@@ -70507,8 +70507,36 @@ const q15_t sqrtTable_Q15[256] = {
      #endif
 #endif /* defined(ARM_MATH_MVEI) */
 
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FAST_TABLES) || defined(ARM_TABLE_SQRT_Q31)
+/*
+ClearAll[tofix];
+tofix[q_][a_] := With[{r = Round[a*2^q]},
+   If[r > (2^q - 1), 2^q - 1, r]
+   ];
 
-#endif /* if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FAST_TABLES) */
+(* For q = format, 2^nb is length of the table *)
+With[{q = 15, nb = 4, q12quarter = 16^^2000},
+  With[{shift = Echo[q - nb]},
+   Table[tofix[q][1.0/Sqrt[1.0*i/2^q]/8.0], {i, 2^(q - 2), 
+     2^q + q12quarter - 1, 2^shift}]]
+  ] // CopyToClipboard
+
+*/
+const q31_t sqrt_initial_lut_q31[32]={536870912, 506166750, 480191942, 457845052, 438353264, 421156193, \
+405836263, 392075079, 379625062, 368290407, 357913941, 348367849, \
+339546978, 331363921, 323745341, 316629190, 309962566, 303700050, \
+297802400, 292235509, 286969573, 281978417, 277238947, 272730696, \
+268435456, 264336964, 260420644, 256673389, 253083375, 249639903, \
+246333269, 243154642};
+#endif /* !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FAST_TABLES) || defined(ARM_TABLE_SQRT_Q31) */
+
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FAST_TABLES) || defined(ARM_TABLE_SQRT_Q15)
+const q15_t sqrt_initial_lut_q15[16]={8192, 7327, 6689, 6193, 5793, 5461, 5181, 4940, 4730, 4544, 4379, \
+4230, 4096, 3974, 3862, 3759};
+#endif /* !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FAST_TABLES) || defined(ARM_TABLE_SQRT_Q15) */
+
+
+#endif /* #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FAST_ALLOW_TABLES) */
 
 #if (defined(ARM_MATH_MVEF) || defined(ARM_MATH_HELIUM)) && !defined(ARM_MATH_AUTOVECTORIZE)
 const float32_t exp_tab[8] = {
