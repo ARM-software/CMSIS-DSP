@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<package schemaVersion="1.7.7" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="https://raw.githubusercontent.com/Open-CMSIS-Pack/Open-CMSIS-Pack-Spec/v1.7.7/schema/PACK.xsd">
+  <name>CMSIS-DSP</name>
+  <description>CMSIS Embedded Compute Library</description>
+  <vendor>ARM</vendor>
+  <license>LICENSE.txt</license>
+  <url>https://www.keil.com/pack/</url>
+
+  <releases>
+    <release version="0.0.0">
+      Active development ...
+    </release>
+  </releases>
+
+ 
+  <!-- conditions are dependency rules that can apply to a component or an individual file -->
+  <conditions>
+    <!-- compiler -->
+    <condition id="ARMCC GCC IAR">
+      <accept Tcompiler="ARMCC"/>
+      <accept Tcompiler="GCC"/>
+      <accept Tcompiler="IAR"/>
+    </condition>
+
+   
+    <!-- CMSIS DSP -->
+    <condition id="CMSIS DSP">
+      <description>Components required for DSP</description>
+      <require condition="ARMCC GCC IAR"/>
+      <require Cclass="CMSIS" Cgroup="CORE"/>
+    </condition>
+
+    <condition id="ARMv7-A Device">
+      <description>Armv7-A architecture based device</description>
+      <accept Dcore="Cortex-A5"/>
+      <accept Dcore="Cortex-A7"/>
+      <accept Dcore="Cortex-A9"/>
+    </condition>
+
+  </conditions>
+
+  <components>
+    <!-- CMSIS-DSP component -->
+    <component Cclass="CMSIS" Cgroup="DSP" Cvariant="Source"  Cversion="0.0.0" isDefaultVariant="true" condition="CMSIS DSP">
+      <description>CMSIS-DSP Library for Cortex-M and Cortex-A</description>
+      <files>
+        <!-- CPU independent -->
+        <file category="doc"      name="Documentation/html/index.html"/>
+        <file category="header"   name="Include/arm_math.h"/>
+        <file category="header"   name="Include/arm_math_f16.h"/>
+        <file category="header"   name="Include/arm_common_tables.h"/>
+        <file category="header"   name="Include/arm_common_tables_f16.h"/>
+        <file category="header"   name="Include/arm_const_structs.h"/>
+        <file category="header"   name="Include/arm_const_structs_f16.h"/>
+
+        <file category="include"  name="PrivateInclude/"/>
+        <file category="include"  name="Include/"/>
+
+        <!-- DSP sources (core) -->
+        <file category="source"   name="Source/BasicMathFunctions/BasicMathFunctions.c"/>
+
+        <file category="source"   name="Source/QuaternionMathFunctions/QuaternionMathFunctions.c"/>
+
+        <file category="source"   name="Source/BayesFunctions/BayesFunctions.c"/>
+        <file category="source"   name="Source/CommonTables/CommonTables.c"/>
+        <file category="source"   name="Source/ComplexMathFunctions/ComplexMathFunctions.c"/>
+        <file category="source"   name="Source/ControllerFunctions/ControllerFunctions.c"/>
+        <file category="source"   name="Source/DistanceFunctions/DistanceFunctions.c"/>
+        <file category="source"   name="Source/FastMathFunctions/FastMathFunctions.c"/>
+        <file category="source"   name="Source/FilteringFunctions/FilteringFunctions.c"/>
+        <file category="source"   name="Source/MatrixFunctions/MatrixFunctions.c"/>
+        <file category="source"   name="Source/StatisticsFunctions/StatisticsFunctions.c"/>
+        <file category="source"   name="Source/SupportFunctions/SupportFunctions.c"/>
+        <file category="source"   name="Source/SVMFunctions/SVMFunctions.c"/>
+        <file category="source"   name="Source/TransformFunctions/TransformFunctions.c"/>
+
+        <file category="source"   name="Source/InterpolationFunctions/InterpolationFunctions.c"/>
+
+        <!-- DSP sources F16 versions -->
+        <file category="source"   name="Source/BasicMathFunctions/BasicMathFunctionsF16.c"/>
+        <file category="source"   name="Source/ComplexMathFunctions/ComplexMathFunctionsF16.c"/>
+        <file category="source"   name="Source/FilteringFunctions/FilteringFunctionsF16.c"/>
+        <file category="source"   name="Source/CommonTables/CommonTablesF16.c"/>
+        <file category="source"   name="Source/TransformFunctions/TransformFunctionsF16.c"/>
+        <file category="source"   name="Source/MatrixFunctions/MatrixFunctionsF16.c"/>
+        <file category="source"   name="Source/InterpolationFunctions/InterpolationFunctionsF16.c"/>
+        <file category="source"   name="Source/StatisticsFunctions/StatisticsFunctionsF16.c"/>
+        <file category="source"   name="Source/SupportFunctions/SupportFunctionsF16.c"/>
+        <file category="source"   name="Source/FastMathFunctions/FastMathFunctionsF16.c"/>
+        <file category="source"   name="Source/DistanceFunctions/DistanceFunctionsF16.c"/>
+        <file category="source"   name="Source/BayesFunctions/BayesFunctionsF16.c"/>
+        <file category="source"   name="Source/SVMFunctions/SVMFunctionsF16.c"/>
+
+        <!-- Compute Library for Cortex-A -->
+        <file category="header"   name="ComputeLibrary/Include/NEMath.h"        condition="ARMv7-A Device"/>
+        <file category="source"   name="ComputeLibrary/Source/arm_cl_tables.c"  condition="ARMv7-A Device"/>
+      </files>
+    </component>
+
+
+  </components>
+
+  <examples>
+    <example name="CMSIS-DSP Bayes example" doc="Abstract.txt" folder="Examples/ARM/arm_bayes_example">
+      <description>Bayes example</description>
+      <board name="uVision Simulator" vendor="Keil"/>
+      <project>
+        <environment name="uv" load="arm_bayes_example.uvprojx"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="CMSIS" Cgroup="DSP"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+        <category>Getting Started</category>
+      </attributes>
+    </example>
+
+    <example name="CMSIS-DSP Class Marks example" doc="Abstract.txt" folder="Examples/ARM/arm_class_marks_example">
+      <description>Class Marks example</description>
+      <board name="uVision Simulator" vendor="Keil"/>
+      <project>
+        <environment name="uv" load="arm_class_marks_example.uvprojx"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="CMSIS" Cgroup="DSP"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+        <category>Getting Started</category>
+      </attributes>
+    </example>
+
+    <example name="CMSIS-DSP Convolution example" doc="Abstract.txt" folder="Examples/ARM/arm_convolution_example">
+      <description>Convolution example</description>
+      <board name="uVision Simulator" vendor="Keil"/>
+      <project>
+        <environment name="uv" load="arm_convolution_example.uvprojx"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="CMSIS" Cgroup="DSP"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+        <category>Getting Started</category>
+      </attributes>
+    </example>
+
+    <example name="CMSIS-DSP Dotproduct example" doc="Abstract.txt" folder="Examples/ARM/arm_dotproduct_example">
+      <description>Dotproduct example</description>
+      <board name="uVision Simulator" vendor="Keil"/>
+      <project>
+        <environment name="uv" load="arm_dotproduct_example.uvprojx"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="CMSIS" Cgroup="DSP"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+        <category>Getting Started</category>
+      </attributes>
+    </example>
+
+    <example name="CMSIS-DSP FFT Bin example" doc="Abstract.txt" folder="Examples/ARM/arm_fft_bin_example">
+      <description>FFT Bin example</description>
+      <board name="uVision Simulator" vendor="Keil"/>
+      <project>
+        <environment name="uv" load="arm_fft_bin_example.uvprojx"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="CMSIS" Cgroup="DSP"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+        <category>Getting Started</category>
+      </attributes>
+    </example>
+
+    <example name="CMSIS-DSP FIR example" doc="Abstract.txt" folder="Examples/ARM/arm_fir_example">
+      <description>FIR example</description>
+      <board name="uVision Simulator" vendor="Keil"/>
+      <project>
+        <environment name="uv" load="arm_fir_example.uvprojx"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="CMSIS" Cgroup="DSP"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+        <category>Getting Started</category>
+      </attributes>
+    </example>
+
+    <example name="CMSIS-DSP Graphic Equalizer example" doc="Abstract.txt" folder="Examples/ARM/arm_graphic_equalizer_example">
+      <description>Graphic Equalizer example</description>
+      <board name="uVision Simulator" vendor="Keil"/>
+      <project>
+        <environment name="uv" load="arm_graphic_equalizer_example.uvprojx"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="CMSIS" Cgroup="DSP"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+        <category>Getting Started</category>
+      </attributes>
+    </example>
+
+    <example name="CMSIS-DSP Linear Interpolation example" doc="Abstract.txt" folder="Examples/ARM/arm_linear_interp_example">
+      <description>Linear Interpolation example</description>
+      <board name="uVision Simulator" vendor="Keil"/>
+      <project>
+        <environment name="uv" load="arm_linear_interp_example.uvprojx"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="CMSIS" Cgroup="DSP"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+        <category>Getting Started</category>
+      </attributes>
+    </example>
+
+    <example name="CMSIS-DSP Matrix example" doc="Abstract.txt" folder="Examples/ARM/arm_matrix_example">
+      <description>Matrix example</description>
+      <board name="uVision Simulator" vendor="Keil"/>
+      <project>
+        <environment name="uv" load="arm_matrix_example.uvprojx"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="CMSIS" Cgroup="DSP"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+        <category>Getting Started</category>
+      </attributes>
+    </example>
+
+    <example name="CMSIS-DSP Signal Convergence example" doc="Abstract.txt" folder="Examples/ARM/arm_signal_converge_example">
+      <description>Signal Convergence example</description>
+      <board name="uVision Simulator" vendor="Keil"/>
+      <project>
+        <environment name="uv" load="arm_signal_converge_example.uvprojx"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="CMSIS" Cgroup="DSP"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+        <category>Getting Started</category>
+      </attributes>
+    </example>
+
+    <example name="CMSIS-DSP Sinus/Cosinus example" doc="Abstract.txt" folder="Examples/ARM/arm_sin_cos_example">
+      <description>Sinus/Cosinus example</description>
+      <board name="uVision Simulator" vendor="Keil"/>
+      <project>
+        <environment name="uv" load="arm_sin_cos_example.uvprojx"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="CMSIS" Cgroup="DSP"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+        <category>Getting Started</category>
+      </attributes>
+    </example>
+
+    <example name="CMSIS-DSP SVM example" doc="Abstract.txt" folder="Examples/ARM/arm_svm_example">
+      <description>SVM example</description>
+      <board name="uVision Simulator" vendor="Keil"/>
+      <project>
+        <environment name="uv" load="arm_svm_example.uvprojx"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="CMSIS" Cgroup="DSP"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+        <category>Getting Started</category>
+      </attributes>
+    </example>
+
+    <example name="CMSIS-DSP Variance example" doc="Abstract.txt" folder="Examples/ARM/arm_variance_example">
+      <description>Variance example</description>
+      <board name="uVision Simulator" vendor="Keil"/>
+      <project>
+        <environment name="uv" load="arm_variance_example.uvprojx"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="CMSIS" Cgroup="DSP"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+        <category>Getting Started</category>
+      </attributes>
+    </example>
+
+   
+
+  </examples>
+
+</package>

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sed -e "s/release version=\"[^\"]*\"/release version=\"0.0.0\"/" | \
+  sed -e "s/Cversion=\"[^\"]*\"/Cversion=\"0.0.0\"/"

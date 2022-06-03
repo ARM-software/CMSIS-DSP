@@ -1,0 +1,8 @@
+#!/bin/bash
+
+DIRNAME=$(dirname $(readlink -f $0))
+DESCRIBE=$(readlink -f ${DIRNAME}/git_describe.sh)
+VERSION=$(${DESCRIBE} v)
+
+sed -e "s/release version=\"0.0.0\"/release version=\"${VERSION}\"/" | \
+  sed -e "s/Cversion=\"0.0.0\"/Cversion=\"${VERSION}\"/"

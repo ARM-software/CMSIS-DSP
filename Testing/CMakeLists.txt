@@ -3,10 +3,8 @@ cmake_policy(SET CMP0077 NEW)
 include(CMakePrintHelpers)
 
 
-# The tests are assuming that MATRIX_CHECK is enabled when building
-# CMSIS-DSP.
-
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/..)
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}")
+set(CMSISDSPFOLDER "${CMAKE_CURRENT_SOURCE_DIR}/..")
 
 function(writeConfig path)
   set(output "")
@@ -95,9 +93,6 @@ project(Testing)
 # Needed to find the config modules
 
 
-set(ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../../..)
-
-
 # Change behavior of configBoot for scatter file
 # We use the linker files from older test framework because bigger sections are needed.
 # We should migrate the linker files to this new framework.
@@ -106,11 +101,9 @@ include(config)
 
 if ((NOT REFLIB) AND (NOT NOCMSIS))
 add_subdirectory(../Source bin_dsp)
+configLib(CMSISDSP)
 endif()
 
-if (NN)
-add_subdirectory(${ROOT}/CMSIS/NN/Source bin_nn)
-endif()
 
 add_library(TestingLib STATIC)
 add_library(FrameworkLib STATIC)
@@ -439,10 +432,6 @@ else()
 endif()
 
 
-# With -O2, generated code is crashing on some cycle accurate models.
-# (cpp part)
-disableOptimization(TestingLib)
-disableOptimization(FrameworkLib)
 
 ## Only build f16 version when running float16tests or all tests
 ## and float16 are supported
@@ -507,10 +496,7 @@ endif()
 
 ### Includes
 if (REFLIB)
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../Source)
-include(configDsp)
-SET(DSP ${ROOT}/CMSIS/DSP)
-target_include_directories(TestingLib PUBLIC "${DSP}/Include")
+target_include_directories(TestingLib PUBLIC "../Include")
 target_link_libraries(TestingLib PRIVATE "${REFLIBNAME}")
 else()
 if (NOT NOCMSIS)
@@ -518,9 +504,7 @@ target_link_libraries(TestingLib PRIVATE CMSISDSP)
 endif()
 endif()
 
-if(NN)
-target_link_libraries(TestingLib PRIVATE CMSISNN)
-endif()
+
 target_include_directories(TestingLib PRIVATE FrameworkInclude)
 
 if ((DISTINCT) AND (BENCHMARK))
@@ -529,14 +513,10 @@ else()
 target_include_directories(TestingLib PRIVATE GeneratedInclude)
 endif()
 
-configLib(TestingLib ${ROOT})
-#configDsp(TestingLib ${ROOT})
-
-configLib(FrameworkLib ${ROOT})
 target_include_directories(FrameworkLib PRIVATE FrameworkInclude)
 # arm_math.h is needed for q7,q15,q31 types
 # which are used for access to pattern files.
-target_include_directories(FrameworkLib PRIVATE ${ROOT}/CMSIS/DSP/Include)
+target_include_directories(FrameworkLib PRIVATE ../Include)
 
 
 # Because we need access to core include for
@@ -545,6 +525,8 @@ target_include_directories(FrameworkLib PRIVATE ${ROOT}/CMSIS/DSP/Include)
 # then reference the right include folder
 set_platform_core()
 core_includes(FrameworkLib)
+# To have access to CMSIS Core includes
+configLib(FrameworkLib)
 
 add_executable(Testing main.cpp)
 # To see the file in the scatter load, it must not because
@@ -559,9 +541,8 @@ target_sources(Testing PRIVATE patterndata.c)
 
 # With -O2, generated code is crashing on some cycle accurate models.
 # (cpp part)
-disableOptimization(Testing)
 
-configApp(Testing ${ROOT})
+configApp(Testing)
 
 target_link_libraries(Testing PRIVATE TestingLib)
 target_link_libraries(Testing PRIVATE FrameworkLib)
@@ -579,52 +560,5 @@ endif()
 writeConfig(${CMAKE_CURRENT_BINARY_DIR}/currentConfig.csv)
 
 
-find_package(Doxygen)
-
-if(DOXYGEN_FOUND)
-
-  # exclude sqlite code
-  set(DOXYGEN_EXCLUDE_PATTERNS
-        */sqlite3/*
-  )
-  # doxygen settings can be set here, prefixed with "DOXYGEN_"
-  set(DOXYGEN_SOURCE_BROWSER NO)
-  set(DOXYGEN_EXTRACT_ALL YES)
-  set(DOXYGEN_EXTRACT_PRIVATE NO)
-  set(DOXYGEN_GENERATE_XML NO)
-  set(DOXYGEN_OPTIMIZE_OUTPUT_FOR_C YES)
-  set(DOXYGEN_EXTRACT_LOCAL_CLASSES NO)
-  set(DOXYGEN_TYPEDEF_HIDES_STRUCT YES)
-  set(DOXYGEN_ENABLE_PREPROCESSING YES)
-  set(DOXYGEN_MACRO_EXPANSION YES)
-  set(DOXYGEN_EXPAND_ONLY_PREDEF YES)
-  set(DOXYGEN_MARKDOWN_SUPPORT YES)
-  set(DOXYGEN_AUTOLINK_SUPPORT YES)
-  set(DOXYGEN_QUIET YES)
-  set(DOXYGEN_SHOW_USED_FILES NO)
-  set(DOXYGENEXTRACT_LOCAL_CLASSES NO)
-  set(DOXYGENSHOW_INCLUDE_FILES NO)
-  set(DOXYGEN_TYPEDEF_HIDES_STRUCT YES)
-  set(DOXYGEN_FULL_PATH_NAMES NO)
-  set(DOXYGEN_RECURSIVE YES)
-  set(DOXYGEN_REFERENCES_LINK_SOURCE NO)
-  set(DOXYGEN_EXCLUDE_PATTERNS "*/RTE/*")
-  set(DOXYGEN_PREDEFINED "__ARM_FP16_FORMAT_IEEE=1;ARM_FLOAT16_SUPPORTED=1;__ALIGNED(x)=")
-  set(DOXYGEN_EXAMPLE_PATH "${ROOT}/CMSIS/DSP/Examples/ARM")
-  set(DOXYGEN_IMAGE_PATH "${ROOT}/CMSIS/DoxyGen/DSP/src/images")
-  set(DOXYGEN_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/docs")
-  set(DOXYGEN_LAYOUT_FILE "${ROOT}/CMSIS/DoxyGen/Doxygen_Templates/DoxygenLayout_forUser.xml")
-  # this target will only be built if specifically asked to.
-  # run "make api-docs" to create the doxygen documentation
-  doxygen_add_docs(
-    docs
-    ${ROOT}/CMSIS/DSP/Source
-    ${ROOT}/CMSIS/DSP/Examples/ARM
-    ${ROOT}/CMSIS/DSP/Include
-    ${ROOT}/CMSIS/DoxyGen/DSP/src/history.txt
-    COMMENT "Generate API-documents"
-  )
-
-endif(DOXYGEN_FOUND)
 
 

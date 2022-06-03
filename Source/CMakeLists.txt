@@ -3,13 +3,7 @@ cmake_policy(SET CMP0077 NEW)
 project(CMSISDSP)
 
 # DSP Sources
-SET(DSP ${ROOT}/CMSIS/DSP)
-
-list(APPEND CMAKE_MODULE_PATH ${DSP}/Source)
-list(APPEND CMAKE_MODULE_PATH ${DSP})
-
-
-include(configLib)
+SET(DSP ${CMAKE_CURRENT_SOURCE_DIR}/..)
 
 
 option(NEON "Neon acceleration" OFF)
@@ -24,6 +18,7 @@ option(MVEI "MVEI intrinsics supported" OFF)
 option(MVEFLOAT16 "Float16 MVE intrinsics supported" OFF)
 option(DISABLEFLOAT16 "Disable building float16 kernels" OFF)
 option(HOST "Build for host" OFF)
+option(AUTOVECTORIZE "Prefer autovectorizable code to one using C intrinsics" OFF)
 
 # Select which parts of the CMSIS-DSP must be compiled.
 # There are some dependencies between the parts but they are not tracked
@@ -196,115 +191,109 @@ option(ARM_CFFT_RADIX4_Q31   "deprecated q31 radix4 cfft"       OFF)
 
 
 
-add_library(CMSISDSP INTERFACE)
+add_library(CMSISDSP STATIC)
+
 
 if (BASICMATH)
-  add_subdirectory(BasicMathFunctions)
-  target_link_libraries(CMSISDSP INTERFACE CMSISDSPBasicMath)
+  include(BasicMathFunctions/Config.cmake)
 endif()
 
 if (COMPLEXMATH)
-  add_subdirectory(ComplexMathFunctions)
-  target_link_libraries(CMSISDSP INTERFACE CMSISDSPComplexMath)
+  include(ComplexMathFunctions/Config.cmake)
 endif()
 
 if (QUATERNIONMATH)
-  add_subdirectory(QuaternionMathFunctions)
-  target_link_libraries(CMSISDSP INTERFACE CMSISDSPQuaternionMath)
+  include(QuaternionMathFunctions/Config.cmake)
 endif()
 
 if (CONTROLLER)
-  add_subdirectory(ControllerFunctions)
+  include(ControllerFunctions/Config.cmake)
   # Fast tables inclusion is allowed
   if (CONFIGTABLE)
-    target_compile_definitions(CMSISDSPController PUBLIC ARM_FAST_ALLOW_TABLES)
+    target_compile_definitions(CMSISDSP PUBLIC ARM_FAST_ALLOW_TABLES)
   endif()
-  target_link_libraries(CMSISDSP INTERFACE CMSISDSPController)
 endif()
 
 if (FASTMATH)
-  add_subdirectory(FastMathFunctions)
+  include(FastMathFunctions/Config.cmake)
   # Fast tables inclusion is allowed
   if (CONFIGTABLE)
-    target_compile_definitions(CMSISDSPFastMath PUBLIC ARM_FAST_ALLOW_TABLES)
+    target_compile_definitions(CMSISDSP PUBLIC ARM_FAST_ALLOW_TABLES)
   endif()
-  target_link_libraries(CMSISDSP INTERFACE CMSISDSPFastMath)
 endif()
 
 if (FILTERING)
-  add_subdirectory(FilteringFunctions)
+  include(FilteringFunctions/Config.cmake)
   # Fast tables inclusion is allowed
   if (CONFIGTABLE)
-    target_compile_definitions(CMSISDSPFiltering PUBLIC ARM_FAST_ALLOW_TABLES)
+    target_compile_definitions(CMSISDSP PUBLIC ARM_FAST_ALLOW_TABLES)
   endif()
-  target_link_libraries(CMSISDSP INTERFACE CMSISDSPFiltering)
 endif()
 
 if (MATRIX)
-  add_subdirectory(MatrixFunctions)
-  target_link_libraries(CMSISDSP INTERFACE CMSISDSPMatrix)
+  include(MatrixFunctions/Config.cmake)
 endif()
 
 if (STATISTICS)
-  add_subdirectory(StatisticsFunctions)
-  target_link_libraries(CMSISDSP INTERFACE CMSISDSPStatistics)
+  include(StatisticsFunctions/Config.cmake)
 endif()
 
 if (SUPPORT)
-  add_subdirectory(SupportFunctions)
-  target_link_libraries(CMSISDSP INTERFACE CMSISDSPSupport)
+  include(SupportFunctions/Config.cmake)
 endif()
 
 if (TRANSFORM)
-  add_subdirectory(TransformFunctions)
+  include(TransformFunctions/Config.cmake)
   # FFT tables inclusion is allowed
   if (CONFIGTABLE)
-    target_compile_definitions(CMSISDSPTransform PUBLIC ARM_FFT_ALLOW_TABLES)
+    target_compile_definitions(CMSISDSP PUBLIC ARM_FFT_ALLOW_TABLES)
   endif()
-  target_link_libraries(CMSISDSP INTERFACE CMSISDSPTransform)
 endif()
 
 if (FILTERING OR CONTROLLER OR FASTMATH OR TRANSFORM OR SVM OR DISTANCE)
-  add_subdirectory(CommonTables)
+  include(CommonTables/Config.cmake)
   if (TRANSFORM)
     # FFT tables inclusion is allowed
     if (CONFIGTABLE)
-      target_compile_definitions(CMSISDSPCommon PUBLIC ARM_FFT_ALLOW_TABLES)
+      target_compile_definitions(CMSISDSP PUBLIC ARM_FFT_ALLOW_TABLES)
     endif()
   endif()
   if (FILTERING OR CONTROLLER OR FASTMATH)
     # Select which tables to include
     if (CONFIGTABLE)
-      target_compile_definitions(CMSISDSPCommon PUBLIC ARM_FAST_ALLOW_TABLES)
+      target_compile_definitions(CMSISDSP PUBLIC ARM_FAST_ALLOW_TABLES)
     endif()
   endif()
-  target_link_libraries(CMSISDSP INTERFACE CMSISDSPCommon)
   # Common project is adding ComputeLibrary tables used by SVM and Distance
   # when NEon is ON.
 endif()
 
 if (SVM)
-  add_subdirectory(SVMFunctions)
-  target_link_libraries(CMSISDSP INTERFACE CMSISDSPSVM)
+  include(SVMFunctions/Config.cmake)
 endif()
 
 if (BAYES)
-  add_subdirectory(BayesFunctions)
-  target_link_libraries(CMSISDSP INTERFACE CMSISDSPBayes)
+  include(BayesFunctions/Config.cmake)
 endif()
 
 if (DISTANCE)
-  add_subdirectory(DistanceFunctions)
-  target_link_libraries(CMSISDSP INTERFACE CMSISDSPDistance)
+  include(DistanceFunctions/Config.cmake)
 endif()
 
 if (INTERPOLATION)
-  add_subdirectory(InterpolationFunctions)
-  target_link_libraries(CMSISDSP INTERFACE CMSISDSPInterpolation)
+  include(InterpolationFunctions/Config.cmake)
 endif()
 
 ### Includes
-target_include_directories(CMSISDSP INTERFACE "${DSP}/Include")
+target_include_directories(CMSISDSP PUBLIC "${DSP}/Include")
+if (DEFINED CMSISCORE)
+target_include_directories(CMSISDSP PUBLIC "${CMSISCORE}/Include")
+endif()
 
+include(configDsp.cmake)
+include(fft.cmake)
+include(interpol.cmake)
 
-
+configDsp(CMSISDSP)
+fft(CMSISDSP)
+interpol(CMSISDSP)

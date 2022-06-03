@@ -153,10 +153,10 @@
    * |---------------------------------|------------------------------------------------------------------------|
    * |\b CMSIS\\Documentation\\DSP     | This documentation                                                     |
    * |\b CMSIS\\DSP\\Examples          | Example projects demonstrating the usage of the library functions      |
-   * |\b CMSIS\\DSP\\Include           | DSP_Lib include files for using and building the lib
-   * |\b CMSIS\\DSP\\PrivateInclude    | DSP_Lib private include files for building the lib                                               |
-   * |\b CMSIS\\DSP\\Lib               | DSP_Lib binaries                                                       |
-   * |\b CMSIS\\DSP\\Source            | DSP_Lib source files                                                   |
+   * |\b CMSIS\\DSP\\ComputeLibrary    | Small Neon kernels when building on Cortex-A
+   * |\b CMSIS\\DSP\\Include           | include files for using and building the lib
+   * |\b CMSIS\\DSP\\PrivateInclude    | private include files for building the lib                                               |
+   * |\b CMSIS\\DSP\\Source            | source files                                                   |
    *
    * <hr>
    * \section rev Revision History of CMSIS-DSP

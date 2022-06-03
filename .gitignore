@@ -18,4 +18,7 @@ Examples/ARM/*/RTE/
 Examples/ARM/*/MTICoverageOut.cov
 CMSISDSP.egg-info/
 dist/
-
+Output/
+Documentation/
+PACK.xsd
+*.uvguix.*

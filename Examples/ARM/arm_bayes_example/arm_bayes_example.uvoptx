@@ -995,9 +995,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>138</LineNumber>
+          <LineNumber>140</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>3096</Address>
+          <Address>3040</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -1006,7 +1006,7 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>.\arm_bayes_example_f32.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\arm_bayes_example\arm_bayes_example_f32.c\138</Expression>
+          <Expression>\\arm_bayes_example\arm_bayes_example_f32.c\140</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -1016,6 +1016,14 @@
           <ItemText>Dbg_Index</ItemText>
         </Ww>
       </WatchWindow1>
+      <MemoryWindow1>
+        <Mm>
+          <WinNumber>1</WinNumber>
+          <SubType>2</SubType>
+          <ItemText>index</ItemText>
+          <AccSizeX>0</AccSizeX>
+        </Mm>
+      </MemoryWindow1>
       <Tracepoint>
         <THDelay>0</THDelay>
       </Tracepoint>

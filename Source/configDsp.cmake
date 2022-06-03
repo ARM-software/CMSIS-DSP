@@ -1,4 +1,4 @@
-function(configDsp project root)
+function(configDsp project)
 
 if (HOST)
       target_compile_definitions(${project} PUBLIC __GNUC_PYTHON__)
@@ -26,9 +26,17 @@ if (AUTOVECTORIZE)
     target_compile_definitions(${project} PRIVATE ARM_MATH_AUTOVECTORIZE) 
 endif()
 
-if (NEON OR NEONEXPERIMENTAL)
+if (NEON)
     # Used in arm_vec_math.h
-    target_include_directories(${project} PUBLIC "${root}/CMSIS/DSP/ComputeLibrary/Include")
+    target_include_directories(${project} PUBLIC "${DSP}/ComputeLibrary/Include")
+    target_compile_definitions(${project} PRIVATE ARM_MATH_NEON)
+
+endif()
+
+if (NEONEXPERIMENTAL)
+    # Used in arm_vec_math.h
+    target_include_directories(${project} PUBLIC "${DSP}/ComputeLibrary/Include")
+    target_compile_definitions(${project} PRIVATE ARM_MATH_NEON_EXPERIMENTAL)
 endif()
 
 if (MVEFLOAT16)
@@ -36,7 +44,7 @@ if (MVEFLOAT16)
 endif()
 
 if (HELIUM OR MVEF OR SUPPORT)
-   target_include_directories(${project} PRIVATE "${root}/CMSIS/DSP/PrivateInclude")
+   target_include_directories(${project} PRIVATE "${DSP}/PrivateInclude")
 endif()
 
 if (DISABLEFLOAT16)
