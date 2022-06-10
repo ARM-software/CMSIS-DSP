@@ -59,7 +59,7 @@ When float are used, then the fpu should be selected to ensure that the compiler
 
 When building with Helium support, it will be automatically detected by CMSIS-DSP. For Neon, it is not the case and you must enable the option `-DARM_MATH_NEON` for the C compilation. With `cmake` this option is controlled with `-DNEON=ON`.
 
-* `-DARM_MATH_LOOPUNROLL` can also be used when compiling with cmake
+* `-DLOOPUNROLL=ON` can also be used when compiling with cmake
 * It corresponds to the C options `-DARM_MATH_LOOPUNROLL`
 
 Compilers are doing unrolling. So this option may not be needed but it is highly dependent on the compiler. With some compilers, this option is needed to get better performances.
@@ -74,6 +74,8 @@ Speed of memory is important. If you can map the data and the constant tables us
 The library is doing some type [punning](https://en.wikipedia.org/wiki/Type_punning) to process word 32 from memory as a pair of `q15` or a quadruple of `q7`.  Those type manipulations are done through `memcpy` functions. Most compilers should be able to optimize out those function calls when the length to copy is small (4 bytes).
 
 This optimization will **not** occur when `-fno-builtin` is used and it will have a **very bad** impact on the performances.
+
+Some compiler may also require the use of option `-munaligned-access` to specify that unaligned accesses are used.
 
 ## How to build
 
