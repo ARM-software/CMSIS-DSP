@@ -107,16 +107,16 @@ Then you can describe the blocks that you need in the compute graph if they are 
 
 Finally, you can execute `graph.py` to generate the C++ files.
 
-Those files need to include the `sdf/src/GenericNodes.h` and the nodes used in the graph and which can be found in `sdf/nodes/cpp`.
+The generated files need to include the `sdf/src/GenericNodes.h` and the nodes used in the graph and which can be found in `sdf/nodes/cpp`.
 
 If you have declared new nodes in `graph.py` then you'll need to provide an implementation.
 
 More details and explanations can be found in the documentation for the examples:
 
-* [Example 1](documentation/example1.md)
-* [Example 2](documentation/example2.md)
-* [Example 3](documentation/example3.md)
-* [Example 4](documentation/example4.md)
+* [Example 1 : how to describe a simple graph](documentation/example1.md)
+* [Example 2 : More complex example with delay and CMSIS-DSP](documentation/example2.md)
+* [Example 3 : Working example with CMSIS-DSP and FFT](documentation/example3.md)
+* [Example 4 : Same as example 3 but with the CMSIS-DSP Python wrapper](documentation/example4.md)
 
 ### How to build the examples
 
@@ -192,7 +192,7 @@ Here is a list of the nodes supported by default. More can be easily added:
   - Binary function with header `void function(T* srcA, T* srcB, T* dst, int nbSamples)`
 - CMSIS-DSP function:
   - It will detect if it is an unary or binary function.
-  - The name must not contain the prefix arm nor the the type suffix
+  - The name must not contain the prefix `arm` nor the the type suffix
   - For instance, use `Dsp("mult",CType(F32),NBSAMPLES)` to use `arm_mult_f32`
   - Other CMSIS-DSP function (with an instance variable) are requiring the creation of a Node if it is not already provided
 - CFFT / ICFFT : Use of CMSIS-DSP CFFT. Currently only F32 and Q15 
