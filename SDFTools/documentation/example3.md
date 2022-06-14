@@ -103,12 +103,12 @@ This node is provided in sdf/nodes/cpp so no need to define it. You can just use
 It can be used by just doing in your AppNodes.h file :
 
 ```c++
-#include "CFFT_F32.h"
+#include "CFFT.h"
 ```
 
 From Python side it would be:
 
 ```python
-from sdf.nodes.py.CFFTF32 import *
+from cmsisdsp.sdf.nodes.CFFT import *
 ```
 

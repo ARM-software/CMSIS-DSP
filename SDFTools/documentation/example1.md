@@ -26,11 +26,7 @@ Let's analyze the file `graph.py` in the `example1` folder. This file is describ
 First, we add some path so that the example can find the sdf packages when run from example1 folder.
 
 ```python
-import sys
-
-sys.path.append("../..")
-
-from sdf import *
+from cmsisdsp.sdf.scheduler import *
 ```
 
 

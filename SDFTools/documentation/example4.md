@@ -30,7 +30,7 @@ This file is defining the new nodes which were used in `graph.py`. In `graph.py`
 In `appnodes.py` we including new kind of nodes for simulation purpose:
 
 ```python
-from sdf.nodes.py.CFFTF32 import *
+from cmsisdsp.sdf.nodes.CFFT import *
 ```
 
 
