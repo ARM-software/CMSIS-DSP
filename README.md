@@ -1,6 +1,6 @@
 # CMSIS-DSP
 
-[![Version](https://img.shields.io/github/v/release/arm-software/CMSIS-DSP)](https://github.com/ARM-software/CMSIS-DSP/releases/latest) [![License](https://img.shields.io/github/license/ARM-software/CMSIS-DSP)](https://github.com/ARM-software/CMSIS-DSP)
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/ARM-software/CMSIS-DSP?include_prereleases)[![GitHub license](https://img.shields.io/github/license/ARM-software/CMSIS-DSP)](https://github.com/ARM-software/CMSIS-DSP/blob/main/LICENSE.txt)
 
 
 ## About
