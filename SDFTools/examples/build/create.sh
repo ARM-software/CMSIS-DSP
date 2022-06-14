@@ -1,4 +1,4 @@
 cmake -DHOST=YES \
    -DDOT="path to dot.EXE" \
-   -DCMSIS="path to cmsis" \
+   -DCMSISCORE="path to cmsis core" \
    -G "Unix Makefiles" ..

@@ -22,7 +22,7 @@ In blue, the amount of samples generated or consumed by a node each time it is c
 
 When the processing is applied to a stream of samples then the problem to solve is : 
 
-**how the blocks must be scheduled and the FIFOs connecting the block dimensioned**
+> **how the blocks must be scheduled and the FIFOs connecting the block dimensioned**
 
 The general problem can be very difficult. But, if some constraints are applied to the graph then some algorithms can compute a static schedule.
 
@@ -87,7 +87,7 @@ The schedule is (the size of the FIFOs after the execution of the node displayed
 
 At the end, both FIFOs are empty so the schedule can be run again : it is periodic !
 
-## How to build the examples
+## How to use the Synchronous Data Flow (SDF)
 
 First, you must install the `CMSIS-DSP` PythonWrapper:
 
@@ -95,15 +95,41 @@ First, you must install the `CMSIS-DSP` PythonWrapper:
 pip install cmsisdsp
 ```
 
+The script inside the cmsisdsp wrapper can be used to describe and generate the schedule.
+
+You can create a `graph.py` and include :
+
+```python
+from cmsisdsp.sdf.scheduler import *
+```
+
+Then you can describe the blocks that you need in the compute graph if they are not provided by the SDF.
+
+Finally, you can execute `graph.py` to generate the C++ files.
+
+Those files need to include the `sdf/src/GenericNodes.h` and the nodes used in the graph and which can be found in `sdf/nodes/cpp`.
+
+If you have declared new nodes in `graph.py` then you'll need to provide an implementation.
+
+More details and explanations can be found in the documentation for the examples:
+
+* [Example 1](documentation/example1.md)
+* [Example 2](documentation/example2.md)
+* [Example 3](documentation/example3.md)
+* [Example 4](documentation/example4.md)
+
+### How to build the examples
+
 In folder `SDFTools/example/build`, type the `cmake` command:
 
 ```bash
-cmake -DHOST=YES -DDOT="path to dot tool" -DCMSIS="path to cmsis" -G "Unix Makefiles" ..
+cmake -DHOST=YES \
+   -DDOT="path to dot.EXE" \
+   -DCMSISCORE="path to cmsis core include directory" \
+   -G "Unix Makefiles" ..
 ```
 
 The Graphviz dot tool is requiring a recent version supporting the HTML-like labels.
-
-The path to cmsis must be the root folder containing CMSIS and Device folders.
 
 If cmake is successful, you can type `make` to build the examples. It will also build CMSIS-DSP for the host.
 
@@ -126,7 +152,7 @@ To build the C examples:
 * the .cpp file contained in the example must be built
 * the include folder `sdf/src` must be added
 
-For `example3` which is using an input file, cmake should have copied the input test pattern `input_example3.txt` inside the build folder. The output file will also be generated in the build folder.
+For `example3` which is using an input file, `cmake` should have copied the input test pattern `input_example3.txt` inside the build folder. The output file will also be generated in the build folder.
 
 `example4` is like `example3` but in pure Python and using the CMSIS-DSP Python wrapper (which must already be installed before trying the example). `example4` is not built by the cmake. You'll need to go to the `example4` folder and type:
 

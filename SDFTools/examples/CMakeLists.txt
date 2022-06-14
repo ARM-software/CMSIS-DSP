@@ -28,16 +28,17 @@ endfunction()
 
 set(SDFDIR ${CMAKE_CURRENT_SOURCE_DIR}/../sdf)
 
+set(DSP ${CMAKE_CURRENT_SOURCE_DIR}/../..)
+
 function(add_sdf_dir TARGET)
     target_include_directories(${TARGET} PRIVATE ${SDFDIR}/src)
     target_include_directories(${TARGET} PRIVATE ${SDFDIR}/nodes/cpp)
-    target_include_directories(${TARGET} PRIVATE ${ROOT}/CMSIS/Core)
-    target_include_directories(${TARGET} PRIVATE ${ROOT}/CMSIS/DSP/Include)
+    target_include_directories(${TARGET} PRIVATE ${CMSISCORE})
+    target_include_directories(${TARGET} PRIVATE ${DSP}/Include)
 endfunction()
 
 project(Examples)
 
-set(DSP ${ROOT}/CMSIS/DSP)
 
 # Add DSP folder to module path
 list(APPEND CMAKE_MODULE_PATH ${DSP})

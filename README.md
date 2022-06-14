@@ -1,5 +1,8 @@
 # CMSIS-DSP
 
+[![Version](https://img.shields.io/github/v/release/arm-software/CMSIS-DSP)](https://github.com/ARM-software/CMSIS-DSP/releases/latest) [![License](https://img.shields.io/github/license/ARM-software/CMSIS-DSP)](https://github.com/ARM-software/CMSIS-DSP)
+
+
 ## About
 
 CMSIS-DSP is an optimized compute library for embedded systems (DSP is in the name for legacy reasons).
@@ -7,6 +10,8 @@ CMSIS-DSP is an optimized compute library for embedded systems (DSP is in the na
 It provides optimized compute kernels for Cortex-M and for Cortex-A.
 
 On Cortex-M, different variants are available according to the core and most of the functions are using a vectorized version when the Helium extension is available.
+
+[Documentation](https://arm-software.github.io/CMSIS_5/DSP/html/index.html) is available as part of [CMSIS](https://github.com/ARM-software/CMSIS_5) repository.
 
 ### Kernels
 
@@ -32,7 +37,7 @@ The goal is to make it easier to move from a design to a final implementation in
 
 ### Synchronous Data Flow
 
-CMSIS-DSP is also providing an experimental synchronous data flow scheduler:
+CMSIS-DSP is also providing an experimental [synchronous data flow scheduler](SDFTools/README.md):
 
 * You define your compute graph in Python
 * A static schedule (computed by the Python script is generated)
@@ -120,7 +125,7 @@ include(configLib)
 configLib(CMSISDSP)
 ```
 
-A typical `cmake` command may be:
+A typical `cmake` command (when using CMSIS-DSP test framework) may be:
 
 ```
 cmake -DCMAKE_PREFIX_PATH="path to compiler" \
