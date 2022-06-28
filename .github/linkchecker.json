@@ -1,0 +1,18 @@
+{
+  "problemMatcher": [
+    {
+      "owner": "linkchecker",
+      "severity": "warning",
+      "pattern": [
+        {
+          "regexp": "^(.*):(\\d+):(\\d+);(.*);(.*);(.*)$",
+          "file": 1,
+          "line": 2,
+          "column": 3,
+          "code": 5,
+          "message": 6
+        }
+      ]
+    }
+  ]
+}
