@@ -50,14 +50,14 @@ jobs:
       - name: Generate doxygen
         run: |
           echo "::add-matcher::.github/doxygen.json"
-          ./gen_doc.sh
+          /bin/bash gen_doc.sh
           echo "::remove-matcher owner=doxygen::"
         working-directory: ./Doxygen
 
       - name: Run linkchecker
         run: |
           echo "::add-matcher::.github/linkchecker.json"
-          ../Scripts/git/check_links.sh ./html/index.html ./
+          /bin/bash ../Scripts/git/check_links.sh ./html/index.html ./
           echo "::remove-matcher owner=linkchecker::"
         working-directory: ./Documentation
 
@@ -82,7 +82,7 @@ jobs:
           mkdir -p ~/.arm/Packs/.Web
           wget -O ~/.arm/Packs/.Web/ARM.CMSIS.pdsc https://www.keil.com/pack/ARM.CMSIS.pdsc
           echo "::add-matcher::.github/packchk.json"
-          ./Scripts/git/gen_pack.sh
+          /bin/bash ./Scripts/git/gen_pack.sh
           echo "::remove-matcher owner=packchk::"
       
       - name: Archive pack
