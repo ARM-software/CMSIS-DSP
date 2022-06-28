@@ -141,7 +141,7 @@ if [ -n "$1" ]; then
   PREFIX=$1
 fi
 TAGS=$(git for-each-ref --format "%(objecttype) %(refname)" --sort="-v:refname" "refs/tags/${PREFIX}*" 2>/dev/null | cut -d\  -f2)
-LATEST=$(${DESCRIBE} "${PREFIX}")
+LATEST=$(/bin/bash ${DESCRIBE} "${PREFIX}")
 
 print_${FORMAT}_head
 

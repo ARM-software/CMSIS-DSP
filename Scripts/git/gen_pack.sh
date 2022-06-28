@@ -20,7 +20,7 @@ set -o pipefail
 DIRNAME=$(dirname $(readlink -f $0))
 CHANGELOG=$(readlink -f ${DIRNAME}/gen_changelog.sh)
 DESCRIBE=$(readlink -f ${DIRNAME}/git_describe.sh)
-VERSION=$(${DESCRIBE} v)
+VERSION=$(/bin/bash ${DESCRIBE} v)
 
 function usage {
   echo "$(basename $0) [-h|--help] [<pdsc>]"
@@ -184,7 +184,7 @@ last=$(grep -n "</releases>" ${PACK_VENDOR}.${PACK_NAME}.pdsc | cut -d: -f1)
 let first-=1
 let last+=1
 head -n ${first} "./${PACK_VENDOR}.${PACK_NAME}.pdsc" > "${PACK_BUILD}/${PACK_VENDOR}.${PACK_NAME}.pdsc"
-"${CHANGELOG}" -p -f pdsc 2>/dev/null | sed "s/^/  /" >> "${PACK_BUILD}/${PACK_VENDOR}.${PACK_NAME}.pdsc"
+/bin/bash "${CHANGELOG}" -p -f pdsc 2>/dev/null | sed "s/^/  /" >> "${PACK_BUILD}/${PACK_VENDOR}.${PACK_NAME}.pdsc"
 tail -n +${last} "./${PACK_VENDOR}.${PACK_NAME}.pdsc" | \
   sed -e "s/Cversion=\"[^\"]*\"/Cversion=\"${VERSION}\"/" >> "${PACK_BUILD}/${PACK_VENDOR}.${PACK_NAME}.pdsc"
 

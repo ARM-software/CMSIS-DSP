@@ -28,7 +28,7 @@ else
 fi
 
 if [ -z $VERSION ]; then
-  VERSION_FULL=$(${DESCRIBE} "v")
+  VERSION_FULL=$(/bin/bash ${DESCRIBE} "v")
   VERSION=${VERSION_FULL%+*}
 fi
 
@@ -41,7 +41,7 @@ sed -e "s/{projectNumber}/${VERSION}/" "${DIRNAME}/dsp.dxy.in" \
   > "${DIRNAME}/dsp.dxy"
 
 echo "${CHANGELOG} -f html > history.txt"
-"${CHANGELOG}" -f html 1> history.txt 2>/dev/null
+/bin/bash "${CHANGELOG}" -f html 1> history.txt 2>/dev/null
 
 echo "${DOXYGEN} dsp.dxy"
 "${DOXYGEN}" dsp.dxy
