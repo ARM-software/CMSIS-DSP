@@ -11,8 +11,6 @@ It provides optimized compute kernels for Cortex-M and for Cortex-A.
 
 On Cortex-M, different variants are available according to the core and most of the functions are using a vectorized version when the Helium extension is available.
 
-The latest [Documentation](https://arm-software.github.io/CMSIS-DSP/main) is here https://arm-software.github.io/CMSIS-DSP/main.
-
 
 ### Kernels
 
