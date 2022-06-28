@@ -17,17 +17,27 @@ class UnaryTestsF64:public Client::Suite
             Client::Pattern<float64_t> input1;
             Client::Pattern<float64_t> input2;
             Client::Pattern<float64_t> ref;
+            Client::Pattern<float64_t> refBeta;
+
 
             Client::Pattern<float64_t> refll;
             Client::Pattern<float64_t> refd;
             Client::Pattern<int16_t> refp;
+            Client::Pattern<float64_t> refTau;
+            Client::Pattern<float64_t> refR;
+            Client::Pattern<float64_t> refQ;
 
             Client::Pattern<int16_t> dims;
             Client::LocalPattern<float64_t> output;
+            Client::LocalPattern<float64_t> outputBeta;
 
             Client::LocalPattern<float64_t> outputll;
             Client::LocalPattern<float64_t> outputd;
             Client::LocalPattern<int16_t> outputp;
+
+            Client::LocalPattern<float64_t> outputTau;
+            Client::LocalPattern<float64_t> outputR;
+            Client::LocalPattern<float64_t> outputQ;
 
             /* Local copies of inputs since matrix instance in CMSIS-DSP are not using
                pointers to const.
@@ -52,6 +62,8 @@ class UnaryTestsF64:public Client::Suite
 
             arm_matrix_instance_f64 outll;
             arm_matrix_instance_f64 outd;
+            arm_matrix_instance_f64 outQ;
+            arm_matrix_instance_f64 outR;
 
             float64_t *outa;   
             float64_t *outb;

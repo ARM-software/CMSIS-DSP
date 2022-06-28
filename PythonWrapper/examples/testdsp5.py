@@ -431,12 +431,12 @@ ref = sa
 res = dsp.arm_copy_f64(sa)
 assert_allclose(ref,res,1e-10,1e-10)
 
-print("arm_div_q63_to_q31")
+print("arm_div_int64_to_int32")
 den=0x7FFF00000000 
 num=0x10000
 ref=den//num
 
-res=dsp.arm_div_q63_to_q31(den,num)
+res=dsp.arm_div_int64_to_int32(den,num)
 print(ref)
 print(res)
 

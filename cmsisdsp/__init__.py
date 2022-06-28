@@ -19,7 +19,7 @@ from cmsisdsp_svm import *
 __version__ = cmsisdsp.version.__version__
 
 # CMSIS-DSP Version used to build the wrapper
-cmsis_dsp_version="1.10.0"
+cmsis_dsp_version="1.10.2"
 
 
 # CMSIS-DSP Commit hash used to build the wrapper
@@ -30,3 +30,7 @@ commit_hash="d9cfca31b66fe837a603ed3520cb6a7947e86ca6"
 developmentVersion=True
 
 __all__ = ["datatype", "fixedpoint", "mfcc"]
+
+# Default values
+DEFAULT_HOUSEHOLDER_THRESHOLD_F64=1.0e-16
+DEFAULT_HOUSEHOLDER_THRESHOLD_F32=1.0e-12

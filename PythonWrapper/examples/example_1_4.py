@@ -31,7 +31,7 @@ y = np.sin(angles)
 
 vals=list(zip(y,x))
 
-printSubTitle("Atan2 Referebce")
+printSubTitle("Atan2 Reference")
 ref=np.array([np.arctan2(yv,xv) for (yv,xv) in vals])/math.pi*180
 print(ref)
 

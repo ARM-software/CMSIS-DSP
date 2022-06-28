@@ -56,6 +56,18 @@ extern "C"
   }                                     \
 }
 
+#define COPY_COL_T(T,A,ROW,COL,DST)               \
+{                                                 \
+    uint32_t row;                                 \
+    T *pb=DST;                                    \
+    T *pa = (A)->pData + ROW * (A)->numCols + COL;\
+    for(row = ROW; row < (A)->numRows; row ++)    \
+    {                                             \
+         *pb++ = *pa;                             \
+         pa += (A)->numCols;                      \
+    }                                             \
+}
+
 #if defined(ARM_FLOAT16_SUPPORTED)
 #if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 
@@ -145,6 +157,7 @@ extern "C"
 
 #else
 
+
 #define SWAP_ROWS_F16(A,COL,i,j)       \
 {                                      \
   int32_t w;                           \
@@ -217,6 +230,9 @@ extern "C"
 
 #endif /*defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)*/
 
+/* Functions with only a scalar version */
+#define COPY_COL_F16(A,ROW,COL,DST) \
+  COPY_COL_T(float16_t,A,ROW,COL,DST)
 
 #define SCALE_COL_F16(A,ROW,v,i)        \
   SCALE_COL_T(float16_t,(_Float16),A,ROW,v,i)
@@ -504,6 +520,15 @@ extern "C"
 }
 
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
+
+
+/* Functions with only a scalar version */
+
+#define COPY_COL_F32(A,ROW,COL,DST) \
+  COPY_COL_T(float32_t,A,ROW,COL,DST)
+
+#define COPY_COL_F64(A,ROW,COL,DST) \
+  COPY_COL_T(float64_t,A,ROW,COL,DST)
 
 #define SWAP_COLS_F32(A,COL,i,j)               \
 {                                              \

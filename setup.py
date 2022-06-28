@@ -132,7 +132,7 @@ interpolationMod = interpolation + common
 filteringMod = filtering + common + support + fastmath + basic
 controllerMod = controller + common
 
-matrixMod = matrix 
+matrixMod = matrix + basic
 supportMod = support 
 complexfMod = complexf + fastmath + common + basic
 basicMod = basic
@@ -243,7 +243,12 @@ def build():
 
   setup (name = 'cmsisdsp',
          version = main_ns['__version__'],
-         packages=["cmsisdsp","cmsisdsp.sdf","cmsisdsp.sdf.nodes","cmsisdsp.sdf.nodes.host","cmsisdsp.sdf.scheduler"],
+         packages=["cmsisdsp",
+                   "cmsisdsp.sdf",
+                   "cmsisdsp.sdf.nodes",
+                   "cmsisdsp.sdf.nodes.host",
+                   "cmsisdsp.sdf.scheduler",
+                   "cmsisdsp.sdf.scheduler.templates"],
          description = 'CMSIS-DSP Python API',
          long_description=open("PythonWrapper_README.md").read(),
          long_description_content_type='text/markdown',
@@ -281,7 +286,7 @@ def build():
                 "Environment :: Console",
                 "Intended Audience :: Developers",
           ],
-          keywords=['development','dsp','cmsis','cmsis-dsp','Arm','signal processing','maths'],
+          keywords=['development','dsp','cmsis','cmsis-dsp','Arm','signal processing','maths','ml','cortex-m','cortex-a'],
           install_requires=['numpy>=1.19',
           'networkx>=2.5',
           'jinja2>= 2.0, <3.0',
@@ -289,8 +294,8 @@ def build():
           'markupsafe<2.1'
           ],
           project_urls={  # Optional
-             'Bug Reports': 'https://github.com/ARM-software/CMSIS_5/issues',
-             'Source': 'https://github.com/ARM-software/CMSIS_5/tree/develop/CMSIS/DSP',
+             'Bug Reports': 'https://github.com/ARM-software/CMSIS-DSP/issues',
+             'Source': 'https://github.com/ARM-software/CMSIS-DSP',
             }
           )
        

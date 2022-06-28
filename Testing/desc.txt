@@ -3282,7 +3282,7 @@ group Root {
                 Pattern INPUTSINV_F32_ID : InputInvert1_f32.txt 
                 Pattern DIMSUNARY1_S16_ID : DimsUnary1_s16.txt 
                 Pattern DIMSINVERT1_S16_ID : DimsInvert1_s16.txt 
-                
+
                 Pattern REFADD1_F32_ID : RefAdd1_f32.txt
                 Pattern REFSUB1_F32_ID : RefSub1_f32.txt
                 Pattern REFSCALE1_F32_ID : RefScale1_f32.txt
@@ -3321,6 +3321,17 @@ group Root {
                 Pattern REF_LT_SOLVE_F32_ID : RefLTSolve1_f32.txt
                 Pattern REF_UT_SOLVE_F32_ID : RefUTSolve1_f32.txt
 
+                Pattern INPUTS_QR_F32_ID : InputMatrixQR1_f32.txt 
+                Pattern DIMS_QR_S16_ID : DimsQR1_s16.txt
+                Pattern REF_QR_TAU_F32_ID : RefTau1_f32.txt
+                Pattern REF_QR_R_F32_ID : RefR1_f32.txt
+                Pattern REF_QR_Q_F32_ID : RefQ1_f32.txt
+
+                Pattern INPUTS_HOUSEHOLDER_F32_ID : InputVectorHouseHolder1_f32.txt
+                Pattern DIMS_HOUSEHOLDER_S16_ID : DimsHouseholder1_s16.txt
+                Pattern REF_HOUSEHOLDER_V_F32_ID : RefVectorHouseholder1_f32.txt
+                Pattern REF_HOUSEHOLDER_BETA_F32_ID : RefValueHouseholder1_f32.txt
+
 
                 Output  D_F32_ID : Output
                 Output  LL_F32_ID : Output
@@ -3351,6 +3362,8 @@ group Root {
                  test solve lower triangular:test_solve_lower_triangular_f32
                  test matrix LDL decomposition DPO:test_mat_ldl_f32
                  test matrix LDL decomposition SDPO:test_mat_ldl_f32
+                 test householder:test_householder_f32
+                 test QR decomposition:test_mat_qr_f32
                 }
 
               }
@@ -3505,6 +3518,18 @@ group Root {
                 Pattern REF_LT_SOLVE_F64_ID : RefLTSolve1_f64.txt
                 Pattern REF_UT_SOLVE_F64_ID : RefUTSolve1_f64.txt
 
+                Pattern INPUTS_QR_F64_ID : InputMatrixQR1_f64.txt 
+                Pattern DIMS_QR_S16_ID : DimsQR1_s16.txt
+                Pattern REF_QR_TAU_F64_ID : RefTau1_f64.txt
+                Pattern REF_QR_R_F64_ID : RefR1_f64.txt
+                Pattern REF_QR_Q_F64_ID : RefQ1_f64.txt
+
+                Pattern INPUTS_HOUSEHOLDER_F64_ID : InputVectorHouseHolder1_f64.txt
+                Pattern DIMS_HOUSEHOLDER_S16_ID : DimsHouseholder1_s16.txt
+                Pattern REF_HOUSEHOLDER_V_F64_ID : RefVectorHouseholder1_f64.txt
+                Pattern REF_HOUSEHOLDER_BETA_F64_ID : RefValueHouseholder1_f64.txt
+
+
                 Output  D_F64_ID : Output
                 Output  LL_F64_ID : Output
                 Output  PERM_S16_ID : Output
@@ -3533,6 +3558,8 @@ group Root {
                  test solve lower triangular:test_solve_lower_triangular_f64
                  test matrix LDL decomposition DPO:test_mat_ldl_f64
                  test matrix LDL decomposition SDPO:test_mat_ldl_f64
+                 test householder:test_householder_f64
+                 test QR decomposition:test_mat_qr_f64
                 }
 
               }

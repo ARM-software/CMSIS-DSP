@@ -72,3 +72,7 @@
 #include "arm_mat_solve_lower_triangular_f64.c"
 #include "arm_mat_ldlt_f32.c"
 #include "arm_mat_ldlt_f64.c"
+#include "arm_mat_qr_f32.c"
+#include "arm_mat_qr_f64.c"
+#include "arm_householder_f64.c"
+#include "arm_householder_f32.c"

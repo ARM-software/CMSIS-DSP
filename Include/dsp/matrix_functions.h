@@ -109,6 +109,9 @@ extern "C"
  * return <code>ARM_MATH_SUCCESS</code>.
  */
 
+  #define DEFAULT_HOUSEHOLDER_THRESHOLD_F64 (1.0e-16)
+  #define DEFAULT_HOUSEHOLDER_THRESHOLD_F32 (1.0e-12f)
+
   /**
    * @brief Instance structure for the floating-point matrix structure.
    */
@@ -749,6 +752,88 @@ void arm_mat_init_f32(
   arm_matrix_instance_f64 * l,
   arm_matrix_instance_f64 * d,
   uint16_t * pp);
+
+/**
+  @brief         QR decomposition of a m x n floating point matrix with m >= n.
+  @param[in]     pSrc      points to input matrix structure. The source matrix is modified by the function.
+  @param[in]     threshold norm2 threshold.
+  @param[out]    pOutR     points to output R matrix structure of dimension m x n
+  @param[out]    pOutQ     points to output Q matrix structure of dimension m x m
+  @param[out]    pOutTau   points to Householder scaling factors of dimension n
+  @param[inout]  pTmpA     points to a temporary vector of dimension m.
+  @param[inout]  pTmpB     points to a temporary vector of dimension n.
+  @return        execution status
+                   - \ref ARM_MATH_SUCCESS       : Operation successful
+                   - \ref ARM_MATH_SIZE_MISMATCH : Matrix size check failed
+                   - \ref ARM_MATH_SINGULAR      : Input matrix is found to be singular (non-invertible)
+ */
+
+arm_status arm_mat_qr_f32(
+    const arm_matrix_instance_f32 * pSrc,
+    const float32_t threshold,
+    arm_matrix_instance_f32 * pOutR,
+    arm_matrix_instance_f32 * pOutQ,
+    float32_t * pOutTau,
+    float32_t *pTmpA,
+    float32_t *pTmpB
+    );
+
+/**
+  @brief         QR decomposition of a m x n floating point matrix with m >= n.
+  @param[in]     pSrc      points to input matrix structure. The source matrix is modified by the function.
+  @param[in]     threshold norm2 threshold.  
+  @param[out]    pOutR     points to output R matrix structure of dimension m x n
+  @param[out]    pOutQ     points to output Q matrix structure of dimension m x m
+  @param[out]    pOutTau   points to Householder scaling factors of dimension n
+  @param[inout]  pTmpA     points to a temporary vector of dimension m.
+  @param[inout]  pTmpB     points to a temporary vector of dimension n.
+  @return        execution status
+                   - \ref ARM_MATH_SUCCESS       : Operation successful
+                   - \ref ARM_MATH_SIZE_MISMATCH : Matrix size check failed
+                   - \ref ARM_MATH_SINGULAR      : Input matrix is found to be singular (non-invertible)
+ */
+
+arm_status arm_mat_qr_f64(
+    const arm_matrix_instance_f64 * pSrc,
+    const float64_t threshold,
+    arm_matrix_instance_f64 * pOutR,
+    arm_matrix_instance_f64 * pOutQ,
+    float64_t * pOutTau,
+    float64_t *pTmpA,
+    float64_t *pTmpB
+    );
+
+/**
+  @brief         Householder transform of a floating point vector.
+  @param[in]     pSrc        points to the input vector.
+  @param[in]     threshold   norm2 threshold.
+  @param[in]     blockSize   dimension of the vector space.
+  @param[outQ]   pOut        points to the output vector.
+  @return        beta        return the scaling factor beta
+ */
+
+float32_t arm_householder_f32(
+    const float32_t * pSrc,
+    const float32_t threshold,
+    uint32_t    blockSize,
+    float32_t * pOut
+    );
+
+/**
+  @brief         Householder transform of a double floating point vector.
+  @param[in]     pSrc        points to the input vector.
+  @param[in]     threshold   norm2 threshold.
+  @param[in]     blockSize   dimension of the vector space.
+  @param[outQ]   pOut        points to the output vector.
+  @return        beta        return the scaling factor beta
+ */
+
+float64_t arm_householder_f64(
+    const float64_t * pSrc,
+    const float64_t threshold,
+    uint32_t    blockSize,
+    float64_t * pOut
+    );
 
 #ifdef   __cplusplus
 }

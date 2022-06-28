@@ -179,83 +179,77 @@ Method_##NAME##_##FIELD(dsp_##NAME##Object *self, PyObject *ignored)\
 
 void capsule_cleanup(PyObject *capsule) {
     void *memory = PyCapsule_GetPointer(capsule, "cmsisdsp capsule");
-    // I'm going to assume your memory needs to be freed with free().
-    // If it needs different cleanup, perform whatever that cleanup is
-    // instead of calling free().
     PyMem_Free(memory);
 }
 
 #define FLOATARRAY2(OBJ,NB1,NB2,DATA)                                                       \
-    npy_intp dims[2];                                                                       \
-    dims[0]=NB1;                                                                            \
-    dims[1]=NB2;                                                                            \
-    const int ND=2;                                                                         \
-    PyArrayObject *OBJ=(PyArrayObject*)PyArray_SimpleNewFromData(ND, dims, NPY_FLOAT, DATA);\
-    PyObject *capsule = PyCapsule_New(DATA, "cmsisdsp capsule",capsule_cleanup);                       \
-    PyArray_SetBaseObject(OBJ, capsule);
+    npy_intp dims##OBJ[2];                                                                       \
+    dims##OBJ[0]=NB1;                                                                            \
+    dims##OBJ[1]=NB2;                                                                            \
+    const int ND##OBJ=2;                                                                         \
+    PyArrayObject *OBJ=(PyArrayObject*)PyArray_SimpleNewFromData(ND##OBJ, dims##OBJ, NPY_FLOAT, DATA);\
+    PyObject *capsule##OBJ = PyCapsule_New(DATA, "cmsisdsp capsule",capsule_cleanup);                       \
+    PyArray_SetBaseObject(OBJ, capsule##OBJ);
 
 #define FLOATARRAY1(OBJ,NB1,DATA)                                                                     \
     npy_intp dims##OBJ[1];                                                                            \
     dims##OBJ[0]=NB1;                                                                                 \
     const int ND##OBJ=1;                                                                              \
     PyArrayObject *OBJ=(PyArrayObject*)PyArray_SimpleNewFromData(ND##OBJ, dims##OBJ, NPY_FLOAT, DATA);\
-    PyObject *capsule = PyCapsule_New(DATA, "cmsisdsp capsule",capsule_cleanup);                       \
-    PyArray_SetBaseObject(OBJ, capsule);
+    PyObject *capsule##OBJ = PyCapsule_New(DATA, "cmsisdsp capsule",capsule_cleanup);                       \
+    PyArray_SetBaseObject(OBJ, capsule##OBJ);
 
 #define FLOAT64ARRAY1(OBJ,NB1,DATA)                                                          \
-    npy_intp dims[1];                                                                        \
-    dims[0]=NB1;                                                                             \
-    const int ND=1;                                                                          \
-    PyArrayObject *OBJ=(PyArrayObject*)PyArray_SimpleNewFromData(ND, dims, NPY_DOUBLE, DATA);\
-    PyObject *capsule = PyCapsule_New(DATA, "cmsisdsp capsule",capsule_cleanup);                       \
-    PyArray_SetBaseObject(OBJ, capsule);
+    npy_intp dims##OBJ[1];                                                                        \
+    dims##OBJ[0]=NB1;                                                                             \
+    const int ND##OBJ=1;                                                                          \
+    PyArrayObject *OBJ=(PyArrayObject*)PyArray_SimpleNewFromData(ND##OBJ, dims##OBJ, NPY_DOUBLE, DATA);\
+    PyObject *capsule##OBJ = PyCapsule_New(DATA, "cmsisdsp capsule",capsule_cleanup);                       \
+    PyArray_SetBaseObject(OBJ, capsule##OBJ);
 
 #define UINT32ARRAY1(OBJ,NB1,DATA)                                                           \
-    npy_intp dims[1];                                                                        \
-    dims[0]=NB1;                                                                             \
-    const int ND=1;                                                                          \
-    PyArrayObject *OBJ=(PyArrayObject*)PyArray_SimpleNewFromData(ND, dims, NPY_UINT32, DATA);\
-    PyObject *capsule = PyCapsule_New(DATA, "cmsisdsp capsule",capsule_cleanup);                       \
-    PyArray_SetBaseObject(OBJ, capsule);
+    npy_intp dims##OBJ[1];                                                                        \
+    dims##OBJ[0]=NB1;                                                                             \
+    const int ND##OBJ=1;                                                                          \
+    PyArrayObject *OBJ=(PyArrayObject*)PyArray_SimpleNewFromData(ND##OBJ, dims##OBJ, NPY_UINT32, DATA);\
+    PyObject *capsule##OBJ = PyCapsule_New(DATA, "cmsisdsp capsule",capsule_cleanup);                       \
+    PyArray_SetBaseObject(OBJ, capsule##OBJ);
 
 #define INT32ARRAY1(OBJ,NB1,DATA)                                                           \
-    npy_intp dims[1];                                                                       \
-    dims[0]=NB1;                                                                            \
-    const int ND=1;                                                                         \
-    PyArrayObject *OBJ=(PyArrayObject*)PyArray_SimpleNewFromData(ND, dims, NPY_INT32, DATA);\
-    PyObject *capsule = PyCapsule_New(DATA, "cmsisdsp capsule",capsule_cleanup);                       \
-    PyArray_SetBaseObject(OBJ, capsule);
+    npy_intp dims##OBJ[1];                                                                       \
+    dims##OBJ[0]=NB1;                                                                            \
+    const int ND##OBJ=1;                                                                         \
+    PyArrayObject *OBJ=(PyArrayObject*)PyArray_SimpleNewFromData(ND##OBJ, dims##OBJ, NPY_INT32, DATA);\
+    PyObject *capsule##OBJ = PyCapsule_New(DATA, "cmsisdsp capsule",capsule_cleanup);                       \
+    PyArray_SetBaseObject(OBJ, capsule##OBJ);
 
 #define INT16ARRAY1(OBJ,NB1,DATA)                                                           \
-    npy_intp dims[1];                                                                       \
-    dims[0]=NB1;                                                                            \
-    const int ND=1;                                                                         \
-    PyArrayObject *OBJ=(PyArrayObject*)PyArray_SimpleNewFromData(ND, dims, NPY_INT16, DATA);\
-    PyObject *capsule = PyCapsule_New(DATA, "cmsisdsp capsule",capsule_cleanup);                       \
-    PyArray_SetBaseObject(OBJ, capsule);
+    npy_intp dims##OBJ[1];                                                                       \
+    dims##OBJ[0]=NB1;                                                                            \
+    const int ND##OBJ=1;                                                                         \
+    PyArrayObject *OBJ=(PyArrayObject*)PyArray_SimpleNewFromData(ND##OBJ, dims##OBJ, NPY_INT16, DATA);\
+    PyObject *capsule##OBJ = PyCapsule_New(DATA, "cmsisdsp capsule",capsule_cleanup);                       \
+    PyArray_SetBaseObject(OBJ, capsule##OBJ);
 
 #define INT8ARRAY1(OBJ,NB1,DATA)                                                           \
-    npy_intp dims[1];                                                                      \
-    dims[0]=NB1;                                                                           \
-    const int ND=1;                                                                        \
-    PyArrayObject *OBJ=(PyArrayObject*)PyArray_SimpleNewFromData(ND, dims, NPY_BYTE, DATA);\
-    PyObject *capsule = PyCapsule_New(DATA, "cmsisdsp capsule",capsule_cleanup);                       \
-    PyArray_SetBaseObject(OBJ, capsule);
+    npy_intp dims##OBJ[1];                                                                      \
+    dims##OBJ[0]=NB1;                                                                           \
+    const int ND##OBJ=1;                                                                        \
+    PyArrayObject *OBJ=(PyArrayObject*)PyArray_SimpleNewFromData(ND##OBJ, dims##OBJ, NPY_BYTE, DATA);\
+    PyObject *capsule##OBJ = PyCapsule_New(DATA, "cmsisdsp capsule",capsule_cleanup);                       \
+    PyArray_SetBaseObject(OBJ, capsule##OBJ);
 
 #define TYP_ARRAY1(OBJ,NB1,DATA,NPYTYPE)                                                  \
-    npy_intp dims[1];                                                                     \
-    dims[0]=NB1;                                                                          \
-    const int ND=1;                                                                       \
-    PyArrayObject *OBJ=(PyArrayObject*)PyArray_SimpleNewFromData(ND, dims, NPYTYPE, DATA);\
-    PyObject *capsule = PyCapsule_New(DATA, "cmsisdsp capsule",capsule_cleanup);                       \
-    PyArray_SetBaseObject(OBJ, capsule);
+    npy_intp dims##OBJ[1];                                                                     \
+    dims##OBJ[0]=NB1;                                                                          \
+    const int ND##OBJ=1;                                                                       \
+    PyArrayObject *OBJ=(PyArrayObject*)PyArray_SimpleNewFromData(ND##OBJ, dims##OBJ, NPYTYPE, DATA);\
+    PyObject *capsule##OBJ = PyCapsule_New(DATA, "cmsisdsp capsule",capsule_cleanup);                       \
+    PyArray_SetBaseObject(OBJ, capsule##OBJ);
 
 #define MATRIXFROMNUMPY(EXT,TYP,SRCTYPE,NUMPYTYPE)                                   \
-arm_matrix_instance_##EXT *EXT##MatrixFromNumpy(PyObject *o)                   \
+void EXT##MatrixFromNumpy(arm_matrix_instance_##EXT *s,PyObject *o)                   \
 {                                                                            \
-    arm_matrix_instance_##EXT *s;                                              \
-                                                                             \
-    s=PyMem_Malloc(sizeof(arm_matrix_instance_##EXT));                               \
     s->pData=NULL;                                                           \
     s->numRows=0;                                                            \
     s->numCols=0;                                                            \
@@ -277,25 +271,21 @@ arm_matrix_instance_##EXT *EXT##MatrixFromNumpy(PyObject *o)                   \
     }                                                                        \
                                                                              \
                                                                              \
-    return(s);                                                               \
                                                                              \
 }
 
 
 
 #define CREATEMATRIX(EXT,TYP)                                        \
-arm_matrix_instance_##EXT *create##EXT##Matrix(uint32_t r,uint32_t c)\
+void create##EXT##Matrix(arm_matrix_instance_##EXT *s,uint32_t r,uint32_t c)\
 {                                                                    \
-    arm_matrix_instance_##EXT *s;                                      \
                                                                      \
-    s=PyMem_Malloc(sizeof(arm_matrix_instance_##EXT));                     \
     s->pData=PyMem_Malloc(sizeof(TYP)*r*c);                                \
     s->numRows=r;                                                    \
     s->numCols=c;                                                    \
-    return(s);                                                       \
 }
 
-
+#define FREEMATRIX(s) PyMem_Free((s)->pData)
 
 #define NUMPYVECTORFROMBUFFER(EXT,CTYPE,NUMPYTYPE_FROMC)                                          \
 PyObject *NumpyVectorFrom##EXT##Buffer(CTYPE *ptr,int nb)                                         \

@@ -15,6 +15,16 @@ a double precision computation.
 
 /*
 
+Comparisons for QR
+
+*/
+
+#define SNR_QR_THRESHOLD 20
+#define REL_QR_ERROR (3.0e-2)
+#define ABS_QR_ERROR (3.0e-2)
+
+/*
+
 Comparisons for inverse
 
 */
@@ -153,6 +163,122 @@ Comparison for Cholesky
       memcpy((void*)bp,(const void*)inp2,sizeof(float16_t)*internal);
                             
 
+static void checkInnerTailOverflow(float16_t *b)
+{
+    ASSERT_TRUE(b[0] == 0);
+    ASSERT_TRUE(b[1] == 0);
+    ASSERT_TRUE(b[2] == 0);
+    ASSERT_TRUE(b[3] == 0);
+    ASSERT_TRUE(b[4] == 0);
+    ASSERT_TRUE(b[5] == 0);
+    ASSERT_TRUE(b[6] == 0);
+    ASSERT_TRUE(b[7] == 0);
+}
+
+
+void UnaryTestsF16::test_householder_f16()
+{
+   int16_t vecDim;
+   const int16_t *dimsp = dims.ptr();          
+   const int nbVectors = dims.nbSamples();
+   const float16_t *inp1=input1.ptr(); 
+
+   float16_t *outp=output.ptr();   
+   float16_t *outBetap=outputBeta.ptr();  
+
+
+   for(int i=0; i < nbVectors ; i++)
+   {
+      vecDim = *dimsp++;
+
+      float16_t beta = arm_householder_f16(inp1,DEFAULT_HOUSEHOLDER_THRESHOLD_F16,vecDim,outp);
+      *outBetap = beta; 
+
+      outp += vecDim;
+      inp1 += vecDim;
+      outBetap++;
+      checkInnerTailOverflow(outp);
+      checkInnerTailOverflow(outBetap);
+
+   }
+
+   ASSERT_EMPTY_TAIL(output);
+   ASSERT_EMPTY_TAIL(outputBeta);
+
+   ASSERT_SNR(output,ref,(float16_t)SNR_THRESHOLD);
+   ASSERT_SNR(outputBeta,refBeta,(float16_t)SNR_THRESHOLD);
+
+   ASSERT_CLOSE_ERROR(output,ref,ABS_ERROR,REL_ERROR);
+   ASSERT_CLOSE_ERROR(outputBeta,refBeta,ABS_ERROR,REL_ERROR);
+
+  
+}
+
+void UnaryTestsF16::test_mat_qr_f16()
+{
+   int16_t rows, columns, rank;
+   const int16_t *dimsp = dims.ptr();          
+   const int nbMatrixes = dims.nbSamples() / 3;
+   const float16_t *inp1=input1.ptr(); 
+
+   float16_t *outTaup=outputTau.ptr();
+   float16_t *outRp=outputR.ptr(); 
+   float16_t *outQp=outputQ.ptr();  
+   float16_t *pTmpA=a.ptr();  
+   float16_t *pTmpB=b.ptr();  
+
+   (void) outTaup;
+   (void) outRp; 
+
+   for(int i=0; i < nbMatrixes ; i++)
+   {
+      rows = *dimsp++;
+      columns = *dimsp++;
+      rank = *dimsp++;
+      (void)rank;
+
+
+      in1.numRows=rows;
+      in1.numCols=columns;
+      in1.pData = (float16_t*)inp1;
+
+     
+      outR.numRows = rows;
+      outR.numCols = columns;
+      outR.pData = (float16_t*)outRp;
+
+      outQ.numRows = rows;
+      outQ.numCols = rows;
+      outQ.pData = (float16_t*)outQp;
+
+      arm_status status=arm_mat_qr_f16(&in1,DEFAULT_HOUSEHOLDER_THRESHOLD_F16,&outR,&outQ,outTaup,pTmpA,pTmpB);
+      ASSERT_TRUE(status==ARM_MATH_SUCCESS);
+
+
+      inp1 += rows * columns;
+      outRp += rows * columns;
+      outQp += rows * rows;
+      outTaup += columns;
+
+      checkInnerTailOverflow(outRp);
+      checkInnerTailOverflow(outQp);
+      checkInnerTailOverflow(outTaup);
+
+
+   }
+
+   ASSERT_EMPTY_TAIL(outputR);
+   ASSERT_EMPTY_TAIL(outputQ);
+   ASSERT_EMPTY_TAIL(outputTau);
+
+   //ASSERT_SNR(refQ,outputQ,(float16_t)SNR_QR_THRESHOLD);
+   //ASSERT_SNR(refR,outputR,(float16_t)SNR_QR_THRESHOLD);
+   //ASSERT_SNR(refTau,outputTau,(float16_t)SNR_QR_THRESHOLD);
+
+   ASSERT_CLOSE_ERROR(refQ,outputQ,ABS_QR_ERROR,REL_QR_ERROR);
+   ASSERT_CLOSE_ERROR(refR,outputR,ABS_QR_ERROR,REL_QR_ERROR);
+   ASSERT_CLOSE_ERROR(refTau,outputTau,ABS_QR_ERROR,REL_QR_ERROR);
+}
 
 void UnaryTestsF16::test_mat_vec_mult_f16()
     {     
@@ -601,6 +727,34 @@ void UnaryTestsF16::test_mat_inverse_f16()
             output.create(ref.nbSamples(),UnaryTestsF16::OUT_F16_ID,mgr);
             a.create(MAXMATRIXDIM*MAXMATRIXDIM,UnaryTestsF16::TMPA_F16_ID,mgr);
             b.create(MAXMATRIXDIM*MAXMATRIXDIM,UnaryTestsF16::TMPB_F16_ID,mgr);
+         break;
+
+         case TEST_HOUSEHOLDER_F16_11:
+            input1.reload(UnaryTestsF16::INPUTS_HOUSEHOLDER_F16_ID,mgr);
+            dims.reload(UnaryTestsF16::DIMS_HOUSEHOLDER_S16_ID,mgr);
+            ref.reload(UnaryTestsF16::REF_HOUSEHOLDER_V_F16_ID,mgr);
+            refBeta.reload(UnaryTestsF16::REF_HOUSEHOLDER_BETA_F16_ID,mgr);
+
+
+            output.create(ref.nbSamples(),UnaryTestsF16::TMPA_F16_ID,mgr);
+            outputBeta.create(refBeta.nbSamples(),UnaryTestsF16::TMPB_F16_ID,mgr);
+         break;
+
+
+         case TEST_MAT_QR_F16_12:
+            input1.reload(UnaryTestsF16::INPUTS_QR_F16_ID,mgr);
+            dims.reload(UnaryTestsF16::DIMS_QR_S16_ID,mgr);
+            refTau.reload(UnaryTestsF16::REF_QR_TAU_F16_ID,mgr);
+            refR.reload(UnaryTestsF16::REF_QR_R_F16_ID,mgr);
+            refQ.reload(UnaryTestsF16::REF_QR_Q_F16_ID,mgr);
+
+
+            outputTau.create(refTau.nbSamples(),UnaryTestsF16::TMPA_F16_ID,mgr);
+            outputR.create(refR.nbSamples(),UnaryTestsF16::TMPB_F16_ID,mgr);
+            outputQ.create(refQ.nbSamples(),UnaryTestsF16::TMPC_F16_ID,mgr);
+
+            a.create(47,UnaryTestsF16::TMPC_F16_ID,mgr);
+            b.create(47,UnaryTestsF16::TMPD_F16_ID,mgr);
          break;
       }
        

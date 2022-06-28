@@ -934,7 +934,7 @@ cmsis_arm_weighted_sum_f32(PyObject *obj, PyObject *args)
 }
 
 static PyObject *
-cmsis_arm_div_q63_to_q31(PyObject *obj, PyObject *args)
+cmsis_arm_div_int64_to_int32(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrc=NULL; // input
@@ -946,7 +946,7 @@ cmsis_arm_div_q63_to_q31(PyObject *obj, PyObject *args)
   {
 
     
-    result=arm_div_q63_to_q31(num,den);
+    result=arm_div_int64_to_int32(num,den);
 
     PyObject* resultOBJ=Py_BuildValue("l",result);
 
@@ -962,7 +962,7 @@ cmsis_arm_div_q63_to_q31(PyObject *obj, PyObject *args)
 
 static PyMethodDef CMSISDSPMethods[] = {
 
-{"arm_div_q63_to_q31",  cmsis_arm_div_q63_to_q31, METH_VARARGS,""},
+{"arm_div_int64_to_int32",  cmsis_arm_div_int64_to_int32, METH_VARARGS,""},
 {"arm_copy_f64",  cmsis_arm_copy_f64, METH_VARARGS,""},
 {"arm_copy_f32",  cmsis_arm_copy_f32, METH_VARARGS,""},
 {"arm_copy_q7",  cmsis_arm_copy_q7, METH_VARARGS,""},

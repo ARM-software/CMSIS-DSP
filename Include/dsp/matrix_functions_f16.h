@@ -41,6 +41,8 @@ extern "C"
     
 #if defined(ARM_FLOAT16_SUPPORTED)
 
+  #define DEFAULT_HOUSEHOLDER_THRESHOLD_F16 (1.0e-3f)
+
  /**
    * @brief Instance structure for the floating-point matrix structure.
    */
@@ -212,6 +214,46 @@ void arm_mat_init_f16(
   arm_matrix_instance_f16 * dst);
 
 
+/**
+  @brief         QR decomposition of a m x n floating point matrix with m >= n.
+  @param[in]     pSrc      points to input matrix structure. The source matrix is modified by the function.
+  @param[in]     threshold norm2 threshold.  
+  @param[out]    pOutR     points to output R matrix structure of dimension m x n
+  @param[out]    pOutQ     points to output Q matrix structure of dimension m x m
+  @param[out]    pOutTau   points to Householder scaling factors of dimension n
+  @param[inout]  pTmpA     points to a temporary vector of dimension m.
+  @param[inout]  pTmpB     points to a temporary vector of dimension n.
+  @return        execution status
+                   - \ref ARM_MATH_SUCCESS       : Operation successful
+                   - \ref ARM_MATH_SIZE_MISMATCH : Matrix size check failed
+                   - \ref ARM_MATH_SINGULAR      : Input matrix is found to be singular (non-invertible)
+ */
+
+arm_status arm_mat_qr_f16(
+    const arm_matrix_instance_f16 * pSrc,
+    const float16_t threshold,
+    arm_matrix_instance_f16 * pOutR,
+    arm_matrix_instance_f16 * pOutQ,
+    float16_t * pOutTau,
+    float16_t *pTmpA,
+    float16_t *pTmpB
+    );
+
+/**
+  @brief         Householder transform of a half floating point vector.
+  @param[in]     pSrc        points to the input vector.
+  @param[in]     threshold   norm2 threshold.  
+  @param[in]     blockSize   dimension of the vector space.
+  @param[outQ]   pOut        points to the output vector.
+  @return        beta        return the scaling factor beta
+ */
+
+float16_t arm_householder_f16(
+    const float16_t * pSrc,
+    const float16_t threshold,
+    uint32_t    blockSize,
+    float16_t * pOut
+    );
 
 #endif /*defined(ARM_FLOAT16_SUPPORTED)*/
 #ifdef   __cplusplus

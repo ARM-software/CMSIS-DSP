@@ -5,7 +5,6 @@ project(CMSISDSP)
 # DSP Sources
 SET(DSP ${CMAKE_CURRENT_SOURCE_DIR}/..)
 
-
 option(NEON "Neon acceleration" OFF)
 option(NEONEXPERIMENTAL "Neon experimental acceleration" OFF)
 option(HELIUMEXPERIMENTAL "Helium experimental acceleration" OFF)

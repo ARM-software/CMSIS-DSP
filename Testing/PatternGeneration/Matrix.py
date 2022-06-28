@@ -5,6 +5,7 @@ import Tools
 import numpy.linalg
 import math
 import scipy.linalg
+import QR
 
 def cartesian(*somelists):
    r=[]
@@ -685,7 +686,6 @@ def notnull(x):
         return(x)
 
 def writeUnaryTests(config,format):
-    config.setOverwrite(False)
     # For benchmarks
     NBSAMPLES=NBA*NBB
     NBVECSAMPLES = NBB
@@ -790,8 +790,7 @@ def writeUnaryTests(config,format):
        dims=[1,2,3,4,7,8,9,15,16,17,32,33]
     #
 
-    if format == Tools.F32 or format == Tools.F16 or format == Tools.F64:
-       config.setOverwrite(True)
+    
     vals = []
     inp=[]
     
@@ -812,7 +811,6 @@ def writeUnaryTests(config,format):
     config.writeInput(1, inp,"InputInvert")
     config.writeReference(1, vals,"RefInvert")
 
-    config.setOverwrite(False)
     # One kind of matrix shape
 
     # Cholesky and LDLT definite positive (DPO)
@@ -916,7 +914,6 @@ def writeUnaryTests(config,format):
     config.writeReferenceS16(1, permvals,"RefLDLT_PERM_SDPO")
 
     # Lower and upper triangular
-    config.setOverwrite(True)
     thedims=[]
     theltmatrix=[] 
     theutmatrix=[] 
@@ -962,10 +959,202 @@ def writeUnaryTests(config,format):
     config.writeReference(1, theltinvs,"RefLTSolve")
     config.writeReference(1, theutinvs,"RefUTSolve")
     config.writeInputS16(1, thedims,"DimsLTSolve")
-    config.setOverwrite(False)
+
+def okQRConfig(args):
+    rows,cols,rank=args
+    maxDim=max(rows,cols)
+    return((rank<=maxDim) and (rows >= cols))
+
+
+
+def testHouseholder(config,format):
+    sizes=[Tools.loopnb(format,Tools.TAILONLY),
+    Tools.loopnb(format,Tools.BODYONLY),
+    Tools.loopnb(format,Tools.BODYANDTAIL)
+    ]
+
+    thedims=[]
+    theInput=[] 
+    theOutputVector=[] 
+    theOutputValue=[]
+
+    for s in sizes:
+        x = np.random.randn(s)
+        x = Tools.normalize(x)
+
+        v,beta=QR.householder(x)
+
+        thedims.append(s)
+        theInput += list(np.array(x).reshape(s))
+        theOutputVector += list(np.array(v).reshape(s))
+        theOutputValue.append(beta)
+
+    s = 4
+    x = np.array([1,0,0,0])
+
+    v,beta=QR.householder(x)
+
+    thedims.append(s)
+    theInput += list(np.array(x).reshape(s))
+    theOutputVector += list(np.array(v).reshape(s))
+    theOutputValue.append(beta)
+
+
+    x = np.array([-1,0,0,0])
+
+    v,beta=QR.householder(x)
+
+    thedims.append(s)
+    theInput += list(np.array(x).reshape(s))
+    theOutputVector += list(np.array(v).reshape(s))
+    theOutputValue.append(beta)
+
+    config.writeInputS16(1, thedims,"DimsHouseholder")
+    config.writeInput(1, theInput,"InputVectorHouseHolder")
+    config.writeReference(1, theOutputVector,"RefVectorHouseholder")
+    config.writeReference(1, theOutputValue,"RefValueHouseholder")
+
+   
+# Check that the matrix is an orthogonal one
+def checkOrtho(A):
+    product = A.T.dot(A)
+    #print(A)
+    np.fill_diagonal(product,0)
+    #print(product)
+    return (np.all(np.abs(product)<1e-10))
+
+# Check the result of the QR algorithm implemented
+# in python.
+# We must have M = Q R and Q orthogonal 
+# In f16, on some mqtrix the accuracy is
+# very bad so the test is relaxed a lot
+def checkMyQR(m,q,r,format):
+    # Check that M = QR
+    # Q is Orthogonal
+    nm = np.dot(q,r)
+    rtol = 1e-14 
+    atol = 1e-13 
+    if format == Tools.F16:
+       rtol = 3e-2 
+       atol = 3e-2 
+    if not (np.allclose(nm,m,rtol=rtol,atol=atol)):
+        print(np.max(np.abs(nm-m)))
+        print(np.max(atol + rtol * np.abs(m)))
+    assert (np.allclose(nm,m,rtol=rtol,atol=atol))
+    assert (checkOrtho(q))
+    
+
+# Generate patterns for QR decomposition
+def testQR(config,format):
+    eps=1e-16 
+    if format==Tools.F32:
+        eps=1e-12
+    if format==Tools.F16:
+        eps=1.0e-3
+    thedims=[]
+    theMatrix=[] 
+    theRefR=[] 
+    theRefQ=[] 
+    theRefTau=[]
+
+    sizes=[Tools.loopnb(format,Tools.TAILONLY),
+    Tools.loopnb(format,Tools.BODYONLY),
+    Tools.loopnb(format,Tools.BODYANDTAIL)
+    ]
+    ranks=[1,Tools.loopnb(format,Tools.TAILONLY),
+    Tools.loopnb(format,Tools.BODYONLY),
+    Tools.loopnb(format,Tools.BODYANDTAIL)]
+
+    allConfigs=cartesian(sizes,sizes,ranks)
+    allConfigs=list(filter(okQRConfig,allConfigs))
+    
+    for c in allConfigs:
+        rows,cols,rank = c
+        thedims += [rows,cols,rank]
+        m = QR.randomIsometry(rows,cols,rank)
+        theMatrix += list(np.array(m).reshape(rows*cols))
+
+        #q,r = numpy.linalg.qr(m,mode='complete')
+        #h,tau = numpy.linalg.qr(m,mode='raw')
+
+        q,r,tau,h = QR.QR(m,eps=eps)
+        # Used to check that the reference Python
+        # implementation for QR is correct:
+        checkMyQR(m,q,r,format)
+
+        #print(r)
+        for i in range(cols):
+            try:
+               r[i+1:,i] = h[i][1:]
+            except:
+                print(h)
+                print(r)
+                print(i)
+                print(r[1:,i]) 
+                print(h[i][1:])
+                raise
+
+        #print(m)
+        #print(h)
+        #print("")
+        #print(r)
+        #print("--------\n\n")
+
+        
+
+        theRefTau += list(np.array(tau).reshape(cols))
+        theRefR += list(np.array(r).reshape(rows*cols))
+        theRefQ += list(np.array(q).reshape(rows*rows))
+
+    for d in sizes:
+        m = QR.kahan_matrix(d)
+        thedims += [d,d,d]
+
+        theMatrix += list(np.array(m).reshape(d*d))
+        #q,r = numpy.linalg.qr(m,mode='complete')
+        #h,tau = numpy.linalg.qr(m,mode='raw')
+        q,r,tau,h = QR.QR(m,eps=eps)
+        # Used to check that the reference Python
+        # implementation for QR is correct:
+        checkMyQR(m,q,r,format)
+
+        for i in range(d):
+            try:
+                r[i+1:,i] = h[i][1:]
+            except:
+                print(h)
+                print(r)
+                print(i)
+                raise
+        theRefTau += list(np.array(tau).reshape(d))
+        theRefR += list(np.array(r).reshape(d*d))
+        theRefQ += list(np.array(q).reshape(d*d))
+
+    config.writeInputS16(1, thedims,"DimsQR")
+    config.writeInput(1, theMatrix,"InputMatrixQR")
+
+    config.writeReference(1, theRefTau,"RefTau")
+    config.writeReference(1, theRefR,"RefR")
+    config.writeReference(1, theRefQ,"RefQ")
+
+   
+
+   
+def checkHouseholder(h):
+    v,beta=h 
+    n = len(v)
+    #print(v)
+    #print(beta)
+    v=v[np.newaxis]
+
+    p=np.identity(n)-beta * v.T .dot(v)
+    #print("P")
+    #print(p)
+    print(checkOrtho(p))
 
 
 def generatePatterns():
+   
     PATTERNBINDIR = os.path.join("Patterns","DSP","Matrix","Binary","Binary")
     PARAMBINDIR = os.path.join("Parameters","DSP","Matrix","Binary","Binary")
     
@@ -984,12 +1173,12 @@ def generatePatterns():
     configBinaryq7.setOverwrite(False)
 
     
-    writeBinaryTests(configBinaryf64,Tools.F32)
-    writeBinaryTests(configBinaryf32,Tools.F32)
-    writeBinaryTests(configBinaryf16,Tools.F16)
-    writeBinaryTests(configBinaryq31,Tools.Q31)
-    writeBinaryTests(configBinaryq15,Tools.Q15)
-    writeBinaryTests(configBinaryq7,Tools.Q7)
+    #writeBinaryTests(configBinaryf64,Tools.F32)
+    #writeBinaryTests(configBinaryf32,Tools.F32)
+    #writeBinaryTests(configBinaryf16,Tools.F16)
+    #writeBinaryTests(configBinaryq31,Tools.Q31)
+    #writeBinaryTests(configBinaryq15,Tools.Q15)
+    #writeBinaryTests(configBinaryq7,Tools.Q7)
     
     PATTERNUNDIR = os.path.join("Patterns","DSP","Matrix","Unary","Unary")
     PARAMUNDIR = os.path.join("Parameters","DSP","Matrix","Unary","Unary")
@@ -1008,13 +1197,29 @@ def generatePatterns():
     configUnaryq15.setOverwrite(False)
     configUnaryq7.setOverwrite(False)
     
-    writeUnaryTests(configUnaryf64,Tools.F64)
-    writeUnaryTests(configUnaryf32,Tools.F32)
-    writeUnaryTests(configUnaryf16,Tools.F16)
-    writeUnaryTests(configUnaryq31,Tools.Q31)
-    writeUnaryTests(configUnaryq31,Tools.Q31)
-    writeUnaryTests(configUnaryq15,Tools.Q15)
-    writeUnaryTests(configUnaryq7,Tools.Q7)
+    #writeUnaryTests(configUnaryf64,Tools.F64)
+    #writeUnaryTests(configUnaryf32,Tools.F32)
+    #writeUnaryTests(configUnaryf16,Tools.F16)
+    #writeUnaryTests(configUnaryq31,Tools.Q31)
+    #writeUnaryTests(configUnaryq31,Tools.Q31)
+    #writeUnaryTests(configUnaryq15,Tools.Q15)
+    #writeUnaryTests(configUnaryq7,Tools.Q7)
+
+    #configUnaryf64.setOverwrite(True)
+    #configUnaryf32.setOverwrite(True)
+    #configUnaryf16.setOverwrite(True)
+    testQR(configUnaryf64,Tools.F64)
+    testQR(configUnaryf32,Tools.F32)
+    testQR(configUnaryf16,Tools.F16)
+    #testHouseholder(configUnaryf64,Tools.F32)
+    #testHouseholder(configUnaryf32,Tools.F32)
+    #testHouseholder(configUnaryf16,Tools.F32)
+
+
+
+
+
+
 
 if __name__ == '__main__':
   generatePatterns()

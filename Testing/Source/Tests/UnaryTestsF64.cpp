@@ -1,7 +1,7 @@
 #include "UnaryTestsF64.h"
 #include "Error.h"
 
-#define SNR_THRESHOLD 120
+#define SNR_THRESHOLD 250
 
 /* 
 
@@ -9,8 +9,26 @@ Reference patterns are generated with
 a double precision computation.
 
 */
-#define REL_ERROR (1.0e-6)
-#define ABS_ERROR (1.0e-5)
+#define REL_ERROR (1.0e-12)
+#define ABS_ERROR (1.0e-12)
+
+/*
+
+Comparisons for householder
+
+*/
+#define SNR_HOUSEHOLDER_THRESHOLD 270
+#define REL_HOUSEHOLDER_ERROR (1.0e-13)
+#define ABS_HOUSEHOLDER_ERROR (1.0e-13)
+
+/*
+
+Comparison for QR decomposition
+
+*/
+#define SNR_QR_THRESHOLD 270
+#define REL_QR_ERROR (1.0e-13)
+#define ABS_QR_ERROR (1.0e-13)
 
 /*
 
@@ -121,11 +139,150 @@ Comparison for Cholesky
      A[j*n + w] = tmp;       \
   }
 
+static void checkInnerTailOverflow(float64_t *b)
+{
+    ASSERT_TRUE(b[0] == 0);
+    ASSERT_TRUE(b[1] == 0);
+}
 
 
 void UnaryTestsF64::test_mat_add_f64()
 {
 
+}
+
+void UnaryTestsF64::test_householder_f64()
+{
+   int64_t vecDim;
+   const int16_t *dimsp = dims.ptr();          
+   const int nbVectors = dims.nbSamples();
+   const float64_t *inp1=input1.ptr(); 
+
+   float64_t *outp=output.ptr();   
+   float64_t *outBetap=outputBeta.ptr();  
+
+
+   for(int i=0; i < nbVectors ; i++)
+   {
+      vecDim = *dimsp++;
+
+      float64_t beta = arm_householder_f64(inp1,DEFAULT_HOUSEHOLDER_THRESHOLD_F64,vecDim,outp);
+      *outBetap = beta; 
+
+      outp += vecDim;
+      inp1 += vecDim;
+      outBetap++;
+      checkInnerTailOverflow(outp);
+      checkInnerTailOverflow(outBetap);
+
+   }
+
+   ASSERT_EMPTY_TAIL(output);
+   ASSERT_EMPTY_TAIL(outputBeta);
+
+   ASSERT_SNR(output,ref,(float64_t)SNR_HOUSEHOLDER_THRESHOLD);
+   ASSERT_SNR(outputBeta,refBeta,(float64_t)SNR_HOUSEHOLDER_THRESHOLD);
+
+   ASSERT_CLOSE_ERROR(output,ref,ABS_HOUSEHOLDER_ERROR,REL_HOUSEHOLDER_ERROR);
+   ASSERT_CLOSE_ERROR(outputBeta,refBeta,ABS_HOUSEHOLDER_ERROR,REL_HOUSEHOLDER_ERROR);
+
+  
+}
+
+#include "dsp/debug.h"
+
+void UnaryTestsF64::test_mat_qr_f64()
+{
+   int64_t rows, columns, rank;
+   int nb;
+   const int16_t *dimsp = dims.ptr();          
+   const int nbMatrixes = dims.nbSamples() / 3;
+   const float64_t *inp1=input1.ptr(); 
+
+   float64_t *outTaup=outputTau.ptr();   
+   float64_t *outRp=outputR.ptr();  
+   float64_t *outQp=outputQ.ptr();  
+
+   float64_t *pTmpA=a.ptr();  
+   float64_t *pTmpB=b.ptr();  
+
+   (void) outTaup;
+   (void) outRp; 
+   (void) outQp; 
+   (void)nbMatrixes;
+   (void)nb;
+   (void)dimsp;
+   (void)inp1;
+
+   nb=0;
+   for(int i=0; i < nbMatrixes ; i++)
+   //for(int i=0; i < 1 ; i++)
+   {
+      rows = *dimsp++;
+      columns = *dimsp++;
+      rank = *dimsp++;
+      (void)rank;
+
+      //printf("--> %d %d : %lld %lld\n",nb,i,rows,columns);
+      nb += rows * columns;
+
+      in1.numRows=rows;
+      in1.numCols=columns;
+      in1.pData = (float64_t*)inp1;
+
+      outR.numRows = rows;
+      outR.numCols = columns;
+      outR.pData = (float64_t*)outRp;
+
+      outQ.numRows = rows;
+      outQ.numCols = rows;
+      outQ.pData = (float64_t*)outQp;
+
+      
+      arm_status status=arm_mat_qr_f64(&in1,DEFAULT_HOUSEHOLDER_THRESHOLD_F64,&outR,&outQ,outTaup,pTmpA,pTmpB);
+      ASSERT_TRUE(status==ARM_MATH_SUCCESS);
+      
+      // Set Householder reflectors into R matrix to 0
+      //float64_t *p = outRp ;
+      //printf("%d %d %d\n",in1.numCols, outR.numRows,outR.numCols);
+      #if 0
+      for(int col=0 ; col < in1.numCols; col++)
+      {
+          float64_t *pa = p + outR.numCols;
+          for(int k=0;k<outR.numRows-col-1; k++)
+          {
+             *pa = 0;
+             pa += outR.numCols;
+          }
+          p += 1 + outR.numCols;
+      }
+      #endif
+      //PM_f64("Corrected R",&outR);
+
+      inp1 += rows * columns;
+      outRp += rows * columns;
+      outQp += rows * rows;
+      outTaup += columns;
+
+      checkInnerTailOverflow(outRp);
+      checkInnerTailOverflow(outQp);
+      checkInnerTailOverflow(outTaup);
+
+
+   }
+
+
+   ASSERT_EMPTY_TAIL(outputR);
+   ASSERT_EMPTY_TAIL(outputQ);
+   ASSERT_EMPTY_TAIL(outputTau);
+
+   ASSERT_SNR(refQ,outputQ,(float64_t)SNR_QR_THRESHOLD);
+   ASSERT_SNR(refR,outputR,(float64_t)SNR_QR_THRESHOLD);
+   ASSERT_SNR(refTau,outputTau,(float64_t)SNR_QR_THRESHOLD);
+
+   ASSERT_CLOSE_ERROR(refQ,outputQ,ABS_QR_ERROR,REL_QR_ERROR);
+   ASSERT_CLOSE_ERROR(refR,outputR,ABS_QR_ERROR,REL_QR_ERROR);
+   ASSERT_CLOSE_ERROR(refTau,outputTau,ABS_QR_ERROR,REL_QR_ERROR);
 }
 
 void UnaryTestsF64::test_mat_sub_f64()
@@ -613,6 +770,34 @@ void UnaryTestsF64::test_mat_inverse_f64()
             tmpbpat.create(MAXMATRIXDIM*MAXMATRIXDIM,UnaryTestsF64::TMPDC_F64_ID,mgr);
             tmpcpat.create(MAXMATRIXDIM*MAXMATRIXDIM,UnaryTestsF64::TMPDD_F64_ID,mgr);
 
+         break;
+
+         case TEST_HOUSEHOLDER_F64_11:
+            input1.reload(UnaryTestsF64::INPUTS_HOUSEHOLDER_F64_ID,mgr);
+            dims.reload(UnaryTestsF64::DIMS_HOUSEHOLDER_S16_ID,mgr);
+            ref.reload(UnaryTestsF64::REF_HOUSEHOLDER_V_F64_ID,mgr);
+            refBeta.reload(UnaryTestsF64::REF_HOUSEHOLDER_BETA_F64_ID,mgr);
+
+
+            output.create(ref.nbSamples(),UnaryTestsF64::TMPA_F64_ID,mgr);
+            outputBeta.create(refBeta.nbSamples(),UnaryTestsF64::TMPB_F64_ID,mgr);
+         break;
+
+
+         case TEST_MAT_QR_F64_12:
+            input1.reload(UnaryTestsF64::INPUTS_QR_F64_ID,mgr);
+            dims.reload(UnaryTestsF64::DIMS_QR_S16_ID,mgr);
+            refTau.reload(UnaryTestsF64::REF_QR_TAU_F64_ID,mgr);
+            refR.reload(UnaryTestsF64::REF_QR_R_F64_ID,mgr);
+            refQ.reload(UnaryTestsF64::REF_QR_Q_F64_ID,mgr);
+
+
+            outputTau.create(refTau.nbSamples(),UnaryTestsF64::TMPA_F64_ID,mgr);
+            outputR.create(refR.nbSamples(),UnaryTestsF64::TMPB_F64_ID,mgr);
+            outputQ.create(refQ.nbSamples(),UnaryTestsF64::TMPC_F64_ID,mgr);
+
+            a.create(47,UnaryTestsF64::TMPC_F64_ID,mgr);
+            b.create(47,UnaryTestsF64::TMPD_F64_ID,mgr);
          break;
 
       }

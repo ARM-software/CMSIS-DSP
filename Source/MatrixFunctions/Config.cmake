@@ -11,6 +11,8 @@ MatrixFunctions/arm_mat_solve_lower_triangular_f64.c
 MatrixFunctions/arm_mat_solve_upper_triangular_f64.c
 MatrixFunctions/arm_mat_sub_f64.c
 MatrixFunctions/arm_mat_trans_f64.c
+MatrixFunctions/arm_mat_qr_f64.c
+MatrixFunctions/arm_householder_f64.c
 )
 
 set(SRCF32 MatrixFunctions/arm_mat_add_f32.c
@@ -27,6 +29,8 @@ MatrixFunctions/arm_mat_solve_upper_triangular_f32.c
 MatrixFunctions/arm_mat_sub_f32.c
 MatrixFunctions/arm_mat_trans_f32.c
 MatrixFunctions/arm_mat_vec_mult_f32.c
+MatrixFunctions/arm_mat_qr_f32.c
+MatrixFunctions/arm_householder_f32.c
 )
 
 set(SRCQ31 MatrixFunctions/arm_mat_add_q31.c
@@ -82,6 +86,8 @@ MatrixFunctions/arm_mat_solve_upper_triangular_f16.c
 MatrixFunctions/arm_mat_sub_f16.c
 MatrixFunctions/arm_mat_trans_f16.c
 MatrixFunctions/arm_mat_vec_mult_f16.c
+MatrixFunctions/arm_mat_qr_f16.c
+MatrixFunctions/arm_householder_f16.c
 )
 
 endif()

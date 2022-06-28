@@ -827,6 +827,18 @@ group Root {
                 Pattern REF_LT_SOLVE_F16_ID : RefLTSolve1_f16.txt
                 Pattern REF_UT_SOLVE_F16_ID : RefUTSolve1_f16.txt
 
+                Pattern INPUTS_QR_F16_ID : InputMatrixQR1_f16.txt 
+                Pattern DIMS_QR_S16_ID : DimsQR1_s16.txt
+                Pattern REF_QR_TAU_F16_ID : RefTau1_f16.txt
+                Pattern REF_QR_R_F16_ID : RefR1_f16.txt
+                Pattern REF_QR_Q_F16_ID : RefQ1_f16.txt
+
+                Pattern INPUTS_HOUSEHOLDER_F16_ID : InputVectorHouseHolder1_f16.txt
+                Pattern DIMS_HOUSEHOLDER_S16_ID : DimsHouseholder1_s16.txt
+                Pattern REF_HOUSEHOLDER_V_F16_ID : RefVectorHouseholder1_f16.txt
+                Pattern REF_HOUSEHOLDER_BETA_F16_ID : RefValueHouseholder1_f16.txt
+
+
                 Output  D_F16_ID : Output
                 Output  LL_F16_ID : Output
                 Output  PERM_S16_ID : Output
@@ -834,6 +846,8 @@ group Root {
                 Output  OUT_F16_ID : Output
                 Output  TMPA_F16_ID : TmpA
                 Output  TMPB_F16_ID : TmpB
+                Output  TMPC_F16_ID : TmpC
+                Output  TMPD_F16_ID : TmpD
 
                 Functions {
                  test matrix add:test_mat_add_f16
@@ -846,6 +860,8 @@ group Root {
                  test matrix cholesky decomposition:test_mat_cholesky_dpo_f16
                  test solve upper triangular:test_solve_upper_triangular_f16
                  test solve lower triangular:test_solve_lower_triangular_f16
+                 test householder:test_householder_f16
+                 test QR decomposition:test_mat_qr_f16
                 }
 
               }

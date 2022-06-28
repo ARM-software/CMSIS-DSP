@@ -14,14 +14,26 @@ class UnaryTestsF16:public Client::Suite
             Client::Pattern<float16_t> input1;
             Client::Pattern<float16_t> input2;
             Client::Pattern<float16_t> ref;
+            Client::Pattern<float16_t> refBeta;
+            Client::Pattern<float16_t> refTau;
+            Client::Pattern<float16_t> refR;
+            Client::Pattern<float16_t> refQ;
+
             Client::Pattern<int16_t> dims;
             Client::LocalPattern<float16_t> output;
+            Client::LocalPattern<float16_t> outputBeta;
+
+            Client::LocalPattern<float16_t> outputTau;
+            Client::LocalPattern<float16_t> outputR;
+            Client::LocalPattern<float16_t> outputQ;
 
             /* Local copies of inputs since matrix instance in CMSIS-DSP are not using
                pointers to const.
             */
             Client::LocalPattern<float16_t> a;
             Client::LocalPattern<float16_t> b;
+            Client::LocalPattern<float16_t> c;
+            Client::LocalPattern<float16_t> d;
 
             int nbr;
             int nbc;
@@ -29,4 +41,6 @@ class UnaryTestsF16:public Client::Suite
             arm_matrix_instance_f16 in1;
             arm_matrix_instance_f16 in2;
             arm_matrix_instance_f16 out;
+            arm_matrix_instance_f16 outQ;
+            arm_matrix_instance_f16 outR;
     };

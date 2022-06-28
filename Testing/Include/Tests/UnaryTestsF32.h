@@ -17,13 +17,23 @@ class UnaryTestsF32:public Client::Suite
             Client::Pattern<float32_t> input1;
             Client::Pattern<float32_t> input2;
             Client::Pattern<float32_t> ref;
+            Client::Pattern<float32_t> refBeta;
+
 
             Client::Pattern<float32_t> refll;
             Client::Pattern<float32_t> refd;
             Client::Pattern<int16_t> refp;
+            Client::Pattern<float32_t> refTau;
+            Client::Pattern<float32_t> refR;
+            Client::Pattern<float32_t> refQ;
 
             Client::Pattern<int16_t> dims;
             Client::LocalPattern<float32_t> output;
+            Client::LocalPattern<float32_t> outputBeta;
+
+            Client::LocalPattern<float32_t> outputTau;
+            Client::LocalPattern<float32_t> outputR;
+            Client::LocalPattern<float32_t> outputQ;
 
             Client::LocalPattern<float32_t> outputll;
             Client::LocalPattern<float32_t> outputd;
@@ -50,6 +60,8 @@ class UnaryTestsF32:public Client::Suite
             arm_matrix_instance_f32 in2;
             
             arm_matrix_instance_f32 out;
+            arm_matrix_instance_f32 outQ;
+            arm_matrix_instance_f32 outR;
 
             arm_matrix_instance_f32 outll;
             arm_matrix_instance_f32 outd;

@@ -422,33 +422,35 @@ cmsis_arm_mat_add_f32(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrcA=NULL; // input
-  arm_matrix_instance_f32 *pSrcA_converted=NULL; // input
+  arm_matrix_instance_f32 pSrcA_converted; // input
   PyObject *pSrcB=NULL; // input
-  arm_matrix_instance_f32 *pSrcB_converted=NULL; // input
+  arm_matrix_instance_f32 pSrcB_converted; // input
+
+  arm_matrix_instance_f32 pDst_converted; 
 
   if (PyArg_ParseTuple(args,"OO",&pSrcA,&pSrcB))
   {
 
-    arm_matrix_instance_f32 *pSrcA_converted = f32MatrixFromNumpy(pSrcA);
-    arm_matrix_instance_f32 *pSrcB_converted = f32MatrixFromNumpy(pSrcB);
-    uint32_t row = pSrcA_converted->numRows ;
-    uint32_t column = pSrcB_converted->numCols ;
-    arm_matrix_instance_f32 *pDst_converted = createf32Matrix(row,column);
+    f32MatrixFromNumpy(&pSrcA_converted,pSrcA);
+    f32MatrixFromNumpy(&pSrcB_converted,pSrcB);
+    uint32_t row = pSrcA_converted.numRows ;
+    uint32_t column = pSrcB_converted.numCols ;
+    createf32Matrix(&pDst_converted,row,column);
 
-    arm_status returnValue = arm_mat_add_f32(pSrcA_converted,pSrcB_converted,pDst_converted);
+    arm_status returnValue = arm_mat_add_f32(&pSrcA_converted,&pSrcB_converted,&pDst_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* pDstOBJ=NumpyArrayFromf32Matrix(pDst_converted);
+    PyObject* pDstOBJ=NumpyArrayFromf32Matrix(&pDst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pDstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(pSrcA_converted);
-    FREEARGUMENT(pSrcB_converted);
+    FREEMATRIX(&pSrcA_converted);
+    FREEMATRIX(&pSrcB_converted);
     Py_DECREF(pDstOBJ);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 
@@ -457,33 +459,37 @@ cmsis_arm_mat_add_q15(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrcA=NULL; // input
-  arm_matrix_instance_q15 *pSrcA_converted=NULL; // input
+  arm_matrix_instance_q15 pSrcA_converted; // input
   PyObject *pSrcB=NULL; // input
-  arm_matrix_instance_q15 *pSrcB_converted=NULL; // input
+  arm_matrix_instance_q15 pSrcB_converted; // input
+
+  arm_matrix_instance_q15 pDst_converted;
 
   if (PyArg_ParseTuple(args,"OO",&pSrcA,&pSrcB))
   {
 
-    arm_matrix_instance_q15 *pSrcA_converted = q15MatrixFromNumpy(pSrcA);
-    arm_matrix_instance_q15 *pSrcB_converted = q15MatrixFromNumpy(pSrcB);
-    uint32_t row = pSrcA_converted->numRows ;
-    uint32_t column = pSrcB_converted->numCols ;
-    arm_matrix_instance_q15 *pDst_converted = createq15Matrix(row,column);
+    q15MatrixFromNumpy(&pSrcA_converted,pSrcA);
+    q15MatrixFromNumpy(&pSrcB_converted,pSrcB);
+    uint32_t row = pSrcA_converted.numRows ;
+    uint32_t column = pSrcB_converted.numCols ;
+    createq15Matrix(&pDst_converted,row,column);
 
-    arm_status returnValue = arm_mat_add_q15(pSrcA_converted,pSrcB_converted,pDst_converted);
+    arm_status returnValue = arm_mat_add_q15(&pSrcA_converted,
+        &pSrcB_converted,
+        &pDst_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* pDstOBJ=NumpyArrayFromq15Matrix(pDst_converted);
+    PyObject* pDstOBJ=NumpyArrayFromq15Matrix(&pDst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pDstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(pSrcA_converted);
-    FREEARGUMENT(pSrcB_converted);
+    FREEMATRIX(&pSrcA_converted);
+    FREEMATRIX(&pSrcB_converted);
     Py_DECREF(pDstOBJ);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 
@@ -492,33 +498,37 @@ cmsis_arm_mat_add_q31(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrcA=NULL; // input
-  arm_matrix_instance_q31 *pSrcA_converted=NULL; // input
+  arm_matrix_instance_q31 pSrcA_converted; // input
   PyObject *pSrcB=NULL; // input
-  arm_matrix_instance_q31 *pSrcB_converted=NULL; // input
+  arm_matrix_instance_q31 pSrcB_converted; // input
+
+  arm_matrix_instance_q31 pDst_converted;
 
   if (PyArg_ParseTuple(args,"OO",&pSrcA,&pSrcB))
   {
 
-    arm_matrix_instance_q31 *pSrcA_converted = q31MatrixFromNumpy(pSrcA);
-    arm_matrix_instance_q31 *pSrcB_converted = q31MatrixFromNumpy(pSrcB);
-    uint32_t row = pSrcA_converted->numRows ;
-    uint32_t column = pSrcB_converted->numCols ;
-    arm_matrix_instance_q31 *pDst_converted = createq31Matrix(row,column);
+    q31MatrixFromNumpy(&pSrcA_converted,pSrcA);
+    q31MatrixFromNumpy(&pSrcB_converted,pSrcB);
+    uint32_t row = pSrcA_converted.numRows ;
+    uint32_t column = pSrcB_converted.numCols ;
+    createq31Matrix(&pDst_converted,row,column);
 
-    arm_status returnValue = arm_mat_add_q31(pSrcA_converted,pSrcB_converted,pDst_converted);
+    arm_status returnValue = arm_mat_add_q31(&pSrcA_converted,
+        &pSrcB_converted,
+        &pDst_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* pDstOBJ=NumpyArrayFromq31Matrix(pDst_converted);
+    PyObject* pDstOBJ=NumpyArrayFromq31Matrix(&pDst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pDstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(pSrcA_converted);
-    FREEARGUMENT(pSrcB_converted);
+    FREEMATRIX(&pSrcA_converted);
+    FREEMATRIX(&pSrcB_converted);
     Py_DECREF(pDstOBJ);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 static PyObject *
@@ -526,17 +536,18 @@ cmsis_arm_mat_cmplx_trans_f32(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrc=NULL; // input
-  arm_matrix_instance_f32 *pSrc_converted=NULL; // input
+  arm_matrix_instance_f32 pSrc_converted; // input
+  arm_matrix_instance_f32 pDst_converted;
 
   if (PyArg_ParseTuple(args,"O",&pSrc))
   {
 
-    arm_matrix_instance_f32 *pSrc_converted = f32MatrixFromNumpy(pSrc);
-    pSrc_converted->numCols = pSrc_converted->numCols / 2;
+    f32MatrixFromNumpy(&pSrc_converted,pSrc);
+    pSrc_converted.numCols = pSrc_converted.numCols / 2;
 
-    uint32_t row = pSrc_converted->numCols ;
-    uint32_t column = pSrc_converted->numRows*2 ;
-    arm_matrix_instance_f32 *pDst_converted = createf32Matrix(row,column);
+    uint32_t row = pSrc_converted.numCols ;
+    uint32_t column = pSrc_converted.numRows*2 ;
+    createf32Matrix(&pDst_converted,row,column);
     /*
     Dimensions in matrix instance are not correct but they are not used
     by CMSIS-DSP since the library is not compiled with ARM_MATRIX_CHECK.
@@ -547,19 +558,19 @@ cmsis_arm_mat_cmplx_trans_f32(PyObject *obj, PyObject *args)
 
     */
 
-    arm_status returnValue = arm_mat_cmplx_trans_f32(pSrc_converted,pDst_converted);
+    arm_status returnValue = arm_mat_cmplx_trans_f32(&pSrc_converted,&pDst_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* pDstOBJ=NumpyArrayFromf32Matrix(pDst_converted);
+    PyObject* pDstOBJ=NumpyArrayFromf32Matrix(&pDst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pDstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(pSrc_converted);
+    FREEMATRIX(&pSrc_converted);
     Py_DECREF(pDstOBJ);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 static PyObject *
@@ -567,17 +578,18 @@ cmsis_arm_mat_cmplx_trans_q31(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrc=NULL; // input
-  arm_matrix_instance_q31 *pSrc_converted=NULL; // input
+  arm_matrix_instance_q31 pSrc_converted; // input
+  arm_matrix_instance_q31 pDst_converted;
 
   if (PyArg_ParseTuple(args,"O",&pSrc))
   {
 
-    arm_matrix_instance_q31 *pSrc_converted = q31MatrixFromNumpy(pSrc);
-    pSrc_converted->numCols = pSrc_converted->numCols / 2;
+    q31MatrixFromNumpy(&pSrc_converted,pSrc);
+    pSrc_converted.numCols = pSrc_converted.numCols / 2;
 
-    uint32_t row = pSrc_converted->numCols ;
-    uint32_t column = pSrc_converted->numRows*2 ;
-    arm_matrix_instance_q31 *pDst_converted = createq31Matrix(row,column);
+    uint32_t row = pSrc_converted.numCols ;
+    uint32_t column = pSrc_converted.numRows*2 ;
+    createq31Matrix(&pDst_converted,row,column);
     /*
     Dimensions in matrix instance are not correct but they are not used
     by CMSIS-DSP since the library is not compiled with ARM_MATRIX_CHECK.
@@ -588,19 +600,19 @@ cmsis_arm_mat_cmplx_trans_q31(PyObject *obj, PyObject *args)
 
     */
 
-    arm_status returnValue = arm_mat_cmplx_trans_q31(pSrc_converted,pDst_converted);
+    arm_status returnValue = arm_mat_cmplx_trans_q31(&pSrc_converted,&pDst_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* pDstOBJ=NumpyArrayFromq31Matrix(pDst_converted);
+    PyObject* pDstOBJ=NumpyArrayFromq31Matrix(&pDst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pDstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(pSrc_converted);
+    FREEMATRIX(&pSrc_converted);
     Py_DECREF(pDstOBJ);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 static PyObject *
@@ -608,17 +620,18 @@ cmsis_arm_mat_cmplx_trans_q15(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrc=NULL; // input
-  arm_matrix_instance_q15 *pSrc_converted=NULL; // input
+  arm_matrix_instance_q15 pSrc_converted; // input
+  arm_matrix_instance_q15 pDst_converted;
 
   if (PyArg_ParseTuple(args,"O",&pSrc))
   {
 
-    arm_matrix_instance_q15 *pSrc_converted = q15MatrixFromNumpy(pSrc);
-    pSrc_converted->numCols = pSrc_converted->numCols / 2;
+    q15MatrixFromNumpy(&pSrc_converted,pSrc);
+    pSrc_converted.numCols = pSrc_converted.numCols / 2;
 
-    uint32_t row = pSrc_converted->numCols ;
-    uint32_t column = pSrc_converted->numRows*2 ;
-    arm_matrix_instance_q15 *pDst_converted = createq15Matrix(row,column);
+    uint32_t row = pSrc_converted.numCols ;
+    uint32_t column = pSrc_converted.numRows*2 ;
+    createq15Matrix(&pDst_converted,row,column);
     /*
     Dimensions in matrix instance are not correct but they are not used
     by CMSIS-DSP since the library is not compiled with ARM_MATRIX_CHECK.
@@ -629,19 +642,19 @@ cmsis_arm_mat_cmplx_trans_q15(PyObject *obj, PyObject *args)
 
     */
 
-    arm_status returnValue = arm_mat_cmplx_trans_q15(pSrc_converted,pDst_converted);
+    arm_status returnValue = arm_mat_cmplx_trans_q15(&pSrc_converted,&pDst_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* pDstOBJ=NumpyArrayFromq15Matrix(pDst_converted);
+    PyObject* pDstOBJ=NumpyArrayFromq15Matrix(&pDst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pDstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(pSrc_converted);
+    FREEMATRIX(&pSrc_converted);
     Py_DECREF(pDstOBJ);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 static PyObject *
@@ -649,35 +662,37 @@ cmsis_arm_mat_cmplx_mult_f32(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrcA=NULL; // input
-  arm_matrix_instance_f32 *pSrcA_converted=NULL; // input
+  arm_matrix_instance_f32 pSrcA_converted; // input
   PyObject *pSrcB=NULL; // input
-  arm_matrix_instance_f32 *pSrcB_converted=NULL; // input
+  arm_matrix_instance_f32 pSrcB_converted; // input
+  arm_matrix_instance_f32 pDst_converted;
 
   if (PyArg_ParseTuple(args,"OO",&pSrcA,&pSrcB))
   {
 
-    arm_matrix_instance_f32 *pSrcA_converted = f32MatrixFromNumpy(pSrcA);
-    arm_matrix_instance_f32 *pSrcB_converted = f32MatrixFromNumpy(pSrcB);
-    pSrcA_converted->numCols = pSrcA_converted->numCols / 2;
-    pSrcB_converted->numCols = pSrcB_converted->numCols / 2;
-    uint32_t row = pSrcA_converted->numRows ;
-    uint32_t column = pSrcB_converted->numCols * 2;
-    arm_matrix_instance_f32 *pDst_converted = createf32Matrix(row,column);
+    f32MatrixFromNumpy(&pSrcA_converted,pSrcA);
+    f32MatrixFromNumpy(&pSrcB_converted,pSrcB);
+    pSrcA_converted.numCols = pSrcA_converted.numCols / 2;
+    pSrcB_converted.numCols = pSrcB_converted.numCols / 2;
+    uint32_t row = pSrcA_converted.numRows ;
+    uint32_t column = pSrcB_converted.numCols * 2;
+    createf32Matrix(&pDst_converted,row,column);
 
-    arm_status returnValue = arm_mat_cmplx_mult_f32(pSrcA_converted,pSrcB_converted,pDst_converted);
+    arm_status returnValue = arm_mat_cmplx_mult_f32(&pSrcA_converted,
+        &pSrcB_converted,&pDst_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* pDstOBJ=NumpyArrayFromf32Matrix(pDst_converted);
+    PyObject* pDstOBJ=NumpyArrayFromf32Matrix(&pDst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pDstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(pSrcA_converted);
-    FREEARGUMENT(pSrcB_converted);
+    FREEMATRIX(&pSrcA_converted);
+    FREEMATRIX(&pSrcB_converted);
     Py_DECREF(pDstOBJ);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 
@@ -686,39 +701,41 @@ cmsis_arm_mat_cmplx_mult_q15(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrcA=NULL; // input
-  arm_matrix_instance_q15 *pSrcA_converted=NULL; // input
+  arm_matrix_instance_q15 pSrcA_converted; // input
   PyObject *pSrcB=NULL; // input
-  arm_matrix_instance_q15 *pSrcB_converted=NULL; // input
+  arm_matrix_instance_q15 pSrcB_converted; // input
   PyObject *pScratch=NULL; // input
   q15_t *pScratch_converted=NULL; // input
+  arm_matrix_instance_q15 pDst_converted;
 
   if (PyArg_ParseTuple(args,"OOO",&pSrcA,&pSrcB,&pScratch))
   {
 
-    arm_matrix_instance_q15 *pSrcA_converted = q15MatrixFromNumpy(pSrcA);
-    arm_matrix_instance_q15 *pSrcB_converted = q15MatrixFromNumpy(pSrcB);
+    q15MatrixFromNumpy(&pSrcA_converted,pSrcA);
+    q15MatrixFromNumpy(&pSrcB_converted,pSrcB);
     GETARGUMENT(pScratch,NPY_INT16,int16_t,int16_t);
-    pSrcA_converted->numCols = pSrcA_converted->numCols / 2;
-    pSrcB_converted->numCols = pSrcB_converted->numCols / 2;
-    uint32_t row = pSrcA_converted->numRows ;
-    uint32_t column = pSrcB_converted->numCols * 2;
-    arm_matrix_instance_q15 *pDst_converted = createq15Matrix(row,column);
+    pSrcA_converted.numCols = pSrcA_converted.numCols / 2;
+    pSrcB_converted.numCols = pSrcB_converted.numCols / 2;
+    uint32_t row = pSrcA_converted.numRows ;
+    uint32_t column = pSrcB_converted.numCols * 2;
+    createq15Matrix(&pDst_converted,row,column);
 
-    arm_status returnValue = arm_mat_cmplx_mult_q15(pSrcA_converted,pSrcB_converted,pDst_converted,pScratch_converted);
+    arm_status returnValue = arm_mat_cmplx_mult_q15(&pSrcA_converted,
+        &pSrcB_converted,&pDst_converted,pScratch_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* pDstOBJ=NumpyArrayFromq15Matrix(pDst_converted);
+    PyObject* pDstOBJ=NumpyArrayFromq15Matrix(&pDst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pDstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(pSrcA_converted);
-    FREEARGUMENT(pSrcB_converted);
+    FREEMATRIX(&pSrcA_converted);
+    FREEMATRIX(&pSrcB_converted);
     Py_DECREF(pDstOBJ);
     FREEARGUMENT(pScratch_converted);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 
@@ -727,35 +744,37 @@ cmsis_arm_mat_cmplx_mult_q31(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrcA=NULL; // input
-  arm_matrix_instance_q31 *pSrcA_converted=NULL; // input
+  arm_matrix_instance_q31 pSrcA_converted; // input
   PyObject *pSrcB=NULL; // input
-  arm_matrix_instance_q31 *pSrcB_converted=NULL; // input
+  arm_matrix_instance_q31 pSrcB_converted; // input
+  arm_matrix_instance_q31 pDst_converted;
 
   if (PyArg_ParseTuple(args,"OO",&pSrcA,&pSrcB))
   {
 
-    arm_matrix_instance_q31 *pSrcA_converted = q31MatrixFromNumpy(pSrcA);
-    arm_matrix_instance_q31 *pSrcB_converted = q31MatrixFromNumpy(pSrcB);
-    pSrcA_converted->numCols = pSrcA_converted->numCols / 2;
-    pSrcB_converted->numCols = pSrcB_converted->numCols / 2;
-    uint32_t row = pSrcA_converted->numRows ;
-    uint32_t column = pSrcB_converted->numCols * 2;
-    arm_matrix_instance_q31 *pDst_converted = createq31Matrix(row,column);
+    q31MatrixFromNumpy(&pSrcA_converted,pSrcA);
+    q31MatrixFromNumpy(&pSrcB_converted,pSrcB);
+    pSrcA_converted.numCols = pSrcA_converted.numCols / 2;
+    pSrcB_converted.numCols = pSrcB_converted.numCols / 2;
+    uint32_t row = pSrcA_converted.numRows ;
+    uint32_t column = pSrcB_converted.numCols * 2;
+    createq31Matrix(&pDst_converted,row,column);
 
-    arm_status returnValue = arm_mat_cmplx_mult_q31(pSrcA_converted,pSrcB_converted,pDst_converted);
+    arm_status returnValue = arm_mat_cmplx_mult_q31(&pSrcA_converted,
+        &pSrcB_converted,&pDst_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* pDstOBJ=NumpyArrayFromq31Matrix(pDst_converted);
+    PyObject* pDstOBJ=NumpyArrayFromq31Matrix(&pDst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pDstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(pSrcA_converted);
-    FREEARGUMENT(pSrcB_converted);
+    FREEMATRIX(&pSrcA_converted);
+    FREEMATRIX(&pSrcB_converted);
     Py_DECREF(pDstOBJ);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 
@@ -764,29 +783,30 @@ cmsis_arm_mat_trans_f32(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrc=NULL; // input
-  arm_matrix_instance_f32 *pSrc_converted=NULL; // input
+  arm_matrix_instance_f32 pSrc_converted; // input
+  arm_matrix_instance_f32 pDst_converted;
 
   if (PyArg_ParseTuple(args,"O",&pSrc))
   {
 
-    arm_matrix_instance_f32 *pSrc_converted = f32MatrixFromNumpy(pSrc);
-    uint32_t row = pSrc_converted->numCols ;
-    uint32_t column = pSrc_converted->numRows ;
-    arm_matrix_instance_f32 *pDst_converted = createf32Matrix(row,column);
+    f32MatrixFromNumpy(&pSrc_converted,pSrc);
+    uint32_t row = pSrc_converted.numCols ;
+    uint32_t column = pSrc_converted.numRows ;
+    createf32Matrix(&pDst_converted,row,column);
 
-    arm_status returnValue = arm_mat_trans_f32(pSrc_converted,pDst_converted);
+    arm_status returnValue = arm_mat_trans_f32(&pSrc_converted,&pDst_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* pDstOBJ=NumpyArrayFromf32Matrix(pDst_converted);
+    PyObject* pDstOBJ=NumpyArrayFromf32Matrix(&pDst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pDstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(pSrc_converted);
+    FREEMATRIX(&pSrc_converted);
     Py_DECREF(pDstOBJ);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 static PyObject *
@@ -794,29 +814,30 @@ cmsis_arm_mat_trans_f64(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrc=NULL; // input
-  arm_matrix_instance_f64 *pSrc_converted=NULL; // input
+  arm_matrix_instance_f64 pSrc_converted; // input
+  arm_matrix_instance_f64 pDst_converted;
 
   if (PyArg_ParseTuple(args,"O",&pSrc))
   {
 
-    arm_matrix_instance_f64 *pSrc_converted = f64MatrixFromNumpy(pSrc);
-    uint32_t row = pSrc_converted->numCols ;
-    uint32_t column = pSrc_converted->numRows ;
-    arm_matrix_instance_f64 *pDst_converted = createf64Matrix(row,column);
+    f64MatrixFromNumpy(&pSrc_converted,pSrc);
+    uint32_t row = pSrc_converted.numCols ;
+    uint32_t column = pSrc_converted.numRows ;
+    createf64Matrix(&pDst_converted,row,column);
 
-    arm_status returnValue = arm_mat_trans_f64(pSrc_converted,pDst_converted);
+    arm_status returnValue = arm_mat_trans_f64(&pSrc_converted,&pDst_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* pDstOBJ=NumpyArrayFromf64Matrix(pDst_converted);
+    PyObject* pDstOBJ=NumpyArrayFromf64Matrix(&pDst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pDstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(pSrc_converted);
+    FREEMATRIX(&pSrc_converted);
     Py_DECREF(pDstOBJ);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 static PyObject *
@@ -824,29 +845,30 @@ cmsis_arm_mat_trans_q7(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrc=NULL; // input
-  arm_matrix_instance_q7 *pSrc_converted=NULL; // input
+  arm_matrix_instance_q7 pSrc_converted; // input
+  arm_matrix_instance_q7 pDst_converted;
 
   if (PyArg_ParseTuple(args,"O",&pSrc))
   {
 
-    arm_matrix_instance_q7 *pSrc_converted = q7MatrixFromNumpy(pSrc);
-    uint32_t row = pSrc_converted->numCols ;
-    uint32_t column = pSrc_converted->numRows ;
-    arm_matrix_instance_q7 *pDst_converted = createq7Matrix(row,column);
+    q7MatrixFromNumpy(&pSrc_converted,pSrc);
+    uint32_t row = pSrc_converted.numCols ;
+    uint32_t column = pSrc_converted.numRows ;
+    createq7Matrix(&pDst_converted,row,column);
 
-    arm_status returnValue = arm_mat_trans_q7(pSrc_converted,pDst_converted);
+    arm_status returnValue = arm_mat_trans_q7(&pSrc_converted,&pDst_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* pDstOBJ=NumpyArrayFromq7Matrix(pDst_converted);
+    PyObject* pDstOBJ=NumpyArrayFromq7Matrix(&pDst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pDstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(pSrc_converted);
+    FREEMATRIX(&pSrc_converted);
     Py_DECREF(pDstOBJ);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 static PyObject *
@@ -854,29 +876,30 @@ cmsis_arm_mat_trans_q15(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrc=NULL; // input
-  arm_matrix_instance_q15 *pSrc_converted=NULL; // input
+  arm_matrix_instance_q15 pSrc_converted; // input
+  arm_matrix_instance_q15 pDst_converted;
 
   if (PyArg_ParseTuple(args,"O",&pSrc))
   {
 
-    arm_matrix_instance_q15 *pSrc_converted = q15MatrixFromNumpy(pSrc);
-    uint32_t row = pSrc_converted->numCols ;
-    uint32_t column = pSrc_converted->numRows ;
-    arm_matrix_instance_q15 *pDst_converted = createq15Matrix(row,column);
+    q15MatrixFromNumpy(&pSrc_converted,pSrc);
+    uint32_t row = pSrc_converted.numCols ;
+    uint32_t column = pSrc_converted.numRows ;
+    createq15Matrix(&pDst_converted,row,column);
 
-    arm_status returnValue = arm_mat_trans_q15(pSrc_converted,pDst_converted);
+    arm_status returnValue = arm_mat_trans_q15(&pSrc_converted,&pDst_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* pDstOBJ=NumpyArrayFromq15Matrix(pDst_converted);
+    PyObject* pDstOBJ=NumpyArrayFromq15Matrix(&pDst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pDstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(pSrc_converted);
+    FREEMATRIX(&pSrc_converted);
     Py_DECREF(pDstOBJ);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 
@@ -885,29 +908,30 @@ cmsis_arm_mat_trans_q31(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrc=NULL; // input
-  arm_matrix_instance_q31 *pSrc_converted=NULL; // input
+  arm_matrix_instance_q31 pSrc_converted; // input
+  arm_matrix_instance_q31 pDst_converted;
 
   if (PyArg_ParseTuple(args,"O",&pSrc))
   {
 
-    arm_matrix_instance_q31 *pSrc_converted = q31MatrixFromNumpy(pSrc);
-    uint32_t row = pSrc_converted->numCols ;
-    uint32_t column = pSrc_converted->numRows ;
-    arm_matrix_instance_q31 *pDst_converted = createq31Matrix(row,column);
+    q31MatrixFromNumpy(&pSrc_converted,pSrc);
+    uint32_t row = pSrc_converted.numCols ;
+    uint32_t column = pSrc_converted.numRows ;
+    createq31Matrix(&pDst_converted,row,column);
 
-    arm_status returnValue = arm_mat_trans_q31(pSrc_converted,pDst_converted);
+    arm_status returnValue = arm_mat_trans_q31(&pSrc_converted,&pDst_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* pDstOBJ=NumpyArrayFromq31Matrix(pDst_converted);
+    PyObject* pDstOBJ=NumpyArrayFromq31Matrix(&pDst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pDstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(pSrc_converted);
+    FREEMATRIX(&pSrc_converted);
     Py_DECREF(pDstOBJ);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 static PyObject *
@@ -915,7 +939,7 @@ cmsis_arm_mat_vec_mult_f32(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrcA=NULL; // input
-  arm_matrix_instance_f32 *pSrcA_converted=NULL; // input
+  arm_matrix_instance_f32 pSrcA_converted; // input
   PyObject *pSrcB=NULL; // input
   float32_t *pSrcB_converted=NULL; // input
   float32_t *pDst=NULL; // output
@@ -923,24 +947,24 @@ cmsis_arm_mat_vec_mult_f32(PyObject *obj, PyObject *args)
   if (PyArg_ParseTuple(args,"OO",&pSrcA,&pSrcB))
   {
 
-    arm_matrix_instance_f32 *pSrcA_converted = f32MatrixFromNumpy(pSrcA);
+    f32MatrixFromNumpy(&pSrcA_converted,pSrcA);
     GETARGUMENT(pSrcB,NPY_DOUBLE,double,float32_t);
-    uint32_t row = pSrcA_converted->numRows ;
-    uint32_t column = pSrcA_converted->numCols ;
+    uint32_t row = pSrcA_converted.numRows ;
+    uint32_t column = pSrcA_converted.numCols ;
     pDst=PyMem_Malloc(sizeof(float32_t)*row);
 
-    arm_mat_vec_mult_f32(pSrcA_converted,pSrcB_converted,pDst);
+    arm_mat_vec_mult_f32(&pSrcA_converted,pSrcB_converted,pDst);
     FLOATARRAY1(pDstOBJ,row,pDst);
 
     PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
 
-    FREEARGUMENT(pSrcA_converted);
+    FREEMATRIX(&pSrcA_converted);
     FREEARGUMENT(pSrcB_converted);
     Py_DECREF(pDstOBJ);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 static PyObject *
@@ -948,33 +972,36 @@ cmsis_arm_mat_mult_f32(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrcA=NULL; // input
-  arm_matrix_instance_f32 *pSrcA_converted=NULL; // input
+  arm_matrix_instance_f32 pSrcA_converted; // input
   PyObject *pSrcB=NULL; // input
-  arm_matrix_instance_f32 *pSrcB_converted=NULL; // input
+  arm_matrix_instance_f32 pSrcB_converted; // input
+  arm_matrix_instance_f32 pDst_converted; 
 
   if (PyArg_ParseTuple(args,"OO",&pSrcA,&pSrcB))
   {
 
-    arm_matrix_instance_f32 *pSrcA_converted = f32MatrixFromNumpy(pSrcA);
-    arm_matrix_instance_f32 *pSrcB_converted = f32MatrixFromNumpy(pSrcB);
-    uint32_t row = pSrcA_converted->numRows ;
-    uint32_t column = pSrcB_converted->numCols ;
-    arm_matrix_instance_f32 *pDst_converted = createf32Matrix(row,column);
+    f32MatrixFromNumpy(&pSrcA_converted,pSrcA);
+    f32MatrixFromNumpy(&pSrcB_converted,pSrcB);
+    uint32_t row = pSrcA_converted.numRows ;
+    uint32_t column = pSrcB_converted.numCols ;
+    createf32Matrix(&pDst_converted,row,column);
 
-    arm_status returnValue = arm_mat_mult_f32(pSrcA_converted,pSrcB_converted,pDst_converted);
+    arm_status returnValue = arm_mat_mult_f32(&pSrcA_converted,
+        &pSrcB_converted,
+        &pDst_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* pDstOBJ=NumpyArrayFromf32Matrix(pDst_converted);
+    PyObject* pDstOBJ=NumpyArrayFromf32Matrix(&pDst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pDstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(pSrcA_converted);
-    FREEARGUMENT(pSrcB_converted);
+    FREEMATRIX(&pSrcA_converted);
+    FREEMATRIX(&pSrcB_converted);
     Py_DECREF(pDstOBJ);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 static PyObject *
@@ -982,33 +1009,35 @@ cmsis_arm_mat_mult_f64(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrcA=NULL; // input
-  arm_matrix_instance_f64 *pSrcA_converted=NULL; // input
+  arm_matrix_instance_f64 pSrcA_converted; // input
   PyObject *pSrcB=NULL; // input
-  arm_matrix_instance_f64 *pSrcB_converted=NULL; // input
+  arm_matrix_instance_f64 pSrcB_converted; // input
+  arm_matrix_instance_f64 pDst_converted ;
 
   if (PyArg_ParseTuple(args,"OO",&pSrcA,&pSrcB))
   {
 
-    arm_matrix_instance_f64 *pSrcA_converted = f64MatrixFromNumpy(pSrcA);
-    arm_matrix_instance_f64 *pSrcB_converted = f64MatrixFromNumpy(pSrcB);
-    uint32_t row = pSrcA_converted->numRows ;
-    uint32_t column = pSrcB_converted->numCols ;
-    arm_matrix_instance_f64 *pDst_converted = createf64Matrix(row,column);
+    f64MatrixFromNumpy(&pSrcA_converted,pSrcA);
+    f64MatrixFromNumpy(&pSrcB_converted,pSrcB);
+    uint32_t row = pSrcA_converted.numRows ;
+    uint32_t column = pSrcB_converted.numCols ;
+    createf64Matrix(&pDst_converted,row,column);
 
-    arm_status returnValue = arm_mat_mult_f64(pSrcA_converted,pSrcB_converted,pDst_converted);
+    arm_status returnValue = arm_mat_mult_f64(&pSrcA_converted,
+        &pSrcB_converted,&pDst_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* pDstOBJ=NumpyArrayFromf64Matrix(pDst_converted);
+    PyObject* pDstOBJ=NumpyArrayFromf64Matrix(&pDst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pDstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(pSrcA_converted);
-    FREEARGUMENT(pSrcB_converted);
+    FREEMATRIX(&pSrcA_converted);
+    FREEMATRIX(&pSrcB_converted);
     Py_DECREF(pDstOBJ);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 static PyObject *
@@ -1016,7 +1045,7 @@ cmsis_arm_mat_vec_mult_q15(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrcA=NULL; // input
-  arm_matrix_instance_q15 *pSrcA_converted=NULL; // input
+  arm_matrix_instance_q15 pSrcA_converted; // input
   PyObject *pSrcB=NULL; // input
   q15_t *pSrcB_converted=NULL; // input
   q15_t *pDst=NULL; // output
@@ -1024,24 +1053,24 @@ cmsis_arm_mat_vec_mult_q15(PyObject *obj, PyObject *args)
   if (PyArg_ParseTuple(args,"OO",&pSrcA,&pSrcB))
   {
 
-    arm_matrix_instance_q15 *pSrcA_converted = q15MatrixFromNumpy(pSrcA);
+    q15MatrixFromNumpy(&pSrcA_converted,pSrcA);
     GETARGUMENT(pSrcB,NPY_INT16,int16_t,q15_t);
-    uint32_t row = pSrcA_converted->numRows ;
-    uint32_t column = pSrcA_converted->numCols ;
+    uint32_t row = pSrcA_converted.numRows ;
+    uint32_t column = pSrcA_converted.numCols ;
     pDst=PyMem_Malloc(sizeof(q15_t)*row);
 
-    arm_mat_vec_mult_q15(pSrcA_converted,pSrcB_converted,pDst);
+    arm_mat_vec_mult_q15(&pSrcA_converted,pSrcB_converted,pDst);
     INT16ARRAY1(pDstOBJ,row,pDst);
 
     PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
 
-    FREEARGUMENT(pSrcA_converted);
+    FREEMATRIX(&pSrcA_converted);
     FREEARGUMENT(pSrcB_converted);
     Py_DECREF(pDstOBJ);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 static PyObject *
@@ -1049,7 +1078,7 @@ cmsis_arm_mat_vec_mult_q7(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrcA=NULL; // input
-  arm_matrix_instance_q7 *pSrcA_converted=NULL; // input
+  arm_matrix_instance_q7 pSrcA_converted; // input
   PyObject *pSrcB=NULL; // input
   q7_t *pSrcB_converted=NULL; // input
   q7_t *pDst=NULL; // output
@@ -1057,24 +1086,24 @@ cmsis_arm_mat_vec_mult_q7(PyObject *obj, PyObject *args)
   if (PyArg_ParseTuple(args,"OO",&pSrcA,&pSrcB))
   {
 
-    arm_matrix_instance_q7 *pSrcA_converted = q7MatrixFromNumpy(pSrcA);
+    q7MatrixFromNumpy(&pSrcA_converted,pSrcA);
     GETARGUMENT(pSrcB,NPY_BYTE,int8_t,q7_t);
-    uint32_t row = pSrcA_converted->numRows ;
-    uint32_t column = pSrcA_converted->numCols ;
+    uint32_t row = pSrcA_converted.numRows ;
+    uint32_t column = pSrcA_converted.numCols ;
     pDst=PyMem_Malloc(sizeof(q7_t)*row);
 
-    arm_mat_vec_mult_q7(pSrcA_converted,pSrcB_converted,pDst);
+    arm_mat_vec_mult_q7(&pSrcA_converted,pSrcB_converted,pDst);
     INT8ARRAY1(pDstOBJ,row,pDst);
 
     PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
 
-    FREEARGUMENT(pSrcA_converted);
+    FREEMATRIX(&pSrcA_converted);
     FREEARGUMENT(pSrcB_converted);
     Py_DECREF(pDstOBJ);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 static PyObject *
@@ -1082,37 +1111,40 @@ cmsis_arm_mat_mult_q7(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrcA=NULL; // input
-  arm_matrix_instance_q7 *pSrcA_converted=NULL; // input
+  arm_matrix_instance_q7 pSrcA_converted; // input
   PyObject *pSrcB=NULL; // input
-  arm_matrix_instance_q7 *pSrcB_converted=NULL; // input
+  arm_matrix_instance_q7 pSrcB_converted; // input
   PyObject *pState=NULL; // input
   q7_t *pState_converted=NULL; // input
+  arm_matrix_instance_q7 pDst_converted;
 
   if (PyArg_ParseTuple(args,"OOO",&pSrcA,&pSrcB,&pState))
   {
 
-    arm_matrix_instance_q7 *pSrcA_converted = q7MatrixFromNumpy(pSrcA);
-    arm_matrix_instance_q7 *pSrcB_converted = q7MatrixFromNumpy(pSrcB);
+    q7MatrixFromNumpy(&pSrcA_converted,pSrcA);
+    q7MatrixFromNumpy(&pSrcB_converted,pSrcB);
     GETARGUMENT(pState,NPY_BYTE,int8_t,q7_t);
-    uint32_t row = pSrcA_converted->numRows ;
-    uint32_t column = pSrcB_converted->numCols ;
-    arm_matrix_instance_q7 *pDst_converted = createq7Matrix(row,column);
+    uint32_t row = pSrcA_converted.numRows ;
+    uint32_t column = pSrcB_converted.numCols ;
+    createq7Matrix(&pDst_converted,row,column);
 
-    arm_status returnValue = arm_mat_mult_q7(pSrcA_converted,pSrcB_converted,pDst_converted,pState_converted);
+    arm_status returnValue = arm_mat_mult_q7(&pSrcA_converted,
+        &pSrcB_converted,
+        &pDst_converted,pState_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* pDstOBJ=NumpyArrayFromq7Matrix(pDst_converted);
+    PyObject* pDstOBJ=NumpyArrayFromq7Matrix(&pDst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pDstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(pSrcA_converted);
-    FREEARGUMENT(pSrcB_converted);
+    FREEMATRIX(&pSrcA_converted);
+    FREEMATRIX(&pSrcB_converted);
     Py_DECREF(pDstOBJ);
     FREEARGUMENT(pState_converted);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 static PyObject *
@@ -1120,38 +1152,40 @@ cmsis_arm_mat_mult_q15(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrcA=NULL; // input
-  arm_matrix_instance_q15 *pSrcA_converted=NULL; // input
+  arm_matrix_instance_q15 pSrcA_converted; // input
   PyObject *pSrcB=NULL; // input
-  arm_matrix_instance_q15 *pSrcB_converted=NULL; // input
+  arm_matrix_instance_q15 pSrcB_converted; // input
   PyObject *pState=NULL; // input
   q15_t *pState_converted=NULL; // input
+  arm_matrix_instance_q15 pDst_converted;
 
   if (PyArg_ParseTuple(args,"OOO",&pSrcA,&pSrcB,&pState))
   {
 
-    arm_matrix_instance_q15 *pSrcA_converted = q15MatrixFromNumpy(pSrcA);
-    arm_matrix_instance_q15 *pSrcB_converted = q15MatrixFromNumpy(pSrcB);
+    q15MatrixFromNumpy(&pSrcA_converted,pSrcA);
+    q15MatrixFromNumpy(&pSrcB_converted,pSrcB);
     
     GETARGUMENT(pState,NPY_INT16,int16_t,int16_t);
-    uint32_t row = pSrcA_converted->numRows ;
-    uint32_t column = pSrcB_converted->numCols ;
-    arm_matrix_instance_q15 *pDst_converted = createq15Matrix(row,column);
+    uint32_t row = pSrcA_converted.numRows ;
+    uint32_t column = pSrcB_converted.numCols ;
+    createq15Matrix(&pDst_converted,row,column);
 
-    arm_status returnValue = arm_mat_mult_q15(pSrcA_converted,pSrcB_converted,pDst_converted,pState_converted);
+    arm_status returnValue = arm_mat_mult_q15(&pSrcA_converted,
+        &pSrcB_converted,&pDst_converted,pState_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* pDstOBJ=NumpyArrayFromq15Matrix(pDst_converted);
+    PyObject* pDstOBJ=NumpyArrayFromq15Matrix(&pDst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pDstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(pSrcA_converted);
-    FREEARGUMENT(pSrcB_converted);
+    FREEMATRIX(&pSrcA_converted);
+    FREEMATRIX(&pSrcB_converted);
     Py_DECREF(pDstOBJ);
     FREEARGUMENT(pState_converted);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 
@@ -1160,37 +1194,39 @@ cmsis_arm_mat_mult_fast_q15(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrcA=NULL; // input
-  arm_matrix_instance_q15 *pSrcA_converted=NULL; // input
+  arm_matrix_instance_q15 pSrcA_converted; // input
   PyObject *pSrcB=NULL; // input
-  arm_matrix_instance_q15 *pSrcB_converted=NULL; // input
+  arm_matrix_instance_q15 pSrcB_converted; // input
   PyObject *pState=NULL; // input
   q15_t *pState_converted=NULL; // input
+  arm_matrix_instance_q15 pDst_converted;
 
   if (PyArg_ParseTuple(args,"OOO",&pSrcA,&pSrcB,&pState))
   {
 
-    arm_matrix_instance_q15 *pSrcA_converted = q15MatrixFromNumpy(pSrcA);
-    arm_matrix_instance_q15 *pSrcB_converted = q15MatrixFromNumpy(pSrcB);
+    q15MatrixFromNumpy(&pSrcA_converted,pSrcA);
+    q15MatrixFromNumpy(&pSrcB_converted,pSrcB);
     GETARGUMENT(pState,NPY_INT16,int16_t,int16_t);
-    uint32_t row = pSrcA_converted->numRows ;
-    uint32_t column = pSrcB_converted->numCols ;
-    arm_matrix_instance_q15 *pDst_converted = createq15Matrix(row,column);
+    uint32_t row = pSrcA_converted.numRows ;
+    uint32_t column = pSrcB_converted.numCols ;
+    createq15Matrix(&pDst_converted,row,column);
 
-    arm_status returnValue = arm_mat_mult_fast_q15(pSrcA_converted,pSrcB_converted,pDst_converted,pState_converted);
+    arm_status returnValue = arm_mat_mult_fast_q15(&pSrcA_converted,
+        &pSrcB_converted,&pDst_converted,pState_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* pDstOBJ=NumpyArrayFromq15Matrix(pDst_converted);
+    PyObject* pDstOBJ=NumpyArrayFromq15Matrix(&pDst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pDstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(pSrcA_converted);
-    FREEARGUMENT(pSrcB_converted);
+    FREEMATRIX(&pSrcA_converted);
+    FREEMATRIX(&pSrcB_converted);
     Py_DECREF(pDstOBJ);
     FREEARGUMENT(pState_converted);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 static PyObject *
@@ -1198,7 +1234,7 @@ cmsis_arm_mat_vec_mult_q31(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrcA=NULL; // input
-  arm_matrix_instance_q31 *pSrcA_converted=NULL; // input
+  arm_matrix_instance_q31 pSrcA_converted; // input
   PyObject *pSrcB=NULL; // input
   q31_t *pSrcB_converted=NULL; // input
   q31_t *pDst=NULL; // output
@@ -1206,24 +1242,24 @@ cmsis_arm_mat_vec_mult_q31(PyObject *obj, PyObject *args)
   if (PyArg_ParseTuple(args,"OO",&pSrcA,&pSrcB))
   {
 
-    arm_matrix_instance_q31 *pSrcA_converted = q31MatrixFromNumpy(pSrcA);
+    q31MatrixFromNumpy(&pSrcA_converted,pSrcA);
     GETARGUMENT(pSrcB,NPY_INT32,int32_t,q31_t);
-    uint32_t row = pSrcA_converted->numRows ;
-    uint32_t column = pSrcA_converted->numCols ;
+    uint32_t row = pSrcA_converted.numRows ;
+    uint32_t column = pSrcA_converted.numCols ;
     pDst=PyMem_Malloc(sizeof(q31_t)*row);
 
-    arm_mat_vec_mult_q31(pSrcA_converted,pSrcB_converted,pDst);
+    arm_mat_vec_mult_q31(&pSrcA_converted,pSrcB_converted,pDst);
     INT32ARRAY1(pDstOBJ,row,pDst);
 
     PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
 
-    FREEARGUMENT(pSrcA_converted);
+    FREEMATRIX(&pSrcA_converted);
     FREEARGUMENT(pSrcB_converted);
     Py_DECREF(pDstOBJ);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 static PyObject *
@@ -1231,33 +1267,35 @@ cmsis_arm_mat_mult_q31(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrcA=NULL; // input
-  arm_matrix_instance_q31 *pSrcA_converted=NULL; // input
+  arm_matrix_instance_q31 pSrcA_converted; // input
   PyObject *pSrcB=NULL; // input
-  arm_matrix_instance_q31 *pSrcB_converted=NULL; // input
+  arm_matrix_instance_q31 pSrcB_converted; // input
+  arm_matrix_instance_q31 pDst_converted;
 
   if (PyArg_ParseTuple(args,"OO",&pSrcA,&pSrcB))
   {
 
-    arm_matrix_instance_q31 *pSrcA_converted = q31MatrixFromNumpy(pSrcA);
-    arm_matrix_instance_q31 *pSrcB_converted = q31MatrixFromNumpy(pSrcB);
-    uint32_t row = pSrcA_converted->numRows ;
-    uint32_t column = pSrcB_converted->numCols ;
-    arm_matrix_instance_q31 *pDst_converted = createq31Matrix(row,column);
+    q31MatrixFromNumpy(&pSrcA_converted,pSrcA);
+    q31MatrixFromNumpy(&pSrcB_converted,pSrcB);
+    uint32_t row = pSrcA_converted.numRows ;
+    uint32_t column = pSrcB_converted.numCols ;
+    createq31Matrix(&pDst_converted,row,column);
 
-    arm_status returnValue = arm_mat_mult_q31(pSrcA_converted,pSrcB_converted,pDst_converted);
+    arm_status returnValue = arm_mat_mult_q31(&pSrcA_converted,&pSrcB_converted,
+        &pDst_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* pDstOBJ=NumpyArrayFromq31Matrix(pDst_converted);
+    PyObject* pDstOBJ=NumpyArrayFromq31Matrix(&pDst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pDstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(pSrcA_converted);
-    FREEARGUMENT(pSrcB_converted);
+    FREEMATRIX(&pSrcA_converted);
+    FREEMATRIX(&pSrcB_converted);
     Py_DECREF(pDstOBJ);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 static PyObject *
@@ -1265,38 +1303,40 @@ cmsis_arm_mat_mult_opt_q31(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrcA=NULL; // input
-  arm_matrix_instance_q31 *pSrcA_converted=NULL; // input
+  arm_matrix_instance_q31 pSrcA_converted; // input
   PyObject *pSrcB=NULL; // input
-  arm_matrix_instance_q31 *pSrcB_converted=NULL; // input
+  arm_matrix_instance_q31 pSrcB_converted; // input
   PyObject *pState=NULL; // input
   q31_t *pState_converted=NULL; // input
+  arm_matrix_instance_q31 pDst_converted;
 
   if (PyArg_ParseTuple(args,"OOO",&pSrcA,&pSrcB,&pState))
   {
 
-    arm_matrix_instance_q31 *pSrcA_converted = q31MatrixFromNumpy(pSrcA);
-    arm_matrix_instance_q31 *pSrcB_converted = q31MatrixFromNumpy(pSrcB);
+    q31MatrixFromNumpy(&pSrcA_converted,pSrcA);
+    q31MatrixFromNumpy(&pSrcB_converted,pSrcB);
     
     GETARGUMENT(pState,NPY_INT32,int32_t,int32_t);
-    uint32_t row = pSrcA_converted->numRows ;
-    uint32_t column = pSrcB_converted->numCols ;
-    arm_matrix_instance_q31 *pDst_converted = createq31Matrix(row,column);
+    uint32_t row = pSrcA_converted.numRows ;
+    uint32_t column = pSrcB_converted.numCols ;
+    createq31Matrix(&pDst_converted,row,column);
 
-    arm_status returnValue = arm_mat_mult_opt_q31(pSrcA_converted,pSrcB_converted,pDst_converted,pState_converted);
+    arm_status returnValue = arm_mat_mult_opt_q31(&pSrcA_converted,
+        &pSrcB_converted,&pDst_converted,pState_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* pDstOBJ=NumpyArrayFromq31Matrix(pDst_converted);
+    PyObject* pDstOBJ=NumpyArrayFromq31Matrix(&pDst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pDstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(pSrcA_converted);
-    FREEARGUMENT(pSrcB_converted);
+    FREEMATRIX(&pSrcA_converted);
+    FREEMATRIX(&pSrcB_converted);
     Py_DECREF(pDstOBJ);
     FREEARGUMENT(pState_converted);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 static PyObject *
@@ -1304,33 +1344,35 @@ cmsis_arm_mat_mult_fast_q31(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrcA=NULL; // input
-  arm_matrix_instance_q31 *pSrcA_converted=NULL; // input
+  arm_matrix_instance_q31 pSrcA_converted; // input
   PyObject *pSrcB=NULL; // input
-  arm_matrix_instance_q31 *pSrcB_converted=NULL; // input
+  arm_matrix_instance_q31 pSrcB_converted; // input
+  arm_matrix_instance_q31 pDst_converted;
 
   if (PyArg_ParseTuple(args,"OO",&pSrcA,&pSrcB))
   {
 
-    arm_matrix_instance_q31 *pSrcA_converted = q31MatrixFromNumpy(pSrcA);
-    arm_matrix_instance_q31 *pSrcB_converted = q31MatrixFromNumpy(pSrcB);
-    uint32_t row = pSrcA_converted->numRows ;
-    uint32_t column = pSrcB_converted->numCols ;
-    arm_matrix_instance_q31 *pDst_converted = createq31Matrix(row,column);
+    q31MatrixFromNumpy(&pSrcA_converted,pSrcA);
+    q31MatrixFromNumpy(&pSrcB_converted,pSrcB);
+    uint32_t row = pSrcA_converted.numRows ;
+    uint32_t column = pSrcB_converted.numCols ;
+    createq31Matrix(&pDst_converted,row,column);
 
-    arm_status returnValue = arm_mat_mult_fast_q31(pSrcA_converted,pSrcB_converted,pDst_converted);
+    arm_status returnValue = arm_mat_mult_fast_q31(&pSrcA_converted,
+        &pSrcB_converted,&pDst_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* pDstOBJ=NumpyArrayFromq31Matrix(pDst_converted);
+    PyObject* pDstOBJ=NumpyArrayFromq31Matrix(&pDst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pDstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(pSrcA_converted);
-    FREEARGUMENT(pSrcB_converted);
+    FREEMATRIX(&pSrcA_converted);
+    FREEMATRIX(&pSrcB_converted);
     Py_DECREF(pDstOBJ);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 
@@ -1339,33 +1381,35 @@ cmsis_arm_mat_sub_f32(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrcA=NULL; // input
-  arm_matrix_instance_f32 *pSrcA_converted=NULL; // input
+  arm_matrix_instance_f32 pSrcA_converted; // input
   PyObject *pSrcB=NULL; // input
-  arm_matrix_instance_f32 *pSrcB_converted=NULL; // input
+  arm_matrix_instance_f32 pSrcB_converted; // input
+  arm_matrix_instance_f32 pDst_converted;
 
   if (PyArg_ParseTuple(args,"OO",&pSrcA,&pSrcB))
   {
 
-    arm_matrix_instance_f32 *pSrcA_converted = f32MatrixFromNumpy(pSrcA);
-    arm_matrix_instance_f32 *pSrcB_converted = f32MatrixFromNumpy(pSrcB);
-    uint32_t row = pSrcA_converted->numRows ;
-    uint32_t column = pSrcB_converted->numCols ;
-    arm_matrix_instance_f32 *pDst_converted = createf32Matrix(row,column);
+    f32MatrixFromNumpy(&pSrcA_converted,pSrcA);
+    f32MatrixFromNumpy(&pSrcB_converted,pSrcB);
+    uint32_t row = pSrcA_converted.numRows ;
+    uint32_t column = pSrcB_converted.numCols ;
+    createf32Matrix(&pDst_converted,row,column);
 
-    arm_status returnValue = arm_mat_sub_f32(pSrcA_converted,pSrcB_converted,pDst_converted);
+    arm_status returnValue = arm_mat_sub_f32(&pSrcA_converted,
+        &pSrcB_converted,&pDst_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* pDstOBJ=NumpyArrayFromf32Matrix(pDst_converted);
+    PyObject* pDstOBJ=NumpyArrayFromf32Matrix(&pDst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pDstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(pSrcA_converted);
-    FREEARGUMENT(pSrcB_converted);
+    FREEMATRIX(&pSrcA_converted);
+    FREEMATRIX(&pSrcB_converted);
     Py_DECREF(pDstOBJ);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 static PyObject *
@@ -1373,33 +1417,35 @@ cmsis_arm_mat_sub_f64(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrcA=NULL; // input
-  arm_matrix_instance_f64 *pSrcA_converted=NULL; // input
+  arm_matrix_instance_f64 pSrcA_converted; // input
   PyObject *pSrcB=NULL; // input
-  arm_matrix_instance_f64 *pSrcB_converted=NULL; // input
+  arm_matrix_instance_f64 pSrcB_converted; // input
+  arm_matrix_instance_f64 pDst_converted;
 
   if (PyArg_ParseTuple(args,"OO",&pSrcA,&pSrcB))
   {
 
-    arm_matrix_instance_f64 *pSrcA_converted = f64MatrixFromNumpy(pSrcA);
-    arm_matrix_instance_f64 *pSrcB_converted = f64MatrixFromNumpy(pSrcB);
-    uint32_t row = pSrcA_converted->numRows ;
-    uint32_t column = pSrcB_converted->numCols ;
-    arm_matrix_instance_f64 *pDst_converted = createf64Matrix(row,column);
+    f64MatrixFromNumpy(&pSrcA_converted,pSrcA);
+    f64MatrixFromNumpy(&pSrcB_converted,pSrcB);
+    uint32_t row = pSrcA_converted.numRows ;
+    uint32_t column = pSrcB_converted.numCols ;
+    createf64Matrix(&pDst_converted,row,column);
 
-    arm_status returnValue = arm_mat_sub_f64(pSrcA_converted,pSrcB_converted,pDst_converted);
+    arm_status returnValue = arm_mat_sub_f64(&pSrcA_converted,
+        &pSrcB_converted,&pDst_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* pDstOBJ=NumpyArrayFromf64Matrix(pDst_converted);
+    PyObject* pDstOBJ=NumpyArrayFromf64Matrix(&pDst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pDstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(pSrcA_converted);
-    FREEARGUMENT(pSrcB_converted);
+    FREEMATRIX(&pSrcA_converted);
+    FREEMATRIX(&pSrcB_converted);
     Py_DECREF(pDstOBJ);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 
@@ -1408,33 +1454,35 @@ cmsis_arm_mat_sub_q15(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrcA=NULL; // input
-  arm_matrix_instance_q15 *pSrcA_converted=NULL; // input
+  arm_matrix_instance_q15 pSrcA_converted; // input
   PyObject *pSrcB=NULL; // input
-  arm_matrix_instance_q15 *pSrcB_converted=NULL; // input
+  arm_matrix_instance_q15 pSrcB_converted; // input
+  arm_matrix_instance_q15 pDst_converted; 
 
   if (PyArg_ParseTuple(args,"OO",&pSrcA,&pSrcB))
   {
 
-    arm_matrix_instance_q15 *pSrcA_converted = q15MatrixFromNumpy(pSrcA);
-    arm_matrix_instance_q15 *pSrcB_converted = q15MatrixFromNumpy(pSrcB);
-    uint32_t row = pSrcA_converted->numRows ;
-    uint32_t column = pSrcB_converted->numCols ;
-    arm_matrix_instance_q15 *pDst_converted = createq15Matrix(row,column);
+    q15MatrixFromNumpy(&pSrcA_converted,pSrcA);
+    q15MatrixFromNumpy(&pSrcB_converted,pSrcB);
+    uint32_t row = pSrcA_converted.numRows ;
+    uint32_t column = pSrcB_converted.numCols ;
+    createq15Matrix(&pDst_converted,row,column);
 
-    arm_status returnValue = arm_mat_sub_q15(pSrcA_converted,pSrcB_converted,pDst_converted);
+    arm_status returnValue = arm_mat_sub_q15(&pSrcA_converted,&pSrcB_converted,
+        &pDst_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* pDstOBJ=NumpyArrayFromq15Matrix(pDst_converted);
+    PyObject* pDstOBJ=NumpyArrayFromq15Matrix(&pDst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pDstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(pSrcA_converted);
-    FREEARGUMENT(pSrcB_converted);
+    FREEMATRIX(&pSrcA_converted);
+    FREEMATRIX(&pSrcB_converted);
     Py_DECREF(pDstOBJ);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 
@@ -1443,33 +1491,35 @@ cmsis_arm_mat_sub_q31(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrcA=NULL; // input
-  arm_matrix_instance_q31 *pSrcA_converted=NULL; // input
+  arm_matrix_instance_q31 pSrcA_converted; // input
   PyObject *pSrcB=NULL; // input
-  arm_matrix_instance_q31 *pSrcB_converted=NULL; // input
+  arm_matrix_instance_q31 pSrcB_converted; // input
+  arm_matrix_instance_q31 pDst_converted;
 
   if (PyArg_ParseTuple(args,"OO",&pSrcA,&pSrcB))
   {
 
-    arm_matrix_instance_q31 *pSrcA_converted = q31MatrixFromNumpy(pSrcA);
-    arm_matrix_instance_q31 *pSrcB_converted = q31MatrixFromNumpy(pSrcB);
-    uint32_t row = pSrcA_converted->numRows ;
-    uint32_t column = pSrcB_converted->numCols ;
-    arm_matrix_instance_q31 *pDst_converted = createq31Matrix(row,column);
+    q31MatrixFromNumpy(&pSrcA_converted,pSrcA);
+    q31MatrixFromNumpy(&pSrcB_converted,pSrcB);
+    uint32_t row = pSrcA_converted.numRows ;
+    uint32_t column = pSrcB_converted.numCols ;
+    createq31Matrix(&pDst_converted,row,column);
 
-    arm_status returnValue = arm_mat_sub_q31(pSrcA_converted,pSrcB_converted,pDst_converted);
+    arm_status returnValue = arm_mat_sub_q31(&pSrcA_converted,
+        &pSrcB_converted,&pDst_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* pDstOBJ=NumpyArrayFromq31Matrix(pDst_converted);
+    PyObject* pDstOBJ=NumpyArrayFromq31Matrix(&pDst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pDstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(pSrcA_converted);
-    FREEARGUMENT(pSrcB_converted);
+    FREEMATRIX(&pSrcA_converted);
+    FREEMATRIX(&pSrcB_converted);
     Py_DECREF(pDstOBJ);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 
@@ -1478,30 +1528,31 @@ cmsis_arm_mat_scale_f32(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrc=NULL; // input
-  arm_matrix_instance_f32 *pSrc_converted=NULL; // input
+  arm_matrix_instance_f32 pSrc_converted; // input
   float32_t scale; // input
+  arm_matrix_instance_f32 pDst_converted;
 
   if (PyArg_ParseTuple(args,"Of",&pSrc,&scale))
   {
 
-    arm_matrix_instance_f32 *pSrc_converted = f32MatrixFromNumpy(pSrc);
-    uint32_t row = pSrc_converted->numRows ;
-    uint32_t column = pSrc_converted->numCols ;
-    arm_matrix_instance_f32 *pDst_converted = createf32Matrix(row,column);
+    f32MatrixFromNumpy(&pSrc_converted,pSrc);
+    uint32_t row = pSrc_converted.numRows ;
+    uint32_t column = pSrc_converted.numCols ;
+    createf32Matrix(&pDst_converted,row,column);
 
-    arm_status returnValue = arm_mat_scale_f32(pSrc_converted,scale,pDst_converted);
+    arm_status returnValue = arm_mat_scale_f32(&pSrc_converted,scale,&pDst_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* pDstOBJ=NumpyArrayFromf32Matrix(pDst_converted);
+    PyObject* pDstOBJ=NumpyArrayFromf32Matrix(&pDst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pDstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(pSrc_converted);
+    FREEMATRIX(&pSrc_converted);
     Py_DECREF(pDstOBJ);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 
@@ -1510,31 +1561,32 @@ cmsis_arm_mat_scale_q15(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrc=NULL; // input
-  arm_matrix_instance_q15 *pSrc_converted=NULL; // input
+  arm_matrix_instance_q15 pSrc_converted; // input
   q15_t scaleFract; // input
   int32_t shift; // input
+  arm_matrix_instance_q15 pDst_converted;
 
   if (PyArg_ParseTuple(args,"Ohi",&pSrc,&scaleFract,&shift))
   {
 
-    arm_matrix_instance_q15 *pSrc_converted = q15MatrixFromNumpy(pSrc);
-    uint32_t row = pSrc_converted->numRows ;
-    uint32_t column = pSrc_converted->numCols ;
-    arm_matrix_instance_q15 *pDst_converted = createq15Matrix(row,column);
+    q15MatrixFromNumpy(&pSrc_converted,pSrc);
+    uint32_t row = pSrc_converted.numRows ;
+    uint32_t column = pSrc_converted.numCols ;
+    createq15Matrix(&pDst_converted,row,column);
 
-    arm_status returnValue = arm_mat_scale_q15(pSrc_converted,scaleFract,shift,pDst_converted);
+    arm_status returnValue = arm_mat_scale_q15(&pSrc_converted,scaleFract,shift,&pDst_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* pDstOBJ=NumpyArrayFromq15Matrix(pDst_converted);
+    PyObject* pDstOBJ=NumpyArrayFromq15Matrix(&pDst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pDstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(pSrc_converted);
+    FREEMATRIX(&pSrc_converted);
     Py_DECREF(pDstOBJ);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 
@@ -1543,63 +1595,268 @@ cmsis_arm_mat_scale_q31(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrc=NULL; // input
-  arm_matrix_instance_q31 *pSrc_converted=NULL; // input
+  arm_matrix_instance_q31 pSrc_converted; // input
   q31_t scaleFract; // input
   int32_t shift; // input
+  arm_matrix_instance_q31 pDst_converted;
 
   if (PyArg_ParseTuple(args,"Oii",&pSrc,&scaleFract,&shift))
   {
 
-    arm_matrix_instance_q31 *pSrc_converted = q31MatrixFromNumpy(pSrc);
-    uint32_t row = pSrc_converted->numRows ;
-    uint32_t column = pSrc_converted->numCols ;
-    arm_matrix_instance_q31 *pDst_converted = createq31Matrix(row,column);
+    q31MatrixFromNumpy(&pSrc_converted,pSrc);
+    uint32_t row = pSrc_converted.numRows ;
+    uint32_t column = pSrc_converted.numCols ;
+    createq31Matrix(&pDst_converted,row,column);
 
-    arm_status returnValue = arm_mat_scale_q31(pSrc_converted,scaleFract,shift,pDst_converted);
+    arm_status returnValue = arm_mat_scale_q31(&pSrc_converted,scaleFract,shift,&pDst_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* pDstOBJ=NumpyArrayFromq31Matrix(pDst_converted);
+    PyObject* pDstOBJ=NumpyArrayFromq31Matrix(&pDst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pDstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(pSrc_converted);
+    FREEMATRIX(&pSrc_converted);
     Py_DECREF(pDstOBJ);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
+static PyObject *
+cmsis_arm_mat_qr_f64(PyObject *obj, PyObject *args)
+{
 
+  PyObject *src=NULL;
+  arm_matrix_instance_f64 src_converted;
+
+  PyObject *pTmpaIn=NULL;
+  float64_t *pTmpaIn_converted=NULL; 
+
+  PyObject *pTmpbIn=NULL; 
+  float64_t *pTmpbIn_converted=NULL;
+
+  float64_t threshold;
+
+  arm_matrix_instance_f64 Q_converted;
+  arm_matrix_instance_f64 R_converted;
+
+  if (PyArg_ParseTuple(args,"OdOO",&src,&threshold,&pTmpaIn,&pTmpbIn))
+  {
+
+    f64MatrixFromNumpy(&src_converted,src);
+    uint64_t column = src_converted.numCols ;
+    uint64_t row = src_converted.numRows ;
+
+    GETARGUMENT(pTmpaIn,NPY_DOUBLE,double,float64_t);
+    GETARGUMENT(pTmpbIn,NPY_DOUBLE,double,float64_t);
+    int tmpALength=arraySizepTmpaIn ;
+    int tmpBLength=arraySizepTmpbIn ;
+
+    
+    createf64Matrix(&Q_converted,row,row);
+    createf64Matrix(&R_converted,row,column);
+    float64_t *pTau=PyMem_Malloc(sizeof(float64_t)*column);
+    float64_t *pTmpa=PyMem_Malloc(sizeof(float64_t)*tmpALength);
+    float64_t *pTmpb=PyMem_Malloc(sizeof(float64_t)*tmpBLength);
+
+    arm_status returnValue = arm_mat_qr_f64(&src_converted,threshold,
+        &R_converted,&Q_converted,pTau,pTmpa,pTmpb);
+
+    PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
+    PyObject* ROBJ=NumpyArrayFromf64Matrix(&R_converted);
+    PyObject* QOBJ=NumpyArrayFromf64Matrix(&Q_converted);
+    FLOAT64ARRAY1(pTauOBJ,column,pTau);
+
+    PyObject *pythonResult = Py_BuildValue("OOOO",theReturnOBJ,ROBJ,QOBJ,pTauOBJ);
+
+    Py_DECREF(theReturnOBJ);
+    Py_DECREF(ROBJ);
+    Py_DECREF(QOBJ);
+    Py_DECREF(pTauOBJ);
+    FREEMATRIX(&src_converted);
+    FREEARGUMENT(pTmpaIn_converted);
+    FREEARGUMENT(pTmpbIn_converted);
+
+    PyMem_Free(pTmpa);
+    PyMem_Free(pTmpb);
+
+    return(pythonResult);
+
+  }
+  Py_RETURN_NONE;
+}
+
+static PyObject *
+cmsis_arm_mat_qr_f32(PyObject *obj, PyObject *args)
+{
+
+  PyObject *src=NULL;
+  arm_matrix_instance_f32 src_converted;
+
+  PyObject *pTmpaIn=NULL;
+  float32_t *pTmpaIn_converted=NULL; 
+
+  PyObject *pTmpbIn=NULL; 
+  float32_t *pTmpbIn_converted=NULL;
+
+  float32_t threshold;
+
+  arm_matrix_instance_f32 Q_converted;
+  arm_matrix_instance_f32 R_converted;
+
+  if (PyArg_ParseTuple(args,"OfOO",&src,&threshold,&pTmpaIn,&pTmpbIn))
+  {
+
+    f32MatrixFromNumpy(&src_converted,src);
+    uint32_t column = src_converted.numCols ;
+    uint32_t row = src_converted.numRows ;
+
+    GETARGUMENT(pTmpaIn,NPY_DOUBLE,double,float32_t);
+    GETARGUMENT(pTmpbIn,NPY_DOUBLE,double,float32_t);
+    int tmpALength=arraySizepTmpaIn ;
+    int tmpBLength=arraySizepTmpbIn ;
+
+    
+    createf32Matrix(&Q_converted,row,row);
+    createf32Matrix(&R_converted,row,column);
+    float32_t *pTau=PyMem_Malloc(sizeof(float32_t)*column);
+    float32_t *pTmpa=PyMem_Malloc(sizeof(float32_t)*tmpALength);
+    float32_t *pTmpb=PyMem_Malloc(sizeof(float32_t)*tmpBLength);
+
+    arm_status returnValue = arm_mat_qr_f32(&src_converted,threshold,
+        &R_converted,&Q_converted,pTau,pTmpa,pTmpb);
+
+    PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
+    PyObject* ROBJ=NumpyArrayFromf32Matrix(&R_converted);
+    PyObject* QOBJ=NumpyArrayFromf32Matrix(&Q_converted);
+    FLOATARRAY1(pTauOBJ,column,pTau);
+
+    PyObject *pythonResult = Py_BuildValue("OOOO",theReturnOBJ,ROBJ,QOBJ,pTauOBJ);
+
+    Py_DECREF(theReturnOBJ);
+    Py_DECREF(ROBJ);
+    Py_DECREF(QOBJ);
+    Py_DECREF(pTauOBJ);
+    FREEMATRIX(&src_converted);
+    FREEARGUMENT(pTmpaIn_converted);
+    FREEARGUMENT(pTmpbIn_converted);
+
+    PyMem_Free(pTmpa);
+    PyMem_Free(pTmpb);
+    
+    
+    return(pythonResult);
+
+  }
+  Py_RETURN_NONE;
+}
+
+static PyObject *
+cmsis_arm_householder_f64(PyObject *obj, PyObject *args)
+{
+
+  PyObject *pSrc=NULL; // input
+  float64_t *pSrc_converted=NULL; // input
+  uint32_t blockSize; // input
+  float64_t pResult; // output
+  float64_t *pDst=NULL; // output
+  float64_t threshold;
+
+  if (PyArg_ParseTuple(args,"Od",&pSrc,&threshold))
+  {
+
+    GETARGUMENT(pSrc,NPY_DOUBLE,double,float64_t);
+    blockSize = arraySizepSrc ;
+
+    pDst=PyMem_Malloc(sizeof(float64_t)*blockSize);
+
+
+    pResult=arm_householder_f64(pSrc_converted,threshold,blockSize,pDst);
+    PyObject* pResultOBJ=Py_BuildValue("d",pResult);
+    FLOAT64ARRAY1(pDstOBJ,blockSize,pDst);
+
+    PyObject *betaResult = Py_BuildValue("O",pResultOBJ);
+    PyObject *vecResult = Py_BuildValue("O",pDstOBJ);
+    
+    PyObject *pythonResult = Py_BuildValue("OO",betaResult,vecResult);
+
+    FREEARGUMENT(pSrc_converted);
+    Py_DECREF(pResultOBJ);
+    Py_DECREF(pDstOBJ);
+    return(pythonResult);
+
+  }
+  Py_RETURN_NONE;
+}
+
+static PyObject *
+cmsis_arm_householder_f32(PyObject *obj, PyObject *args)
+{
+
+  PyObject *pSrc=NULL; // input
+  float32_t *pSrc_converted=NULL; // input
+  uint32_t blockSize; // input
+  float32_t pResult; // output
+  float32_t *pDst=NULL; // output
+  float32_t threshold;
+
+  if (PyArg_ParseTuple(args,"Of",&pSrc,&threshold))
+  {
+
+    GETARGUMENT(pSrc,NPY_DOUBLE,double,float32_t);
+    blockSize = arraySizepSrc ;
+
+    pDst=PyMem_Malloc(sizeof(float32_t)*blockSize);
+
+
+    pResult=arm_householder_f32(pSrc_converted,threshold,blockSize,pDst);
+    PyObject* pResultOBJ=Py_BuildValue("f",pResult);
+    FLOATARRAY1(pDstOBJ,blockSize,pDst);
+
+    PyObject *betaResult = Py_BuildValue("O",pResultOBJ);
+    PyObject *vecResult = Py_BuildValue("O",pDstOBJ);
+    
+    PyObject *pythonResult = Py_BuildValue("OO",betaResult,vecResult);
+
+    FREEARGUMENT(pSrc_converted);
+    Py_DECREF(pResultOBJ);
+    Py_DECREF(pDstOBJ);
+    return(pythonResult);
+
+  }
+  Py_RETURN_NONE;
+}
 
 static PyObject *
 cmsis_arm_mat_inverse_f32(PyObject *obj, PyObject *args)
 {
 
   PyObject *src=NULL; // input
-  arm_matrix_instance_f32 *src_converted=NULL; // input
+  arm_matrix_instance_f32 src_converted; // input
+  arm_matrix_instance_f32 dst_converted;
 
   if (PyArg_ParseTuple(args,"O",&src))
   {
 
-    arm_matrix_instance_f32 *src_converted = f32MatrixFromNumpy(src);
-    uint32_t row = src_converted->numCols ;
-    uint32_t column = src_converted->numRows ;
-    arm_matrix_instance_f32 *dst_converted = createf32Matrix(row,column);
+    f32MatrixFromNumpy(&src_converted,src);
+    uint32_t row = src_converted.numCols ;
+    uint32_t column = src_converted.numRows ;
+    createf32Matrix(&dst_converted,row,column);
 
-    arm_status returnValue = arm_mat_inverse_f32(src_converted,dst_converted);
+    arm_status returnValue = arm_mat_inverse_f32(&src_converted,&dst_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* dstOBJ=NumpyArrayFromf32Matrix(dst_converted);
+    PyObject* dstOBJ=NumpyArrayFromf32Matrix(&dst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,dstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(src_converted);
+    FREEMATRIX(&src_converted);
     Py_DECREF(dstOBJ);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 
@@ -1608,29 +1865,30 @@ cmsis_arm_mat_inverse_f64(PyObject *obj, PyObject *args)
 {
 
   PyObject *src=NULL; // input
-  arm_matrix_instance_f64 *src_converted=NULL; // input
+  arm_matrix_instance_f64 src_converted; // input
+  arm_matrix_instance_f64 dst_converted;
 
   if (PyArg_ParseTuple(args,"O",&src))
   {
 
-    arm_matrix_instance_f64 *src_converted = f64MatrixFromNumpy(src);
-    uint32_t row = src_converted->numCols ;
-    uint32_t column = src_converted->numRows ;
-    arm_matrix_instance_f64 *dst_converted = createf64Matrix(row,column);
+    f64MatrixFromNumpy(&src_converted,src);
+    uint32_t row = src_converted.numCols ;
+    uint32_t column = src_converted.numRows ;
+    createf64Matrix(&dst_converted,row,column);
 
-    arm_status returnValue = arm_mat_inverse_f64(src_converted,dst_converted);
+    arm_status returnValue = arm_mat_inverse_f64(&src_converted,&dst_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* dstOBJ=NumpyArrayFromf64Matrix(dst_converted);
+    PyObject* dstOBJ=NumpyArrayFromf64Matrix(&dst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,dstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(src_converted);
+    FREEMATRIX(&src_converted);
     Py_DECREF(dstOBJ);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 
@@ -1639,29 +1897,30 @@ cmsis_arm_mat_cholesky_f32(PyObject *obj, PyObject *args)
 {
 
   PyObject *src=NULL; // input
-  arm_matrix_instance_f32 *src_converted=NULL; // input
+  arm_matrix_instance_f32 src_converted; // input
+  arm_matrix_instance_f32 dst_converted;
 
   if (PyArg_ParseTuple(args,"O",&src))
   {
 
-    arm_matrix_instance_f32 *src_converted = f32MatrixFromNumpy(src);
-    uint32_t column = src_converted->numCols ;
-    uint32_t row = src_converted->numRows ;
-    arm_matrix_instance_f32 *dst_converted = createf32Matrix(row,column);
+    f32MatrixFromNumpy(&src_converted,src);
+    uint32_t column = src_converted.numCols ;
+    uint32_t row = src_converted.numRows ;
+    createf32Matrix(&dst_converted,row,column);
 
-    arm_status returnValue = arm_mat_cholesky_f32(src_converted,dst_converted);
+    arm_status returnValue = arm_mat_cholesky_f32(&src_converted,&dst_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* dstOBJ=NumpyArrayFromf32Matrix(dst_converted);
+    PyObject* dstOBJ=NumpyArrayFromf32Matrix(&dst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,dstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(src_converted);
+    FREEMATRIX(&src_converted);
     Py_DECREF(dstOBJ);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 static PyObject *
@@ -1669,29 +1928,30 @@ cmsis_arm_mat_cholesky_f64(PyObject *obj, PyObject *args)
 {
 
   PyObject *src=NULL; // input
-  arm_matrix_instance_f64 *src_converted=NULL; // input
+  arm_matrix_instance_f64 src_converted; // input
+  arm_matrix_instance_f64 dst_converted;
 
   if (PyArg_ParseTuple(args,"O",&src))
   {
 
-    arm_matrix_instance_f64 *src_converted = f64MatrixFromNumpy(src);
-    uint32_t column = src_converted->numCols ;
-    uint32_t row = src_converted->numRows ;
-    arm_matrix_instance_f64 *dst_converted = createf64Matrix(row,column);
+    f64MatrixFromNumpy(&src_converted,src);
+    uint32_t column = src_converted.numCols ;
+    uint32_t row = src_converted.numRows ;
+    createf64Matrix(&dst_converted,row,column);
 
-    arm_status returnValue = arm_mat_cholesky_f64(src_converted,dst_converted);
+    arm_status returnValue = arm_mat_cholesky_f64(&src_converted,&dst_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* dstOBJ=NumpyArrayFromf64Matrix(dst_converted);
+    PyObject* dstOBJ=NumpyArrayFromf64Matrix(&dst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,dstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(src_converted);
+    FREEMATRIX(&src_converted);
     Py_DECREF(dstOBJ);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 static PyObject *
@@ -1699,32 +1959,34 @@ cmsis_arm_mat_ldlt_f32(PyObject *obj, PyObject *args)
 {
 
   PyObject *src=NULL; // input
-  arm_matrix_instance_f32 *src_converted=NULL; // input
+  arm_matrix_instance_f32 src_converted; // input
+  arm_matrix_instance_f32 l_converted;
+  arm_matrix_instance_f32 d_converted;
 
   if (PyArg_ParseTuple(args,"O",&src))
   {
 
-    arm_matrix_instance_f32 *src_converted = f32MatrixFromNumpy(src);
-    uint32_t column = src_converted->numCols ;
-    uint32_t row = src_converted->numRows ;
+    f32MatrixFromNumpy(&src_converted,src);
+    uint32_t column = src_converted.numCols ;
+    uint32_t row = src_converted.numRows ;
     
-    arm_matrix_instance_f32 *l_converted = createf32Matrix(row,column);
-    arm_matrix_instance_f32 *d_converted = createf32Matrix(row,column);
+    createf32Matrix(&l_converted,row,column);
+    createf32Matrix(&d_converted,row,column);
 
     uint16_t *pPerm=(uint16_t *)PyMem_Malloc(sizeof(uint16_t)*row);
     INT16ARRAY1(pPermOBJ,row,pPerm);
 
-    arm_status returnValue = arm_mat_ldlt_f32(src_converted,l_converted,d_converted,pPerm);
+    arm_status returnValue = arm_mat_ldlt_f32(&src_converted,&l_converted,&d_converted,pPerm);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
     
-    PyObject* lOBJ=NumpyArrayFromf32Matrix(l_converted);
-    PyObject* dOBJ=NumpyArrayFromf32Matrix(d_converted);
+    PyObject* lOBJ=NumpyArrayFromf32Matrix(&l_converted);
+    PyObject* dOBJ=NumpyArrayFromf32Matrix(&d_converted);
 
 
     PyObject *pythonResult = Py_BuildValue("OOOO",theReturnOBJ,lOBJ,dOBJ,pPermOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(src_converted);
+    FREEMATRIX(&src_converted);
     Py_DECREF(lOBJ);
     Py_DECREF(dOBJ);
     Py_DECREF(pPermOBJ);
@@ -1732,7 +1994,7 @@ cmsis_arm_mat_ldlt_f32(PyObject *obj, PyObject *args)
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 static PyObject *
@@ -1740,32 +2002,34 @@ cmsis_arm_mat_ldlt_f64(PyObject *obj, PyObject *args)
 {
 
   PyObject *src=NULL; // input
-  arm_matrix_instance_f64 *src_converted=NULL; // input
+  arm_matrix_instance_f64 src_converted; // input
+  arm_matrix_instance_f64 l_converted;
+  arm_matrix_instance_f64 d_converted;
 
   if (PyArg_ParseTuple(args,"O",&src))
   {
 
-    arm_matrix_instance_f64 *src_converted = f64MatrixFromNumpy(src);
-    uint32_t column = src_converted->numCols ;
-    uint32_t row = src_converted->numRows ;
+    f64MatrixFromNumpy(&src_converted,src);
+    uint32_t column = src_converted.numCols ;
+    uint32_t row = src_converted.numRows ;
     
-    arm_matrix_instance_f64 *l_converted = createf64Matrix(row,column);
-    arm_matrix_instance_f64 *d_converted = createf64Matrix(row,column);
+    createf64Matrix(&l_converted,row,column);
+    createf64Matrix(&d_converted,row,column);
 
     uint16_t *pPerm=(uint16_t *)PyMem_Malloc(sizeof(uint16_t)*row);
     INT16ARRAY1(pPermOBJ,row,pPerm);
 
-    arm_status returnValue = arm_mat_ldlt_f64(src_converted,l_converted,d_converted,pPerm);
+    arm_status returnValue = arm_mat_ldlt_f64(&src_converted,&l_converted,&d_converted,pPerm);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
     
-    PyObject* lOBJ=NumpyArrayFromf64Matrix(l_converted);
-    PyObject* dOBJ=NumpyArrayFromf64Matrix(d_converted);
+    PyObject* lOBJ=NumpyArrayFromf64Matrix(&l_converted);
+    PyObject* dOBJ=NumpyArrayFromf64Matrix(&d_converted);
 
 
     PyObject *pythonResult = Py_BuildValue("OOOO",theReturnOBJ,lOBJ,dOBJ,pPermOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(src_converted);
+    FREEMATRIX(&src_converted);
     Py_DECREF(lOBJ);
     Py_DECREF(dOBJ);
     Py_DECREF(pPermOBJ);
@@ -1773,7 +2037,7 @@ cmsis_arm_mat_ldlt_f64(PyObject *obj, PyObject *args)
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 static PyObject *
@@ -1781,34 +2045,36 @@ cmsis_arm_mat_solve_lower_triangular_f32(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrcA=NULL; // input
-  arm_matrix_instance_f32 *pSrcA_converted=NULL; // input
+  arm_matrix_instance_f32 pSrcA_converted; // input
   PyObject *pSrcB=NULL; // input
-  arm_matrix_instance_f32 *pSrcB_converted=NULL; // input
+  arm_matrix_instance_f32 pSrcB_converted; // input
+  arm_matrix_instance_f32 pDst_converted;
 
   if (PyArg_ParseTuple(args,"OO",&pSrcA,&pSrcB))
   {
 
-    arm_matrix_instance_f32 *pSrcA_converted = f32MatrixFromNumpy(pSrcA);
-    arm_matrix_instance_f32 *pSrcB_converted = f32MatrixFromNumpy(pSrcB);
-    uint32_t column = pSrcB_converted->numCols ;
-    uint32_t row = pSrcA_converted->numRows ;
+    f32MatrixFromNumpy(&pSrcA_converted,pSrcA);
+    f32MatrixFromNumpy(&pSrcB_converted,pSrcB);
+    uint32_t column = pSrcB_converted.numCols ;
+    uint32_t row = pSrcA_converted.numRows ;
 
-    arm_matrix_instance_f32 *pDst_converted = createf32Matrix(row,column);
+    createf32Matrix(&pDst_converted,row,column);
 
-    arm_status returnValue = arm_mat_solve_lower_triangular_f32(pSrcA_converted,pSrcB_converted,pDst_converted);
+    arm_status returnValue = arm_mat_solve_lower_triangular_f32(&pSrcA_converted,
+        &pSrcB_converted,&pDst_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* pDstOBJ=NumpyArrayFromf32Matrix(pDst_converted);
+    PyObject* pDstOBJ=NumpyArrayFromf32Matrix(&pDst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pDstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(pSrcA_converted);
-    FREEARGUMENT(pSrcB_converted);
+    FREEMATRIX(&pSrcA_converted);
+    FREEMATRIX(&pSrcB_converted);
     Py_DECREF(pDstOBJ);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 static PyObject *
@@ -1816,34 +2082,36 @@ cmsis_arm_mat_solve_lower_triangular_f64(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrcA=NULL; // input
-  arm_matrix_instance_f64 *pSrcA_converted=NULL; // input
+  arm_matrix_instance_f64 pSrcA_converted; // input
   PyObject *pSrcB=NULL; // input
-  arm_matrix_instance_f64 *pSrcB_converted=NULL; // input
+  arm_matrix_instance_f64 pSrcB_converted; // input
+  arm_matrix_instance_f64 pDst_converted;
 
   if (PyArg_ParseTuple(args,"OO",&pSrcA,&pSrcB))
   {
 
-    arm_matrix_instance_f64 *pSrcA_converted = f64MatrixFromNumpy(pSrcA);
-    arm_matrix_instance_f64 *pSrcB_converted = f64MatrixFromNumpy(pSrcB);
-    uint32_t column = pSrcB_converted->numCols ;
-    uint32_t row = pSrcA_converted->numRows ;
+    f64MatrixFromNumpy(&pSrcA_converted,pSrcA);
+    f64MatrixFromNumpy(&pSrcB_converted,pSrcB);
+    uint32_t column = pSrcB_converted.numCols ;
+    uint32_t row = pSrcA_converted.numRows ;
 
-    arm_matrix_instance_f64 *pDst_converted = createf64Matrix(row,column);
+   createf64Matrix(&pDst_converted,row,column);
 
-    arm_status returnValue = arm_mat_solve_lower_triangular_f64(pSrcA_converted,pSrcB_converted,pDst_converted);
+    arm_status returnValue = arm_mat_solve_lower_triangular_f64(&pSrcA_converted,
+        &pSrcB_converted,&pDst_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* pDstOBJ=NumpyArrayFromf64Matrix(pDst_converted);
+    PyObject* pDstOBJ=NumpyArrayFromf64Matrix(&pDst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pDstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(pSrcA_converted);
-    FREEARGUMENT(pSrcB_converted);
+    FREEMATRIX(&pSrcA_converted);
+    FREEMATRIX(&pSrcB_converted);
     Py_DECREF(pDstOBJ);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 static PyObject *
@@ -1851,33 +2119,35 @@ cmsis_arm_mat_solve_upper_triangular_f32(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrcA=NULL; // input
-  arm_matrix_instance_f32 *pSrcA_converted=NULL; // input
+  arm_matrix_instance_f32 pSrcA_converted; // input
   PyObject *pSrcB=NULL; // input
-  arm_matrix_instance_f32 *pSrcB_converted=NULL; // input
+  arm_matrix_instance_f32 pSrcB_converted; // input
+  arm_matrix_instance_f32 pDst_converted;
 
   if (PyArg_ParseTuple(args,"OO",&pSrcA,&pSrcB))
   {
 
-    arm_matrix_instance_f32 *pSrcA_converted = f32MatrixFromNumpy(pSrcA);
-    arm_matrix_instance_f32 *pSrcB_converted = f32MatrixFromNumpy(pSrcB);
-    uint32_t column = pSrcB_converted->numCols ;
-    uint32_t row = pSrcA_converted->numRows ;
-    arm_matrix_instance_f32 *pDst_converted = createf32Matrix(row,column);
+    f32MatrixFromNumpy(&pSrcA_converted,pSrcA);
+    f32MatrixFromNumpy(&pSrcB_converted,pSrcB);
+    uint32_t column = pSrcB_converted.numCols ;
+    uint32_t row = pSrcA_converted.numRows ;
+    createf32Matrix(&pDst_converted,row,column);
 
-    arm_status returnValue = arm_mat_solve_upper_triangular_f32(pSrcA_converted,pSrcB_converted,pDst_converted);
+    arm_status returnValue = arm_mat_solve_upper_triangular_f32(&pSrcA_converted,
+        &pSrcB_converted,&pDst_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* pDstOBJ=NumpyArrayFromf32Matrix(pDst_converted);
+    PyObject* pDstOBJ=NumpyArrayFromf32Matrix(&pDst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pDstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(pSrcA_converted);
-    FREEARGUMENT(pSrcB_converted);
+    FREEMATRIX(&pSrcA_converted);
+    FREEMATRIX(&pSrcB_converted);
     Py_DECREF(pDstOBJ);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 static PyObject *
@@ -1885,33 +2155,35 @@ cmsis_arm_mat_solve_upper_triangular_f64(PyObject *obj, PyObject *args)
 {
 
   PyObject *pSrcA=NULL; // input
-  arm_matrix_instance_f64 *pSrcA_converted=NULL; // input
+  arm_matrix_instance_f64 pSrcA_converted; // input
   PyObject *pSrcB=NULL; // input
-  arm_matrix_instance_f64 *pSrcB_converted=NULL; // input
+  arm_matrix_instance_f64 pSrcB_converted; // input
+  arm_matrix_instance_f64 pDst_converted;
 
   if (PyArg_ParseTuple(args,"OO",&pSrcA,&pSrcB))
   {
 
-    arm_matrix_instance_f64 *pSrcA_converted = f64MatrixFromNumpy(pSrcA);
-    arm_matrix_instance_f64 *pSrcB_converted = f64MatrixFromNumpy(pSrcB);
-    uint32_t column = pSrcB_converted->numCols ;
-    uint32_t row = pSrcA_converted->numRows ;
-    arm_matrix_instance_f64 *pDst_converted = createf64Matrix(row,column);
+    f64MatrixFromNumpy(&pSrcA_converted,pSrcA);
+    f64MatrixFromNumpy(&pSrcB_converted,pSrcB);
+    uint32_t column = pSrcB_converted.numCols ;
+    uint32_t row = pSrcA_converted.numRows ;
+    createf64Matrix(&pDst_converted,row,column);
 
-    arm_status returnValue = arm_mat_solve_upper_triangular_f64(pSrcA_converted,pSrcB_converted,pDst_converted);
+    arm_status returnValue = arm_mat_solve_upper_triangular_f64(&pSrcA_converted,
+        &pSrcB_converted,&pDst_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* pDstOBJ=NumpyArrayFromf64Matrix(pDst_converted);
+    PyObject* pDstOBJ=NumpyArrayFromf64Matrix(&pDst_converted);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pDstOBJ);
 
     Py_DECREF(theReturnOBJ);
-    FREEARGUMENT(pSrcA_converted);
-    FREEARGUMENT(pSrcB_converted);
+    FREEMATRIX(&pSrcA_converted);
+    FREEMATRIX(&pSrcB_converted);
     Py_DECREF(pDstOBJ);
     return(pythonResult);
 
   }
-  return(NULL);
+  Py_RETURN_NONE;
 }
 
 static PyMethodDef CMSISDSPMethods[] = {
@@ -1962,6 +2234,10 @@ static PyMethodDef CMSISDSPMethods[] = {
 {"arm_mat_solve_lower_triangular_f64",  cmsis_arm_mat_solve_lower_triangular_f64, METH_VARARGS,""},
 {"arm_mat_solve_upper_triangular_f32",  cmsis_arm_mat_solve_upper_triangular_f32, METH_VARARGS,""},
 {"arm_mat_solve_upper_triangular_f64",  cmsis_arm_mat_solve_upper_triangular_f64, METH_VARARGS,""},
+{"arm_householder_f32",  cmsis_arm_householder_f32, METH_VARARGS,""},
+{"arm_householder_f64",  cmsis_arm_householder_f64, METH_VARARGS,""},
+{"arm_mat_qr_f32",  cmsis_arm_mat_qr_f32, METH_VARARGS,""},
+{"arm_mat_qr_f64",  cmsis_arm_mat_qr_f64, METH_VARARGS,""},
 {"error_out", (PyCFunction)error_out, METH_NOARGS, NULL},
 
     {NULL, NULL, 0, NULL}        /* Sentinel */
