@@ -22,3 +22,7 @@ Output/
 Documentation/
 PACK.xsd
 *.uvguix.*
+build
+Documentation/html/*
+Doxygen/history.txt
+Doxygen/dsp.dxy
