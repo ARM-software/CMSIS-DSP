@@ -5,8 +5,9 @@
   <description>CMSIS Embedded Compute Library</description>
   <vendor>ARM</vendor>
   <license>LICENSE.txt</license>
-  <url>https://www.keil.com/pack/</url>
-
+  <url>https://raw.githubusercontent.com/ARM-software/CMSIS-DSP/pack-index/</url>
+  <repository type="git">https://github.com/ARM-software/CMSIS-DSP.git</repository>
+    
   <releases>
     <release version="0.0.0">
       Active development ...

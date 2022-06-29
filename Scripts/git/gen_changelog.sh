@@ -4,7 +4,7 @@ DIRNAME=$(dirname $(readlink -f $0))
 DESCRIBE=$(readlink -f ${DIRNAME}/git_describe.sh)
 
 function usage {
-  echo "$(basename $0) [-h|--help] [-f|--format <format>] [tag-prefix]"
+  echo "$(basename $0) [-h|--help] [-f|--format <format>] [-u|--url <url>] [tag-prefix]"
   echo ""
   echo "Arguments:"
   echo "  -h|--help               Print this usage message and exit."
@@ -14,6 +14,8 @@ function usage {
   echo "               dxy        Release notes for Doxygen"
   echo "               html       Release notes for HTML"
   echo "  -p|--pre                Include latest pre-release."
+  echo "  -u|--url <url>          Add url attribute to each release:"
+  echo "                          Placeholders are TAG, VERSION, DATE."
   echo "  tag-prefix              Prefix to filter tags."
   echo ""
 }
@@ -41,11 +43,14 @@ function print_pdsc_head {
 }
 
 function print_pdsc {
-  if [ -z "$2" ]; then
-    echo "  <release version=\"$1\">"
-  else
-    echo "  <release version=\"$1\" date=\"$2\">"
+  echo -n "  <release version=\"$1\""
+  if [ -n "$2" ]; then
+    echo -n " date=\"$2\""
   fi
+  if [ -n "$4" ]; then
+    echo -n " url=\"$4\""
+  fi
+  echo ">"
   echo -e "$3" | \
     sed "s/^/    /" | \
     sed "s/<br>//" | \
@@ -108,6 +113,7 @@ function print_html_tail {
 POSITIONAL=()
 FORMAT="text"
 PRERELEASE=0
+URL=""
 while [[ $# -gt 0 ]]
 do
   key="$1"
@@ -124,6 +130,11 @@ do
     ;;
     '-p'|'--pre')
       PRERELEASE=1
+      shift
+    ;;
+    '-u'|'--url')
+      shift
+      URL=$1
       shift
     ;;
     *)    # unknown option
@@ -150,10 +161,14 @@ if [[ $PRERELEASE != 0 ]] && ! git rev-list "${PREFIX}${LATEST}" >/dev/null; the
 fi
 
 for TAG in $TAGS; do
-  TAG="${TAG#refs/tags/}" 
+  TAG="${TAG#refs/tags/}"
+  VERSION="${TAG#${PREFIX}}"
   DESC=$(git tag -l -n99 --format "%(contents)" ${TAG} 2>/dev/null)
   DATE=$(git tag -l -n99 --format "%(taggerdate:short)" ${TAG} 2>/dev/null)
-  print_$FORMAT "${TAG#${PREFIX}}" "${DATE}" "${DESC}"       
+  if [ -n "$URL" ]; then
+    DLURL=$(TAG=$TAG VERSION=$VERSION DATE=$DATE envsubst <<< $URL)
+  fi
+  print_$FORMAT "${VERSION}" "${DATE}" "${DESC}" "${DLURL}"
 done
 
 print_${FORMAT}_tail
