@@ -9,7 +9,7 @@ CMSIS-DSP is an optimized compute library for embedded systems (DSP is in the na
 
 It provides optimized compute kernels for Cortex-M and for Cortex-A.
 
-On Cortex-M, different variants are available according to the core and most of the functions are using a vectorized version when the Helium extension is available.
+Different variants are available according to the core and most of the functions are using a vectorized version when the Helium or Neon extension is available.
 
 
 ### Kernels
