@@ -102,7 +102,7 @@ project (testcmsisdsp VERSION 0.1)
 add_subdirectory(${CMSISDSP}/Source bin_dsp)
 ```
 
-CMSIS-DSP is dependent on the CMSIS Core includes. So, you should use a `target_include_directories` to define where the `CMSIS_5\CMSIS\Core\Include` is located. Or you can also define `CMSISCORE` on the cmake command line.
+CMSIS-DSP is dependent on the CMSIS Core includes. So, you should use a `target_include_directories` to define where the `CMSIS_5\CMSIS\Core\Include` is located. Or you can also define `CMSISCORE` on the cmake command line. The path used will be `${CMSISCORE}\Include`.
 
 You should also set the compilation options to use to build the library.
 
@@ -157,7 +157,7 @@ cmake -DHOST=YES \
 
 Building examples with cmake is similar to building only the CMSIS-DSP library but in addition to that we also rely on the CMSIS-DSP test framework for the boot code.
 
-In addition to the `CMSIS` variable, the variable `CMSISDSPFOLDER` must also be defined.
+In addition to the `CMSIS` variable, the variable `CMSISDSP` must also be defined.
 
 `Examples/CMakeLists.txt` can be used to build all the examples.
 
@@ -172,7 +172,7 @@ cmake -DLOOPUNROLL=ON \
       -DCMAKE_PREFIX_PATH="path to compiler" \
       -DCMAKE_TOOLCHAIN_FILE=../../Testing/armac6.cmake \
       -DCMSIS="path_to_cmsis" \
-      -DCMSISDSPFOLDER="path_to_cmsisdsp" \
+      -DCMSISDSP="path_to_cmsisdsp" \
       -DARM_CPU="cortex-m55" \
       -DPLATFORM="FVP" \
       -DHELIUM=ON \
@@ -191,10 +191,40 @@ cmake -DLOOPUNROLL=ON \
       -DBAYES=ON \
       -DDISTANCE=ON \
       -DINTERPOLATION=ON \
-      -G "Unix Makefiles" "../ARM"
+      -G "Unix Makefiles" ".."
 ```
 
-### Building 
+If you want `printf` to be enabled in the examples, you should also define `-DSEMIHOSTING`
+
+### How to build for aarch64
+
+The intrinsics defined in `Core_A/Include` are not available on recent Cortex-A processors.
+
+But you can still build for those Cortex-A cores and benefit from the Neon intrinsics.
+
+You need to build with `-D__GNUC_PYTHON__` on the compiler command line. This flag was introduced for building the Python wrapper and is disabling the use of CMSIS Core includes.
+
+When this flag is enabled, CMSIS-DSP is defining a few macros used in the library for compiler portability:
+
+```C
+#include <stdint.h>
+#define  __ALIGNED(x) __attribute__((aligned(x)))
+#define __STATIC_FORCEINLINE static inline __attribute__((always_inline)) 
+#define __STATIC_INLINE static inline
+```
+
+If the compiler you are using is requiring different definitions, you can add them to `arm_math_types.h` in the `Include` folder of the library. MSVC and XCode are already supported and in those case, you don't need to define `-D__GNUC_PYTHON`__
+
+Then, you need to define `-DARM_MATH_NEON`
+
+For cmake the equivalent options are:
+
+* -DHOST=ON
+* -DNEON=ON
+
+cmake is automatically including the ComputeLibrary folder. If you are using a different build, you need to include this folder too.
+
+### Launching the build
 
 Once cmake has generated the makefiles, you can use a GNU Make to build.
 

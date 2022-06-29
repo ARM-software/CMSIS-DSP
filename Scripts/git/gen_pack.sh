@@ -184,7 +184,7 @@ last=$(grep -n "</releases>" ${PACK_VENDOR}.${PACK_NAME}.pdsc | cut -d: -f1)
 let first-=1
 let last+=1
 head -n ${first} "./${PACK_VENDOR}.${PACK_NAME}.pdsc" > "${PACK_BUILD}/${PACK_VENDOR}.${PACK_NAME}.pdsc"
-/bin/bash "${CHANGELOG}" -p -f pdsc 2>/dev/null | sed "s/^/  /" >> "${PACK_BUILD}/${PACK_VENDOR}.${PACK_NAME}.pdsc"
+/bin/bash "${CHANGELOG}" -f pdsc 2>/dev/null | sed "s/^/  /" >> "${PACK_BUILD}/${PACK_VENDOR}.${PACK_NAME}.pdsc"
 tail -n +${last} "./${PACK_VENDOR}.${PACK_NAME}.pdsc" | \
   sed -e "s/Cversion=\"[^\"]*\"/Cversion=\"${VERSION}\"/" >> "${PACK_BUILD}/${PACK_VENDOR}.${PACK_NAME}.pdsc"
 

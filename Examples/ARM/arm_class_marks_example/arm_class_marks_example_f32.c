@@ -212,7 +212,7 @@ int32_t main()
   arm_var_f32(testOutput, numStudents, &var);
 
 #if defined(SEMIHOSTING)
-  printf("mean = %f, std = %f\n",mean,std);
+  printf("mean = %f, std = %f\n",(double)mean,(double)std);
 #endif
 
 #if !defined(SEMIHOSTING)

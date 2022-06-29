@@ -111,7 +111,7 @@ jobs:
       - name: Publish documentation
         if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
         run: |
-          rm -r main
+          rm -rf main
           mkdir main
           cd main
           tar -xvjf /tmp/doc.tbz2

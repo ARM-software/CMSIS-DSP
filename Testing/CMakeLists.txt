@@ -4,7 +4,9 @@ include(CMakePrintHelpers)
 
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}")
-set(CMSISDSPFOLDER "${CMAKE_CURRENT_SOURCE_DIR}/..")
+if (NOT (DEFINED CMSISDSP))
+set(CMSISDSP "${CMAKE_CURRENT_SOURCE_DIR}/..")
+endif()
 
 function(writeConfig path)
   set(output "")

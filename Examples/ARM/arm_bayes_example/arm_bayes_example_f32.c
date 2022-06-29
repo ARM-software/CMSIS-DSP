@@ -112,6 +112,7 @@ int32_t main(void)
 
 #if defined(SEMIHOSTING)
   printf("Class = %d\n", index);
+  printf("Max proba = %f\n", (double)maxProba);
 #endif
 
   in[0] = -1.5f;
@@ -123,6 +124,7 @@ int32_t main(void)
 
 #if defined(SEMIHOSTING)
   printf("Class = %d\n", index);
+  printf("Max proba = %f\n", (double)maxProba);
 #endif
 
   in[0] = 0.0f;
@@ -134,6 +136,7 @@ int32_t main(void)
 
 #if defined(SEMIHOSTING)
   printf("Class = %d\n", index);
+  printf("Max proba = %f\n", (double)maxProba);
 #endif
 
 #if !defined(SEMIHOSTING)

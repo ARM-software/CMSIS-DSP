@@ -55,7 +55,7 @@ endfunction()
 
 function(configboot PROJECT_NAME)
 
-  target_include_directories(${PROJECT_NAME} PRIVATE ${CMSIS}/CMSIS/DSP/Include)
+  target_include_directories(${PROJECT_NAME} PRIVATE ${CMSISDSP}/Include)
   set_platform_core()
 
   ###################

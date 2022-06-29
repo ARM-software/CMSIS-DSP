@@ -1,6 +1,6 @@
 option(SEMIHOSTING "Test trace using printf" OFF)
 
-set(PLATFORMS "${CMSISDSPFOLDER}/Testing/Platforms")
+set(PLATFORMS "${CMSISDSP}/Testing/Platforms")
 
 if (PLATFORM STREQUAL "FVP")
 SET(PLATFORMFOLDER ${PLATFORMS}/FVP)
