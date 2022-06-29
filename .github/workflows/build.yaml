@@ -16,6 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
+          ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
 
       - name: Install packages
@@ -54,21 +55,21 @@ jobs:
           echo "::remove-matcher owner=doxygen::"
         working-directory: ./Doxygen
 
-      - name: Run linkchecker
-        run: |
-          echo "::add-matcher::.github/linkchecker.json"
-          /bin/bash ../Scripts/git/check_links.sh ./html/index.html ./
-          echo "::remove-matcher owner=linkchecker::"
-        working-directory: ./Documentation
+#      - name: Run linkchecker
+#        run: |
+#          echo "::add-matcher::.github/linkchecker.json"
+#          /bin/bash ../Scripts/git/check_links.sh ./html/index.html ./
+#          echo "::remove-matcher owner=linkchecker::"
+#        working-directory: ./Documentation
 
-      - name: Archive documentation
-        if: ${{ github.event_name == 'pull_request' }}
-        uses: actions/upload-artifact@v2
-        with:
-          name: documentation
-          path: Documentation/html/
-          retention-days: 1
-          if-no-files-found: error
+#      - name: Archive documentation
+#        if: ${{ github.event_name == 'pull_request' }}
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: documentation
+#          path: Documentation/html/
+#          retention-days: 1
+#          if-no-files-found: error
           
       - name: Archive documentation
         if: ${{ github.event_name == 'release' || github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
@@ -82,57 +83,63 @@ jobs:
           mkdir -p ~/.arm/Packs/.Web
           wget -O ~/.arm/Packs/.Web/ARM.CMSIS.pdsc https://www.keil.com/pack/ARM.CMSIS.pdsc
           echo "::add-matcher::.github/packchk.json"
-          /bin/bash ./Scripts/git/gen_pack.sh
+          /bin/bash ./Scripts/git/gen_pack.sh -k
           echo "::remove-matcher owner=packchk::"
       
-      - name: Archive pack
-        if: ${{ github.event_name != 'release' }}
-        uses: actions/upload-artifact@v2
-        with:
-          path: output/*.pack
-          retention-days: 1
-          if-no-files-found: error
-
-      - name: Attach pack to release assets
-        if: ${{ github.event_name == 'release' }}
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file_glob: true
-          file: output/*.pack
-          tag: ${{ github.ref }}
-          overwrite: true
-
-      - uses: actions/checkout@v2
-        if: ${{ github.event_name == 'release' || github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
-        with:
-          ref: gh-pages
-
-      - name: Publish documentation
-        if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
-        run: |
-          rm -rf main
-          mkdir main
-          cd main
-          tar -xvjf /tmp/doc.tbz2
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add .
-          git commit -m "Update main documentation"
-          git push
-
-      - name: Publish documentation
-        if: ${{ github.event_name == 'release' }}
-        run: |
-          RELEASE=$(echo $GITHUB_REF | sed 's/refs\/tags\///')
-          rm -rf ${RELEASE}
-          mkdir -p ${RELEASE}
-          rm -f latest
-          ln -s ${RELEASE} latest
-          cd ${RELEASE}
-          tar -xvjf /tmp/doc.tbz2
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add . ../latest
-          git commit -m "Update documentation for release ${RELEASE}"
-          git push
+      - name: Setup upterm session
+        uses: lhotari/action-upterm@v1
+        # with:
+          ## limits ssh access and adds the ssh public key for the user which triggered the workflow
+          # limit-access-to-actor: true
+      
+#      - name: Archive pack
+#        if: ${{ github.event_name != 'release' }}
+#        uses: actions/upload-artifact@v2
+#        with:
+#          path: output/*.pack
+#          retention-days: 1
+#          if-no-files-found: error
+#
+#      - name: Attach pack to release assets
+#        if: ${{ github.event_name == 'release' }}
+#        uses: svenstaro/upload-release-action@v2
+#        with:
+#          repo_token: ${{ secrets.GITHUB_TOKEN }}
+#          file_glob: true
+#          file: output/*.pack
+#          tag: ${{ github.ref }}
+#          overwrite: true
+#
+#      - uses: actions/checkout@v2
+#        if: ${{ github.event_name == 'release' || github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
+#        with:
+#          ref: gh-pages
+#
+#      - name: Publish documentation
+#        if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
+#        run: |
+#          rm -rf main
+#          mkdir main
+#          cd main
+#          tar -xvjf /tmp/doc.tbz2
+#          git config user.name github-actions
+#          git config user.email github-actions@github.com
+#          git add .
+#          git commit -m "Update main documentation"
+#          git push
+#
+#      - name: Publish documentation
+#        if: ${{ github.event_name == 'release' }}
+#        run: |
+#          RELEASE=$(echo $GITHUB_REF | sed 's/refs\/tags\///')
+#          rm -rf ${RELEASE}
+#          mkdir -p ${RELEASE}
+#          rm -f latest
+#          ln -s ${RELEASE} latest
+#          cd ${RELEASE}
+#          tar -xvjf /tmp/doc.tbz2
+#          git config user.name github-actions
+#          git config user.email github-actions@github.com
+#          git add . ../latest
+#          git commit -m "Update documentation for release ${RELEASE}"
+#          git push
