@@ -60,7 +60,8 @@ fi
 sed -e "s/{datetime}/${datetime}/" "${DIRNAME}/templates/footer.js.in" \
   | sed -e "s/{year}/${year}/" \
   | sed -e "s/{projectName}/${projectName}/" \
-  | sed -e "s/{projectNumber}/${VERSION_FULL}/" \
+  | sed -e "s/{projectNumber}/${VERSION}/" \
+  | sed -e "s/{projectNumberFull}/${VERSION_FULL}/" \
   > "${DIRNAME}/../Documentation/html/footer.js"
 
 exit 0
