@@ -1,5 +1,5 @@
 const versions = {
-    "main": "v1.10.2-dev1+g4b4c680 (main)",
+    "main": "v1.10.2-dev1 (main)",
     "v1.10.1": "v1.10.1 (latest)" 
 };
 
