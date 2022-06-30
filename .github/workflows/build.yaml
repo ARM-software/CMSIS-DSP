@@ -87,7 +87,7 @@ jobs:
           mkdir -p ~/.arm/Packs/.Web
           wget -O ~/.arm/Packs/.Web/ARM.CMSIS.pdsc https://www.keil.com/pack/ARM.CMSIS.pdsc
           echo "::add-matcher::.github/packchk.json"
-          /bin/bash ./Scripts/git/gen_pack.sh
+          /bin/bash ./Scripts/git/gen_pack.sh -k
           echo "::remove-matcher owner=packchk::"
       
       - name: Archive pack
@@ -107,6 +107,30 @@ jobs:
           file: output/*.pack
           tag: ${{ github.ref }}
           overwrite: true
+
+      - name: Generate pack index
+        if: ${{ github.event_name == 'release' }}
+        run: |
+          VERSION=$(sed 's/refs\/tags\/v//' <<< $GITHUB_REF)
+          /bin/bash ./Scripts/git/gen_pack_index.sh ${VERSION} > /tmp/CMSIS-DSP.pidx
+          cp ./build/ARM.CMSIS-DSP.pdsc /tmp/
+          
+      - uses: actions/checkout@v2
+        if: ${{ github.event_name == 'release' }}
+        with:
+          ref: pack-index
+
+      - name: Update pack index
+        if: ${{ github.event_name == 'release' }}
+        run: |
+          RELEASE=$(sed 's/refs\/tags\///' <<< $GITHUB_REF)
+          cp -f /tmp/CMSIS-DSP.pidx .
+          cp -f /tmp/ARM.CMSIS-DSP.pdsc .
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "Update pack index with release ${RELEASE}"
+          git push
 
       - uses: actions/checkout@v2
         if: ${{ github.event_name == 'release' || github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
@@ -129,7 +153,7 @@ jobs:
       - name: Publish documentation
         if: ${{ github.event_name == 'release' }}
         run: |
-          RELEASE=$(echo $GITHUB_REF | sed 's/refs\/tags\///')
+          RELEASE=$(sed 's/refs\/tags\///' <<< $GITHUB_REF)
           rm -rf ${RELEASE}
           mkdir -p ${RELEASE}
           rm -f latest
