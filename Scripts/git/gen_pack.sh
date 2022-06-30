@@ -118,9 +118,6 @@ PACK_DELETE_FILES=""
 # Specify patches to be applied
 PACK_PATCH_FILES=""
 
-# Specify the pack download url pattern
-PACK_URL="https://github.com/ARM-software/CMSIS-DSP/releases/download"
-
 ############ DO NOT EDIT BELOW ###########
 echo Starting CMSIS-Pack Generation: `date`
 # Zip utility check
@@ -187,7 +184,7 @@ last=$(grep -n "</releases>" ${PACK_VENDOR}.${PACK_NAME}.pdsc | cut -d: -f1)
 let first-=1
 let last+=1
 head -n ${first} "./${PACK_VENDOR}.${PACK_NAME}.pdsc" > "${PACK_BUILD}/${PACK_VENDOR}.${PACK_NAME}.pdsc"
-/bin/bash "${CHANGELOG}" -p -f pdsc -u "${PACK_URL}/\${TAG}/${PACK_VENDOR}.${PACK_NAME}.\${VERSION}.pack"  2>/dev/null | sed "s/^/  /" >> "${PACK_BUILD}/${PACK_VENDOR}.${PACK_NAME}.pdsc"
+/bin/bash "${CHANGELOG}" -p -f pdsc 2>/dev/null | sed "s/^/  /" >> "${PACK_BUILD}/${PACK_VENDOR}.${PACK_NAME}.pdsc"
 tail -n +${last} "./${PACK_VENDOR}.${PACK_NAME}.pdsc" | \
   sed -e "s/Cversion=\"[^\"]*\"/Cversion=\"${VERSION}\"/" >> "${PACK_BUILD}/${PACK_VENDOR}.${PACK_NAME}.pdsc"
 
