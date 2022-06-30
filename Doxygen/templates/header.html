@@ -14,6 +14,8 @@
 $treeview
 $search
 $mathjax
+<link href="../version.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../version.js"></script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -28,9 +30,10 @@ $mathjax
   <!--BEGIN PROJECT_NAME-->
   <td style="padding-left: 0.5em;">
    <div id="projectname">$projectname
-   <!--BEGIN PROJECT_NUMBER-->&#160;<span id="projectnumber"><script type="text/javascript">
+   <!--BEGIN PROJECT_NUMBER-->&#160;<span id="projectnumber" class=""><script type="text/javascript">
      <!--
      writeHeader.call(this);
+     writeVersionDropdown(this);
      //-->
     </script> 
    </span><!--END PROJECT_NUMBER-->
