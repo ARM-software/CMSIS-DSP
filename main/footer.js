@@ -1,5 +1,5 @@
 function writeHeader() {
-    document.write('Version 1.10.2-dev1+g4b4c680');
+    document.write('Version 1.10.2-dev1');
 };
 
 function writeFooter()  {
