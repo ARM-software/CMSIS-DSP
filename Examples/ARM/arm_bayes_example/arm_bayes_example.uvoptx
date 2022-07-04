@@ -130,7 +130,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DbgFM</Key>
-          <Name>-I -S"System Generator:FVP_MPS2_Cortex_M0_MDK" -L"armcortexm0ct" -O12294 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M0_MDK.exe" -MF".\ARMCM0_config.txt" -MA -PF".\MTICoverageOut.cov"</Name>
+          <Name>-I -S"System Generator:FVP_MPS2_Cortex_M0_MDK" -L"armcortexm0ct" -O4102 -C0 -MC"$K\ARM\VHT\VHT_MPS2_Cortex-M0_MDK.exe" -MF".\ARMCM0_config.txt" -PF -MA</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -162,9 +162,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>138</LineNumber>
+          <LineNumber>143</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>1676</Address>
+          <Address>1636</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -173,7 +173,7 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>.\arm_bayes_example_f32.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\arm_bayes_example\arm_bayes_example_f32.c\138</Expression>
+          <Expression>\\arm_bayes_example\arm_bayes_example_f32.c\143</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -183,6 +183,14 @@
           <ItemText>Dbg_Index</ItemText>
         </Ww>
       </WatchWindow1>
+      <MemoryWindow1>
+        <Mm>
+          <WinNumber>1</WinNumber>
+          <SubType>2</SubType>
+          <ItemText>index</ItemText>
+          <AccSizeX>0</AccSizeX>
+        </Mm>
+      </MemoryWindow1>
       <Tracepoint>
         <THDelay>0</THDelay>
       </Tracepoint>
@@ -337,7 +345,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DbgFM</Key>
-          <Name>-I -S"System Generator:FVP_MPS2_Cortex_M3_MDK" -L"armcortexm3ct" -O12294 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M3_MDK.exe" -MF".\ARMCM3_config.txt" -MA -PF".\MTICoverageOut.cov"</Name>
+          <Name>-I -S"System Generator:FVP_MPS2_Cortex_M3_MDK" -L"armcortexm3ct" -O12294 -C0 -MC"$K\ARM\VHT\VHT_MPS2_Cortex-M3_MDK.exe" -MF".\ARMCM3_config.txt" -PF -MA</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -369,9 +377,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>138</LineNumber>
+          <LineNumber>143</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>1760</Address>
+          <Address>1728</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -380,7 +388,7 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>.\arm_bayes_example_f32.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\arm_bayes_example\arm_bayes_example_f32.c\138</Expression>
+          <Expression>\\arm_bayes_example\arm_bayes_example_f32.c\143</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -390,6 +398,14 @@
           <ItemText>Dbg_Index</ItemText>
         </Ww>
       </WatchWindow1>
+      <MemoryWindow1>
+        <Mm>
+          <WinNumber>1</WinNumber>
+          <SubType>2</SubType>
+          <ItemText>index</ItemText>
+          <AccSizeX>0</AccSizeX>
+        </Mm>
+      </MemoryWindow1>
       <Tracepoint>
         <THDelay>0</THDelay>
       </Tracepoint>
@@ -544,7 +560,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DbgFM</Key>
-          <Name>-I -S -L"armcortexm4ct" -O12294 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M4_MDK.exe" -MF".\ARMCM4_FP_config.txt" -MA -PF".\MTICoverageOut.cov"</Name>
+          <Name>-I -S -L"armcortexm4ct" -O12294 -C0 -MC"$K\ARM\VHT\VHT_MPS2_Cortex-M4_MDK.exe" -MF".\ARMCM4_FP_config.txt" -PF -MA</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -576,9 +592,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>138</LineNumber>
+          <LineNumber>143</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>1622</Address>
+          <Address>1582</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -587,7 +603,7 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>.\arm_bayes_example_f32.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\arm_bayes_example\arm_bayes_example_f32.c\138</Expression>
+          <Expression>\\arm_bayes_example\arm_bayes_example_f32.c\143</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -597,6 +613,14 @@
           <ItemText>Dbg_Index</ItemText>
         </Ww>
       </WatchWindow1>
+      <MemoryWindow1>
+        <Mm>
+          <WinNumber>1</WinNumber>
+          <SubType>2</SubType>
+          <ItemText>index</ItemText>
+          <AccSizeX>0</AccSizeX>
+        </Mm>
+      </MemoryWindow1>
       <Tracepoint>
         <THDelay>0</THDelay>
       </Tracepoint>
@@ -751,7 +775,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DbgFM</Key>
-          <Name>-I -S"System Generator:FVP_MPS2_Cortex_M7_MDK" -L"armcortexm7ct" -O12294 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M7_MDK.exe" -MF".\ARMCM7_SP_config.txt" -MA -PF".\MTICoverageOut.cov"</Name>
+          <Name>-I -S"System Generator:FVP_MPS2_Cortex_M7_MDK" -L"armcortexm7ct" -O12294 -C0 -MC"$K\ARM\VHT\VHT_MPS2_Cortex-M7_MDK.exe" -MF".\ARMCM7_SP_config.txt" -PF -MA</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -783,9 +807,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>138</LineNumber>
+          <LineNumber>143</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>1772</Address>
+          <Address>1736</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -794,7 +818,7 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>.\arm_bayes_example_f32.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\arm_bayes_example\arm_bayes_example_f32.c\138</Expression>
+          <Expression>\\arm_bayes_example\arm_bayes_example_f32.c\143</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -804,6 +828,14 @@
           <ItemText>Dbg_Index</ItemText>
         </Ww>
       </WatchWindow1>
+      <MemoryWindow1>
+        <Mm>
+          <WinNumber>1</WinNumber>
+          <SubType>2</SubType>
+          <ItemText>index</ItemText>
+          <AccSizeX>0</AccSizeX>
+        </Mm>
+      </MemoryWindow1>
       <Tracepoint>
         <THDelay>0</THDelay>
       </Tracepoint>
@@ -958,7 +990,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DbgFMv8M</Key>
-          <Name>-I -S -L"cpu0" -O12294 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M55_MDK.exe" -MF".\ARMCM55_FP_MVE_config.txt" -PF".\MTICoverageOut.cov" -MA</Name>
+          <Name>-I -S -L"cpu0" -O4102 -C0 -MC"$K\ARM\VHT\VHT_MPS3_Corstone_SSE-300.exe" -MF".\ARMCM55_FP_MVE_config.txt" -PF".\MTICoverageOut.cov" -MA</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -995,9 +1027,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>140</LineNumber>
+          <LineNumber>143</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>3040</Address>
+          <Address>3892</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -1006,7 +1038,7 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>.\arm_bayes_example_f32.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\arm_bayes_example\arm_bayes_example_f32.c\140</Expression>
+          <Expression>\\arm_bayes_example\arm_bayes_example_f32.c\143</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>

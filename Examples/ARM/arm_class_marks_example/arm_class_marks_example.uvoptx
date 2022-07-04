@@ -130,7 +130,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DbgFM</Key>
-          <Name>-I -S"System Generator:FVP_MPS2_Cortex_M0_MDK" -L"armcortexm0ct" -O12294 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M0_MDK.exe" -MF".\ARMCM0_config.txt" -MA -PF"C:\_Repos\Git\CMSIS_5.DSPExamples\CMSIS\DSP\Examples\ARM\arm_class_marks_example\MTICoverageOut.cov"</Name>
+          <Name>-I -S"System Generator:FVP_MPS2_Cortex_M0_MDK" -L"armcortexm0ct" -O12294 -C0 -MC"$K\ARM\VHT\VHT_MPS2_Cortex-M0_MDK.exe" -MF".\ARMCM0_config.txt" -MA -PF"C:\_Repos\Git\CMSIS_5.DSPExamples\CMSIS\DSP\Examples\ARM\arm_class_marks_example\MTICoverageOut.cov"</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -275,7 +275,7 @@
       <OPTFL>
         <tvExp>1</tvExp>
         <tvExpOptDlg>0</tvExpOptDlg>
-        <IsCurrentTarget>0</IsCurrentTarget>
+        <IsCurrentTarget>1</IsCurrentTarget>
       </OPTFL>
       <CpuCode>7</CpuCode>
       <DebugOpt>
@@ -330,7 +330,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DbgFM</Key>
-          <Name>-I -S"System Generator:FVP_MPS2_Cortex_M3_MDK" -L"armcortexm3ct" -O12294 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M3_MDK.exe" -MF".\ARMCM3_config.txt" -MA -PF".\MTICoverageOut.cov"</Name>
+          <Name>-I -S"System Generator:FVP_MPS2_Cortex_M3_MDK" -L"armcortexm3ct" -O4102 -C0 -MC"$K\ARM\VHT\VHT_MPS2_Cortex-M3_MDK.exe" -MF".\ARMCM3_config.txt" -PF".\MTICoverageOut.cov" -MA</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -364,7 +364,7 @@
           <Type>0</Type>
           <LineNumber>219</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>1980</Address>
+          <Address>2064</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -376,6 +376,14 @@
           <Expression>\\arm_class_marks_example\arm_class_marks_example_f32.c\219</Expression>
         </Bp>
       </Breakpoint>
+      <MemoryWindow1>
+        <Mm>
+          <WinNumber>1</WinNumber>
+          <SubType>2</SubType>
+          <ItemText>index</ItemText>
+          <AccSizeX>0</AccSizeX>
+        </Mm>
+      </MemoryWindow1>
       <Tracepoint>
         <THDelay>0</THDelay>
       </Tracepoint>
@@ -530,7 +538,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DbgFM</Key>
-          <Name>-I -S"System Generator:FVP_MPS2_Cortex_M4_MDK" -L"armcortexm4ct" -O12294 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M4_MDK.exe" -MF".\ARMCM4_FP_config.txt" -MA -PF".\MTICoverageOut.cov"</Name>
+          <Name>-I -S"System Generator:FVP_MPS2_Cortex_M4_MDK" -L"armcortexm4ct" -O4102 -C0 -MC"$K\ARM\VHT\VHT_MPS2_Cortex-M4_MDK.exe" -MF".\ARMCM4_FP_config.txt" -PF".\MTICoverageOut.cov" -MA</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -564,7 +572,7 @@
           <Type>0</Type>
           <LineNumber>219</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>1792</Address>
+          <Address>1768</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -576,6 +584,14 @@
           <Expression>\\arm_class_marks_example\arm_class_marks_example_f32.c\219</Expression>
         </Bp>
       </Breakpoint>
+      <MemoryWindow1>
+        <Mm>
+          <WinNumber>1</WinNumber>
+          <SubType>2</SubType>
+          <ItemText>index</ItemText>
+          <AccSizeX>0</AccSizeX>
+        </Mm>
+      </MemoryWindow1>
       <Tracepoint>
         <THDelay>0</THDelay>
       </Tracepoint>
@@ -730,7 +746,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DbgFM</Key>
-          <Name>-I -S"System Generator:FVP_MPS2_Cortex_M7_MDK" -L"armcortexm7ct" -O12294 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M7_MDK.exe" -MF".\ARMCM7_SP_config.txt" -MA -PF"\MTICoverageOut.cov"</Name>
+          <Name>-I -S"System Generator:FVP_MPS2_Cortex_M7_MDK" -L"armcortexm7ct" -O4102 -C0 -MC"$K\ARM\VHT\VHT_MPS2_Cortex-M7_MDK.exe" -MF".\ARMCM7_SP_config.txt" -PF"\MTICoverageOut.cov" -MA</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -764,7 +780,7 @@
           <Type>0</Type>
           <LineNumber>219</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>1984</Address>
+          <Address>2040</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -776,6 +792,14 @@
           <Expression>\\arm_class_marks_example\arm_class_marks_example_f32.c\219</Expression>
         </Bp>
       </Breakpoint>
+      <MemoryWindow1>
+        <Mm>
+          <WinNumber>1</WinNumber>
+          <SubType>2</SubType>
+          <ItemText>index</ItemText>
+          <AccSizeX>0</AccSizeX>
+        </Mm>
+      </MemoryWindow1>
       <Tracepoint>
         <THDelay>0</THDelay>
       </Tracepoint>
@@ -875,7 +899,7 @@
       <OPTFL>
         <tvExp>1</tvExp>
         <tvExpOptDlg>0</tvExpOptDlg>
-        <IsCurrentTarget>1</IsCurrentTarget>
+        <IsCurrentTarget>0</IsCurrentTarget>
       </OPTFL>
       <CpuCode>7</CpuCode>
       <DebugOpt>
@@ -930,7 +954,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DbgFMv8M</Key>
-          <Name>-I -S -L"cpu0" -O12294 -C0 -MC".\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M55_MDK.exe" -MF".\ARMCM55_FP_MVE_config.txt" -PF".\MTICoverageOut.cov" -MA</Name>
+          <Name>-I -S -L"cpu0" -O4102 -C0 -MC"$K\ARM\VHT\VHT_MPS3_Corstone_SSE-300.exe" -MF".\ARMCM55_FP_MVE_config.txt" -PF".\MTICoverageOut.cov" -MA</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -969,7 +993,7 @@
           <Type>0</Type>
           <LineNumber>219</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>4272</Address>
+          <Address>4340</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
