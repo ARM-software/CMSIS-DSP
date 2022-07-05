@@ -22,6 +22,8 @@
 <script type="text/javascript">
   $(document).ready(function() { searchBox.OnSelectItem(0); });
 </script>
+<link href="../version.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../version.js"></script>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -32,9 +34,10 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber"><script type="text/javascript">
+   &#160;<span id="projectnumber" class=""><script type="text/javascript">
      <!--
      writeHeader.call(this);
+     writeVersionDropdown(this);
      //-->
     </script> 
    </span>
