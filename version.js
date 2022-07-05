@@ -1,7 +1,9 @@
+//--- list of versions ---
 const versions = {
-    "main": "v1.10.2-dev1",
-    "latest": "v1.10.1"
-};
+    "main": "1.10.2-dev1",
+    "latest": "1.10.1"
+}
+//--- list of versions ---
 
 var scripts = document.getElementsByTagName("script"),
 scriptUrl = new URL(scripts[scripts.length-1].src);
