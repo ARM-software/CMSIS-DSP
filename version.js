@@ -1,6 +1,6 @@
 const versions = {
-    "main": "v1.10.2-dev1 (main)",
-    "v1.10.1": "v1.10.1 (latest)" 
+    "main": "v1.10.2-dev1",
+    "latest": "v1.10.1"
 };
 
 var scripts = document.getElementsByTagName("script"),
@@ -26,6 +26,9 @@ function writeVersionDropdown() {
     document.write('  <div id="myDropdown" class="dropdown-content">'); 
     for(var version in versions) {
         var label = versions[version];
+        if (label != version) {
+            label += "("+version+")"
+        }
         document.write('    <a href="'+urlForVersion(docUrl, version)+'">'+label+'</a>');
     }
     document.write('  </div>');
