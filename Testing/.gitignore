@@ -19,3 +19,11 @@ __pycache__
 bugcheck.py
 fulltests/
 testUNIXrunConfig.yaml
+Objects/
+Listings/
+*.scvd
+Tmp/
+.ARMCM55_ac6.sct@*
+.startup_ARMCM55.c@*
+.system_ARMCM55.c@*
+.*@*

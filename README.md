@@ -81,11 +81,49 @@ This optimization will **not** occur when `-fno-builtin` is used and it will hav
 
 Some compiler may also require the use of option `-munaligned-access` to specify that unaligned accesses are used.
 
+### Half float support
+
+`f16` data type (half float) has been added to the library. It is useful only if your Cortex has some half float hardware acceleration (for instance with Helium extension). If you don't need `f16`, you should disable it since it may cause compilation problems. Just define `-DDISABLEFLOAT16` when building.
+
 ## How to build
 
-The standard way to build is through the [Open CMSIS-Pack](https://www.open-cmsis-pack.org/) included in the repository (or available in your IDE).
+### Building with MDK or Open CMSIS-Pack
 
-But cmake can also be used.
+The standard way to build is by using the CMSIS pack technology. CMSIS-DSP is available as a pack.
+
+This pack technology is supported by some IDE like [Keil MDK](https://www.keil.com/download/product/) or [Keil studio](https://www.keil.arm.com/).
+
+You can also use those packs using the [Open CMSIS-Pack](https://www.open-cmsis-pack.org/) technology and from command line on any platform.
+
+cmake can also be used to build CMSIS-DSP.
+
+### How to build with Open CMSIS-Pack
+
+You should first install the tools from https://github.com/Open-CMSIS-Pack/devtools
+
+You can get the CMSIS-Toolbox which is containing the package installer, cmsis build and cmsis project manager. Here is some documentation:
+
+* Documentation about [CMSIS Build](https://open-cmsis-pack.github.io/devtools/buildmgr/latest/index.html)
+* Documentation about [CMSIS Pack](https://open-cmsis-pack.github.io/Open-CMSIS-Pack-Spec/main/html/index.html)
+* Documentation about [CMSIS Project manager](https://github.com/Open-CMSIS-Pack/devtools/blob/main/tools/projmgr/docs/Manual/Overview.md#software-layers)
+
+Once you have installed the tools, you'll need to download the pack index using the `cpackget` tool.
+
+Then, you'll need to convert the solution file into `.cprj`. For instance, for the CMSIS-DSP Examples, you can go to: 
+
+`Examples/cmsis_build` 
+
+and then type 
+
+`csolution convert -s examples.csolution_ac6.yml`
+
+This command processes the `examples.csolution_ac6.yml` describing how to build the examples for several platforms. It will generate lots of `.cprj` files that can be built with `cbuild`.
+
+If you want to build the `FFT` example for the `Corstone-300` virtual hardware platform, you could just do:
+
+`cbuild "fftbin.Release+VHT-Corstone-300.cprj"`
+
+
 
 ### How to build CMSIS-DSP with cmake
 
@@ -102,99 +140,17 @@ project (testcmsisdsp VERSION 0.1)
 add_subdirectory(${CMSISDSP}/Source bin_dsp)
 ```
 
-CMSIS-DSP is dependent on the CMSIS Core includes. So, you should use a `target_include_directories` to define where the `CMSIS_5\CMSIS\Core\Include` is located. Or you can also define `CMSISCORE` on the cmake command line. The path used will be `${CMSISCORE}\Include`.
+CMSIS-DSP is dependent on the CMSIS Core includes. So, you should define `CMSISCORE` on the cmake command line. The path used will be `${CMSISCORE}\Include`.
 
 You should also set the compilation options to use to build the library.
 
-You can also rely on the CMSIS-DSP test framework. The framework will analyze the `ARM_CPU` option and deduce from its values the compilation options and the location of the CMSIS Core includes.
+#### Launching the build
 
-Note that the test framework is only supporting a subset of all the cores.
+Once cmake has generated the makefiles, you can use a GNU Make to build.
 
-The following lines are:
-
-* Adding the test framework to the cmake module path
-* Loading the module `configLib`
-* Defining the compilation options and core includes using the `configLib` function
-
-`configLib` is requiring the variable `CMSIS` to be defined (on cmake command line) with the path to the CMSIS repository.
-
-```cmake
-list(APPEND CMAKE_MODULE_PATH "${CMSISDSP}/Testing")
-include(configLib)
-configLib(CMSISDSP)
-```
-
-A typical `cmake` command (when using CMSIS-DSP test framework) may be:
-
-```
-cmake -DCMAKE_PREFIX_PATH="path to compiler" \
-  -DCMAKE_TOOLCHAIN_FILE="path_to_cmsisdsp/Testing/armac6.cmake" \
-  -DARM_CPU="cortex-m55" \
-  -DLOOPUNROLL=ON \
-  -DCMSISDSP="path_to_cmsisdsp" \
-  -DCMSIS="path_to_cmsis" \
-  -DCMAKE_C_FLAGS_RELEASE="-std=c11 -Ofast -ffast-math -DNDEBUG -Wall -Wextra" \
-  -DCMAKE_CXX_FLAGS_RELEASE="-fno-rtti -std=c++11 -Ofast -ffast-math -DNDEBUG -Wall -Wextra -Wno-unused-parameter" \
-  -DHELIUM=ON \
-  -G "Unix Makefiles" ..
-```
-
-It is also possible to build on the host PC:
-
-```
-cmake -DHOST=YES \
-  -DLOOPUNROLL=ON \
-  -DCMSISDSP="path_to_cmsisdsp" \
-  -DCMSIS="path_to_cmsis" \
-  -DCMAKE_C_FLAGS_RELEASE="-std=c11 -Ofast -ffast-math -DNDEBUG -Wall -Wextra" \
-  -DCMAKE_CXX_FLAGS_RELEASE="-fno-rtti -std=c++11 -Ofast -ffast-math -DNDEBUG -Wall -Wextra -Wno-unused-parameter" \
-  -G "Unix Makefiles" ..
-```
+    make VERBOSE=1
 
 
-
-### How to build CMSIS-DSP examples with cmake and CMSIS-DSP test framework
-
-Building examples with cmake is similar to building only the CMSIS-DSP library but in addition to that we also rely on the CMSIS-DSP test framework for the boot code.
-
-In addition to the `CMSIS` variable, the variable `CMSISDSP` must also be defined.
-
-`Examples/CMakeLists.txt` can be used to build all the examples.
-
-A possible `cmake` command may be:
-
-```
-cmake -DLOOPUNROLL=ON \
-      -DMATRIXCHECK=ON \
-      -DCMAKE_BUILD_TYPE=Release \
-      -DCMAKE_C_FLAGS_RELEASE="-Ofast -ffast-math -DNDEBUG -Wall -Wextra  " \
-      -DCMAKE_CXX_FLAGS_RELEASE="-fno-rtti -Ofast -ffast-math -DNDEBUG -Wall -Wextra" \
-      -DCMAKE_PREFIX_PATH="path to compiler" \
-      -DCMAKE_TOOLCHAIN_FILE=../../Testing/armac6.cmake \
-      -DCMSIS="path_to_cmsis" \
-      -DCMSISDSP="path_to_cmsisdsp" \
-      -DARM_CPU="cortex-m55" \
-      -DPLATFORM="FVP" \
-      -DHELIUM=ON \
-      -DFLOAT16=OFF \
-      -DBASICMATH=ON \
-      -DCOMPLEXMATH=ON \
-      -DQUATERNIONMATH=ON \
-      -DCONTROLLER=ON \
-      -DFASTMATH=ON \
-      -DFILTERING=ON \
-      -DMATRIX=ON \
-      -DSTATISTICS=ON \
-      -DSUPPORT=ON \
-      -DTRANSFORM=ON \
-      -DSVM=ON \
-      -DBAYES=ON \
-      -DDISTANCE=ON \
-      -DINTERPOLATION=ON \
-      -G "Unix Makefiles" ".."
-```
-
-If you want `printf` to be enabled in the examples, you should also define `-DSEMIHOSTING`
 
 ### How to build for aarch64
 
@@ -222,13 +178,7 @@ For cmake the equivalent options are:
 * -DHOST=ON
 * -DNEON=ON
 
-cmake is automatically including the ComputeLibrary folder. If you are using a different build, you need to include this folder too.
-
-### Launching the build
-
-Once cmake has generated the makefiles, you can use a GNU Make to build.
-
-    make VERBOSE=1
+cmake is automatically including the `ComputeLibrary` folder. If you are using a different build, you need to include this folder too.
 
 ### Running
 
@@ -238,6 +188,8 @@ For instance, if you built for m7, you could just do:
     FVP_MPS2_Cortex-M7.exe -a arm_variance_example
 
 The final executable has no extension in the filename. 
+
+Of course, on your fast model or virtual hardware you should use the right configuration file (to enable float, to enable FVP, to enable semihosting if needed for the examples ...)
 
 ## Folders and files
 

@@ -1,0 +1,15 @@
+project:
+  groups:
+    - group: App
+      files:
+        - file: ../ARM/arm_linear_interp_example/arm_linear_interp_example_f32.c
+        - file: ../ARM/arm_linear_interp_example/arm_linear_interp_data.c
+        - file: ../ARM/arm_linear_interp_example/math_helper.c
+  add-paths:
+    - ../ARM/arm_linear_interp_example
+
+       
+
+  layers:
+    - layer: vht.clayer.yml 
+

@@ -28,7 +28,6 @@ extern "C" void testmain_hook      (void) __attribute__ ((weak));
 
 void testmain_hook(void)
 {
-
 }
 
 int testmain(const char *patterns)

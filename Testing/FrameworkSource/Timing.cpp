@@ -23,6 +23,8 @@ static uint32_t startCycles=0;
   #include "ARMCM7_SP.h"
 #elif defined ARMCM7_DP
   #include "ARMCM7_DP.h"
+#elif defined (ARMCM33)
+  #include "ARMCM33.h"
 #elif defined (ARMCM33_DSP_FP)
   #include "ARMCM33_DSP_FP.h"
 #elif defined (ARMCM33_DSP_FP_TZ)
@@ -47,10 +49,14 @@ static uint32_t startCycles=0;
   #include "ARMv8MML_DSP_DP.h"
 #elif defined ARMv81MML_DSP_DP_MVE_FP
   #include "ARMv81MML_DSP_DP_MVE_FP.h"
+#elif defined ARMCM55
+  #include "ARMCM55.h"
+#elif defined ARMCM85
+  #include "ARMCM85.h"
 #elif defined ARMv7A
   /* TODO */
 #else
-  #warning "no appropriate header file found!"
+  #define NOTIMING
 #endif
 #endif /* CORTEXM*/
 
@@ -68,6 +74,7 @@ unsigned long sectionCounter=0;
 
 void initCycleMeasurement()
 {
+#if !defined(NOTIMING)
 #ifdef CORTEXM
     SysTick->LOAD = SYSTICK_INITIAL_VALUE;
     SysTick->VAL = 0;
@@ -106,11 +113,12 @@ void initCycleMeasurement()
       __set_CP(15, 0, value, 14, 15, 7);
     #endif
 #endif
-
+#endif
 }
 
 void cycleMeasurementStart()
 {
+#if !defined(NOTIMING)
 #ifndef EXTBENCH
 #ifdef CORTEXM
    
@@ -136,22 +144,30 @@ void cycleMeasurementStart()
     startCycles =  value;
 #endif
 #endif 
-
+#endif
 }
 
 void cycleMeasurementStop()
 {
+#if !defined(NOTIMING)
 #ifndef EXTBENCH
 #ifdef CORTEXM
     SysTick->CTRL = 0;
     SysTick->LOAD = SYSTICK_INITIAL_VALUE;
 #endif
 #endif
+#endif
 }
 
 Testing::cycles_t getCycles()
 {
+#if defined(NOTIMING)
+return(0);
+#else
 #ifdef CORTEXM
+    #if defined(NORMALFVP)
+    return(0);
+    #else
     uint32_t v = SysTick->VAL;
     Testing::cycles_t result;
     if (v < startCycles)
@@ -166,9 +182,7 @@ Testing::cycles_t getCycles()
        On other FVP, the value is forced to 0
        because measurement is wrong.
     */
-    #if defined(NORMALFVP)
-    return(0);
-    #else
+    
     return(result);
     #endif
 #endif 
@@ -179,5 +193,5 @@ Testing::cycles_t getCycles()
     __get_CP(15, 0, value, 9, 13, 0);
     return(value - startCycles);
 #endif
-
+#endif
 }
