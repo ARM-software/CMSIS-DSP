@@ -1,8 +1,7 @@
 //--- list of versions ---
 const versions = {
-    "latest": "1.10.1",
-    "v1.10.1": "1.10.1",
-    "main": "1.10.2-dev1"
+    "main": "1.10.2-dev1",
+    "latest": "1.10.1"
 }
 //--- list of versions ---
 
@@ -30,7 +29,7 @@ function writeVersionDropdown() {
     for(var version in versions) {
         var label = versions[version];
         if (label != version) {
-            label += " ("+version+")"
+            label += "("+version+")"
         }
         document.write('    <a href="'+urlForVersion(docUrl, version)+'">'+label+'</a>');
     }
