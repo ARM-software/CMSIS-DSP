@@ -2,9 +2,13 @@ solution:
   compiler: AC6
   misc:
     - C:
-      - -std=c11 -Ofast -ffast-math
+      - -std=c11 
+      - -Ofast 
+      - -ffast-math
     - CPP:
-      - -std=c++11 -Ofast -ffast-math
+      - -std=c++11 
+      - -Ofast 
+      - -ffast-math
     - ASM:
       - -masm=auto
     - Link:
@@ -19,7 +23,6 @@ solution:
       - ../GeneratedInclude
       - ../Include/Tests
   defines:
-      - CORTEXM
       - EMBEDDED
       - NORMALFVP
 
@@ -33,30 +36,74 @@ solution:
   target-types:
     - type: VHT-Corstone-310
       device: ARM::SSE-310-MPS3
+      defines:
+        - CORTEXM
 
     - type: VHT-Corstone-300
       device: ARM::SSE-300-MPS3
+      defines:
+        - CORTEXM
 
     - type: FVP_M55
       device: ARMCM55
+      defines:
+        - CORTEXM
 
     - type: VHT_M33
       device: ARMCM33_DSP_FP
+      defines:
+        - CORTEXM
 
     - type: VHT_M7
       device: ARMCM7_DP
+      defines:
+        - CORTEXM
 
     - type: VHT_M4
       device: ARMCM4_FP
+      defines:
+        - CORTEXM
 
     - type: VHT_M3
       device: ARMCM3
+      defines:
+        - CORTEXM
 
     - type: VHT_M23
       device: ARMCM23
+      defines:
+        - CORTEXM
 
     - type: VHT_M0P
       device: ARMCM0P
+      defines:
+        - CORTEXM
+
+# ARMCA5, ARMCA7 and ARMCA9 are not configured
+# with Neon in the pack. 
+# And the standard .cmake in CMSIS Build tools
+# is not supporting Cortex-A yet.
+# Since the goal is to run the Neon code of CMSIS-DSP,
+# we have added Cortex-A support to the .cmake
+# and forced Neon support without taking into account
+# the FPU variable from the pack.
+# If you want to build those targets, you'll have to add
+# Cortex-A support to the .cmake of CMSIS Build tools
+# in the same way (forcing Neon)
+    - type: FVP_A5Neon
+      device: ARMCA5
+      defines:
+        - CORTEXA
+
+    - type: FVP_A7Neon
+      device: ARMCA7
+      defines:
+        - CORTEXA
+
+    - type: FVP_A9Neon
+      device: ARMCA9
+      defines:
+        - CORTEXA
 
   build-types:
     - type: Release

@@ -102,7 +102,10 @@ class TextFormatter:
              p=Fore.RED + "FAILED" + Style.RESET_ALL
              if passed == 1:
                 p= Fore.GREEN + "PASSED" + Style.RESET_ALL
-             print("%s%s %s(%s - %d)%s : %s (cycles = %d)" % (ident,message,Style.BRIGHT,func,theId,Style.RESET_ALL,p,cycles))
+             if cycles > 0:
+                print("%s%s %s(%s - %d)%s : %s (cycles = %d)" % (ident,message,Style.BRIGHT,func,theId,Style.RESET_ALL,p,cycles))
+             else:
+                print("%s%s %s(%s - %d)%s : %s" % (ident,message,Style.BRIGHT,func,theId,Style.RESET_ALL,p))
              if params:
                 print("%s %s" % (ident,params))
              if passed != 1:

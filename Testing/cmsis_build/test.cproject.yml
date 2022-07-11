@@ -123,10 +123,47 @@ project:
   components:
     - component: ARM::CMSIS:CORE
     - component: ARM::CMSIS:DSP&Source@1.10.1
+      not-for-type: 
+        - +FVP_A5Neon
+        - +FVP_A7Neon
+        - +FVP_A9Neon
+    # CMSIS-DSP cannot be built with Neon intrinsics for A9
+    # because of lack of Fused MAC on A9
+    - component: ARM::CMSIS:DSP&Source@1.10.1
+      defines:
+        - ARM_MATH_NEON
+      for-type: 
+        - +FVP_A5Neon
+        - +FVP_A7Neon
+    # On A9, CMSIS-DSP is built with auto-vectorization
+    # but no use of Neon intrinsics
+    - component: ARM::CMSIS:DSP&Source@1.10.1
+      defines:
+        - ARM_MATH_AUTOVECTORIZE
+      for-type: 
+        - +FVP_A9Neon
     - component: Device:Startup&C Startup
       not-for-type: 
         - +VHT-Corstone-300 
         - +VHT-Corstone-310
+        - +FVP_A5Neon
+        - +FVP_A7Neon
+        - +FVP_A9Neon
+    - component: Device:Startup
+      for-type: 
+        - +FVP_A5Neon
+        - +FVP_A7Neon
+        - +FVP_A9Neon
+    - component: Device:IRQ Controller
+      for-type: 
+        - +FVP_A5Neon
+        - +FVP_A7Neon
+        - +FVP_A9Neon
+    - component: Device:OS Tick
+      for-type: 
+        - +FVP_A5Neon
+        - +FVP_A7Neon
+        - +FVP_A9Neon
     - component: ARM::Device:Definition
       for-type: 
         - +VHT-Corstone-300 

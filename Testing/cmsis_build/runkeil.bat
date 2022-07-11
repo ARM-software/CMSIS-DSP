@@ -31,10 +31,10 @@ REM C:\Keil_v5\ARM\VHT\VHT_Corstone_SSE-310.exe ^
 REM   -f configs/ARM_VHT_Corstone_310_config.txt ^
 REM   -a cpu0="Objects\test.Release+VHT-Corstone-310.axf" 
 
-REM C:\Keil_v5\ARM\VHT\VHT_Corstone_SSE-300_Ethos-U55.exe ^
-REM   -f configs/ARM_VHT_Corstone_300_config.txt ^
-REM   -a cpu0="Objects\test.Release+VHT-Corstone-300.axf" 
+C:\Keil_v5\ARM\VHT\VHT_Corstone_SSE-300_Ethos-U55.exe ^
+  -f configs/ARM_VHT_Corstone_300_config.txt ^
+  -a cpu0="Objects\test.Release+VHT-Corstone-300.axf" 
 
-C:\Keil_v5\ARM\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M55_MDK.exe ^
-   -f configs/ARM_VHT_MPS2_M55_config.txt ^
-   Objects\test.Release+FVP_M55.axf 
+REM C:\Keil_v5\ARM\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M55_MDK.exe ^
+REM    -f configs/ARM_VHT_MPS2_M55_config.txt ^
+REM    Objects\test.Release+FVP_M55.axf 

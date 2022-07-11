@@ -15,23 +15,30 @@
     <compiler name="AC6" version="6.18.0"/>
   </compilers>
 
-  <target Dfpu="NO_FPU" Dname="ARMCM0P" Dsecure="Non-secure" Dvendor="ARM:82">
-    <output intdir="test.Release+VHT_M0P_IntDir/" name="test.Release+VHT_M0P" outdir="test.Release+VHT_M0P_OutDir/" type="exe"/>
+  <target Dfpu="DP_FPU" Dname="ARMCA7" Dsecure="Non-secure" Dvendor="ARM:82">
+    <output intdir="test.Release+FVP_A7Neon_IntDir/" name="test.Release+FVP_A7Neon" outdir="test.Release+FVP_A7Neon_OutDir/" type="exe"/>
     <asflags add="-masm=auto" compiler="AC6"/>
     <cflags add="-std=c11 -Ofast -ffast-math" compiler="AC6"/>
     <cxxflags add="-std=c++11 -Ofast -ffast-math" compiler="AC6"/>
-    <ldflags add="--entry=Reset_Handler --info=summarysizes --info=sizes --info=totals --info=unused --info=veneers" compiler="AC6" file="RTE/Device/ARMCM0P/ARMCM0plus_ac6.sct"/>
-    <defines>EMBEDDED;NORMALFVP;CORTEXM</defines>
+    <ldflags add="--entry=Reset_Handler --info=summarysizes --info=sizes --info=totals --info=unused --info=veneers" compiler="AC6" file="RTE/Device/ARMCA7/ARMCA7.sct"/>
+    <defines>EMBEDDED;NORMALFVP;CORTEXA</defines>
     <includes>../FrameworkInclude;../GeneratedInclude;../Include/Tests</includes>
   </target>
 
   <components>
-    <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="5.6.0"/>
-    <component Cclass="CMSIS" Cgroup="DSP" Cvariant="Source" Cvendor="ARM" Cversion="1.10.1"/>
-    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cvendor="ARM" Cversion="2.0.3">
-      <file attr="config" category="linkerScript" name="Device/ARM/ARMCM0plus/Source/ARM/ARMCM0plus_ac6.sct" version="1.0.0"/>
-      <file attr="config" category="sourceC" name="Device/ARM/ARMCM0plus/Source/startup_ARMCM0plus.c" version="2.0.3"/>
-      <file attr="config" category="sourceC" name="Device/ARM/ARMCM0plus/Source/system_ARMCM0plus.c" version="1.0.0"/>
+    <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="1.2.1"/>
+    <component Cclass="CMSIS" Cgroup="DSP" Cvariant="Source" Cvendor="ARM" Cversion="1.10.1">
+      <defines>ARM_MATH_NEON</defines>
+    </component>
+    <component Cclass="Device" Cgroup="IRQ Controller" Csub="GIC" Cvendor="ARM" Cversion="1.0.1"/>
+    <component Cclass="Device" Cgroup="OS Tick" Csub="Generic Physical Timer" Cvendor="ARM" Cversion="1.0.1"/>
+    <component Cclass="Device" Cgroup="Startup" Cvendor="ARM" Cversion="1.0.1">
+      <file attr="config" category="header" name="Device/ARM/ARMCA7/Config/mem_ARMCA7.h" version="1.1.0"/>
+      <file attr="config" category="header" name="Device/ARM/ARMCA7/Config/system_ARMCA7.h" version="1.0.0"/>
+      <file attr="config" category="linkerScript" name="Device/ARM/ARMCA7/Source/AC6/ARMCA7.sct" version="1.0.0"/>
+      <file attr="config" category="sourceC" name="Device/ARM/ARMCA7/Source/AC6/startup_ARMCA7.c" version="1.0.1"/>
+      <file attr="config" category="sourceC" name="Device/ARM/ARMCA7/Source/mmu_ARMCA7.c" version="1.2.0"/>
+      <file attr="config" category="sourceC" name="Device/ARM/ARMCA7/Source/system_ARMCA7.c" version="1.0.1"/>
     </component>
   </components>
 
