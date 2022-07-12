@@ -115,7 +115,11 @@ void Reset_Handler(void) {
   "CPS    #0x1B                                    \n"
   "LDR    SP, =Image$$UND_STACK$$ZI$$Limit         \n"
   "CPS    #0x1F                                    \n"
+#if defined ( __GNUC__ )
+  "LDR    SP, =Image$$SYS_STACK$$ZI$$Limit         \n"
+#else
   "LDR    SP, =Image$$ARM_LIB_STACK$$ZI$$Limit     \n"
+#endif
 
   // Call SystemInit
   "BL     SystemInit                               \n"
@@ -124,7 +128,11 @@ void Reset_Handler(void) {
   "CPSIE  if                                       \n"
 
   // Call __main
+#if defined ( __GNUC__ )
+  "BL     _start                                  \n"
+#else
   "BL     __main                                  \n"
+#endif
   );
 }
 

@@ -132,6 +132,7 @@ project:
     - component: ARM::CMSIS:DSP&Source@1.10.1
       defines:
         - ARM_MATH_NEON
+        - DISABLEFLOAT16
       for-type: 
         - +FVP_A5Neon
         - +FVP_A7Neon
@@ -140,6 +141,7 @@ project:
     - component: ARM::CMSIS:DSP&Source@1.10.1
       defines:
         - ARM_MATH_AUTOVECTORIZE
+        - DISABLEFLOAT16
       for-type: 
         - +FVP_A9Neon
     - component: Device:Startup&C Startup

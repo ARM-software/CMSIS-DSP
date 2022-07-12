@@ -2,9 +2,9 @@ solution:
   compiler: GCC
   misc:
     - C:
-      - -ffunction-sections -fdata-sections -std=c11 -Ofast -ffast-math -mfp16-format=ieee -flax-vector-conversions
+      - -ffunction-sections -mfp16-format=ieee -fdata-sections -std=c11 -Ofast -ffast-math  -flax-vector-conversions
     - CPP:
-      - -ffunction-sections -fdata-sections  -std=c++11 -Ofast -ffast-math  -mfp16-format=ieee -flax-vector-conversions -Wno-unused-parameter
+      - -ffunction-sections -mfp16-format=ieee -fdata-sections  -std=c++11 -Ofast -ffast-math  -flax-vector-conversions -Wno-unused-parameter
     - ASM:
       - -masm=auto
     - Link:
@@ -12,6 +12,7 @@ solution:
       - --specs=rdimon.specs
       - --entry=Reset_Handler 
       - -Wl,--gc-sections
+     
   add-paths:
       - ../FrameworkInclude
       - ../GeneratedInclude
@@ -22,7 +23,7 @@ solution:
 
   packs:
     - pack: ARM::CMSIS-DSP@1.10.1
-    - pack: ARM::CMSIS@5.9.0
+    - pack: ARM::CMSIS@5.9.1
     - pack: ARM::V2M_MPS3_SSE_300_BSP@1.3.0
     - pack: ARM::V2M_MPS3_SSE_310_BSP@1.0.0
     - pack: Keil::ARM_Compiler@1.7.2
@@ -47,32 +48,32 @@ solution:
       device: ARMCM33_DSP_FP
       defines:
         - CORTEXM
-
+    
     - type: VHT_M7
       device: ARMCM7_DP
       defines:
         - CORTEXM
-
+      
     - type: VHT_M4
       device: ARMCM4_FP
       defines:
         - CORTEXM
-
+      
     - type: VHT_M3
       device: ARMCM3
       defines:
         - CORTEXM
-
+      
     - type: VHT_M23
       device: ARMCM23
       defines:
         - CORTEXM
-
+      
     - type: VHT_M0P
       device: ARMCM0P
       defines:
         - CORTEXM
-
+      
 # ARMCA5, ARMCA7 and ARMCA9 are not configured
 # with Neon in the pack. 
 # And the standard .cmake in CMSIS Build tools
@@ -86,23 +87,24 @@ solution:
 # in the same way (forcing Neon)
 #
 # Also, the packs have an issue with the scatter file for gcc
-# with is categorized as "Other" instead of "linkerScript".
-# So those configurations are disabled for now.
-# ARM::CMSIS@5.9.0
-    #- type: FVP_A5Neon
-    #  device: ARMCA5
-    #  defines:
-    #    - CORTEXA
-    #  
-    #- type: FVP_A7Neon
-    #  device: ARMCA7
-    #  defines:
-    #    - CORTEXA
-#
-    #- type: FVP_A9Neon
-    #  device: ARMCA9
-    #  defines:
-    #    - CORTEXA
+# with is categorized as "Other" instead of "linkerScript"
+# in CMSIS 5.9.0
+# You'll need a more recent version where the problem 
+# is solved
+    - type: FVP_A5Neon
+      device: ARMCA5
+      defines:
+        - CORTEXA
+          
+    - type: FVP_A7Neon
+      device: ARMCA7
+      defines:
+        - CORTEXA
+
+    - type: FVP_A9Neon
+      device: ARMCA9
+      defines:
+        - CORTEXA
 
   build-types:
     - type: Release

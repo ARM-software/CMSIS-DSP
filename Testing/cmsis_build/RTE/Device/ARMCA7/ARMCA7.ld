@@ -1,10 +1,10 @@
-#include "mem_ARMCA7.h" 
+
 
 MEMORY
 {
-  ROM (rx)   : ORIGIN = __ROM_BASE, LENGTH = __ROM_SIZE
-  L_TTB (rw) : ORIGIN = __TTB_BASE, LENGTH = __TTB_SIZE 
-  RAM (rwx)  : ORIGIN = __RAM_BASE, LENGTH = __RAM_SIZE
+  ROM (rx)   : ORIGIN = 0x80000000, LENGTH = 0x00200000
+  L_TTB (rw) : ORIGIN = 0x80500000, LENGTH = 0x00005000 
+  RAM (rwx)  : ORIGIN = 0x80200000, LENGTH = 0x00300000
 }
 
 ENTRY(Reset_Handler)
@@ -83,7 +83,7 @@ SECTIONS
     .ttb :
     {
         Image$$TTB$$ZI$$Base = .;
-        . += __TTB_SIZE;
+        . += 0x00005000;
         Image$$TTB$$ZI$$Limit = .;
     } > L_TTB
 
@@ -135,46 +135,44 @@ SECTIONS
         end = __end__;
     } > RAM
 
-#if defined(__HEAP_SIZE) && (__HEAP_SIZE > 0)    
     .heap (NOLOAD):
     {
         . = ALIGN(8);
         Image$$HEAP$$ZI$$Base = .;
-        . += __HEAP_SIZE;
+        . += 0x00100000;
         Image$$HEAP$$ZI$$Limit = .;
         __HeapLimit = .;
     } > RAM  
-#endif
 
     .stack (NOLOAD):
     {
-        . = ORIGIN(RAM) + LENGTH(RAM) - __STACK_SIZE - __FIQ_STACK_SIZE - __IRQ_STACK_SIZE - __SVC_STACK_SIZE - __ABT_STACK_SIZE - __UND_STACK_SIZE;
+        . = ORIGIN(RAM) + LENGTH(RAM) - 0x00002000 - 0x00000100 - 0x00000100 - 0x00000100 - 0x00000100 - 0x00000100;
         . = ALIGN(8);
         
         __StackTop = .;
         Image$$SYS_STACK$$ZI$$Base = .;
-        . += __STACK_SIZE;
+        . += 0x00002000;
         Image$$SYS_STACK$$ZI$$Limit = .;
         __stack = .;
 
         Image$$FIQ_STACK$$ZI$$Base = .;
-        . += __FIQ_STACK_SIZE;
+        . += 0x00000100;
         Image$$FIQ_STACK$$ZI$$Limit = .;
 
         Image$$IRQ_STACK$$ZI$$Base = .;
-        . += __IRQ_STACK_SIZE;
+        . += 0x00000100;
         Image$$IRQ_STACK$$ZI$$Limit = .;
 
         Image$$SVC_STACK$$ZI$$Base = .;
-        . += __SVC_STACK_SIZE;
+        . += 0x00000100;
         Image$$SVC_STACK$$ZI$$Limit = .;
 
         Image$$ABT_STACK$$ZI$$Base = .;
-        . += __ABT_STACK_SIZE;
+        . += 0x00000100;
         Image$$ABT_STACK$$ZI$$Limit = .;
 
         Image$$UND_STACK$$ZI$$Base = .;
-        . += __UND_STACK_SIZE;
+        . += 0x00000100;
         Image$$UND_STACK$$ZI$$Limit = .;
         
     } > RAM
