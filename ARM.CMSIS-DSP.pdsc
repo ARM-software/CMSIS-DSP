@@ -24,12 +24,19 @@
     </condition>
 
    
-    <!-- CMSIS DSP -->
-    <condition id="CMSIS DSP">
-      <description>Components required for DSP</description>
+    <!-- CMSIS -->
+    <condition id="CMSISCORE">
+      <description>Components required for CMSIS Core</description>
       <require condition="ARMCC GCC IAR"/>
       <require Cclass="CMSIS" Cgroup="CORE"/>
     </condition>
+
+    <condition id="CMSISDSPLIB">
+      <description>Components required for DSP</description>
+      <require condition="CMSISCORE"/>
+      <require Cclass="CMSIS" Cgroup="DSP" Cversion="1.10.0"/>
+    </condition>
+
 
     <condition id="ARMv7-A Device">
       <description>Armv7-A architecture based device</description>
@@ -42,7 +49,7 @@
 
   <components>
     <!-- CMSIS-DSP component -->
-    <component Cclass="CMSIS" Cgroup="DSP" Cvariant="Source"  Cversion="0.0.0" isDefaultVariant="true" condition="CMSIS DSP">
+    <component Cclass="CMSIS" Cgroup="DSP" Cvariant="Source"  Cversion="0.0.0" isDefaultVariant="true" condition="CMSISCORE">
       <description>CMSIS-DSP Library for Cortex-M and Cortex-A</description>
       <files>
         <!-- CPU independent -->
@@ -98,7 +105,14 @@
       </files>
     </component>
 
-
+    <component Cclass="CMSIS" Cgroup="DSP" Csub="Synchronous Dataflow" Cvariant="Source"  Cversion="0.0.0" isDefaultVariant="true" condition="CMSISDSPLIB">
+      <description>CMSIS-DSP Synchronous Dataflow (SDF)</description>
+      <files>
+          <file category="header" name="SDFTools/sdf/src/GenericNodes.h"/>
+          <file category="include"  name="SDFTools/sdf/nodes/cpp/"/>
+          <file category="include"  name="SDFTools/sdf/src/"/>
+      </files>
+    </component>
   </components>
 
   <examples>
