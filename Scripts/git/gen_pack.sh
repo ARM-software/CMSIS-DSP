@@ -110,6 +110,18 @@ PACK_DIRS="
 # Specify file names to be added to pack base directory
 PACK_BASE_FILES="
   LICENSE.txt
+  SDFTools/sdf/src/GenericNodes.h
+  SDFTools/sdf/nodes/cpp/CFFT.h
+  SDFTools/sdf/nodes/cpp/ICFFT.h
+  SDFTools/sdf/nodes/cpp/MFCC.h
+  SDFTools/sdf/nodes/cpp/NullSink.h
+  SDFTools/sdf/nodes/cpp/StereoToMono.h
+  SDFTools/sdf/nodes/cpp/StreamingSink.h
+  SDFTools/sdf/nodes/cpp/StreamingSource.h
+  SDFTools/sdf/nodes/cpp/ToComplex.h
+  SDFTools/sdf/nodes/cpp/ToReal.h
+  SDFTools/sdf/nodes/cpp/Unzip.h
+  SDFTools/sdf/nodes/cpp/Zip.h
 "
 
 # Specify file names to be deleted from pack build directory
@@ -190,18 +202,20 @@ tail -n +${last} "./${PACK_VENDOR}.${PACK_NAME}.pdsc" | \
 
 # Add directories
 echo Adding directories to pack:
-echo "${PACK_DIRS}"
+#echo "${PACK_DIRS}"
 echo " "
 for d in ${PACK_DIRS}; do
+  echo "$d"
   cp -r --parents "$d" "${PACK_BUILD}"
 done
 
 # Add files
 echo Adding files to pack:
-echo "${PACK_BASE_FILES}"
+#echo "${PACK_BASE_FILES}"
 echo " "
 if [ ! -x ${PACK_BASE_FILES+x} ]; then
   for f in ${PACK_BASE_FILES}; do
+    echo "$f"
     cp -f --parents "$f" $PACK_BUILD/
   done
 fi
