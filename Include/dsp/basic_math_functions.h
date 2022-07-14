@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     basic_math_functions.h
  * @brief    Public header file for CMSIS DSP Library
- * @version  V1.11.1
- * @date     14 July 2022
+ * @version  V1.11.0
+ * @date     08 July 2021
  * Target Processor: Cortex-M and Cortex-A cores
  ******************************************************************************/
 /*
@@ -157,8 +157,6 @@ const float64_t * pSrcB,
   const q7_t * pSrcB,
         q7_t * pDst,
         uint32_t blockSize);
-
-
   /**
    * @brief Q15 vector addition.
    * @param[in]  pSrcA      points to the first input vector
