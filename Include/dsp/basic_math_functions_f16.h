@@ -159,8 +159,6 @@ void arm_clip_f16(const float16_t * pSrc,
   float16_t high, 
   uint32_t numSamples);
 
-
-
 #endif /* defined(ARM_FLOAT16_SUPPORTED)*/
 
 #ifdef   __cplusplus
