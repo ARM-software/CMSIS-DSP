@@ -34,15 +34,19 @@ With this wrapper you can design your algorithm in Python using an API as close 
 
 The goal is to make it easier to move from a design to a final implementation in C.
 
-### Synchronous Data Flow
+### Synchronous Data Flow (SDF)
 
 CMSIS-DSP is also providing an experimental [synchronous data flow scheduler](SDFTools/README.md):
 
 * You define your compute graph in Python
-* A static schedule (computed by the Python script is generated)
-* The static schedule can be run on the device
+* A static schedule (computed by the Python script) is generated
+* The static schedule can be run on the device with very low overhead
 
-The scripts for the synchronous data flow (SDF) are part of the CMSIS-DSP Python wrapper. 
+The Python scripts for the synchronous data flow (SDF) are part of the CMSIS-DSP Python wrapper. 
+
+The header files are part of the CMSIS-DSP pack (version 1.10.2 and above).
+
+The audio streaming nodes on top of CMSIS-RTOS2 are not part of the CMSIS-DSP pack but can be found in the repository. They are demo quality only. They can be used with Arm Virtual Hardware.
 
 The SDF is making it easier to implement a streaming solution : connecting different compute kernels each consuming and producing different amount of data.
 
@@ -81,7 +85,7 @@ This optimization will **not** occur when `-fno-builtin` is used and it will hav
 
 Some compiler may also require the use of option `-munaligned-access` to specify that unaligned accesses are used.
 
-### Half float support
+## Half float support
 
 `f16` data type (half float) has been added to the library. It is useful only if your Cortex has some half float hardware acceleration (for instance with Helium extension). If you don't need `f16`, you should disable it since it may cause compilation problems. Just define `-DDISABLEFLOAT16` when building.
 
@@ -140,7 +144,7 @@ project (testcmsisdsp VERSION 0.1)
 add_subdirectory(${CMSISDSP}/Source bin_dsp)
 ```
 
-CMSIS-DSP is dependent on the CMSIS Core includes. So, you should define `CMSISCORE` on the cmake command line. The path used will be `${CMSISCORE}\Include`.
+CMSIS-DSP is dependent on the CMSIS Core includes. So, you should define `CMSISCORE` on the cmake command line. The path used will be `${CMSISCORE}/Include`.
 
 You should also set the compilation options to use to build the library.
 
@@ -163,13 +167,12 @@ You need to build with `-D__GNUC_PYTHON__` on the compiler command line. This fl
 When this flag is enabled, CMSIS-DSP is defining a few macros used in the library for compiler portability:
 
 ```C
-#include <stdint.h>
 #define  __ALIGNED(x) __attribute__((aligned(x)))
 #define __STATIC_FORCEINLINE static inline __attribute__((always_inline)) 
 #define __STATIC_INLINE static inline
 ```
 
-If the compiler you are using is requiring different definitions, you can add them to `arm_math_types.h` in the `Include` folder of the library. MSVC and XCode are already supported and in those case, you don't need to define `-D__GNUC_PYTHON`__
+If the compiler you are using is requiring different definitions, you can add them to `arm_math_types.h` in the `Include` folder of the library. MSVC and XCode are already supported and in those case, you don't need to define `-D__GNUC_PYTHON__`
 
 Then, you need to define `-DARM_MATH_NEON`
 
@@ -178,7 +181,7 @@ For cmake the equivalent options are:
 * -DHOST=ON
 * -DNEON=ON
 
-cmake is automatically including the `ComputeLibrary` folder. If you are using a different build, you need to include this folder too.
+cmake is automatically including the `ComputeLibrary` folder. If you are using a different build, you need to include this folder too to build with Neon support.
 
 ### Running
 

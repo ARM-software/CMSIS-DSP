@@ -34,7 +34,7 @@
     <condition id="CMSISDSPLIB">
       <description>Components required for DSP</description>
       <require condition="CMSISCORE"/>
-      <require Cclass="CMSIS" Cgroup="DSP" Cversion="1.10.0"/>
+      <require Cclass="CMSIS" Cgroup="DSP" Csub=""/>
     </condition>
 
 
