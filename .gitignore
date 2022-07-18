@@ -19,7 +19,7 @@ Examples/ARM/*/MTICoverageOut.cov
 CMSISDSP.egg-info/
 dist/
 Output/
-Documentation/
+Documentation/html/
 PACK.xsd
 *.uvguix.*
 build
