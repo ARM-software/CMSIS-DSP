@@ -52,15 +52,35 @@ extern "C"
  */
 
 
- /**
-   * @ingroup groupController
-   */
+/**
+  @ingroup groupController
+ */
 
-  /**
-   * @addtogroup SinCos
-   * @{
-   */
+/**
+  @defgroup SinCos Sine Cosine
 
+  Computes the trigonometric sine and cosine values using a combination of table lookup
+  and linear interpolation.
+  There are separate functions for Q31 and floating-point data types.
+  The input to the floating-point version is in degrees while the
+  fixed-point Q31 have a scaled input with the range
+  [-1 0.9999] mapping to [-180 +180] degrees.
+
+  The floating point function also allows values that are out of the usual range. When this happens, the function will
+  take extra time to adjust the input value to the range of [-180 180].
+
+  The result is accurate to 5 digits after the decimal point.
+
+  The implementation is based on table lookup using 360 values together with linear interpolation.
+  The steps used are:
+   -# Calculation of the nearest integer table index.
+   -# Compute the fractional portion (fract) of the input.
+   -# Fetch the value corresponding to \c index from sine table to \c y0 and also value from \c index+1 to \c y1.
+   -# Sine value is computed as <code> *psinVal = y0 + (fract * (y1 - y0))</code>.
+   -# Fetch the value corresponding to \c index from cosine table to \c y0 and also value from \c index+1 to \c y1.
+   -# Cosine value is computed as <code> *pcosVal = y0 + (fract * (y1 - y0))</code>.
+ */
+ 
 /**
    * @brief  Floating-point sin_cos function.
    * @param[in]  theta   input value in degrees
@@ -83,10 +103,6 @@ extern "C"
         q31_t theta,
         q31_t * pSinVal,
         q31_t * pCosVal);
-
-  /**
-   * @} end of SinCos group
-   */
 
  /**
    * @ingroup groupController

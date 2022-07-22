@@ -29,20 +29,20 @@ jobs:
           sudo apt-get install --no-install-recommends -y libclang1-9 libclang-cpp1-9 p7zip libxml2-utils
           sudo pip install LinkChecker
 
-      - name: Install Doxygen 1.8.6
-        run: |
-          wget http://archive.ubuntu.com/ubuntu/pool/main/d/doxygen/doxygen_1.8.6-2_amd64.deb
-          sudo dpkg -i doxygen_1.8.6-2_amd64.deb
-          which doxygen
-          doxygen --version
-
-#      - name: Install doxygen 1.9.2
+#      - name: Install Doxygen 1.8.6
 #        run: |
-#          wget https://doxygen.nl/files/doxygen-1.9.2.linux.bin.tar.gz
-#          sudo tar -C /opt -xf doxygen-1.9.2.linux.bin.tar.gz
-#          sudo ln -s /opt/doxygen-1.9.2/bin/doxygen /usr/local/bin/
+#          wget http://archive.ubuntu.com/ubuntu/pool/main/d/doxygen/doxygen_1.8.6-2_amd64.deb
+#          sudo dpkg -i doxygen_1.8.6-2_amd64.deb
 #          which doxygen
 #          doxygen --version
+
+      - name: Install doxygen 1.9.2
+        run: |
+          wget https://doxygen.nl/files/doxygen-1.9.2.linux.bin.tar.gz
+          sudo tar -C /opt -xf doxygen-1.9.2.linux.bin.tar.gz
+          sudo ln -s /opt/doxygen-1.9.2/bin/doxygen /usr/local/bin/
+          which doxygen
+          doxygen --version
 
       - name: Install PackChk 1.3.95
         run: |

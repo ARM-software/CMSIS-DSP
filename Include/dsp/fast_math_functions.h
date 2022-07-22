@@ -63,17 +63,8 @@ extern "C"
  *
  */
 
-  /**
-   * @ingroup groupFastMath
-   */
 
-
-/**
-  @addtogroup sin
-  @{
- */
-
-/**
+   /**
    * @brief  Fast approximation to the trigonometric sine function for floating-point data.
    * @param[in] x  input value in radians.
    * @return  sin(x).
@@ -90,7 +81,6 @@ extern "C"
   q31_t arm_sin_q31(
   q31_t x);
 
-
   /**
    * @brief  Fast approximation to the trigonometric sine function for Q15 data.
    * @param[in] x  Scaled input value in radians.
@@ -99,14 +89,6 @@ extern "C"
   q15_t arm_sin_q15(
   q15_t x);
 
-/**
-  @} end of sin group
- */
-
-/**
-  @addtogroup cos
-  @{
- */
 
   /**
    * @brief  Fast approximation to the trigonometric cosine function for floating-point data.
@@ -134,10 +116,6 @@ extern "C"
   q15_t arm_cos_q15(
   q15_t x);
 
-/**
-  @} end of cos group
- */
-
 
 /**
   @brief         Floating-point vector of log values.
@@ -162,8 +140,8 @@ extern "C"
  */
   void arm_vlog_f64(
   const float64_t * pSrc,
-		float64_t * pDst,
-		uint32_t blockSize);
+        float64_t * pDst,
+        uint32_t blockSize);
 
 
 

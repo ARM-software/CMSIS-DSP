@@ -33,6 +33,7 @@
 
 /**
   @ingroup barycenter
+  @{
  */
 
 

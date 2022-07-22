@@ -121,18 +121,6 @@ extern "C"
   } arm_spline_instance_f32;
 
 
-
-
-  /**
-   * @ingroup groupInterpolation
-   */
-
-  /**
-   * @addtogroup SplineInterpolate
-   * @{
-   */
-
-  
   /**
    * @brief Processing function for the floating-point cubic spline interpolation.
    * @param[in]  S          points to an instance of the floating-point spline structure.
@@ -166,18 +154,7 @@ extern "C"
           float32_t * tempBuffer);
 
 
-  /**
-   * @} end of SplineInterpolate group
-   */
-
-
-  
-  /**
-   * @addtogroup LinearInterpolate
-   * @{
-   */
-
-    /**
+   /**
    * @brief  Process function for the floating-point Linear Interpolation Function.
    * @param[in,out] S  is an instance of the floating-point Linear Interpolation structure
    * @param[in]     x  input sample to process
@@ -242,23 +219,6 @@ q7_t arm_linear_interp_q7(
   uint32_t nValues);
 
   /**
-   * @} end of LinearInterpolate group
-   */
-
-  
-
-
-  /**
-   * @ingroup groupInterpolation
-   */
-
-
-  /**
-   * @addtogroup BilinearInterpolate
-   * @{
-   */
-
-  /**
   * @brief  Floating-point bilinear interpolation.
   * @param[in,out] S  points to an instance of the interpolation structure.
   * @param[in]     X  interpolation coordinate.
@@ -306,10 +266,6 @@ q7_t arm_linear_interp_q7(
   arm_bilinear_interp_instance_q7 * S,
   q31_t X,
   q31_t Y);
-  /**
-   * @} end of BilinearInterpolate group
-   */
-
 
 
 #ifdef   __cplusplus

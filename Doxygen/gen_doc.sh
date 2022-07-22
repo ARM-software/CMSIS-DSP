@@ -5,7 +5,7 @@
 #
 # Pre-requisites:
 # - bash shell (for Windows: install git for Windows)
-# - doxygen 1.8.6
+# - doxygen 1.9.2
 
 set -o pipefail
 
@@ -22,8 +22,8 @@ if [[ ! -f "${DOXYGEN}" ]]; then
 else
   version=$("${DOXYGEN}" --version)
   echo "DOXYGEN is ${DOXYGEN} at version ${version}"
-  if [[ "${version}" != "1.8.6" ]]; then
-    echo " >> Version is different from 1.8.6 !" >&2
+  if [[ "${version}" != "1.9.2" ]]; then
+    echo " >> Version is different from 1.9.2 !" >&2
   fi
 fi
 
