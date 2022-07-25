@@ -996,7 +996,14 @@ EXCLUDE_PATTERNS       = */RTE/* \
 # Note that the wildcards are matched against the file with absolute path, so to
 # exclude all test directories use the pattern */test/*
 
-EXCLUDE_SYMBOLS        = 
+EXCLUDE_SYMBOLS        = S \
+   arm_cfft_sR_f64_* \
+   arm_cfft_sR_f32_* \
+   arm_cfft_sR_f16_* \
+   arm_cfft_sR_q31_* \
+   arm_cfft_sR_q15_* \
+   any32x4_t \
+   any32x2_t
 
 # The EXAMPLE_PATH tag can be used to specify one or more files or directories
 # that contain example code fragments that are included (see the \include

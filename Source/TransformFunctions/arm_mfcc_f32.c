@@ -40,15 +40,6 @@
  */
 
 
-/**
-  @defgroup MFCC MFCC
-
-  MFCC Transform
-
-  There are separate functions for floating-point, Q15, and Q31 data types.
- */
-
-
 
 /**
   @addtogroup MFCC
