@@ -53,7 +53,7 @@
   </pre>
   @par
                    <code>pState</code> points to the array of state variables.
-                   <code>pState</code> is of length <code>numTaps+blockSize-1</code> samples, where <code>blockSize</code> is the number of input samples processed by each call to <code>arm_fir_f32()</code>.
+                   <code>pState</code> is of length <code>numTaps+blockSize-1</code> samples, where <code>blockSize</code> is the number of input samples processed by each call to <code>arm_fir_f64()</code>.
   
   @par
                    There is no Helium version of the fir F64.
