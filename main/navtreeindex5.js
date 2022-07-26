@@ -1,5 +1,13 @@
 var NAVTREEINDEX5 =
 {
+"structarm__mfcc__instance__f32.html#a13e9ec26f0771670bc9e3802b8d774d3":[4,71,1],
+"structarm__mfcc__instance__f32.html#a489f76388c886ac258175e4d27970b0c":[4,71,7],
+"structarm__mfcc__instance__f32.html#a4a698086e918a056cb7175569c59cb61":[4,71,8],
+"structarm__mfcc__instance__f32.html#a4bf2fc236988cf1e39f7b3efbd0a1797":[4,71,4],
+"structarm__mfcc__instance__f32.html#a5dfb2cf763294de0b95c7a3a2cf8fbe1":[4,71,2],
+"structarm__mfcc__instance__f32.html#a8026013bc0810af2b1db606041228cca":[4,71,0],
+"structarm__mfcc__instance__f32.html#a8ac2a63296ee4e08bb019bf75f66f7d0":[4,71,6],
+"structarm__mfcc__instance__f32.html#a92fa17569af954a83e7d76d88693ecc6":[4,71,3],
 "structarm__mfcc__instance__f32.html#acfacbcf8d50f063823b8097880bc9485":[4,71,5],
 "structarm__mfcc__instance__q15.html":[4,72],
 "structarm__mfcc__instance__q15.html#a13e9ec26f0771670bc9e3802b8d774d3":[4,72,1],

@@ -23,6 +23,13 @@
   $(document).ready(function() { init_search(); });
 /* @license-end */
 </script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js", "TeX/AMSmath.js", "TeX/AMSsymbols.js"],
+  jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="$extra_stylesheet" rel="stylesheet" type="text/css" />
 <link href="extra_stylesheet.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -35,7 +42,7 @@
   <td id="projectlogo" style="padding: 1.5em;"><img alt="Logo" src="cmsis_logo_white_small.png"/></td>
   <td style="padding-left: 1em; padding-bottom: 1em;padding-top: 1em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.10.2-dev12</span>
+   &#160;<span id="projectnumber">Version 1.10.2-dev13</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -147,7 +154,8 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
       <li><a href="globals_func_f.html#index_f"><span>float</span></a></li>
       <li><a href="globals_func_g.html#index_g"><span>g</span></a></li>
       <li><a href="globals_func_g.html#index_g"><span>gauss</span></a></li>
-      <li class="current"><a href="globals_func_h.html#index_h"><span>hammi</span></a></li>
+      <li><a href="globals_func_h.html#index_h"><span>hammi</span></a></li>
+      <li class="current"><a href="globals_func_h.html#index_h"><span>house</span></a></li>
       <li><a href="globals_func_i.html#index_i"><span>iir_l</span></a></li>
       <li><a href="globals_func_i.html#index_i"><span>inv_c</span></a></li>
       <li><a href="globals_func_i.html#index_i"><span>inv_p</span></a></li>
@@ -169,6 +177,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
       <li><a href="globals_func_m.html#index_m"><span>mat_i</span></a></li>
       <li><a href="globals_func_m.html#index_m"><span>mat_l</span></a></li>
       <li><a href="globals_func_m.html#index_m"><span>mat_m</span></a></li>
+      <li><a href="globals_func_m.html#index_m"><span>mat_q</span></a></li>
       <li><a href="globals_func_m.html#index_m"><span>mat_s</span></a></li>
       <li><a href="globals_func_m.html#index_m"><span>mat_t</span></a></li>
       <li><a href="globals_func_m.html#index_m"><span>mat_v</span></a></li>
@@ -278,8 +287,10 @@ $(document).ready(function(){initNavTree('globals_func_h.html',''); initResizabl
 <div class="contents">
 &#160;
 
-<h3><a id="index_h" name="index_h"></a>- hammi -</h3><ul>
-<li>arm_hamming_distance()&#160;:&#160;<a class="el" href="group__BoolDist.html#ga408dd9df42fb1f3f5ec7ca8d80694d4a">distance_functions.h</a>, <a class="el" href="group__BoolDist.html#ga408dd9df42fb1f3f5ec7ca8d80694d4a">arm_hamming_distance.c</a></li>
+<h3><a id="index_h" name="index_h"></a>- house -</h3><ul>
+<li>arm_householder_f16()&#160;:&#160;<a class="el" href="group__MatrixHouseholder.html#ga2ac1a8e5e186599ae8ca5a67206c19c4">matrix_functions_f16.h</a>, <a class="el" href="group__MatrixHouseholder.html#ga2ac1a8e5e186599ae8ca5a67206c19c4">arm_householder_f16.c</a></li>
+<li>arm_householder_f32()&#160;:&#160;<a class="el" href="group__MatrixHouseholder.html#ga4dcb8af2a65875bf84da6ed35c436537">matrix_functions.h</a>, <a class="el" href="group__MatrixHouseholder.html#ga4dcb8af2a65875bf84da6ed35c436537">arm_householder_f32.c</a></li>
+<li>arm_householder_f64()&#160;:&#160;<a class="el" href="group__MatrixHouseholder.html#ga62826e5b9e3c7787147e4e4de21015fc">matrix_functions.h</a>, <a class="el" href="group__MatrixHouseholder.html#ga62826e5b9e3c7787147e4e4de21015fc">arm_householder_f64.c</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

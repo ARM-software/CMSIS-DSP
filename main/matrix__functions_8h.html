@@ -23,6 +23,13 @@
   $(document).ready(function() { init_search(); });
 /* @license-end */
 </script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js", "TeX/AMSmath.js", "TeX/AMSsymbols.js"],
+  jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="$extra_stylesheet" rel="stylesheet" type="text/css" />
 <link href="extra_stylesheet.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -35,7 +42,7 @@
   <td id="projectlogo" style="padding: 1.5em;"><img alt="Logo" src="cmsis_logo_white_small.png"/></td>
   <td style="padding-left: 1em; padding-bottom: 1em;padding-top: 1em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.10.2-dev12</span>
+   &#160;<span id="projectnumber">Version 1.10.2-dev13</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -117,6 +124,7 @@ $(document).ready(function(){initNavTree('matrix__functions_8h.html',''); initRe
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">matrix_functions.h File Reference</div></div>
 </div><!--header-->
@@ -139,6 +147,13 @@ Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__matrix__instance__q31.html">arm_matrix_instance_q31</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Instance structure for the Q31 matrix structure.  <a href="structarm__matrix__instance__q31.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a8145c6c16876276d99ab16775309ff86"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="matrix__functions_8h.html#a8145c6c16876276d99ab16775309ff86">DEFAULT_HOUSEHOLDER_THRESHOLD_F64</a>&#160;&#160;&#160;(1.0e-16)</td></tr>
+<tr class="separator:a8145c6c16876276d99ab16775309ff86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9857c49fd86842758a5a3b1f185fbea0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="matrix__functions_8h.html#a9857c49fd86842758a5a3b1f185fbea0">DEFAULT_HOUSEHOLDER_THRESHOLD_F32</a>&#160;&#160;&#160;(1.0e-12f)</td></tr>
+<tr class="separator:a9857c49fd86842758a5a3b1f185fbea0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -280,7 +295,48 @@ Functions</h2></td></tr>
 <tr class="memitem:gabc7f0d81b9d1e4899ca47d13775bbbc1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math__types_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MatrixChol.html#gabc7f0d81b9d1e4899ca47d13775bbbc1">arm_mat_ldlt_f64</a> (const <a class="el" href="structarm__matrix__instance__f64.html">arm_matrix_instance_f64</a> *src, <a class="el" href="structarm__matrix__instance__f64.html">arm_matrix_instance_f64</a> *l, <a class="el" href="structarm__matrix__instance__f64.html">arm_matrix_instance_f64</a> *d, uint16_t *pp)</td></tr>
 <tr class="memdesc:gabc7f0d81b9d1e4899ca47d13775bbbc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Floating-point LDL decomposition of Symmetric Positive Semi-Definite Matrix.  <a href="group__MatrixChol.html#gabc7f0d81b9d1e4899ca47d13775bbbc1">More...</a><br /></td></tr>
 <tr class="separator:gabc7f0d81b9d1e4899ca47d13775bbbc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae4b129d8c645a812914da44ad1fc4f50"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math__types_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MatrixQR.html#gae4b129d8c645a812914da44ad1fc4f50">arm_mat_qr_f32</a> (const <a class="el" href="structarm__matrix__instance__f32.html">arm_matrix_instance_f32</a> *pSrc, const <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> threshold, <a class="el" href="structarm__matrix__instance__f32.html">arm_matrix_instance_f32</a> *pOutR, <a class="el" href="structarm__matrix__instance__f32.html">arm_matrix_instance_f32</a> *pOutQ, <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pOutTau, <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pTmpA, <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pTmpB)</td></tr>
+<tr class="memdesc:gae4b129d8c645a812914da44ad1fc4f50"><td class="mdescLeft">&#160;</td><td class="mdescRight">QR decomposition of a m x n floating point matrix with m &gt;= n.  <a href="group__MatrixQR.html#gae4b129d8c645a812914da44ad1fc4f50">More...</a><br /></td></tr>
+<tr class="separator:gae4b129d8c645a812914da44ad1fc4f50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa222c153ee1753dce2904b4b01189eb4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math__types_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MatrixQR.html#gaa222c153ee1753dce2904b4b01189eb4">arm_mat_qr_f64</a> (const <a class="el" href="structarm__matrix__instance__f64.html">arm_matrix_instance_f64</a> *pSrc, const <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> threshold, <a class="el" href="structarm__matrix__instance__f64.html">arm_matrix_instance_f64</a> *pOutR, <a class="el" href="structarm__matrix__instance__f64.html">arm_matrix_instance_f64</a> *pOutQ, <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *pOutTau, <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *pTmpA, <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *pTmpB)</td></tr>
+<tr class="memdesc:gaa222c153ee1753dce2904b4b01189eb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">QR decomposition of a m x n floating point matrix with m &gt;= n.  <a href="group__MatrixQR.html#gaa222c153ee1753dce2904b4b01189eb4">More...</a><br /></td></tr>
+<tr class="separator:gaa222c153ee1753dce2904b4b01189eb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4dcb8af2a65875bf84da6ed35c436537"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MatrixHouseholder.html#ga4dcb8af2a65875bf84da6ed35c436537">arm_householder_f32</a> (const <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pSrc, const <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> threshold, uint32_t <a class="el" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>, <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pOut)</td></tr>
+<tr class="memdesc:ga4dcb8af2a65875bf84da6ed35c436537"><td class="mdescLeft">&#160;</td><td class="mdescRight">Householder transform of a floating point vector.  <a href="group__MatrixHouseholder.html#ga4dcb8af2a65875bf84da6ed35c436537">More...</a><br /></td></tr>
+<tr class="separator:ga4dcb8af2a65875bf84da6ed35c436537"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga62826e5b9e3c7787147e4e4de21015fc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MatrixHouseholder.html#ga62826e5b9e3c7787147e4e4de21015fc">arm_householder_f64</a> (const <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *pSrc, const <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> threshold, uint32_t <a class="el" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>, <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *pOut)</td></tr>
+<tr class="memdesc:ga62826e5b9e3c7787147e4e4de21015fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Householder transform of a double floating point vector.  <a href="group__MatrixHouseholder.html#ga62826e5b9e3c7787147e4e4de21015fc">More...</a><br /></td></tr>
+<tr class="separator:ga62826e5b9e3c7787147e4e4de21015fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a9857c49fd86842758a5a3b1f185fbea0" name="a9857c49fd86842758a5a3b1f185fbea0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9857c49fd86842758a5a3b1f185fbea0">&#9670;&nbsp;</a></span>DEFAULT_HOUSEHOLDER_THRESHOLD_F32</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DEFAULT_HOUSEHOLDER_THRESHOLD_F32&#160;&#160;&#160;(1.0e-12f)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8145c6c16876276d99ab16775309ff86" name="a8145c6c16876276d99ab16775309ff86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8145c6c16876276d99ab16775309ff86">&#9670;&nbsp;</a></span>DEFAULT_HOUSEHOLDER_THRESHOLD_F64</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DEFAULT_HOUSEHOLDER_THRESHOLD_F64&#160;&#160;&#160;(1.0e-16)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

@@ -1,5 +1,13 @@
 var NAVTREEINDEX4 =
 {
+"structarm__cfft__radix4__instance__q15.html#a3b229432d381b0a511a9cdbe3aa74e78":[4,26,4],
+"structarm__cfft__radix4__instance__q15.html#a7f19217cfa0370f9e518caa882265386":[4,26,5],
+"structarm__cfft__radix4__instance__q15.html#ab8db3bbe7c61e6bb8ca2a55e3446e11a":[4,26,2],
+"structarm__cfft__radix4__instance__q15.html#ad6ca6e223f986ebfd94c5ee1e410aa73":[4,26,3],
+"structarm__cfft__radix4__instance__q15.html#afe772e5b5001c9d8e85032115a8df5bf":[4,26,6],
+"structarm__cfft__radix4__instance__q31.html":[4,27],
+"structarm__cfft__radix4__instance__q31.html#a09a221a818c6d0e064557a99e2fe9a8b":[4,27,0],
+"structarm__cfft__radix4__instance__q31.html#a33386d95319dc3ee7097b3a8e52e01ec":[4,27,1],
 "structarm__cfft__radix4__instance__q31.html#a3b229432d381b0a511a9cdbe3aa74e78":[4,27,4],
 "structarm__cfft__radix4__instance__q31.html#a9760c603af5d85652496dbffd63a8a2e":[4,27,5],
 "structarm__cfft__radix4__instance__q31.html#ab8db3bbe7c61e6bb8ca2a55e3446e11a":[4,27,2],
@@ -241,13 +249,5 @@ var NAVTREEINDEX4 =
 "structarm__mfcc__instance__f16.html#a92fa17569af954a83e7d76d88693ecc6":[4,70,3],
 "structarm__mfcc__instance__f16.html#acfacbcf8d50f063823b8097880bc9485":[4,70,5],
 "structarm__mfcc__instance__f16.html#ad5e5aff68fbc05cb8ab468dce6cfe915":[4,70,2],
-"structarm__mfcc__instance__f32.html":[4,71],
-"structarm__mfcc__instance__f32.html#a13e9ec26f0771670bc9e3802b8d774d3":[4,71,1],
-"structarm__mfcc__instance__f32.html#a489f76388c886ac258175e4d27970b0c":[4,71,7],
-"structarm__mfcc__instance__f32.html#a4a698086e918a056cb7175569c59cb61":[4,71,8],
-"structarm__mfcc__instance__f32.html#a4bf2fc236988cf1e39f7b3efbd0a1797":[4,71,4],
-"structarm__mfcc__instance__f32.html#a5dfb2cf763294de0b95c7a3a2cf8fbe1":[4,71,2],
-"structarm__mfcc__instance__f32.html#a8026013bc0810af2b1db606041228cca":[4,71,0],
-"structarm__mfcc__instance__f32.html#a8ac2a63296ee4e08bb019bf75f66f7d0":[4,71,6],
-"structarm__mfcc__instance__f32.html#a92fa17569af954a83e7d76d88693ecc6":[4,71,3]
+"structarm__mfcc__instance__f32.html":[4,71]
 };

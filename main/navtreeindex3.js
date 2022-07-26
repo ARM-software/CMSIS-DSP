@@ -1,5 +1,13 @@
 var NAVTREEINDEX3 =
 {
+"group__float__to__x.html#gac7696e64963e5051ebb950c88c6ba186":[3,12,6,1],
+"group__groupBayes.html":[3,2],
+"group__groupBayes.html#ga23f942747fc13865a66bf14bb44dd299":[3,2,1],
+"group__groupBayes.html#ga6f7cde3d37f85f99bd1a125601a718a0":[3,2,0],
+"group__groupCmplxMath.html":[3,3],
+"group__groupController.html":[3,4],
+"group__groupDistance.html":[3,5],
+"group__groupExamples.html":[3,0],
 "group__groupFastMath.html":[3,6],
 "group__groupFilters.html":[3,7],
 "group__groupInterpolation.html":[3,8],
@@ -241,13 +249,5 @@ var NAVTREEINDEX3 =
 "structarm__cfft__radix4__instance__f32.html#afe772e5b5001c9d8e85032115a8df5bf":[4,25,7],
 "structarm__cfft__radix4__instance__q15.html":[4,26],
 "structarm__cfft__radix4__instance__q15.html#a09a221a818c6d0e064557a99e2fe9a8b":[4,26,0],
-"structarm__cfft__radix4__instance__q15.html#a33386d95319dc3ee7097b3a8e52e01ec":[4,26,1],
-"structarm__cfft__radix4__instance__q15.html#a3b229432d381b0a511a9cdbe3aa74e78":[4,26,4],
-"structarm__cfft__radix4__instance__q15.html#a7f19217cfa0370f9e518caa882265386":[4,26,5],
-"structarm__cfft__radix4__instance__q15.html#ab8db3bbe7c61e6bb8ca2a55e3446e11a":[4,26,2],
-"structarm__cfft__radix4__instance__q15.html#ad6ca6e223f986ebfd94c5ee1e410aa73":[4,26,3],
-"structarm__cfft__radix4__instance__q15.html#afe772e5b5001c9d8e85032115a8df5bf":[4,26,6],
-"structarm__cfft__radix4__instance__q31.html":[4,27],
-"structarm__cfft__radix4__instance__q31.html#a09a221a818c6d0e064557a99e2fe9a8b":[4,27,0],
-"structarm__cfft__radix4__instance__q31.html#a33386d95319dc3ee7097b3a8e52e01ec":[4,27,1]
+"structarm__cfft__radix4__instance__q15.html#a33386d95319dc3ee7097b3a8e52e01ec":[4,26,1]
 };

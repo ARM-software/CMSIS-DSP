@@ -23,6 +23,13 @@
   $(document).ready(function() { init_search(); });
 /* @license-end */
 </script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js", "TeX/AMSmath.js", "TeX/AMSsymbols.js"],
+  jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="$extra_stylesheet" rel="stylesheet" type="text/css" />
 <link href="extra_stylesheet.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -35,7 +42,7 @@
   <td id="projectlogo" style="padding: 1.5em;"><img alt="Logo" src="cmsis_logo_white_small.png"/></td>
   <td style="padding-left: 1em; padding-bottom: 1em;padding-top: 1em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.10.2-dev12</span>
+   &#160;<span id="projectnumber">Version 1.10.2-dev13</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -204,17 +211,19 @@ $(document).ready(function(){initNavTree('modules.html',''); initResizable(); })
 <tr id="row_8_1_" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__LinearInterpolate.html" target="_self">Linear Interpolation</a></td><td class="desc"></td></tr>
 <tr id="row_8_2_" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__SplineInterpolate.html" target="_self">Cubic Spline Interpolation</a></td><td class="desc"></td></tr>
 <tr id="row_9_"><td class="entry"><span style="width:0px;display:inline-block;">&#160;</span><span id="arr_9_" class="arrow" onclick="toggleFolder('9_')">&#9658;</span><a class="el" href="group__groupMatrix.html" target="_self">Matrix Functions</a></td><td class="desc"></td></tr>
-<tr id="row_9_0_" class="even" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__MatrixAdd.html" target="_self">Matrix Addition</a></td><td class="desc"></td></tr>
-<tr id="row_9_1_" class="even" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__MatrixChol.html" target="_self">Cholesky and LDLT decompositions</a></td><td class="desc"></td></tr>
-<tr id="row_9_2_" class="even" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__CmplxMatrixMult.html" target="_self">Complex Matrix Multiplication</a></td><td class="desc"></td></tr>
-<tr id="row_9_3_" class="even" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__MatrixComplexTrans.html" target="_self">Complex Matrix Transpose</a></td><td class="desc"></td></tr>
-<tr id="row_9_4_" class="even" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__MatrixInit.html" target="_self">Matrix Initialization</a></td><td class="desc"></td></tr>
-<tr id="row_9_5_" class="even" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__MatrixInv.html" target="_self">Matrix Inverse</a></td><td class="desc"></td></tr>
-<tr id="row_9_6_" class="even" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__MatrixMult.html" target="_self">Matrix Multiplication</a></td><td class="desc"></td></tr>
-<tr id="row_9_7_" class="even" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__MatrixScale.html" target="_self">Matrix Scale</a></td><td class="desc"></td></tr>
-<tr id="row_9_8_" class="even" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__MatrixSub.html" target="_self">Matrix Subtraction</a></td><td class="desc"></td></tr>
-<tr id="row_9_9_" class="even" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__MatrixTrans.html" target="_self">Matrix Transpose</a></td><td class="desc"></td></tr>
-<tr id="row_9_10_" class="even" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__MatrixVectMult.html" target="_self">Matrix Vector Multiplication</a></td><td class="desc"></td></tr>
+<tr id="row_9_0_" class="even" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__MatrixHouseholder.html" target="_self">Householder transform of a vector</a></td><td class="desc"></td></tr>
+<tr id="row_9_1_" class="even" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__MatrixAdd.html" target="_self">Matrix Addition</a></td><td class="desc"></td></tr>
+<tr id="row_9_2_" class="even" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__MatrixChol.html" target="_self">Cholesky and LDLT decompositions</a></td><td class="desc"></td></tr>
+<tr id="row_9_3_" class="even" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__CmplxMatrixMult.html" target="_self">Complex Matrix Multiplication</a></td><td class="desc"></td></tr>
+<tr id="row_9_4_" class="even" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__MatrixComplexTrans.html" target="_self">Complex Matrix Transpose</a></td><td class="desc"></td></tr>
+<tr id="row_9_5_" class="even" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__MatrixInit.html" target="_self">Matrix Initialization</a></td><td class="desc"></td></tr>
+<tr id="row_9_6_" class="even" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__MatrixInv.html" target="_self">Matrix Inverse</a></td><td class="desc"></td></tr>
+<tr id="row_9_7_" class="even" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__MatrixMult.html" target="_self">Matrix Multiplication</a></td><td class="desc"></td></tr>
+<tr id="row_9_8_" class="even" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__MatrixQR.html" target="_self">QR decomposition of a Matrix</a></td><td class="desc"></td></tr>
+<tr id="row_9_9_" class="even" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__MatrixScale.html" target="_self">Matrix Scale</a></td><td class="desc"></td></tr>
+<tr id="row_9_10_" class="even" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__MatrixSub.html" target="_self">Matrix Subtraction</a></td><td class="desc"></td></tr>
+<tr id="row_9_11_" class="even" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__MatrixTrans.html" target="_self">Matrix Transpose</a></td><td class="desc"></td></tr>
+<tr id="row_9_12_" class="even" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__MatrixVectMult.html" target="_self">Matrix Vector Multiplication</a></td><td class="desc"></td></tr>
 <tr id="row_10_" class="even"><td class="entry"><span style="width:0px;display:inline-block;">&#160;</span><span id="arr_10_" class="arrow" onclick="toggleFolder('10_')">&#9658;</span><a class="el" href="group__groupQuaternionMath.html" target="_self">Quaternion Math Functions</a></td><td class="desc"></td></tr>
 <tr id="row_10_0_" style="display:none;"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span id="arr_10_0_" class="arrow" onclick="toggleFolder('10_0_')">&#9658;</span><a class="el" href="group__QuatConv.html" target="_self">Quaternion conversions</a></td><td class="desc"></td></tr>
 <tr id="row_10_0_0_" style="display:none;"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><a class="el" href="group__QuatRot.html" target="_self">Quaternion to Rotation</a></td><td class="desc"></td></tr>

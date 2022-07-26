@@ -23,6 +23,13 @@
   $(document).ready(function() { init_search(); });
 /* @license-end */
 </script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js", "TeX/AMSmath.js", "TeX/AMSsymbols.js"],
+  jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="$extra_stylesheet" rel="stylesheet" type="text/css" />
 <link href="extra_stylesheet.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -35,7 +42,7 @@
   <td id="projectlogo" style="padding: 1.5em;"><img alt="Logo" src="cmsis_logo_white_small.png"/></td>
   <td style="padding-left: 1em; padding-bottom: 1em;padding-top: 1em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.10.2-dev12</span>
+   &#160;<span id="projectnumber">Version 1.10.2-dev13</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -117,6 +124,7 @@ $(document).ready(function(){initNavTree('matrix__functions__f16_8h.html',''); i
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">matrix_functions_f16.h File Reference</div></div>
 </div><!--header-->
@@ -127,6 +135,11 @@ Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__matrix__instance__f16.html">arm_matrix_instance_f16</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Instance structure for the floating-point matrix structure.  <a href="structarm__matrix__instance__f16.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a9bb89ed8b2528583d57ee17e167a09f3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="matrix__functions__f16_8h.html#a9bb89ed8b2528583d57ee17e167a09f3">DEFAULT_HOUSEHOLDER_THRESHOLD_F16</a>&#160;&#160;&#160;(1.0e-3f)</td></tr>
+<tr class="separator:a9bb89ed8b2528583d57ee17e167a09f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -169,7 +182,28 @@ Functions</h2></td></tr>
 <tr class="memitem:gada0a0dc278249b0e279691568c1c8b96"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math__types_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MatrixInv.html#gada0a0dc278249b0e279691568c1c8b96">arm_mat_solve_lower_triangular_f16</a> (const <a class="el" href="structarm__matrix__instance__f16.html">arm_matrix_instance_f16</a> *lt, const <a class="el" href="structarm__matrix__instance__f16.html">arm_matrix_instance_f16</a> *a, <a class="el" href="structarm__matrix__instance__f16.html">arm_matrix_instance_f16</a> *dst)</td></tr>
 <tr class="memdesc:gada0a0dc278249b0e279691568c1c8b96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve LT . X = A where LT is a lower triangular matrix.  <a href="group__MatrixInv.html#gada0a0dc278249b0e279691568c1c8b96">More...</a><br /></td></tr>
 <tr class="separator:gada0a0dc278249b0e279691568c1c8b96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6b783c1917e0744ef7a088812ffcd1cf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math__types_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MatrixQR.html#ga6b783c1917e0744ef7a088812ffcd1cf">arm_mat_qr_f16</a> (const <a class="el" href="structarm__matrix__instance__f16.html">arm_matrix_instance_f16</a> *pSrc, const float16_t threshold, <a class="el" href="structarm__matrix__instance__f16.html">arm_matrix_instance_f16</a> *pOutR, <a class="el" href="structarm__matrix__instance__f16.html">arm_matrix_instance_f16</a> *pOutQ, float16_t *pOutTau, float16_t *pTmpA, float16_t *pTmpB)</td></tr>
+<tr class="memdesc:ga6b783c1917e0744ef7a088812ffcd1cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">QR decomposition of a m x n floating point matrix with m &gt;= n.  <a href="group__MatrixQR.html#ga6b783c1917e0744ef7a088812ffcd1cf">More...</a><br /></td></tr>
+<tr class="separator:ga6b783c1917e0744ef7a088812ffcd1cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2ac1a8e5e186599ae8ca5a67206c19c4"><td class="memItemLeft" align="right" valign="top">float16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MatrixHouseholder.html#ga2ac1a8e5e186599ae8ca5a67206c19c4">arm_householder_f16</a> (const float16_t *pSrc, const float16_t threshold, uint32_t <a class="el" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>, float16_t *pOut)</td></tr>
+<tr class="memdesc:ga2ac1a8e5e186599ae8ca5a67206c19c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Householder transform of a half floating point vector.  <a href="group__MatrixHouseholder.html#ga2ac1a8e5e186599ae8ca5a67206c19c4">More...</a><br /></td></tr>
+<tr class="separator:ga2ac1a8e5e186599ae8ca5a67206c19c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a9bb89ed8b2528583d57ee17e167a09f3" name="a9bb89ed8b2528583d57ee17e167a09f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9bb89ed8b2528583d57ee17e167a09f3">&#9670;&nbsp;</a></span>DEFAULT_HOUSEHOLDER_THRESHOLD_F16</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DEFAULT_HOUSEHOLDER_THRESHOLD_F16&#160;&#160;&#160;(1.0e-3f)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

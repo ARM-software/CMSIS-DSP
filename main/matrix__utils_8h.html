@@ -23,6 +23,13 @@
   $(document).ready(function() { init_search(); });
 /* @license-end */
 </script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js", "TeX/AMSmath.js", "TeX/AMSsymbols.js"],
+  jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="$extra_stylesheet" rel="stylesheet" type="text/css" />
 <link href="extra_stylesheet.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -35,7 +42,7 @@
   <td id="projectlogo" style="padding: 1.5em;"><img alt="Logo" src="cmsis_logo_white_small.png"/></td>
   <td style="padding-left: 1em; padding-bottom: 1em;padding-top: 1em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.10.2-dev12</span>
+   &#160;<span id="projectnumber">Version 1.10.2-dev13</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -127,6 +134,8 @@ Macros</h2></td></tr>
 <tr class="separator:ad57c3933860c3112ab5099050d93d53a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7fa9981769e07c333412e4d08c95e7f6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="matrix__utils_8h.html#a7fa9981769e07c333412e4d08c95e7f6">SCALE_COL_T</a>(T,  CAST,  A,  ROW,  v,  i)</td></tr>
 <tr class="separator:a7fa9981769e07c333412e4d08c95e7f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12e06cb0a358d2a433e201a1fb5f5142"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="matrix__utils_8h.html#a12e06cb0a358d2a433e201a1fb5f5142">COPY_COL_T</a>(T,  A,  ROW,  COL,  DST)</td></tr>
+<tr class="separator:a12e06cb0a358d2a433e201a1fb5f5142"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a262a0eb6289116baf75266c87ed6dab3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="matrix__utils_8h.html#a262a0eb6289116baf75266c87ed6dab3">SWAP_ROWS_F16</a>(A,  COL,  i,  j)</td></tr>
 <tr class="separator:a262a0eb6289116baf75266c87ed6dab3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a36f7d084b633d7a1ec6e3765a4bc908c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="matrix__utils_8h.html#a36f7d084b633d7a1ec6e3765a4bc908c">SCALE_ROW_F16</a>(A,  COL,  v,  i)</td></tr>
@@ -135,6 +144,8 @@ Macros</h2></td></tr>
 <tr class="separator:a39ab0537de6fbbcb197e569a5ba3ee68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a56e4eee08d87c8412a6b134f02517961"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="matrix__utils_8h.html#a56e4eee08d87c8412a6b134f02517961">MAS_ROW_F16</a>(COL,  A,  i,  v,  B,  j)</td></tr>
 <tr class="separator:a56e4eee08d87c8412a6b134f02517961"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab323f89d7d101a4261dde2189d754366"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="matrix__utils_8h.html#ab323f89d7d101a4261dde2189d754366">COPY_COL_F16</a>(A,  ROW,  COL,  DST)&#160;&#160;&#160;  <a class="el" href="matrix__utils_8h.html#a12e06cb0a358d2a433e201a1fb5f5142">COPY_COL_T</a>(float16_t,A,ROW,COL,DST)</td></tr>
+<tr class="separator:ab323f89d7d101a4261dde2189d754366"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aed7321506cb95cc99dd6cc946b319a0c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="matrix__utils_8h.html#aed7321506cb95cc99dd6cc946b319a0c">SCALE_COL_F16</a>(A,  ROW,  v,  i)&#160;&#160;&#160;  <a class="el" href="matrix__utils_8h.html#a7fa9981769e07c333412e4d08c95e7f6">SCALE_COL_T</a>(float16_t,(_Float16),A,ROW,v,i)</td></tr>
 <tr class="separator:aed7321506cb95cc99dd6cc946b319a0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3736d7e2052c3c68c54b6455fa2d137e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="matrix__utils_8h.html#a3736d7e2052c3c68c54b6455fa2d137e">SWAP_ROWS_F32</a>(A,  COL,  i,  j)</td></tr>
@@ -145,6 +156,10 @@ Macros</h2></td></tr>
 <tr class="separator:aefe7c7ca20d1340f9b6c6ccbeb0bd549"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16a999fb8693c571b9e35c7e949f242c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="matrix__utils_8h.html#a16a999fb8693c571b9e35c7e949f242c">SCALE_ROW_F32</a>(A,  COL,  v,  i)</td></tr>
 <tr class="separator:a16a999fb8693c571b9e35c7e949f242c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76e792ff7c58f84962021bc0a8d28a46"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="matrix__utils_8h.html#a76e792ff7c58f84962021bc0a8d28a46">COPY_COL_F32</a>(A,  ROW,  COL,  DST)&#160;&#160;&#160;  <a class="el" href="matrix__utils_8h.html#a12e06cb0a358d2a433e201a1fb5f5142">COPY_COL_T</a>(<a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a>,A,ROW,COL,DST)</td></tr>
+<tr class="separator:a76e792ff7c58f84962021bc0a8d28a46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad218d95b9cb129084e6ff92be8e8f3a6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="matrix__utils_8h.html#ad218d95b9cb129084e6ff92be8e8f3a6">COPY_COL_F64</a>(A,  ROW,  COL,  DST)&#160;&#160;&#160;  <a class="el" href="matrix__utils_8h.html#a12e06cb0a358d2a433e201a1fb5f5142">COPY_COL_T</a>(<a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a>,A,ROW,COL,DST)</td></tr>
+<tr class="separator:ad218d95b9cb129084e6ff92be8e8f3a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aab32bdb986034bc2e38796c67b73c536"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="matrix__utils_8h.html#aab32bdb986034bc2e38796c67b73c536">SWAP_COLS_F32</a>(A,  COL,  i,  j)</td></tr>
 <tr class="separator:aab32bdb986034bc2e38796c67b73c536"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5763afc70639971e34ac9fc33f423e8c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="matrix__utils_8h.html#a5763afc70639971e34ac9fc33f423e8c">SCALE_COL_F32</a>(A,  ROW,  v,  i)&#160;&#160;&#160;  <a class="el" href="matrix__utils_8h.html#a7fa9981769e07c333412e4d08c95e7f6">SCALE_COL_T</a>(<a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a>,,A,ROW,v,i)</td></tr>
@@ -163,6 +178,182 @@ Macros</h2></td></tr>
 <tr class="separator:a3847068f146c2d404285dd5ba2b9ad40"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ab323f89d7d101a4261dde2189d754366" name="ab323f89d7d101a4261dde2189d754366"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab323f89d7d101a4261dde2189d754366">&#9670;&nbsp;</a></span>COPY_COL_F16</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define COPY_COL_F16</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">A, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">ROW, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">COL, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">DST&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;  <a class="el" href="matrix__utils_8h.html#a12e06cb0a358d2a433e201a1fb5f5142">COPY_COL_T</a>(float16_t,A,ROW,COL,DST)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a76e792ff7c58f84962021bc0a8d28a46" name="a76e792ff7c58f84962021bc0a8d28a46"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a76e792ff7c58f84962021bc0a8d28a46">&#9670;&nbsp;</a></span>COPY_COL_F32</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define COPY_COL_F32</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">A, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">ROW, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">COL, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">DST&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;  <a class="el" href="matrix__utils_8h.html#a12e06cb0a358d2a433e201a1fb5f5142">COPY_COL_T</a>(<a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a>,A,ROW,COL,DST)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad218d95b9cb129084e6ff92be8e8f3a6" name="ad218d95b9cb129084e6ff92be8e8f3a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad218d95b9cb129084e6ff92be8e8f3a6">&#9670;&nbsp;</a></span>COPY_COL_F64</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define COPY_COL_F64</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">A, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">ROW, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">COL, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">DST&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;  <a class="el" href="matrix__utils_8h.html#a12e06cb0a358d2a433e201a1fb5f5142">COPY_COL_T</a>(<a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a>,A,ROW,COL,DST)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a12e06cb0a358d2a433e201a1fb5f5142" name="a12e06cb0a358d2a433e201a1fb5f5142"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a12e06cb0a358d2a433e201a1fb5f5142">&#9670;&nbsp;</a></span>COPY_COL_T</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define COPY_COL_T</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">T, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">A, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">ROW, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">COL, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">DST&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">{                                                 \</div>
+<div class="line">    uint32_t row;                                 \</div>
+<div class="line">    T *pb=DST;                                    \</div>
+<div class="line">    T *pa = (A)-&gt;pData + ROW * (A)-&gt;numCols + COL;\</div>
+<div class="line">    for(row = ROW; row &lt; (A)-&gt;numRows; row ++)    \</div>
+<div class="line">    {                                             \</div>
+<div class="line">         *pb++ = *pa;                             \</div>
+<div class="line">         pa += (A)-&gt;numCols;                      \</div>
+<div class="line">    }                                             \</div>
+<div class="line">}</div>
+</div><!-- fragment -->
+</div>
+</div>
 <a id="ad57c3933860c3112ab5099050d93d53a" name="ad57c3933860c3112ab5099050d93d53a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad57c3933860c3112ab5099050d93d53a">&#9670;&nbsp;</a></span>ELEM</h2>
 
