@@ -78,8 +78,6 @@ void arm_sin_cos_f32(
   d1 = -sinTable_f32[indexS  ];
   d2 = -sinTable_f32[indexS+1];
 
-  temp = (1.0f - fract) * f1 + fract * f2;
-
   Dn = 0.0122718463030f; /* delta between the two points (fixed), in this case 2*pi/FAST_MATH_TABLE_SIZE */
   Df = f2 - f1;          /* delta between the values of the functions */
 
@@ -96,7 +94,6 @@ void arm_sin_cos_f32(
   d1 = sinTable_f32[indexC  ];
   d2 = sinTable_f32[indexC+1];
 
-  temp = (1.0f - fract) * f1 + fract * f2;
 
   Df = f2 - f1; // delta between the values of the functions
   temp = Dn * (d1 + d2) - 2 * Df;
