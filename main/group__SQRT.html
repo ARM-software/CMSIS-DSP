@@ -42,7 +42,7 @@ MathJax.Hub.Config({
   <td id="projectlogo" style="padding: 1.5em;"><img alt="Logo" src="cmsis_logo_white_small.png"/></td>
   <td style="padding-left: 1em; padding-bottom: 1em;padding-top: 1em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.10.2-dev14</span>
+   &#160;<span id="projectnumber">Version 1.10.2-dev15</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -123,21 +123,11 @@ $(document).ready(function(){initNavTree('group__SQRT.html',''); initResizable()
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">Square Root<div class="ingroups"><a class="el" href="group__groupFastMath.html">Fast Math Functions</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:gaf6719bb18280f9c76077432e7445f2f5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SQRT.html#gaf6719bb18280f9c76077432e7445f2f5">Q12QUARTER</a>&#160;&#160;&#160;0x2000</td></tr>
-<tr class="memdesc:gaf6719bb18280f9c76077432e7445f2f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Q15 square root function.  <a href="group__SQRT.html#gaf6719bb18280f9c76077432e7445f2f5">More...</a><br /></td></tr>
-<tr class="separator:gaf6719bb18280f9c76077432e7445f2f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga897a7cd07e490b404fd5dcad307fe119"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SQRT.html#ga897a7cd07e490b404fd5dcad307fe119">Q28QUARTER</a>&#160;&#160;&#160;0x20000000</td></tr>
-<tr class="memdesc:ga897a7cd07e490b404fd5dcad307fe119"><td class="mdescLeft">&#160;</td><td class="mdescRight">Q31 square root function.  <a href="group__SQRT.html#ga897a7cd07e490b404fd5dcad307fe119">More...</a><br /></td></tr>
-<tr class="separator:ga897a7cd07e490b404fd5dcad307fe119"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ga15e88409f0b53f3a01eff4eb8a8b58c2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math__types_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SQRT.html#ga15e88409f0b53f3a01eff4eb8a8b58c2">arm_sqrt_f32</a> (const <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> in, <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pOut)</td></tr>
@@ -159,60 +149,7 @@ Functions</h2></td></tr>
 </pre><p> where <code>x1</code> is the current estimate, <code>x0</code> is the previous estimate, and <code>f'(x0)</code> is the derivative of <code>f()</code> evaluated at <code>x0</code>. For the square root function, the algorithm reduces to: </p><pre>
     x0 = in/2                         [initial guess]
     x1 = 1/2 * ( x0 + in / x0)        [each iteration]
-</pre> <h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="gaf6719bb18280f9c76077432e7445f2f5" name="gaf6719bb18280f9c76077432e7445f2f5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaf6719bb18280f9c76077432e7445f2f5">&#9670;&nbsp;</a></span>Q12QUARTER</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define Q12QUARTER&#160;&#160;&#160;0x2000</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">in</td><td>input value. The range of the input value is [0 +1) or 0x0000 to 0x7FFF </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">pOut</td><td>points to square root of input value </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>execution status<ul>
-<li><a class="el" href="arm__math__types_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a> : input value is positive</li>
-<li><a class="el" href="arm__math__types_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a74897e18d4b8f62b12a7d8a01dd2bb35">ARM_MATH_ARGUMENT_ERROR</a> : input value is negative; *pOut is set to 0 </li>
-</ul>
-</dd></dl>
-
-</div>
-</div>
-<a id="ga897a7cd07e490b404fd5dcad307fe119" name="ga897a7cd07e490b404fd5dcad307fe119"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga897a7cd07e490b404fd5dcad307fe119">&#9670;&nbsp;</a></span>Q28QUARTER</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define Q28QUARTER&#160;&#160;&#160;0x20000000</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">in</td><td>input value. The range of the input value is [0 +1) or 0x00000000 to 0x7FFFFFFF </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">pOut</td><td>points to square root of input value </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>execution status<ul>
-<li><a class="el" href="arm__math__types_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a> : input value is positive</li>
-<li><a class="el" href="arm__math__types_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a74897e18d4b8f62b12a7d8a01dd2bb35">ARM_MATH_ARGUMENT_ERROR</a> : input value is negative; *pOut is set to 0 </li>
-</ul>
-</dd></dl>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
+</pre> <h2 class="groupheader">Function Documentation</h2>
 <a id="gac5a6e022df2f904cd5a44ee81942dc14" name="gac5a6e022df2f904cd5a44ee81942dc14"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gac5a6e022df2f904cd5a44ee81942dc14">&#9670;&nbsp;</a></span>arm_sqrt_f16()</h2>
 

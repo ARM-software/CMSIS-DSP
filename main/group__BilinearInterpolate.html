@@ -42,7 +42,7 @@ MathJax.Hub.Config({
   <td id="projectlogo" style="padding: 1.5em;"><img alt="Logo" src="cmsis_logo_white_small.png"/></td>
   <td style="padding-left: 1em; padding-bottom: 1em;padding-top: 1em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.10.2-dev14</span>
+   &#160;<span id="projectnumber">Version 1.10.2-dev15</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -148,27 +148,6 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p >Bilinear interpolation is an extension of linear interpolation applied to a two dimensional grid. The underlying function <code>f(x, y)</code> is sampled on a regular grid and the interpolation process determines values between the grid points. Bilinear interpolation is equivalent to two step linear interpolation, first in the x-dimension and then in the y-dimension. Bilinear interpolation is often used in image processing to rescale images. The CMSIS DSP library provides bilinear interpolation functions for Q7, Q15, Q31, and floating-point data types.</p>
-<p ><b>Algorithm</b> </p><dl class="section user"><dt></dt><dd>The instance structure used by the bilinear interpolation functions describes a two dimensional data table. For floating-point, the instance structure is defined as: <pre>
-  typedef struct
-  {
-    uint16_t numRows;
-    uint16_t numCols;
-    float16_t *pData;
-} <a class="el" href="structarm__bilinear__interp__instance__f16.html" title="Instance structure for the floating-point bilinear interpolation function.">arm_bilinear_interp_instance_f16</a>;
-</pre></dd></dl>
-<dl class="section user"><dt></dt><dd>where <code>numRows</code> specifies the number of rows in the table; <code>numCols</code> specifies the number of columns in the table; and <code>pData</code> points to an array of size <code>numRows*numCols</code> values. The data table <code>pTable</code> is organized in row order and the supplied data values fall on integer indexes. That is, table element (x,y) is located at <code>pTable[x + y*numCols]</code> where x and y are integers.</dd></dl>
-<dl class="section user"><dt></dt><dd>Let <code>(x, y)</code> specify the desired interpolation point. Then define: <pre>
-    XF = floor(x)
-    YF = floor(y)
-</pre> </dd></dl>
-<dl class="section user"><dt></dt><dd>The interpolated output point is computed as: <pre>
- f(x, y) = f(XF, YF) * (1-(x-XF)) * (1-(y-YF))
-          + f(XF+1, YF) * (x-XF)*(1-(y-YF))
-          + f(XF, YF+1) * (1-(x-XF))*(y-YF)
-          + f(XF+1, YF+1) * (x-XF)*(y-YF)
-</pre> Note that the coordinates (x, y) contain integer and fractional components. The integer components specify which portion of the table to use while the fractional components control the interpolation processor.</dd></dl>
-<dl class="section user"><dt></dt><dd>if (x,y) are outside of the table boundary, Bilinear interpolation returns zero output.</dd></dl>
-<p>Bilinear interpolation is an extension of linear interpolation applied to a two dimensional grid. The underlying function <code>f(x, y)</code> is sampled on a regular grid and the interpolation process determines values between the grid points. Bilinear interpolation is equivalent to two step linear interpolation, first in the x-dimension and then in the y-dimension. Bilinear interpolation is often used in image processing to rescale images. The CMSIS DSP library provides bilinear interpolation functions for Q7, Q15, Q31, and floating-point data types.</p>
 <p ><b>Algorithm</b> </p><dl class="section user"><dt></dt><dd>The instance structure used by the bilinear interpolation functions describes a two dimensional data table. For floating-point, the instance structure is defined as: <pre>
   typedef struct
   {

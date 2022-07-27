@@ -1,7 +1,5 @@
 var NAVTREEINDEX3 =
 {
-"group__float__to__x.html#gac7696e64963e5051ebb950c88c6ba186":[3,12,6,1],
-"group__groupBayes.html":[3,2],
 "group__groupBayes.html#ga23f942747fc13865a66bf14bb44dd299":[3,2,1],
 "group__groupBayes.html#ga6f7cde3d37f85f99bd1a125601a718a0":[3,2,0],
 "group__groupCmplxMath.html":[3,3],
@@ -87,16 +85,20 @@ var NAVTREEINDEX3 =
 "group__variance.html#gaae455544f0c8ac92469a1e25d3906515":[3,11,12,1],
 "group__variance.html#gaef3ebc6401209c3f93749e08d341ab48":[3,11,12,3],
 "group__variance.html#gaf6a59a8ac297499b1e6e5f439369ddf0":[3,11,12,2],
-"group__vlog.html":[3,6,4],
-"group__vlog.html#ga1a97d95af11d143b26334c8ff278443e":[3,6,4,1],
-"group__vlog.html#ga35aac80d9cfc0b7b08382da2117772d1":[3,6,4,3],
-"group__vlog.html#ga6773e6b0b5448e0e409931b4119271dc":[3,6,4,2],
-"group__vlog.html#gad29d9e6edab1e2de5fcb1fc596758388":[3,6,4,0],
+"group__vexp.html":[3,6,4],
+"group__vexp.html#ga356e3a0e17fd9fdb1a79f9386f05b7be":[3,6,4,0],
+"group__vexp.html#gaa2b569a40e82e69917f9560774f75a91":[3,6,4,1],
+"group__vexp.html#gac5c79a10b36e8a1f2fcaf23b9497e1b2":[3,6,4,2],
+"group__vlog.html":[3,6,5],
+"group__vlog.html#ga1a97d95af11d143b26334c8ff278443e":[3,6,5,1],
+"group__vlog.html#ga35aac80d9cfc0b7b08382da2117772d1":[3,6,5,3],
+"group__vlog.html#ga6773e6b0b5448e0e409931b4119271dc":[3,6,5,2],
+"group__vlog.html#gad29d9e6edab1e2de5fcb1fc596758388":[3,6,5,0],
 "group__weightedsum.html":[3,12,10],
 "group__weightedsum.html#ga06e10e847786d8d96c5459fb36d5c752":[3,12,10,0],
 "group__weightedsum.html#gaffef5e0e3e1d0289e419c23853e20850":[3,12,10,1],
-"index.html":[0],
 "index.html":[],
+"index.html":[0],
 "index.html#example":[0,2],
 "index.html#intro":[0,0],
 "index.html#license":[0,7],
@@ -247,7 +249,5 @@ var NAVTREEINDEX3 =
 "structarm__cfft__radix4__instance__f32.html#acf295a7b97b7d48a9cae4d1ab5ed00f6":[4,25,4],
 "structarm__cfft__radix4__instance__f32.html#ad6ca6e223f986ebfd94c5ee1e410aa73":[4,25,3],
 "structarm__cfft__radix4__instance__f32.html#afe772e5b5001c9d8e85032115a8df5bf":[4,25,7],
-"structarm__cfft__radix4__instance__q15.html":[4,26],
-"structarm__cfft__radix4__instance__q15.html#a09a221a818c6d0e064557a99e2fe9a8b":[4,26,0],
-"structarm__cfft__radix4__instance__q15.html#a33386d95319dc3ee7097b3a8e52e01ec":[4,26,1]
+"structarm__cfft__radix4__instance__q15.html":[4,26]
 };

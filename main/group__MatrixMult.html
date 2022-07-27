@@ -42,7 +42,7 @@ MathJax.Hub.Config({
   <td id="projectlogo" style="padding: 1.5em;"><img alt="Logo" src="cmsis_logo_white_small.png"/></td>
   <td style="padding-left: 1em; padding-bottom: 1em;padding-top: 1em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.10.2-dev14</span>
+   &#160;<span id="projectnumber">Version 1.10.2-dev15</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -160,10 +160,10 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p >Multiplies two matrices.</p>
-<div class="image">
-<img src="MatrixMultiplication.gif" alt=""/>
-<div class="caption">
-Multiplication of two 3 x 3 matrices</div></div>
+<dl class="section user"><dt>Multiplication of two 3x3 matrices:</dt><dd></dd></dl>
+<p class="formulaDsp">
+\[ \begin{pmatrix} a_{1,1} &amp; a_{1,2} &amp; a_{1,3} \\ a_{2,1} &amp; a_{2,2} &amp; a_{2,3} \\ a_{3,1} &amp; a_{3,2} &amp; a_{3,3} \\ \end{pmatrix} \begin{pmatrix} b_{1,1} &amp; b_{1,2} &amp; b_{1,3} \\ b_{2,1} &amp; b_{2,2} &amp; b_{2,3} \\ b_{3,1} &amp; b_{3,2} &amp; b_{3,3} \\ \end{pmatrix} = \begin{pmatrix} a_{1,1} b_{1,1}+a_{1,2} b_{2,1}+a_{1,3} b_{3,1} &amp; a_{1,1} b_{1,2}+a_{1,2} b_{2,2}+a_{1,3} b_{3,2} &amp; a_{1,1} b_{1,3}+a_{1,2} b_{2,3}+a_{1,3} b_{3,3} \\ a_{2,1} b_{1,1}+a_{2,2} b_{2,1}+a_{2,3} b_{3,1} &amp; a_{2,1} b_{1,2}+a_{2,2} b_{2,2}+a_{2,3} b_{3,2} &amp; a_{2,1} b_{1,3}+a_{2,2} b_{2,3}+a_{2,3} b_{3,3} \\ a_{3,1} b_{1,1}+a_{3,2} b_{2,1}+a_{3,3} b_{3,1} &amp; a_{3,1} b_{1,2}+a_{3,2} b_{2,2}+a_{3,3} b_{3,2} &amp; a_{3,1} b_{1,3}+a_{3,2} b_{2,3}+a_{3,3} b_{3,3} \\ \end{pmatrix} \]
+</p>
 <p >Matrix multiplication is only defined if the number of columns of the first matrix equals the number of rows of the second matrix. Multiplying an <code>M x N</code> matrix with an <code>N x P</code> matrix results in an <code>M x P</code> matrix. When matrix size checking is enabled, the functions check: (1) that the inner dimensions of <code>pSrcA</code> and <code>pSrcB</code> are equal; and (2) that the size of the output matrix equals the outer dimensions of <code>pSrcA</code> and <code>pSrcB</code>. </p>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="gaee4dce0bfe4ca464a55ed8cb8f01a79b" name="gaee4dce0bfe4ca464a55ed8cb8f01a79b"></a>

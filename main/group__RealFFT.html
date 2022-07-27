@@ -42,7 +42,7 @@ MathJax.Hub.Config({
   <td id="projectlogo" style="padding: 1.5em;"><img alt="Logo" src="cmsis_logo_white_small.png"/></td>
   <td style="padding-left: 1em; padding-bottom: 1em;padding-top: 1em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.10.2-dev14</span>
+   &#160;<span id="projectnumber">Version 1.10.2-dev15</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -190,43 +190,7 @@ Real Fast Fourier Transform</div></div>
 Real Inverse Fast Fourier Transform</div></div>
  </dd></dl>
 <dl class="section user"><dt></dt><dd>The algorithms for floating-point, Q15, and Q31 data are slightly different and we describe each algorithm in turn. </dd></dl>
-<dl class="section user"><dt>Floating-point</dt><dd>The main functions are <a class="el" href="group__RealFFT.html#gaf018157c88626e83de3d9143f5273d18">arm_rfft_fast_f16()</a> and <a class="el" href="group__RealFFT.html#gacc1c721dd5a690a4c90cfb0264058659">arm_rfft_fast_init_f16()</a>.</dd></dl>
-<dl class="section user"><dt></dt><dd>The FFT of a real N-point sequence has even symmetry in the frequency domain. The second half of the data equals the conjugate of the first half flipped in frequency. Looking at the data, we see that we can uniquely represent the FFT using only N/2 complex numbers. These are packed into the output array in alternating real and imaginary components: </dd></dl>
-<dl class="section user"><dt></dt><dd>X = { real[0], imag[0], real[1], imag[1], real[2], imag[2] ... real[(N/2)-1], imag[(N/2)-1 } </dd></dl>
-<dl class="section user"><dt></dt><dd>It happens that the first complex number (real[0], imag[0]) is actually all real. real[0] represents the DC offset, and imag[0] should be 0. (real[1], imag[1]) is the fundamental frequency, (real[2], imag[2]) is the first harmonic and so on. </dd></dl>
-<dl class="section user"><dt></dt><dd>The real FFT functions pack the frequency domain data in this fashion. The forward transform outputs the data in this form and the inverse transform expects input data in this form. The function always performs the needed bitreversal so that the input and output data is always in normal order. The functions support lengths of [32, 64, 128, ..., 4096] samples. </dd></dl>
-<dl class="section user"><dt>Q15 and Q31</dt><dd>The real algorithms are defined in a similar manner and utilize N/2 complex transforms behind the scenes. </dd></dl>
-<dl class="section user"><dt></dt><dd>The complex transforms used internally include scaling to prevent fixed-point overflows. The overall scaling equals 1/(fftLen/2). Due to the use of complex transform internally, the source buffer is modified by the rfft. </dd></dl>
-<dl class="section user"><dt></dt><dd>A separate instance structure must be defined for each transform used but twiddle factor and bit reversal tables can be reused. </dd></dl>
-<dl class="section user"><dt></dt><dd>There is also an associated initialization function for each data type. The initialization function performs the following operations:<ul>
-<li>Sets the values of the internal structure fields.</li>
-<li>Initializes twiddle factor table and bit reversal table pointers.</li>
-<li>Initializes the internal complex FFT data structure. </li>
-</ul>
-</dd></dl>
-<dl class="section user"><dt></dt><dd>Use of the initialization function is optional <b>except for MVE versions where it is mandatory</b>. If you don't use the initialization functions, then the structures should be initialized with code similar to the one below: <pre>
-      <a class="el" href="structarm__rfft__instance__q31.html" title="Instance structure for the Q31 RFFT/RIFFT function.">arm_rfft_instance_q31</a> S = {fftLenReal, fftLenBy2, ifftFlagR, bitReverseFlagR, twidCoefRModifier, pTwiddleAReal, pTwiddleBReal, pCfft};
-      <a class="el" href="structarm__rfft__instance__q15.html" title="Instance structure for the Q15 RFFT/RIFFT function.">arm_rfft_instance_q15</a> S = {fftLenReal, fftLenBy2, ifftFlagR, bitReverseFlagR, twidCoefRModifier, pTwiddleAReal, pTwiddleBReal, pCfft};
-  </pre> where <code>fftLenReal</code> is the length of the real transform; <code>fftLenBy2</code> length of the internal complex transform (fftLenReal/2). <code>ifftFlagR</code> Selects forward (=0) or inverse (=1) transform. <code>bitReverseFlagR</code> Selects bit reversed output (=0) or normal order output (=1). <code>twidCoefRModifier</code> stride modifier for the twiddle factor table. The value is based on the FFT length; <code>pTwiddleAReal</code>points to the A array of twiddle coefficients; <code>pTwiddleBReal</code>points to the B array of twiddle coefficients; <code>pCfft</code> points to the CFFT Instance structure. The CFFT structure must also be initialized. <br  />
- </dd></dl>
-<dl class="section user"><dt></dt><dd>Note that with MVE versions you can't initialize instance structures directly and <b>must use the initialization function</b>.</dd></dl>
-<dl class="section user"><dt></dt><dd>The CMSIS DSP library includes specialized algorithms for computing the FFT of real data sequences. The FFT is defined over complex data but in many applications the input is real. Real FFT algorithms take advantage of the symmetry properties of the FFT and have a speed advantage over complex algorithms of the same length. </dd></dl>
-<dl class="section user"><dt></dt><dd>The Fast RFFT algorithm relays on the mixed radix CFFT that save processor usage. </dd></dl>
-<dl class="section user"><dt></dt><dd>The real length N forward FFT of a sequence is computed using the steps shown below. </dd></dl>
-<dl class="section user"><dt></dt><dd><div class="image">
-<img src="RFFT.gif" alt=""/>
-<div class="caption">
-Real Fast Fourier Transform</div></div>
- </dd></dl>
-<dl class="section user"><dt></dt><dd>The real sequence is initially treated as if it were complex to perform a CFFT. Later, a processing stage reshapes the data to obtain half of the frequency spectrum in complex format. Except the first complex number that contains the two real numbers X[0] and X[N/2] all the data is complex. In other words, the first complex sample contains two real values packed. </dd></dl>
-<dl class="section user"><dt></dt><dd>The input for the inverse RFFT should keep the same format as the output of the forward RFFT. A first processing stage pre-process the data to later perform an inverse CFFT. </dd></dl>
-<dl class="section user"><dt></dt><dd><div class="image">
-<img src="RIFFT.gif" alt=""/>
-<div class="caption">
-Real Inverse Fast Fourier Transform</div></div>
- </dd></dl>
-<dl class="section user"><dt></dt><dd>The algorithms for floating-point, Q15, and Q31 data are slightly different and we describe each algorithm in turn. </dd></dl>
-<dl class="section user"><dt>Floating-point</dt><dd>The main functions are <a class="el" href="group__RealFFT.html#ga5d2ec62f3e35575eba467d09ddcd98b5">arm_rfft_fast_f32()</a> and <a class="el" href="group__RealFFT.html#gac5fceb172551e7c11eb4d0e17ef15aa3">arm_rfft_fast_init_f32()</a>. The older functions <a class="el" href="group__RealFFT.html#ga3df1766d230532bc068fc4ed69d0fcdc">arm_rfft_f32()</a> and <a class="el" href="group__RealFFT.html#ga10717ee326bf50832ef1c25b85a23068">arm_rfft_init_f32()</a> have been deprecated but are still documented. </dd></dl>
+<dl class="section user"><dt>Floating-point</dt><dd>The main functions are <a class="el" href="group__RealFFT.html#ga5d2ec62f3e35575eba467d09ddcd98b5">arm_rfft_fast_f32()</a> and <a class="el" href="group__RealFFT.html#gac5fceb172551e7c11eb4d0e17ef15aa3">arm_rfft_fast_init_f32()</a>. The older functions <a class="el" href="group__RealFFT.html#ga3df1766d230532bc068fc4ed69d0fcdc">arm_rfft_f32()</a> and <a class="el" href="group__RealFFT.html#ga10717ee326bf50832ef1c25b85a23068">arm_rfft_init_f32()</a> have been deprecated but are still documented. For f16, the functions are <a class="el" href="group__RealFFT.html#gaf018157c88626e83de3d9143f5273d18">arm_rfft_fast_f16()</a> and <a class="el" href="group__RealFFT.html#gacc1c721dd5a690a4c90cfb0264058659">arm_rfft_fast_init_f16()</a>. For f64, the functions are <a class="el" href="group__RealFFT.html#gae3b00f039305039732f7364171da89fb">arm_rfft_fast_f64()</a> and <a class="el" href="group__RealFFT.html#ga51ca806ce1aa56a231684add8d2820bb">arm_rfft_fast_init_f64()</a>. </dd></dl>
 <dl class="section user"><dt></dt><dd>The FFT of a real N-point sequence has even symmetry in the frequency domain. The second half of the data equals the conjugate of the first half flipped in frequency. Looking at the data, we see that we can uniquely represent the FFT using only N/2 complex numbers. These are packed into the output array in alternating real and imaginary components: </dd></dl>
 <dl class="section user"><dt></dt><dd>X = { real[0], imag[0], real[1], imag[1], real[2], imag[2] ... real[(N/2)-1], imag[(N/2)-1 } </dd></dl>
 <dl class="section user"><dt></dt><dd>It happens that the first complex number (real[0], imag[0]) is actually all real. real[0] represents the DC offset, and imag[0] should be 0. (real[1], imag[1]) is the fundamental frequency, (real[2], imag[2]) is the first harmonic and so on. </dd></dl>
@@ -827,16 +791,52 @@ Real Inverse Fast Fourier Transform</div></div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none</dd></dl>
 <dl class="section user"><dt>Input an output formats</dt><dd>Internally input is downscaled by 2 for every stage to avoid saturations inside CFFT/CIFFT process. Hence the output format is different for different RFFT sizes. The input and output formats for different RFFT sizes and number of bits to upscale are mentioned in the tables below for RFFT and RIFFT: </dd></dl>
-<dl class="section user"><dt></dt><dd><div class="image">
-<img src="RFFTQ15.gif" alt=""/>
-<div class="caption">
-Input and Output Formats for Q15 RFFT</div></div>
- </dd></dl>
-<dl class="section user"><dt></dt><dd><div class="image">
-<img src="RIFFTQ15.gif" alt=""/>
-<div class="caption">
-Input and Output Formats for Q15 RIFFT</div></div>
- </dd></dl>
+<dl class="section user"><dt>Input and Output formats for RFFT Q15</dt><dd></dd></dl>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadRight">RFFT Size   </th><th class="markdownTableHeadRight">Input Format   </th><th class="markdownTableHeadRight">Output Format   </th><th class="markdownTableHeadRight">Number of bits to upscale    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyRight">32   </td><td class="markdownTableBodyRight">1.15   </td><td class="markdownTableBodyRight">5.11   </td><td class="markdownTableBodyRight">5    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyRight">64   </td><td class="markdownTableBodyRight">1.15   </td><td class="markdownTableBodyRight">6.10   </td><td class="markdownTableBodyRight">6    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyRight">128   </td><td class="markdownTableBodyRight">1.15   </td><td class="markdownTableBodyRight">7.9   </td><td class="markdownTableBodyRight">7    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyRight">256   </td><td class="markdownTableBodyRight">1.15   </td><td class="markdownTableBodyRight">8.8   </td><td class="markdownTableBodyRight">8    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyRight">512   </td><td class="markdownTableBodyRight">1.15   </td><td class="markdownTableBodyRight">9.7   </td><td class="markdownTableBodyRight">9    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyRight">1024   </td><td class="markdownTableBodyRight">1.15   </td><td class="markdownTableBodyRight">10.6   </td><td class="markdownTableBodyRight">10    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyRight">2048   </td><td class="markdownTableBodyRight">1.15   </td><td class="markdownTableBodyRight">11.5   </td><td class="markdownTableBodyRight">11    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyRight">4096   </td><td class="markdownTableBodyRight">1.15   </td><td class="markdownTableBodyRight">12.4   </td><td class="markdownTableBodyRight">12    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyRight">8192   </td><td class="markdownTableBodyRight">1.15   </td><td class="markdownTableBodyRight">13.3   </td><td class="markdownTableBodyRight">13   </td></tr>
+</table>
+<dl class="section user"><dt>Input and Output formats for RIFFT Q15</dt><dd></dd></dl>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadRight">RIFFT Size   </th><th class="markdownTableHeadRight">Input Format   </th><th class="markdownTableHeadRight">Output Format   </th><th class="markdownTableHeadRight">Number of bits to upscale    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyRight">32   </td><td class="markdownTableBodyRight">1.15   </td><td class="markdownTableBodyRight">5.11   </td><td class="markdownTableBodyRight">0    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyRight">64   </td><td class="markdownTableBodyRight">1.15   </td><td class="markdownTableBodyRight">6.10   </td><td class="markdownTableBodyRight">0    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyRight">128   </td><td class="markdownTableBodyRight">1.15   </td><td class="markdownTableBodyRight">7.9   </td><td class="markdownTableBodyRight">0    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyRight">256   </td><td class="markdownTableBodyRight">1.15   </td><td class="markdownTableBodyRight">8.8   </td><td class="markdownTableBodyRight">0    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyRight">512   </td><td class="markdownTableBodyRight">1.15   </td><td class="markdownTableBodyRight">9.7   </td><td class="markdownTableBodyRight">0    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyRight">1024   </td><td class="markdownTableBodyRight">1.15   </td><td class="markdownTableBodyRight">10.6   </td><td class="markdownTableBodyRight">0    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyRight">2048   </td><td class="markdownTableBodyRight">1.15   </td><td class="markdownTableBodyRight">11.5   </td><td class="markdownTableBodyRight">0    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyRight">4096   </td><td class="markdownTableBodyRight">1.15   </td><td class="markdownTableBodyRight">12.4   </td><td class="markdownTableBodyRight">0    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyRight">8192   </td><td class="markdownTableBodyRight">1.15   </td><td class="markdownTableBodyRight">13.3   </td><td class="markdownTableBodyRight">0   </td></tr>
+</table>
 <dl class="section user"><dt></dt><dd>If the input buffer is of length N, the output buffer must have length 2*N. The input buffer is modified by this function. </dd></dl>
 <dl class="section user"><dt></dt><dd>For the RIFFT, the source buffer must at least have length fftLenReal + 2. The last two elements must be equal to what would be generated by the RFFT: (pSrc[0] - pSrc[1]) &gt;&gt; 1 and 0 </dd></dl>
 
@@ -883,16 +883,52 @@ Input and Output Formats for Q15 RIFFT</div></div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none</dd></dl>
 <dl class="section user"><dt>Input an output formats</dt><dd>Internally input is downscaled by 2 for every stage to avoid saturations inside CFFT/CIFFT process. Hence the output format is different for different RFFT sizes. The input and output formats for different RFFT sizes and number of bits to upscale are mentioned in the tables below for RFFT and RIFFT: </dd></dl>
-<dl class="section user"><dt></dt><dd><div class="image">
-<img src="RFFTQ31.gif" alt=""/>
-<div class="caption">
-Input and Output Formats for Q31 RFFT</div></div>
- </dd></dl>
-<dl class="section user"><dt></dt><dd><div class="image">
-<img src="RIFFTQ31.gif" alt=""/>
-<div class="caption">
-Input and Output Formats for Q31 RIFFT</div></div>
- </dd></dl>
+<dl class="section user"><dt>Input and Output formats for RFFT Q31</dt><dd></dd></dl>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadRight">RFFT Size   </th><th class="markdownTableHeadRight">Input Format   </th><th class="markdownTableHeadRight">Output Format   </th><th class="markdownTableHeadRight">Number of bits to upscale    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyRight">32   </td><td class="markdownTableBodyRight">1.31   </td><td class="markdownTableBodyRight">5.27   </td><td class="markdownTableBodyRight">5    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyRight">64   </td><td class="markdownTableBodyRight">1.31   </td><td class="markdownTableBodyRight">6.26   </td><td class="markdownTableBodyRight">6    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyRight">128   </td><td class="markdownTableBodyRight">1.31   </td><td class="markdownTableBodyRight">7.25   </td><td class="markdownTableBodyRight">7    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyRight">256   </td><td class="markdownTableBodyRight">1.31   </td><td class="markdownTableBodyRight">8.24   </td><td class="markdownTableBodyRight">8    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyRight">512   </td><td class="markdownTableBodyRight">1.31   </td><td class="markdownTableBodyRight">9.23   </td><td class="markdownTableBodyRight">9    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyRight">1024   </td><td class="markdownTableBodyRight">1.31   </td><td class="markdownTableBodyRight">10.22   </td><td class="markdownTableBodyRight">10    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyRight">2048   </td><td class="markdownTableBodyRight">1.31   </td><td class="markdownTableBodyRight">11.21   </td><td class="markdownTableBodyRight">11    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyRight">4096   </td><td class="markdownTableBodyRight">1.31   </td><td class="markdownTableBodyRight">12.20   </td><td class="markdownTableBodyRight">12    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyRight">8192   </td><td class="markdownTableBodyRight">1.31   </td><td class="markdownTableBodyRight">13.19   </td><td class="markdownTableBodyRight">13   </td></tr>
+</table>
+<dl class="section user"><dt>Input and Output formats for RIFFT Q31</dt><dd></dd></dl>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadRight">RIFFT Size   </th><th class="markdownTableHeadRight">Input Format   </th><th class="markdownTableHeadRight">Output Format   </th><th class="markdownTableHeadRight">Number of bits to upscale    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyRight">32   </td><td class="markdownTableBodyRight">1.31   </td><td class="markdownTableBodyRight">5.27   </td><td class="markdownTableBodyRight">0    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyRight">64   </td><td class="markdownTableBodyRight">1.31   </td><td class="markdownTableBodyRight">6.26   </td><td class="markdownTableBodyRight">0    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyRight">128   </td><td class="markdownTableBodyRight">1.31   </td><td class="markdownTableBodyRight">7.25   </td><td class="markdownTableBodyRight">0    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyRight">256   </td><td class="markdownTableBodyRight">1.31   </td><td class="markdownTableBodyRight">8.24   </td><td class="markdownTableBodyRight">0    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyRight">512   </td><td class="markdownTableBodyRight">1.31   </td><td class="markdownTableBodyRight">9.23   </td><td class="markdownTableBodyRight">0    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyRight">1024   </td><td class="markdownTableBodyRight">1.31   </td><td class="markdownTableBodyRight">10.22   </td><td class="markdownTableBodyRight">0    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyRight">2048   </td><td class="markdownTableBodyRight">1.31   </td><td class="markdownTableBodyRight">11.21   </td><td class="markdownTableBodyRight">0    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyRight">4096   </td><td class="markdownTableBodyRight">1.31   </td><td class="markdownTableBodyRight">12.20   </td><td class="markdownTableBodyRight">0    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyRight">8192   </td><td class="markdownTableBodyRight">1.31   </td><td class="markdownTableBodyRight">13.19   </td><td class="markdownTableBodyRight">0   </td></tr>
+</table>
 <dl class="section user"><dt></dt><dd>If the input buffer is of length N, the output buffer must have length 2*N. The input buffer is modified by this function. </dd></dl>
 <dl class="section user"><dt></dt><dd>For the RIFFT, the source buffer must at least have length fftLenReal + 2. The last two elements must be equal to what would be generated by the RFFT: (pSrc[0] - pSrc[1]) &gt;&gt; 1 and 0 </dd></dl>
 

@@ -1022,7 +1022,6 @@ table.markdownTable {
 table.markdownTable td, table.markdownTable th {
        border: 1px solid var(--arm_light_gray);
        padding: 7px 10px 5px;
-       text-align:left;
 }
 
 table.markdownTable th {
@@ -1046,6 +1045,18 @@ table.markdownTable th a:visited{
 
 table.markdownTable th a:hover{
        color: var(--arm_yellow);
+}
+
+th.markdownTableHeadLeft, td.markdownTableBodyLeft {
+	text-align: left
+}
+
+th.markdownTableHeadRight, td.markdownTableBodyRight {
+	text-align: right
+}
+
+th.markdownTableHeadCenter, td.markdownTableBodyCenter {
+	text-align: center
 }
 
 /* @end */
