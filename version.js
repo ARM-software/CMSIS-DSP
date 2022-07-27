@@ -31,6 +31,7 @@ function writeVersionDropdown() {
         if (label != version) {
             label += "("+version+")"
         }
+        label = "Version " + label
         document.write('    <a href="'+urlForVersion(docUrl, version)+'">'+label+'</a>');
     }
     document.write('  </div>');
