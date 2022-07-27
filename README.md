@@ -127,7 +127,17 @@ If you want to build the `FFT` example for the `Corstone-300` virtual hardware p
 
 `cbuild "fftbin.Release+VHT-Corstone-300.cprj"`
 
+### How to build with Make
 
+There is an example `Makefile` in `Source`.
+
+In each source folder (like `BasicMathFunctions`), you'll see files with no `_datatype` suffix (like `BasicMathFunctions.c` and `BasicMathFunctionsF16.c`).
+
+Those files are all you need in your makefile. They are including all other C files from the source folders.
+
+Then, for the includes you'll need to add the paths: `Include`, `PrivateInclude` and, since there is a dependency to CMSIS Core, `Core/Include` from `CMSIS_5/CMSIS`.
+
+If you are building for `Cortex-A` and want to use Neon, you'll also need to include `ComputeLibrary/Include` and the source file in `ComputeLibrary/Source`.
 
 ### How to build CMSIS-DSP with cmake
 

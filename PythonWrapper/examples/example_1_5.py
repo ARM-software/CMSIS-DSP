@@ -5,6 +5,7 @@ import numpy as np
 import math
 import colorama
 from colorama import init,Fore, Back, Style
+from numpy.testing import assert_allclose
 
 from numpy.linalg import qr 
 

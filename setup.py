@@ -270,7 +270,7 @@ def build():
          include_package_data=True,
          author = 'Copyright (C) 2010-2022 ARM Limited or its affiliates. All rights reserved.',
          author_email = 'christophe.favergeon@arm.com',
-         url="https://arm-software.github.io/CMSIS_5/DSP/html/index.html",
+         url="https://github.com/ARM-software/CMSIS-DSP",
          python_requires='>=3.6',
          license="License :: OSI Approved :: Apache Software License",
          platforms=['any'],
