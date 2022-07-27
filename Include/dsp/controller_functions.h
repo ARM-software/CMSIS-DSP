@@ -104,10 +104,11 @@ extern "C"
         q31_t * pSinVal,
         q31_t * pCosVal);
 
- /**
-   * @ingroup groupController
-   */
 
+/**
+  @ingroup groupController
+ */
+  
 /**
    * @defgroup PID PID Motor Control
    *
@@ -168,6 +169,7 @@ extern "C"
 
 
   /**
+   * @ingroup PID
    * @brief Instance structure for the Q15 PID Control.
    */
   typedef struct
@@ -186,6 +188,7 @@ extern "C"
   } arm_pid_instance_q15;
 
   /**
+   * @ingroup PID
    * @brief Instance structure for the Q31 PID Control.
    */
   typedef struct
@@ -200,6 +203,7 @@ extern "C"
   } arm_pid_instance_q31;
 
   /**
+   * @ingroup PID
    * @brief Instance structure for the floating-point PID Control.
    */
   typedef struct
@@ -271,12 +275,10 @@ extern "C"
 
 
 
-  /**
-   * @addtogroup PID
-   * @{
-   */
+
 
   /**
+   * @ingroup PID
    * @brief         Process function for the floating-point PID Control.
    * @param[in,out] S   is an instance of the floating-point PID Control structure
    * @param[in]     in  input sample to process
@@ -303,6 +305,7 @@ extern "C"
   }
 
 /**
+  @ingroup PID
   @brief         Process function for the Q31 PID Control.
   @param[in,out] S  points to an instance of the Q31 PID Control structure
   @param[in]     in  input sample to process
@@ -348,6 +351,7 @@ __STATIC_FORCEINLINE q31_t arm_pid_q31(
 
 
 /**
+  @ingroup PID
   @brief         Process function for the Q15 PID Control.
   @param[in,out] S   points to an instance of the Q15 PID Control structure
   @param[in]     in  input sample to process
@@ -400,9 +404,7 @@ __STATIC_FORCEINLINE q15_t arm_pid_q15(
     return (out);
   }
 
-  /**
-   * @} end of PID group
-   */
+
 
   /**
    * @ingroup groupController
@@ -432,12 +434,10 @@ __STATIC_FORCEINLINE q15_t arm_pid_q15(
    * Refer to the function specific documentation below for usage guidelines.
    */
 
-  /**
-   * @addtogroup park
-   * @{
-   */
+ 
 
   /**
+   * @ingroup park
    * @brief Floating-point Park transform
    * @param[in]  Ialpha  input two-phase vector coordinate alpha
    * @param[in]  Ibeta   input two-phase vector coordinate beta
@@ -467,6 +467,7 @@ __STATIC_FORCEINLINE q15_t arm_pid_q15(
 
 
 /**
+  @ingroup park
   @brief  Park transform for Q31 version
   @param[in]  Ialpha  input two-phase vector coordinate alpha
   @param[in]  Ibeta   input two-phase vector coordinate beta
@@ -512,9 +513,6 @@ __STATIC_FORCEINLINE void arm_park_q31(
     *pIq = __QSUB(product4, product3);
   }
 
-  /**
-   * @} end of park group
-   */
 
 
   /**
@@ -538,12 +536,10 @@ __STATIC_FORCEINLINE void arm_park_q31(
    * Refer to the function specific documentation below for usage guidelines.
    */
 
-  /**
-   * @addtogroup inv_park
-   * @{
-   */
+  
 
    /**
+   * @ingroup inv_park
    * @brief  Floating-point Inverse Park transform
    * @param[in]  Id       input coordinate of rotor reference frame d
    * @param[in]  Iq       input coordinate of rotor reference frame q
@@ -570,6 +566,7 @@ __STATIC_FORCEINLINE void arm_park_q31(
 
 
 /**
+  @ingroup inv_park
   @brief  Inverse Park transform for   Q31 version
   @param[in]  Id       input coordinate of rotor reference frame d
   @param[in]  Iq       input coordinate of rotor reference frame q
@@ -615,9 +612,6 @@ __STATIC_FORCEINLINE void arm_inv_park_q31(
     *pIbeta = __QADD(product4, product3);
   }
 
-  /**
-   * @} end of Inverse park group
-   */
 
 /**
    * @ingroup groupController
@@ -645,13 +639,10 @@ __STATIC_FORCEINLINE void arm_inv_park_q31(
    * Refer to the function specific documentation below for usage guidelines.
    */
 
-  /**
-   * @addtogroup clarke
-   * @{
-   */
 
   /**
    *
+   * @ingroup clarke
    * @brief  Floating-point Clarke transform
    * @param[in]  Ia       input three-phase coordinate <code>a</code>
    * @param[in]  Ib       input three-phase coordinate <code>b</code>
@@ -674,6 +665,7 @@ __STATIC_FORCEINLINE void arm_inv_park_q31(
 
 
 /**
+  @ingroup clarke
   @brief  Clarke transform for Q31 version
   @param[in]  Ia       input three-phase coordinate <code>a</code>
   @param[in]  Ib       input three-phase coordinate <code>b</code>
@@ -707,9 +699,6 @@ __STATIC_FORCEINLINE void arm_clarke_q31(
     *pIbeta = __QADD(product1, product2);
   }
 
-  /**
-   * @} end of clarke group
-   */
 
 
   /**
@@ -732,12 +721,10 @@ __STATIC_FORCEINLINE void arm_clarke_q31(
    * Refer to the function specific documentation below for usage guidelines.
    */
 
-  /**
-   * @addtogroup inv_clarke
-   * @{
-   */
+ 
 
    /**
+   * @ingroup inv_clarke
    * @brief  Floating-point Inverse Clarke transform
    * @param[in]  Ialpha  input two-phase orthogonal vector axis alpha
    * @param[in]  Ibeta   input two-phase orthogonal vector axis beta
@@ -760,6 +747,7 @@ __STATIC_FORCEINLINE void arm_clarke_q31(
 
 
 /**
+  @ingroup inv_clarke
   @brief  Inverse Clarke transform for Q31 version
   @param[in]  Ialpha  input two-phase orthogonal vector axis alpha
   @param[in]  Ibeta   input two-phase orthogonal vector axis beta
@@ -793,9 +781,7 @@ __STATIC_FORCEINLINE void arm_inv_clarke_q31(
     *pIb = __QSUB(product2, product1);
   }
 
-  /**
-   * @} end of inv_clarke group
-   */
+
 
 
 

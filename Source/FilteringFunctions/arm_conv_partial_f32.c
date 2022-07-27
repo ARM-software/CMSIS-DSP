@@ -56,6 +56,12 @@
   @par           Opt Versions
                    Opt versions are supported for Q15 and Q7. Design uses internal scratch buffer for getting good optimisation.
                    These versions are optimised in cycles and consumes more memory (Scratch memory) compared to Q15 and Q7 versions of partial convolution
+ 
+  @par           Long versions:
+                   For convolution of long vectors, those functions are
+                   no more adapted and will be very slow.
+                   An implementation based upon FFTs should be used.
+
  */
 
 /**

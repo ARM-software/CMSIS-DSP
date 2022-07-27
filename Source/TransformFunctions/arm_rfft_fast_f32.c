@@ -495,6 +495,8 @@ void merge_rfft_f32(
                    The main functions are \ref arm_rfft_fast_f32() and \ref arm_rfft_fast_init_f32().
                    The older functions \ref arm_rfft_f32() and \ref arm_rfft_init_f32() have been deprecated
                    but are still documented.
+                   For f16, the functions are \ref arm_rfft_fast_f16() and \ref arm_rfft_fast_init_f16().
+                   For f64, the functions are \ref arm_rfft_fast_f64() and \ref arm_rfft_fast_init_f64().
   @par
                    The FFT of a real N-point sequence has even symmetry in the frequency domain. 
                    The second half of the data equals the conjugate of the first half flipped in frequency. 

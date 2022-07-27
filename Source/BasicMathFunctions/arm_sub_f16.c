@@ -32,17 +32,6 @@
   @ingroup groupMath
  */
 
-/**
-  @defgroup BasicSub Vector Subtraction
-
-  Element-by-element subtraction of two vectors.
-
-  <pre>
-      pDst[n] = pSrcA[n] - pSrcB[n],   0 <= n < blockSize.
-  </pre>
-
-  There are separate functions for floating-point, Q7, Q15, and Q31 data types.
- */
 
 /**
   @addtogroup BasicSub

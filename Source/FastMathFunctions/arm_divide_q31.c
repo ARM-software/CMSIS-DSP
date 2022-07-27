@@ -36,11 +36,6 @@
  */
 
 /**
-  @defgroup divide Fixed point division
-
- */
-
-/**
   @addtogroup divide
   @{
  */

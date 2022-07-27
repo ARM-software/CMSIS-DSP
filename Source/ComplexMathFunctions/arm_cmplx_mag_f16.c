@@ -33,29 +33,7 @@
   @ingroup groupCmplxMath
  */
 
-/**
-  @defgroup cmplx_mag Complex Magnitude
 
-  Computes the magnitude of the elements of a complex data vector.
-
-  The <code>pSrc</code> points to the source data and
-  <code>pDst</code> points to the where the result should be written.
-  <code>numSamples</code> specifies the number of complex samples
-  in the input array and the data is stored in an interleaved fashion
-  (real, imag, real, imag, ...).
-  The input array has a total of <code>2*numSamples</code> values;
-  the output array has a total of <code>numSamples</code> values.
-
-  The underlying algorithm is used:
-
-  <pre>
-  for (n = 0; n < numSamples; n++) {
-      pDst[n] = sqrt(pSrc[(2*n)+0]^2 + pSrc[(2*n)+1]^2);
-  }
-  </pre>
-
-  There are separate functions for floating-point, Q15, and Q31 data types.
- */
 
 /**
   @addtogroup cmplx_mag

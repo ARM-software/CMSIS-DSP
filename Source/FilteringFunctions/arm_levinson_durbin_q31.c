@@ -93,10 +93,7 @@ __STATIC_FORCEINLINE q31_t divide(q31_t n, q31_t d)
   @ingroup groupFilters
  */
 
-/**
-  @defgroup LD Levinson Durbin Algorithm
 
- */
 
 /**
   @addtogroup LD

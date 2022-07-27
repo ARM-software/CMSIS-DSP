@@ -64,10 +64,34 @@ void arm_split_rifft_q31(
                    Internally input is downscaled by 2 for every stage to avoid saturations inside CFFT/CIFFT process.
                    Hence the output format is different for different RFFT sizes.
                    The input and output formats for different RFFT sizes and number of bits to upscale are mentioned in the tables below for RFFT and RIFFT:
-  @par
-                   \image html RFFTQ31.gif "Input and Output Formats for Q31 RFFT"
-  @par
-                   \image html RIFFTQ31.gif "Input and Output Formats for Q31 RIFFT"
+  @par             Input and Output formats for RFFT Q31
+
+| RFFT Size  | Input Format  | Output Format  | Number of bits to upscale |
+| ---------: | ------------: | -------------: | ------------------------: |
+| 32         | 1.31          | 5.27           | 5                         |
+| 64         | 1.31          | 6.26           | 6                         |
+| 128        | 1.31          | 7.25           | 7                         |
+| 256        | 1.31          | 8.24           | 8                         |
+| 512        | 1.31          | 9.23           | 9                         |
+| 1024       | 1.31          | 10.22          | 10                        |
+| 2048       | 1.31          | 11.21          | 11                        |
+| 4096       | 1.31          | 12.20          | 12                        |
+| 8192       | 1.31          | 13.19          | 13                        |
+             
+  @par             Input and Output formats for RIFFT Q31
+
+| RIFFT Size  | Input Format  | Output Format  | Number of bits to upscale |
+| ----------: | ------------: | -------------: | ------------------------: |
+| 32          | 1.31          | 5.27           | 0                         |
+| 64          | 1.31          | 6.26           | 0                         |
+| 128         | 1.31          | 7.25           | 0                         |
+| 256         | 1.31          | 8.24           | 0                         |
+| 512         | 1.31          | 9.23           | 0                         |
+| 1024        | 1.31          | 10.22          | 0                         |
+| 2048        | 1.31          | 11.21          | 0                         |
+| 4096        | 1.31          | 12.20          | 0                         |
+| 8192        | 1.31          | 13.19          | 0                         |
+
   @par
                    If the input buffer is of length N, the output buffer must have length 2*N.
                    The input buffer is modified by this function.

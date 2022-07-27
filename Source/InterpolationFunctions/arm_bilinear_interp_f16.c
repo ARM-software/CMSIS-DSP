@@ -35,57 +35,6 @@
   @ingroup groupInterpolation
  */
 
-/**
-   * @defgroup BilinearInterpolate Bilinear Interpolation
-   *
-   * Bilinear interpolation is an extension of linear interpolation applied to a two dimensional grid.
-   * The underlying function <code>f(x, y)</code> is sampled on a regular grid and the interpolation process
-   * determines values between the grid points.
-   * Bilinear interpolation is equivalent to two step linear interpolation, first in the x-dimension and then in the y-dimension.
-   * Bilinear interpolation is often used in image processing to rescale images.
-   * The CMSIS DSP library provides bilinear interpolation functions for Q7, Q15, Q31, and floating-point data types.
-   *
-   * <b>Algorithm</b>
-   * \par
-   * The instance structure used by the bilinear interpolation functions describes a two dimensional data table.
-   * For floating-point, the instance structure is defined as:
-   * <pre>
-   *   typedef struct
-   *   {
-   *     uint16_t numRows;
-   *     uint16_t numCols;
-   *     float16_t *pData;
-   * } arm_bilinear_interp_instance_f16;
-   * </pre>
-   *
-   * \par
-   * where <code>numRows</code> specifies the number of rows in the table;
-   * <code>numCols</code> specifies the number of columns in the table;
-   * and <code>pData</code> points to an array of size <code>numRows*numCols</code> values.
-   * The data table <code>pTable</code> is organized in row order and the supplied data values fall on integer indexes.
-   * That is, table element (x,y) is located at <code>pTable[x + y*numCols]</code> where x and y are integers.
-   *
-   * \par
-   * Let <code>(x, y)</code> specify the desired interpolation point.  Then define:
-   * <pre>
-   *     XF = floor(x)
-   *     YF = floor(y)
-   * </pre>
-   * \par
-   * The interpolated output point is computed as:
-   * <pre>
-   *  f(x, y) = f(XF, YF) * (1-(x-XF)) * (1-(y-YF))
-   *           + f(XF+1, YF) * (x-XF)*(1-(y-YF))
-   *           + f(XF, YF+1) * (1-(x-XF))*(y-YF)
-   *           + f(XF+1, YF+1) * (x-XF)*(y-YF)
-   * </pre>
-   * Note that the coordinates (x, y) contain integer and fractional components.
-   * The integer components specify which portion of the table to use while the
-   * fractional components control the interpolation processor.
-   *
-   * \par
-   * if (x,y) are outside of the table boundary, Bilinear interpolation returns zero output.
-   */
 
 
   /**

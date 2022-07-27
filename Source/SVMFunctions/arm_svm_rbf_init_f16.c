@@ -37,11 +37,6 @@
   @ingroup groupSVM
  */
 
-/**
-  @defgroup rbfsvm RBF SVM
-
-  RBF SVM classifier
- */
 
 
 /**

@@ -32,10 +32,7 @@
   @ingroup groupFilters
  */
 
-/**
-  @defgroup LD Levinson Durbin Algorithm
 
- */
 
 /**
   @addtogroup LD

@@ -29,6 +29,18 @@
 #include "dsp/fast_math_functions.h"
 #include "arm_common_tables.h"
 
+/**
+  @addtogroup vexp
+  @{
+ */
+
+/**
+  @brief         Floating-point vector of exp values.
+  @param[in]     pSrc       points to the input vector
+  @param[out]    pDst       points to the output vector
+  @param[in]     blockSize  number of samples in each vector
+  @return        none
+ */
 void arm_vexp_f64(
   const float64_t * pSrc,
         float64_t * pDst,
@@ -49,3 +61,7 @@ void arm_vexp_f64(
       blkCnt--;
    }
 }
+
+/**
+  @} end of vexp group
+ */

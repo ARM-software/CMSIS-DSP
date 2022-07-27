@@ -29,6 +29,8 @@
 #include "dsp/fast_math_functions.h"
 #include "arm_common_tables.h"
 
+#define Q28QUARTER 0x20000000 
+
 /**
   @ingroup groupFastMath
  */
@@ -46,7 +48,6 @@
                    - \ref ARM_MATH_SUCCESS        : input value is positive
                    - \ref ARM_MATH_ARGUMENT_ERROR : input value is negative; *pOut is set to 0
  */
-#define Q28QUARTER 0x20000000 
 
 arm_status arm_sqrt_q31(
   q31_t in,

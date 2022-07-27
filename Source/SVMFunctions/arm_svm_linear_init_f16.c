@@ -33,20 +33,11 @@
 #include <limits.h>
 #include <math.h>
 
-/**
- * @defgroup groupSVM SVM Functions
- *
- */
 
 /**
   @ingroup groupSVM
  */
 
-/**
-  @defgroup linearsvm Linear SVM
-
-  Linear SVM classifier
- */
 
 /**
  * @addtogroup linearsvm
