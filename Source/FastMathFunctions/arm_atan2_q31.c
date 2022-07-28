@@ -80,14 +80,26 @@ __STATIC_FORCEINLINE q31_t arm_atan_q31(q31_t y,q31_t x)
 
    if (y<0)
    {
-     arm_negate_q31(&y,&y,1);
+    /* Negate y */
+#if defined (ARM_MATH_DSP)
+    y = __QSUB(0, y);
+#else
+    y = (y == INT32_MIN) ? INT32_MAX : -y;
+#endif
+
      sign=1-sign;
    }
 
    if (x < 0)
    {
       sign=1 - sign;
-      arm_negate_q31(&x,&x,1);
+
+    /* Negate x */
+#if defined (ARM_MATH_DSP)
+    x = __QSUB(0, x);
+#else
+    x = (x == INT32_MIN) ? INT32_MAX : -x;
+#endif
    }
 
    if (y > x)
@@ -97,7 +109,15 @@ __STATIC_FORCEINLINE q31_t arm_atan_q31(q31_t y,q31_t x)
 
     arm_divide_q31(x,y,&ratio,&shift);
 
-    arm_shift_q31(&ratio,shift,&ratio,1);
+    /* Shift ratio by shift */
+    if (shift >= 0)
+    {
+         ratio = clip_q63_to_q31((q63_t) ratio << shift);
+    }
+    else
+    {
+         ratio = (ratio >> -shift);
+    }
    
     res = PIHALF_Q29 - arm_atan_limited_q31(ratio);
       
@@ -109,7 +129,16 @@ __STATIC_FORCEINLINE q31_t arm_atan_q31(q31_t y,q31_t x)
 
     arm_divide_q31(y,x,&ratio,&shift);
 
-    arm_shift_q31(&ratio,shift,&ratio,1);
+    /* Shift ratio by shift */
+    if (shift >= 0)
+    {
+         ratio = clip_q63_to_q31((q63_t) ratio << shift);
+    }
+    else
+    {
+         ratio = (ratio >> -shift);
+    }
+   
 
     res = arm_atan_limited_q31(ratio);
 
@@ -118,7 +147,12 @@ __STATIC_FORCEINLINE q31_t arm_atan_q31(q31_t y,q31_t x)
 
    if (sign)
    {
-     arm_negate_q31(&res,&res,1);
+     /* Negate res */
+#if defined (ARM_MATH_DSP)
+     res = __QSUB(0, res);
+#else
+     res = (res == INT32_MIN) ? INT32_MAX : -res;
+#endif
    }
 
    return(res);

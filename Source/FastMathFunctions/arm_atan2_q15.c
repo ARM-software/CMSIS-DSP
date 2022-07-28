@@ -79,14 +79,26 @@ __STATIC_FORCEINLINE q15_t arm_atan_q15(q15_t y,q15_t x)
 
    if (y<0)
    {
-     arm_negate_q15(&y,&y,1);
+     /* Negate y */
+#if defined (ARM_MATH_DSP)
+     y = __QSUB16(0, y);
+#else 
+     y = (y == (q15_t) 0x8000) ? (q15_t) 0x7fff : -y;
+#endif
+
      sign=1-sign;
    }
 
    if (x < 0)
    {
       sign=1 - sign;
-      arm_negate_q15(&x,&x,1);
+     
+      /* Negate x */
+#if defined (ARM_MATH_DSP)
+     x = __QSUB16(0, x);
+#else 
+     x = (x == (q15_t) 0x8000) ? (q15_t) 0x7fff : -x;
+#endif
    }
 
    if (y > x)
@@ -96,7 +108,15 @@ __STATIC_FORCEINLINE q15_t arm_atan_q15(q15_t y,q15_t x)
 
     arm_divide_q15(x,y,&ratio,&shift);
 
-    arm_shift_q15(&ratio,shift,&ratio,1);
+    /* Shift ratio by shift */
+    if (shift >=0)
+    {
+       ratio = __SSAT(((q31_t) ratio << shift), 16);
+    }
+    else
+    {
+       ratio = (ratio >> -shift);
+    }
    
     res = PIHALFQ13 - arm_atan_limited_q15(ratio);
       
@@ -108,7 +128,16 @@ __STATIC_FORCEINLINE q15_t arm_atan_q15(q15_t y,q15_t x)
 
     arm_divide_q15(y,x,&ratio,&shift);
 
-    arm_shift_q15(&ratio,shift,&ratio,1);
+    /* Shift ratio by shift */
+    if (shift >=0)
+    {
+       ratio = __SSAT(((q31_t) ratio << shift), 16);
+    }
+    else
+    {
+       ratio = (ratio >> -shift);
+    }
+   
 
     res = arm_atan_limited_q15(ratio);
 
@@ -117,7 +146,12 @@ __STATIC_FORCEINLINE q15_t arm_atan_q15(q15_t y,q15_t x)
 
    if (sign)
    {
-     arm_negate_q15(&res,&res,1);
+     /* Negate res */
+#if defined (ARM_MATH_DSP)
+     res = __QSUB16(0, res);
+#else 
+     res = (res == (q15_t) 0x8000) ? (q15_t) 0x7fff : -res;
+#endif
    }
 
    return(res);
