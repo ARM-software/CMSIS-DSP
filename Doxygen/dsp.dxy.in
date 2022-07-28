@@ -1324,8 +1324,9 @@ HTML_EXTRA_FILES       = templates/tabs.css \
                          templates/search.css \
                          templates/navtree.css \
                          templates/tab_b.png \
-                         templates/printComponentTabs.js \
                          templates/navtree.js \
+                         templates/version.css \
+                         templates/dropdown.png \
                          ../LICENSE.txt
 
 # The HTML_COLORSTYLE_HUE tag controls the color of the HTML output. Doxygen
