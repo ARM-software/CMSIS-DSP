@@ -832,7 +832,7 @@ class CodeGen:
         self._currentPaths = oldPath.copy()
         self._currentParamPaths = oldParamPath.copy()
 
-    def genCodeForTree(self,root,benchMode):
+    def genCodeForTree(self,genFolder,root,benchMode):
       """ Generate all files from the trees of tests
       
       Args:
@@ -845,14 +845,16 @@ class CodeGen:
       # Get a list of all suites contained in the tree
       suites = self.getSuites(root,[])
 
-      src = "GeneratedSource"
-      header = "GeneratedInclude"
+      src = os.path.join(genFolder,"GeneratedSource")
+      header = os.path.join(genFolder,"GeneratedInclude")
       if benchMode:
         src += "Bench"
         header += "Bench"
       # Generate .cpp and .h files neded to run the tests
-      with open("%s/TestDesc.cpp" % src,"w") as sourceFile:
-       with open("%s/TestDesc.h" % header,"w") as headerFile:
+      testDescCPath = os.path.join(src,"TestDesc.cpp")
+      testDescHeaderPath = os.path.join(header,"TestDesc.h")
+      with open(testDescCPath,"w") as sourceFile:
+       with open(testDescHeaderPath,"w") as headerFile:
          headerFile.write("#include \"Test.h\"\n")
          headerFile.write("#include \"Pattern.h\"\n")
 
@@ -871,18 +873,20 @@ class CodeGen:
       # the pattern files.
       # Driver file is similar in this case but different from semihosting
       # one.
+      testDriveHeaderPath = os.path.join(header,"TestDrive.h")
+      patternHeaderPath = os.path.join(header,"Patterns.h")
       if not self._fpga:
-         with open("%s/TestDrive.h" % header,"w") as driverFile:
+         with open(testDriveHeaderPath,"w") as driverFile:
             driverFile.write("// Empty driver include in semihosting mode")
-         with open("%s/Patterns.h" % header,"w") as includeFile:
+         with open(patternHeaderPath,"w") as includeFile:
             includeFile.write("// Empty pattern include in semihosting mode")
       else:
-        with open("%s/TestDrive.h" % header,"w") as driverFile:
+        with open(testDriveHeaderPath,"w") as driverFile:
           driverFile.write("#ifndef _DRIVER_H_\n")
           driverFile.write("#define _DRIVER_H_\n")
           driverFile.write("__ALIGNED(8) const char testDesc[]={\n")
           self._offset=0
-          with open("%s/Patterns.h" % header,"w") as includeFile:
+          with open(patternHeaderPath,"w") as includeFile:
             includeFile.write("#ifndef _PATTERNS_H_\n")
             includeFile.write("#define _PATTERNS_H_\n")
             includeFile.write("__ALIGNED(8) const char patterns[]={\n")

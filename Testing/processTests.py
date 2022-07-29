@@ -9,6 +9,7 @@ parser.add_argument('-f', nargs='?',type = str, default="Output.pickle", help="P
 
 parser.add_argument('-p', nargs='?',type = str, default="Patterns", help="Pattern dir path")
 parser.add_argument('-d', nargs='?',type = str, default="Parameters", help="Parameter dir path")
+parser.add_argument('-gen', nargs='?',type = str, default=".", help="Folder for generated C sources")
 
 # -e true when no semihosting
 # Input is include files
@@ -34,6 +35,6 @@ if args.f is not None:
     d.deprecate(root,args.others)
     #print(root)
     # Generate code with the tree of tests
-    c.genCodeForTree(root,args.b)
+    c.genCodeForTree(args.gen,root,args.b)
 else:
     parser.print_help()

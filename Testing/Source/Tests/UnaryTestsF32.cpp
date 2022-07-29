@@ -40,7 +40,7 @@ Comparisons for inverse
 /* Not very accurate for big matrix.
 But big matrix needed for checking the vectorized code */
 
-#define SNR_THRESHOLD_INV 100
+#define SNR_THRESHOLD_INV 99
 #define REL_ERROR_INV (3.0e-5)
 #define ABS_ERROR_INV (1.0e-5)
 

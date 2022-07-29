@@ -35,6 +35,7 @@
 #include <math.h>
 
 
+
 /**
   @ingroup groupMatrix
  */
@@ -53,6 +54,9 @@
   @param[out]    pOut        points to the output vector.
   @return        beta        return the scaling factor beta
  */
+
+
+
 
 float64_t arm_householder_f64(
     const float64_t * pSrc,

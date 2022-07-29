@@ -30,6 +30,7 @@
 #include "dsp/matrix_utils.h"
 
 
+
 /**
   @ingroup groupMatrix
  */
@@ -65,6 +66,9 @@
 
  */
 
+
+
+
 arm_status arm_mat_qr_f64(
     const arm_matrix_instance_f64 * pSrc,
     const float64_t threshold,
@@ -76,16 +80,13 @@ arm_status arm_mat_qr_f64(
     )
 
 {
-  
-
-  uint32_t col=0;
+  int32_t col=0;
   int32_t nb,pos;
   float64_t *pa,*pc;
   float64_t beta;
   float64_t *pv;
   float64_t *pdst;
   float64_t *p;
-  float64_t sum;
 
   if (pSrc->numRows < pSrc->numCols)
   {
@@ -101,7 +102,8 @@ arm_status arm_mat_qr_f64(
   pc = pOutTau;
   for(col=0 ; col < pSrc->numCols; col++)
   {
-      uint32_t i,j,k;
+      int32_t i,j,k,blkCnt;
+      float64_t *pa0,*pa1,*pa2,*pa3;
       COPY_COL_F64(pOutR,col,col,pTmpA);
 
       beta = arm_householder_f64(pTmpA,threshold,pSrc->numRows - col,pTmpA);
@@ -110,26 +112,70 @@ arm_status arm_mat_qr_f64(
       pdst = pTmpB;
 
       /* v.T A(col:,col:) -> tmpb */
+      pv = pTmpA;
+      pa = p;
       for(j=0;j<pSrc->numCols-col; j++)
       {
-          pa = p+j;
-          pv = pTmpA;
-          sum = 0.0;
-          for(k=0;k<pSrc->numRows-col; k++)
+              *pdst++ = *pv * *pa++; 
+      }
+      pa += col;
+      pv++;
+      pdst = pTmpB;
+
+      pa0 = pa;
+      pa1 = pa0 + pSrc->numCols;
+      pa2 = pa1 + pSrc->numCols;
+      pa3 = pa2 + pSrc->numCols;
+
+      /* Unrolled loop */
+      blkCnt = (pSrc->numRows-col - 1) >> 2;
+      k=1;
+      while(blkCnt > 0)
+      {
+          float64_t sum;
+
+          for(j=0;j<pSrc->numCols-col; j++)
           {
-              sum += *pv++ * *pa; 
-              pa += pOutR->numCols;
+              sum = *pdst;
+
+              sum += pv[0] * *pa0++;
+              sum += pv[1] * *pa1++;
+              sum += pv[2] * *pa2++;
+              sum += pv[3] * *pa3++;
+              
+              *pdst++ = sum; 
           }
-          *pdst++ = sum;
+          pa0 += col + 3*pSrc->numCols;
+          pa1 += col + 3*pSrc->numCols;
+          pa2 += col + 3*pSrc->numCols;
+          pa3 += col + 3*pSrc->numCols;
+          pv  += 4;
+          pdst = pTmpB;
+          k += 4;
+          blkCnt--;
+      }
+
+      pa = pa0;
+      for(;k<pSrc->numRows-col; k++)
+      {
+          for(j=0;j<pSrc->numCols-col; j++)
+          {
+              *pdst++ += *pv * *pa++; 
+          }
+          pa += col;
+          pv++;
+          pdst = pTmpB;
       }
 
       /* A(col:,col:) - beta v tmpb */
       pa = p;
       for(j=0;j<pSrc->numRows-col; j++)
       {
+        float64_t f = beta * pTmpA[j];
+
         for(i=0;i<pSrc->numCols-col; i++)
         {
-          *pa = *pa - beta * pTmpA[j] * pTmpB[i] ;
+          *pa = *pa - f * pTmpB[i] ;
           pa++;
         }
         pa += col;
@@ -165,7 +211,8 @@ arm_status arm_mat_qr_f64(
      pc = pOutTau + pOutQ->numCols - 1;
      for(col=0 ; col < pOutQ->numCols; col++)
      {
-       int32_t i,j,k;
+       int32_t i,j,k, blkCnt;
+       float64_t *pa0,*pa1,*pa2,*pa3;
        pos = pSrc->numRows - nb;
        p = pOutQ->pData + pos + pOutQ->numCols*pos ;
    
@@ -175,26 +222,70 @@ arm_status arm_mat_qr_f64(
        pdst = pTmpB;
       
        /* v.T A(col:,col:) -> tmpb */
+       
+       pv = pTmpA;
+       pa = p;
        for(j=0;j<pOutQ->numRows-pos; j++)
        {
-           pa = p+j;
-           pv = pTmpA;
-           sum = 0.0;
-           for(k=0;k<pOutQ->numRows-pos; k++)
+               *pdst++ = *pv * *pa++; 
+       }
+       pa += pos;
+       pv++;
+       pdst = pTmpB;
+       pa0 = pa;
+       pa1 = pa0 + pOutQ->numRows;
+       pa2 = pa1 + pOutQ->numRows;
+       pa3 = pa2 + pOutQ->numRows;
+
+       /* Unrolled loop */
+       blkCnt = (pOutQ->numRows-pos - 1) >> 2;
+       k=1;
+       while(blkCnt > 0)
+       {
+           float64_t sum;
+
+           for(j=0;j<pOutQ->numRows-pos; j++)
            {
-               sum += *pv++ * *pa; 
-               pa += pOutQ->numCols;
+              sum = *pdst;
+
+              sum += pv[0] * *pa0++;
+              sum += pv[1] * *pa1++;
+              sum += pv[2] * *pa2++;
+              sum += pv[3] * *pa3++;
+              
+              *pdst++ = sum; 
            }
-           *pdst++ = sum;
+           pa0 += pos + 3*pOutQ->numRows;
+           pa1 += pos + 3*pOutQ->numRows;
+           pa2 += pos + 3*pOutQ->numRows;
+           pa3 += pos + 3*pOutQ->numRows;
+           pv  += 4;
+           pdst = pTmpB;
+           k += 4;
+           blkCnt--;
+       }
+
+       pa = pa0;
+       for(;k<pOutQ->numRows-pos; k++)
+       {
+           for(j=0;j<pOutQ->numRows-pos; j++)
+           {
+               *pdst++ += *pv * *pa++; 
+           }
+           pa += pos;
+           pv++;
+           pdst = pTmpB;
        }
    
        pa = p;
        beta = *pc--;
        for(j=0;j<pOutQ->numRows-pos; j++)
        {
+           float64_t f = beta * pTmpA[j];
+
            for(i=0;i<pOutQ->numCols-pos; i++)
            {
-             *pa = *pa - beta * pTmpA[j] * pTmpB[i] ;
+             *pa = *pa - f * pTmpB[i] ;
              pa++;
            }
            pa += pos;
