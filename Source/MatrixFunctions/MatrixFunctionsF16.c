@@ -40,4 +40,4 @@
 #include "arm_mat_solve_upper_triangular_f16.c"
 #include "arm_mat_solve_lower_triangular_f16.c"
 #include "arm_mat_qr_f16.c"
-#include "arm_householder_f32.c"
+#include "arm_householder_f16.c"
