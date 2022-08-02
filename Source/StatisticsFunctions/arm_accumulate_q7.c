@@ -58,7 +58,7 @@
 void arm_accumulate_q7(
                        const q7_t * pSrc,
                        uint32_t blockSize,
-                       q7_t * pResult)
+                       q31_t * pResult)
 {
   uint32_t  blkCnt;           /* loop counters */
   q7x16_t vecSrc;
@@ -96,7 +96,7 @@ void arm_accumulate_q7(
 void arm_accumulate_q7(
                        const q7_t * pSrc,
                        uint32_t blockSize,
-                       q7_t * pResult)
+                       q31_t * pResult)
 {
   uint32_t blkCnt;                               /* Loop counter */
   q31_t sum = 0;                                 /* Temporary result storage */

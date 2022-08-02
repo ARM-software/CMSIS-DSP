@@ -1005,7 +1005,7 @@ const float64_t * pSrc,
 void arm_accumulate_q7(
 const q7_t * pSrc,
       uint32_t blockSize,
-      q7_t * pResult);
+      q31_t * pResult);
 
 /**
  * @brief  Accumulation value of a Q15 vector.
@@ -1017,7 +1017,7 @@ const q7_t * pSrc,
 void arm_accumulate_q15(
 const q15_t * pSrc,
       uint32_t blockSize,
-      q15_t * pResult);
+      q63_t * pResult);
 
 /**
  * @brief  Accumulation value of a Q31 vector.
@@ -1029,7 +1029,7 @@ const q15_t * pSrc,
 void arm_accumulate_q31(
 const q31_t * pSrc,
       uint32_t blockSize,
-      q31_t * pResult);
+      q63_t * pResult);
 
 #ifdef   __cplusplus
 }
