@@ -70,8 +70,21 @@ void arm_bitreversal_q15(
                  Hence the output format is different for different FFT sizes.
                  The input and output formats for different FFT sizes and number of bits to upscale are mentioned in the tables below for CFFT and CIFFT:
   @par
-                 \image html CFFTQ15.gif "Input and Output Formats for Q15 CFFT"
-                 \image html CIFFTQ15.gif "Input and Output Formats for Q15 CIFFT"
+                
+| CFFT Size | Input format  | Output format | Number of bits to upscale |
+| --------: | ------------: | ------------: | ------------------------: |
+| 16        | 1.15          | 5.11          | 4                         |
+| 64        | 1.15          | 7.9           | 6                         |
+| 256       | 1.15          | 9.7           | 8                         |
+| 1024      | 1.15          | 11.5          | 10                        |
+
+| CIFFT Size | Input format  | Output format | Number of bits to upscale |
+| ---------: | ------------: | ------------: | ------------------------: |
+| 16         | 1.15          | 5.11          | 0                         |
+| 64         | 1.15          | 7.9           | 0                         |
+| 256        | 1.15          | 9.7           | 0                         |
+| 1024       | 1.15          | 11.5          | 0                         |
+
  */
 
 void arm_cfft_radix4_q15(

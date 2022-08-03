@@ -35,6 +35,9 @@
 /**
   @defgroup FIR_Sparse Finite Impulse Response (FIR) Sparse Filters
 
+  @deprecated Those functions are no more tested nor maintained and will be removed in
+              a future version.
+
   This group of functions implements sparse FIR filters.
   Sparse FIR filters are equivalent to standard FIR filters except that most of the coefficients are equal to zero.
   Sparse filters are used for simulating reflections in communications and audio applications.

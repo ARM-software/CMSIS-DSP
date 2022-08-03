@@ -48,7 +48,12 @@
                    The input and output formats for different DCT sizes and number of bits to upscale are
                    mentioned in the table below:
 
-                   \image html dct4FormatsQ31Table.gif
+| DCT Size  | Input format  | Output format | Number of bits to upscale |
+| --------: | ------------: | ------------: | ------------------------: |
+| 2048      | 2.30          | 12.20         | 11                        |
+| 512       | 2.30          | 10.22         | 9                         |
+| 128       | 2.30          | 8.24          | 7                         |
+
  */
 
 void arm_dct4_q31(

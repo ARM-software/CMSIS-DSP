@@ -52,7 +52,22 @@
   of elementary row-operations to an identity matrix yields the inverse matrix.
   If the input matrix is singular, then the algorithm terminates and returns error status
   <code>ARM_MATH_SINGULAR</code>.
-  \image html MatrixInverse.gif "Matrix Inverse of a 3 x 3 matrix using Gauss-Jordan Method"
+ 
+  @par Matrix Inverse of a 3 x 3 matrix using Gauss-Jordan Method 
+
+  \f[
+  \begin{pmatrix}
+   a_{1,1} & a_{1,2} & a_{1,3} & | & 1 & 0 & 0\\
+   a_{2,1} & a_{2,2} & a_{2,3} & | & 0 & 1 & 0\\
+   a_{3,1} & a_{3,2} & a_{3,3} & | & 0 & 0 & 1\\
+  \end{pmatrix}
+  \rightarrow
+  \begin{pmatrix}
+   1 & 0 & 0 & | & x_{1,1} & x_{2,1} & x_{3,1} \\
+   0 & 1 & 0 & | & x_{1,2} & x_{2,2} & x_{3,2} \\
+   0 & 0 & 1 & | & x_{1,3} & x_{2,3} & x_{3,3} \\
+  \end{pmatrix}
+  \f]
  */
 
 /**

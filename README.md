@@ -154,7 +154,7 @@ project (testcmsisdsp VERSION 0.1)
 add_subdirectory(${CMSISDSP}/Source bin_dsp)
 ```
 
-CMSIS-DSP is dependent on the CMSIS Core includes. So, you should define `CMSISCORE` on the cmake command line. The path used will be `${CMSISCORE}/Include`.
+CMSIS-DSP is dependent on the CMSIS Core includes. So, you should define `CMSISCORE` on the cmake command line. The path used by CMSIS-DSP will be `${CMSISCORE}/Include`.
 
 You should also set the compilation options to use to build the library.
 

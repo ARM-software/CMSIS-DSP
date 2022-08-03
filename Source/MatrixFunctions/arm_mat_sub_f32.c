@@ -36,8 +36,27 @@
   @defgroup MatrixSub Matrix Subtraction
 
   Subtract two matrices.
-  \image html MatrixSubtraction.gif "Subraction of two 3 x 3 matrices"
-
+  @par Subraction of two 3 x 3 matrices
+  
+  \f[
+  \begin{pmatrix}
+   a_{1,1} & a_{1,2} & a_{1,3} \\
+   a_{2,1} & a_{2,2} & a_{2,3} \\
+   a_{3,1} & a_{3,2} & a_{3,3} \\
+  \end{pmatrix}
+  -
+  \begin{pmatrix}
+   b_{1,1} & b_{1,2} & b_{1,3} \\
+   b_{2,1} & b_{2,2} & b_{2,3} \\
+   b_{3,1} & b_{3,2} & b_{3,3} \\
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+   a_{1,1}-b_{1,1} & a_{1,2}-b_{1,2} & a_{1,3}-b_{1,3} \\
+   a_{2,1}-b_{2,1} & a_{2,2}-b_{2,2} & a_{2,3}-b_{2,3} \\
+   a_{3,1}-b_{3,1} & a_{3,2}-b_{3,2} & a_{3,3}-b_{3,3} \\
+  \end{pmatrix}
+  \f]
   The functions check to make sure that
   <code>pSrcA</code>, <code>pSrcB</code>, and <code>pDst</code> have the same
   number of rows and columns.

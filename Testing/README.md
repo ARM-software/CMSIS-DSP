@@ -2,7 +2,87 @@
 
 This framework is for our own internal use. We decided to release it but, at least in short term, we won't give any help or support about it.
 
+## Summary
+
+Here is a quick summary of how to get started with the framework the first time the repository is cloned. 
+
+First, you must use the same tag than the one for your CMSIS Pack. Otherwise, the cloned source may contain tests for functions which are not yet available in the official pack.
+
+You can also look at the artifact for the commit : it is containing a CMSIS Pack for this commit.
+
+You need `Python 3` and the following Python packages:
+
+```
+pip install pyparsing
+pip install Colorama
+```
+
+Once you have cloned the right version and installed the Python packages, you need to generate some files.
+
+**Generation of all C files needed to build the tests.** 
+
+The commands must be run from Testing folder:
+
+`createDefaultFolder.sh`
+
+`python preprocess.py -f desc.txt`
+
+`python preprocess.py -f desc_f16.txt -o Output_f16.pickle`
+
+`python processTests.py -e`
+
+`python processTests.py -e -f Output_f16.pickle`
+
+**Now the test suite you want to run can be selected:**
+
+`python processTests.py -e BasicTestsF32`
+
+Each time you want to change the test suite to run, you need to execute this function. No need to redo all the previous steps to generate all the missing files.
+
+Note that if the test suite is part of the half float tests, then you'll need to do instead:
+
+`python processTests.py -f Output_f16.pickle -e BasicTestsF16`
+
+**Building the test framework:**
+
+In `Testing\cmsis_build` you can find some scripts:
+
+* `buildsolution.sh` is converting the solution file, using `csolution`,  to generate the `.cprj` files for each target
+* `build.sh` is building all the targets using `cbuild` tool
+
+The CMSIS build tools must be installed and configured. You may need to run the CMSIS build tools setup script before the previous steps:
+
+`source /cmsistools/etc/setup`
+
+and you may need to add the path to the `csolution` tool:
+
+`export PATH=$PATH:/cmsistools/bin/linux64`
+
+(If you are on Windows, use the `bin/windows64` folder)
+
+You may need to initialize the pack repository and install the needed packs:
+
+`cpackget init`
+
+`cpackget add -f test_packlist.txt`
+
+The `test_packlist.txt` is in the `Testing\cmsis_build` folder.
+
+**You can then run the executable on Virtual Hardware.** 
+
+For instance, to run the test on the virtual hardware for Corstone 300, if you have the Arm MDK installed on Windows :
+
+`C:\Keil_v5\ARM\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M55_MDK.exe ^
+   -f configs/ARM_VHT_MPS2_M55_config.txt ^
+   Objects\test.Release+FVP_M55.axf > results.txt`
+
+**Parsing the results:**
+
+`python processResult.py -f Output.pickle -e -r result.txt`
+
 ## REQUIREMENTS
+
+Requirements for the test framework. 
 
 ### Test descriptions
 

@@ -35,6 +35,9 @@
 /**
   @defgroup FIR_Lattice Finite Impulse Response (FIR) Lattice Filters
 
+  @deprecated Those functions are no more tested nor maintained and will be removed in
+              a future version.
+              
   This set of functions implements Finite Impulse Response (FIR) lattice filters
   for Q15, Q31 and floating-point data types.  Lattice filters are used in a
   variety of adaptive filter applications. The filter structure is feedforward and

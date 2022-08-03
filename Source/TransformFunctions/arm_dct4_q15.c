@@ -44,8 +44,14 @@
                    Internally inputs are downscaled in the RFFT process function to avoid overflows.
                    Number of bits downscaled, depends on the size of the transform. The input and output
                    formats for different DCT sizes and number of bits to upscale are mentioned in the table below:
+ 
+| DCT Size  | Input format  | Output format | Number of bits to upscale |
+| --------: | ------------: | ------------: | ------------------------: |
+| 2048      | 1.15          | 11.5          | 10                        |
+| 512       | 1.15          | 9.7           | 8                         |
+| 128       | 1.15          | 7.9           | 6                         |
 
-                   \image html dct4FormatsQ15Table.gif
+
  */
 
 void arm_dct4_q15(

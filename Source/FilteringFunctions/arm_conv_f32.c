@@ -43,12 +43,14 @@
  @par            Algorithm
                    Let <code>a[n]</code> and <code>b[n]</code> be sequences of length <code>srcALen</code> and
                    <code>srcBLen</code> samples respectively. Then the convolution
-  <pre>
-     c[n] = a[n] * b[n]
-  </pre>
+                   \f[
+                      c[n] = a[n] * b[n]
+                   \f]
   @par
                    is defined as
-                   \image html ConvolutionEquation.gif
+                   \f[
+                   c[n] = \sum_{k=0}^{srcALen} a[k] b[n-k]
+                   \f]
   @par
                    Note that <code>c[n]</code> is of length <code>srcALen + srcBLen - 1</code> and is defined over the interval <code>n=0, 1, 2, ..., srcALen + srcBLen - 2</code>.
                    <code>pSrcA</code> points to the first input vector of length <code>srcALen</code> and
@@ -60,9 +62,9 @@
                    For each offset \c n, the overlapping portions of a[n] and b[n] are multiplied and summed together.
   @par
                    Note that convolution is a commutative operation:
-  <pre>
-     a[n] * b[n] = b[n] * a[n].
-  </pre>
+                   \f[
+                      a[n] * b[n] = b[n] * a[n].
+                   \f]
   @par
                    This means that switching the A and B arguments to the convolution functions has no effect.
 

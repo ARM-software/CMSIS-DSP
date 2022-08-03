@@ -38,7 +38,23 @@
   Tranposes a complex matrix.
 
   Transposing an <code>M x N</code> matrix flips it around the center diagonal and results in an <code>N x M</code> matrix.
-  \image html MatrixTranspose.gif "Transpose of a 3 x 3 matrix"
+ 
+  @par Transpose of a 3 x 3 matrix
+  
+  \f[
+  \begin{pmatrix}
+   a_{1,1} & a_{1,2} & a_{1,3} \\
+   a_{2,1} & a_{2,2} & a_{2,3} \\
+   a_{3,1} & a_{3,2} & a_{3,3} \\
+  \end{pmatrix}^T
+   =
+  \begin{pmatrix}
+   a_{1,1} & a_{2,1} & a_{3,1} \\
+   a_{1,2} & a_{2,2} & a_{3,2} \\
+   a_{1,3} & a_{2,3} & a_{3,3} \\
+  \end{pmatrix}
+  \f]
+
  */
 
 /**
