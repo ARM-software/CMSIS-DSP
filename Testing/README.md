@@ -72,13 +72,13 @@ The `test_packlist.txt` is in the `Testing\cmsis_build` folder.
 
 For instance, to run the test on the virtual hardware for Corstone 300, if you have the Arm MDK installed on Windows :
 
-`C:\Keil_v5\ARM\FVP\MPS2_Cortex-M\FVP_MPS2_Cortex-M55_MDK.exe ^
-   -f configs/ARM_VHT_MPS2_M55_config.txt ^
-   Objects\test.Release+FVP_M55.axf > results.txt`
+`C:\Keil_v5\ARM\VHT\VHT_Corstone_SSE-300_Ethos-U55.exe -f configs\ARM_VHT_Corstone_300_config.txt Objects\test.Release+VHT-Corstone-300.axf > results.txt`
 
 **Parsing the results:**
 
-`python processResult.py -f Output.pickle -e -r result.txt`
+If you are still in the `cmsis_build` folder:
+
+`python ../processResult.py -f ../Output.pickle -e -r results.txt`
 
 ## REQUIREMENTS
 
