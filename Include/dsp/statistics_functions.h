@@ -995,41 +995,6 @@ const float64_t * pSrc,
       uint32_t blockSize,
       float64_t * pResult);
 
-/**
- * @brief  Accumulation value of a Q7 vector.
- * @param[in]  pSrc       is input pointer
- * @param[in]  blockSize  is the number of samples to process
- * @param[out] pResult    is output value.
- */
-
-void arm_accumulate_q7(
-const q7_t * pSrc,
-      uint32_t blockSize,
-      q31_t * pResult);
-
-/**
- * @brief  Accumulation value of a Q15 vector.
- * @param[in]  pSrc       is input pointer
- * @param[in]  blockSize  is the number of samples to process
- * @param[out] pResult    is output value.
- */
-
-void arm_accumulate_q15(
-const q15_t * pSrc,
-      uint32_t blockSize,
-      q63_t * pResult);
-
-/**
- * @brief  Accumulation value of a Q31 vector.
- * @param[in]  pSrc       is input pointer
- * @param[in]  blockSize  is the number of samples to process
- * @param[out] pResult    is output value.
- */
-
-void arm_accumulate_q31(
-const q31_t * pSrc,
-      uint32_t blockSize,
-      q63_t * pResult);
 
 #ifdef   __cplusplus
 }
