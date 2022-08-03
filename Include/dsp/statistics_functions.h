@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     statistics_functions.h
  * @brief    Public header file for CMSIS DSP Library
- * @version  V1.10.0
- * @date     08 July 2021
+ * @version  V1.10.1
+ * @date     14 July 2022
  * Target Processor: Cortex-M and Cortex-A cores
  ******************************************************************************/
 /*
@@ -969,6 +969,32 @@ void arm_mse_f64(
   const float64_t * pSrcB,
         uint32_t blockSize,
         float64_t * pResult);
+
+
+/**
+ * @brief  Accumulation value of a floating-point vector.
+ * @param[in]  pSrc       is input pointer
+ * @param[in]  blockSize  is the number of samples to process
+ * @param[out] pResult    is output value.
+ */
+
+void arm_accumulate_f32(
+const float32_t * pSrc,
+      uint32_t blockSize,
+      float32_t * pResult);
+
+/**
+ * @brief  Accumulation value of a floating-point vector.
+ * @param[in]  pSrc       is input pointer
+ * @param[in]  blockSize  is the number of samples to process
+ * @param[out] pResult    is output value.
+ */
+
+void arm_accumulate_f64(
+const float64_t * pSrc,
+      uint32_t blockSize,
+      float64_t * pResult);
+
 
 #ifdef   __cplusplus
 }
