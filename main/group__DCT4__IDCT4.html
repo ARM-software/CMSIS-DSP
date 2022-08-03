@@ -165,13 +165,13 @@ Functions</h2></td></tr>
 <img src="DCT4.gif" alt=""/>
 <div class="caption">
 Discrete Cosine Transform - type-IV</div></div>
-<dl class="section user"><dt>Algorithm</dt><dd>The N-point type-IV DCT is defined as a real, linear transformation by the formula: <div class="image">
-<img src="DCT4Equation.gif" alt=""/>
-</div>
+<dl class="section user"><dt>Algorithm</dt><dd>The N-point type-IV DCT is defined as a real, linear transformation by the formula: <p class="formulaDsp">
+\[ X_c(k) = \sqrt{\frac{2}{N}}\sum_{n=0}^{N-1} x(n)cos\Big[\Big(n+\frac{1}{2}\Big)\Big(k+\frac{1}{2}\Big)\frac{\pi}{N}\Big] \]
+</p>
  where <code>k = 0, 1, 2, ..., N-1</code> </dd></dl>
-<dl class="section user"><dt></dt><dd>Its inverse is defined as follows: <div class="image">
-<img src="IDCT4Equation.gif" alt=""/>
-</div>
+<dl class="section user"><dt></dt><dd>Its inverse is defined as follows: <p class="formulaDsp">
+\[ x(n) = \sqrt{\frac{2}{N}}\sum_{k=0}^{N-1} X_c(k)cos\Big[\Big(n+\frac{1}{2}\Big)\Big(k+\frac{1}{2}\Big)\frac{\pi}{N}\Big] \]
+</p>
  where <code>n = 0, 1, 2, ..., N-1</code> </dd></dl>
 <dl class="section user"><dt></dt><dd>The DCT4 matrices become involutory (i.e. they are self-inverse) by multiplying with an overall scale factor of sqrt(2/N). The symmetry of the transform matrix indicates that the fast algorithms for the forward and inverse transform computation are identical. Note that the implementation of Inverse DCT4 and DCT4 is same, hence same process function can be used for both.</dd></dl>
 <dl class="section user"><dt>Lengths supported by the transform:</dt><dd>As DCT4 internally uses Real FFT, it supports all the lengths 128, 512, 2048 and 8192. The library provides separate functions for Q15, Q31, and floating-point data types.</dd></dl>
@@ -297,10 +297,17 @@ Discrete Cosine Transform - type-IV</div></div>
 </ul>
 </dd></dl>
 <dl class="section user"><dt>Normalizing factor</dt><dd>The normalizing factor is <code>sqrt(2/N)</code>, which depends on the size of transform <code>N</code>. Floating-point normalizing factors are mentioned in the table below for different DCT sizes:</dd></dl>
-<div class="image">
-<img src="dct4NormalizingF32Table.gif" alt=""/>
-</div>
- 
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadRight">DCT Size   </th><th class="markdownTableHeadRight">Normalizing factor value    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyRight">2048   </td><td class="markdownTableBodyRight">0.03125    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyRight">512   </td><td class="markdownTableBodyRight">0.0625    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyRight">128   </td><td class="markdownTableBodyRight">0.125   </td></tr>
+</table>
+
 </div>
 </div>
 <a id="ga966fd1b66a80873964533703ab5dc054" name="ga966fd1b66a80873964533703ab5dc054"></a>
@@ -369,10 +376,17 @@ Discrete Cosine Transform - type-IV</div></div>
 </ul>
 </dd></dl>
 <dl class="section user"><dt>Normalizing factor</dt><dd>The normalizing factor is <code>sqrt(2/N)</code>, which depends on the size of transform <code>N</code>. Normalizing factors in 1.15 format are mentioned in the table below for different DCT sizes:</dd></dl>
-<div class="image">
-<img src="dct4NormalizingQ15Table.gif" alt=""/>
-</div>
- 
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadRight">DCT Size   </th><th class="markdownTableHeadRight">Normalizing factor value (hexadecimal)    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyRight">2048   </td><td class="markdownTableBodyRight">0x400    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyRight">512   </td><td class="markdownTableBodyRight">0x800    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyRight">128   </td><td class="markdownTableBodyRight">0x1000   </td></tr>
+</table>
+
 </div>
 </div>
 <a id="ga631bb59c7c97c814ff7147ecba6a716a" name="ga631bb59c7c97c814ff7147ecba6a716a"></a>
@@ -441,10 +455,17 @@ Discrete Cosine Transform - type-IV</div></div>
 </ul>
 </dd></dl>
 <dl class="section user"><dt>Normalizing factor:</dt><dd>The normalizing factor is <code>sqrt(2/N)</code>, which depends on the size of transform <code>N</code>. Normalizing factors in 1.31 format are mentioned in the table below for different DCT sizes:</dd></dl>
-<div class="image">
-<img src="dct4NormalizingQ31Table.gif" alt=""/>
-</div>
- 
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadRight">DCT Size   </th><th class="markdownTableHeadRight">Normalizing factor value (hexadecimal)    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyRight">2048   </td><td class="markdownTableBodyRight">0x4000000    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyRight">512   </td><td class="markdownTableBodyRight">0x8000000    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyRight">128   </td><td class="markdownTableBodyRight">0x10000000   </td></tr>
+</table>
+
 </div>
 </div>
 <a id="ga114cb9635059f678df291fcc887aaf2b" name="ga114cb9635059f678df291fcc887aaf2b"></a>
@@ -488,10 +509,17 @@ Discrete Cosine Transform - type-IV</div></div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none</dd></dl>
 <dl class="section user"><dt>Input an output formats</dt><dd>Internally inputs are downscaled in the RFFT process function to avoid overflows. Number of bits downscaled, depends on the size of the transform. The input and output formats for different DCT sizes and number of bits to upscale are mentioned in the table below:</dd></dl>
-<div class="image">
-<img src="dct4FormatsQ15Table.gif" alt=""/>
-</div>
- 
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadRight">DCT Size   </th><th class="markdownTableHeadRight">Input format   </th><th class="markdownTableHeadRight">Output format   </th><th class="markdownTableHeadRight">Number of bits to upscale    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyRight">2048   </td><td class="markdownTableBodyRight">1.15   </td><td class="markdownTableBodyRight">11.5   </td><td class="markdownTableBodyRight">10    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyRight">512   </td><td class="markdownTableBodyRight">1.15   </td><td class="markdownTableBodyRight">9.7   </td><td class="markdownTableBodyRight">8    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyRight">128   </td><td class="markdownTableBodyRight">1.15   </td><td class="markdownTableBodyRight">7.9   </td><td class="markdownTableBodyRight">6   </td></tr>
+</table>
+
 </div>
 </div>
 <a id="gad04d0baab6ed081d8e8afe02538eb80b" name="gad04d0baab6ed081d8e8afe02538eb80b"></a>
@@ -535,10 +563,17 @@ Discrete Cosine Transform - type-IV</div></div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none</dd></dl>
 <dl class="section user"><dt>Input an output formats</dt><dd>Input samples need to be downscaled by 1 bit to avoid saturations in the Q31 DCT process, as the conversion from DCT2 to DCT4 involves one subtraction. Internally inputs are downscaled in the RFFT process function to avoid overflows. Number of bits downscaled, depends on the size of the transform. The input and output formats for different DCT sizes and number of bits to upscale are mentioned in the table below:</dd></dl>
-<div class="image">
-<img src="dct4FormatsQ31Table.gif" alt=""/>
-</div>
- 
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadRight">DCT Size   </th><th class="markdownTableHeadRight">Input format   </th><th class="markdownTableHeadRight">Output format   </th><th class="markdownTableHeadRight">Number of bits to upscale    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyRight">2048   </td><td class="markdownTableBodyRight">2.30   </td><td class="markdownTableBodyRight">12.20   </td><td class="markdownTableBodyRight">11    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyRight">512   </td><td class="markdownTableBodyRight">2.30   </td><td class="markdownTableBodyRight">10.22   </td><td class="markdownTableBodyRight">9    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyRight">128   </td><td class="markdownTableBodyRight">2.30   </td><td class="markdownTableBodyRight">8.24   </td><td class="markdownTableBodyRight">7   </td></tr>
+</table>
+
 </div>
 </div>
 </div><!-- contents -->

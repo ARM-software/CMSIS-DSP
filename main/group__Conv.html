@@ -158,18 +158,20 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p >Convolution is a mathematical operation that operates on two finite length vectors to generate a finite length output vector. Convolution is similar to correlation and is frequently used in filtering and data analysis. The CMSIS DSP library contains functions for convolving Q7, Q15, Q31, and floating-point data types. The library also provides fast versions of the Q15 and Q31 functions.</p>
-<dl class="section user"><dt>Algorithm</dt><dd>Let <code>a[n]</code> and <code>b[n]</code> be sequences of length <code>srcALen</code> and <code>srcBLen</code> samples respectively. Then the convolution <pre>
-    c[n] = a[n] * b[n]
- </pre> </dd></dl>
-<dl class="section user"><dt></dt><dd>is defined as <div class="image">
-<img src="ConvolutionEquation.gif" alt=""/>
-</div>
+<dl class="section user"><dt>Algorithm</dt><dd>Let <code>a[n]</code> and <code>b[n]</code> be sequences of length <code>srcALen</code> and <code>srcBLen</code> samples respectively. Then the convolution <p class="formulaDsp">
+\[ c[n] = a[n] * b[n] \]
+</p>
+ </dd></dl>
+<dl class="section user"><dt></dt><dd>is defined as <p class="formulaDsp">
+\[ c[n] = \sum_{k=0}^{srcALen} a[k] b[n-k] \]
+</p>
  </dd></dl>
 <dl class="section user"><dt></dt><dd>Note that <code>c[n]</code> is of length <code>srcALen + srcBLen - 1</code> and is defined over the interval <code>n=0, 1, 2, ..., srcALen + srcBLen - 2</code>. <code>pSrcA</code> points to the first input vector of length <code>srcALen</code> and <code>pSrcB</code> points to the second input vector of length <code>srcBLen</code>. The output result is written to <code>pDst</code> and the calling function must allocate <code>srcALen+srcBLen-1</code> words for the result. </dd></dl>
 <dl class="section user"><dt></dt><dd>Conceptually, when two signals <code>a[n]</code> and <code>b[n]</code> are convolved, the signal <code>b[n]</code> slides over <code>a[n]</code>. For each offset <code>n</code>, the overlapping portions of a[n] and b[n] are multiplied and summed together. </dd></dl>
-<dl class="section user"><dt></dt><dd>Note that convolution is a commutative operation: <pre>
-    a[n] * b[n] = b[n] * a[n].
- </pre> </dd></dl>
+<dl class="section user"><dt></dt><dd>Note that convolution is a commutative operation: <p class="formulaDsp">
+\[ a[n] * b[n] = b[n] * a[n]. \]
+</p>
+ </dd></dl>
 <dl class="section user"><dt></dt><dd>This means that switching the A and B arguments to the convolution functions has no effect.</dd></dl>
 <dl class="section user"><dt>Fixed-Point Behavior</dt><dd>Convolution requires summing up a large number of intermediate products. As such, the Q7, Q15, and Q31 functions run a risk of overflow and saturation. Refer to the function specific documentation below for further details of the particular algorithm used.</dd></dl>
 <dl class="section user"><dt>Fast Versions</dt><dd>Fast versions are supported for Q31 and Q15. Cycles for Fast versions are less compared to Q31 and Q15 of conv and the design requires the input signals should be scaled down to avoid intermediate overflows.</dd></dl>

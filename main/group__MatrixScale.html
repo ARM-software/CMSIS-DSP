@@ -142,10 +142,11 @@ Functions</h2></td></tr>
 <tr class="separator:ga609743821ee81fa8c34c4bcdc1ed9744"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
-<p >Multiplies a matrix by a scalar. This is accomplished by multiplying each element in the matrix by the scalar. For example: </p><div class="image">
-<img src="MatrixScale.gif" alt=""/>
-<div class="caption">
-Matrix Scaling of a 3 x 3 matrix</div></div>
+<p >Multiplies a matrix by a scalar. This is accomplished by multiplying each element in the matrix by the scalar. For example:</p>
+<dl class="section user"><dt>Matrix Scaling of a 3 x 3 matrix </dt><dd></dd></dl>
+<p class="formulaDsp">
+\[ \begin{pmatrix} a_{1,1} &amp; a_{1,2} &amp; a_{1,3} \\ a_{2,1} &amp; a_{2,2} &amp; a_{2,3} \\ a_{3,1} &amp; a_{3,2} &amp; a_{3,3} \\ \end{pmatrix} K = \begin{pmatrix} K a_{1,1} &amp; K a_{1,2} &amp; K a_{1,3} \\ K a_{2,1} &amp; K a_{2,2} &amp; K a_{2,3} \\ K a_{3,1} &amp; K a_{3,2} &amp; K a_{3,3} \\ \end{pmatrix} \]
+</p>
 <p >The function checks to make sure that the input and output matrices are of the same size.</p>
 <p >In the fixed-point Q15 and Q31 functions, <code>scale</code> is represented by a fractional multiplication <code>scaleFract</code> and an arithmetic shift <code>shift</code>. The shift allows the gain of the scaling operation to exceed 1.0. The overall scale factor applied to the fixed-point data is </p><pre>
     scale = scaleFract * 2^shift.

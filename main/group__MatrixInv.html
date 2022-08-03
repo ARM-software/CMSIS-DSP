@@ -160,12 +160,12 @@ Functions</h2></td></tr>
 <p >Computes the inverse of a matrix.</p>
 <p >The inverse is defined only if the input matrix is square and non-singular (the determinant is non-zero). The function checks that the input and output matrices are square and of the same size.</p>
 <p >Matrix inversion is numerically sensitive and the CMSIS DSP library only supports matrix inversion of floating-point matrices.</p>
-<dl class="section user"><dt>Algorithm</dt><dd>The Gauss-Jordan method is used to find the inverse. The algorithm performs a sequence of elementary row-operations until it reduces the input matrix to an identity matrix. Applying the same sequence of elementary row-operations to an identity matrix yields the inverse matrix. If the input matrix is singular, then the algorithm terminates and returns error status <code>ARM_MATH_SINGULAR</code>. <div class="image">
-<img src="MatrixInverse.gif" alt=""/>
-<div class="caption">
-Matrix Inverse of a 3 x 3 matrix using Gauss-Jordan Method</div></div>
- </dd></dl>
-<h2 class="groupheader">Function Documentation</h2>
+<dl class="section user"><dt>Algorithm</dt><dd>The Gauss-Jordan method is used to find the inverse. The algorithm performs a sequence of elementary row-operations until it reduces the input matrix to an identity matrix. Applying the same sequence of elementary row-operations to an identity matrix yields the inverse matrix. If the input matrix is singular, then the algorithm terminates and returns error status <code>ARM_MATH_SINGULAR</code>.</dd></dl>
+<dl class="section user"><dt>Matrix Inverse of a 3 x 3 matrix using Gauss-Jordan Method </dt><dd></dd></dl>
+<p class="formulaDsp">
+\[ \begin{pmatrix} a_{1,1} &amp; a_{1,2} &amp; a_{1,3} &amp; | &amp; 1 &amp; 0 &amp; 0\\ a_{2,1} &amp; a_{2,2} &amp; a_{2,3} &amp; | &amp; 0 &amp; 1 &amp; 0\\ a_{3,1} &amp; a_{3,2} &amp; a_{3,3} &amp; | &amp; 0 &amp; 0 &amp; 1\\ \end{pmatrix} \rightarrow \begin{pmatrix} 1 &amp; 0 &amp; 0 &amp; | &amp; x_{1,1} &amp; x_{2,1} &amp; x_{3,1} \\ 0 &amp; 1 &amp; 0 &amp; | &amp; x_{1,2} &amp; x_{2,2} &amp; x_{3,2} \\ 0 &amp; 0 &amp; 1 &amp; | &amp; x_{1,3} &amp; x_{2,3} &amp; x_{3,3} \\ \end{pmatrix} \]
+</p>
+ <h2 class="groupheader">Function Documentation</h2>
 <a id="ga7eb900deee2301c0693f79d7b8f0d5f8" name="ga7eb900deee2301c0693f79d7b8f0d5f8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga7eb900deee2301c0693f79d7b8f0d5f8">&#9670;&nbsp;</a></span>arm_mat_inverse_f16()</h2>
 

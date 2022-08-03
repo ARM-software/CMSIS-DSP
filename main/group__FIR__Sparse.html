@@ -154,6 +154,7 @@ Functions</h2></td></tr>
 <tr class="separator:ga319b3d9032ba723a8efb819b9d2a3676"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000003">Deprecated:</a></b></dt><dd>Those functions are no more tested nor maintained and will be removed in a future version.</dd></dl>
 <p >This group of functions implements sparse FIR filters. Sparse FIR filters are equivalent to standard FIR filters except that most of the coefficients are equal to zero. Sparse filters are used for simulating reflections in communications and audio applications.</p>
 <p >There are separate functions for Q7, Q15, Q31, and floating-point data types. The functions operate on blocks of input and output data and each call to the function processes <code>blockSize</code> samples through the filter. <code>pSrc</code> and <code>pDst</code> points to input and output arrays respectively containing <code>blockSize</code> values.</p>
 <dl class="section user"><dt>Algorithm</dt><dd>The sparse filter instant structure contains an array of tap indices <code>pTapDelay</code> which specifies the locations of the non-zero coefficients. This is in addition to the coefficient array <code>b</code>. The implementation essentially skips the multiplications by zero and leads to an efficient realization. <pre>
