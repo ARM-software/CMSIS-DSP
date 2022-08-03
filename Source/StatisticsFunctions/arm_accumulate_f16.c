@@ -60,36 +60,6 @@
  @param[out]    pResult    sum value returned here.
  @return        none
  */
-#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
-
-#include "arm_helium_utils.h"
-
-void arm_accumulate_f16(
-                        const float16_t * pSrc,
-                        uint32_t blockSize,
-                        float16_t * pResult)
-{
-  int32_t  blkCnt;           /* loop counters */
-  f16x8_t vecSrc;
-  f16x8_t sumVec = vdupq_n_f16(0.0f16);
-  
-  blkCnt = blockSize;
-  do {
-    mve_pred16_t p = vctp16q(blkCnt);
-    
-    vecSrc = vldrhq_z_f16((float16_t const *) pSrc, p);
-    sumVec = vaddq_m_f16(sumVec, sumVec, vecSrc, p);
-    
-    blkCnt -= 8;
-    pSrc += 8;
-  }
-  while (blkCnt > 0);
-  
-  *pResult = vecAddAcrossF16Mve(sumVec);
-}
-
-
-#else
 
 void arm_accumulate_f16(
                         const float16_t * pSrc,
@@ -148,5 +118,4 @@ void arm_accumulate_f16(
  @} end of Accumulation group
  */
 
-#endif /* #if defined(ARM_FLOAT16_SUPPORTED) */ 
 
