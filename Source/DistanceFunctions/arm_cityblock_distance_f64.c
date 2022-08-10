@@ -4,8 +4,8 @@
  * Title:        arm_cityblock_distance_f64.c
  * Description:  Cityblock (Manhattan) distance between two vectors
  *
- * $Date:        13 September 2021
- * $Revision:    V1.10.0
+ * $Date:        10 August 2022
+ * $Revision:    V1.10.1
  *
  * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
@@ -48,15 +48,37 @@
 float64_t arm_cityblock_distance_f64(const float64_t *pA,const float64_t *pB, uint32_t blockSize)
 {
    float64_t accum,tmpA, tmpB;
-
+  uint32_t blkCnt;
    accum = 0.;
-   while(blockSize > 0)
+  
+#if defined(ARM_MATH_NEON)
+  float64x2_t tmpAV, tmpBV,accumV , subV;
+  accumV = vdupq_n_f64(0.0f);
+  blkCnt = blockSize >> 1U;
+  
+  while(blkCnt > 0U)
+  {
+    tmpAV = vld1q_f64(pA);
+    tmpBV = vld1q_f64(pB);
+    subV = vabdq_f64(tmpAV, tmpBV);
+    accumV = vaddq_f64(accumV, subV);
+    pA+=2;
+    pB+=2;
+    blkCnt--;
+  }
+  accum = vaddvq_f64(accumV);
+  blkCnt = blockSize & 1 ; 
+  
+#else
+  blkCnt = blockSize;
+#endif
+   while(blkCnt > 0)
    {
       tmpA = *pA++;
       tmpB = *pB++;
       accum  += fabs(tmpA - tmpB);
       
-      blockSize --;
+      blkCnt--;
    }
   
    return(accum);

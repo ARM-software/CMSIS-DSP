@@ -3,8 +3,8 @@
  * Title:        arm_vlog_f64.c
  * Description:  Fast vectorized log
  *
- * $Date:        13 September 2021
- * $Revision:    V1.10.0
+ * $Date:        10 August 2022
+ * $Revision:    V1.10.1
  *
  * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
@@ -28,31 +28,44 @@
 
 #include "dsp/fast_math_functions.h"
 #include "arm_common_tables.h"
+#if defined(ARM_MATH_NEON)
+#include "arm_vec_math.h"
+#endif
 
-/**
-  @addtogroup vexp
-  @{
- */
-
-/**
-  @brief         Floating-point vector of exp values.
-  @param[in]     pSrc       points to the input vector
-  @param[out]    pDst       points to the output vector
-  @param[in]     blockSize  number of samples in each vector
-  @return        none
- */
 void arm_vexp_f64(
   const float64_t * pSrc,
         float64_t * pDst,
         uint32_t blockSize)
 {
-   uint32_t blkCnt; 
+   uint32_t blkCnt;
+#if defined(ARM_MATH_NEON)
+ 
+  
+  float64x2_t src;
+  float64x2_t dst;
 
+  blkCnt = blockSize >> 1U;
+
+  while (blkCnt > 0U)
+  {
+     src = vld1q_f64(pSrc);
+     dst = vexpq_f64(src);
+     vst1q_f64(pDst, dst);
+
+     pSrc += 2;
+     pDst += 2;
+
+     blkCnt--;
+  }
+  
+  blkCnt = blockSize & 1;
+#else
    blkCnt = blockSize;
-
+#endif
    while (blkCnt > 0U)
    {
       /* C = log(A) */
+     
   
       /* Calculate log and store result in destination buffer. */
       *pDst++ = exp(*pSrc++);
@@ -61,7 +74,3 @@ void arm_vexp_f64(
       blkCnt--;
    }
 }
-
-/**
-  @} end of vexp group
- */

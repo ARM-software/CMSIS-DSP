@@ -3,8 +3,8 @@
  * Title:        arm_mse_f64.c
  * Description:  Double floating point mean square error
  *
- * $Date:        05 April 2022
- * $Revision:    V1.10.0
+ * $Date:        10 August 2022
+ * $Revision:    V1.10.1
  *
  * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
@@ -29,82 +29,106 @@
 #include "dsp/statistics_functions.h"
 
 /**
-  @ingroup groupStats
+ @ingroup groupStats
  */
 
 /**
-  @addtogroup MSE
-  @{
+ @addtogroup MSE
+ @{
  */
 
 /**
-  @brief         Mean square error between two double floating point vectors.
-  @param[in]     pSrcA       points to the first input vector
-  @param[in]     pSrcB       points to the second input vector
-  @param[in]     blockSize   number of samples in input vector
-  @param[out]    result      mean square error
-  @return        none
+ @brief         Mean square error between two double floating point vectors.
+ @param[in]     pSrcA       points to the first input vector
+ @param[in]     pSrcB       points to the second input vector
+ @param[in]     blockSize   number of samples in input vector
+ @param[out]    result      mean square error
+ @return        none
  */
-
-
-
-
 
 void arm_mse_f64(
-    const float64_t * pSrcA,
-    const float64_t * pSrcB,
-    uint32_t    blockSize,
-    float64_t * result)
+                 const float64_t * pSrcA,
+                 const float64_t * pSrcB,
+                 uint32_t    blockSize,
+                 float64_t * result)
 
 {
-  uint32_t blkCnt;                               /* Loop counter */
-  float64_t inA, inB;
-  float64_t sum = 0.0;                          /* Temporary return variable */
-#if defined (ARM_MATH_LOOPUNROLL)
-  blkCnt = (blockSize) >> 1;
-
- 
-  while (blkCnt > 0U)
-  {
-
-
-    inA = *pSrcA++; 
-    inB = *pSrcB++;
-    inA = inA - inB;
-    sum += inA * inA;
-
-    inA = *pSrcA++; 
-    inB = *pSrcB++;
-    inA = inA - inB;
-    sum += inA * inA;
-
-    /* Decrement loop counter */
-    blkCnt--;
-  }
-
-  
-  /* Loop unrolling: Compute remaining outputs */
-  blkCnt = (blockSize) & 1;
+    
+    uint32_t blkCnt;                               /* Loop counter */
+    float64_t inA, inB;
+    float64_t sum = 0.0;
+#if defined (ARM_MATH_NEON)
+    
+    float64x2_t inAV , inBV , subV, sumV;
+    sumV = vdupq_n_f64(0.0f);
+    
+    blkCnt = blockSize >> 1U ;
+    
+    while (blkCnt > 0U)
+    {
+        inAV = vld1q_f64(pSrcA);
+        pSrcA+=2;
+        inBV = vld1q_f64(pSrcB);
+        pSrcB+=2;
+        subV = vsubq_f64(inAV, inBV);
+        sumV = vmlaq_f64(sumV, subV, subV);
+        
+        blkCnt--;
+        
+    }
+    sum = vaddvq_f64(sumV);
+    blkCnt = (blockSize) & 1;
+    
 #else
-  /* Initialize blkCnt with number of samples */
-  blkCnt = blockSize;
+                            /* Temporary return variable */
+#if defined (ARM_MATH_LOOPUNROLL)
+    blkCnt = (blockSize) >> 1;
+    
+#pragma clang loop vectorize(enable)
+    while (blkCnt > 0U)
+    {
+        
+        
+        inA = *pSrcA++;
+        inB = *pSrcB++;
+        inA = inA - inB;
+        sum += inA * inA;
+        
+        inA = *pSrcA++;
+        inB = *pSrcB++;
+        inA = inA - inB;
+        sum += inA * inA;
+        
+        /* Decrement loop counter */
+        blkCnt--;
+    }
+    
+    
+    /* Loop unrolling: Compute remaining outputs */
+    blkCnt = (blockSize) & 1;
+#else
+    /* Initialize blkCnt with number of samples */
+    blkCnt = blockSize;
 #endif
-  while (blkCnt > 0U)
-  {
-    inA = *pSrcA++; 
-    inB = *pSrcB++;
-    inA = inA - inB;
-    sum += inA * inA;
-
-    /* Decrement loop counter */
-    blkCnt--;
-  }
-
-  /* Store result in destination buffer */
-  *result = sum / blockSize;
+#endif
+//#pragma clang loop vectorize(enable) unroll(disable)
+    while (blkCnt > 0U)
+    {
+        inA = *pSrcA++;
+        inB = *pSrcB++;
+        inA = inA - inB;
+        sum += inA * inA;
+        
+        /* Decrement loop counter */
+        blkCnt--;
+    }
+    
+    /* Store result in destination buffer */
+    *result = sum / blockSize;
 }
 
 
+
 /**
-  @} end of MSE group
+ @} end of MSE group
  */

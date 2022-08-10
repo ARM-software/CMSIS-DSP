@@ -3,8 +3,8 @@
  * Title:        arm_correlate_f64.c
  * Description:  Correlation of floating-point sequences
  *
- * $Date:        13 September 2021
- * $Revision:    V1.10.0
+ * $Date:        10 August 2022
+ * $Revision:    V1.10.1
  *
  * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
@@ -65,6 +65,9 @@ void arm_correlate_f64(
         uint32_t j, k, count, blkCnt;                  /* Loop counters */
         uint32_t outBlockSize;                         /* Loop counter */
         int32_t inc = 1;                               /* Destination address modifier */
+#if defined(ARM_MATH_NEON)
+  float64x2_t sumV,pxV,pyV ;
+#endif
 
   /* The algorithm implementation is based on the lengths of the inputs. */
   /* srcB is always made to slide across srcA. */
@@ -164,10 +167,25 @@ void arm_correlate_f64(
   {
     /* Accumulator is made zero for every iteration */
     sum = 0.;
-
+#if defined(ARM_MATH_NEON)
+    sumV = vdupq_n_f64(0.0f);
+    k = count >> 1U ;
+    
+    while(k > 0U)
+    {
+      pxV = vld1q_f64(px);
+      pyV = vld1q_f64(py);
+      sumV = vmlaq_f64(sumV, pxV, pyV);
+      px+=2;
+      py+=2;
+      k--;
+    }
+    sum =vaddvq_f64(sumV);
+    k = count & 1 ;
+#else
     /* Initialize k with number of samples */
     k = count;
-
+#endif
     while (k > 0U)
     {
       /* Perform the multiply-accumulate */
@@ -179,6 +197,7 @@ void arm_correlate_f64(
     }
 
     /* Store the result in the accumulator in the destination buffer. */
+
     *pOut = sum;
     /* Destination pointer is updated according to the address modifier, inc */
     pOut += inc;
@@ -192,6 +211,7 @@ void arm_correlate_f64(
 
     /* Decrement loop counter */
     blockSize1--;
+
   }
 
   /* --------------------------
@@ -229,10 +249,26 @@ void arm_correlate_f64(
     {
       /* Accumulator is made zero for every iteration */
       sum = 0.;
+#if defined(ARM_MATH_NEON)
+      sumV = vdupq_n_f64(0.0f);
+      k = srcBLen >> 1U ;
+      while(k > 0U)
+      {
+        pxV = vld1q_f64(px);
+        pyV = vld1q_f64(py);
+        sumV = vmlaq_f64(sumV, pxV, pyV);
+        px+=2;
+        py+=2;
+        k--;
+      }
+      sum =vaddvq_f64(sumV);
+      k = srcBLen & 1 ;
+      
+#else
 
       /* Initialize blkCnt with number of samples */
       k = srcBLen;
-
+#endif
       while (k > 0U)
       {
         /* Perform the multiply-accumulate */
@@ -269,10 +305,26 @@ void arm_correlate_f64(
     {
       /* Accumulator is made zero for every iteration */
       sum = 0.;
+#if defined(ARM_MATH_NEON)
+      sumV = vdupq_n_f64(0.0f);
+      k = srcBLen >> 1U ;
+      while(k > 0U)
+      {
+        pxV = vld1q_f64(px);
+        pyV = vld1q_f64(py);
+        sumV = vmlaq_f64(sumV, pxV, pyV);
+        px+=2;
+        py+=2;
+        k--;
+      }
+      sum =vaddvq_f64(sumV);
+      k = srcBLen & 1 ;
+      
+#else
 
       /* Loop over srcBLen */
       k = srcBLen;
-
+#endif
       while (k > 0U)
       {
         /* Perform the multiply-accumulate */
@@ -330,10 +382,26 @@ void arm_correlate_f64(
   {
     /* Accumulator is made zero for every iteration */
     sum = 0.;
+#if defined(ARM_MATH_NEON)
+    sumV = vdupq_n_f64(0.0f);
+    k = count >> 1U ;
+    
+    while(k > 0U)
+    {
+      pxV = vld1q_f64(px);
+      pyV = vld1q_f64(py);
+      sumV = vmlaq_f64(sumV, pxV, pyV);
+      px+=2;
+      py+=2;
+      k--;
+    }
+    sum =vaddvq_f64(sumV);
+    k = count & 1 ;
+#else
 
     /* Initialize blkCnt with number of samples */
     k = count;
-
+#endif
     while (k > 0U)
     {
       /* Perform the multiply-accumulate */
