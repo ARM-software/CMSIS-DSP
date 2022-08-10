@@ -35,7 +35,7 @@ Comparison for QR decomposition
 Comparison for Cholesky
 
 */
-#define SNR_THRESHOLD_CHOL 270
+#define SNR_THRESHOLD_CHOL 269
 #define REL_ERROR_CHOL (1.0e-9)
 #define ABS_ERROR_CHOL (1.0e-9)
 

@@ -3,8 +3,8 @@
  * Title:        arm_power_f64.c
  * Description:  Sum of the squares of the elements of a floating-point vector
  *
- * $Date:        13 September 2021
- * $Revision:    V1.10.0
+ * $Date:        10 August 2022
+ * $Revision:    V1.10.1
  *
  * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
@@ -44,34 +44,85 @@
   @param[out]    pResult    sum of the squares value returned here
   @return        none
  */
+#if defined(ARM_MATH_NEON) && defined(__aarch64__)
 void arm_power_f64(
-  const float64_t * pSrc,
-        uint32_t blockSize,
-        float64_t * pResult)
+    const float64_t * pSrc,
+    uint32_t blockSize,
+    float64_t * pResult)
 {
-        uint32_t blkCnt;                               /* Loop counter */
-        float64_t sum = 0.;                          /* Temporary result storage */
-        float64_t in;                                  /* Temporary variable to store input value */
-
-  /* Initialize blkCnt with number of samples */
-  blkCnt = blockSize;
-
-  while (blkCnt > 0U)
-  {
-    /* C = A[0] * A[0] + A[1] * A[1] + ... + A[blockSize-1] * A[blockSize-1] */
-
-    /* Compute Power and store result in a temporary variable, sum. */
-    in = *pSrc++;
-    sum += in * in;
-
-    /* Decrement loop counter */
-    blkCnt--;
-  }
-
-  /* Store result to destination */
-  *pResult = sum;
+    uint32_t blkCnt;                               /* Loop counter */
+    float64_t sum = 0.;                          /* Temporary result storage */
+    float64x2_t sumV ;                                 /* Temporary variable to store input value */
+    sumV = vdupq_n_f64(0.0);
+    float64x2_t pSrcV;
+    
+    /* Initialize blkCnt with number of samples */
+    blkCnt = blockSize >> 1U;
+    
+    while (blkCnt > 0U)
+    {
+        /* C = A[0] * A[0] + A[1] * A[1] + ... + A[blockSize-1] * A[blockSize-1] */
+        
+        /* Compute Power and store result in a temporary variable, sum. */
+        pSrcV = vld1q_f64(pSrc);
+        sumV = vmlaq_f64(sumV, pSrcV, pSrcV);
+        pSrc+= 2 ;
+        
+        
+        
+        /* Decrement loop counter */
+        blkCnt--;
+    }
+    sum = vaddvq_f64(sumV);
+    
+    
+    float64_t in;
+    blkCnt = blockSize & 1;
+    
+    while (blkCnt > 0U)
+    {
+        /* C = A[0] * A[0] + A[1] * A[1] + ... + A[blockSize-1] * A[blockSize-1] */
+        
+        /* Compute Power and store result in a temporary variable, sum. */
+        in = *pSrc++;
+        sum += in * in;
+        
+        /* Decrement loop counter */
+        blkCnt--;
+    }
+    
+    /* Store result to destination */
+    *pResult = sum;
 }
-
+#else
+void arm_power_f64(
+    const float64_t * pSrc,
+    uint32_t blockSize,
+    float64_t * pResult)
+{
+    uint32_t blkCnt;                               /* Loop counter */
+    float64_t sum = 0.;                          /* Temporary result storage */
+    float64_t in;                                  /* Temporary variable to store input value */
+    
+    /* Initialize blkCnt with number of samples */
+    blkCnt = blockSize;
+    
+    while (blkCnt > 0U)
+    {
+        /* C = A[0] * A[0] + A[1] * A[1] + ... + A[blockSize-1] * A[blockSize-1] */
+        
+        /* Compute Power and store result in a temporary variable, sum. */
+        in = *pSrc++;
+        sum += in * in;
+        
+        /* Decrement loop counter */
+        blkCnt--;
+    }
+    
+    /* Store result to destination */
+    *pResult = sum;
+}
+#endif
 /**
   @} end of power group
  */

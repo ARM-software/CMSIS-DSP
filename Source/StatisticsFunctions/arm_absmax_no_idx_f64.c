@@ -3,8 +3,8 @@
  * Title:        arm_absmax_no_idx_f64.c
  * Description:  Maximum value of absolute values of a floating-point vector
  *
- * $Date:        16 November 2021
- * $Revision:    V1.10.0
+ * $Date:        10 August 2022
+ * $Revision:    V1.10.1
  *
  * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
@@ -28,6 +28,8 @@
 
 #include "dsp/statistics_functions.h"
 
+
+
 /**
   @ingroup groupStats
  */
@@ -44,43 +46,109 @@
   @param[out]    pResult    maximum value returned here
   @return        none
  */
+
+#if defined(ARM_MATH_NEON) && defined(__aarch64__)
 void arm_absmax_no_idx_f64(
-  const float64_t * pSrc,
-        uint32_t blockSize,
-        float64_t * pResult)
+    const float64_t * pSrc,
+    uint32_t blockSize,
+    float64_t * pResult)
 {
-        float64_t maxVal, out;                         /* Temporary variables to store the output value. */
-        uint32_t blkCnt;                     /* Loop counter */
+    float64_t maxVal , in;                         /* Temporary variables to store the output value. */
+    uint32_t blkCnt;                     /* Loop counter */
+    
+    float64x2_t maxV;
+    float64x2_t pSrcV ;
+    pSrcV = vld1q_f64(pSrc);
+    pSrc += 2 ;
+    maxV = vabsq_f64(pSrcV);
 
+    
+    
+    
+    /* Load first input value that act as reference value for comparision */
 
-
-
-
-  /* Load first input value that act as reference value for comparision */
-  out = fabs(*pSrc++);
-
-  /* Initialize blkCnt with number of samples */
-  blkCnt = (blockSize - 1U);
-
-  while (blkCnt > 0U)
-  {
-    /* Initialize maxVal to the next consecutive values one by one */
-    maxVal = fabs(*pSrc++);
-
-    /* compare for the maximum value */
-    if (out < maxVal)
+    
+    /* Initialize blkCnt with number of samples */
+    blkCnt = (blockSize - 2U) >> 1U;
+    
+    while (blkCnt > 0U)
     {
-      /* Update the maximum value and it's index */
-      out = maxVal;
+        /* Initialize maxVal to the next consecutive values one by one */
+        pSrcV = vld1q_f64(pSrc);
+        maxV = vmaxq_f64(maxV, vabsq_f64(pSrcV));
+        
+        pSrc += 2 ;
+        
+        /* Decrement loop counter */
+        blkCnt--;
     }
+    maxVal =vgetq_lane_f64(maxV, 0);
+    if(maxVal < vgetq_lane_f64(maxV, 1))
+    {
+        maxVal = vgetq_lane_f64(maxV, 1);
+    }
+    blkCnt = (blockSize - 2U) & 1;
+    
+    while (blkCnt > 0U)
+    {
+        /* Initialize maxVal to the next consecutive values one by one */
+        in = fabs(*pSrc++);
+        
+        /* compare for the maximum value */
+        if (maxVal < in)
+        {
+            /* Update the maximum value and it's index */
+            maxVal = in;
+        }
+        
+        /* Decrement loop counter */
+        blkCnt--;
+    }
+    *pResult = maxVal;
+    
+    
+    /* Store the maximum value and it's index into destination pointers */
 
-    /* Decrement loop counter */
-    blkCnt--;
-  }
-
-  /* Store the maximum value and it's index into destination pointers */
-  *pResult = out;
 }
+#else
+void arm_absmax_no_idx_f64(
+    const float64_t * pSrc,
+    uint32_t blockSize,
+    float64_t * pResult)
+{
+    float64_t maxVal, out;                         /* Temporary variables to store the output value. */
+    uint32_t blkCnt;                     /* Loop counter */
+    
+    
+    
+    
+    
+    /* Load first input value that act as reference value for comparision */
+    out = fabs(*pSrc++);
+    
+    /* Initialize blkCnt with number of samples */
+    blkCnt = (blockSize - 1U);
+    
+    while (blkCnt > 0U)
+    {
+        /* Initialize maxVal to the next consecutive values one by one */
+        maxVal = fabs(*pSrc++);
+        
+        /* compare for the maximum value */
+        if (out < maxVal)
+        {
+            /* Update the maximum value and it's index */
+            out = maxVal;
+        }
+        
+        /* Decrement loop counter */
+        blkCnt--;
+    }
+    
+    /* Store the maximum value and it's index into destination pointers */
+    *pResult = out;
+}
+#endif
 
 /**
   @} end of AbsMax group

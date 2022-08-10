@@ -1,7 +1,7 @@
 README
 ======
 
-This folder is containing two files imported, and slightly modified, from the ComputeLibrary:
+This folder is containing two files imported from the ComputeLibrary:
 
     NEMath.h and arm_cl_tables.c 
 
@@ -14,6 +14,8 @@ NEMath.inl is included from NEMath.h whereas in this CMSIS DSP implementation, t
 The tables contained in NEMath.inl have been moved to arm_cl_tables.c and finally the files are in C for the CMSIS DSP library and in C++ in the original Compute Library.
 
 Otherwise, the features and implementations are the same : a few optimized Neon functions.
+
+New aarch64 code have been contributed by the community.
 
 The license covering those files is different : It is a MIT license.
 Other parts of the CMSIS-DSP are covered with an Apache-2.0 license.

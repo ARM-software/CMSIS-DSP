@@ -3,8 +3,8 @@
  * Title:        arm_absmin_no_idx_f64.c
  * Description:  Minimum value of absolute values of a floating-point vector
  *
- * $Date:        16 November 2021
- * $Revision:    V1.10.0
+ * $Date:        10 August 2022
+ * $Revision:    V1.10.1
  *
  * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
@@ -44,41 +44,106 @@
   @param[out]    pResult    minimum value returned here
   @return        none
  */
+
+#if defined(ARM_MATH_NEON) && defined(__aarch64__)
 void arm_absmin_no_idx_f64(
-  const float64_t * pSrc,
-        uint32_t blockSize,
-        float64_t * pResult)
+    const float64_t * pSrc,
+    uint32_t blockSize,
+    float64_t * pResult)
 {
-       float64_t minVal, out;                         /* Temporary variables to store the output value. */
-       uint32_t blkCnt;                     /* Loop counter */
-
-
-  /* Load first input value that act as reference value for comparision */
-  out = fabs(*pSrc++);
-
-  /* Initialize blkCnt with number of samples */
-  blkCnt = (blockSize - 1U);
-
-  while (blkCnt > 0U)
-  {
-    /* Initialize minVal to the next consecutive values one by one */
-    minVal = fabs(*pSrc++);
-
-    /* compare for the minimum value */
-    if (out > minVal)
+    float64_t minVal , in;                         /* Temporary variables to store the output value. */
+    uint32_t blkCnt;                     /* Loop counter */
+    
+    float64x2_t minV;
+    float64x2_t pSrcV ;
+    pSrcV = vld1q_f64(pSrc);
+    pSrc += 2 ;
+    minV = vabsq_f64(pSrcV);
+    
+    
+    
+    
+    /* Load first input value that act as reference value for comparision */
+    
+    
+    /* Initialize blkCnt with number of samples */
+    blkCnt = (blockSize - 2U) >> 1U;
+    
+    while (blkCnt > 0U)
     {
-      /* Update the minimum value and it's index */
-      out = minVal;
+        /* Initialize maxVal to the next consecutive values one by one */
+        pSrcV = vld1q_f64(pSrc);
+        minV = vminq_f64(minV, vabsq_f64(pSrcV));
+        
+        pSrc += 2 ;
+        
+        /* Decrement loop counter */
+        blkCnt--;
     }
-
-    /* Decrement loop counter */
-    blkCnt--;
-  }
-
-  /* Store the minimum value and it's index into destination pointers */
-  *pResult = out;
+    minVal =vgetq_lane_f64(minV, 0);
+    if(minVal > vgetq_lane_f64(minV, 1))
+    {
+        minVal = vgetq_lane_f64(minV, 1);
+    }
+    blkCnt = (blockSize - 2U) & 1;
+    
+    while (blkCnt > 0U)
+    {
+        /* Initialize maxVal to the next consecutive values one by one */
+        in = fabs(*pSrc++);
+        
+        /* compare for the maximum value */
+        if (minVal > in)
+        {
+            /* Update the maximum value and it's index */
+            minVal = in;
+        }
+        
+        /* Decrement loop counter */
+        blkCnt--;
+    }
+    *pResult = minVal;
+    
+    
+    /* Store the maximum value and it's index into destination pointers */
+    
 }
-
+#else
+void arm_absmin_no_idx_f64(
+    const float64_t * pSrc,
+    uint32_t blockSize,
+    float64_t * pResult)
+{
+    float64_t minVal, out;                         /* Temporary variables to store the output value. */
+    uint32_t blkCnt;                     /* Loop counter */
+    
+    
+    /* Load first input value that act as reference value for comparision */
+    out = fabs(*pSrc++);
+    
+    /* Initialize blkCnt with number of samples */
+    blkCnt = (blockSize - 1U);
+    
+    while (blkCnt > 0U)
+    {
+        /* Initialize minVal to the next consecutive values one by one */
+        minVal = fabs(*pSrc++);
+        
+        /* compare for the minimum value */
+        if (out > minVal)
+        {
+            /* Update the minimum value and it's index */
+            out = minVal;
+        }
+        
+        /* Decrement loop counter */
+        blkCnt--;
+    }
+    
+    /* Store the minimum value and it's index into destination pointers */
+    *pResult = out;
+}
+#endif
 /**
   @} end of AbsMin group
  */

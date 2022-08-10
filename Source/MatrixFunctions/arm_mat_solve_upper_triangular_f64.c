@@ -3,8 +3,8 @@
  * Title:        arm_mat_solve_upper_triangular_f64.c
  * Description:  Solve linear system UT X = A with UT upper triangular matrix
  *
- * $Date:        23 April 2021
- * $Revision:    V1.9.0
+ * $Date:        10 August 2022
+ * $Revision:    V1.9.1
  *
  * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
@@ -46,74 +46,172 @@
    * @param[out] dst The solution X of UT . X = A
    * @return The function returns ARM_MATH_SINGULAR, if the system can't be solved.
   */
-  arm_status arm_mat_solve_upper_triangular_f64(
-  const arm_matrix_instance_f64 * ut,
-  const arm_matrix_instance_f64 * a,
-  arm_matrix_instance_f64 * dst)
-  {
-arm_status status;                             /* status of matrix inverse */
 
-
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE) && defined(__aarch64__)
+arm_status arm_mat_solve_upper_triangular_f64(
+    const arm_matrix_instance_f64 * ut,
+    const arm_matrix_instance_f64 * a,
+    arm_matrix_instance_f64 * dst)
+{
+    arm_status status;                             /* status of matrix inverse */
+    
+    
 #ifdef ARM_MATH_MATRIX_CHECK
-
-  /* Check for matrix mismatch condition */
-  if ((ut->numRows != ut->numCols) ||
-      (ut->numRows != a->numRows)   )
-  {
-    /* Set status as ARM_MATH_SIZE_MISMATCH */
-    status = ARM_MATH_SIZE_MISMATCH;
-  }
-  else
-
-#endif /* #ifdef ARM_MATH_MATRIX_CHECK */
-
-  {
-
-    int i,j,k,n,cols;
-
-    float64_t *pX = dst->pData;
-    float64_t *pUT = ut->pData;
-    float64_t *pA = a->pData;
-
-    float64_t *ut_row;
-    float64_t *a_col;
-
-    n = dst->numRows;
-    cols = dst->numCols;
-
-    for(j=0; j < cols; j ++)
+    
+    /* Check for matrix mismatch condition */
+    if ((ut->numRows != ut->numCols) ||
+        (ut->numRows != a->numRows)   )
     {
-       a_col = &pA[j];
-
-       for(i=n-1; i >= 0 ; i--)
-       {
-            float64_t tmp=a_col[i * cols];
-
-            ut_row = &pUT[n*i];
-
-            for(k=n-1; k > i; k--)
-            {
-                tmp -= ut_row[k] * pX[cols*k+j];
-            }
-
-            if (ut_row[i]==0.0)
-            {
-              return(ARM_MATH_SINGULAR);
-            }
-            tmp = tmp / ut_row[i];
-            pX[i*cols+j] = tmp;
-       }
-
+        /* Set status as ARM_MATH_SIZE_MISMATCH */
+        status = ARM_MATH_SIZE_MISMATCH;
     }
-    status = ARM_MATH_SUCCESS;
-
-  }
-
-  
-  /* Return to application */
-  return (status);
+    else
+        
+#endif /* #ifdef ARM_MATH_MATRIX_CHECK */
+        
+    {
+        
+        int i,j,k,n,cols;
+        
+        n = dst->numRows;
+        cols = dst->numCols;
+        
+        float64_t *pX = dst->pData;
+        float64_t *pUT = ut->pData;
+        float64_t *pA = a->pData;
+        
+        float64_t *ut_row;
+        float64_t *a_col;
+        
+        float64_t invUT;
+        
+        float64x2_t vecA;
+        float64x2_t vecX;
+        
+        for(i=n-1; i >= 0 ; i--)
+        {
+            for(j=0; j+1 < cols; j +=2)
+            {
+                vecA = vld1q_f64(&pA[i * cols + j]);
+                
+                for(k=n-1; k > i; k--)
+                {
+                    vecX = vld1q_f64(&pX[cols*k+j]);
+                    vecA = vfmsq_f64(vecA,vdupq_n_f64(pUT[n*i + k]),vecX);
+                }
+                
+                if (pUT[n*i + i]==0.0)
+                {
+                    return(ARM_MATH_SINGULAR);
+                }
+                
+                invUT = 1.0 / pUT[n*i + i];
+                vecA = vmulq_f64(vecA,vdupq_n_f64(invUT));
+                
+                
+                vst1q_f64(&pX[i*cols+j],vecA);
+            }
+            
+            for(; j < cols; j ++)
+            {
+                a_col = &pA[j];
+                
+                ut_row = &pUT[n*i];
+                
+                float64_t tmp=a_col[i * cols];
+                
+                for(k=n-1; k > i; k--)
+                {
+                    tmp -= ut_row[k] * pX[cols*k+j];
+                }
+                
+                if (ut_row[i]==0.0)
+                {
+                    return(ARM_MATH_SINGULAR);
+                }
+                tmp = tmp / ut_row[i];
+                pX[i*cols+j] = tmp;
+            }
+            
+        }
+        status = ARM_MATH_SUCCESS;
+        
+    }
+    
+    
+    /* Return to application */
+    return (status);
 }
 
+#else
+arm_status arm_mat_solve_upper_triangular_f64(
+    const arm_matrix_instance_f64 * ut,
+    const arm_matrix_instance_f64 * a,
+    arm_matrix_instance_f64 * dst)
+{
+    arm_status status;                             /* status of matrix inverse */
+    
+    
+#ifdef ARM_MATH_MATRIX_CHECK
+    
+    /* Check for matrix mismatch condition */
+    if ((ut->numRows != ut->numCols) ||
+        (ut->numRows != a->numRows)   )
+    {
+        /* Set status as ARM_MATH_SIZE_MISMATCH */
+        status = ARM_MATH_SIZE_MISMATCH;
+    }
+    else
+        
+#endif /* #ifdef ARM_MATH_MATRIX_CHECK */
+        
+    {
+        
+        int i,j,k,n,cols;
+        
+        float64_t *pX = dst->pData;
+        float64_t *pUT = ut->pData;
+        float64_t *pA = a->pData;
+        
+        float64_t *ut_row;
+        float64_t *a_col;
+        
+        n = dst->numRows;
+        cols = dst->numCols;
+        
+        for(j=0; j < cols; j ++)
+        {
+            a_col = &pA[j];
+            
+            for(i=n-1; i >= 0 ; i--)
+            {
+                float64_t tmp=a_col[i * cols];
+                
+                ut_row = &pUT[n*i];
+                
+                for(k=n-1; k > i; k--)
+                {
+                    tmp -= ut_row[k] * pX[cols*k+j];
+                }
+                
+                if (ut_row[i]==0.0)
+                {
+                    return(ARM_MATH_SINGULAR);
+                }
+                tmp = tmp / ut_row[i];
+                pX[i*cols+j] = tmp;
+            }
+            
+        }
+        status = ARM_MATH_SUCCESS;
+        
+    }
+    
+    
+    /* Return to application */
+    return (status);
+}
+#endif
 
 /**
   @} end of MatrixInv group

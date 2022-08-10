@@ -11,8 +11,17 @@ It provides optimized compute kernels for Cortex-M and for Cortex-A.
 
 Different variants are available according to the core and most of the functions are using a vectorized version when the Helium or Neon extension is available.
 
+This repository contains the CMSIS-DSP library and several other projects:
 
-### Kernels
+* Test framework for bare metal Cortex-M or Cortex-A
+* Examples for bare metal Cortex-M
+* ComputeGraph
+* PythonWrapper
+
+You don't need any of the other projects to build and use CMSIS-DSP library. Building the other projects may require installation of other libraries (CMSIS), other tools (Arm Virtual Hardware) or CMSIS build tools.
+
+
+### CMSIS-DSP Kernels
 
 Kernels provided by CMSIS-DSP (list not exhaustive):
 
@@ -46,9 +55,9 @@ The Python scripts for the static scheduler generator are part of the CMSIS-DSP 
 
 The header files are part of the CMSIS-DSP pack (version 1.10.2 and above).
 
-The audio streaming nodes on top of CMSIS-RTOS2 are not part of the CMSIS-DSP pack but can be found in the repository. They are demo quality only. They can be used with Arm Virtual Hardware.
+The audio streaming nodes on top of CMSIS-RTOS2 are not part of the CMSIS-DSP pack but can be found in the repository. They are demo quality only. They can only be used with Arm Virtual Hardware.
 
-The SDF is making it easier to implement a streaming solution : connecting different compute kernels each consuming and producing different amount of data.
+The Compute Graph is making it easier to implement a streaming solution : connecting different compute kernels each consuming and producing different amount of data.
 
 ## Support / Contact
 
@@ -91,6 +100,8 @@ Some compiler may also require the use of option `-munaligned-access` to specify
 
 ## How to build
 
+You can build CMSIS-DSP with the open CMSIS-Pack, or cmake, or Makefile and it is also easy to build if you use any other build tool.
+
 ### Building with MDK or Open CMSIS-Pack
 
 The standard way to build is by using the CMSIS pack technology. CMSIS-DSP is available as a pack.
@@ -98,10 +109,6 @@ The standard way to build is by using the CMSIS pack technology. CMSIS-DSP is av
 This pack technology is supported by some IDE like [Keil MDK](https://www.keil.com/download/product/) or [Keil studio](https://www.keil.arm.com/).
 
 You can also use those packs using the [Open CMSIS-Pack](https://www.open-cmsis-pack.org/) technology and from command line on any platform.
-
-cmake can also be used to build CMSIS-DSP.
-
-### How to build with Open CMSIS-Pack
 
 You should first install the tools from https://github.com/Open-CMSIS-Pack/devtools
 
@@ -113,7 +120,7 @@ You can get the CMSIS-Toolbox which is containing the package installer, cmsis b
 
 Once you have installed the tools, you'll need to download the pack index using the `cpackget` tool.
 
-Then, you'll need to convert the solution file into `.cprj`. For instance, for the CMSIS-DSP Examples, you can go to: 
+Then, you'll need to convert a solution file into `.cprj`. For instance, for the CMSIS-DSP Examples, you can go to: 
 
 `Examples/cmsis_build` 
 
@@ -164,7 +171,18 @@ Once cmake has generated the makefiles, you can use a GNU Make to build.
 
     make VERBOSE=1
 
+### How to build with any other build system
 
+You need the following folders:
+
+* Source
+* Include
+* PrivateInclude
+* ComputeLibrary (only if you target Neon)
+
+In `Source` subfolders, you may either build all of the source file with a datatype suffix (like `_f32.c`), or just compile the files without a datatype suffix. For instance for `BasicMathFunctions`, you can build all the C files except `BasicMathFunctions.c` and `BasicMathFunctionsF16.c`, or you can just build those two files (they are including all of the other C files of the folder).
+
+`f16` files are not mandatory. You can build with `-DDISABLEFLOAT16`
 
 ### How to build for aarch64
 
@@ -193,9 +211,9 @@ For cmake the equivalent options are:
 
 cmake is automatically including the `ComputeLibrary` folder. If you are using a different build, you need to include this folder too to build with Neon support.
 
-### Running
+### Running the examples
 
-The generated executable can be run on a fast model. 
+If you build the examples with CMSIS build tools, the generated executable can be run on a fast model. 
 For instance, if you built for m7, you could just do:
 
     FVP_MPS2_Cortex-M7.exe -a arm_variance_example
@@ -206,6 +224,15 @@ Of course, on your fast model or virtual hardware you should use the right confi
 
 ## Folders and files
 
+The only folders required to build and use CMSIS-DSP Library are:
+
+* Source
+* Include
+* PrivateInclude
+* ComputeLibrary (only when using Neon)
+
+Other folders are part of different projects, tests or examples.
+
 ### Folders
 
 * cmsisdsp
@@ -214,7 +241,8 @@ Of course, on your fast model or virtual hardware you should use the right confi
 * ComputeLibrary:
   * Some kernels required when building CMSIS-DSP with Neon acceleration
 * Examples:
-  * Examples of use of CMSIS-DSP
+  * Examples of use of CMSIS-DSP on bare metal Cortex-M
+  * Require the use of CMSIS Build tools
 * Include:
   * Include files for CMSIS-DSP
 * PrivateInclude:
@@ -225,13 +253,17 @@ Of course, on your fast model or virtual hardware you should use the right confi
 * Scripts:
   * Debugging scripts
   * Script to generate some coefficient tables used by CMSIS-DSP
-* SDFTools:
-  * Examples for the Synchronous Data Flow
-  * C++ templates for the Synchronous Data Flow
+* Compute Graph:
+  * Not needed to build CMSIS-DSP. This project is relying on CMSIS-DSP library
+  * Examples for the Compute Graph
+  * C++ templates for the Compute Graph
+  * Default (and optional) nodes
+  
 * Source:
   * CMSIS-DSP source
 * Testing:
-  * CMSIS-DSP Test framework
+  * CMSIS-DSP Test framework for bare metal Cortex-M and Cortex-A
+  * Require the use of CMSIS build tools
 
 ### Files
 

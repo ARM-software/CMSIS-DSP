@@ -3,8 +3,8 @@
  * Title:        arm_vlog_f64.c
  * Description:  Fast vectorized log
  *
- * $Date:        13 September 2021
- * $Revision:    V1.10.0
+ * $Date:        10 August 2022
+ * $Revision:    V1.10.1
  *
  * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
@@ -30,22 +30,23 @@
 #include "arm_common_tables.h"
 
 void arm_vlog_f64(
-  const float64_t * pSrc,
-        float64_t * pDst,
-        uint32_t blockSize)
+    const float64_t * pSrc,
+    float64_t * pDst,
+    uint32_t blockSize)
 {
-   uint32_t blkCnt; 
+    uint32_t blkCnt;
 
-   blkCnt = blockSize;
-
-   while (blkCnt > 0U)
-   {
-      /* C = log(A) */
-  
-      /* Calculate log and store result in destination buffer. */
-      *pDst++ = log(*pSrc++);
-  
-      /* Decrement loop counter */
-      blkCnt--;
-   }
+    blkCnt = blockSize;
+    
+    
+    while (blkCnt > 0U)
+    {
+        /* C = log(A) */
+        
+        /* Calculate log and store result in destination buffer. */
+        *pDst++ = log(*pSrc++);
+        
+        /* Decrement loop counter */
+        blkCnt--;
+    }
 }

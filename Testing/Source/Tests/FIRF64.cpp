@@ -10,7 +10,7 @@ Reference patterns are generated with
 a double precision computation.
 
 */
-#define REL_ERROR (2.0e-14)
+#define REL_ERROR (5.0e-14)
 
 
 static void checkInnerTail(float64_t *b)

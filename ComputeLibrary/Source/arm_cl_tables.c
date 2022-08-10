@@ -39,7 +39,23 @@ const float32_t exp_tab[4*8] =
         0.000195780929062f,0.000195780929062f,0.000195780929062f,0.000195780929062f
 };
 
+
+
 /** Logarithm polynomial coefficients */
+
+/*
+p0
+p4
+p2
+p6
+p1
+p5
+p3
+p7
+where Poly(x) is the Minimax approximation of log(x) over the 
+                range [1, 2]
+*/
+
 const float32_t log_tab[4*8] =
 {
         -2.29561495781f,-2.29561495781f,-2.29561495781f,-2.29561495781f,
@@ -51,5 +67,10 @@ const float32_t log_tab[4*8] =
         4.58445882797f,4.58445882797f,4.58445882797f,4.58445882797f,
         0.0141278216615f,0.0141278216615f,0.0141278216615f,0.0141278216615f
 };
+
+
+
+
+
 
 #endif

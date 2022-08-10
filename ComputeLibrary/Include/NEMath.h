@@ -26,6 +26,28 @@
 
 
 #if defined(ARM_MATH_NEON)
+
+#if defined(__aarch64__)
+
+/** Perform a 7th degree polynomial approximation using Estrin's method.
+ *
+ * @param[in] x      Input vector value in F32 format.
+ * @param[in] coeffs Polynomial coefficients table. (array of flattened float32x4_t vectors)
+ *
+ * @return The calculated approximation.
+ */
+static inline float64x2_t vtaylor_polyq_f64(float64x2_t x, const float64_t *coeffs);
+
+/** Calculate reciprocal.
+ *
+ * @param[in] x Input value.
+ *
+ * @return The calculated reciprocal.
+ */
+static inline float64x2_t vinvq_f64(float64x2_t x);
+
+#endif /* #if defined(__aarch64__) */
+
 /** Calculate floor of a vector.
  *
  * @param[in] val Input vector value in F32 format.
@@ -182,9 +204,13 @@ static inline float16x8_t vpowq_f16(float16x8_t val, float16x8_t n);
 /** Exponent polynomial coefficients */
 extern const float32_t exp_tab[4*8];
 
+extern const float64_t exp_tab_64[2*8];
+
 
 /** Logarithm polynomial coefficients */
 extern const float32_t log_tab[4*8];
+
+extern const float64_t log_tab_64[2*8];
 
 #ifndef DOXYGEN_SKIP_THIS
 inline float32x4_t vfloorq_f32(float32x4_t val)
@@ -231,6 +257,18 @@ inline float32x4_t vinvq_f32(float32x4_t x)
     return recip;
 }
 
+#if defined(__aarch64__)
+
+inline float64x2_t vinvq_f64(float64x2_t x)
+{
+    float64x2_t recip = vrecpeq_f64(x);
+    recip             = vmulq_f64(vrecpsq_f64(x, recip), recip);
+    recip             = vmulq_f64(vrecpsq_f64(x, recip), recip);
+    return recip;
+}
+
+#endif /* #if defined(__aarch64__) */
+
 inline float32x4_t vtaylor_polyq_f32(float32x4_t x, const float32_t *coeffs)
 {
     float32x4_t A   = vmlaq_f32(vld1q_f32(&coeffs[4*0]), vld1q_f32(&coeffs[4*4]), x);
@@ -242,6 +280,23 @@ inline float32x4_t vtaylor_polyq_f32(float32x4_t x, const float32_t *coeffs)
     float32x4_t res = vmlaq_f32(vmlaq_f32(A, B, x2), vmlaq_f32(C, D, x2), x4);
     return res;
 }
+
+#if defined(__aarch64__)
+
+inline float64x2_t vtaylor_polyq_f64(float64x2_t x, const float64_t *coeffs)
+{
+    float64x2_t A   = vmlaq_f64(vld1q_f64(&coeffs[2*0]), vld1q_f64(&coeffs[2*4]), x);
+    float64x2_t B   = vmlaq_f64(vld1q_f64(&coeffs[2*2]), vld1q_f64(&coeffs[2*6]), x);
+    float64x2_t C   = vmlaq_f64(vld1q_f64(&coeffs[2*1]), vld1q_f64(&coeffs[2*5]), x);
+    float64x2_t D   = vmlaq_f64(vld1q_f64(&coeffs[2*3]), vld1q_f64(&coeffs[2*7]), x);
+    float64x2_t x2  = vmulq_f64(x, x);
+    float64x2_t x4  = vmulq_f64(x2, x2);
+    float64x2_t res = vmlaq_f64(vmlaq_f64(A, B, x2), vmlaq_f64(C, D, x2), x4);
+    return res;
+}
+
+#endif /* #if defined(__aarch64__) */
+
 
 inline float32x4_t vexpq_f32(float32x4_t x)
 {
@@ -261,6 +316,7 @@ inline float32x4_t vexpq_f32(float32x4_t x)
     poly = vreinterpretq_f32_s32(vqaddq_s32(vreinterpretq_s32_f32(poly), vqshlq_n_s32(m, 23)));
     poly = vbslq_f32(vcltq_s32(m, vld1q_s32(CONST_NEGATIVE_126)), vld1q_f32(CONST_0), poly);
 
+  
     return poly;
 }
 
@@ -281,6 +337,7 @@ inline float32x4_t vlogq_f32(float32x4_t x)
 
     return poly;
 }
+
 
 inline float32x4_t vtanhq_f32(float32x4_t val)
 {
