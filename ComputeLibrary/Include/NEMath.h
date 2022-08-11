@@ -26,6 +26,40 @@
 
 
 #if defined(ARM_MATH_NEON)
+
+
+/** Calculate logarithm
+ *
+ * @param[in] x Input vector value in F32 format.
+ *
+ * @return The calculated logarithm.
+ */
+static inline float64x2_t vlogq_f64(float64x2_t x);
+/** Calculate exponential
+ *
+ * @param[in] x Input vector value in F32 format.
+ *
+ * @return The calculated exponent.
+ */
+static inline float64x2_t vexpq_f64(float64x2_t x);
+
+/** Perform a 7th degree polynomial approximation using Estrin's method.
+ *
+ * @param[in] x      Input vector value in F32 format.
+ * @param[in] coeffs Polynomial coefficients table. (array of flattened float32x4_t vectors)
+ *
+ * @return The calculated approximation.
+ */
+static inline float64x2_t vtaylor_polyq_f64(float64x2_t x, const float64_t *coeffs);
+
+/** Calculate reciprocal.
+ *
+ * @param[in] x Input value.
+ *
+ * @return The calculated reciprocal.
+ */
+static inline float64x2_t vinvq_f64(float64x2_t x);
+
 /** Calculate floor of a vector.
  *
  * @param[in] val Input vector value in F32 format.
@@ -182,9 +216,13 @@ static inline float16x8_t vpowq_f16(float16x8_t val, float16x8_t n);
 /** Exponent polynomial coefficients */
 extern const float32_t exp_tab[4*8];
 
+extern const float64_t exp_tab_64[2*8];
+
 
 /** Logarithm polynomial coefficients */
 extern const float32_t log_tab[4*8];
+
+extern const float64_t log_tab_64[2*8];
 
 #ifndef DOXYGEN_SKIP_THIS
 inline float32x4_t vfloorq_f32(float32x4_t val)
@@ -231,6 +269,14 @@ inline float32x4_t vinvq_f32(float32x4_t x)
     return recip;
 }
 
+inline float64x2_t vinvq_f64(float64x2_t x)
+{
+    float64x2_t recip = vrecpeq_f64(x);
+    recip             = vmulq_f64(vrecpsq_f64(x, recip), recip);
+    recip             = vmulq_f64(vrecpsq_f64(x, recip), recip);
+    return recip;
+}
+
 inline float32x4_t vtaylor_polyq_f32(float32x4_t x, const float32_t *coeffs)
 {
     float32x4_t A   = vmlaq_f32(vld1q_f32(&coeffs[4*0]), vld1q_f32(&coeffs[4*4]), x);
@@ -240,6 +286,18 @@ inline float32x4_t vtaylor_polyq_f32(float32x4_t x, const float32_t *coeffs)
     float32x4_t x2  = vmulq_f32(x, x);
     float32x4_t x4  = vmulq_f32(x2, x2);
     float32x4_t res = vmlaq_f32(vmlaq_f32(A, B, x2), vmlaq_f32(C, D, x2), x4);
+    return res;
+}
+
+inline float64x2_t vtaylor_polyq_f64(float64x2_t x, const float64_t *coeffs)
+{
+    float64x2_t A   = vmlaq_f64(vld1q_f64(&coeffs[2*0]), vld1q_f64(&coeffs[2*4]), x);
+    float64x2_t B   = vmlaq_f64(vld1q_f64(&coeffs[2*2]), vld1q_f64(&coeffs[2*6]), x);
+    float64x2_t C   = vmlaq_f64(vld1q_f64(&coeffs[2*1]), vld1q_f64(&coeffs[2*5]), x);
+    float64x2_t D   = vmlaq_f64(vld1q_f64(&coeffs[2*3]), vld1q_f64(&coeffs[2*7]), x);
+    float64x2_t x2  = vmulq_f64(x, x);
+    float64x2_t x4  = vmulq_f64(x2, x2);
+    float64x2_t res = vmlaq_f64(vmlaq_f64(A, B, x2), vmlaq_f64(C, D, x2), x4);
     return res;
 }
 
@@ -261,6 +319,28 @@ inline float32x4_t vexpq_f32(float32x4_t x)
     poly = vreinterpretq_f32_s32(vqaddq_s32(vreinterpretq_s32_f32(poly), vqshlq_n_s32(m, 23)));
     poly = vbslq_f32(vcltq_s32(m, vld1q_s32(CONST_NEGATIVE_126)), vld1q_f32(CONST_0), poly);
 
+  
+    return poly;
+}
+
+inline float64x2_t vexpq_f64(float64x2_t x)
+{
+
+    static const float64_t CONST_LN2[2]          = { 0.6931471805f ,0.6931471805f}; // ln(2)
+    static const float64_t CONST_INV_LN2[2]      = {1.4426950408f,1.4426950408f}; // 1/ln(2)
+    static const float64_t CONST_0[2]            = {0.f,0.f};
+    static const int64_t   CONST_NEGATIVE_1022[2] = {-1022,-1022};
+
+    //[-log(2),log(2)]
+    int64x2_t   m   = vcvtq_s64_f64(vmulq_f64(x, vld1q_f64(CONST_INV_LN2)));
+    float64x2_t val = vmlsq_f64(x, vcvtq_f64_s64(m), vld1q_f64(CONST_LN2));
+
+    // Polynomial Approximation
+    float64x2_t poly = vtaylor_polyq_f64(val, exp_tab_64);
+
+    // Reconstruct
+    poly = vreinterpretq_f64_s64(vqaddq_s64(vreinterpretq_s64_f64(poly), vqshlq_n_s64(m,52)));
+    poly = vbslq_f64(vcltq_s64(m, vld1q_s64(CONST_NEGATIVE_1022)), vld1q_f64(CONST_0), poly);
     return poly;
 }
 
@@ -281,6 +361,25 @@ inline float32x4_t vlogq_f32(float32x4_t x)
 
     return poly;
 }
+
+inline float64x2_t vlogq_f64(float64x2_t x)
+{
+    static const int64_t   CONST_1023[2] = {1023,1023};           // 1023
+    static const float64_t CONST_LN2[2] = {0.6931471805f,0.6931471805f}; // ln(2)
+
+    // Extract exponent
+    int64x2_t   m   = vsubq_s64(vreinterpretq_s64_u64(vshrq_n_u64(vreinterpretq_u64_f64(x), 52)), vld1q_s64(CONST_1023));
+    float64x2_t val = vreinterpretq_f64_s64(vsubq_s64(vreinterpretq_s64_f64(x), vshlq_n_s64(m, 52)));
+
+    // Polynomial Approximation
+    float64x2_t poly = vtaylor_polyq_f64(val, log_tab_64);
+
+    // Reconstruct
+    poly = vmlaq_f64(poly, vcvtq_f64_s64(m), vld1q_f64(CONST_LN2));
+
+    return poly;
+}
+
 
 inline float32x4_t vtanhq_f32(float32x4_t val)
 {

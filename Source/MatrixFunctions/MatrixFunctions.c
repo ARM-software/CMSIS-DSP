@@ -32,6 +32,7 @@
 #include "arm_mat_cmplx_mult_f32.c"
 #include "arm_mat_cmplx_mult_q15.c"
 #include "arm_mat_cmplx_mult_q31.c"
+#include "arm_mat_init_f64.c"
 #include "arm_mat_init_f32.c"
 #include "arm_mat_init_q15.c"
 #include "arm_mat_init_q31.c"
