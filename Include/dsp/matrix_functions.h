@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     matrix_functions.h
  * @brief    Public header file for CMSIS DSP Library
- * @version  V1.10.0
- * @date     08 July 2021
+ * @version  V1.10.1
+ * @date     10 August 2022
  * Target Processor: Cortex-M and Cortex-A cores
  ******************************************************************************/
 /*
@@ -619,6 +619,20 @@ void arm_mat_init_f32(
         uint16_t nRows,
         uint16_t nColumns,
         float32_t * pData);
+
+/**
+ * @brief  Floating-point matrix initialization.
+ * @param[in,out] S         points to an instance of the floating-point matrix structure.
+ * @param[in]     nRows     number of rows in the matrix.
+ * @param[in]     nColumns  number of columns in the matrix.
+ * @param[in]     pData     points to the matrix data array.
+ */
+void arm_mat_init_f64(
+      arm_matrix_instance_f64 * S,
+      uint16_t nRows,
+      uint16_t nColumns,
+      float64_t * pData);
+
 
 
 
