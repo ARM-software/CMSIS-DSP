@@ -55,7 +55,7 @@ extern "C"
         uint32_t blockSize);
 
 /**
-   * @brief Converts the elements of the 64 bit floating-point vector to floating-point vector.
+   * @brief Converts the elements of the 64 bit floating-point vector to Q31 vector.
    * @param[in]  pSrc       points to the floating-point 64 input vector
    * @param[out] pDst       points to the Q31 output vector
    * @param[in]  blockSize  length of the input vector
@@ -66,7 +66,7 @@ extern "C"
         uint32_t blockSize);
 
 /**
-   * @brief Converts the elements of the 64 bit floating-point vector to floating-point vector.
+   * @brief Converts the elements of the 64 bit floating-point vector to Q15 vector.
    * @param[in]  pSrc       points to the floating-point 64 input vector
    * @param[out] pDst       points to the Q15 output vector
    * @param[in]  blockSize  length of the input vector
@@ -77,7 +77,7 @@ extern "C"
         uint32_t blockSize);
 
 /**
-   * @brief Converts the elements of the 64 bit floating-point vector to floating-point vector.
+   * @brief Converts the elements of the 64 bit floating-point vector to Q7 vector.
    * @param[in]  pSrc       points to the floating-point 64 input vector
    * @param[out] pDst       points to the Q7 output vector
    * @param[in]  blockSize  length of the input vector
@@ -91,8 +91,8 @@ extern "C"
 
 /**
    * @brief Converts the elements of the floating-point  vector to 64 bit floating-point  vector.
-   * @param[in]  pSrc       points to the floating-point 64 input vector
-   * @param[out] pDst       points to the floating-point output vector
+   * @param[in]  pSrc       points to the floating-point input vector
+   * @param[out] pDst       points to the 64 bit floating-point output vector
    * @param[in]  blockSize  length of the input vector
    */
   void arm_float_to_f64(

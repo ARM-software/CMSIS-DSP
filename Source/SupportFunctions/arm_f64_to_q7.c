@@ -38,7 +38,7 @@
  */
 
 /**
- * @brief Converts the elements of the floating-point vector to Q7 vector.
+ * @brief Converts the elements of the 64 bit floating-point vector to Q7 vector.
  * @param[in]       *pSrc points to the 64 bit floating-point input vector
  * @param[out]      *pDst points to the Q7 output vector
  * @param[in]       blockSize length of the input vector

@@ -42,7 +42,7 @@
  */
 
 /**
-  @brief         Converts the elements of the Q15 vector to floating-point vector.
+  @brief         Converts the elements of the Q15 vector to 64 bit floating-point vector.
   @param[in]     pSrc       points to the Q15 input vector
   @param[out]    pDst       points to the 64 bit floating-point output vector
   @param[in]     blockSize  number of samples in each vector

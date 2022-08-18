@@ -39,7 +39,7 @@
  */
 
 /**
-  @brief         Converts the elements of the floating-point vector to Q31 vector.
+  @brief         Converts the elements of the 64 bit floating-point vector to Q31 vector.
   @param[in]     pSrc       points to the 64 bit floating-point input vector
   @param[out]    pDst       points to the Q31 output vector
   @param[in]     blockSize  number of samples in each vector

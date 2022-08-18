@@ -32,9 +32,6 @@
   @ingroup groupSupport
  */
 
-/**
- * @defgroup f64_to_x  Convert 64-bit floating point value
- */
 
 /**
   @addtogroup f64_to_x
