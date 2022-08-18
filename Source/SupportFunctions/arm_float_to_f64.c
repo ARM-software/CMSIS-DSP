@@ -36,7 +36,7 @@
  */
 
 /**
-  @addtogroup f64_to_x
+  @addtogroup float_to_x
   @{
  */
 
@@ -77,7 +77,7 @@ void arm_float_to_f64(
 
 
 /**
-  @} end of f64_to_x group
+  @} end of float_to_x group
  */
 
 

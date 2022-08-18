@@ -51,7 +51,7 @@
  @par            Details
                    The equation used for the conversion process is:
   <pre>
-      pDst[n] = (float32_t) pSrc[n] / 128;   0 <= n < blockSize.
+      pDst[n] = (float64_t) pSrc[n] / 128;   0 <= n < blockSize.
   </pre>
  */
 void arm_q7_to_f64(
@@ -69,7 +69,7 @@ void arm_q7_to_f64(
 
   while (blkCnt > 0U)
   {
-    /* C = (float32_t) A / 128 */
+    /* C = (float64_t) A / 128 */
 
     /* Convert from q7 to float and store result in destination buffer */
     *pDst++ = ((float64_t) * pIn++ / 128.0f);
@@ -93,7 +93,7 @@ void arm_q7_to_f64(
 
   while (blkCnt > 0U)
   {
-    /* C = (float32_t) A / 128 */
+    /* C = (float64_t) A / 128 */
 
     /* Convert from q7 to float and store result in destination buffer */
     *pDst++ = ((float64_t) * pIn++ / 128.0f);
