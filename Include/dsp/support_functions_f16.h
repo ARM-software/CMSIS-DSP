@@ -72,6 +72,21 @@ void arm_f16_to_q15(const float16_t * pSrc, q15_t * pDst, uint32_t blockSize);
    */
 void arm_q15_to_f16(const q15_t * pSrc, float16_t * pDst, uint32_t blockSize);
 
+/**
+   * @brief Converts the elements of the floating-point vector to Q31 vector.
+   * @param[in]  pSrc       points to the f32 input vector
+   * @param[out] pDst       points to the f16 output vector
+   * @param[in]  blockSize  length of the input vector
+   */
+void arm_f64_to_f16(const float64_t * pSrc, float16_t * pDst, uint32_t blockSize);
+
+/**
+   * @brief Converts the elements of the floating-point vector to Q31 vector.
+   * @param[in]  pSrc       points to the f32 input vector
+   * @param[out] pDst       points to the f16 output vector
+   * @param[in]  blockSize  length of the input vector
+   */
+void arm_f16_to_f64(const float16_t * pSrc, float64_t * pDst, uint32_t blockSize);
 
 /**
    * @brief Converts the elements of the floating-point vector to Q31 vector.

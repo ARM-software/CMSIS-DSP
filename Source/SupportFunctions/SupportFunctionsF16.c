@@ -30,6 +30,8 @@
 #include "arm_fill_f16.c"
 #include "arm_f16_to_q15.c"
 #include "arm_f16_to_float.c"
+#include "arm_f16_to_f64.c"
+#include "arm_f64_to_f16.c"
 #include "arm_q15_to_f16.c"
 #include "arm_float_to_f16.c"
 #include "arm_weighted_sum_f16.c"
