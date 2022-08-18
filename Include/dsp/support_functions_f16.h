@@ -73,7 +73,7 @@ void arm_f16_to_q15(const float16_t * pSrc, q15_t * pDst, uint32_t blockSize);
 void arm_q15_to_f16(const q15_t * pSrc, float16_t * pDst, uint32_t blockSize);
 
 /**
-   * @brief Converts the elements of the floating-point vector to 16 bit floating-point vector.
+   * @brief Converts the elements of the 64 bit floating-point vector to 16 bit floating-point vector.
    * @param[in]  pSrc       points to the f64 input vector
    * @param[out] pDst       points to the f16 output vector
    * @param[in]  blockSize  length of the input vector
