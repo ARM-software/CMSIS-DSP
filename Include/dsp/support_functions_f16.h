@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     support_functions_f16.h
  * @brief    Public header file for CMSIS DSP Library
- * @version  V1.10.0
- * @date     08 July 2021
+ * @version  V1.10.1
+ * @date     18 August 2022
  * Target Processor: Cortex-M and Cortex-A cores
  ******************************************************************************/
 /*

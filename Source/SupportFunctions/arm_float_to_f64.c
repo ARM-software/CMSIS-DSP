@@ -3,8 +3,8 @@
  * Title:        arm_float_to_f64.c
  * Description:  Converts the elements of the floating-point vector to floating-point 64 bit vector
  *
- * $Date:        23 April 2021
- * $Revision:    V1.9.0
+ * $Date:        18 August 2022
+ * $Revision:    V1.0.0
  *
  * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */

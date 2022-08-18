@@ -3,8 +3,8 @@
  * Title:        SupportFunctions.c
  * Description:  Combination of all support function source files.
  *
- * $Date:        16. March 2020
- * $Revision:    V1.1.0
+ * $Date:        18 August 2022
+ * $Revision:    V1.1.1
  *
  * Target Processor: Cortex-M cores
  * -------------------------------------------------------------------- */
