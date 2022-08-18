@@ -45,6 +45,20 @@
 
     } 
 
+    void SupportTestsQ15::test_q15_f64()
+    {
+       const q15_t *inp = inputQ15.ptr();
+       float64_t *outp = outputF64.ptr();
+       
+      
+       arm_q15_to_f64(inp, outp,this->nbSamples);
+         
+          
+       ASSERT_REL_ERROR(refF64,outputF64,REL_ERROR);
+       ASSERT_EMPTY_TAIL(outputF64);
+
+    } 
+
     void SupportTestsQ15::test_q15_float()
     {
        const q15_t *inp = inputQ15.ptr();
@@ -58,6 +72,8 @@
        ASSERT_EMPTY_TAIL(outputF32);
 
     } 
+
+
 
     void SupportTestsQ15::test_q15_q31()
     {
@@ -273,6 +289,30 @@
               inputQ15.reload(SupportTestsQ15::SAMPLES_Q15_ID,mgr,this->nbSamples);
               refQ7.reload(SupportTestsQ15::SAMPLES_Q7_ID,mgr,this->nbSamples);
               outputQ7.create(this->nbSamples,SupportTestsQ15::OUT_ID,mgr);
+
+            break;
+
+            case TEST_Q15_F64_21:
+              this->nbSamples = 7;
+              inputQ15.reload(SupportTestsQ15::SAMPLES_Q15_ID,mgr,this->nbSamples);
+              refF64.reload(SupportTestsQ15::SAMPLES_F64_ID,mgr,this->nbSamples);
+              outputF64.create(this->nbSamples,SupportTestsQ15::OUT_ID,mgr);
+
+            break;
+
+            case TEST_Q15_F64_22:
+              this->nbSamples = 16;
+              inputQ15.reload(SupportTestsQ15::SAMPLES_Q15_ID,mgr,this->nbSamples);
+              refF64.reload(SupportTestsQ15::SAMPLES_F64_ID,mgr,this->nbSamples);
+              outputF64.create(this->nbSamples,SupportTestsQ15::OUT_ID,mgr);
+
+            break;
+
+            case TEST_Q15_F64_23:
+              this->nbSamples = 23;
+              inputQ15.reload(SupportTestsQ15::SAMPLES_Q15_ID,mgr,this->nbSamples);
+              refF64.reload(SupportTestsQ15::SAMPLES_F64_ID,mgr,this->nbSamples);
+              outputF64.create(this->nbSamples,SupportTestsQ15::OUT_ID,mgr);
 
             break;
 

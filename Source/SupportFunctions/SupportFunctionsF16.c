@@ -3,8 +3,8 @@
  * Title:        SupportFunctions.c
  * Description:  Combination of all support function source files.
  *
- * $Date:        16. March 2020
- * $Revision:    V1.1.0
+ * $Date:        18 August 2022
+ * $Revision:    V1.1.1
  *
  * Target Processor: Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -30,6 +30,8 @@
 #include "arm_fill_f16.c"
 #include "arm_f16_to_q15.c"
 #include "arm_f16_to_float.c"
+#include "arm_f16_to_f64.c"
+#include "arm_f64_to_f16.c"
 #include "arm_q15_to_f16.c"
 #include "arm_float_to_f16.c"
 #include "arm_weighted_sum_f16.c"

@@ -571,7 +571,11 @@ group Root {
               folder = SupportF64
 
 
-              Pattern SAMPLES_F64_ID : Samples1_f64.txt 
+              Pattern SAMPLES_F64_ID : Samples1_f64.txt
+              Pattern SAMPLES_Q15_ID : Samples3_q15.txt
+              Pattern SAMPLES_Q31_ID : Samples4_q31.txt
+              Pattern SAMPLES_Q7_ID : Samples5_q7.txt
+              Pattern SAMPLES_F32_ID : Samples6_f32.txt 
              
 
               Output  OUT_F64_ID : Output
@@ -586,16 +590,7 @@ group Root {
                 test_fill_f64 nb=2:test_fill_f64
                 test_fill_f64 nb=2n:test_fill_f64
                 test_fill_f64 nb=2n+1:test_fill_f64
-                disabled{test_float_q15 nb=7:test_float_to_q15}
-                disabled{test_float_q15 nb=8n:test_float_to_q15}
-                disabled{test_float_q15 nb=8n+1:test_float_to_q15}
-                disabled{test_float_q31 nb=3:test_float_to_q31}
-                disabled{test_float_q31 nb=4n:test_float_to_q31}
-                disabled{test_float_q31 nb=4n+1:test_float_to_q31}
-                disabled{test_float_q7 nb=15:test_float_to_q7}
-                disabled{test_float_q7 nb=16n:test_float_to_q7}
-                disabled{test_float_q7 nb=16n+1:test_float_to_q7}
-
+                
                 disabled{test_bitonic_sort_f64 nb=16 outofoplace:test_bitonic_sort_out_f64   }
                 disabled{test_bitonic_sort_f64 nb=32 outofplace:test_bitonic_sort_out_f64}
                 disabled{test_bitonic_sort_f64 nb=32 inplace:test_bitonic_sort_in_f64}
@@ -618,7 +613,19 @@ group Root {
                 disabled{test_selection_sort_f64 nb=11 inplace:test_selection_sort_in_f64}
                 disabled{test_selection_sort_f64 nb=16 const:test_selection_sort_const_f64}
 
-                
+                test_f64_q15 nb=1:test_f64_to_q15
+                test_f64_q15 nb=2n:test_f64_to_q15
+                test_f64_q15 nb=2n+1:test_f64_to_q15
+                test_f64_q31 nb=1:test_f64_to_q31
+                test_f64_q31 nb=2n:test_f64_to_q31
+                test_f64_q31 nb=2n+1:test_f64_to_q31
+                test_f64_q7 nb=1:test_f64_to_q7
+                test_f64_q7 nb=2n:test_f64_to_q7
+                test_f64_q7 nb=2n+1:test_f64_to_q7
+                test_f64_float nb=1:test_f64_to_float
+                test_f64_float nb=2n:test_f64_to_float
+                test_f64_float nb=2n+1:test_f64_to_float
+
               }
 
            }
@@ -643,6 +650,7 @@ group Root {
               Pattern SAMPLES_Q15_ID : Samples3_q15.txt 
               Pattern SAMPLES_Q31_ID : Samples4_q31.txt 
               Pattern SAMPLES_Q7_ID : Samples5_q7.txt 
+              Pattern SAMPLES_F64_ID : Samples6_f64.txt 
 
               Output  OUT_F32_ID : Output
              
@@ -688,7 +696,10 @@ group Root {
                 test_selection_sort_f32 nb=11 inplace:test_selection_sort_in_f32
                 test_selection_sort_f32 nb=16 const:test_selection_sort_const_f32
 
-                
+                test_float_f64 nb=15:test_float_to_f64
+                test_float_f64 nb=16n:test_float_to_f64
+                test_float_f64 nb=16n+1:test_float_to_f64
+
               }
 
            }
@@ -701,6 +712,7 @@ group Root {
               Pattern SAMPLES_Q15_ID : Samples3_q15.txt 
               Pattern SAMPLES_Q31_ID : Samples4_q31.txt 
               Pattern SAMPLES_Q7_ID : Samples5_q7.txt 
+              Pattern SAMPLES_F64_ID : Samples6_f64.txt
 
               Output  OUT_ID : Output
 
@@ -720,6 +732,9 @@ group Root {
                 test_q31_q7 nb=3:test_q31_q7
                 test_q31_q7 nb=4n:test_q31_q7
                 test_q31_q7 nb=4n+1:test_q31_q7
+                test_q31_f64 nb=3:test_q31_f64
+                test_q31_f64 nb=4n:test_q31_f64
+                test_q31_f64 nb=4n+1:test_q31_f64
               }
 
            }
@@ -732,6 +747,7 @@ group Root {
               Pattern SAMPLES_Q15_ID : Samples3_q15.txt 
               Pattern SAMPLES_Q31_ID : Samples4_q31.txt 
               Pattern SAMPLES_Q7_ID : Samples5_q7.txt 
+              Pattern SAMPLES_F64_ID : Samples6_f64.txt
 
               Output  OUT_ID : Output
 
@@ -756,6 +772,9 @@ group Root {
                 test_read_q15x2_da:test_read_q15x2_da
                 test_write_q15x2_ia:test_write_q15x2_ia
                 test_write_q15x2:test_write_q15x2
+                test_q15_f64 nb=7:test_q15_f64
+                test_q15_f64 nb=8n:test_q15_f64
+                test_q15_f64 nb=8n+1:test_q15_f64
               }
 
            }
@@ -768,6 +787,7 @@ group Root {
               Pattern SAMPLES_Q15_ID : Samples3_q15.txt 
               Pattern SAMPLES_Q31_ID : Samples4_q31.txt 
               Pattern SAMPLES_Q7_ID : Samples5_q7.txt 
+              Pattern SAMPLES_F64_ID : Samples6_f64.txt
 
               Output  OUT_ID : Output
 
@@ -790,6 +810,9 @@ group Root {
                 test_read_q7x4_ia:test_read_q7x4_ia
                 test_read_q7x4_da:test_read_q7x4_da
                 test_write_q7x4_ia:test_write_q7x4_ia
+                test_q7_f64 nb=15:test_q7_f64
+                test_q7_f64 nb=16n:test_q7_f64
+                test_q7_f64 nb=16n+1:test_q7_f64
               }
 
            }

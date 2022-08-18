@@ -15,17 +15,21 @@ class SupportTestsF16:public Client::Suite
             Client::Pattern<float16_t> input;
             Client::Pattern<q15_t> inputQ15;
             Client::Pattern<float32_t> inputF32;
+            Client::Pattern<float64_t> inputF64;
+
             Client::Pattern<float16_t> coefs;
             Client::LocalPattern<float16_t> buffer;
 
             Client::LocalPattern<float16_t> output;
             Client::LocalPattern<q15_t> outputQ15;
             Client::LocalPattern<float32_t> outputF32;
+            Client::LocalPattern<float64_t> outputF64;
 
             // Reference patterns are not loaded when we are in dump mode
             Client::RefPattern<float16_t> ref;
             Client::RefPattern<q15_t> refQ15;
             Client::RefPattern<float32_t> refF32;
+            Client::RefPattern<float64_t> refF64;
 
             int nbSamples;
             int offset;

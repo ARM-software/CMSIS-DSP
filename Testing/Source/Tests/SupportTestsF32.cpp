@@ -74,6 +74,19 @@ void SupportTestsF32::test_float_to_q15()
 
 } 
 
+void SupportTestsF32::test_float_to_f64()
+{
+ const float32_t *inp = input.ptr();
+ float64_t *outp = outputF64.ptr();
+ 
+ 
+ arm_float_to_f64(inp, outp,this->nbSamples);
+ 
+ ASSERT_REL_ERROR(refF64,outputF64,REL_ERROR);
+ ASSERT_EMPTY_TAIL(outputF64);
+
+} 
+
 void SupportTestsF32::test_float_to_q31()
 {
  const float32_t *inp = input.ptr();
@@ -718,6 +731,30 @@ void SupportTestsF32::setUp(Testing::testID_t id,std::vector<Testing::param_t>& 
     input.reload(SupportTestsF32::INPUT_SORT_CONST_F32_ID,mgr,this->nbSamples);
     ref.reload(SupportTestsF32::REF_SORT_CONST_F32_ID,mgr);
     output.create(this->nbSamples,SupportTestsF32::OUT_F32_ID,mgr); 
+    break;
+
+    case TEST_FLOAT_TO_F64_40:
+    this->nbSamples = 7;
+    input.reload(SupportTestsF32::SAMPLES_F32_ID,mgr,this->nbSamples);
+    refF64.reload(SupportTestsF32::SAMPLES_F64_ID,mgr,this->nbSamples);
+    outputF64.create(this->nbSamples,SupportTestsF32::OUT_F32_ID,mgr);
+
+    break;
+
+    case TEST_FLOAT_TO_F64_41:
+    this->nbSamples = 16;
+    input.reload(SupportTestsF32::SAMPLES_F32_ID,mgr,this->nbSamples);
+    refF64.reload(SupportTestsF32::SAMPLES_F64_ID,mgr,this->nbSamples);
+    outputF64.create(this->nbSamples,SupportTestsF32::OUT_F32_ID,mgr);
+
+    break;
+
+    case TEST_FLOAT_TO_F64_42:
+    this->nbSamples = 17;
+    input.reload(SupportTestsF32::SAMPLES_F32_ID,mgr,this->nbSamples);
+    refF64.reload(SupportTestsF32::SAMPLES_F64_ID,mgr,this->nbSamples);
+    outputF64.create(this->nbSamples,SupportTestsF32::OUT_F32_ID,mgr);
+
     break;
 
 

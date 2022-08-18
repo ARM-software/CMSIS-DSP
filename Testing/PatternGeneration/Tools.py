@@ -263,6 +263,22 @@ class Config:
         else:
           return(os.path.join(self._patternDir,"Input%d_%s.txt" % (i,"s8")))
 
+    def inputF64P(self,i,name=None):
+        """ Path to a reference pattern from the ID
+      
+        Args:
+          i (int): ID to the reference pattern
+        Raises:
+          Nothing 
+        Returns:
+          str : path to the file where to generate the pattern data
+        """
+        if name:
+          return(os.path.join(self._patternDir,"%s%d_%s.txt" % (name,i,"f64")))
+        else:
+          return(os.path.join(self._patternDir,"Input%d_%s.txt" % (i,"f64")))
+
+
     def inputF32P(self,i,name=None):
         """ Path to a reference pattern from the ID
       
@@ -1120,6 +1136,9 @@ class Config:
           self._writeVectorS8(self.inputP(j,name),data)
         if (self._ext == "u8"):
           self._writeVectorU8(self.inputP(j,name),data)
+
+    def writeInputF64(self,j,data,name=None):
+        self._writeVectorF64(self.inputF64P(j,name),data)
 
     def writeInputF32(self,j,data,name=None):
         self._writeVectorF32(self.inputF32P(j,name),data)

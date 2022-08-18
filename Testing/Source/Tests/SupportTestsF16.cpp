@@ -6,6 +6,7 @@
 
 #define SNR_THRESHOLD 120
 #define REL_ERROR (1.0e-5)
+#define REL_Q15_ERROR (1.0e-3)
 
 #define ABS_WEIGHTEDSUM_ERROR (1.0e-1)
 #define REL_WEIGHTEDSUM_ERROR (5.0e-3)
@@ -95,6 +96,20 @@ void SupportTestsF16::test_f16_f32()
 
 } 
 
+void SupportTestsF16::test_f16_f64()
+{
+ const float16_t *inp = input.ptr();
+ float64_t *outp = outputF64.ptr();
+ 
+ 
+ arm_f16_to_f64(inp, outp,this->nbSamples);
+ 
+ 
+ ASSERT_REL_ERROR(refF64,outputF64,REL_ERROR_F32);
+ ASSERT_EMPTY_TAIL(outputF64);
+
+} 
+
 void SupportTestsF16::test_q15_f16()
 {
  const q15_t *inp = inputQ15.ptr();
@@ -104,8 +119,8 @@ void SupportTestsF16::test_q15_f16()
  arm_q15_to_f16(inp, outp,this->nbSamples);
  
  
- ASSERT_REL_ERROR(ref,output,REL_ERROR);
- ASSERT_EMPTY_TAIL(outputF32);
+ ASSERT_REL_ERROR(ref,output,REL_Q15_ERROR);
+ ASSERT_EMPTY_TAIL(output);
 
 } 
 
@@ -119,7 +134,21 @@ void SupportTestsF16::test_f32_f16()
  
  
  ASSERT_REL_ERROR(ref,output,REL_ERROR);
- ASSERT_EMPTY_TAIL(outputF32);
+ ASSERT_EMPTY_TAIL(output);
+
+} 
+
+void SupportTestsF16::test_f64_f16()
+{
+ const float64_t *inp = inputF64.ptr();
+ float16_t *outp = output.ptr();
+ 
+ 
+ arm_f64_to_f16(inp, outp,this->nbSamples);
+ 
+ 
+ ASSERT_REL_ERROR(ref,output,REL_ERROR);
+ ASSERT_EMPTY_TAIL(output);
 
 } 
 
@@ -302,6 +331,54 @@ void SupportTestsF16::setUp(Testing::testID_t id,std::vector<Testing::param_t>& 
     inputF32.reload(SupportTestsF16::SAMPLES_F32_ID,mgr,this->nbSamples);
     ref.reload(SupportTestsF16::SAMPLES_F16_ID,mgr,this->nbSamples);
     output.create(this->nbSamples,SupportTestsF16::OUT_F16_ID,mgr);
+
+    break;
+
+    case TEST_F64_F16_22:
+    this->nbSamples = 7;
+    inputF64.reload(SupportTestsF16::SAMPLES_F64_ID,mgr,this->nbSamples);
+    ref.reload(SupportTestsF16::SAMPLES_F16_ID,mgr,this->nbSamples);
+    output.create(this->nbSamples,SupportTestsF16::OUT_F16_ID,mgr);
+
+    break;
+
+    case TEST_F64_F16_23:
+    this->nbSamples = 16;
+    inputF64.reload(SupportTestsF16::SAMPLES_F64_ID,mgr,this->nbSamples);
+    ref.reload(SupportTestsF16::SAMPLES_F16_ID,mgr,this->nbSamples);
+    output.create(this->nbSamples,SupportTestsF16::OUT_F16_ID,mgr);
+
+    break;
+
+    case TEST_F64_F16_24:
+    this->nbSamples = 23;
+    inputF64.reload(SupportTestsF16::SAMPLES_F64_ID,mgr,this->nbSamples);
+    ref.reload(SupportTestsF16::SAMPLES_F16_ID,mgr,this->nbSamples);
+    output.create(this->nbSamples,SupportTestsF16::OUT_F16_ID,mgr);
+
+    break;
+
+    case TEST_F16_F64_25:
+    this->nbSamples = 7;
+    input.reload(SupportTestsF16::SAMPLES_F16_ID,mgr,this->nbSamples);
+    refF64.reload(SupportTestsF16::SAMPLES_F64_ID,mgr,this->nbSamples);
+    outputF64.create(this->nbSamples,SupportTestsF16::OUT_F32_ID,mgr);
+
+    break;
+
+    case TEST_F16_F64_26:
+    this->nbSamples = 16;
+    input.reload(SupportTestsF16::SAMPLES_F16_ID,mgr,this->nbSamples);
+    refF64.reload(SupportTestsF16::SAMPLES_F64_ID,mgr,this->nbSamples);
+    outputF64.create(this->nbSamples,SupportTestsF16::OUT_F32_ID,mgr);
+
+    break;
+
+    case TEST_F16_F64_27:
+    this->nbSamples = 23;
+    input.reload(SupportTestsF16::SAMPLES_F16_ID,mgr,this->nbSamples);
+    refF64.reload(SupportTestsF16::SAMPLES_F64_ID,mgr,this->nbSamples);
+    outputF64.create(this->nbSamples,SupportTestsF16::OUT_F32_ID,mgr);
 
     break;
 

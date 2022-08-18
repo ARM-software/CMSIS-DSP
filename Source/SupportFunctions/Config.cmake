@@ -18,6 +18,11 @@ SupportFunctions/arm_fill_f64.c
 SupportFunctions/arm_fill_q15.c
 SupportFunctions/arm_fill_q31.c
 SupportFunctions/arm_fill_q7.c
+SupportFunctions/arm_f64_to_float.c
+SupportFunctions/arm_f64_to_q31.c
+SupportFunctions/arm_f64_to_q15.c
+SupportFunctions/arm_f64_to_q7.c
+SupportFunctions/arm_float_to_f64.c
 SupportFunctions/arm_float_to_q15.c
 SupportFunctions/arm_float_to_q31.c
 SupportFunctions/arm_float_to_q7.c
@@ -25,12 +30,15 @@ SupportFunctions/arm_heap_sort_f32.c
 SupportFunctions/arm_insertion_sort_f32.c
 SupportFunctions/arm_merge_sort_f32.c
 SupportFunctions/arm_merge_sort_init_f32.c
+SupportFunctions/arm_q15_to_f64.c
 SupportFunctions/arm_q15_to_float.c
 SupportFunctions/arm_q15_to_q31.c
 SupportFunctions/arm_q15_to_q7.c
+SupportFunctions/arm_q31_to_f64.c
 SupportFunctions/arm_q31_to_float.c
 SupportFunctions/arm_q31_to_q15.c
 SupportFunctions/arm_q31_to_q7.c
+SupportFunctions/arm_q7_to_f64.c
 SupportFunctions/arm_q7_to_float.c
 SupportFunctions/arm_q7_to_q15.c
 SupportFunctions/arm_q7_to_q31.c
@@ -53,5 +61,7 @@ target_sources(CMSISDSP PRIVATE SupportFunctions/arm_float_to_f16.c)
 target_sources(CMSISDSP PRIVATE SupportFunctions/arm_f16_to_float.c)
 target_sources(CMSISDSP PRIVATE SupportFunctions/arm_weighted_sum_f16.c)
 target_sources(CMSISDSP PRIVATE SupportFunctions/arm_barycenter_f16.c)
+target_sources(CMSISDSP PRIVATE SupportFunctions/arm_f16_to_f64.c)
+target_sources(CMSISDSP PRIVATE SupportFunctions/arm_f64_to_f16.c)
 endif()
 

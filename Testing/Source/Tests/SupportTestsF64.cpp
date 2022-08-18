@@ -60,14 +60,27 @@ ASSERT_EMPTY_TAIL(output);
 
 } 
 
-/*
-void SupportTestsF64::test_float_to_q15()
+void SupportTestsF64::test_f64_to_float()
+{
+ const float64_t *inp = input.ptr();
+ float32_t *outp = outputF32.ptr();
+ 
+ 
+ arm_f64_to_float(inp, outp,this->nbSamples);
+ 
+ ASSERT_REL_ERROR(refF32,outputF32,REL_ERROR);
+ ASSERT_EMPTY_TAIL(outputF32);
+
+} 
+
+
+void SupportTestsF64::test_f64_to_q15()
 {
  const float64_t *inp = input.ptr();
  q15_t *outp = outputQ15.ptr();
  
  
- arm_float_to_q15(inp, outp,this->nbSamples);
+ arm_f64_to_q15(inp, outp,this->nbSamples);
  
  
  ASSERT_NEAR_EQ(refQ15,outputQ15,ABS_Q15_ERROR);
@@ -75,13 +88,13 @@ void SupportTestsF64::test_float_to_q15()
 
 } 
 
-void SupportTestsF64::test_float_to_q31()
+void SupportTestsF64::test_f64_to_q31()
 {
  const float64_t *inp = input.ptr();
  q31_t *outp = outputQ31.ptr();
  
  
- arm_float_to_q31(inp, outp,this->nbSamples);
+ arm_f64_to_q31(inp, outp,this->nbSamples);
  
  
  ASSERT_NEAR_EQ(refQ31,outputQ31,ABS_Q31_ERROR);
@@ -89,13 +102,13 @@ void SupportTestsF64::test_float_to_q31()
 
 } 
 
-void SupportTestsF64::test_float_to_q7()
+void SupportTestsF64::test_f64_to_q7()
 {
  const float64_t *inp = input.ptr();
  q7_t *outp = outputQ7.ptr();
  
  
- arm_float_to_q7(inp, outp,this->nbSamples);
+ arm_f64_to_q7(inp, outp,this->nbSamples);
  
  
  ASSERT_NEAR_EQ(refQ7,outputQ7,ABS_Q7_ERROR);
@@ -103,6 +116,7 @@ void SupportTestsF64::test_float_to_q7()
 
 } 
 
+/*
 void SupportTestsF64::test_bitonic_sort_out_f64()
 {
  float64_t *inp = input.ptr();
@@ -501,79 +515,9 @@ void SupportTestsF64::setUp(Testing::testID_t id,std::vector<Testing::param_t>& 
     output.create(this->nbSamples,SupportTestsF64::OUT_F64_ID,mgr);
 
     break;
+
+
 /*
-    case TEST_FLOAT_TO_Q15_10:
-    this->nbSamples = 7;
-    input.reload(SupportTestsF64::SAMPLES_F64_ID,mgr,this->nbSamples);
-    refQ15.reload(SupportTestsF64::SAMPLES_Q15_ID,mgr,this->nbSamples);
-    outputQ15.create(this->nbSamples,SupportTestsF64::OUT_F64_ID,mgr);
-
-    break;
-
-    case TEST_FLOAT_TO_Q15_11:
-    this->nbSamples = 16;
-    input.reload(SupportTestsF64::SAMPLES_F64_ID,mgr,this->nbSamples);
-    refQ15.reload(SupportTestsF64::SAMPLES_Q15_ID,mgr,this->nbSamples);
-    outputQ15.create(this->nbSamples,SupportTestsF64::OUT_F64_ID,mgr);
-
-    break;
-
-    case TEST_FLOAT_TO_Q15_12:
-    this->nbSamples = 17;
-    input.reload(SupportTestsF64::SAMPLES_F64_ID,mgr,this->nbSamples);
-    refQ15.reload(SupportTestsF64::SAMPLES_Q15_ID,mgr,this->nbSamples);
-    outputQ15.create(this->nbSamples,SupportTestsF64::OUT_F64_ID,mgr);
-
-    break;
-
-    case TEST_FLOAT_TO_Q31_13:
-    this->nbSamples = 3;
-    input.reload(SupportTestsF64::SAMPLES_F64_ID,mgr,this->nbSamples);
-    refQ31.reload(SupportTestsF64::SAMPLES_Q31_ID,mgr,this->nbSamples);
-    outputQ31.create(this->nbSamples,SupportTestsF64::OUT_F64_ID,mgr);
-
-    break;
-
-    case TEST_FLOAT_TO_Q31_14:
-    this->nbSamples = 8;
-    input.reload(SupportTestsF64::SAMPLES_F64_ID,mgr,this->nbSamples);
-    refQ31.reload(SupportTestsF64::SAMPLES_Q31_ID,mgr,this->nbSamples);
-    outputQ31.create(this->nbSamples,SupportTestsF64::OUT_F64_ID,mgr);
-
-    break;
-
-    case TEST_FLOAT_TO_Q31_15:
-    this->nbSamples = 11;
-    input.reload(SupportTestsF64::SAMPLES_F64_ID,mgr,this->nbSamples);
-    refQ31.reload(SupportTestsF64::SAMPLES_Q31_ID,mgr,this->nbSamples);
-    outputQ31.create(this->nbSamples,SupportTestsF64::OUT_F64_ID,mgr);
-
-    break;
-
-    case TEST_FLOAT_TO_Q7_16:
-    this->nbSamples = 15;
-    input.reload(SupportTestsF64::SAMPLES_F64_ID,mgr,this->nbSamples);
-    refQ7.reload(SupportTestsF64::SAMPLES_Q7_ID,mgr,this->nbSamples);
-    outputQ7.create(this->nbSamples,SupportTestsF64::OUT_F64_ID,mgr);
-
-    break;
-
-    case TEST_FLOAT_TO_Q7_17:
-    this->nbSamples = 32;
-    input.reload(SupportTestsF64::SAMPLES_F64_ID,mgr,this->nbSamples);
-    refQ7.reload(SupportTestsF64::SAMPLES_Q7_ID,mgr,this->nbSamples);
-    outputQ7.create(this->nbSamples,SupportTestsF64::OUT_F64_ID,mgr);
-
-    break;
-
-    case TEST_FLOAT_TO_Q7_18:
-    this->nbSamples = 33;
-    input.reload(SupportTestsF64::SAMPLES_F64_ID,mgr,this->nbSamples);
-    refQ7.reload(SupportTestsF64::SAMPLES_Q7_ID,mgr,this->nbSamples);
-    outputQ7.create(this->nbSamples,SupportTestsF64::OUT_F64_ID,mgr);
-
-    break;
-
     case TEST_BITONIC_SORT_OUT_F64_19:
     this->nbSamples = 16;
     input.reload(SupportTestsF64::INPUT_BITONIC_SORT_16_F64_ID,mgr,this->nbSamples);
@@ -722,6 +666,101 @@ void SupportTestsF64::setUp(Testing::testID_t id,std::vector<Testing::param_t>& 
     break;
 */
 
+    case TEST_F64_TO_Q15_31:
+    this->nbSamples = 1;
+    input.reload(SupportTestsF64::SAMPLES_F64_ID,mgr,this->nbSamples);
+    refQ15.reload(SupportTestsF64::SAMPLES_Q15_ID,mgr,this->nbSamples);
+    outputQ15.create(this->nbSamples,SupportTestsF64::OUT_F64_ID,mgr);
+
+    break;
+
+    case TEST_F64_TO_Q15_32:
+    this->nbSamples = 4;
+    input.reload(SupportTestsF64::SAMPLES_F64_ID,mgr,this->nbSamples);
+    refQ15.reload(SupportTestsF64::SAMPLES_Q15_ID,mgr,this->nbSamples);
+    outputQ15.create(this->nbSamples,SupportTestsF64::OUT_F64_ID,mgr);
+
+    break;
+
+    case TEST_F64_TO_Q15_33:
+    this->nbSamples = 5;
+    input.reload(SupportTestsF64::SAMPLES_F64_ID,mgr,this->nbSamples);
+    refQ15.reload(SupportTestsF64::SAMPLES_Q15_ID,mgr,this->nbSamples);
+    outputQ15.create(this->nbSamples,SupportTestsF64::OUT_F64_ID,mgr);
+
+    break;
+
+    case TEST_F64_TO_Q31_34:
+    this->nbSamples = 1;
+    input.reload(SupportTestsF64::SAMPLES_F64_ID,mgr,this->nbSamples);
+    refQ31.reload(SupportTestsF64::SAMPLES_Q31_ID,mgr,this->nbSamples);
+    outputQ31.create(this->nbSamples,SupportTestsF64::OUT_F64_ID,mgr);
+
+    break;
+
+    case TEST_F64_TO_Q31_35:
+    this->nbSamples = 4;
+    input.reload(SupportTestsF64::SAMPLES_F64_ID,mgr,this->nbSamples);
+    refQ31.reload(SupportTestsF64::SAMPLES_Q31_ID,mgr,this->nbSamples);
+    outputQ31.create(this->nbSamples,SupportTestsF64::OUT_F64_ID,mgr);
+
+    break;
+
+    case TEST_F64_TO_Q31_36:
+    this->nbSamples = 6;
+    input.reload(SupportTestsF64::SAMPLES_F64_ID,mgr,this->nbSamples);
+    refQ31.reload(SupportTestsF64::SAMPLES_Q31_ID,mgr,this->nbSamples);
+    outputQ31.create(this->nbSamples,SupportTestsF64::OUT_F64_ID,mgr);
+
+    break;
+
+    case TEST_F64_TO_Q7_37:
+    this->nbSamples = 1;
+    input.reload(SupportTestsF64::SAMPLES_F64_ID,mgr,this->nbSamples);
+    refQ7.reload(SupportTestsF64::SAMPLES_Q7_ID,mgr,this->nbSamples);
+    outputQ7.create(this->nbSamples,SupportTestsF64::OUT_F64_ID,mgr);
+
+    break;
+
+    case TEST_F64_TO_Q7_38:
+    this->nbSamples = 4;
+    input.reload(SupportTestsF64::SAMPLES_F64_ID,mgr,this->nbSamples);
+    refQ7.reload(SupportTestsF64::SAMPLES_Q7_ID,mgr,this->nbSamples);
+    outputQ7.create(this->nbSamples,SupportTestsF64::OUT_F64_ID,mgr);
+
+    break;
+
+    case TEST_F64_TO_Q7_39:
+    this->nbSamples = 5;
+    input.reload(SupportTestsF64::SAMPLES_F64_ID,mgr,this->nbSamples);
+    refQ7.reload(SupportTestsF64::SAMPLES_Q7_ID,mgr,this->nbSamples);
+    outputQ7.create(this->nbSamples,SupportTestsF64::OUT_F64_ID,mgr);
+
+    break;
+
+    case TEST_F64_TO_FLOAT_40:
+    this->nbSamples = 1;
+    input.reload(SupportTestsF64::SAMPLES_F64_ID,mgr,this->nbSamples);
+    refF32.reload(SupportTestsF64::SAMPLES_F32_ID,mgr,this->nbSamples);
+    outputF32.create(this->nbSamples,SupportTestsF64::OUT_F64_ID,mgr);
+
+    break;
+
+    case TEST_F64_TO_FLOAT_41:
+    this->nbSamples = 4;
+    input.reload(SupportTestsF64::SAMPLES_F64_ID,mgr,this->nbSamples);
+    refF32.reload(SupportTestsF64::SAMPLES_F32_ID,mgr,this->nbSamples);
+    outputF32.create(this->nbSamples,SupportTestsF64::OUT_F64_ID,mgr);
+
+    break;
+
+    case TEST_F64_TO_FLOAT_42:
+    this->nbSamples = 5;
+    input.reload(SupportTestsF64::SAMPLES_F64_ID,mgr,this->nbSamples);
+    refF32.reload(SupportTestsF64::SAMPLES_F32_ID,mgr,this->nbSamples);
+    outputF32.create(this->nbSamples,SupportTestsF64::OUT_F64_ID,mgr);
+
+    break;
 
   }       
 

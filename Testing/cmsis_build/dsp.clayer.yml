@@ -8,6 +8,8 @@ layer:
 
   groups:
     - group: CMSIS-DSP
+      define:
+        - ARM_MATH_ROUNDING
       files:
         - file: ../../Source/BasicMathFunctions/BasicMathFunctions.c
         - file: ../../Source/BasicMathFunctions/BasicMathFunctionsF16.c

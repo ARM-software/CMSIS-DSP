@@ -151,6 +151,7 @@ group Root {
               Pattern SAMPLES_F32_ID : Samples1_f32.txt 
               Pattern SAMPLES_Q15_ID : Samples3_q15.txt 
               Pattern SAMPLES_F16_ID : Samples11_f16.txt 
+              Pattern SAMPLES_F64_ID : Samples6_f64.txt 
 
               Output  OUT_F32_ID : Output
               Output  OUT_Q15_ID : OutputQ15
@@ -178,6 +179,12 @@ group Root {
                 test_f32_f16 nb=3:test_f32_f16
                 test_f32_f16 nb=4n:test_f32_f16
                 test_f32_f16 nb=4n+1:test_f32_f16
+                test_f64_f16 nb=3:test_f64_f16
+                test_f64_f16 nb=4n:test_f64_f16
+                test_f64_f16 nb=4n+1:test_f64_f16
+                test_f16_f64 nb=7:test_f16_f64
+                test_f16_f64 nb=8n:test_f16_f64
+                test_f16_f64 nb=8n+1:test_f16_f64
               }
 
            }

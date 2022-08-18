@@ -20,9 +20,11 @@ class SupportTestsF64:public Client::Suite
             Client::LocalPattern<q15_t> outputQ15;
             Client::LocalPattern<q31_t> outputQ31;
             Client::LocalPattern<q7_t> outputQ7;
+            Client::LocalPattern<float32_t> outputF32;
 
             // Reference patterns are not loaded when we are in dump mode
             Client::RefPattern<float64_t> ref;
+            Client::RefPattern<float32_t> refF32;
             Client::RefPattern<q15_t> refQ15;
             Client::RefPattern<q31_t> refQ31;
             Client::RefPattern<q7_t> refQ7;

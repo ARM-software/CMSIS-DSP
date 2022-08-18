@@ -79,23 +79,34 @@ def genBarycenter(config,nb,nbTests,nbVecsArray,vecDimArray):
     config.writeInput(nb, weights,"Weights")
     config.writeReference(nb, output,"Ref")
 
+# Gen samples for datatype conversions
+def genSamples(nb):
+    va = np.random.rand(nb)
+    va = Tools.normalize(va)
+    sat = np.array([-1.0,1.0,-2.1,2.1])
+    va = np.hstack([va,sat])
+    return(va)
+
 def writeTestsF64(config):
     NBSAMPLES=256
+    va = genSamples(NBSAMPLES)
 
-    va = np.random.rand(NBSAMPLES)
-    va = Tools.normalize(va)
     config.writeInput(1,va,"Samples")
+    config.writeInputF32(6,va,"Samples")
+    config.writeInputQ31(4,va,"Samples")
+    config.writeInputQ15(3,va,"Samples")
+    config.writeInputQ7(5,va,"Samples")
+    config.writeInputF16(11,va,"Samples")
 
 def writeTestsF32(config):
     NBSAMPLES=256
 
-    va = np.random.rand(NBSAMPLES)
-    va = Tools.normalize(va)
+    va = genSamples(NBSAMPLES)
     config.writeInput(1,va,"Samples")
+    config.writeInputF64(6,va,"Samples")
     config.writeInputQ15(3,va,"Samples")
     config.writeInputQ31(4,va,"Samples")
     config.writeInputQ7(5,va,"Samples")
-    config.writeInputF16(11,va,"Samples")
 
 
     # This is for benchmarking the weighted sum and we use only one test pattern
@@ -105,11 +116,11 @@ def writeTestsF32(config):
 def writeTestsF16(config):
     NBSAMPLES=256
 
-    va = np.random.rand(NBSAMPLES)
-    va = Tools.normalize(va)
+    va = genSamples(NBSAMPLES)
+    config.writeInputF16(11,va,"Samples")
     config.writeInputF32(1,va,"Samples")
+    config.writeInputF64(6,va,"Samples")
     config.writeInputQ15(3,va,"Samples")
-    config.writeInput(11,va,"Samples")
 
     # This is for benchmarking the weighted sum and we use only one test pattern
     genWsum(config,Tools.F16,6)
@@ -117,9 +128,9 @@ def writeTestsF16(config):
 def writeTestsQ31(config):
     NBSAMPLES=256
 
-    va = np.random.rand(NBSAMPLES)
-    va = Tools.normalize(va)
+    va = genSamples(NBSAMPLES)
     config.writeInputF32(1,va,"Samples")
+    config.writeInputF64(6,va,"Samples")
     config.writeInputQ15(3,va,"Samples")
     config.writeInput(4,va,"Samples")
     config.writeInputQ7(5,va,"Samples")
@@ -128,9 +139,9 @@ def writeTestsQ31(config):
 def writeTestsQ15(config):
     NBSAMPLES=256
 
-    va = np.random.rand(NBSAMPLES)
-    va = Tools.normalize(va)
+    va = genSamples(NBSAMPLES)
     config.writeInputF32(1,va,"Samples")
+    config.writeInputF64(6,va,"Samples")
     config.writeInput(3,va,"Samples")
     config.writeInputQ31(4,va,"Samples")
     config.writeInputQ7(5,va,"Samples")
@@ -139,9 +150,9 @@ def writeTestsQ15(config):
 def writeTestsQ7(config):
     NBSAMPLES=256
 
-    va = np.random.rand(NBSAMPLES)
-    va = Tools.normalize(va)
+    va = genSamples(NBSAMPLES)
     config.writeInputF32(1,va,"Samples")
+    config.writeInputF64(6,va,"Samples")
     config.writeInputQ15(3,va,"Samples")
     config.writeInputQ31(4,va,"Samples")
     config.writeInput(5,va,"Samples")
@@ -197,8 +208,9 @@ def generatePatterns():
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
     configq7=Tools.Config(PATTERNDIR,PARAMDIR,"q7")
     
+    configf64.setOverwrite(False)
     configf32.setOverwrite(False)
-    configf16.setOverwrite(False)
+    configf16.setOverwrite(True)
     configq31.setOverwrite(False)
     configq15.setOverwrite(False)
     configq7.setOverwrite(False)
@@ -210,6 +222,13 @@ def generatePatterns():
     writeTestsQ31(configq31)
     writeTestsQ15(configq15)
     writeTestsQ7(configq7)
+
+    configf64.setOverwrite(False)
+    configf32.setOverwrite(False)
+    configf16.setOverwrite(False)
+    configq31.setOverwrite(False)
+    configq15.setOverwrite(False)
+    configq7.setOverwrite(False)
 
     writeTests2(configf32,0)
     

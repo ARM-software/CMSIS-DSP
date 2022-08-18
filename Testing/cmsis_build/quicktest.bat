@@ -1,7 +1,7 @@
 ECHO OFF
 ECHO "Gen Test"
 cd .. 
-python processTests.py -f Output.pickle -e StatsTests
+python processTests.py -f Output.pickle -e SupportBarTestsF32
 cd cmsis_build 
 
 ECHO "Build"
@@ -15,3 +15,10 @@ REM cbuild "test.Release+VHT_M7_UNROLLED.cprj"
 REM ECHO "Run"
 REM C:\Keil_v5\ARM\VHT\VHT_MPS2_Cortex-M7.exe -f configs/ARM_VHT_MPS2_M7DP_config.txt out\test\VHT_M7_UNROLLED\Release\test.Release+VHT_M7_UNROLLED.axf > results_m7_unrolled.txt
 REM python ..\processResult.py  -f ..\Output.pickle -e -r results_m7_unrolled.txt
+
+REM ECHO "Build"
+REM cbuild "test.Release+FVP_M55.cprj" 
+REM ECHO "Run"
+REM C:\Keil_v5\ARM\VHT\VHT_MPS2_Cortex-M55.exe -f configs/REM ARM_VHT_MPS2_M55_config.txt -a cpu0="REM out\test\FVP_M55\Release\test.Release+FVP_M55.elf" REM > results_m55.txt
+REM python ..\processResult.py  -f ..\Output.pickle -e -r REM results_m55.txt
+REM 
