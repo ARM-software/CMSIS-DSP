@@ -152,6 +152,7 @@ void arm_biquad_cascade_df2T_f64(
                 (float64_t const *) S->pCoeffs;
     float64x2_t b0Coeffs, a0Coeffs;           /*  Coefficients vector       */
     float64x2_t state;                        /*  State vector*/
+  float64x2_t zeroV = vdupq_n_f64(0);
   
     float64_t b0 ;
     
@@ -194,8 +195,8 @@ void arm_biquad_cascade_df2T_f64(
           */
           
           /* state -> initial state (see above) */
-          state = vsetq_lane_f64(vgetq_lane_f64(state, 1), state, 0);
-          state = vsetq_lane_f64(0.0f, state , 1);
+
+          state = vextq_f64(state, zeroV, 1);
           
           /* Calculation of final state */
           state = vfmaq_n_f64(state, b0Coeffs, Xn0);
@@ -225,8 +226,8 @@ void arm_biquad_cascade_df2T_f64(
           */
           
           /* state -> initial state (see above) */
-          state = vsetq_lane_f64(vgetq_lane_f64(state, 1), state, 0);
-          state = vsetq_lane_f64(0.0f, state , 1);
+
+          state = vextq_f64(state, zeroV, 1);
           
           /* Calculation of final state */
           state = vfmaq_n_f64(state, b0Coeffs, Xn0);
@@ -261,8 +262,8 @@ void arm_biquad_cascade_df2T_f64(
           */
           
           /* state -> initial state (see above) */
-          state = vsetq_lane_f64(vgetq_lane_f64(state, 1), state, 0);
-          state = vsetq_lane_f64(0.0f, state , 1);
+
+          state = vextq_f64(state, zeroV, 1);
           
           /* Calculation of final state */
           state = vfmaq_n_f64(state, b0Coeffs, Xn0);
