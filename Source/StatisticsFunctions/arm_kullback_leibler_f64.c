@@ -50,53 +50,53 @@
 
 float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,const float64_t * pSrcB,uint32_t blockSize)
 {
-    const float64_t *pInA, *pInB;
-    uint32_t blkCnt;
-    float64_t accum, pA,pB;
-
-    float64x2_t accumV;
-    float64x2_t tmpVA, tmpVB,tmpV;
- 
-    pInA = pSrcA;
-    pInB = pSrcB;
-
-    accum = 0.0f;
-    accumV = vdupq_n_f64(0.0f);
-
-    blkCnt = blockSize >> 1;
-    while(blkCnt > 0)
-    {
-      tmpVA = vld1q_f64(pInA);
-      pInA += 2;
-
-      tmpVB = vld1q_f64(pInB);
-      pInB += 2;
-
-      tmpV = vinvq_f64(tmpVA);
-      tmpVB = vmulq_f64(tmpVB, tmpV);
-      tmpVB = vlogq_f64(tmpVB);
-
-      accumV = vmlaq_f64(accumV, tmpVA, tmpVB);
-       
-      blkCnt--;
-    
-    }
-
-
-  accum = vaddvq_f64(accumV);
-
-    blkCnt = blockSize & 1;
-    while(blkCnt > 0)
-    {
-       pA = *pInA++;
-       pB = *pInB++;
-       accum += pA * logf(pB/pA);
-       
-       blkCnt--;
-    
-    }
-
-    return(-accum);
+	const float64_t *pInA, *pInB;
+	uint32_t blkCnt;
+	float64_t accum, pA,pB;
+	
+	float64x2_t accumV;
+	float64x2_t tmpVA, tmpVB,tmpV;
+	
+	pInA = pSrcA;
+	pInB = pSrcB;
+	
+	accum = 0.0f;
+	accumV = vdupq_n_f64(0.0f);
+	
+	blkCnt = blockSize >> 1;
+	while(blkCnt > 0)
+	{
+		tmpVA = vld1q_f64(pInA);
+		pInA += 2;
+		
+		tmpVB = vld1q_f64(pInB);
+		pInB += 2;
+		
+		tmpV = vinvq_f64(tmpVA);
+		tmpVB = vmulq_f64(tmpVB, tmpV);
+		tmpVB = vlogq_f64(tmpVB);
+		
+		accumV = vmlaq_f64(accumV, tmpVA, tmpVB);
+		
+		blkCnt--;
+		
+	}
+	
+	
+	accum = vaddvq_f64(accumV);
+	
+	blkCnt = blockSize & 1;
+	while(blkCnt > 0)
+	{
+		pA = *pInA++;
+		pB = *pInB++;
+		accum += pA * logf(pB/pA);
+		
+		blkCnt--;
+		
+	}
+	
+	return(-accum);
 }
 #else
 

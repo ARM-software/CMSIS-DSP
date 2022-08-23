@@ -33,44 +33,44 @@
 #endif
 
 void arm_vexp_f64(
-  const float64_t * pSrc,
-        float64_t * pDst,
-        uint32_t blockSize)
+	const float64_t * pSrc,
+	float64_t * pDst,
+	uint32_t blockSize)
 {
-   uint32_t blkCnt;
+	uint32_t blkCnt;
 #if defined(ARM_MATH_NEON)
- 
-  
-  float64x2_t src;
-  float64x2_t dst;
-
-  blkCnt = blockSize >> 1U;
-
-  while (blkCnt > 0U)
-  {
-     src = vld1q_f64(pSrc);
-     dst = vexpq_f64(src);
-     vst1q_f64(pDst, dst);
-
-     pSrc += 2;
-     pDst += 2;
-
-     blkCnt--;
-  }
-  
-  blkCnt = blockSize & 1;
+	
+	
+	float64x2_t src;
+	float64x2_t dst;
+	
+	blkCnt = blockSize >> 1U;
+	
+	while (blkCnt > 0U)
+	{
+		src = vld1q_f64(pSrc);
+		dst = vexpq_f64(src);
+		vst1q_f64(pDst, dst);
+		
+		pSrc += 2;
+		pDst += 2;
+		
+		blkCnt--;
+	}
+	
+	blkCnt = blockSize & 1;
 #else
-   blkCnt = blockSize;
+	blkCnt = blockSize;
 #endif
-   while (blkCnt > 0U)
-   {
-      /* C = log(A) */
-     
-  
-      /* Calculate log and store result in destination buffer. */
-      *pDst++ = exp(*pSrc++);
-  
-      /* Decrement loop counter */
-      blkCnt--;
-   }
+	while (blkCnt > 0U)
+	{
+		/* C = log(A) */
+		
+		
+		/* Calculate log and store result in destination buffer. */
+		*pDst++ = exp(*pSrc++);
+		
+		/* Decrement loop counter */
+		blkCnt--;
+	}
 }

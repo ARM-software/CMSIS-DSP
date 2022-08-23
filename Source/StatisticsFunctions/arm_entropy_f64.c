@@ -49,43 +49,43 @@
 
 float64_t arm_entropy_f64(const float64_t * pSrcA, uint32_t blockSize)
 {
-    const float64_t *pIn;
-    uint32_t blkCnt;
-    float64_t accum, p;
- 
-    pIn = pSrcA;
-
-
-    accum = 0.0;
+	const float64_t *pIn;
+	uint32_t blkCnt;
+	float64_t accum, p;
+	
+	pIn = pSrcA;
+	
+	
+	accum = 0.0;
 #if defined(ARM_MATH_NEON)
-  float64x2_t sumV ,pInV ;
-  sumV = vdupq_n_f64(0.0f);
-  blkCnt = blockSize >> 1U ;
-  
-  while(blkCnt > 0){
-    pInV = vld1q_f64(pIn);
-    sumV = vmlaq_f64(sumV, pInV,vlogq_f64(pInV) );
-    pIn += 2 ;
-    blkCnt--;
-    
-  }
-  accum = vaddvq_f64(sumV);
-  blkCnt = blockSize & 1 ;
+	float64x2_t sumV ,pInV ;
+	sumV = vdupq_n_f64(0.0f);
+	blkCnt = blockSize >> 1U ;
+	
+	while(blkCnt > 0){
+		pInV = vld1q_f64(pIn);
+		sumV = vmlaq_f64(sumV, pInV,vlogq_f64(pInV) );
+		pIn += 2 ;
+		blkCnt--;
+		
+	}
+	accum = vaddvq_f64(sumV);
+	blkCnt = blockSize & 1 ;
 #else
-  blkCnt = blockSize;
+	blkCnt = blockSize;
 #endif
-
-    while(blkCnt > 0)
-    {
-        p = *pIn++;
-
-        accum += p * log(p);
-       
-        blkCnt--;
-    
-    }
-
-    return(-accum);
+	
+	while(blkCnt > 0)
+	{
+		p = *pIn++;
+		
+		accum += p * log(p);
+		
+		blkCnt--;
+		
+	}
+	
+	return(-accum);
 }
 
 /**

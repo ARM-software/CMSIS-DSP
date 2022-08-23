@@ -47,84 +47,84 @@
  */
 
 void arm_mse_f64(
-                 const float64_t * pSrcA,
-                 const float64_t * pSrcB,
-                 uint32_t    blockSize,
-                 float64_t * result)
+	const float64_t * pSrcA,
+	const float64_t * pSrcB,
+	uint32_t 	blockSize,
+	float64_t * result)
 
 {
-    
-    uint32_t blkCnt;                               /* Loop counter */
-    float64_t inA, inB;
-    float64_t sum = 0.0;
+	
+	uint32_t blkCnt;                               /* Loop counter */
+	float64_t inA, inB;
+	float64_t sum = 0.0;
 #if defined (ARM_MATH_NEON)
-    
-    float64x2_t inAV , inBV , subV, sumV;
-    sumV = vdupq_n_f64(0.0f);
-    
-    blkCnt = blockSize >> 1U ;
-    
-    while (blkCnt > 0U)
-    {
-        inAV = vld1q_f64(pSrcA);
-        pSrcA+=2;
-        inBV = vld1q_f64(pSrcB);
-        pSrcB+=2;
-        subV = vsubq_f64(inAV, inBV);
-        sumV = vmlaq_f64(sumV, subV, subV);
-        
-        blkCnt--;
-        
-    }
-    sum = vaddvq_f64(sumV);
-    blkCnt = (blockSize) & 1;
-    
+	
+	float64x2_t inAV , inBV , subV, sumV;
+	sumV = vdupq_n_f64(0.0f);
+	
+	blkCnt = blockSize >> 1U ;
+	
+	while (blkCnt > 0U)
+	{
+		inAV = vld1q_f64(pSrcA);
+		pSrcA+=2;
+		inBV = vld1q_f64(pSrcB);
+		pSrcB+=2;
+		subV = vsubq_f64(inAV, inBV);
+		sumV = vmlaq_f64(sumV, subV, subV);
+		
+		blkCnt--;
+		
+	}
+	sum = vaddvq_f64(sumV);
+	blkCnt = (blockSize) & 1;
+	
 #else
-                            /* Temporary return variable */
+	/* Temporary return variable */
 #if defined (ARM_MATH_LOOPUNROLL)
-    blkCnt = (blockSize) >> 1;
-    
+	blkCnt = (blockSize) >> 1;
+	
 #pragma clang loop vectorize(enable)
-    while (blkCnt > 0U)
-    {
-        
-        
-        inA = *pSrcA++;
-        inB = *pSrcB++;
-        inA = inA - inB;
-        sum += inA * inA;
-        
-        inA = *pSrcA++;
-        inB = *pSrcB++;
-        inA = inA - inB;
-        sum += inA * inA;
-        
-        /* Decrement loop counter */
-        blkCnt--;
-    }
-    
-    
-    /* Loop unrolling: Compute remaining outputs */
-    blkCnt = (blockSize) & 1;
+	while (blkCnt > 0U)
+	{
+		
+		
+		inA = *pSrcA++;
+		inB = *pSrcB++;
+		inA = inA - inB;
+		sum += inA * inA;
+		
+		inA = *pSrcA++;
+		inB = *pSrcB++;
+		inA = inA - inB;
+		sum += inA * inA;
+		
+		/* Decrement loop counter */
+		blkCnt--;
+	}
+	
+	
+	/* Loop unrolling: Compute remaining outputs */
+	blkCnt = (blockSize) & 1;
 #else
-    /* Initialize blkCnt with number of samples */
-    blkCnt = blockSize;
+	/* Initialize blkCnt with number of samples */
+	blkCnt = blockSize;
 #endif
 #endif
-//#pragma clang loop vectorize(enable) unroll(disable)
-    while (blkCnt > 0U)
-    {
-        inA = *pSrcA++;
-        inB = *pSrcB++;
-        inA = inA - inB;
-        sum += inA * inA;
-        
-        /* Decrement loop counter */
-        blkCnt--;
-    }
-    
-    /* Store result in destination buffer */
-    *result = sum / blockSize;
+	//#pragma clang loop vectorize(enable) unroll(disable)
+	while (blkCnt > 0U)
+	{
+		inA = *pSrcA++;
+		inB = *pSrcB++;
+		inA = inA - inB;
+		sum += inA * inA;
+		
+		/* Decrement loop counter */
+		blkCnt--;
+	}
+	
+	/* Store result in destination buffer */
+	*result = sum / blockSize;
 }
 
 
