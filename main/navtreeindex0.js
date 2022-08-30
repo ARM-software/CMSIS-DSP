@@ -3,8 +3,8 @@ var NAVTREEINDEX0 =
 "ChangeLog_pg.html":[1],
 "annotated.html":[4],
 "deprecated.html":[2],
-"functions.html":[5,0],
 "functions.html":[5,0,0],
+"functions.html":[5,0],
 "functions_b.html":[5,0,1],
 "functions_c.html":[5,0,2],
 "functions_d.html":[5,0,3],
@@ -73,6 +73,10 @@ var NAVTREEINDEX0 =
 "group__AbsMin.html#gae16f84e5b1d5ca575bf745bb4754e724":[3,11,1,6],
 "group__AbsMin.html#gaebee898232f3408b94ae147e882a1e0e":[3,11,1,7],
 "group__AbsMin.html#gafb9e895412ec3891703d03147e0218f9":[3,11,1,3],
+"group__Accumulation.html":[3,11,2],
+"group__Accumulation.html#ga5eb38c599fecbb3f3f49e6e881d91d10":[3,11,2,0],
+"group__Accumulation.html#ga5ef6f38d405cb2e809696ef3a166f39b":[3,11,2,1],
+"group__Accumulation.html#ga7a129893e96b15ebfff07f62ce7072cb":[3,11,2,2],
 "group__And.html":[3,1,2],
 "group__And.html#ga08d3e60296226203f83c5bca20c86dc0":[3,1,2,2],
 "group__And.html#ga2a4f9651595c621581c886d2649e35ec":[3,1,2,1],
@@ -245,9 +249,5 @@ var NAVTREEINDEX0 =
 "group__Canberra.html#ga4cb969f4c0c64a9afda98b2ed13e95fa":[3,5,0,1,1],
 "group__Canberra.html#gab5b73214c89dc54f2d52b2808cd67ca5":[3,5,0,1,0],
 "group__Chebyshev.html":[3,5,0,2],
-"group__Chebyshev.html#ga47f287c9b4ba01fde36fd2480854646b":[3,5,0,2,2],
-"group__Chebyshev.html#ga5cf07beec12cfe0ad126aadc9a6f5f97":[3,5,0,2,0],
-"group__Chebyshev.html#gaeac7e25faa01178ba6de05be8e1a31e9":[3,5,0,2,1],
-"group__ClassMarks.html":[3,0,1],
-"group__CmplxByCmplxMult.html":[3,3,4]
+"group__Chebyshev.html#ga47f287c9b4ba01fde36fd2480854646b":[3,5,0,2,2]
 };

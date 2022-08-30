@@ -2,6 +2,7 @@ var group__groupStats =
 [
     [ "Absolute Maximum", "group__AbsMax.html", "group__AbsMax" ],
     [ "Absolute Minimum", "group__AbsMin.html", "group__AbsMin" ],
+    [ "Accumulation functions", "group__Accumulation.html", "group__Accumulation" ],
     [ "Entropy", "group__Entropy.html", "group__Entropy" ],
     [ "Kullback-Leibler divergence", "group__Kullback-Leibler.html", "group__Kullback-Leibler" ],
     [ "LogSumExp", "group__LogSumExp.html", "group__LogSumExp" ],

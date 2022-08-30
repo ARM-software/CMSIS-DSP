@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CMSIS-DSP: Statistics Functions</title>
+<title>CMSIS-DSP: arm_accumulate_f16.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -69,7 +69,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Usage&#160;and&#160;Description</span></a></li>
-      <li class="current"><a href="modules.html"><span>&#160;API&#160;Reference</span></a></li>
+      <li><a href="modules.html"><span>&#160;API&#160;Reference</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -101,7 +101,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('group__groupStats.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('arm__accumulate__f16_8c.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -121,48 +121,23 @@ $(document).ready(function(){initNavTree('group__groupStats.html',''); initResiz
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Content</a>  </div>
-  <div class="headertitle"><div class="title">Statistics Functions</div></div>
+<a href="#func-members">Functions</a>  </div>
+  <div class="headertitle"><div class="title">arm_accumulate_f16.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="groups" name="groups"></a>
-Content</h2></td></tr>
-<tr class="memitem:group__AbsMax"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__AbsMax.html">Absolute Maximum</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group__AbsMin"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__AbsMin.html">Absolute Minimum</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group__Accumulation"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Accumulation.html">Accumulation functions</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group__Entropy"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Entropy.html">Entropy</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group__Kullback-Leibler"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Kullback-Leibler.html">Kullback-Leibler divergence</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group__LogSumExp"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__LogSumExp.html">LogSumExp</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group__Max"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Max.html">Maximum</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group__mean"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__mean.html">Mean</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group__Min"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Min.html">Minimum</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group__MSE"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MSE.html">Mean Square Error</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group__power"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__power.html">Power</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group__RMS"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RMS.html">Root mean square (RMS)</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group__STD"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__STD.html">Standard deviation</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group__variance"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__variance.html">Variance</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga5eb38c599fecbb3f3f49e6e881d91d10"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Accumulation.html#ga5eb38c599fecbb3f3f49e6e881d91d10">arm_accumulate_f16</a> (const float16_t *pSrc, uint32_t <a class="el" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>, float16_t *pResult)</td></tr>
+<tr class="memdesc:ga5eb38c599fecbb3f3f49e6e881d91d10"><td class="mdescLeft">&#160;</td><td class="mdescRight">accumulate value of a floating-point vector.  <a href="group__Accumulation.html#ga5eb38c599fecbb3f3f49e6e881d91d10">More...</a><br /></td></tr>
+<tr class="separator:ga5eb38c599fecbb3f3f49e6e881d91d10"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><a class="el" href="dir_74389ed8173ad57b461b9d623a1f3867.html">Source</a></li><li class="navelem"><a class="el" href="dir_344d19a0b1d83afacb905f5b35c429dd.html">StatisticsFunctions</a></li><li class="navelem"><a class="el" href="arm__accumulate__f16_8c.html">arm_accumulate_f16.c</a></li>
     <li class="footer">
       <script type="text/javascript">
         <!--
