@@ -54,7 +54,7 @@ void arm_accumulate_f64(
   uint32_t blkCnt;                               /* Loop counter */
   
   /*Neon buffers*/
-  float64x2_t vSum = vdupq_n_f64(0.0f);
+  float64x2_t vSum = vdupq_n_f64(0.0);
   float64x2_t afterLoad ;
   
   float64_t sum = 0.;                            /* Temporary result storage */

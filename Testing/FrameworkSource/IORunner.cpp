@@ -108,7 +108,7 @@ So to ensure the conditions are always the same, the instruction cache
 and branch predictor are flushed.
 
 */
-#ifdef CORTEXA
+#if defined(CORTEXA) && !defined(__GNUC_PYTHON__)
   __set_BPIALL(0);
   __DSB();
   __ISB();
@@ -269,7 +269,7 @@ fast models.
                 
                 // Run the test once to force the code to be in cache.
                 // By default it is disabled in the suite.
-#ifdef CORTEXA
+#if defined(CORTEXA) && !defined(__GNUC_PYTHON__)
   __set_BPIALL(0);
   __DSB();
   __ISB();

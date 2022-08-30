@@ -165,7 +165,7 @@ void arm_max_f32(
   uint32x4_t countV;
   uint32x2_t countV2;
 
-  maxIdx = vdupq_n_u32(ULONG_MAX);
+  maxIdx = vdupq_n_u32(UINT_MAX);
   delta = vdupq_n_u32(4);
   index = vld1q_u32(indexInit);
   countV = vld1q_u32(countVInit);

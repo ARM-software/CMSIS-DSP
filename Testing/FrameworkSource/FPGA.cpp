@@ -737,7 +737,11 @@ namespace Client
            {
               v = data[i];
               t = TOINT64(v);
+              #if __sizeof_long == 8
+              printf("D: 0x%016lx\n",t);
+              #else
               printf("D: 0x%016llx\n",t);
+              #endif
            }
            printf("D: END\n");
         }
@@ -796,7 +800,11 @@ namespace Client
            {
               v = data[i];
               t = (uint64_t)v;
+              #if __sizeof_long == 8
+              printf("D: 0x%016lx\n",t);
+              #else
               printf("D: 0x%016llx\n",t);
+              #endif
            }
            printf("D: END\n");
         }
@@ -872,7 +880,11 @@ namespace Client
            {
               v = data[i];
               t = (uint64_t)v;
+              #if __sizeof_long == 8
+              printf("D: 0x%016lx\n",t);
+              #else
               printf("D: 0x%016llx\n",t);
+              #endif
            }
            printf("D: END\n");
         }

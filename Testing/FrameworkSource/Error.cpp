@@ -89,7 +89,11 @@ void assert_near_equal(unsigned long nb,q63_t pa, q63_t pb, q63_t threshold)
     if (abs(pa - pb) > threshold)
     {
          char details[200];
+         #if __sizeof_long == 8
+         sprintf(details,"diff %ld > %ld (0x%016lX,0x%016lX)",abs(pa - pb) , threshold,pa,pb);
+         #else 
          sprintf(details,"diff %lld > %lld (0x%016llX,0x%016llX)",abs(pa - pb) , threshold,pa,pb);
+         #endif
          throw (Error(EQUAL_ERROR,nb,details));
     }
 };
