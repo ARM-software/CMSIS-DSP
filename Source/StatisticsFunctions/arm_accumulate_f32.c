@@ -42,12 +42,64 @@
  @brief         Accumulation value of a floating-point vector.
  @param[in]     pSrc       points to the input vector.
  @param[in]     blockSize  number of samples in input vector.
- @param[out]    pResult    sum value returned here.
+ @param[out]    pResult    sum of values in input vector.
  @return        none
  */
 
+#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-#if defined(ARM_MATH_NEON_EXPERIMENTAL) && !defined(ARM_MATH_AUTOVECTORIZE)
+#include "arm_helium_utils.h"
+
+void arm_accumulate_f32(
+                        const float32_t * pSrc,
+                        uint32_t blockSize,
+                        float32_t * pResult)
+{
+    f32x4_t vecA;
+    f32x4_t vecSum;
+    uint32_t blkCnt; 
+    float32_t sum = 0.0f;  
+    vecSum = vdupq_n_f32(0.0f);
+
+    /* Compute 4 outputs at a time */
+    blkCnt = blockSize >> 2U;
+    while (blkCnt > 0U)
+    {
+        /*
+         * C = A[0]* B[0] + A[1]* B[1] + A[2]* B[2] + .....+ A[blockSize-1]* B[blockSize-1]
+         * Calculate dot product and then store the result in a temporary buffer.
+         * and advance vector source and destination pointers
+         */
+        vecA = vld1q_f32(pSrc);
+        pSrc += 4;
+        
+        vecSum = vaddq_f32(vecSum, vecA);
+        /*
+         * Decrement the blockSize loop counter
+         */
+        blkCnt --;
+    }
+
+
+    blkCnt = blockSize & 3;
+    if (blkCnt > 0U)
+    {
+        /* C = A[0]* B[0] + A[1]* B[1] + A[2]* B[2] + .....+ A[blockSize-1]* B[blockSize-1] */
+
+        mve_pred16_t p0 = vctp32q(blkCnt);
+        vecA = vld1q(pSrc);
+        vecSum = vaddq_m(vecSum,vecSum, vecA, p0);
+    }
+
+    sum = vecAddAcrossF32Mve(vecSum);
+
+    /* Store result in destination buffer */
+    *pResult = sum;
+}
+
+#else
+
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 void arm_accumulate_f32(
                         const float32_t * pSrc,
                         uint32_t blockSize,
@@ -96,6 +148,7 @@ void arm_accumulate_f32(
   /* Store the result to the destination */
   *pResult = sum;
 }
+
 #else
 void arm_accumulate_f32(
                         const float32_t * pSrc,
@@ -150,7 +203,7 @@ void arm_accumulate_f32(
 }
 #endif /* #if defined(ARM_MATH_NEON) */
 
-
+#endif /* #if defined(ARM_MATH_MVEF) */
 /**
  @} end of Accumulation group
  */

@@ -13,6 +13,7 @@ a double precision computation.
 
 */
 #define REL_ERROR (6.0e-3)
+#define REL_ERROR_ACCUMULATE (7.0e-3)
 
 #define REL_KULLBACK_ERROR (5.0e-3)
 #define ABS_KULLBACK_ERROR (5.0e-3)
@@ -463,6 +464,25 @@ a double precision computation.
         ASSERT_REL_ERROR(result,refp[this->refOffset],(float16_t)REL_ERROR);
 
     }
+
+    void StatsTestsF16::test_accumulate_f16()
+    {
+      const float16_t *inp  = inputA.ptr();
+      const int16_t *dimsp  = dims.ptr();
+
+      float16_t *outp         = output.ptr();
+
+      for(int i=0;i < this->nbPatterns; i++)
+      {
+         arm_accumulate_f16(inp,dimsp[i+1],outp);
+         outp++;
+      }
+
+      ASSERT_SNR(ref,output,(float16_t)SNR_THRESHOLD);
+
+      ASSERT_REL_ERROR(ref,output,REL_ERROR_ACCUMULATE);
+
+    } 
   
     void StatsTestsF16::setUp(Testing::testID_t id,std::vector<Testing::param_t>& paramsArgs,Client::PatternMgr *mgr)
     {
@@ -1103,6 +1123,20 @@ a double precision computation.
                output.create(1,StatsTestsF16::OUT_F16_ID,mgr);
 
                refOffset = 3;
+            }
+            break;
+
+            case StatsTestsF16::TEST_ACCUMULATE_F16_53:
+            {
+               inputA.reload(StatsTestsF16::INPUT_ACCUMULATE_F16_ID,mgr);
+               ref.reload(StatsTestsF16::REF_ACCUMULATE_F16_ID,mgr);
+               dims.reload(StatsTestsF16::INPUT_ACCUMULATE_CONFIG_S16_ID,mgr);
+               output.create(ref.nbSamples(),StatsTestsF16::OUT_F16_ID,mgr);
+
+               const int16_t *dimsp  = dims.ptr();
+               this->nbPatterns=dimsp[0];
+               
+
             }
             break;
         }

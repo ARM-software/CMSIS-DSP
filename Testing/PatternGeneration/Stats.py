@@ -477,8 +477,7 @@ def writeTests(config,nb,format):
 # So new tests have to be added after existing ones
 def writeNewsTests(config,nb,format):
     NBSAMPLES = 300
-    if format==Tools.F16:
-       config.setOverwrite(True)
+    
     data1=np.random.randn(NBSAMPLES)
     data1 = Tools.normalize(data1)
 
@@ -492,8 +491,40 @@ def writeNewsTests(config,nb,format):
 
     config.writeInput(2, data2,"InputNew")
     nb=generateOperatorTests(config,nb,format,data1,data2,mseTest,"MSEVals")
-    config.setOverwrite(False)
 
+    return(nb)
+
+def writeAccumulateTests(config,nb,format):
+    NBSAMPLES = 300
+    data1=np.random.randn(NBSAMPLES)
+
+    # First value is the number of tests
+    # Other values are the number of samples in each test
+    nbsamples = [4]
+    nbiters = Tools.loopnb(format,Tools.TAILONLY)
+    nbsamples.append(nbiters)
+    
+    nbiters = Tools.loopnb(format,Tools.BODYONLY)
+    nbsamples.append(nbiters)
+    
+    nbiters = Tools.loopnb(format,Tools.BODYANDTAIL)
+    nbsamples.append(nbiters)
+
+    nbsamples.append(NBSAMPLES)
+    ref=[]
+
+
+    for nb in nbsamples[1:]:
+        t = np.sum(data1[:nb])
+        ref.append(t)
+
+    config.writeInput(1, data1,"InputAccumulate")
+    config.writeInputS16(1, nbsamples,"InputAccumulateConfig")
+    config.writeReference(1, ref,"RefAccumulate")
+
+    return(nb+1)
+
+    
 
 def generateBenchmark(config,format):
     NBSAMPLES = 256
@@ -536,24 +567,27 @@ def generatePatterns():
 
     nb=writeTests(configf32,1,0)
     nb=writeF32OnlyTests(configf32,22)
-    writeNewsTests(configf32,nb,Tools.F32)
+    nb=writeNewsTests(configf32,nb,Tools.F32)
+    nb=writeAccumulateTests(configf32,nb,Tools.F32)
 
     nb=writeTests(configf64,1,Tools.F64)
     nb=writeF64OnlyTests(configf64,22)
-    writeNewsTests(configf64,nb,Tools.F64)
+    nb=writeNewsTests(configf64,nb,Tools.F64)
+    nb=writeAccumulateTests(configf64,nb,Tools.F64)
 
     nb=writeTests(configq31,1,31)
-    writeNewsTests(configq31,nb,Tools.Q31)
+    nb=writeNewsTests(configq31,nb,Tools.Q31)
 
     nb=writeTests(configq15,1,15)
-    writeNewsTests(configq15,nb,Tools.Q15)
+    nb=writeNewsTests(configq15,nb,Tools.Q15)
 
     nb=writeTests(configq7,1,7)
-    writeNewsTests(configq7,nb,Tools.Q7)
+    nb=writeNewsTests(configq7,nb,Tools.Q7)
 
     nb=writeTests(configf16,1,16)
     nb=writeF16OnlyTests(configf16,22)
-    writeNewsTests(configf16,nb,Tools.F16)
+    nb=writeNewsTests(configf16,nb,Tools.F16)
+    nb=writeAccumulateTests(configf16,nb,Tools.F16)
 
     generateBenchmark(configf64, Tools.F64)
     generateBenchmark(configf32, Tools.F32)

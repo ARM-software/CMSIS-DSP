@@ -42,10 +42,10 @@
  @brief         Accumulation value of a floating-point vector.
  @param[in]     pSrc       points to the input vector.
  @param[in]     blockSize  number of samples in input vector.
- @param[out]    pResult    sum value returned here.
+ @param[out]    pResult    sum of values in input vector.
  @return        none
  */
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && defined(__aarch64__)
 void arm_accumulate_f64(
                         const float64_t * pSrc,
                         uint32_t blockSize,

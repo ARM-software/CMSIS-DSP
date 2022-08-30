@@ -54,6 +54,10 @@ group Root {
 
               Pattern MSE_F16_ID : MSEVals28_f16.txt
 
+              Pattern INPUT_ACCUMULATE_F16_ID : InputAccumulate1_f16.txt
+              Pattern INPUT_ACCUMULATE_CONFIG_S16_ID : InputAccumulateConfig1_s16.txt
+              Pattern REF_ACCUMULATE_F16_ID : RefAccumulate1_f16.txt
+
               Output  OUT_F16_ID : Output
               Output  OUT_S16_ID : Index
               Output  TMP_F16_ID : Temp
@@ -127,6 +131,7 @@ group Root {
                 Test nb=8n   arm_mse_f16:test_mse_f16
                 Test nb=8n+1 arm_mse_f16:test_mse_f16
                 Test long    arm_mse_f16:test_mse_f16
+                Test combined arm_accumulate_f16:test_accumulate_f16
               }
            }
         }

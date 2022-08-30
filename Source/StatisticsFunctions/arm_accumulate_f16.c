@@ -36,7 +36,7 @@
  */
 
 /**
- @defgroup Accumulation
+ @defgroup Accumulation Accumulation functions
  
  Calculates the accumulation of the input vector. Sum is defined as the addition of the elements in the vector.
  The underlying algorithm is used:
@@ -57,7 +57,7 @@
  @brief         accumulate value of a floating-point vector.
  @param[in]     pSrc       points to the input vector.
  @param[in]     blockSize  number of samples in input vector.
- @param[out]    pResult    sum value returned here.
+ @param[out]    pResult    sum of values in input vector.
  @return        none
  */
 
@@ -67,7 +67,7 @@ void arm_accumulate_f16(
                         float16_t * pResult)
 {
   uint32_t blkCnt;                               /* Loop counter */
-  float16_t sum = 0.0f;                          /* Temporary result storage */
+  float16_t sum = 0.0f16;                          /* Temporary result storage */
   
 #if defined (ARM_MATH_LOOPUNROLL) && !defined(ARM_MATH_AUTOVECTORIZE)
   

@@ -458,6 +458,25 @@ a double precision computation.
         ASSERT_REL_ERROR(result,refp[this->refOffset],(float32_t)REL_ERROR);
 
     }
+
+    void StatsTestsF32::test_accumulate_f32()
+    {
+      const float32_t *inp  = inputA.ptr();
+      const int16_t *dimsp  = dims.ptr();
+
+      float32_t *outp         = output.ptr();
+
+      for(int i=0;i < this->nbPatterns; i++)
+      {
+         arm_accumulate_f32(inp,dimsp[i+1],outp);
+         outp++;
+      }
+
+      ASSERT_SNR(ref,output,(float32_t)SNR_THRESHOLD);
+
+      ASSERT_REL_ERROR(ref,output,REL_ERROR);
+
+    } 
   
 
     void StatsTestsF32::setUp(Testing::testID_t id,std::vector<Testing::param_t>& paramsArgs,Client::PatternMgr *mgr)
@@ -1099,6 +1118,20 @@ a double precision computation.
                output.create(1,StatsTestsF32::OUT_F32_ID,mgr);
 
                refOffset = 3;
+            }
+            break;
+
+            case StatsTestsF32::TEST_ACCUMULATE_F32_53:
+            {
+               inputA.reload(StatsTestsF32::INPUT_ACCUMULATE_F32_ID,mgr);
+               ref.reload(StatsTestsF32::REF_ACCUMULATE_F32_ID,mgr);
+               dims.reload(StatsTestsF32::INPUT_ACCUMULATE_CONFIG_S16_ID,mgr);
+               output.create(ref.nbSamples(),StatsTestsF32::OUT_F32_ID,mgr);
+
+               const int16_t *dimsp  = dims.ptr();
+               this->nbPatterns=dimsp[0];
+               
+
             }
             break;
 
