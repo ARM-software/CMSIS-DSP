@@ -1923,6 +1923,34 @@ cmsis_arm_entropy_f32(PyObject *obj, PyObject *args)
 }
 
 static PyObject *
+cmsis_arm_accumulate_f32(PyObject *obj, PyObject *args)
+{
+
+  PyObject *pSrc=NULL; // input
+  float32_t *pSrc_converted=NULL; // input
+  uint32_t blockSize; // input
+  float32_t pResult; // output
+
+  if (PyArg_ParseTuple(args,"O",&pSrc))
+  {
+
+    GETARGUMENT(pSrc,NPY_DOUBLE,double,float32_t);
+    blockSize = arraySizepSrc ;
+
+    arm_accumulate_f32(pSrc_converted,blockSize,&pResult);
+    PyObject* pResultOBJ=Py_BuildValue("f",pResult);
+
+    PyObject *pythonResult = Py_BuildValue("O",pResultOBJ);
+
+    FREEARGUMENT(pSrc_converted);
+    Py_DECREF(pResultOBJ);
+    return(pythonResult);
+
+  }
+  return(NULL);
+}
+
+static PyObject *
 cmsis_arm_entropy_f64(PyObject *obj, PyObject *args)
 {
 
@@ -1938,6 +1966,34 @@ cmsis_arm_entropy_f64(PyObject *obj, PyObject *args)
     blockSize = arraySizepSrc ;
 
     pResult=arm_entropy_f64(pSrc_converted,blockSize);
+    PyObject* pResultOBJ=Py_BuildValue("d",pResult);
+
+    PyObject *pythonResult = Py_BuildValue("O",pResultOBJ);
+
+    FREEARGUMENT(pSrc_converted);
+    Py_DECREF(pResultOBJ);
+    return(pythonResult);
+
+  }
+  return(NULL);
+}
+
+static PyObject *
+cmsis_arm_accumulate_f64(PyObject *obj, PyObject *args)
+{
+
+  PyObject *pSrc=NULL; // input
+  float64_t *pSrc_converted=NULL; // input
+  uint32_t blockSize; // input
+  float64_t pResult; // output
+
+  if (PyArg_ParseTuple(args,"O",&pSrc))
+  {
+
+    GETARGUMENT(pSrc,NPY_DOUBLE,double,float64_t);
+    blockSize = arraySizepSrc ;
+
+    arm_accumulate_f64(pSrc_converted,blockSize,&pResult);
     PyObject* pResultOBJ=Py_BuildValue("d",pResult);
 
     PyObject *pythonResult = Py_BuildValue("O",pResultOBJ);
@@ -2345,6 +2401,8 @@ static PyMethodDef CMSISDSPMethods[] = {
 {"arm_mse_q31", cmsis_arm_mse_q31, METH_VARARGS,""},
 {"arm_mse_f32", cmsis_arm_mse_f32, METH_VARARGS,""},
 {"arm_mse_f64", cmsis_arm_mse_f64, METH_VARARGS,""},
+{"arm_accumulate_f32", cmsis_arm_accumulate_f32, METH_VARARGS,""},
+{"arm_accumulate_f64", cmsis_arm_accumulate_f64, METH_VARARGS,""},
 
 
     {"error_out", (PyCFunction)error_out, METH_NOARGS, NULL},

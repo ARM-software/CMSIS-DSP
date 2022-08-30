@@ -19,11 +19,11 @@ from cmsisdsp_svm import *
 __version__ = cmsisdsp.version.__version__
 
 # CMSIS-DSP Version used to build the wrapper
-cmsis_dsp_version="1.10.2"
+cmsis_dsp_version="1.12.0"
 
 
 # CMSIS-DSP Commit hash used to build the wrapper
-commit_hash="91f599c052d9790d55210981526e9f607bb85cd2"
+commit_hash="7a8b3da85e97808b6b467377c93d447cfa6a6a6d"
 
 # True if development version of CMSIS-DSP used
 # (So several CMSIS-DSP versions may have same version number hence the commit hash)
