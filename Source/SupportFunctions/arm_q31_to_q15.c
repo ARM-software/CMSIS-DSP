@@ -58,7 +58,7 @@ void arm_q31_to_q15(
 {
     uint32_t  blkCnt;           /* loop counters */
     q31x4x2_t tmp;
-    q15x8_t vecDst;
+    q15x8_t vecDst = { 0 };
     q31_t const *pSrcVec;
 
 

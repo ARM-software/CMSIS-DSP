@@ -62,7 +62,7 @@ arm_status arm_mat_add_f16(
     arm_status status;  
     uint32_t  numSamples;       /* total number of elements in the matrix  */
     float16_t *pDataA, *pDataB, *pDataDst;
-    f16x8_t vecA, vecB, vecDst;
+    f16x8_t vecA, vecB, vecDst = { 0 };
     float16_t const *pSrcAVec;
     float16_t const *pSrcBVec;
     uint32_t  blkCnt;           /* loop counters */

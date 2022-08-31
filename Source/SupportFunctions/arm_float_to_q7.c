@@ -67,8 +67,8 @@ void arm_float_to_q7(
     uint32_t         blkCnt;     /* loop counters */
     float32_t       maxQ = powf(2.0, 7);
     f32x4x4_t       tmp;
-    q15x8_t         evVec, oddVec;
-    q7x16_t         vecDst;
+    q15x8_t         evVec = { 0 }, oddVec = { 0 };
+    q7x16_t         vecDst = { 0 };
     float32_t const *pSrcVec;
 #ifdef ARM_MATH_ROUNDING
     float32_t in;
