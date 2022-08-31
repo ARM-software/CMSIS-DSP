@@ -58,8 +58,8 @@ void arm_q31_to_q7(
 {
     uint32_t  blkCnt;           /* loop counters */
     q31x4x4_t tmp;
-    q15x8_t evVec, oddVec;
-    q7x16_t  vecDst;
+    q15x8_t evVec = { 0 }, oddVec = { 0 };
+    q7x16_t  vecDst = { 0 };
     q31_t const *pSrcVec;
 
     pSrcVec = (q31_t const *) pSrc;

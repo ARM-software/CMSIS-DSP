@@ -58,7 +58,7 @@ arm_status arm_mat_sub_q31(
 {
     uint32_t        numSamples;       /* total number of elements in the matrix  */
     q31_t          *pDataA, *pDataB, *pDataDst;
-    q31x4_t       vecA, vecB, vecDst;
+    q31x4_t       vecA, vecB, vecDst = { 0 };
     q31_t const   *pSrcAVec;
     q31_t const   *pSrcBVec;
     uint32_t        blkCnt;           /* loop counters */

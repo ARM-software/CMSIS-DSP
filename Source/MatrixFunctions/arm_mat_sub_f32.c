@@ -85,7 +85,7 @@ arm_status arm_mat_sub_f32(
     arm_status status;                             /* status of matrix subtraction */
     uint32_t  numSamples;       /* total number of elements in the matrix  */
     float32_t *pDataA, *pDataB, *pDataDst;
-    f32x4_t vecA, vecB, vecDst;
+    f32x4_t vecA, vecB, vecDst = { 0 };
     float32_t const *pSrcAVec;
     float32_t const *pSrcBVec;
     uint32_t  blkCnt;           /* loop counters */

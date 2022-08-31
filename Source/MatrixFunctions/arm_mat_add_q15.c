@@ -59,7 +59,7 @@ arm_status arm_mat_add_q15(
 {
     uint32_t        numSamples;       /* total number of elements in the matrix  */
     q15_t          *pDataA, *pDataB, *pDataDst;
-    q15x8_t       vecA, vecB, vecDst;
+    q15x8_t       vecA, vecB, vecDst = { 0 };
     q15_t const   *pSrcAVec;
     q15_t const   *pSrcBVec;
     uint32_t        blkCnt;           /* loop counters */

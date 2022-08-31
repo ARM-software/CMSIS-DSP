@@ -59,7 +59,7 @@ arm_status arm_mat_add_q31(
     arm_status status;                             /* status of matrix addition */
     uint32_t        numSamples;       /* total number of elements in the matrix  */
     q31_t          *pDataA, *pDataB, *pDataDst;
-    q31x4_t       vecA, vecB, vecDst;
+    q31x4_t       vecA, vecB, vecDst = { 0 };
     q31_t const   *pSrcAVec;
     q31_t const   *pSrcBVec;
     uint32_t        blkCnt;           /* loop counters */
