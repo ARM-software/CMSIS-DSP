@@ -63,8 +63,18 @@ static uint32_t startCycles=0;
 #if defined(CORTEXA) || defined(CORTEXR)
 #if !defined(__GNUC_PYTHON__)
 #include "cmsis_cp15.h"
+#else
+#if defined(__aarch64__)
+#include "timing_aarch64.h"
+#define AARCH64_TIMING
 #endif
+#endif
+
+#if defined(CORTEXA) && defined(AARCH64_TIMING)
+unsigned long long startCycles;
+#else
 unsigned int startCycles;
+#endif 
 
 #define DO_RESET 1
 #define ENABLE_DIVIDER 0 
@@ -84,9 +94,9 @@ void initCycleMeasurement()
 #endif 
 
 #if defined(CORTEXA) || defined(CORTEXR)
+#if !defined(AARCH64_TIMING)
 
     // in general enable all counters (including cycle counter)
-    #if !defined(__GNUC_PYTHON__)
     int32_t   value = 1;
     
 
@@ -99,10 +109,8 @@ void initCycleMeasurement()
 
     if (ENABLE_DIVIDER)
         value |= 8;             // enable "by 64" divider for CCNT.
-    #endif
     //value |= 16;
 
-#if !defined(__GNUC_PYTHON__)
     // program the performance-counter control-register:
     __set_CP(15, 0, value, 9, 12, 0);
 
@@ -117,6 +125,8 @@ void initCycleMeasurement()
       value = value | (0x8000 << 12);
       __set_CP(15, 0, value, 14, 15, 7);
     #endif
+#else
+      enable_timing();
 #endif
 #endif
 #endif
@@ -143,11 +153,15 @@ void cycleMeasurementStart()
     
 #endif
 
-#if (defined(CORTEXA) || defined(CORTEXR)) && !defined(__GNUC_PYTHON__)
+#if (defined(CORTEXA) || defined(CORTEXR))
+    #if !defined(AARCH64_TIMING)
     unsigned int value;
     // Read CCNT Register
     __get_CP(15, 0, value, 9, 13, 0);
     startCycles =  value;
+    #else 
+    startCycles = readCCNT();
+    #endif
 #endif
 #endif 
 #endif
@@ -193,14 +207,18 @@ return(0);
     #endif
 #endif 
 
-#if (defined(CORTEXA) || defined(CORTEXR)) && !defined(__GNUC_PYTHON__)
+#if (defined(CORTEXA) || defined(CORTEXR))
+    #if !defined(AARCH64_TIMING)
     unsigned int value;
     // Read CCNT Register
     __get_CP(15, 0, value, 9, 13, 0);
     return(value - startCycles);
-#endif
-#endif
-    #if defined(__GNUC_PYTHON__)
-    return(0);
+    #else
+    unsigned long long value;
+    value = readCCNT();
+    return((Testing::cycles_t)(value - startCycles));
     #endif
+#endif
+#endif
+   
 }
