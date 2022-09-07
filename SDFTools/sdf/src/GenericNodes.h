@@ -163,6 +163,35 @@ private:
     FIFOBase<OUT2> &mDst2;
 };
 
+template<typename IN,   int inputSize,
+         typename OUT1, int output1Size,
+         typename OUT2, int output2Size,
+         typename OUT3, int output3Size>
+class GenericNode13:public NodeBase
+{
+public:
+     GenericNode13(FIFOBase<IN> &src,
+                   FIFOBase<OUT1> &dst1,
+                   FIFOBase<OUT2> &dst2,
+                   FIFOBase<OUT3> &dst3
+                   ):mSrc(src),
+     mDst1(dst1),mDst2(dst2),mDst3(dst3){};
+
+protected:
+     OUT1 * getWriteBuffer1(){return mDst1.getWriteBuffer(output1Size);};
+     OUT2 * getWriteBuffer2(){return mDst2.getWriteBuffer(output2Size);};
+     OUT3 * getWriteBuffer3(){return mDst3.getWriteBuffer(output3Size);};
+
+     IN * getReadBuffer(){return mSrc.getReadBuffer(inputSize);};
+
+private:
+    FIFOBase<IN> &mSrc;
+    FIFOBase<OUT1> &mDst1;
+    FIFOBase<OUT2> &mDst2;
+    FIFOBase<OUT3> &mDst3;
+
+};
+
 template<typename IN1, int input1Size,typename IN2, int input2Size,typename OUT, int outputSize>
 class GenericNode21:public NodeBase
 {
@@ -284,6 +313,72 @@ public:
     };
 protected:
     std::vector<IN> memory;
+
+};
+
+template<typename IN, int inputSize,typename OUT1,int output1Size,typename OUT2,int output2Size>
+class Duplicate2;
+
+template<typename IN, int inputSize>
+class Duplicate2<IN,inputSize,IN,inputSize,IN,inputSize>: public GenericNode12<IN,inputSize,IN,inputSize,IN,inputSize>
+{
+public:
+    Duplicate2(FIFOBase<IN> &src,FIFOBase<IN> &dst1,FIFOBase<IN> &dst2):
+    GenericNode12<IN,inputSize,IN,inputSize,IN,inputSize>(src,dst1,dst2){};
+
+    int run(){
+        IN *a=this->getReadBuffer();
+        IN *b1=this->getWriteBuffer1();
+        IN *b2=this->getWriteBuffer2();
+        for(int i = 0; i<inputSize; i++)
+        {
+           b1[i] = a[i];
+           b2[i] = a[i];
+        }
+        return(0);
+    };
+
+};
+
+template<typename IN, int inputSize,
+         typename OUT1,int output1Size,
+         typename OUT2,int output2Size,
+         typename OUT3,int output3Size>
+class Duplicate3;
+
+template<typename IN, int inputSize>
+class Duplicate3<IN,inputSize,
+                 IN,inputSize,
+                 IN,inputSize,
+                 IN,inputSize>: 
+                 public GenericNode13<IN,inputSize,
+                                      IN,inputSize,
+                                      IN,inputSize,
+                                      IN,inputSize>
+{
+public:
+    Duplicate3(FIFOBase<IN> &src,
+               FIFOBase<IN> &dst1,
+               FIFOBase<IN> &dst2,
+               FIFOBase<IN> &dst3):
+    GenericNode13<IN,inputSize,
+                  IN,inputSize,
+                  IN,inputSize,
+                  IN,inputSize>(src,dst1,dst2,dst2){};
+
+    int run(){
+        IN *a=this->getReadBuffer();
+        IN *b1=this->getWriteBuffer1();
+        IN *b2=this->getWriteBuffer2();
+        IN *b3=this->getWriteBuffer3();
+        for(int i = 0; i<inputSize; i++)
+        {
+           b1[i] = a[i];
+           b2[i] = a[i];
+           b3[i] = a[i];
+        }
+        return(0);
+    };
 
 };
 

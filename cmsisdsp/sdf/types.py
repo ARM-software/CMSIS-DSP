@@ -55,6 +55,36 @@ class SDFType:
     def bytes(self):
        return(0)
 
+class CStructType(SDFType):
+   """A C structure
+
+      All structures with same name must have same size in bytes
+      Name must be a valid C and Python identifier
+   """
+   def __init__(self,name,python_name,size_in_bytes):
+        self._name=name 
+        self._python_name=python_name 
+        self._size_in_bytes=size_in_bytes
+
+   def __eq__(self, other):
+      return(SDFType.__eq__(self,other) and self._name == other._name)
+
+   @property
+   def bytes(self):
+       return(self._size_in_bytes)
+
+   @property
+   def ctype(self):
+      return(self._name)
+
+   @property
+   def nptype(self):
+      return(self._python_name)
+
+   @property
+   def graphViztype(self):
+      return(self._name)
+
 class CType(SDFType):
     """A C Scalar element"""
     def __init__(self,typeid):

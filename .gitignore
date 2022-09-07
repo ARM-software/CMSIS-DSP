@@ -27,3 +27,4 @@ Documentation/html/*
 Doxygen/history.txt
 Doxygen/dsp.dxy
 __pycache__/
+*.pyd

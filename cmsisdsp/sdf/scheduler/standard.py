@@ -136,6 +136,31 @@ class MFCC(GenericNode):
     def typeName(self):
         return "MFCC"
 
+class Duplicate2(GenericNode):
+    def __init__(self,name,theType,inLength):
+        GenericNode.__init__(self,name)
+
+        self.addInput("i",theType,inLength)
+        self.addOutput("oa",theType,inLength)
+        self.addOutput("ob",theType,inLength)
+
+    @property
+    def typeName(self):
+        return "Duplicate2"
+
+class Duplicate3(GenericNode):
+    def __init__(self,name,theType,inLength):
+        GenericNode.__init__(self,name)
+
+        self.addInput("i",theType,inLength)
+        self.addOutput("oa",theType,inLength)
+        self.addOutput("ob",theType,inLength)
+        self.addOutput("oc",theType,inLength)
+
+    @property
+    def typeName(self):
+        return "Duplicate3"
+
 #############################
 #
 # Host only Nodes
