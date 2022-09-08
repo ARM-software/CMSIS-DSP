@@ -99,7 +99,32 @@ Once it is done, we can start creating instance of those nodes. We will also nee
 floatType=CType(F32)
 ```
 
-Now, we can define the nodes for the graph:
+It is also possible to use a custom datatype, the `example8` is giving an example:
+
+```python
+complexType=CStructType("complex","MyComplex",8)
+```
+
+This is defining a new datatype that is mapped to the type `complex` in C/C++ and the class `MyComplex` in Python. The last argument is the size in bytes of the struct in C.
+
+The type complex may be defined with:
+
+```c
+typedef struct {
+    float re;
+    float im;
+} complex;
+```
+
+**Note that:**
+
+- The value **must have** value semantic in C/C++. So avoid classes 
+- In Python, the classes have reference semantic which implies some constraints:
+  - You should never modify an object from the read buffer 
+  - You should change the field of an object in the write buffer
+  - If you need a new object : copy or create a new object. Never use an object from the read buffer as it is if you intend to customize it
+
+Once a datatype has been defined and chosen, we can define the nodes for the graph:
 
 ```python
 src=Source("source",floatType,5)
