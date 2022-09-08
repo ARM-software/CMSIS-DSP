@@ -42,7 +42,7 @@ public:
         printf("Sink\n");
         for(int i=0;i<inputSize;i++)
         {
-            std::cout << b[i].re << " + I" << b[i].im << std::endl;
+            std::cout << b[i].re << " + I " << b[i].im << std::endl;
         }
         return(0);
     };

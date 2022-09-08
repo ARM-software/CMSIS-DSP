@@ -22,19 +22,34 @@ DEBUGSCHED=False
 
 
 FIFOSIZE0=384
-buf0=np.zeros(FIFOSIZE0,dtype=np.int16)
+
+buf0=np.empty(FIFOSIZE0,dtype=np.int16)
+for i in range(FIFOSIZE0):
+    buf0[i] = 0
 
 FIFOSIZE1=768
-buf1=np.zeros(FIFOSIZE1,dtype=np.int16)
+
+buf1=np.empty(FIFOSIZE1,dtype=np.int16)
+for i in range(FIFOSIZE1):
+    buf1[i] = 0
 
 FIFOSIZE2=1024
-buf2=np.zeros(FIFOSIZE2,dtype=np.int16)
+
+buf2=np.empty(FIFOSIZE2,dtype=np.int16)
+for i in range(FIFOSIZE2):
+    buf2[i] = 0
 
 FIFOSIZE3=377
-buf3=np.zeros(FIFOSIZE3,dtype=np.int16)
+
+buf3=np.empty(FIFOSIZE3,dtype=np.int16)
+for i in range(FIFOSIZE3):
+    buf3[i] = 0
 
 FIFOSIZE4=754
-buf4=np.zeros(FIFOSIZE4,dtype=np.int16)
+
+buf4=np.empty(FIFOSIZE4,dtype=np.int16)
+for i in range(FIFOSIZE4):
+    buf4[i] = 0
 
 
 def scheduler(mfccConfig,dispbuf):

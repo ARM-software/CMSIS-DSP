@@ -31,7 +31,10 @@ DEBUGSCHED=False
 
 {% for id in range(nbFifos) %}
 FIFOSIZE{{id}}={{fifos[id].length}}
-{{config.prefix}}buf{{id}}=np.zeros(FIFOSIZE{{id}},dtype=np.{{fifos[id].theType.nptype}})
+
+{{config.prefix}}buf{{id}}=np.empty(FIFOSIZE{{id}},dtype={{fifos[id].theType.nptype}})
+for i in range(FIFOSIZE{{id}}):
+    {{config.prefix}}buf{{id}}[i] = {{fifos[id].theType.fillValue}}
 
 {% endfor %}
 

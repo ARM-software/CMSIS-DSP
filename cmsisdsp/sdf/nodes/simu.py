@@ -29,6 +29,7 @@
 """
 
 import numpy as np 
+import copy
 
 class FIFOBase:
     pass 
@@ -43,7 +44,17 @@ class FIFO(FIFOBase):
     def getWriteBuffer(self,nb):
 
         if (self._readPos > 0):
-            self._buffer[:self._writePos-self._readPos] = self._buffer[self._readPos:self._writePos]
+            # The objects are recycled because contrary to C++
+            # the objects don't have value semantic but reference
+            # semantic.
+            # We want to be sure that we don't create sharing by
+            # copying references 
+            # So if we have N distincts objects before, we must have
+            # N distinct object afters (but permuted circularly)
+            temp = np.empty(self._readPos,dtype=self._buffer.dtype)
+            temp[:] = self._buffer[:self._readPos]
+            self._buffer[:-self._readPos] = self._buffer[self._readPos:]
+            self._buffer[-self._readPos:] = temp[:]
             self._writePos = self._writePos - self._readPos
             self._readPos = 0
         
@@ -94,6 +105,30 @@ class GenericNode12:
 
     def getReadBuffer(self):
         return(self._src.getReadBuffer(self._inputSize))
+
+class GenericNode13:
+    def __init__(self,inputSize, outputSize1,outputSize2,outputSize3,fifoin,fifoout1,fifoout2,fifoout3):
+        self._src = fifoin
+        self._dst1 = fifoout1 
+        self._dst2 = fifoout2 
+        self._dst3 = fifoout3
+        self._inputSize = inputSize 
+        self._outputSize1 = outputSize1
+        self._outputSize2 = outputSize2
+        self._outputSize3 = outputSize3
+
+    def getWriteBuffer1(self):
+        return(self._dst1.getWriteBuffer(self._outputSize1))
+
+    def getWriteBuffer2(self):
+        return(self._dst2.getWriteBuffer(self._outputSize2))
+
+    def getWriteBuffer3(self):
+        return(self._dst3.getWriteBuffer(self._outputSize3))
+
+    def getReadBuffer(self):
+        return(self._src.getReadBuffer(self._inputSize))
+
 
 class GenericNode21:
     def __init__(self,inputSize1,inputSize2, outputSize,fifoin1,fifoin2,fifoout):

@@ -364,7 +364,7 @@ public:
     GenericNode13<IN,inputSize,
                   IN,inputSize,
                   IN,inputSize,
-                  IN,inputSize>(src,dst1,dst2,dst2){};
+                  IN,inputSize>(src,dst1,dst2,dst3){};
 
     int run(){
         IN *a=this->getReadBuffer();

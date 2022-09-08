@@ -22,28 +22,52 @@ DEBUGSCHED=False
 
 
 FIFOSIZE0=256
-buf0=np.zeros(FIFOSIZE0,dtype=np.float32)
+
+buf0=np.empty(FIFOSIZE0,dtype=np.float32)
+for i in range(FIFOSIZE0):
+    buf0[i] = 0
 
 FIFOSIZE1=256
-buf1=np.zeros(FIFOSIZE1,dtype=np.float32)
+
+buf1=np.empty(FIFOSIZE1,dtype=np.float32)
+for i in range(FIFOSIZE1):
+    buf1[i] = 0
 
 FIFOSIZE2=256
-buf2=np.zeros(FIFOSIZE2,dtype=np.float32)
+
+buf2=np.empty(FIFOSIZE2,dtype=np.float32)
+for i in range(FIFOSIZE2):
+    buf2[i] = 0
 
 FIFOSIZE3=512
-buf3=np.zeros(FIFOSIZE3,dtype=np.float32)
+
+buf3=np.empty(FIFOSIZE3,dtype=np.float32)
+for i in range(FIFOSIZE3):
+    buf3[i] = 0
 
 FIFOSIZE4=512
-buf4=np.zeros(FIFOSIZE4,dtype=np.float32)
+
+buf4=np.empty(FIFOSIZE4,dtype=np.float32)
+for i in range(FIFOSIZE4):
+    buf4[i] = 0
 
 FIFOSIZE5=512
-buf5=np.zeros(FIFOSIZE5,dtype=np.float32)
+
+buf5=np.empty(FIFOSIZE5,dtype=np.float32)
+for i in range(FIFOSIZE5):
+    buf5[i] = 0
 
 FIFOSIZE6=256
-buf6=np.zeros(FIFOSIZE6,dtype=np.float32)
+
+buf6=np.empty(FIFOSIZE6,dtype=np.float32)
+for i in range(FIFOSIZE6):
+    buf6[i] = 0
 
 FIFOSIZE7=256
-buf7=np.zeros(FIFOSIZE7,dtype=np.float32)
+
+buf7=np.empty(FIFOSIZE7,dtype=np.float32)
+for i in range(FIFOSIZE7):
+    buf7[i] = 0
 
 
 def scheduler(dispbuf):

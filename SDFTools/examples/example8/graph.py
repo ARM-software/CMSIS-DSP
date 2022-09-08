@@ -34,7 +34,15 @@ class ProcessingNode(Node):
 
 
 ### Define nodes
-complexType=CStructType("complex","Complex",8)
+# Node datatype
+# WARNING : In Python there is reference semantic for
+# the objects. But in C++, the struct have value semantic.
+# So in Python implementation of the node, the reference
+# shoudl never be shared. 
+# Modify the fields of the objects, or create a totally new
+# object.
+
+complexType=CStructType("complex","MyComplex",8)
 
 src=Source("source",complexType,5)
 b=ProcessingNode("filter",complexType,7,5)
@@ -65,15 +73,23 @@ conf.cOptionalArgs="int someVariable"
 #conf.prefix="sched1"
 
 #print(g.nullVector())
-sched = g.computeSchedule()
+sched1 = g.computeSchedule()
 #print(sched.schedule)
-print("Schedule length = %d" % sched.scheduleLength)
-print("Memory usage %d bytes" % sched.memory)
+print("Schedule length = %d" % sched1.scheduleLength)
+print("Memory usage %d bytes" % sched1.memory)
 #
 
 #conf.codeArray=True
-sched.ccode("generated",conf)
+# C++ implementation
+sched1.ccode("generated",conf)
+
+sched2 = g.computeSchedule()
+# Python implementation
+#conf.prefix="sched1"
+conf.pyOptionalArgs="someVariable"
+#conf.dumpFIFO=True
+sched2.pythoncode(".",config=conf)
 
 with open("test.dot","w") as f:
-    sched.graphviz(f)
+    sched1.graphviz(f)
 

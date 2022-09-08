@@ -22,10 +22,16 @@ DEBUGSCHED=False
 
 
 FIFOSIZE0=128
-buf0=np.zeros(FIFOSIZE0,dtype=np.int16)
+
+buf0=np.empty(FIFOSIZE0,dtype=np.int16)
+for i in range(FIFOSIZE0):
+    buf0[i] = 0
 
 FIFOSIZE1=128
-buf1=np.zeros(FIFOSIZE1,dtype=np.int16)
+
+buf1=np.empty(FIFOSIZE1,dtype=np.int16)
+for i in range(FIFOSIZE1):
+    buf1[i] = 0
 
 
 def scheduler():

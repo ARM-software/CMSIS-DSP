@@ -55,6 +55,11 @@ class SDFType:
     def bytes(self):
        return(0)
 
+    @property
+    def fillValue(self):
+        return(0)
+       
+
 class CStructType(SDFType):
    """A C structure
 
@@ -70,6 +75,10 @@ class CStructType(SDFType):
       return(SDFType.__eq__(self,other) and self._name == other._name)
 
    @property
+   def fillValue(self):
+        return("%s()" % self._python_name) 
+
+   @property
    def bytes(self):
        return(self._size_in_bytes)
 
@@ -79,7 +88,7 @@ class CStructType(SDFType):
 
    @property
    def nptype(self):
-      return(self._python_name)
+      return("object")
 
    @property
    def graphViztype(self):
@@ -151,29 +160,29 @@ class CType(SDFType):
     @property
     def nptype(self):
         if self._id == F64:
-           return("float64")
+           return("np.float64")
         elif self._id == F32:
-           return("float32")
+           return("np.float32")
         elif self._id == F16:
-           return("float16")
+           return("np.float16")
         elif self._id == Q31:
-           return("int32")
+           return("np.int32")
         elif self._id == Q15:
-           return("int16")
+           return("np.int16")
         elif self._id == Q7:
-           return("int8")
+           return("np.int8")
         elif self._id == UINT32:
-           return("uint32")
+           return("np.uint32")
         elif self._id == UINT16:
            return("uint16")
         elif self._id == UINT8:
-           return("uint8")
+           return("np.uint8")
         elif self._id == SINT32:
-           return("int32")
+           return("np.int32")
         elif self._id == SINT16:
-           return("int16")
+           return("np.int16")
         elif self._id == SINT8:
-           return("int8")
+           return("np.int8")
         else:
            return("void")
 
