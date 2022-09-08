@@ -51,6 +51,12 @@ buf4=np.empty(FIFOSIZE4,dtype=object)
 for i in range(FIFOSIZE4):
     buf4[i] = MyComplex()
 
+FIFOSIZE5=5
+
+buf5=np.empty(FIFOSIZE5,dtype=object)
+for i in range(FIFOSIZE5):
+    buf5[i] = MyComplex()
+
 
 def scheduler(someVariable):
     sdfError=0
@@ -65,15 +71,17 @@ def scheduler(someVariable):
     fifo2=FIFO(FIFOSIZE2,buf2)
     fifo3=FIFO(FIFOSIZE3,buf3)
     fifo4=FIFO(FIFOSIZE4,buf4)
+    fifo5=FIFO(FIFOSIZE5,buf5)
 
     # 
     #  Create node objects
     #
-    dup = Duplicate3(5,5,5,5,fifo1,fifo2,fifo3,fifo4)
-    filter = ProcessingNode(7,5,fifo0,fifo1,4,"Test",someVariable)
-    sa = Sink(5,fifo2)
-    sb = Sink(5,fifo3)
-    sc = Sink(5,fifo4)
+    dup0 = Duplicate3(5,5,5,5,fifo2,fifo3,fifo4,fifo5)
+    filter = ProcessingNode(7,5,5,fifo0,fifo2,fifo1,4,"Test",someVariable)
+    sa = Sink(5,fifo3)
+    sb = Sink(5,fifo4)
+    sc = Sink(5,fifo5)
+    sd = Sink(5,fifo1)
     source = Source(5,fifo0)
 
     while((sdfError==0) and (debugCounter > 0)):
@@ -88,7 +96,10 @@ def scheduler(someVariable):
        sdfError = filter.run()
        if sdfError < 0:
           break
-       sdfError = dup.run()
+       sdfError = sd.run()
+       if sdfError < 0:
+          break
+       sdfError = dup0.run()
        if sdfError < 0:
           break
        sdfError = sc.run()
@@ -109,7 +120,10 @@ def scheduler(someVariable):
        sdfError = source.run()
        if sdfError < 0:
           break
-       sdfError = dup.run()
+       sdfError = sd.run()
+       if sdfError < 0:
+          break
+       sdfError = dup0.run()
        if sdfError < 0:
           break
        sdfError = sc.run()
@@ -127,7 +141,10 @@ def scheduler(someVariable):
        sdfError = filter.run()
        if sdfError < 0:
           break
-       sdfError = dup.run()
+       sdfError = sd.run()
+       if sdfError < 0:
+          break
+       sdfError = dup0.run()
        if sdfError < 0:
           break
        sdfError = sc.run()
@@ -148,7 +165,10 @@ def scheduler(someVariable):
        sdfError = source.run()
        if sdfError < 0:
           break
-       sdfError = dup.run()
+       sdfError = sd.run()
+       if sdfError < 0:
+          break
+       sdfError = dup0.run()
        if sdfError < 0:
           break
        sdfError = sc.run()
@@ -163,7 +183,10 @@ def scheduler(someVariable):
        sdfError = filter.run()
        if sdfError < 0:
           break
-       sdfError = dup.run()
+       sdfError = sd.run()
+       if sdfError < 0:
+          break
+       sdfError = dup0.run()
        if sdfError < 0:
           break
        sdfError = sc.run()

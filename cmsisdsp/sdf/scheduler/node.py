@@ -54,7 +54,7 @@ class IO:
         self._nbSamples = nbSamples 
         self._owner = owner
         self._name = name
-        self._fifo = None 
+        self._fifo = [] 
         self.constantNode = None
 
     @property
@@ -212,6 +212,10 @@ class BaseNode:
 
     @property
     def isConstantNode(self):
+        return False
+
+    @property 
+    def isDuplicateNode(self):
         return False
 
     @property

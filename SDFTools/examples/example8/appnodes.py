@@ -44,14 +44,15 @@ class Sink(GenericSink):
             print("%f + I %f" % (c.re,c.im))
         return(0)
 
-class ProcessingNode(GenericNode): 
-    def __init__(self,inputSize,outputSize,fifoin,fifoout,i,s,v):
-        GenericNode.__init__(self,inputSize,outputSize,fifoin,fifoout)
+class ProcessingNode(GenericNode12): 
+    def __init__(self,inputSize,outputSize1,outputSize2,fifoin,fifoout1,fifoout2,i,s,v):
+        GenericNode12.__init__(self,inputSize,outputSize1,outputSize2,fifoin,fifoout1,fifoout2)
 
     def run(self):
         print("ProcessingNode");
         a=self.getReadBuffer()
-        b=self.getWriteBuffer()
+        b=self.getWriteBuffer1()
+        c=self.getWriteBuffer2()
         # Python objects have reference semantic and not
         # value semantic.
         # So in a write buffer, we can change the
@@ -59,6 +60,7 @@ class ProcessingNode(GenericNode):
         # replace the object and risk creating sharing
         # Duplicating the a object may be ok
         b[0]=a[3]
+        c[0]=a[3]
         return(0)
 
 class Source(GenericSource):

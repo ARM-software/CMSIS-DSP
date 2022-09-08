@@ -74,17 +74,29 @@ public:
 
 };
 
-template<typename IN, int inputSize,typename OUT,int outputSize>
-class ProcessingNode: public GenericNode<IN,inputSize,OUT,outputSize>
+template<typename IN, int inputSize,
+         typename OUT1,int outputSize1,
+         typename OUT2,int outputSize2>
+class ProcessingNode: public GenericNode12<IN,inputSize,
+                                           OUT1,outputSize1,
+                                           OUT2,outputSize2>
 {
 public:
-    ProcessingNode(FIFOBase<IN> &src,FIFOBase<OUT> &dst,int,const char*,int):GenericNode<IN,inputSize,OUT,outputSize>(src,dst){};
+    ProcessingNode(FIFOBase<IN> &src,
+                   FIFOBase<OUT1> &dst1,
+                   FIFOBase<OUT2> &dst2,
+                   int,const char*,int):
+    GenericNode12<IN,inputSize,
+                  OUT1,outputSize1,
+                  OUT2,outputSize2>(src,dst1,dst2){};
 
     int run(){
         printf("ProcessingNode\n");
         IN *a=this->getReadBuffer();
-        OUT *b=this->getWriteBuffer();
-        b[0] =(OUT)a[3];
+        OUT1 *b=this->getWriteBuffer1();
+        OUT2 *c=this->getWriteBuffer2();
+        b[0] =(OUT1)a[3];
+        c[0] =(OUT2)a[3];
         return(0);
     };
 

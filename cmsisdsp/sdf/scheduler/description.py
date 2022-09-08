@@ -38,6 +38,8 @@ import cmsisdsp.sdf.scheduler.pythoncode
 
 from .node import *
 from .config import *
+from .standard import Duplicate2,Duplicate3
+
 from ..types import *
 
 # To debug graph coloring for memory optimization
@@ -56,6 +58,9 @@ class DeadlockError(Exception):
     pass
 
 class CannotDelayConstantError(Exception):
+    pass
+
+class TooManyNodesOnOutput(Exception):
     pass
 
 class FifoBuffer:
@@ -165,7 +170,128 @@ class Graph():
         self._allFIFOs = None 
         self._allBuffers = None
 
-    def connect(self,nodea,nodeb):
+    def connectDup(self,destination,outputIO,theId):
+        if (destination[theId][1]!=0):
+            self.connectWithDelay(outputIO,destination[theId][0],destination[theId][1],dupAllowed=False)
+        else:
+            self.connect(outputIO,destination[theId][0],dupAllowed=False)
+
+
+
+    def insertDuplicates(self):
+        # Insert dup nodes (Duplicate2 and Duplicate3) to
+        # ensure that an output is connected to only one input
+        dupNb = 0
+        # Scan all nodes
+        allNodes = list(self._g)
+        for n in allNodes:
+            # For each nodes, get the IOs
+            for k in n._outputs.keys():
+                output = n._outputs[k]
+                fifo = output.fifo
+                # Check if the FIFO list has only 1 element
+                # In this case, we convert it into a value
+                # since code using the graph is expecting an
+                # IO to be connected top one and only one other IO
+                # so the FIFO must be a value and not a list
+                if len(fifo)==1:
+                    # Extract first element of list
+                    fifo = fifo[0]
+                    fifo[0].fifo = fifo 
+                    fifo[1].fifo = fifo
+                # If the FIFO has more elements, we need to
+                # restructure the graph and add Duplicate nodes
+                else:
+                    # Currently the library is only providing
+                    # Duplicate2 and Duplicate3 nodes.
+                    # So an output cannot be connected to more than
+                    # 3 inputs
+                    if (len(fifo)>3):
+                        raise TooManyNodesOnOutput
+
+                    dup = None 
+                    # We extract from the IO the nb of produced
+                    # samples and the data type
+                    # Duplicate will use the same
+                    inputSize = output.nbSamples
+                    theType = output.theType
+
+                    # We create a duplicate node
+                    if len(fifo)==2:
+                        dup = Duplicate2("dup%d" % dupNb,theType,inputSize)
+
+                    if len(fifo)==3:
+                        dup = Duplicate3("dup%d" % dupNb,theType,inputSize)
+
+                    #print(dup)
+
+
+
+                    dupNb = dupNb + 1
+                    # We disconnect all the fifo element (a,b)
+                    # and remember the destination b
+                    # We must rewrite the edges of self._g
+                    # self._edges 
+                    # self._nodes
+                    # the node fifo 
+                    destinations = []
+                    delays = []
+
+                    self._sortedNodes = None
+                    self._sortedEdges = None
+                    for f in fifo:
+                        # IO connected to the FIFOs
+                        # nodea is the IO belowing to nodea
+                        # but not the node itself
+                        nodea = f[0]
+                        nodeb = f[1]
+
+                        if (nodea,nodeb) in self._delays:
+                           delay = self._delays[(nodea,nodeb)]
+                        else:
+                           delay = 0
+
+                        destinations.append((nodeb,delay))
+
+                        nodea.fifo=None 
+                        nodeb.fifo=None
+                        # Since we are not using a multi graph
+                        # and there no parallel edges, it will
+                        # remove all edges between two nodes.
+                        # But some edges may come from other IO
+                        # and be valid.
+                        # Anyway, those edges are not used
+                        # in the algorithm at all
+                        # Instead we have our own graph with self._edges
+                        # (This script will have to be rewritten in a much
+                        # cleaner way)
+                        self._g.remove_edge(nodea.owner,nodeb.owner)
+                        del self._edges[(nodea,nodeb)]
+                        if (nodea,nodeb) in self._delays:
+                           del self._delays[(nodea,nodeb)]
+
+                        
+                    
+                    # Now for each fifo destination we need 
+                    # create a new
+                    # connection dup -> b
+                    # And we create a new connection a -> dup
+
+                    self.connect(output,dup.i,dupAllowed=False)
+
+                    if len(destinations)==2:
+                       self.connectDup(destinations,dup.oa,0)
+                       self.connectDup(destinations,dup.ob,1)
+                       
+                    if len(destinations)==3:
+                       self.connectDup(destinations,dup.oa,0)
+                       self.connectDup(destinations,dup.ob,1)
+                       self.connectDup(destinations,dup.oc,2)
+                        
+
+               
+
+    def connect(self,nodea,nodeb,dupAllowed=True):
         # When connecting to a constant node we do nothing
         # since there is no FIFO in this case
         # and it does not participate to the scheduling.
@@ -178,8 +304,12 @@ class Graph():
                 self._sortedEdges = None
                 self._g.add_edge(nodea.owner,nodeb.owner)
     
-                nodea.fifo = (nodea,nodeb) 
-                nodeb.fifo = (nodea,nodeb)
+                if dupAllowed:
+                   nodea.fifo.append((nodea,nodeb))
+                   nodeb.fifo.append((nodea,nodeb))
+                else:
+                   nodea.fifo=(nodea,nodeb)
+                   nodeb.fifo=(nodea,nodeb)
                 self._edges[(nodea,nodeb)]=True
                 if not (nodea.owner in self._nodes):
                    self._nodes[nodea.owner]=True
@@ -188,12 +318,12 @@ class Graph():
             else:
                 raise IncompatibleIO
 
-    def connectWithDelay(self,nodea,nodeb,delay):
+    def connectWithDelay(self,nodea,nodeb,delay,dupAllowed=True):
         # We cannot connect with delay to a constant node
         if (isinstance(nodea,Constant)):
             raise CannotDelayConstantError
         else:
-            self.connect(nodea,nodeb)
+            self.connect(nodea,nodeb,dupAllowed=dupAllowed)
             self._delays[(nodea,nodeb)] = delay
     
     def __str__(self):
@@ -426,7 +556,14 @@ class Graph():
         v[nodeID] = 1 
         return(v)
 
+    
+
     def computeSchedule(self,config=Configuration()):
+        # First we must rewrite the graph and insert duplication
+        # nodes when an ouput is connected to several inputs.
+        # After this transform, each output should be connected to
+        # only one output.
+        self.insertDuplicates()
         # Init values
         initB = self.initEvolutionVector
         initN = self.nullVector()

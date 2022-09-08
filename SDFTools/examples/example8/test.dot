@@ -1,6 +1,7 @@
 
 
 
+
 digraph structs {
     node [shape=plaintext]
     rankdir=LR
@@ -8,31 +9,22 @@ digraph structs {
     fontname="times"
 
 
+dup0 [shape=point,label=dup0]
 
-dup [label=<
+
+filter [label=<
 <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
   <TR>
     <TD PORT="i"><FONT POINT-SIZE="9.0">i</FONT></TD>
-    <TD ALIGN="CENTER" ROWSPAN="3">dup<BR/>(Duplicate3)</TD>
+    <TD ALIGN="CENTER" ROWSPAN="2">filter<BR/>(ProcessingNode)</TD>
     <TD PORT="oa"><FONT POINT-SIZE="9.0">oa</FONT></TD>
   </TR>
 <TR>
  
 <TD></TD>
 <TD PORT="ob"><FONT POINT-SIZE="9.0">ob</FONT></TD>
-</TR><TR>
- 
-<TD></TD>
-<TD PORT="oc"><FONT POINT-SIZE="9.0">oc</FONT></TD>
 </TR>
 
-</TABLE>>];
-
-filter [label=<
-<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
-  <TR>
-    <TD ALIGN="CENTER" PORT="i">filter<BR/>(ProcessingNode)</TD>
-  </TR>
 </TABLE>>];
 
 sa [label=<
@@ -56,6 +48,13 @@ sc [label=<
   </TR>
 </TABLE>>];
 
+sd [label=<
+<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+  <TR>
+    <TD ALIGN="CENTER" PORT="i">sd<BR/>(Sink)</TD>
+  </TR>
+</TABLE>>];
+
 source [label=<
 <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
   <TR>
@@ -65,35 +64,41 @@ source [label=<
 
 
 
-source:i -> filter:i [headlabel=<
-<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >7</FONT>
-</TD></TR></TABLE>>,taillabel=<
-<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >5</FONT>
-</TD></TR></TABLE>>,label="complex(11)"]
+source:i -> filter:i [label="complex(11)"
+,headlabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >7</FONT>
+</TD></TR></TABLE>>
+,taillabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >5</FONT>
+</TD></TR></TABLE>>]
 
-filter:i -> dup:i [headlabel=<
-<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >5</FONT>
-</TD></TR></TABLE>>,taillabel=<
-<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >5</FONT>
-</TD></TR></TABLE>>,label="complex(5)"]
+filter:ob -> sd:i [label="complex(5)"
+,headlabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >5</FONT>
+</TD></TR></TABLE>>
+,taillabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >5</FONT>
+</TD></TR></TABLE>>]
 
-dup:oa -> sa:i [headlabel=<
-<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >5</FONT>
-</TD></TR></TABLE>>,taillabel=<
-<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >5</FONT>
-</TD></TR></TABLE>>,label="complex(5)"]
+filter:oa ->  
+dup0 [label="complex(5)"
 
-dup:ob -> sb:i [headlabel=<
-<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >5</FONT>
-</TD></TR></TABLE>>,taillabel=<
-<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >5</FONT>
-</TD></TR></TABLE>>,label="complex(5)"]
+,taillabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >5</FONT>
+</TD></TR></TABLE>>]
 
-dup:oc -> sc:i [headlabel=<
-<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >5</FONT>
-</TD></TR></TABLE>>,taillabel=<
-<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >5</FONT>
-</TD></TR></TABLE>>,label="complex(5)"]
+ 
+dup0 -> sa:i [label="complex(5)"
+,headlabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >5</FONT>
+</TD></TR></TABLE>>
+]
+
+ 
+dup0 -> sb:i [label="complex(5)"
+,headlabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >5</FONT>
+</TD></TR></TABLE>>
+]
+
+ 
+dup0 -> sc:i [label="complex(5)"
+,headlabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >5</FONT>
+</TD></TR></TABLE>>
+]
 
 
 }

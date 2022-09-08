@@ -43,7 +43,7 @@ class Duplicate2(GenericNode12):
 class Duplicate3(GenericNode13): 
     def __init__(self,inputSize,outputSize1,outputSize2,outputSize3,fifoin,fifoout1,fifoout2,fifoout3):
         GenericNode13.__init__(self,inputSize,outputSize1,outputSize2,outputSize3,fifoin,fifoout1,fifoout2,fifoout3)
-
+     
     def run(self):
         a=self.getReadBuffer()
         b=self.getWriteBuffer1()

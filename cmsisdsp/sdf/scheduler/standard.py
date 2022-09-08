@@ -144,6 +144,10 @@ class Duplicate2(GenericNode):
         self.addOutput("oa",theType,inLength)
         self.addOutput("ob",theType,inLength)
 
+    @property 
+    def isDuplicateNode(self):
+        return True
+
     @property
     def typeName(self):
         return "Duplicate2"
@@ -156,6 +160,10 @@ class Duplicate3(GenericNode):
         self.addOutput("oa",theType,inLength)
         self.addOutput("ob",theType,inLength)
         self.addOutput("oc",theType,inLength)
+
+    @property 
+    def isDuplicateNode(self):
+        return True
 
     @property
     def typeName(self):

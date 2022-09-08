@@ -6,7 +6,8 @@ class Node(GenericNode):
     def __init__(self,name,theType,inLength,outLength):
         GenericNode.__init__(self,name)
         self.addInput("i",theType,inLength)
-        self.addOutput("o",theType,outLength)
+        self.addOutput("oa",theType,outLength)
+        self.addOutput("ob",theType,outLength)
 
 class Sink(GenericSink):
     def __init__(self,name,theType,inLength):
@@ -52,44 +53,54 @@ b.addVariableArg("someVariable")
 na = Sink("sa",complexType,5)
 nb = Sink("sb",complexType,5)
 nc = Sink("sc",complexType,5)
-dup=Duplicate3("dup",complexType,5)
+nd = Sink("sd",complexType,5)
+
+#dup=Duplicate3("dup",complexType,5)
 
 g = Graph()
 
 g.connect(src.o,b.i)
-g.connect(b.o,dup.i)
-g.connect(dup.oa,na.i)
-g.connect(dup.ob,nb.i)
-g.connect(dup.oc,nc.i)
+#g.connect(b.o,dup.i)
+#g.connect(dup.oa,na.i)
+#g.connect(dup.ob,nb.i)
+#g.connect(dup.oc,nc.i)
 
+g.connect(b.oa,na.i)
+g.connect(b.oa,nb.i)
+g.connect(b.oa,nc.i)
+
+g.connect(b.ob,nd.i)
+
+GEN_PYTHON = False 
 
 print("Generate graphviz and code")
 
+sched = g.computeSchedule()
+print("Schedule length = %d" % sched.scheduleLength)
+print("Memory usage %d bytes" % sched.memory)
+
+# Generation of the schedule is modifying the original graph
+# (Introduction of duplicate nodes ...)
+# So we cannot reuse the graph to compute the Python and the C
+# code generation
 conf=Configuration()
 conf.debugLimit=1
 conf.cOptionalArgs="int someVariable"
-#conf.displayFIFOSizes=True
-# Prefix for global FIFO buffers
-#conf.prefix="sched1"
-
-#print(g.nullVector())
-sched1 = g.computeSchedule()
-#print(sched.schedule)
-print("Schedule length = %d" % sched1.scheduleLength)
-print("Memory usage %d bytes" % sched1.memory)
-#
-
 #conf.codeArray=True
-# C++ implementation
-sched1.ccode("generated",conf)
+conf.memoryOptimization=True
 
-sched2 = g.computeSchedule()
-# Python implementation
-#conf.prefix="sched1"
-conf.pyOptionalArgs="someVariable"
-#conf.dumpFIFO=True
-sched2.pythoncode(".",config=conf)
+if not GEN_PYTHON:
+   # C++ implementation
+   sched.ccode("generated",conf)
+else:
+   # Python implementation
+   conf.pyOptionalArgs="someVariable"
+   sched.pythoncode(".",config=conf)
 
+
+# When true it is displaying the name of the FIFO buffer
+# When false it is displaying the size of the FIFO (default)
+conf.displayFIFOBuf=False
 with open("test.dot","w") as f:
-    sched1.graphviz(f)
+    sched.graphviz(f,config=conf)
 
