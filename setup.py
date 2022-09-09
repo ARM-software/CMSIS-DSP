@@ -9,6 +9,7 @@ import os.path
 import re
 import pathlib
 
+
 here = pathlib.Path(__file__).parent.resolve()
 ROOT = here
 ROOT=""
@@ -244,11 +245,11 @@ def build():
   setup (name = 'cmsisdsp',
          version = main_ns['__version__'],
          packages=["cmsisdsp",
-                   "cmsisdsp.sdf",
-                   "cmsisdsp.sdf.nodes",
-                   "cmsisdsp.sdf.nodes.host",
-                   "cmsisdsp.sdf.scheduler",
-                   "cmsisdsp.sdf.scheduler.templates"],
+                   "cmsisdsp.cg.static",
+                   "cmsisdsp.cg.static.nodes",
+                   "cmsisdsp.cg.static.nodes.host",
+                   "cmsisdsp.cg.static.scheduler",
+                   "cmsisdsp.cg.static.scheduler.templates"],
          description = 'CMSIS-DSP Python API',
          long_description=open("PythonWrapper_README.md").read(),
          long_description_content_type='text/markdown',

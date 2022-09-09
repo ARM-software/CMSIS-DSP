@@ -1,0 +1,74 @@
+
+
+
+
+digraph structs {
+    node [shape=plaintext]
+    rankdir=LR
+    edge [arrowsize=0.5]
+    fontname="times"
+
+
+audioWin [label=<
+<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+  <TR>
+    <TD ALIGN="CENTER" PORT="i">audioWin<BR/>(SlidingBuffer)</TD>
+  </TR>
+</TABLE>>];
+
+mfcc [label=<
+<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+  <TR>
+    <TD ALIGN="CENTER" PORT="i">mfcc<BR/>(MFCC)</TD>
+  </TR>
+</TABLE>>];
+
+mfccWin [label=<
+<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+  <TR>
+    <TD ALIGN="CENTER" PORT="i">mfccWin<BR/>(SlidingBuffer)</TD>
+  </TR>
+</TABLE>>];
+
+sink [label=<
+<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+  <TR>
+    <TD ALIGN="CENTER" PORT="i">sink<BR/>(FileSink)</TD>
+  </TR>
+</TABLE>>];
+
+src [label=<
+<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+  <TR>
+    <TD ALIGN="CENTER" PORT="i">src<BR/>(FileSource)</TD>
+  </TR>
+</TABLE>>];
+
+
+
+src:i -> audioWin:i [label="f32(256)"
+,headlabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >128</FONT>
+</TD></TR></TABLE>>
+,taillabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >192</FONT>
+</TD></TR></TABLE>>]
+
+audioWin:i -> mfcc:i [label="f32(256)"
+,headlabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >256</FONT>
+</TD></TR></TABLE>>
+,taillabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >256</FONT>
+</TD></TR></TABLE>>]
+
+mfcc:i -> mfccWin:i [label="f32(13)"
+,headlabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >13</FONT>
+</TD></TR></TABLE>>
+,taillabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >13</FONT>
+</TD></TR></TABLE>>]
+
+mfccWin:i -> sink:i [label="f32(26)"
+,headlabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >13</FONT>
+</TD></TR></TABLE>>
+,taillabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >26</FONT>
+</TD></TR></TABLE>>]
+
+
+}
