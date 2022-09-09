@@ -110,18 +110,18 @@ PACK_DIRS="
 # Specify file names to be added to pack base directory
 PACK_BASE_FILES="
   LICENSE.txt
-  SDFTools/sdf/src/GenericNodes.h
-  SDFTools/sdf/nodes/cpp/CFFT.h
-  SDFTools/sdf/nodes/cpp/ICFFT.h
-  SDFTools/sdf/nodes/cpp/MFCC.h
-  SDFTools/sdf/nodes/cpp/NullSink.h
-  SDFTools/sdf/nodes/cpp/StereoToMono.h
-  SDFTools/sdf/nodes/cpp/StreamingSink.h
-  SDFTools/sdf/nodes/cpp/StreamingSource.h
-  SDFTools/sdf/nodes/cpp/ToComplex.h
-  SDFTools/sdf/nodes/cpp/ToReal.h
-  SDFTools/sdf/nodes/cpp/Unzip.h
-  SDFTools/sdf/nodes/cpp/Zip.h
+  ComputeGraph/cg/static/src/GenericNodes.h
+  ComputeGraph/cg/static/nodes/cpp/CFFT.h
+  ComputeGraph/cg/static/nodes/cpp/ICFFT.h
+  ComputeGraph/cg/static/nodes/cpp/MFCC.h
+  ComputeGraph/cg/static/nodes/cpp/NullSink.h
+  ComputeGraph/cg/static/nodes/cpp/StereoToMono.h
+  ComputeGraph/cg/static/nodes/cpp/StreamingSink.h
+  ComputeGraph/cg/static/nodes/cpp/StreamingSource.h
+  ComputeGraph/cg/static/nodes/cpp/ToComplex.h
+  ComputeGraph/cg/static/nodes/cpp/ToReal.h
+  ComputeGraph/cg/static/nodes/cpp/Unzip.h
+  ComputeGraph/cg/static/nodes/cpp/Zip.h
 "
 
 # Specify file names to be deleted from pack build directory
