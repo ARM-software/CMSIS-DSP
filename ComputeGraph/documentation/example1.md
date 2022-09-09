@@ -23,10 +23,10 @@ Let's analyze the file `graph.py` in the `example1` folder. This file is describ
 
 
 
-First, we add some path so that the example can find the sdf packages when run from example1 folder.
+First, we add some path so that the example can find the CG static packages when run from example1 folder.
 
 ```python
-from cmsisdsp.sdf.scheduler import *
+from cmsisdsp.cg.static.scheduler import *
 ```
 
 
@@ -93,7 +93,7 @@ class ProcessingNode(Node):
 
 We just define its type.
 
-Once it is done, we can start creating instance of those nodes. We will also need to define the type for the samples (float32 in this example). The functions and constants are defined in `sdf.schedule.types`.
+Once it is done, we can start creating instance of those nodes. We will also need to define the type for the samples (float32 in this example). The functions and constants are defined in `cg.static.types`.
 
 ```python
 floatType=CType(F32)
@@ -379,7 +379,7 @@ The returned valued is the number of schedules fully executed when the error occ
 The scheduling function is starting with a definition of some variables used for debug and statistics:
 
 ```C++
-int sdfError=0;
+int cgStaticError=0;
 uint32_t nbSchedule=0;
 int32_t debugCounter=1;
 ```
@@ -408,15 +408,15 @@ Source<float32_t,5> source(fifo0);
 And finally, the function is entering the scheduling loop:
 
 ```C++
- while((sdfError==0) && (debugCounter > 0))
+ while((cgStaticError==0) && (debugCounter > 0))
  {
        nbSchedule++;
 
-       sdfError = source.run();
+       cgStaticError = source.run();
        CHECKERROR;
 ```
 
-`CHECKERROR` is a macro defined in `Sched.h`. It is just testing if `sdfError < 0` and breaking out of the loop if it is the case.
+`CHECKERROR` is a macro defined in `Sched.h`. It is just testing if `cgStaticError< 0` and breaking out of the loop if it is the case.
 
 Since an application may want to use several SDF graphs, the name of the `sched` and `customInit` functions can be customized in the `configuration` object on the Python side:
 

@@ -34,15 +34,15 @@ With this wrapper you can design your algorithm in Python using an API as close 
 
 The goal is to make it easier to move from a design to a final implementation in C.
 
-### Synchronous Data Flow (SDF)
+### Compute Graph
 
-CMSIS-DSP is also providing an experimental [synchronous data flow scheduler](SDFTools/README.md):
+CMSIS-DSP is also providing an experimental [static scheduler for compute graph](ComputeGraph/README.md) to describe streaming solutions:
 
 * You define your compute graph in Python
-* A static schedule (computed by the Python script) is generated
+* A static and deterministic schedule (computed by the Python script) is generated
 * The static schedule can be run on the device with very low overhead
 
-The Python scripts for the synchronous data flow (SDF) are part of the CMSIS-DSP Python wrapper. 
+The Python scripts for the static scheduler generator are part of the CMSIS-DSP Python wrapper. 
 
 The header files are part of the CMSIS-DSP pack (version 1.10.2 and above).
 

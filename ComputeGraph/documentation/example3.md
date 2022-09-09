@@ -94,13 +94,13 @@ It is verbose but not difficult. The constructor is initializing the CMSIS-DSP F
 
 
 
-The run function is applying the arm_cfft_f32. Since this function is modifying the input buffer, there is a memcpy. It is not really needed here. The read buffer can be modified by the CFFT. It will just make it more difficult to debug if you'd like to inspect the content of the FIFOs.
+The run function is applying the `arm_cfft_f32`. Since this function is modifying the input buffer, there is a `memcpy`. It is not really needed here. The read buffer can be modified by the CFFT. It will just make it more difficult to debug if you'd like to inspect the content of the FIFOs.
 
 
 
-This node is provided in sdf/nodes/cpp so no need to define it. You can just use it by including the right headers.
+This node is provided in `cg/static/nodes/cpp` so no need to define it. You can just use it by including the right headers.
 
-It can be used by just doing in your AppNodes.h file :
+It can be used by just doing in your `AppNodes.h` file :
 
 ```c++
 #include "CFFT.h"
@@ -109,6 +109,6 @@ It can be used by just doing in your AppNodes.h file :
 From Python side it would be:
 
 ```python
-from cmsisdsp.sdf.nodes.CFFT import *
+from cmsisdsp.cg.static.nodes.CFFT import *
 ```
 

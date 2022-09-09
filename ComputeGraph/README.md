@@ -1,8 +1,8 @@
-# Synchronous Dataflow for CMSIS-DSP
+# Compute Graph for streaming with CMSIS-DSP
 
 ## Introduction
 
-A dataflow graph is a representation of how compute blocks are connected to implement a processing. 
+A dataflow graph is a representation of how compute blocks are connected to implement a streaming processing. 
 
 Here is an example with 3 nodes:
 
@@ -26,14 +26,16 @@ When the processing is applied to a stream of samples then the problem to solve 
 
 The general problem can be very difficult. But, if some constraints are applied to the graph then some algorithms can compute a static schedule.
 
-When the following constraints are satisfied we say we have a Synchronous Dataflow Graph (SDF):
+When the following constraints are satisfied we say we have a Synchronous Dataflow Graph:
 
 - Static graph : graph topology is not changing
 - Each node is always consuming and producing the same number of samples
 
-The CMSIS-DSP SDF Tools are a set of Python scripts and C++ classes with following features:
+In CMSIS-DSP, we are naming this a static flow. 
 
-- A SDF can be described in Python
+The CMSIS-DSP Compute Graph Tools are a set of Python scripts and C++ classes with following features:
+
+- A compute graph and its static flow can be described in Python
 - The Python script will compute a static schedule and the FIFOs size
 - A static schedule is:
   - A periodic sequence of functions calls
@@ -53,7 +55,7 @@ Without any scheduling tool for a dataflow graph, there is a problem of modulari
 - You may need to change how many times the predecessor blocks must run
 - You may have to change the FIFOs sizes
 
-With the CMSIS-DSP SDF Tools you don't have to think about those details while you are still experimenting with your data processing pipeline. It makes it easier to experiment, add or remove blocks, change their parameters.
+With the CMSIS-DSP Compute Graph (CG) Tools you don't have to think about those details while you are still experimenting with your data processing pipeline. It makes it easier to experiment, add or remove blocks, change their parameters.
 
 The tools will generate a schedule and the FIFOs. Even if you don't use this at the end for a final implementation, the information could be useful : is the schedule too long ? Are the FIFOs too big ?
 
@@ -61,7 +63,7 @@ Let's look at an (artificial) example:
 
 <img src="documentation/graph1.PNG" alt="graph1" style="zoom:50%;" />
 
-Without a tool, the user would probably try to modify the sample values so that the number of sample produced is equal to the number of samples consumed. With the SDF Tools  we know that such a graph can be scheduled and that the FIFO sizes need to be 11 and 5.
+Without a tool, the user would probably try to modify the sample values so that the number of sample produced is equal to the number of samples consumed. With the CG Tools  we know that such a graph can be scheduled and that the FIFO sizes need to be 11 and 5.
 
 The periodic schedule generated for this graph has a length of 19. It is big for such a small graph and it is because, indeed 5 and 7 are not very well chosen values. But, it is working even with those values.
 
@@ -87,7 +89,7 @@ The schedule is (the size of the FIFOs after the execution of the node displayed
 
 At the end, both FIFOs are empty so the schedule can be run again : it is periodic !
 
-## How to use the Synchronous Data Flow (SDF)
+## How to use the static scheduler generator
 
 First, you must install the `CMSIS-DSP` PythonWrapper:
 
@@ -100,14 +102,14 @@ The script inside the cmsisdsp wrapper can be used to describe and generate the 
 You can create a `graph.py` and include :
 
 ```python
-from cmsisdsp.sdf.scheduler import *
+from cmsisdsp.cg.static.scheduler import *
 ```
 
-Then you can describe the blocks that you need in the compute graph if they are not provided by the SDF.
+You can describe new type of blocks that you need in the compute graph if they are not provided by the python package by default.
 
 Finally, you can execute `graph.py` to generate the C++ files.
 
-The generated files need to include the `sdf/src/GenericNodes.h` and the nodes used in the graph and which can be found in `sdf/nodes/cpp`.
+The generated files need to include the `ComputeGraph/cg/static/src/GenericNodes.h` and the nodes used in the graph and which can be found in `cg/static/nodes/cpp`.
 
 If you have declared new nodes in `graph.py` then you'll need to provide an implementation.
 
@@ -120,7 +122,7 @@ More details and explanations can be found in the documentation for the examples
 
 ### How to build the examples
 
-In folder `SDFTools/example/build`, type the `cmake` command:
+In folder `ComputeGraph/example/build`, type the `cmake` command:
 
 ```bash
 cmake -DHOST=YES \
@@ -150,7 +152,7 @@ To build the C examples:
 
 * CMSIS-DSP must be built, 
 * the .cpp file contained in the example must be built
-* the include folder `sdf/src` must be added
+* the include folder `cg/static/src` must be added
 
 For `example3` which is using an input file, `cmake` should have copied the input test pattern `input_example3.txt` inside the build folder. The output file will also be generated in the build folder.
 
@@ -169,7 +171,7 @@ The first line is generating the schedule in Python. The second line is executin
 
 It is a first version and there are lots of limitations and probably bugs:
 
-- The code generation is using [Jinja](https://jinja.palletsprojects.com/en/3.0.x/) template in `sdf/templates`. They must be cleaned to be more readable. You can modify the templates according to your needs ;
+- The code generation is using [Jinja](https://jinja.palletsprojects.com/en/3.0.x/) template in `cg/static/templates`. They must be cleaned to be more readable. You can modify the templates according to your needs ;
 - CMSIS-DSP integration must be improved to make it easier
 - Some optimizations are missing 
 - Some checks are missing : for instance you can connect several nodes to the same io port. And io port must be connected to only one other io port. It is not checked by the script.
@@ -217,3 +219,5 @@ Here is a list of the nodes supported by default. More can be easily added:
 Examples 5 and 6 are showing how to use the CMSIS-DSP MFCC with a synchronous data flow.
 
 Example 7 is communicating with OpenModelica. The Modelica model (PythonTest) in the example is implementing a Larsen effect.
+
+Example 8 is showing how to define a new custom datatype for the IOs of the nodes. Example 8 is also demonstrating a new feature where an IO can be connected up to 3 inputs and the static scheduler will automatically generate duplicate nodes.

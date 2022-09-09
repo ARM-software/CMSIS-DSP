@@ -1,5 +1,5 @@
 import numpy as np
-from cmsisdsp.sdf.nodes.simu import *
+from cmsisdsp.cg.static.nodes.simu import *
 
 a=np.zeros(10)
 f=FIFO(10,a)

@@ -68,7 +68,7 @@ The code generated in `sched.cpp` will not require any C++ class, It will look l
   i0=fifo2.getReadBuffer(160);
   o2=fifo4.getWriteBuffer(160);
   arm_scale_f32(i0,HALF,o2,160);
-  sdfError = 0;
+  cgStaticError = 0;
 }
 ```
 

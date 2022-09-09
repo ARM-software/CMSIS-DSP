@@ -265,7 +265,8 @@ class Graph():
                         # Instead we have our own graph with self._edges
                         # (This script will have to be rewritten in a much
                         # cleaner way)
-                        self._g.remove_edge(nodea.owner,nodeb.owner)
+                        if self._g.has_edge(nodea.owner,nodeb.owner):
+                           self._g.remove_edge(nodea.owner,nodeb.owner)
                         del self._edges[(nodea,nodeb)]
                         if (nodea,nodeb) in self._delays:
                            del self._delays[(nodea,nodeb)]
