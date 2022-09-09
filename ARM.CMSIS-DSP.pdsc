@@ -8,7 +8,7 @@
   <url>https://www.keil.com/pack/</url>
 
   <releases>
-    <release version="1.12.0">
+    <release version="0.0.0">
       Active development ...
     </release>
   </releases>
@@ -49,7 +49,7 @@
 
   <components>
     <!-- CMSIS-DSP component -->
-    <component Cclass="CMSIS" Cgroup="DSP" Cvariant="Source"  Cversion="1.12.0" isDefaultVariant="true" condition="CMSISCORE">
+    <component Cclass="CMSIS" Cgroup="DSP" Cvariant="Source"  Cversion="0.0.0" isDefaultVariant="true" condition="CMSISCORE">
       <description>CMSIS-DSP Library for Cortex-M and Cortex-A</description>
       <files>
         <!-- CPU independent -->
@@ -105,7 +105,7 @@
       </files>
     </component>
 
-    <component Cclass="CMSIS" Cgroup="DSP" Csub="Compute Graph Static Flow" Cversion="1.12.0" isDefaultVariant="true" condition="CMSISDSPLIB">
+    <component Cclass="CMSIS" Cgroup="DSP" Csub="Compute Graph Static Flow" Cversion="0.0.0" isDefaultVariant="true" condition="CMSISDSPLIB">
       <description>CMSIS-DSP Compute Graph - Static Flow</description>
       <files>
           <file category="header" name="ComputeGraph/cg/static/src/GenericNodes.h"/>
