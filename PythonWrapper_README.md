@@ -11,9 +11,9 @@ The signal processing chain can thus be tested and developed in a Python environ
 A tutorial is also available but with less details than this README:
 https://developer.arm.com/documentation/102463/latest/
 
-This wrapper is also containing the scripts for the new CMSIS-DSP [Synchronous Data Flow](https://github.com/ARM-software/CMSIS-DSP/blob/main/SDFTools/README.md) (SDF) framework.
+This wrapper is also containing the scripts for the new CMSIS-DSP compute graph framework (CG).
 
-SDF is also including some nodes to communicate with Modelica using the VHT Modelica blocks developed as part of our [VHT-SystemModeling](https://github.com/ARM-software/VHT-SystemModeling) demos.
+CG is also including some nodes to communicate with Modelica using the VHT Modelica blocks developed as part of our [VHT-SystemModeling](https://github.com/ARM-software/VHT-SystemModeling) demos.
 
 
 

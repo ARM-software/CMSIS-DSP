@@ -1,1 +1,2 @@
-__version__ = "1.6.0"
+# Python wrapper version
+__version__ = "1.7.0"

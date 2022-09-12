@@ -606,7 +606,7 @@ class Graph():
         # consumer to consume it.
         # When we select a node for scheduling later we try
         # to minimize the occupancy number of all FIFOs by
-        # selecting the schedulign which is giving the
+        # selecting the scheduling which is giving the
         # minimum maximum occupancy number after the run.
         bMax = 1.0*np.array(initB) / normV
 
@@ -617,7 +617,7 @@ class Graph():
         evolutionTime = 0
         # While there are remaining nodes to schedule
         while (n != zeroVec).any():
-            # Look for the best mode to schedule
+            # Look for the best node to schedule
             # which is the one giving the minimum FIFO increase
             
             # None selected
