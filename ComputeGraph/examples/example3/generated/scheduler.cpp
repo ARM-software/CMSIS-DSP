@@ -111,7 +111,7 @@ uint32_t scheduler(int *error)
          o2=fifo2.getWriteBuffer(256);
          arm_mult_f32(i0,HANN,o2,256);
          cgStaticError = 0;
-       }
+}
                    CHECKERROR;
                 }
                 break;

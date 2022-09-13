@@ -10,4 +10,4 @@
 {% endfor %}
          {{func}}({{args}},{{nb}});
          cgStaticError = 0;
-       }
+}

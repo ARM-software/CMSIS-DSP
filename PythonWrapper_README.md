@@ -43,7 +43,7 @@ You must have a recent `pip` (to automatically install the dependencies like `Nu
 
 DSP examples are available in the [CMSIS-DSP PythonWrapper examples](https://github.com/ARM-software/CMSIS-DSP/tree/main/PythonWrapper/examples) folder.
 
-Synchronous Data Flow examples are available in the [SDF](https://github.com/ARM-software/CMSIS-DSP/tree/main/SDFTools) folder of [CMSIS-DSP](https://github.com/ARM-software/CMSIS-DSP) .
+Synchronous Data Flow examples are available in the [ComputeGraph](https://github.com/ARM-software/CMSIS-DSP/tree/main/ComputeGraph) folder of [CMSIS-DSP](https://github.com/ARM-software/CMSIS-DSP) .
 
 You can also install and run it from [Google colab](https://colab.research.google.com/):
 
@@ -233,5 +233,5 @@ MEL filters are represented as 3 arrays to encode a sparse array.
 
 `datatype` is an API on top of `fixedpoint` to provide more reuse when converting between data formats.
 
-The wrapper is now containing the Synchronous Data Flow Python scripts and you should refer the the documentation in `DSP/SDFTools` folder to know how to use those tools.
+The wrapper is now containing the compute graph Python scripts and you should refer the the documentation in `DSP/ComputeGraph` folder to know how to use those tools.
 
