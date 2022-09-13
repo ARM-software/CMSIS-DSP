@@ -14,6 +14,17 @@ The support classes and code is covered by CMSIS-DSP license.
 #include "AppNodes.h"
 #include "scheduler.h"
 
+/*
+
+Description of the scheduling. It is a list of nodes to call.
+The values are indexes in the previous array.
+
+*/
+static unsigned int schedule[25]=
+{ 
+6,2,0,7,3,4,8,1,6,2,0,7,3,4,8,2,0,7,3,4,1,5,8,1,5,
+};
+
 /***********
 
 FIFO buffers
@@ -86,12 +97,14 @@ uint32_t scheduler(int *error)
     /* Run several schedule iterations */
     while((cgStaticError==0) && (debugCounter > 0))
     {
-       /* Run a schedule iteration */
-       cgStaticError = src.run();
-       CHECKERROR;
-       cgStaticError = audioWin.run();
-       CHECKERROR;
-       {
+        /* Run a schedule iteration */
+        for(unsigned long id=0 ; id < 25; id++)
+        {
+            switch(schedule[id])
+            {
+                case 0:
+                {
+                   {
          float32_t* i0;
          float32_t* o2;
          i0=fifo1.getReadBuffer(256);
@@ -99,69 +112,74 @@ uint32_t scheduler(int *error)
          arm_mult_f32(i0,HANN,o2,256);
          cgStaticError = 0;
        }
-       CHECKERROR;
-       cgStaticError = toCmplx.run();
-       CHECKERROR;
-       cgStaticError = cfft.run();
-       CHECKERROR;
-       cgStaticError = icfft.run();
-       CHECKERROR;
-       cgStaticError = toReal.run();
-       CHECKERROR;
-       cgStaticError = audioOverlap.run();
-       CHECKERROR;
-       cgStaticError = src.run();
-       CHECKERROR;
-       cgStaticError = audioWin.run();
-       CHECKERROR;
-       {
-         float32_t* i0;
-         float32_t* o2;
-         i0=fifo1.getReadBuffer(256);
-         o2=fifo2.getWriteBuffer(256);
-         arm_mult_f32(i0,HANN,o2,256);
-         cgStaticError = 0;
-       }
-       CHECKERROR;
-       cgStaticError = toCmplx.run();
-       CHECKERROR;
-       cgStaticError = cfft.run();
-       CHECKERROR;
-       cgStaticError = icfft.run();
-       CHECKERROR;
-       cgStaticError = toReal.run();
-       CHECKERROR;
-       cgStaticError = audioWin.run();
-       CHECKERROR;
-       {
-         float32_t* i0;
-         float32_t* o2;
-         i0=fifo1.getReadBuffer(256);
-         o2=fifo2.getWriteBuffer(256);
-         arm_mult_f32(i0,HANN,o2,256);
-         cgStaticError = 0;
-       }
-       CHECKERROR;
-       cgStaticError = toCmplx.run();
-       CHECKERROR;
-       cgStaticError = cfft.run();
-       CHECKERROR;
-       cgStaticError = icfft.run();
-       CHECKERROR;
-       cgStaticError = audioOverlap.run();
-       CHECKERROR;
-       cgStaticError = sink.run();
-       CHECKERROR;
-       cgStaticError = toReal.run();
-       CHECKERROR;
-       cgStaticError = audioOverlap.run();
-       CHECKERROR;
-       cgStaticError = sink.run();
-       CHECKERROR;
+                   CHECKERROR;
+                }
+                break;
 
+                case 1:
+                {
+                   cgStaticError = audioOverlap.run();
+                   CHECKERROR;
+                }
+                break;
+
+                case 2:
+                {
+                   cgStaticError = audioWin.run();
+                   CHECKERROR;
+                }
+                break;
+
+                case 3:
+                {
+                   cgStaticError = cfft.run();
+                   CHECKERROR;
+                }
+                break;
+
+                case 4:
+                {
+                   cgStaticError = icfft.run();
+                   CHECKERROR;
+                }
+                break;
+
+                case 5:
+                {
+                   cgStaticError = sink.run();
+                   CHECKERROR;
+                }
+                break;
+
+                case 6:
+                {
+                   cgStaticError = src.run();
+                   CHECKERROR;
+                }
+                break;
+
+                case 7:
+                {
+                   cgStaticError = toCmplx.run();
+                   CHECKERROR;
+                }
+                break;
+
+                case 8:
+                {
+                   cgStaticError = toReal.run();
+                   CHECKERROR;
+                }
+                break;
+
+                default:
+                break;
+            }
+        }
        debugCounter--;
        nbSchedule++;
     }
+
     *error=cgStaticError;
     return(nbSchedule);
 }

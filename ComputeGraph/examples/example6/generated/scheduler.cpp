@@ -14,6 +14,17 @@ The support classes and code is covered by CMSIS-DSP license.
 #include "AppNodes.h"
 #include "scheduler.h"
 
+/*
+
+Description of the scheduling. It is a list of nodes to call.
+The values are indexes in the previous array.
+
+*/
+static unsigned int schedule[17]=
+{ 
+4,0,1,2,3,3,4,0,1,2,3,3,0,1,2,3,3,
+};
+
 /***********
 
 FIFO buffers
@@ -63,45 +74,54 @@ uint32_t scheduler(int *error,arm_mfcc_instance_f32 *mfccConfig)
     /* Run several schedule iterations */
     while((cgStaticError==0) && (debugCounter > 0))
     {
-       /* Run a schedule iteration */
-       cgStaticError = src.run();
-       CHECKERROR;
-       cgStaticError = audioWin.run();
-       CHECKERROR;
-       cgStaticError = mfcc.run();
-       CHECKERROR;
-       cgStaticError = mfccWin.run();
-       CHECKERROR;
-       cgStaticError = sink.run();
-       CHECKERROR;
-       cgStaticError = sink.run();
-       CHECKERROR;
-       cgStaticError = src.run();
-       CHECKERROR;
-       cgStaticError = audioWin.run();
-       CHECKERROR;
-       cgStaticError = mfcc.run();
-       CHECKERROR;
-       cgStaticError = mfccWin.run();
-       CHECKERROR;
-       cgStaticError = sink.run();
-       CHECKERROR;
-       cgStaticError = sink.run();
-       CHECKERROR;
-       cgStaticError = audioWin.run();
-       CHECKERROR;
-       cgStaticError = mfcc.run();
-       CHECKERROR;
-       cgStaticError = mfccWin.run();
-       CHECKERROR;
-       cgStaticError = sink.run();
-       CHECKERROR;
-       cgStaticError = sink.run();
-       CHECKERROR;
+        /* Run a schedule iteration */
+        for(unsigned long id=0 ; id < 17; id++)
+        {
+            switch(schedule[id])
+            {
+                case 0:
+                {
+                   cgStaticError = audioWin.run();
+                   CHECKERROR;
+                }
+                break;
 
+                case 1:
+                {
+                   cgStaticError = mfcc.run();
+                   CHECKERROR;
+                }
+                break;
+
+                case 2:
+                {
+                   cgStaticError = mfccWin.run();
+                   CHECKERROR;
+                }
+                break;
+
+                case 3:
+                {
+                   cgStaticError = sink.run();
+                   CHECKERROR;
+                }
+                break;
+
+                case 4:
+                {
+                   cgStaticError = src.run();
+                   CHECKERROR;
+                }
+                break;
+
+                default:
+                break;
+            }
+        }
        debugCounter--;
        nbSchedule++;
     }
+
     *error=cgStaticError;
     return(nbSchedule);
 }

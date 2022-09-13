@@ -63,7 +63,10 @@ class Configuration:
         # When codeArray  is true, instead of using
         # function calls we parse un array giving
         # the index of functions to call in another array
-        self.codeArray = False
+        self.codeArray = True
+        # If users do not want to use function pointers,
+        # we can generate a switch/case instead
+        self.switchCase = True
 
         # True for an horizontal graphviz layout
         self.horizontal = True

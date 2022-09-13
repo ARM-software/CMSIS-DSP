@@ -14,6 +14,17 @@ The support classes and code is covered by CMSIS-DSP license.
 #include "AppNodes.h"
 #include "scheduler.h"
 
+/*
+
+Description of the scheduling. It is a list of nodes to call.
+The values are indexes in the previous array.
+
+*/
+static unsigned int schedule[37]=
+{ 
+6,6,1,5,0,4,3,2,6,1,6,5,0,4,3,2,6,1,5,0,4,3,2,6,1,6,5,0,4,3,2,1,5,0,4,3,2,
+};
+
 /***********
 
 FIFO buffers
@@ -75,85 +86,68 @@ uint32_t scheduler(int *error,int someVariable)
     /* Run several schedule iterations */
     while((cgStaticError==0) && (debugCounter > 0))
     {
-       /* Run a schedule iteration */
-       cgStaticError = source.run();
-       CHECKERROR;
-       cgStaticError = source.run();
-       CHECKERROR;
-       cgStaticError = filter.run();
-       CHECKERROR;
-       cgStaticError = sd.run();
-       CHECKERROR;
-       cgStaticError = dup0.run();
-       CHECKERROR;
-       cgStaticError = sc.run();
-       CHECKERROR;
-       cgStaticError = sb.run();
-       CHECKERROR;
-       cgStaticError = sa.run();
-       CHECKERROR;
-       cgStaticError = source.run();
-       CHECKERROR;
-       cgStaticError = filter.run();
-       CHECKERROR;
-       cgStaticError = source.run();
-       CHECKERROR;
-       cgStaticError = sd.run();
-       CHECKERROR;
-       cgStaticError = dup0.run();
-       CHECKERROR;
-       cgStaticError = sc.run();
-       CHECKERROR;
-       cgStaticError = sb.run();
-       CHECKERROR;
-       cgStaticError = sa.run();
-       CHECKERROR;
-       cgStaticError = source.run();
-       CHECKERROR;
-       cgStaticError = filter.run();
-       CHECKERROR;
-       cgStaticError = sd.run();
-       CHECKERROR;
-       cgStaticError = dup0.run();
-       CHECKERROR;
-       cgStaticError = sc.run();
-       CHECKERROR;
-       cgStaticError = sb.run();
-       CHECKERROR;
-       cgStaticError = sa.run();
-       CHECKERROR;
-       cgStaticError = source.run();
-       CHECKERROR;
-       cgStaticError = filter.run();
-       CHECKERROR;
-       cgStaticError = source.run();
-       CHECKERROR;
-       cgStaticError = sd.run();
-       CHECKERROR;
-       cgStaticError = dup0.run();
-       CHECKERROR;
-       cgStaticError = sc.run();
-       CHECKERROR;
-       cgStaticError = sb.run();
-       CHECKERROR;
-       cgStaticError = sa.run();
-       CHECKERROR;
-       cgStaticError = filter.run();
-       CHECKERROR;
-       cgStaticError = sd.run();
-       CHECKERROR;
-       cgStaticError = dup0.run();
-       CHECKERROR;
-       cgStaticError = sc.run();
-       CHECKERROR;
-       cgStaticError = sb.run();
-       CHECKERROR;
-       cgStaticError = sa.run();
-       CHECKERROR;
+        /* Run a schedule iteration */
+        for(unsigned long id=0 ; id < 37; id++)
+        {
+            switch(schedule[id])
+            {
+                case 0:
+                {
+                   cgStaticError = dup0.run();
+                   CHECKERROR;
+                }
+                break;
 
+                case 1:
+                {
+                   cgStaticError = filter.run();
+                   CHECKERROR;
+                }
+                break;
+
+                case 2:
+                {
+                   cgStaticError = sa.run();
+                   CHECKERROR;
+                }
+                break;
+
+                case 3:
+                {
+                   cgStaticError = sb.run();
+                   CHECKERROR;
+                }
+                break;
+
+                case 4:
+                {
+                   cgStaticError = sc.run();
+                   CHECKERROR;
+                }
+                break;
+
+                case 5:
+                {
+                   cgStaticError = sd.run();
+                   CHECKERROR;
+                }
+                break;
+
+                case 6:
+                {
+                   cgStaticError = source.run();
+                   CHECKERROR;
+                }
+                break;
+
+                default:
+                break;
+            }
+        }
        debugCounter--;
        nbSchedule++;
     }
+
     *error=cgStaticError;
     return(nbSchedule);
 }

@@ -14,6 +14,17 @@ The support classes and code is covered by CMSIS-DSP license.
 #include "AppNodes.h"
 #include "scheduler.h"
 
+/*
+
+Description of the scheduling. It is a list of nodes to call.
+The values are indexes in the previous array.
+
+*/
+static unsigned int schedule[17]=
+{ 
+2,2,0,1,2,0,1,2,2,0,1,2,0,1,2,0,1,
+};
+
 /***********
 
 FIFO buffers
@@ -51,45 +62,40 @@ uint32_t scheduler(int *error,int someVariable)
     /* Run several schedule iterations */
     while((cgStaticError==0) && (debugCounter > 0))
     {
-       /* Run a schedule iteration */
-       cgStaticError = source.run();
-       CHECKERROR;
-       cgStaticError = source.run();
-       CHECKERROR;
-       cgStaticError = filter.run();
-       CHECKERROR;
-       cgStaticError = sink.run();
-       CHECKERROR;
-       cgStaticError = source.run();
-       CHECKERROR;
-       cgStaticError = filter.run();
-       CHECKERROR;
-       cgStaticError = sink.run();
-       CHECKERROR;
-       cgStaticError = source.run();
-       CHECKERROR;
-       cgStaticError = source.run();
-       CHECKERROR;
-       cgStaticError = filter.run();
-       CHECKERROR;
-       cgStaticError = sink.run();
-       CHECKERROR;
-       cgStaticError = source.run();
-       CHECKERROR;
-       cgStaticError = filter.run();
-       CHECKERROR;
-       cgStaticError = sink.run();
-       CHECKERROR;
-       cgStaticError = source.run();
-       CHECKERROR;
-       cgStaticError = filter.run();
-       CHECKERROR;
-       cgStaticError = sink.run();
-       CHECKERROR;
+        /* Run a schedule iteration */
+        for(unsigned long id=0 ; id < 17; id++)
+        {
+            switch(schedule[id])
+            {
+                case 0:
+                {
+                   cgStaticError = filter.run();
+                   CHECKERROR;
+                }
+                break;
 
+                case 1:
+                {
+                   cgStaticError = sink.run();
+                   CHECKERROR;
+                }
+                break;
+
+                case 2:
+                {
+                   cgStaticError = source.run();
+                   CHECKERROR;
+                }
+                break;
+
+                default:
+                break;
+            }
+        }
        debugCounter--;
        nbSchedule++;
     }
+
     *error=cgStaticError;
     return(nbSchedule);
 }

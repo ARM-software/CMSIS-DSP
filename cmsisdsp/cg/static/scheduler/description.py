@@ -505,6 +505,10 @@ class Graph():
 
     def topologyMatrix(self):
         self.checkGraph()
+        # For cyclo static scheduling : compute the node periods
+        for n in self.nodes:
+            n.computeCyclePeriod()
+
         rows=[]
         # This is used in schedule generation
         # and all functions must use the same node ordering
@@ -522,21 +526,27 @@ class Graph():
             ib=self._sortedNodes.index(nb.owner)
 
             # Produced by na on the edge
-            currentRow[ia] = na.nbSamples
+            # for execution of one cycle of the na.owner node
+            totalProduced = na.cycleTotal * na.owner.cyclePeriod // na.cyclePeriod
+            currentRow[ia] = totalProduced
 
             # Consumed by nb on the edge
-            currentRow[ib] = -nb.nbSamples
+            # for execution of a full cycle of the node
+            totalProduced = nb.cycleTotal * nb.owner.cyclePeriod // nb.cyclePeriod
+            currentRow[ib] = -totalProduced
 
             rows.append(currentRow)
 
         return(np.array(rows))
 
-    def nullVector(self):
-        m = self.topologyMatrix()
+    def nullVector(self,m):
+        #print("Null vector")
+        # m is topology matrix computed with toplogyMatrix
         r=Matrix(m).nullspace()
         if len(r) != 1:
            raise NotSchedulableError
         result=list(r[0])
+        #print(result)
         denominators = [x.q for x in result]
         # Remove denominators
         ppcm = ilcm(*denominators)
@@ -544,17 +554,72 @@ class Graph():
         intValues = [x * ppcm for x in result]
         # Convert intValues to the smallest possible values
         gcd = igcd(*intValues)
-        return([x / gcd for x in intValues])
+        return([x // gcd for x in intValues])
 
     @property
     def initEvolutionVector(self):
         """Initial FIFO state taking into account delays"""
         return(np.array([self.getDelay(x) for x in self.edges]))
 
-    def evolutionVectorForNode(self,nodeID):
+    def evolutionVectorForNode(self,nodeID,test=True):
         """Return the evolution vector corresponding to a selected node"""
-        v = np.zeros(len(self._sortedNodes))
-        v[nodeID] = 1 
+        # For a simple static scheduling, the toplogy matrix T
+        # is enough. If we know which node is executed, we have
+        # a node vector V where there is a 1 at the position of the
+        # execute node.
+        # And the data generated on the fifos is:
+        # T . V so the new fifo vector B' is given with
+        # B' = T .V + B
+        # But in case of cyclo static scheduling the topology
+        # matrix is for a full period of the node
+        # so 1 or several periods of each IO.
+        # And we don't have the granularity corresponding to 
+        # one node execution.
+        # For one node execution, we need to know where we are
+        # in the cycle on each IO
+        # and where we are in the cycle for the node to
+        # track how many full eriods of the node execution have been
+        # done.
+        # So this function is not just returning the node vector
+        # and letting the main function updating the fifos.
+        # This function is returning the new fifo state
+        # Node vector would have been
+        # v = np.zeros(len(self._sortedNodes))
+        # v[nodeID] = 1 
+        # for cyclo static scheduling
+        n = self._sortedNodes[nodeID]
+        #print(n)
+        v = np.zeros(len(self._sortedEdges))
+
+        # In test mode we are testing several nodes
+        # to find the best one to schedule.
+        # So we should not advance the cycle
+        # of the IOs
+        for i in n._inputs:
+            io = n._inputs[i]
+            edge = io._fifo
+            # If 0, it is a connection to a constant node
+            # so there is no FIFO
+            if len(edge)>0:
+               pos = self._sortedEdges.index(edge)
+               v[pos] = -io.cycleValue
+               if not test:
+                  io.advanceCycle()
+            
+
+        for o in n._outputs:
+            io = n._outputs[o]
+            edge = io._fifo
+            # If 0 it is a connection to a constant edge
+            # so there is no FIFO
+            if len(edge)>0:
+               pos = self._sortedEdges.index(edge)
+               v[pos] = io.cycleValue
+               if not test:
+                  io.advanceCycle()
+            
+
+        #print(v)
         return(v)
 
     
@@ -565,9 +630,21 @@ class Graph():
         # After this transform, each output should be connected to
         # only one output.
         self.insertDuplicates()
+
+        networkMatrix = self.topologyMatrix()
+
         # Init values
         initB = self.initEvolutionVector
-        initN = self.nullVector()
+        initN = self.nullVector(networkMatrix)
+        #print(initN)
+
+        # nullVector is giving the number of repetitions
+        # for a node cycle.
+        # So the number of iteration of the node must be multiplied
+        # by the cycle period for this node.
+        #for nodeID in range(len(self._sortedNodes)):
+        #    initN[nodeID] = initN[nodeID] * self._sortedNodes[nodeID].cyclePeriod
+
 
         # Current values (copys)
         b = np.array(initB)
@@ -579,7 +656,9 @@ class Graph():
            print(b)
 
         # Topology matrix
-        t = np.array(self.topologyMatrix())
+        t = np.array(networkMatrix)
+        #print(t)
+        #print(n)
 
         # Define the list of FIFOs objects
         nbFIFOS = t.shape[0]
@@ -588,7 +667,18 @@ class Graph():
             allFIFOs.append(FIFODesc(i))
 
         # Normalization vector
-        normV =  1.0*np.apply_along_axis(abs,1,t).max(axis=1)
+        # For static scheduling it is
+        #normV =  1.0*np.apply_along_axis(abs,1,t).max(axis=1)
+        # For cyclo static scheduling we need the max per execution
+        # and not the accumulated value for the run of a node
+        # period which may be several periods of an IO
+        #print(normV)
+        normV = np.zeros(len(self._sortedEdges)) 
+        for e in range(len(self._sortedEdges)):
+            (src,dst) = self._sortedEdges[e]
+            normV[e] = max(src.cycleMax, dst.cycleMax)
+
+        #print(normV)
 
         # bMax below is used to track maximum FIFO size 
         # occuring during a run of the schedule
@@ -615,8 +705,11 @@ class Graph():
 
         zeroVec = np.zeros(len(self._sortedNodes))
         evolutionTime = 0
-        # While there are remaining nodes to schedule
+        #print(self._sortedNodes)
+        # While there are remaining node periods to schedule
         while (n != zeroVec).any():
+            #print("")
+            #print(n)
             # Look for the best node to schedule
             # which is the one giving the minimum FIFO increase
             
@@ -629,10 +722,14 @@ class Graph():
             for node in self._sortedNodes:
                 # If the node can be scheduled
                 if n[nodeID] > 0:
-                   # Evolution vector if this node is selected
-                   v = self.evolutionVectorForNode(nodeID)
+                   # Evolution vector for static scheduling
+                   # v = self.evolutionVectorForNode(nodeID)
+                   # for cyclo static we need the new fifo state
+                   newB = self.evolutionVectorForNode(nodeID) + b
                    # New fifos size after this evolution
-                   newB = np.dot(t,v) + b
+                   # For static scheduling, fifo update would have been
+                   # newB = np.dot(t,v) + b
+                   #print(newB)
 
                    # Check that there is no FIFO underflow:
                    if np.all(newB >= 0):
@@ -656,13 +753,28 @@ class Graph():
             # Now  we have evaluated all schedulable nodes for this run
             # and selected the one giving the smallest FIFO increase
 
+            # Implementation for static scheduling
             # Real evolution vector for selected node
-            evol =  self.evolutionVectorForNode(selected)
+            # evol =  self.evolutionVectorForNode(selected)
             # Keep track that this node has been schedule
-            n = n - evol
+            # n = n - evol
             # Compute new fifo state
-            fifoChange = np.dot(t,evol)
+            # fifoChange = np.dot(t,evol)
+            # b = fifoChange + b
+
+            # Implementation for cyclo static scheduling
+            #print("selected")
+            fifoChange = self.evolutionVectorForNode(selected,test=False)
             b = fifoChange + b
+            # For cyclo static, we create an evolution vector 
+            # which contains a 1
+            # at a node position only if this node has executed
+            # its period.
+            # Otherwise the null vector is not decreased
+            v = np.zeros(len(self._sortedNodes))
+            v[selected] = self._sortedNodes[selected].executeNode() 
+            n = n - v
+
 
             if config.displayFIFOSizes:
                print(b)

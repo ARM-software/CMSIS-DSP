@@ -42,7 +42,10 @@ def gencode(sched,directory,config):
     schedDescription=""
 
     if config.codeArray:
-       ctemplate = env.get_template("codeArray.cpp")
+       if config.switchCase:
+          ctemplate = env.get_template("codeSwitch.cpp")
+       else:
+          ctemplate = env.get_template("codeArray.cpp")
        nb = 0
        for s in sched.schedule:
          schedDescription = schedDescription + ("%d," % sched.nodes[s].codeID)
