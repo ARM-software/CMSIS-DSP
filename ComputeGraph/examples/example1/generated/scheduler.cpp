@@ -96,6 +96,7 @@ uint32_t scheduler(int *error,int someVariable)
        nbSchedule++;
     }
 
+errorHandling:
     *error=cgStaticError;
     return(nbSchedule);
 }

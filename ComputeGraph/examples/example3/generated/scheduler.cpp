@@ -180,6 +180,7 @@ uint32_t scheduler(int *error)
        nbSchedule++;
     }
 
+errorHandling:
     *error=cgStaticError;
     return(nbSchedule);
 }

@@ -70,6 +70,7 @@ uint32_t {{config.schedName}}(int *error{{optionalargs()}})
     /* Run several schedule iterations */
 {% block scheduleLoop %}
 {% endblock %}
+errorHandling:
     *error=cgStaticError;
     return(nbSchedule);
 }

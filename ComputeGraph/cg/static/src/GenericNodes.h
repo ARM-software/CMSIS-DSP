@@ -137,8 +137,8 @@ public:
      GenericNode(FIFOBase<IN> &src,FIFOBase<OUT> &dst):mSrc(src),mDst(dst){};
 
 protected:
-     OUT * getWriteBuffer(){return mDst.getWriteBuffer(outputSize);};
-     IN * getReadBuffer(){return mSrc.getReadBuffer(inputSize);};
+     OUT * getWriteBuffer(int nb = outputSize){return mDst.getWriteBuffer(nb);};
+     IN * getReadBuffer(int nb = inputSize){return mSrc.getReadBuffer(nb);};
 
 private:
     FIFOBase<IN> &mSrc;
@@ -153,9 +153,9 @@ public:
      mDst1(dst1),mDst2(dst2){};
 
 protected:
-     OUT1 * getWriteBuffer1(){return mDst1.getWriteBuffer(output1Size);};
-     OUT2 * getWriteBuffer2(){return mDst2.getWriteBuffer(output2Size);};
-     IN * getReadBuffer(){return mSrc.getReadBuffer(inputSize);};
+     OUT1 * getWriteBuffer1(int nb=output1Size){return mDst1.getWriteBuffer(nb);};
+     OUT2 * getWriteBuffer2(int nb=output2Size){return mDst2.getWriteBuffer(nb);};
+     IN * getReadBuffer(int nb=inputSize){return mSrc.getReadBuffer(nb);};
 
 private:
     FIFOBase<IN> &mSrc;
@@ -178,11 +178,11 @@ public:
      mDst1(dst1),mDst2(dst2),mDst3(dst3){};
 
 protected:
-     OUT1 * getWriteBuffer1(){return mDst1.getWriteBuffer(output1Size);};
-     OUT2 * getWriteBuffer2(){return mDst2.getWriteBuffer(output2Size);};
-     OUT3 * getWriteBuffer3(){return mDst3.getWriteBuffer(output3Size);};
+     OUT1 * getWriteBuffer1(int nb=output1Size){return mDst1.getWriteBuffer(nb);};
+     OUT2 * getWriteBuffer2(int nb=output2Size){return mDst2.getWriteBuffer(nb);};
+     OUT3 * getWriteBuffer3(int nb=output3Size){return mDst3.getWriteBuffer(nb);};
 
-     IN * getReadBuffer(){return mSrc.getReadBuffer(inputSize);};
+     IN * getReadBuffer(int nb=inputSize){return mSrc.getReadBuffer(nb);};
 
 private:
     FIFOBase<IN> &mSrc;
@@ -201,9 +201,9 @@ public:
      mDst(dst){};
 
 protected:
-     OUT * getWriteBuffer(){return mDst.getWriteBuffer(outputSize);};
-     IN1 * getReadBuffer1(){return mSrc1.getReadBuffer(input1Size);};
-     IN2 * getReadBuffer2(){return mSrc2.getReadBuffer(input2Size);};
+     OUT * getWriteBuffer(int nb=outputSize){return mDst.getWriteBuffer(nb);};
+     IN1 * getReadBuffer1(int nb=input1Size){return mSrc1.getReadBuffer(nb);};
+     IN2 * getReadBuffer2(int nb=input2Size){return mSrc2.getReadBuffer(nb);};
 
 private:
     FIFOBase<IN1> &mSrc1;
@@ -220,7 +220,7 @@ public:
      GenericSource(FIFOBase<OUT> &dst):mDst(dst){};
 
 protected:
-     OUT * getWriteBuffer(){return mDst.getWriteBuffer(outputSize);};
+     OUT * getWriteBuffer(int nb=outputSize){return mDst.getWriteBuffer(nb);};
 
 private:
     FIFOBase<OUT> &mDst;
@@ -233,7 +233,7 @@ public:
      GenericSink(FIFOBase<IN> &src):mSrc(src){};
 
 protected:
-     IN * getReadBuffer(){return mSrc.getReadBuffer(inputSize);};
+     IN * getReadBuffer(int nb=inputSize){return mSrc.getReadBuffer(nb);};
 
 private:
     FIFOBase<IN> &mSrc;
@@ -385,7 +385,7 @@ public:
 #if !defined(CHECKERROR)
 #define CHECKERROR       if (cgStaticError < 0) \
        {\
-         break;\
+         goto errorHandling;\
        }
 
 #endif

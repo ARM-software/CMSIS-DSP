@@ -74,6 +74,7 @@ class Configuration:
         # Display FIFO buffers in graph instead of datatype
         self.displayFIFOBuf = False
 
+
     @property
     def debug(self):
         return (self.debugLimit > 0)

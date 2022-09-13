@@ -128,6 +128,7 @@ uint32_t {{config.schedName}}(int *error{{optionalargs()}})
        nbSchedule++;
     }
 
+errorHandling:
     *error=cgStaticError;
     return(nbSchedule);
 }
