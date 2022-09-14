@@ -54,7 +54,7 @@ class Configuration:
         # Prefix to add before the global FIFO buffer names
         self.prefix = ""
 
-        # Experimental so disbaled by default
+        # Experimental so disabled by default
         self.memoryOptimization = False
 
         # Path to CG  module for Python simu 

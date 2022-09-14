@@ -3,8 +3,7 @@
 {% block schedArray %}
 /*
 
-Description of the scheduling. It is a list of nodes to call.
-The values are indexes in the previous array.
+Description of the scheduling. 
 
 */
 static unsigned int schedule[{{schedLen}}]=

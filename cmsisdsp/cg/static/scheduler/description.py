@@ -359,7 +359,7 @@ class Graph():
         allBuffers=[]
 
         # Compute a graph describing when FIFOs are used at the same time
-        # The use graph coloring to allocate buffer to those FIFOs.
+        # Then use graph coloring to allocate buffer to those FIFOs.
         # Then size the buffer based on the longest FIFO using it
         if config.memoryOptimization:
             G = nx.Graph()
@@ -376,7 +376,7 @@ class Graph():
             currentTime=0
             while currentTime<=maxTime:
                 # Remove fifo no more active.
-                # Thei stop time < currenTime
+                # Their stop time < currentTime
                 toDelete=[]
                 for k in active:
                     start,stop=k._liveInterval 
@@ -394,9 +394,11 @@ class Graph():
                         start,stop=fifo._liveInterval
                         # If a src -> node -> dst
                         # At time t, node will read for src and the stop time
-                        # will be currentTime t.
+                        # will be currentTime t because once read
+                        # the buffer can be reused.
                         # And it will write to dst and the start time will be
-                        # currentTime
+                        # currentTime because once written the buffer
+                        # cannot be used again until it has been read.
                         # So, src and dst are both live at this time.
                         # Which means the condition on the stop time must be 
                         # stop >= currentTime and not a strict comparison
@@ -410,6 +412,7 @@ class Graph():
 
             # To debug and display the graph
             if False:
+               import matplotlib.pyplot as plt
                labels={}
                for n in G.nodes:
                   labels[n]="%s -> %s" % (n.src.owner.nodeName,n.dst.owner.nodeName)
@@ -450,6 +453,9 @@ class Graph():
               sharedA = FifoBuffer(theID,CType(UINT8),maxSizes[theID])
               allBuffers.append(sharedA)
 
+
+        # bufferID must start after all shared buffers
+        bufferID = bufferID + 1
         for fifo in allFIFOs:
             # Use shared buffer if memory optimization
             if fifo.isArray and config.memoryOptimization:
@@ -472,6 +478,7 @@ class Graph():
 
         #for fifo in allFIFOs:
         #    fifo.dump()
+        
         return(allBuffers)
 
 
