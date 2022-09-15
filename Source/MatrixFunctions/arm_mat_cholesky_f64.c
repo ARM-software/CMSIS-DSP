@@ -198,7 +198,7 @@ arm_status arm_mat_cholesky_f64(
                 return(ARM_MATH_DECOMPOSITION_FAILURE);
             }
             
-            invSqrtVj = 1.0f/sqrtf(pG[i * n + i]);
+            invSqrtVj = 1.0f/sqrt(pG[i * n + i]);
             SCALE_COL_F64(pDst,i,invSqrtVj,i);
         }
         

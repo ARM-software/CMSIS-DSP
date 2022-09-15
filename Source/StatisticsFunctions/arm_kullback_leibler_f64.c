@@ -90,7 +90,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,const float64_t * pSr
     {
         pA = *pInA++;
         pB = *pInB++;
-        accum += pA * logf(pB/pA);
+        accum += pA * log(pB/pA);
         
         blkCnt--;
         
