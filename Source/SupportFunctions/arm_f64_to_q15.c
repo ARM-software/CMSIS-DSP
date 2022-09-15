@@ -83,28 +83,28 @@ void arm_f64_to_q15(
     /* convert from float to Q15 and store result in destination buffer */
 #ifdef ARM_MATH_ROUNDING
 
-    in = (*pIn++ * 32768.0f);
-    in += in > 0.0f ? 0.5f : -0.5f;
+    in = (*pIn++ * 32768.0);
+    in += in > 0.0 ? 0.5f : -0.5f;
     *pDst++ = (q15_t) (__SSAT((q31_t) (in), 16));
 
-    in = (*pIn++ * 32768.0f);
-    in += in > 0.0f ? 0.5f : -0.5f;
+    in = (*pIn++ * 32768.0);
+    in += in > 0.0 ? 0.5f : -0.5f;
     *pDst++ = (q15_t) (__SSAT((q31_t) (in), 16));
 
-    in = (*pIn++ * 32768.0f);
-    in += in > 0.0f ? 0.5f : -0.5f;
+    in = (*pIn++ * 32768.0);
+    in += in > 0.0 ? 0.5f : -0.5f;
     *pDst++ = (q15_t) (__SSAT((q31_t) (in), 16));
 
-    in = (*pIn++ * 32768.0f);
-    in += in > 0.0f ? 0.5f : -0.5f;
+    in = (*pIn++ * 32768.0);
+    in += in > 0.0 ? 0.5f : -0.5f;
     *pDst++ = (q15_t) (__SSAT((q31_t) (in), 16));
 
 #else
 
-    *pDst++ = (q15_t) __SSAT((q31_t) (*pIn++ * 32768.0f), 16);
-    *pDst++ = (q15_t) __SSAT((q31_t) (*pIn++ * 32768.0f), 16);
-    *pDst++ = (q15_t) __SSAT((q31_t) (*pIn++ * 32768.0f), 16);
-    *pDst++ = (q15_t) __SSAT((q31_t) (*pIn++ * 32768.0f), 16);
+    *pDst++ = (q15_t) __SSAT((q31_t) (*pIn++ * 32768.0), 16);
+    *pDst++ = (q15_t) __SSAT((q31_t) (*pIn++ * 32768.0), 16);
+    *pDst++ = (q15_t) __SSAT((q31_t) (*pIn++ * 32768.0), 16);
+    *pDst++ = (q15_t) __SSAT((q31_t) (*pIn++ * 32768.0), 16);
 
 #endif /* #ifdef ARM_MATH_ROUNDING */
 
@@ -129,15 +129,15 @@ void arm_f64_to_q15(
     /* convert from float to Q15 and store result in destination buffer */
 #ifdef ARM_MATH_ROUNDING
 
-    in = (*pIn++ * 32768.0f);
-    in += in > 0.0f ? 0.5f : -0.5f;
+    in = (*pIn++ * 32768.0);
+    in += in > 0.0 ? 0.5f : -0.5f;
     *pDst++ = (q15_t) (__SSAT((q31_t) (in), 16));
 
 #else
 
     /* C = A * 32768 */
     /* Convert from float to q15 and then store the results in the destination buffer */
-    *pDst++ = (q15_t) __SSAT((q31_t) (*pIn++ * 32768.0f), 16);
+    *pDst++ = (q15_t) __SSAT((q31_t) (*pIn++ * 32768.0), 16);
 
 #endif /* #ifdef ARM_MATH_ROUNDING */
 
