@@ -30,7 +30,7 @@
 
 /**
   @ingroup groupFilters
- */
+*/
 
 /**
   @defgroup BiquadCascadeDF2T Biquad Cascade IIR Filters Using a Direct Form II Transposed Structure
