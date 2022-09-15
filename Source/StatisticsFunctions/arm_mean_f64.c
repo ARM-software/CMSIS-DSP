@@ -29,21 +29,21 @@
 #include "dsp/statistics_functions.h"
 
 /**
- @ingroup groupStats
+  @ingroup groupStats
  */
 
 
 /**
- @addtogroup mean
- @{
+  @addtogroup mean
+  @{
  */
 
 /**
- @brief         Mean value of a floating-point vector.
- @param[in]     pSrc       points to the input vector.
- @param[in]     blockSize  number of samples in input vector.
- @param[out]    pResult    mean value returned here.
- @return        none
+  @brief         Mean value of a floating-point vector.
+  @param[in]     pSrc       points to the input vector.
+  @param[in]     blockSize  number of samples in input vector.
+  @param[out]    pResult    mean value returned here.
+  @return        none
  */
 
 #if defined(ARM_MATH_NEON)
@@ -114,5 +114,5 @@ void arm_mean_f64(
 }
 #endif
 /**
- @} end of mean group
+  @} end of mean group
  */

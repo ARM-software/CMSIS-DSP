@@ -31,20 +31,20 @@
 
 
 /**
- @ingroup groupStats
+  @ingroup groupStats
  */
 
 /**
- @addtogroup AbsMax
- @{
+  @addtogroup AbsMax
+  @{
  */
 
 /**
- @brief         Maximum value of absolute values of a floating-point vector.
- @param[in]     pSrc       points to the input vector
- @param[in]     blockSize  number of samples in input vector
- @param[out]    pResult    maximum value returned here
- @return        none
+  @brief         Maximum value of absolute values of a floating-point vector.
+  @param[in]     pSrc       points to the input vector
+  @param[in]     blockSize  number of samples in input vector
+  @param[out]    pResult    maximum value returned here
+  @return        none
  */
 
 #if defined(ARM_MATH_NEON)
@@ -151,5 +151,5 @@ void arm_absmax_no_idx_f64(
 #endif
 
 /**
- @} end of AbsMax group
+  @} end of AbsMax group
  */

@@ -98,5 +98,5 @@ void arm_var_f64(
 }
 
 /**
- @} end of variance group
+  @} end of variance group
  */

@@ -29,20 +29,20 @@
 #include "dsp/statistics_functions.h"
 
 /**
- @ingroup groupStats
+  @ingroup groupStats
  */
 
 /**
- @addtogroup power
- @{
+  @addtogroup power
+  @{
  */
 
 /**
- @brief         Sum of the squares of the elements of a floating-point vector.
- @param[in]     pSrc       points to the input vector
- @param[in]     blockSize  number of samples in input vector
- @param[out]    pResult    sum of the squares value returned here
- @return        none
+  @brief         Sum of the squares of the elements of a floating-point vector.
+  @param[in]     pSrc       points to the input vector
+  @param[in]     blockSize  number of samples in input vector
+  @param[out]    pResult    sum of the squares value returned here
+  @return        none
  */
 #if defined(ARM_MATH_NEON)
 void arm_power_f64(
@@ -124,5 +124,5 @@ void arm_power_f64(
 }
 #endif
 /**
- @} end of power group
+  @} end of power group
  */

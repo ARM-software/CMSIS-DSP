@@ -29,21 +29,21 @@
 #include "dsp/statistics_functions.h"
 
 /**
- @ingroup groupStats
+  @ingroup groupStats
  */
 
 /**
- @addtogroup MSE
- @{
+  @addtogroup MSE
+  @{
  */
 
 /**
- @brief         Mean square error between two double floating point vectors.
- @param[in]     pSrcA       points to the first input vector
- @param[in]     pSrcB       points to the second input vector
- @param[in]     blockSize   number of samples in input vector
- @param[out]    result      mean square error
- @return        none
+  @brief         Mean square error between two double floating point vectors.
+  @param[in]     pSrcA       points to the first input vector
+  @param[in]     pSrcB       points to the second input vector
+  @param[in]     blockSize   number of samples in input vector
+  @param[out]    result      mean square error
+  @return        none
  */
 
 void arm_mse_f64(
@@ -130,5 +130,5 @@ void arm_mse_f64(
 
 
 /**
- @} end of MSE group
+  @} end of MSE group
  */
