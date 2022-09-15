@@ -45,56 +45,56 @@
   @return        none
  */
 void arm_var_f64(
-	const float64_t * pSrc,
-	uint32_t blockSize,
-	float64_t * pResult)
+    const float64_t * pSrc,
+    uint32_t blockSize,
+    float64_t * pResult)
 {
-	
-	uint32_t blkCnt;                               /* Loop counter */
-	float64_t sum = 0.;                          /* Temporary result storage */
-	float64_t fSum = 0.;
-	float64_t fMean, fValue;
-	const float64_t * pInput = pSrc;
-	
-	if (blockSize <= 1U)
-	{
-		*pResult = 0;
-		return;
-	}
-	arm_mean_f64(pInput, blockSize, &fMean);
+    
+    uint32_t blkCnt;                               /* Loop counter */
+    float64_t sum = 0.;                          /* Temporary result storage */
+    float64_t fSum = 0.;
+    float64_t fMean, fValue;
+    const float64_t * pInput = pSrc;
+    
+    if (blockSize <= 1U)
+    {
+        *pResult = 0;
+        return;
+    }
+    arm_mean_f64(pInput, blockSize, &fMean);
 #if defined(ARM_MATH_NEON)
-	float64x2_t fValueV ,fsumV , pInputV , fMeanV;
-	fsumV = vdupq_n_f64(0.0f);
-	fMeanV = vdupq_n_f64(fMean);
-	blkCnt = blockSize >> 1U;
-	
-	while(blkCnt > 0U)
-	{
-		pInputV = vld1q_f64(pInput);
-		fValueV = vsubq_f64(pInputV, fMeanV);
-		fsumV = vmlaq_f64(fsumV, fValueV, fValueV);
-		pInput += 2 ;
-		blkCnt--;
-	}
-	fSum = vaddvq_f64(fsumV);
-	
-	blkCnt = blockSize & 1 ;
-	
+    float64x2_t fValueV ,fsumV , pInputV , fMeanV;
+    fsumV = vdupq_n_f64(0.0f);
+    fMeanV = vdupq_n_f64(fMean);
+    blkCnt = blockSize >> 1U;
+    
+    while(blkCnt > 0U)
+    {
+        pInputV = vld1q_f64(pInput);
+        fValueV = vsubq_f64(pInputV, fMeanV);
+        fsumV = vmlaq_f64(fsumV, fValueV, fValueV);
+        pInput += 2 ;
+        blkCnt--;
+    }
+    fSum = vaddvq_f64(fsumV);
+    
+    blkCnt = blockSize & 1 ;
+    
 #else
-	/* Initialize blkCnt with number of samples */
-	blkCnt = blockSize;
+    /* Initialize blkCnt with number of samples */
+    blkCnt = blockSize;
 #endif
-	while (blkCnt > 0U)
-	{
-		fValue = *pInput++ - fMean;
-		fSum += fValue * fValue;
-		
-		/* Decrement loop counter */
-		blkCnt--;
-	}
-	
-	/* Variance */
-	*pResult = fSum / (float64_t)(blockSize - 1.);
+    while (blkCnt > 0U)
+    {
+        fValue = *pInput++ - fMean;
+        fSum += fValue * fValue;
+        
+        /* Decrement loop counter */
+        blkCnt--;
+    }
+    
+    /* Variance */
+    *pResult = fSum / (float64_t)(blockSize - 1.);
 }
 
 /**

@@ -47,9 +47,9 @@
  */
 #if defined(ARM_MATH_NEON)
 void arm_max_no_idx_f64(
-	const float64_t * pSrc,
-	uint32_t blockSize,
-	float64_t * pResult)
+    const float64_t * pSrc,
+    uint32_t blockSize,
+    float64_t * pResult)
 {
     float64_t maxVal , in;                         /* Temporary variables to store the output value. */
     uint32_t blkCnt;                     /* Loop counter */
@@ -110,9 +110,9 @@ void arm_max_no_idx_f64(
 }
 #else
 void arm_max_no_idx_f64(
-	const float64_t *pSrc,
-	uint32_t   blockSize,
-	float64_t *pResult)
+    const float64_t *pSrc,
+    uint32_t   blockSize,
+    float64_t *pResult)
 {
     float64_t   maxValue = F64_MIN;
     float64_t   newVal;
