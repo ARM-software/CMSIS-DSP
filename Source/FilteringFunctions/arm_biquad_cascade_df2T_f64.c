@@ -34,15 +34,18 @@
 
 /**
   @defgroup BiquadCascadeDF2T Biquad Cascade IIR Filters Using a Direct Form II Transposed Structure
+
   This set of functions implements arbitrary order recursive (IIR) filters using a transposed direct form II structure.
   The filters are implemented as a cascade of second order Biquad sections.
   These functions provide a slight memory savings as compared to the direct form I Biquad filter functions.
   Only floating-point data is supported.
+
   This function operate on blocks of input and output data and each call to the function
   processes <code>blockSize</code> samples through the filter.
   <code>pSrc</code> points to the array of input data and
   <code>pDst</code> points to the array of output data.
   Both arrays contain <code>blockSize</code> values.
+
   @par           Algorithm
                    Each Biquad stage implements a second order filter using the difference equation:
   <pre>
@@ -88,10 +91,12 @@
                    The transposed Direct Form II structure, on the other hand, requires a wide dynamic range for the state variables <code>d1</code> and <code>d2</code>.
                    Because of this, the CMSIS library only has a floating-point version of the Direct Form II Biquad.
                    The advantage of the Direct Form II Biquad is that it requires half the number of state variables, 2 rather than 4, per Biquad stage.
+
   @par           Instance Structure
                    The coefficients and state variables for a filter are stored together in an instance data structure.
                    A separate instance structure must be defined for each filter.
                    Coefficient arrays may be shared among several instances while state variable arrays cannot be shared.
+
   @par           Init Functions
                    There is also an associated initialization function.
                    The initialization function performs following operations:
@@ -127,6 +132,8 @@
   @param[in]     blockSize number of samples to process
   @return        none
  */
+
+
 #if defined(ARM_MATH_NEON)
 void arm_biquad_cascade_df2T_f64(
     const arm_biquad_cascade_df2T_instance_f64 * S,
