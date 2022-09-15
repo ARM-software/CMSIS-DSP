@@ -44,7 +44,7 @@
   @param[out]    pResult    sum of the squares value returned here
   @return        none
  */
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && defined(__aarch64__)
 void arm_power_f64(
     const float64_t * pSrc,
     uint32_t blockSize,

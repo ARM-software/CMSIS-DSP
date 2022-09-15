@@ -51,7 +51,7 @@ float64_t arm_euclidean_distance_f64(const float64_t *pA,const float64_t *pB, ui
 {
     float64_t accum=0.,tmp;
     uint32_t blkCnt;
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && defined(__aarch64__)
     float64x2_t accumV,tmpV , pAV ,pBV;
     accumV = vdupq_n_f64(0.0f);
     blkCnt = blockSize >> 1U;

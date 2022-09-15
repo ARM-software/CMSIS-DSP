@@ -39,7 +39,7 @@ void arm_vlog_f64(
     uint32_t blockSize)
 {
     uint32_t blkCnt;
-#if (defined(ARM_MATH_NEON) || defined(ARM_MATH_NEON_EXPERIMENTAL)) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if (defined(ARM_MATH_NEON) || defined(ARM_MATH_NEON_EXPERIMENTAL)) && !defined(ARM_MATH_AUTOVECTORIZE) && defined(__aarch64__)
     float64x2_t src;
     float64x2_t dst;
     

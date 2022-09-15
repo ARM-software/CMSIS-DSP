@@ -52,7 +52,7 @@
    * The decomposition of A is returning a lower triangular matrix L such that A = L L^t
    */
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE) && defined(__aarch64__)
 
 arm_status arm_mat_cholesky_f64(
     const arm_matrix_instance_f64 * pSrc,

@@ -44,7 +44,7 @@
  * @return Kullback-Leibler divergence D(A || B)
  *
  */
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE) && defined(__aarch64__)
 
 #include "NEMath.h"
 

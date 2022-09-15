@@ -38,7 +38,7 @@ void arm_vexp_f64(
     uint32_t blockSize)
 {
     uint32_t blkCnt;
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && defined(__aarch64__)
     
     
     float64x2_t src;

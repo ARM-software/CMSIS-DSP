@@ -47,7 +47,7 @@
    * @return The function returns ARM_MATH_SINGULAR, if the system can't be solved.
   */
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE) && defined(__aarch64__)
 arm_status arm_mat_solve_upper_triangular_f64(
     const arm_matrix_instance_f64 * ut,
     const arm_matrix_instance_f64 * a,

@@ -29,7 +29,7 @@
 #include "dsp/statistics_functions.h"
 #include <limits.h>
 #include <math.h>
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && defined(__aarch64__)
 #include "arm_vec_math.h"
 #endif
 
@@ -57,7 +57,7 @@ float64_t arm_entropy_f64(const float64_t * pSrcA, uint32_t blockSize)
     
     
     accum = 0.0;
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && defined(__aarch64__)
     float64x2_t sumV ,pInV ;
     sumV = vdupq_n_f64(0.0f);
     blkCnt = blockSize >> 1U ;

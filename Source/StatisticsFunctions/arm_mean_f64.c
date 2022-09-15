@@ -46,7 +46,7 @@
   @return        none
  */
 
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && defined(__aarch64__)
 
 void arm_mean_f64(
     const float64_t * pSrc,

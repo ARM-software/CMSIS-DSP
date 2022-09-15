@@ -52,7 +52,7 @@ float64_t arm_chebyshev_distance_f64(const float64_t *pA,const float64_t *pB, ui
     float64_t diff=0.,  maxVal,tmpA, tmpB;
     uint32_t blkCnt;
     maxVal = F64_MIN;
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && defined(__aarch64__)
     float64x2_t diffV , tmpAV , tmpBV , maxValV ;
     maxValV = vdupq_n_f64(maxVal);
     blkCnt = blockSize >> 1U ;

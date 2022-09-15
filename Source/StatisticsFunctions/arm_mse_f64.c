@@ -57,7 +57,7 @@ void arm_mse_f64(
     uint32_t blkCnt;                               /* Loop counter */
     float64_t inA, inB;
     float64_t sum = 0.0;
-#if defined (ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && defined(__aarch64__)
     
     float64x2_t inAV , inBV , subV, sumV;
     sumV = vdupq_n_f64(0.0f);

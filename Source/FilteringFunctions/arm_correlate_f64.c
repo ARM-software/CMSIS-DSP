@@ -65,7 +65,7 @@ void arm_correlate_f64(
     uint32_t j, k, count, blkCnt;                  /* Loop counters */
     uint32_t outBlockSize;                         /* Loop counter */
     int32_t inc = 1;                               /* Destination address modifier */
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && defined(__aarch64__)
     float64x2_t sumV,pxV,pyV ;
 #endif
     
@@ -167,7 +167,7 @@ void arm_correlate_f64(
     {
         /* Accumulator is made zero for every iteration */
         sum = 0.;
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && defined(__aarch64__)
         sumV = vdupq_n_f64(0.0f);
         k = count >> 1U ;
         
@@ -249,7 +249,7 @@ void arm_correlate_f64(
         {
             /* Accumulator is made zero for every iteration */
             sum = 0.;
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && defined(__aarch64__)
             sumV = vdupq_n_f64(0.0f);
             k = srcBLen >> 1U ;
             while(k > 0U)
@@ -305,7 +305,7 @@ void arm_correlate_f64(
         {
             /* Accumulator is made zero for every iteration */
             sum = 0.;
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && defined(__aarch64__)
             sumV = vdupq_n_f64(0.0f);
             k = srcBLen >> 1U ;
             while(k > 0U)
@@ -382,7 +382,7 @@ void arm_correlate_f64(
     {
         /* Accumulator is made zero for every iteration */
         sum = 0.;
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && defined(__aarch64__)
         sumV = vdupq_n_f64(0.0f);
         k = count >> 1U ;
         
