@@ -19,6 +19,17 @@ extern "C"
 {
 #endif
 
+{% if config.eventRecorder %}
+#include "EventRecorder.h"
+
+#define EvtSched 0x01 
+
+#define Evt_Scheduler   EventID (EventLevelAPI,   EvtSched, 0x00)
+#define Evt_Node        EventID (EventLevelAPI,   EvtSched, 0x01)
+#define Evt_Error       EventID (EventLevelError,   EvtSched, 0x02)
+
+{% endif %}
+
 extern uint32_t {{config.schedName}}(int *error{{optionalargs()}});
 
 #ifdef   __cplusplus

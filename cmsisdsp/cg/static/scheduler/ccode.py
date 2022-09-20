@@ -58,8 +58,8 @@ def gencode(sched,directory,config):
     htemplate = env.get_template("code.h")
 
 
-    cfile=os.path.join(directory,"scheduler.cpp")
-    hfile=os.path.join(directory,"scheduler.h")
+    cfile=os.path.join(directory,"%s.cpp" % config.schedulerCFileName)
+    hfile=os.path.join(directory,"%s.h" % config.schedulerCFileName)
 
     nbFifos = len(sched._graph._allFIFOs)
     

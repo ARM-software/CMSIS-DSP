@@ -20,25 +20,40 @@ static unsigned int schedule[{{schedLen}}]=
 {% endif %}
     {
         /* Run a schedule iteration */
+        {% if config.eventRecorder -%}
+        EventRecord2 (Evt_Scheduler, nbSchedule, 0);
+        {% endif -%}
+        CG_BEFORE_ITERATION;
         for(unsigned long id=0 ; id < {{schedLen}}; id++)
         {
+            {% if config.eventRecorder -%}
+            EventRecord2 (Evt_Node, schedule[id], 0);
+            {% endif -%}
             switch(schedule[id])
             {
                 {% for nodeID in range(nbNodes) -%}
                 case {{nodeID}}:
                 {
                    {{nodes[nodeID].cRun()}}
-                   CHECKERROR;
                 }
                 break;
 
-                {% endfor %}default:
+                {% endfor -%}
+                default:
                 break;
             }
+            {% if config.eventRecorder -%}
+            if (cgStaticError<0)
+            {
+                EventRecord2 (Evt_Error, cgStaticError, 0);
+            }
+            {% endif -%}
+            CHECKERROR;
         }
 {% if config.debug %}
        debugCounter--;
 {% endif %}
+       CG_AFTER_ITERATION;
        nbSchedule++;
     }
 

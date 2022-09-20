@@ -12,10 +12,12 @@ The support classes and code is covered by CMSIS-DSP license.
 {% endif %}
 
 #include "arm_math.h"
-#include "custom.h"
+#include "{{config.customCName}}"
 #include "GenericNodes.h"
-#include "AppNodes.h"
-#include "scheduler.h"
+#include "{{config.appNodesCName}}"
+#include "{{config.schedulerCFileName}}.h"
+
+
 
 {% macro optionalargs() -%}
 {% if config.cOptionalArgs %},{{config.cOptionalArgs}}{% endif %}

@@ -389,4 +389,13 @@ public:
        }
 
 #endif
+
+#if !defined(CG_BEFORE_ITERATION)
+#define CG_BEFORE_ITERATION
+#endif 
+
+#if !defined(CG_AFTER_ITERATION)
+#define CG_AFTER_ITERATION
+#endif 
+
 #endif

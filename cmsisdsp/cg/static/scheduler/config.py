@@ -74,6 +74,21 @@ class Configuration:
         # Display FIFO buffers in graph instead of datatype
         self.displayFIFOBuf = False
 
+        # Enable support for CMSIS Event Recorder 
+        self.eventRecorder = False
+
+        # Name of AppNode file
+        self.appNodesCName = "AppNodes.h"
+        self.appNodesPythonName = "appnodes"
+
+        # Name of custom file
+        self.customCName = "custom.h"
+        self.customPythonName = "custom"
+
+        # Name of scheduler source and header files
+        self.schedulerCFileName = "scheduler"
+        self.schedulerPythonFileName = "sched"
+
 
     @property
     def debug(self):

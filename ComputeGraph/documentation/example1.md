@@ -181,6 +181,7 @@ There are other fields for the configuration:
 - `memoryOptimization` : Experimental. It is attempting to reuse buffer memory and share it between several FIFOs 
 - `pathToSDFModule` : Path to the Python SDF module so that the generated Python code can find it
 - `codeArray` : Experimental. When a schedule is very long, representing it as a sequence of function calls is not good for the code size of the generated solution. When this option is enabled, the schedule is described with an array. It implies that the pure function calls cannot be inlined any more and are replaced by new nodes which are automatically generated.
+- `eventRecorder` : Enable the support for the CMSIS Event Recorder.
 
 In the example 1, we are passing a variable to initialize the node of type ProcessingNode. So, it would be great if this variable was an argument of the scheduler function. So we define:
 

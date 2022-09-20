@@ -11,8 +11,8 @@ import sys
 import numpy as np
 import cmsisdsp as dsp
 from cmsisdsp.cg.static.nodes.simu import *
-from appnodes import * 
-from custom import *
+from {{config.appNodesPythonName}} import * 
+from {{config.customPythonName}} import *
 
 {% macro optionalargs() -%}
 {% if config.pyOptionalArgs %}{{config.pyOptionalArgs}}{% endif %}

@@ -1,26 +1,4 @@
 {% extends "commonc.cpp" %}
-/*
-
-Generated with CMSIS-DSP Compute Graph Scripts.
-The generated code is not covered by CMSIS-DSP license.
-
-The support classes and code is covered by CMSIS-DSP license.
-
-*/
-
-{% if config.dumpFIFO %}
-#define DEBUGSCHED 1
-{% endif %}
-
-#include "arm_math.h"
-#include "custom.h"
-#include "GenericNodes.h"
-#include "AppNodes.h"
-#include "scheduler.h"
-
-{% macro optionalargs() -%}
-{% if config.cOptionalArgs %},{{config.cOptionalArgs}}{% endif %}
-{% endmacro -%}
 
 {% block schedArray %}
 {% endblock %}
@@ -33,8 +11,21 @@ The support classes and code is covered by CMSIS-DSP license.
 {% endif %}
     {
        /* Run a schedule iteration */
+       {% if config.eventRecorder -%}
+       EventRecord2 (Evt_Scheduler, nbSchedule, 0);
+       {% endif -%}
+       CG_BEFORE_ITERATION;
 {% for s in schedule %}
+       {% if config.eventRecorder -%}
+       EventRecord2 (Evt_Node, {{nodes[s].codeID}}, 0);
+       {% endif -%}
        {{nodes[s].cRun()}}
+       {% if config.eventRecorder -%}
+       if (cgStaticError<0)
+       {
+           EventRecord2 (Evt_Error, cgStaticError, 0);
+       }
+       {% endif -%}
        CHECKERROR;
 {% if config.dumpFIFO %}
 {% for fifoID in sched.outputFIFOs(nodes[s]) %}
@@ -47,6 +38,7 @@ The support classes and code is covered by CMSIS-DSP license.
 {% if config.debug %}
        debugCounter--;
 {% endif %}
+       CG_AFTER_ITERATION;
        nbSchedule++;
     }
     

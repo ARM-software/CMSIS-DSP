@@ -111,6 +111,7 @@
           <file category="header" name="ComputeGraph/cg/static/src/GenericNodes.h"/>
           <file category="include"  name="ComputeGraph/cg/static/nodes/cpp/"/>
           <file category="include"  name="ComputeGraph/cg/static/src/"/>
+          <file category="other"  name="ComputeGraph/cg.scvd" />
       </files>
     </component>
   </components>

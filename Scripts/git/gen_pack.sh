@@ -122,6 +122,7 @@ PACK_BASE_FILES="
   ComputeGraph/cg/static/nodes/cpp/ToReal.h
   ComputeGraph/cg/static/nodes/cpp/Unzip.h
   ComputeGraph/cg/static/nodes/cpp/Zip.h
+  ComputeGraph/cg.scvd
 "
 
 # Specify file names to be deleted from pack build directory

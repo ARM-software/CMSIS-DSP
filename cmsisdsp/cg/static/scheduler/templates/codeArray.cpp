@@ -12,10 +12,10 @@ The support classes and code is covered by CMSIS-DSP license.
 {% endif %}
 
 #include "arm_math.h"
-#include "custom.h"
+#include "{{config.customCName}}"
 #include "GenericNodes.h"
-#include "AppNodes.h"
-#include "scheduler.h"
+#include "{{config.appNodesCName}}"
+#include "{{config.schedulerCFileName}}.h"
 
 {% macro optionalargs() -%}
 {% if config.cOptionalArgs %},{{config.cOptionalArgs}}{% endif %}
@@ -116,15 +116,29 @@ uint32_t {{config.schedName}}(int *error{{optionalargs()}})
 {% endif %}
     {
         /* Run a schedule iteration */
+        {% if config.eventRecorder -%}
+        EventRecord2 (Evt_Scheduler, nbSchedule, 0);
+        {% endif -%}
+        CG_BEFORE_ITERATION;
         for(unsigned long id=0 ; id < {{schedLen}}; id++)
         {
             unsigned int nodeId = schedule[id];
+            {% if config.eventRecorder -%}
+            EventRecord2 (Evt_Node, nodeId, 0);
+            {% endif -%}
             cgStaticError = nodeArray[nodeId]->run();
+            {% if config.eventRecorder -%}
+            if (cgStaticError<0)
+            {
+                EventRecord2 (Evt_Error, cgStaticError, 0);
+            }
+            {% endif -%}
             CHECKERROR;
         }
 {% if config.debug %}
        debugCounter--;
 {% endif %}
+       CG_AFTER_ITERATION;
        nbSchedule++;
     }
 
