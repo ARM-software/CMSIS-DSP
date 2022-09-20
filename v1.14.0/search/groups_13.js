@@ -1,0 +1,27 @@
+var searchData=
+[
+  ['variance_0',['Variance',['../group__variance.html',1,'']]],
+  ['variance_20example_1',['Variance Example',['../group__VarianceExample.html',1,'']]],
+  ['vector_20absolute_20value_2',['Vector Absolute Value',['../group__BasicAbs.html',1,'']]],
+  ['vector_20addition_3',['Vector Addition',['../group__BasicAdd.html',1,'']]],
+  ['vector_20bitwise_20and_4',['Vector bitwise AND',['../group__And.html',1,'']]],
+  ['vector_20bitwise_20exclusive_20or_5',['Vector bitwise exclusive OR',['../group__Xor.html',1,'']]],
+  ['vector_20bitwise_20inclusive_20or_6',['Vector bitwise inclusive OR',['../group__Or.html',1,'']]],
+  ['vector_20bitwise_20not_7',['Vector bitwise NOT',['../group__Not.html',1,'']]],
+  ['vector_20clarke_20transform_8',['Vector Clarke Transform',['../group__clarke.html',1,'']]],
+  ['vector_20copy_9',['Vector Copy',['../group__copy.html',1,'']]],
+  ['vector_20dot_20product_10',['Vector Dot Product',['../group__BasicDotProd.html',1,'']]],
+  ['vector_20exponential_11',['Vector Exponential',['../group__vexp.html',1,'']]],
+  ['vector_20fill_12',['Vector Fill',['../group__Fill.html',1,'']]],
+  ['vector_20inverse_20clarke_20transform_13',['Vector Inverse Clarke Transform',['../group__inv__clarke.html',1,'']]],
+  ['vector_20inverse_20park_20transform_14',['Vector Inverse Park transform',['../group__inv__park.html',1,'']]],
+  ['vector_20log_15',['Vector Log',['../group__vlog.html',1,'']]],
+  ['vector_20multiplication_16',['Vector Multiplication',['../group__BasicMult.html',1,'']]],
+  ['vector_20negate_17',['Vector Negate',['../group__BasicNegate.html',1,'']]],
+  ['vector_20offset_18',['Vector Offset',['../group__BasicOffset.html',1,'']]],
+  ['vector_20park_20transform_19',['Vector Park Transform',['../group__park.html',1,'']]],
+  ['vector_20scale_20',['Vector Scale',['../group__BasicScale.html',1,'']]],
+  ['vector_20shift_21',['Vector Shift',['../group__BasicShift.html',1,'']]],
+  ['vector_20sorting_20algorithms_22',['Vector sorting algorithms',['../group__Sorting.html',1,'']]],
+  ['vector_20subtraction_23',['Vector Subtraction',['../group__BasicSub.html',1,'']]]
+];
