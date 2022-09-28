@@ -19,15 +19,15 @@ from cmsisdsp_svm import *
 __version__ = cmsisdsp.version.__version__
 
 # CMSIS-DSP Version used to build the wrapper
-cmsis_dsp_version="1.12.1"
+cmsis_dsp_version="1.14.1"
 
 
 # CMSIS-DSP Commit hash used to build the wrapper
-commit_hash="142dcec5c333781c2299fe43824545cc57a5bcb0"
+commit_hash="b8177102d9a4aaf83fd3f067364ecfa3100966c2"
 
 # True if development version of CMSIS-DSP used
 # (So several CMSIS-DSP versions may have same version number hence the commit hash)
-developmentVersion=True
+developmentVersion=False
 
 __all__ = ["datatype", "fixedpoint", "mfcc"]
 

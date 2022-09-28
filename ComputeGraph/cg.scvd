@@ -40,7 +40,7 @@
 
       <event id="0x0100 + 0x01" level="API" property="NodeExecution" info="Execution of a node" value="ID=%d[val1]" />
 
-      <event id="0x0100 + 0x02" level="NodeError" property="Error" info="Error during execution of a node" value="err=%d[val1]" />
+      <event id="0x0100 + 0x02" level="Error" property="Error" info="Error during execution of a node" value="err=%d[val1]" />
     
       
     </events>

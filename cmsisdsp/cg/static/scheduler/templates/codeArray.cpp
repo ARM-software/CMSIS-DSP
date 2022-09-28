@@ -93,6 +93,7 @@ uint32_t {{config.schedName}}(int *error{{optionalargs()}})
 {% endif %}
 {% endfor %}
 
+    CG_BEFORE_NODE_INIT;
     /* 
     Create node objects 
     */
@@ -107,6 +108,8 @@ uint32_t {{config.schedName}}(int *error{{optionalargs()}})
     nodeArray[{{node.codeID}}]=(NodeBase*)&func{{node.pureNodeID}};
 {% endif %}
 {% endfor %}
+
+    CG_BEFORE_SCHEDULE;
 
     /* Run several schedule iterations */
 {% if config.debug %}

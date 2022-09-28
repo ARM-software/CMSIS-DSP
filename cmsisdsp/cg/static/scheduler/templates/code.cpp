@@ -4,6 +4,7 @@
 {% endblock %}
 
 {% block scheduleLoop %}
+    CG_BEFORE_SCHEDULE;
 {% if config.debug %}
     while((cgStaticError==0) && (debugCounter > 0))
 {% else %}

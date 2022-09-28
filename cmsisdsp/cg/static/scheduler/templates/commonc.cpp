@@ -60,6 +60,7 @@ uint32_t {{config.schedName}}(int *error{{optionalargs()}})
 {% endif %}
 {% endfor %}
 
+    CG_BEFORE_NODE_INIT;
     /* 
     Create node objects
     */
