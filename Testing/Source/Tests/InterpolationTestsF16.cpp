@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "Error.h"
 
-#define SNR_THRESHOLD 55
+#define SNR_THRESHOLD 44
 
 /* 
 
@@ -11,8 +11,8 @@ a double precision computation.
 
 */
 
-#define REL_ERROR (5.0e-3)
-#define ABS_ERROR (5.0e-3)
+#define REL_ERROR (6.0e-3)
+#define ABS_ERROR (7.0e-3)
 
 
 

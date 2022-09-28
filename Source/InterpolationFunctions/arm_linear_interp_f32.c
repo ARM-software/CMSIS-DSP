@@ -90,7 +90,7 @@
     /* Calculation of index */
     i = (int32_t) ((x - S->x1) / xSpacing);
 
-    if (i < 0)
+    if (x < S->x1)
     {
       /* Iniatilize output for below specified range as least output value of table */
       y = pYData[0];

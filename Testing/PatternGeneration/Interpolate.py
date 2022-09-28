@@ -17,11 +17,12 @@ def writeTests(config,format):
 
     x = np.linspace(0, NBSAMPLES, num=NBSAMPLES+1, endpoint=True)
     y = np.cos(-x**2/(NBSAMPLES - 1))
-    f = interp1d(x, y)
-    data=x+0.5
-    data=data[:-1]
+    f = interp1d(x, y,bounds_error=False,fill_value=(y[0],y[-1]))
+    data=x-0.9
+    data=np.hstack((data,np.array(data[-1]+1.5)))
     z = f(data)
 
+    config.setOverwrite(True)
     if format != 0 and format != 16:
        data = data / 2.0**11
     if format != 0 and format != 16:
@@ -32,6 +33,8 @@ def writeTests(config,format):
     
     ref = z
     config.writeReference(1, ref)
+
+    config.setOverwrite(False)
 
     # Bilinear interpolation test
     x = np.arange(-3.14, 3.14, 1.0)
@@ -54,7 +57,7 @@ def writeTests(config,format):
 
     # Now we generate other points. The points where we want to evaluate
     # the function.
-    # In Python they must be rescale between -3.14 and tghe max x or max y defined above.
+    # In Python they must be rescale between -3.14 and the max x or max y defined above.
     # In CMSIS they will be between 1 and numRow-1 or numCols-1.
     # Since we add 0.5 to be sure we are between grid point, we use
     # numCols-2 as bound to be sured we are <= numCols-1
@@ -135,6 +138,12 @@ def generatePatterns():
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
     configq7=Tools.Config(PATTERNDIR,PARAMDIR,"q7")
     
+    configf32.setOverwrite(False)
+    configf16.setOverwrite(False)
+    configq31.setOverwrite(False)
+    configq15.setOverwrite(False)
+    configq7.setOverwrite(False)
+
     writeTests(configf32,0)
     writeTests(configf16,16)
     writeTests(configq31,31)

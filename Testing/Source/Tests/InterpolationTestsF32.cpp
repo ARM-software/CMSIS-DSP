@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "Error.h"
 
-#define SNR_THRESHOLD 120
+#define SNR_THRESHOLD 119
 
 /* 
 
