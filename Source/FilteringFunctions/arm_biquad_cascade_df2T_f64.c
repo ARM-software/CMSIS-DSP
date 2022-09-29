@@ -105,7 +105,6 @@
                    To do this manually without calling the init function, assign the follow subfields of the instance structure:
                    numStages, pCoeffs, pState. Also set all of the values in pState to zero.
   @par
-
                    Use of the initialization function is optional except for the vectorized versions (Helium and Neon).
                    However, if the initialization function is used, then the instance structure cannot be placed into a const data section.
                    To place an instance structure into a const data section, the instance structure must be manually initialized.
