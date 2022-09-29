@@ -1,5 +1,6 @@
 var NAVTREEINDEX3 =
 {
+"group__float__to__x.html#ga5e0636b1fa9640c3e192108e0c747830":[3,12,6,0],
 "group__float__to__x.html#ga63b7cef42a242f0be43376ba3380988d":[3,12,6,3],
 "group__float__to__x.html#gaae21be47db707e79552f3e8221a48fb0":[3,12,6,2],
 "group__float__to__x.html#gac7696e64963e5051ebb950c88c6ba186":[3,12,6,1],
@@ -92,7 +93,6 @@ var NAVTREEINDEX3 =
 "group__vexp.html":[3,6,4],
 "group__vexp.html#ga356e3a0e17fd9fdb1a79f9386f05b7be":[3,6,4,0],
 "group__vexp.html#gaa2b569a40e82e69917f9560774f75a91":[3,6,4,1],
-"group__vexp.html#gac5c79a10b36e8a1f2fcaf23b9497e1b2":[3,6,4,2],
 "group__vlog.html":[3,6,5],
 "group__vlog.html#ga1a97d95af11d143b26334c8ff278443e":[3,6,5,1],
 "group__vlog.html#ga35aac80d9cfc0b7b08382da2117772d1":[3,6,5,3],
@@ -101,8 +101,8 @@ var NAVTREEINDEX3 =
 "group__weightedsum.html":[3,12,10],
 "group__weightedsum.html#ga06e10e847786d8d96c5459fb36d5c752":[3,12,10,0],
 "group__weightedsum.html#gaffef5e0e3e1d0289e419c23853e20850":[3,12,10,1],
-"index.html":[0],
 "index.html":[],
+"index.html":[0],
 "index.html#example":[0,2],
 "index.html#intro":[0,0],
 "index.html#license":[0,7],

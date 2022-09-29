@@ -174,9 +174,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gaa2b569a40e82e69917f9560774f75a91"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__vexp.html#gaa2b569a40e82e69917f9560774f75a91">arm_vexp_f32</a> (const <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pSrc, <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pDst, uint32_t <a class="el" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>)</td></tr>
 <tr class="memdesc:gaa2b569a40e82e69917f9560774f75a91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Floating-point vector of exp values.  <a href="group__vexp.html#gaa2b569a40e82e69917f9560774f75a91">More...</a><br /></td></tr>
 <tr class="separator:gaa2b569a40e82e69917f9560774f75a91"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac5c79a10b36e8a1f2fcaf23b9497e1b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__vexp.html#gac5c79a10b36e8a1f2fcaf23b9497e1b2">arm_vexp_f64</a> (const <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *pSrc, <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *pDst, uint32_t <a class="el" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>)</td></tr>
-<tr class="memdesc:gac5c79a10b36e8a1f2fcaf23b9497e1b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Floating-point vector of exp values.  <a href="group__vexp.html#gac5c79a10b36e8a1f2fcaf23b9497e1b2">More...</a><br /></td></tr>
-<tr class="separator:gac5c79a10b36e8a1f2fcaf23b9497e1b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5c79a10b36e8a1f2fcaf23b9497e1b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fast__math__functions_8h.html#ac5c79a10b36e8a1f2fcaf23b9497e1b2">arm_vexp_f64</a> (const <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *pSrc, <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *pDst, uint32_t <a class="el" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>)</td></tr>
+<tr class="memdesc:ac5c79a10b36e8a1f2fcaf23b9497e1b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Floating-point vector of exp values.  <a href="fast__math__functions_8h.html#ac5c79a10b36e8a1f2fcaf23b9497e1b2">More...</a><br /></td></tr>
+<tr class="separator:ac5c79a10b36e8a1f2fcaf23b9497e1b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga15e88409f0b53f3a01eff4eb8a8b58c2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math__types_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SQRT.html#ga15e88409f0b53f3a01eff4eb8a8b58c2">arm_sqrt_f32</a> (const <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> in, <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pOut)</td></tr>
 <tr class="memdesc:ga15e88409f0b53f3a01eff4eb8a8b58c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Floating-point square root function.  <a href="group__SQRT.html#ga15e88409f0b53f3a01eff4eb8a8b58c2">More...</a><br /></td></tr>
 <tr class="separator:ga15e88409f0b53f3a01eff4eb8a8b58c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -260,6 +260,49 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="ac5c79a10b36e8a1f2fcaf23b9497e1b2" name="ac5c79a10b36e8a1f2fcaf23b9497e1b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac5c79a10b36e8a1f2fcaf23b9497e1b2">&#9670;&nbsp;</a></span>arm_vexp_f64()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_vexp_f64 </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *&#160;</td>
+          <td class="paramname"><em>pSrc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *&#160;</td>
+          <td class="paramname"><em>pDst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>blockSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pSrc</td><td>points to the input vector </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pDst</td><td>points to the output vector </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">blockSize</td><td>number of samples in each vector </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
+
+</div>
+</div>
 <a id="ab6ba4e6a3d382ac68744e4726a220fad" name="ab6ba4e6a3d382ac68744e4726a220fad"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab6ba4e6a3d382ac68744e4726a220fad">&#9670;&nbsp;</a></span>arm_vlog_f64()</h2>
 

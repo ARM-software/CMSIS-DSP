@@ -14,8 +14,9 @@ var NAVTREEINDEX2 =
 "group__MatrixInit.html":[3,9,5],
 "group__MatrixInit.html#ga11e3dc41592a6401c13182fef9416a27":[3,9,5,1],
 "group__MatrixInit.html#ga1d3b0bea0f7978b117c16b330fe0e2e5":[3,9,5,0],
-"group__MatrixInit.html#ga31a7c2b991803d49719393eb2d53dc26":[3,9,5,2],
-"group__MatrixInit.html#ga48a5e5d37e1f062cc57fcfaf683343cc":[3,9,5,3],
+"group__MatrixInit.html#ga31a7c2b991803d49719393eb2d53dc26":[3,9,5,3],
+"group__MatrixInit.html#ga48a5e5d37e1f062cc57fcfaf683343cc":[3,9,5,4],
+"group__MatrixInit.html#gab82440b44092f3cbd2ed4bcdb26ce105":[3,9,5,2],
 "group__MatrixInv.html":[3,9,6],
 "group__MatrixInv.html#ga542be7aabbf7a2297a4b62cf212910e3":[3,9,6,1],
 "group__MatrixInv.html#ga58fa7bf2d93ab84f19037822ede54606":[3,9,6,4],
@@ -248,6 +249,5 @@ var NAVTREEINDEX2 =
 "group__f16__to__x.html":[3,12,4],
 "group__f16__to__x.html#ga5a9b37b962ee47d40f3b6b98551e333f":[3,12,4,1],
 "group__f16__to__x.html#ga809b0be376f5cbfe044239cefe36d246":[3,12,4,0],
-"group__float__to__x.html":[3,12,6],
-"group__float__to__x.html#ga5e0636b1fa9640c3e192108e0c747830":[3,12,6,0]
+"group__float__to__x.html":[3,12,6]
 };

@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CMSIS-DSP: arm_vexp_f64.c File Reference</title>
+<title>CMSIS-DSP: arm_mat_init_f64.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -101,7 +101,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('arm__vexp__f64_8c.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('arm__mat__init__f64_8c.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -122,66 +122,22 @@ $(document).ready(function(){initNavTree('arm__vexp__f64_8c.html',''); initResiz
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">arm_vexp_f64.c File Reference</div></div>
+  <div class="headertitle"><div class="title">arm_mat_init_f64.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ac5c79a10b36e8a1f2fcaf23b9497e1b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__vexp__f64_8c.html#ac5c79a10b36e8a1f2fcaf23b9497e1b2">arm_vexp_f64</a> (const <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *pSrc, <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *pDst, uint32_t <a class="el" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>)</td></tr>
-<tr class="memdesc:ac5c79a10b36e8a1f2fcaf23b9497e1b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Floating-point vector of exp values.  <a href="arm__vexp__f64_8c.html#ac5c79a10b36e8a1f2fcaf23b9497e1b2">More...</a><br /></td></tr>
-<tr class="separator:ac5c79a10b36e8a1f2fcaf23b9497e1b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab82440b44092f3cbd2ed4bcdb26ce105"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MatrixInit.html#gab82440b44092f3cbd2ed4bcdb26ce105">arm_mat_init_f64</a> (<a class="el" href="structarm__matrix__instance__f64.html">arm_matrix_instance_f64</a> *S, uint16_t nRows, uint16_t nColumns, <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *pData)</td></tr>
+<tr class="memdesc:gab82440b44092f3cbd2ed4bcdb26ce105"><td class="mdescLeft">&#160;</td><td class="mdescRight">Floating-point matrix initialization.  <a href="group__MatrixInit.html#gab82440b44092f3cbd2ed4bcdb26ce105">More...</a><br /></td></tr>
+<tr class="separator:gab82440b44092f3cbd2ed4bcdb26ce105"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="ac5c79a10b36e8a1f2fcaf23b9497e1b2" name="ac5c79a10b36e8a1f2fcaf23b9497e1b2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac5c79a10b36e8a1f2fcaf23b9497e1b2">&#9670;&nbsp;</a></span>arm_vexp_f64()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void arm_vexp_f64 </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *&#160;</td>
-          <td class="paramname"><em>pSrc</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *&#160;</td>
-          <td class="paramname"><em>pDst</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>blockSize</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pSrc</td><td>points to the input vector </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">pDst</td><td>points to the output vector </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">blockSize</td><td>number of samples in each vector </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_74389ed8173ad57b461b9d623a1f3867.html">Source</a></li><li class="navelem"><a class="el" href="dir_6eaff12231d4cc03f5e0a8fd67e4273a.html">FastMathFunctions</a></li><li class="navelem"><a class="el" href="arm__vexp__f64_8c.html">arm_vexp_f64.c</a></li>
+    <li class="navelem"><a class="el" href="dir_74389ed8173ad57b461b9d623a1f3867.html">Source</a></li><li class="navelem"><a class="el" href="dir_bb926a5602cc238d2a7cf1bf4433cf64.html">MatrixFunctions</a></li><li class="navelem"><a class="el" href="arm__mat__init__f64_8c.html">arm_mat_init_f64.c</a></li>
     <li class="footer">
       <script type="text/javascript">
         <!--

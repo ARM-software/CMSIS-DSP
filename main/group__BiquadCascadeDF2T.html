@@ -190,10 +190,15 @@ Single transposed Direct Form II Biquad</div></div>
 <li>Zeros out the values in the state buffer. To do this manually without calling the init function, assign the follow subfields of the instance structure: numStages, pCoeffs, pState. Also set all of the values in pState to zero. </li>
 </ul>
 </dd></dl>
-<dl class="section user"><dt></dt><dd>Use of the initialization function is optional except for the vectorized versions (Helium and Neon). However, if the initialization function is used, then the instance structure cannot be placed into a const data section. To place an instance structure into a const data section, the instance structure must be manually initialized. Set the values in the state buffer to zeros before static initialization. For example, to statically initialize the instance structure use <pre>
+<dl class="section user"><dt></dt><dd><pre class="fragment">             Use of the initialization function is optional except for the vectorized versions (Helium and Neon).
+             However, if the initialization function is used, then the instance structure cannot be placed into a const data section.
+             To place an instance structure into a const data section, the instance structure must be manually initialized.
+             Set the values in the state buffer to zeros before static initialization.
+             For example, to statically initialize the instance structure use
+</pre> <pre>
     <a class="el" href="structarm__biquad__cascade__df2T__instance__f64.html" title="Instance structure for the floating-point transposed direct form II Biquad cascade filter.">arm_biquad_cascade_df2T_instance_f64</a> S1 = {numStages, pState, pCoeffs};
     <a class="el" href="structarm__biquad__cascade__df2T__instance__f32.html" title="Instance structure for the floating-point transposed direct form II Biquad cascade filter.">arm_biquad_cascade_df2T_instance_f32</a> S1 = {numStages, pState, pCoeffs};
-</pre> where <code>numStages</code> is the number of Biquad stages in the filter; <code>pState</code> is the address of the state buffer. <code>pCoeffs</code> is the address of the coefficient buffer; </dd></dl>
+</pre> where <code>numStages</code> is the number of Biquad stages in the filter; <code>pState</code> is the address of the state buffer. <code>pCoeffs</code> is the address of the coefficient buffer;</dd></dl>
 <dl class="section user"><dt>Neon version</dt><dd>For Neon version, the function arm_biquad_cascade_df2T_compute_coefs_x must be used in addition to arm_biquad_cascade_df2T_init_x.</dd></dl>
 <p>See the documentation of arm_biquad_cascade_df2T_init_x for more details. </p>
 <h2 class="groupheader">Function Documentation</h2>
