@@ -56,6 +56,12 @@ extern "C"
         q7_t * pDst,
         uint32_t blockSize);
 
+/**
+ * @brief Architecture agnostic naming
+ * @see arm_mult_q7
+ */
+#define cmsis_mult_q7 arm_mult_q7
+
 
   /**
    * @brief Q15 vector multiplication.
