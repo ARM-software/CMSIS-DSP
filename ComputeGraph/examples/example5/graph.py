@@ -42,13 +42,12 @@ g.connect(slidingMFCC.o,sink.i)
 
 print("Generate graphviz and code")
 
-
-
-sched = g.computeSchedule()
+conf=Configuration()
+#conf.dumpSchedule = True 
+sched = g.computeSchedule(conf)
 print("Schedule length = %d" % sched.scheduleLength)
 print("Memory usage %d bytes" % sched.memory)
 #
-conf=Configuration()
 conf.debugLimit=12
 conf.pyOptionalArgs="mfccConfig,dispbuf"
 

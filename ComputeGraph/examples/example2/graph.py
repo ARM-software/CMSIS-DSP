@@ -93,8 +93,9 @@ print("Generate graphviz and code")
 conf=Configuration()
 conf.debugLimit=1
 conf.cOptionalArgs="int opt1,int opt2"
+conf.sinkPriority  = True
 #conf.memoryOptimization=True
-#print(g.nullVector())
+#conf.dumpSchedule = True 
 sched = g.computeSchedule(conf)
 #print(sched.schedule)
 print("Schedule length = %d" % sched.scheduleLength)

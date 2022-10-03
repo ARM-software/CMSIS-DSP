@@ -382,29 +382,7 @@ public:
 
 };
 
-#if !defined(CHECKERROR)
-#define CHECKERROR       if (cgStaticError < 0) \
-       {\
-         goto errorHandling;\
-       }
 
-#endif
-
-#if !defined(CG_BEFORE_ITERATION)
-#define CG_BEFORE_ITERATION
-#endif 
-
-#if !defined(CG_AFTER_ITERATION)
-#define CG_AFTER_ITERATION
-#endif 
-
-#if !defined(CG_BEFORE_SCHEDULE)
-#define CG_BEFORE_SCHEDULE
-#endif
-
-#if !defined(CG_BEFORE_NODE_INIT)
-#define CG_BEFORE_NODE_INIT
-#endif
        
 
 #endif

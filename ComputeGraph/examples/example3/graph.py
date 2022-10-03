@@ -52,7 +52,7 @@ conf=Configuration()
 conf.debugLimit=40
 #conf.memoryOptimization=True
 
-#print(g.nullVector())
+#conf.dumpSchedule = True 
 sched = g.computeSchedule(conf)
 #print(sched.schedule)
 print("Schedule length = %d" % sched.scheduleLength)

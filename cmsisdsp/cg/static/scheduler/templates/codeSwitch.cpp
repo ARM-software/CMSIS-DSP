@@ -30,6 +30,7 @@ static unsigned int schedule[{{schedLen}}]=
             {% if config.eventRecorder -%}
             EventRecord2 (Evt_Node, schedule[id], 0);
             {% endif -%}
+            CG_BEFORE_NODE_EXECUTION;
             switch(schedule[id])
             {
                 {% for nodeID in range(nbNodes) -%}
@@ -43,6 +44,7 @@ static unsigned int schedule[{{schedLen}}]=
                 default:
                 break;
             }
+            CG_AFTER_NODE_EXECUTION;
             {% if config.eventRecorder -%}
             if (cgStaticError<0)
             {

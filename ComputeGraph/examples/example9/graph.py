@@ -5,7 +5,8 @@ from cmsisdsp.cg.static.scheduler import *
 class Node(GenericNode):
     def __init__(self,name,theType,inLength,outLength):
         GenericNode.__init__(self,name)
-        self.addInput("i",theType,inLength)
+        self.addInput("ia",theType,inLength)
+        self.addInput("ib",theType,inLength)
         self.addOutput("o",theType,outLength)
 
 class Sink(GenericSink):
@@ -36,22 +37,22 @@ class ProcessingNode(Node):
 ### Define nodes
 floatType=CType(F32)
 src=Source("source",floatType,5)
-b=ProcessingNode("filter",floatType,7,5)
-b.addLiteralArg(4)
-b.addLiteralArg("Test")
-b.addVariableArg("someVariable")
+b=ProcessingNode("filter",floatType,5,5)
 sink=Sink("sink",floatType,5)
 
 g = Graph()
 
-g.connect(src.o,b.i)
+g.connect(src.o,b.ia)
 g.connect(b.o,sink.i)
+# With less than 5, the tool cannot find a possible schedule
+# and is generating a DeadLock error
+g.connectWithDelay(b.o,b.ib,5)
 
 
 print("Generate graphviz and code")
 
 conf=Configuration()
-conf.debugLimit=1
+conf.debugLimit=2
 conf.cOptionalArgs="int someVariable"
 #conf.displayFIFOSizes=True
 # Prefix for global FIFO buffers

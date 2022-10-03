@@ -13,9 +13,14 @@ The support classes and code is covered by CMSIS-DSP license.
 
 #include "arm_math.h"
 #include "{{config.customCName}}"
-#include "GenericNodes.h"
+#include "{{config.genericNodeCName}}"
 #include "{{config.appNodesCName}}"
 #include "{{config.schedulerCFileName}}.h"
+
+{% include "defineConfig.h" %}
+
+
+CG_AFTER_INCLUDES
 
 {% macro optionalargs() -%}
 {% if config.cOptionalArgs %},{{config.cOptionalArgs}}{% endif %}
@@ -35,6 +40,7 @@ static unsigned int schedule[{{schedLen}}]=
 {{schedDescription}}
 };
 
+CG_BEFORE_FIFO_BUFFERS
 /***********
 
 FIFO buffers
@@ -46,6 +52,7 @@ FIFO buffers
 
 {% for buf in sched._graph._allBuffers %}
 #define BUFFERSIZE{{buf._bufferID}} {{buf._length}}
+CG_BEFORE_BUFFER
 {{buf._theType.ctype}} {{config.prefix}}buf{{buf._bufferID}}[BUFFERSIZE{{buf._bufferID}}]={0};
 
 {% endfor %}
@@ -74,6 +81,7 @@ public:
 };
 {% endfor %}
 
+CG_BEFORE_SCHEDULER_FUNCTION
 uint32_t {{config.schedName}}(int *error{{optionalargs()}})
 {
     int cgStaticError=0;
@@ -82,6 +90,7 @@ uint32_t {{config.schedName}}(int *error{{optionalargs()}})
     int32_t debugCounter={{config.debugLimit}};
 {% endif %}
 
+    CG_BEFORE_FIFO_INIT;
     /*
     Create FIFOs objects
     */
@@ -129,7 +138,9 @@ uint32_t {{config.schedName}}(int *error{{optionalargs()}})
             {% if config.eventRecorder -%}
             EventRecord2 (Evt_Node, nodeId, 0);
             {% endif -%}
+            CG_BEFORE_NODE_EXECUTION;
             cgStaticError = nodeArray[nodeId]->run();
+            CG_AFTER_NODE_EXECUTION;
             {% if config.eventRecorder -%}
             if (cgStaticError<0)
             {
@@ -146,6 +157,7 @@ uint32_t {{config.schedName}}(int *error{{optionalargs()}})
     }
 
 errorHandling:
+    CG_AFTER_SCHEDULE;
     *error=cgStaticError;
     return(nbSchedule);
 }

@@ -40,7 +40,7 @@ def gencode(sched,directory,config):
     
     template = env.get_template("code.py")
 
-    cfile=os.path.join(directory,"sched.py" % config.schedulerPythonFileName)
+    cfile=os.path.join(directory,"%s.py" % config.schedulerPythonFileName)
 
 
     with open(cfile,"w") as f:

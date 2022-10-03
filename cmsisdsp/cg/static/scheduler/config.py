@@ -29,15 +29,46 @@
 class Configuration:
 
     def __init__(self):
+
+        #########################
+        #
+        # SCHEDULING OPTIONS
+        #
+
+        # If FIFOs size must be dumped during computation of the schedule
+        self.displayFIFOSizes=False
+
+        # Experimental so disabled by default
+        self.memoryOptimization = False
+
+        # Give priority to sink with topological sort 
+        self.sinkPriority = True
+
+        # Print schedule in a human understandble form
+        self.dumpSchedule = False
+
+        #############################
+        #
+        # GRAPHVIZ GENERATION OPTIONS
+        #
+
+        # True for an horizontal graphviz layout
+        self.horizontal = True
+
+        # Display FIFO buffers in graph instead of datatype
+        self.displayFIFOBuf = False
+
+        #########################
+        #
+        # CODE GENERATION OPTIONS
+        #
+
         # Number of iterations of the schedule. By default it is infinite
         # represented by the value 0
         self.debugLimit = 0 
 
         # If FIFO content must be dumped during execution of the schedule.
         self.dumpFIFO = False
-
-        # If FIFOs size must be dumped during computation of the schedule
-        self.displayFIFOSizes=False
 
         # Name of scheduling function in the generated code
         # (Must be valid C and Python name)
@@ -54,9 +85,6 @@ class Configuration:
         # Prefix to add before the global FIFO buffer names
         self.prefix = ""
 
-        # Experimental so disabled by default
-        self.memoryOptimization = False
-
         # Path to CG  module for Python simu 
         self.pathToCGModule="../../.."
 
@@ -67,12 +95,6 @@ class Configuration:
         # If users do not want to use function pointers,
         # we can generate a switch/case instead
         self.switchCase = True
-
-        # True for an horizontal graphviz layout
-        self.horizontal = True
-
-        # Display FIFO buffers in graph instead of datatype
-        self.displayFIFOBuf = False
 
         # Enable support for CMSIS Event Recorder 
         self.eventRecorder = False
@@ -85,10 +107,12 @@ class Configuration:
         self.customCName = "custom.h"
         self.customPythonName = "custom"
 
+        # Name of generic nodes headers
+        self.genericNodeCName = "GenericNodes.h"
+
         # Name of scheduler source and header files
         self.schedulerCFileName = "scheduler"
         self.schedulerPythonFileName = "sched"
-
 
     @property
     def debug(self):

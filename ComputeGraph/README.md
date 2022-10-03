@@ -113,12 +113,18 @@ The generated files need to include the `ComputeGraph/cg/static/src/GenericNodes
 
 If you have declared new nodes in `graph.py` then you'll need to provide an implementation.
 
-More details and explanations can be found in the documentation for the examples:
+More details and explanations can be found in the documentation for the examples. The first example is giving all the details about the Python and C++ sides of the tool: 
 
 * [Example 1 : how to describe a simple graph](documentation/example1.md)
 * [Example 2 : More complex example with delay and CMSIS-DSP](documentation/example2.md)
 * [Example 3 : Working example with CMSIS-DSP and FFT](documentation/example3.md)
 * [Example 4 : Same as example 3 but with the CMSIS-DSP Python wrapper](documentation/example4.md)
+
+Examples 5 and 6 are showing how to use the CMSIS-DSP MFCC with a synchronous data flow.
+
+Example 7 is communicating with OpenModelica. The Modelica model (PythonTest) in the example is implementing a Larsen effect.
+
+Example 8 is showing how to define a new custom datatype for the IOs of the nodes. Example 8 is also demonstrating a new feature where an IO can be connected up to 3 inputs and the static scheduler will automatically generate duplicate nodes.
 
 ## Cyclo static scheduling
 
@@ -167,9 +173,127 @@ The drawback of cyclo static scheduling is that the schedule length is increased
 
 Since schedule tend to be bigger with cyclo static scheduling, a new code generation mode has been introduced and is enabled by default : now instead of having a sequence of function calls, the schedule is coded by an array of number and there is a switch / case to select the function to be called.
 
+## Options
+
+Several options and be used to control the schedule generation. Some options are used by the scheduling algorithm and other options are used by the code generator:
+
+### Options for the scheduling
+
+#### memoryOptimization (default = False)
+
+When the amount of data written to a FIFO and read from the FIFO is the same, the FIFO is just an array. In this case, depending on the scheduling, the memory used by different arrays may be reused if those arrays are not needed at the same time.
+
+This option is enabling an analysis to optimize the memory usage by merging some buffers when it is possible.
+
+#### sinkPriority (default = True)
+
+Try to prioritize the scheduling of the sinks to minimize the latency between sources and sinks.
+
+When  this option is enable, the tool may not be able to find a schedule in all cases. If it can't find a schedule, it will raise a `DeadLock` exception.
+
+#### displayFIFOSizes (default = False)
+
+During computation of the schedule, the evolution of the FIFO sizes is generated on `stdout`.
+
+#### dumpSchedule (default = False)
+
+During computation of the schedule, the human readable schedule is generated on `stdout`.
+
+### Options for the code generator
+
+#### debugLimit (default = 0)
+
+When `debugLimit` is > 0, the number of iterations of the scheduling is limited to  `debugLimit`. Otherwise, the scheduling is running forever or until an error has occured.
+
+#### dumpFIFO (default = False)
+
+When true, generate some code to dump the FIFO content at runtime. Only useful for debug.
+
+#### schedName (default = "scheduler")
+
+Name of the scheduler function used in the generated code.
+
+#### prefix (default = "")
+
+Prefix to add before the FIFO buffer definition. Those buffers are not static and are global. If you want to use several schedulers in your code, the buffer names used by each should be different.
+
+Another possibility would be to make the buffer static by redefining the macro `CG_BEFORE_BUFFER`
+
+#### Options for C Code Generation only
+
+##### cOptionalArgs (default = "")
+
+Optional arguments to pass to the C version of the scheduler function
+
+##### codeArray (default = True)
+
+When true, the scheduling is defined as an array. Otherwise, the list of function calls is generated.
+
+The list of function call may be easier to read but if the schedule is long, it is not good for code size. In that case, it is better to encode the schedule as an array rather than a list of functions.
+
+When `codeArray` is True, the option `switchCase` is taken into account.
+
+##### switchCase (default = True)
+
+`codeArray` must be true or this option is ignored.
+
+When the schedule is encoded as an array, it can either be an array of function pointers (`switchCase` false) or an array of indexes for a state machine (`switchCase` true)
+
+##### eventRecorder (default = False)
+
+Enable the generation of `CMSIS EventRecorder` intrumentation in the code.
+
+##### customCName (default = "custom.h")
+
+Name of custom header in generated C code. If you use several scheduler, you may want to use different headers for each one.
+
+##### genericNodeCName (default = "GenericNodes.h")
+
+Name of GenericNodes header in generated C code. If you use several scheduler, you may want to use different headers for each one.
+
+##### appNodesCName (default = "AppNodes.h")
+
+Name of AppNodes header in generated C code. If you use several scheduler, you may want to use different headers for each one.
+
+##### schedulerCFileName (default = "scheduler")
+
+Name of scheduler cpp and header in generated C code. If you use several scheduler, you may want to use different headers for each one.
+
+If the option is set to `xxx`, the names generated will be `xxx.cpp` and `xxx.h`
+
+#### Options for Python code generation only
+
+##### pyOptionalArgs (default = "")
+
+Optional arguments to pass to the Python version of the scheduler function
+
+##### customPythonName (default = "custom")
+
+Name of custom header in generated Python code. If you use several scheduler, you may want to use different headers for each one.
+
+##### appNodesPythonName (default = "appnodes")
+
+Name of AppNodes header in generated Python code. If you use several scheduler, you may want to use different headers for each one.
+
+##### schedulerPythonFileName (default = "sched")
+
+Name of scheduler file in generated Python code. If you use several scheduler, you may want to use different headers for each one.
+
+If the option is set to `xxx`, the name generated will be `xxx.py`
+
+### Options for the graphviz generator
+
+#### horizontal (default = True)
+
+Horizontal or vertical layout for the graph.
+
+#### displayFIFOBuf (default = False)
+
+By default, the graph is displaying the FIFO sizes. If you want to know with FIFO variable is used in the code, you can set this option to true and the graph will display the FIFO variable names.
 
 
-### How to build the examples
+
+## How to build the examples
 
 In folder `ComputeGraph/example/build`, type the `cmake` command:
 
@@ -257,16 +381,3 @@ Here is a list of the nodes supported by default. More can be easily added:
   - WavSink and WavSource to use wav files for testing
   - VHTSDF : To communicate with OpenModelica using VHTModelica blocks
 
-
-## Detailed examples 
-
-- [Example 1 : how to describe a simple graph](documentation/example1.md)
-- [Example 2 : More complex example with delay and CMSIS-DSP](documentation/example2.md)
-- [Example 3 : Working example with CMSIS-DSP and FFT](documentation/example3.md)
-- [Example 4 : Same as example 3 but with the CMSIS-DSP Python wrapper](documentation/example4.md)
-
-Examples 5 and 6 are showing how to use the CMSIS-DSP MFCC with a synchronous data flow.
-
-Example 7 is communicating with OpenModelica. The Modelica model (PythonTest) in the example is implementing a Larsen effect.
-
-Example 8 is showing how to define a new custom datatype for the IOs of the nodes. Example 8 is also demonstrating a new feature where an IO can be connected up to 3 inputs and the static scheduler will automatically generate duplicate nodes.

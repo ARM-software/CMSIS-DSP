@@ -23,7 +23,7 @@ cmsis_dsp_version="1.14.1"
 
 
 # CMSIS-DSP Commit hash used to build the wrapper
-commit_hash="b8177102d9a4aaf83fd3f067364ecfa3100966c2"
+commit_hash="8ed2ef7a7e2c6fce29c59d18ba7ee0f9f66027c2"
 
 # True if development version of CMSIS-DSP used
 # (So several CMSIS-DSP versions may have same version number hence the commit hash)

@@ -75,7 +75,9 @@ GEN_PYTHON = False
 
 print("Generate graphviz and code")
 
-sched = g.computeSchedule()
+conf=Configuration()
+#conf.dumpSchedule = True
+sched = g.computeSchedule(conf)
 print("Schedule length = %d" % sched.scheduleLength)
 print("Memory usage %d bytes" % sched.memory)
 
@@ -83,7 +85,6 @@ print("Memory usage %d bytes" % sched.memory)
 # (Introduction of duplicate nodes ...)
 # So we cannot reuse the graph to compute the Python and the C
 # code generation
-conf=Configuration()
 conf.debugLimit=1
 conf.cOptionalArgs="int someVariable"
 #conf.codeArray=True

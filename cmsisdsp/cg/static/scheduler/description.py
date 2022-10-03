@@ -169,6 +169,47 @@ class Graph():
         self._totalMemory=0
         self._allFIFOs = None 
         self._allBuffers = None
+        # Topological sorting of nodes
+        # computed during topology matrix
+        # and used for some scheduling
+        # (prioritizing the scheduling of nodes
+        # close to the graph output)
+        self._topologicalSort=[]
+
+    def computeTopologicalSortOfNodes(self):
+        remaining = self._sortedNodes.copy()
+
+        while len(remaining)>0:
+            toremove = []
+            for n in remaining:
+                if n.nbOutputsForTopologicalSort == 0:
+                    toremove.append(n)
+
+            if (len(toremove)==0):
+                # There are some loops so topological sort is
+                # not possible 
+                self._topologicalSort = [] 
+                return
+
+
+            self._topologicalSort.append(toremove)
+            for x in toremove:
+                remaining.remove(x)
+
+            # Update output count for predecessors of the
+            # removed nodes 
+            for x in toremove:
+                for i in x._inputs:
+                    theFifo = x._inputs[i].fifo
+                    #  Fifo empty means connection to a
+                    # constant node so should be ignoredf
+                    # for topological sort
+                    if len(theFifo)>0:
+                       theInputNodeOutput = theFifo[0]
+                       theInputNode = theInputNodeOutput.owner
+                       theInputNode.nbOutputsForTopologicalSort = theInputNode.nbOutputsForTopologicalSort - 1
+        #print(self._topologicalSort)
+
 
     def connectDup(self,destination,outputIO,theId):
         if (destination[theId][1]!=0):
@@ -525,6 +566,13 @@ class Graph():
         #for x in self._sorted:
         #    print(x.nodeID)
 
+        # Compute sorted node ID
+        nID = 0
+        for node in self._sortedNodes:
+            node.sortedNodeID = nID
+            node.nbOutputsForTopologicalSort = node.nbOutputs
+            nID = nID + 1
+
         for edge in self._sortedEdges: 
             na,nb = edge
             currentRow=[0] * len(self._sortedNodes) 
@@ -629,7 +677,110 @@ class Graph():
         #print(v)
         return(v)
 
+    def computeTopologicalOrderSchedule(self,normV,allFIFOs,initB,bMax,initN,config):
+        b = np.array(initB)
+        n = np.array(initN)
+
+
+        schedule=[]
+
+        zeroVec = np.zeros(len(self._sortedNodes))
+        evolutionTime = 0
+        #print(self._sortedNodes)
+        # While there are remaining node periods to schedule
+        while (n != zeroVec).any():
+            #print("")
+            #print(n)
+            # Look for the best node to schedule
+            # which is the one giving the minimum FIFO increase
+            
+            # None selected
+            selected = -1
+
+            # Min FIFO size found
+
+            for layer in self._topologicalSort:
+                minVal = 10000000
+                selected = -1
+                for node in layer:
+                    # If the node can be scheduled
+                    if n[node.sortedNodeID] > 0:
+                       # Evolution vector for static scheduling
+                       # v = self.evolutionVectorForNode(nodeID)
+                       # for cyclo static we need the new fifo state
+                       newB = self.evolutionVectorForNode(node.sortedNodeID) + b
+                       # New fifos size after this evolution
+                       # For static scheduling, fifo update would have been
+                       # newB = np.dot(t,v) + b
+                       #print(newB)
+                
+                       # Check that there is no FIFO underflow or overfflow:
+                       if np.all(newB >= 0) and np.all(newB <= bMax):
+                          # Total FIFO size for this possible execution
+                          # We normalize to get the occupancy number as explained above
+                          theMin = (1.0*np.array(newB) / normV).max()
+                          # If this possible evolution is giving smaller FIFO size
+                          # (measured in occupancy number) then it is selected
+                          if theMin < minVal:
+                             minVal = theMin
+                             selected = node.sortedNodeID 
     
+                       if selected != -1:
+                          # We put the selected node at the end of the layer
+                          # so that we do not always try the same node
+                          # each time we analyze this layer
+                          # If several nodes can be selected it should allow
+                          # to select them with same probability
+                          layer.remove(node)
+                          layer.append(node)
+                          break
+                # For breaking from the outer loop too
+                else:
+                    continue
+                break
+                # No node could be scheduled because of not enough data
+                # in the FIFOs. It should not occur if there is a null
+                # space of dimension 1. So, it is probably a bug if
+                # this exception is raised
+            if selected < 0:
+               raise DeadlockError
+            
+            # Now  we have evaluated all schedulable nodes for this run
+            # and selected the one giving the smallest FIFO increase
+    
+            # Implementation for static scheduling
+            # Real evolution vector for selected node
+            # evol =  self.evolutionVectorForNode(selected)
+            # Keep track that this node has been schedule
+            # n = n - evol
+            # Compute new fifo state
+            # fifoChange = np.dot(t,evol)
+            # b = fifoChange + b
+    
+            # Implementation for cyclo static scheduling
+            #print("selected")
+            fifoChange = self.evolutionVectorForNode(selected,test=False)
+            b = fifoChange + b
+            # For cyclo static, we create an evolution vector 
+            # which contains a 1
+            # at a node position only if this node has executed
+            # its period.
+            # Otherwise the null vector is not decreased
+            v = np.zeros(len(self._sortedNodes))
+            v[selected] = self._sortedNodes[selected].executeNode() 
+            n = n - v
+    
+    
+            if config.displayFIFOSizes:
+               print(b)
+                
+            schedule.append(selected)
+    
+            # Analyze FIFOs to know if a FIFOs write is
+            # followed immediately by a FIFO read of same size
+            analyzeStep(fifoChange,allFIFOs,evolutionTime)
+            evolutionTime = evolutionTime + 1
+        return(schedule)
 
     def computeSchedule(self,config=Configuration()):
         # First we must rewrite the graph and insert duplication
@@ -639,11 +790,21 @@ class Graph():
         self.insertDuplicates()
 
         networkMatrix = self.topologyMatrix()
+        #print(networkMatrix)
+
+        if config.sinkPriority:
+           self.computeTopologicalSortOfNodes()
+
+        mustDoSinkPrioritization = config.sinkPriority and len(self._topologicalSort)>0
+        if config.sinkPriority and not mustDoSinkPrioritization:
+            print("Sink prioritization has been disabled. The graph has some loops")
 
         # Init values
         initB = self.initEvolutionVector
         initN = self.nullVector(networkMatrix)
+        #print(initB)
         #print(initN)
+        #print(np.dot(networkMatrix,initN))
 
         # nullVector is giving the number of repetitions
         # for a node cycle.
@@ -705,7 +866,7 @@ class Graph():
         # to minimize the occupancy number of all FIFOs by
         # selecting the scheduling which is giving the
         # minimum maximum occupancy number after the run.
-        bMax = 1.0*np.array(initB) / normV
+        bMax = 1.0*np.array(initB)
 
 
         schedule=[]
@@ -725,19 +886,20 @@ class Graph():
 
             # Min FIFO size found
             minVal = 10000000
-            nodeID = 0
+
+            
             for node in self._sortedNodes:
                 # If the node can be scheduled
-                if n[nodeID] > 0:
+                if n[node.sortedNodeID] > 0:
                    # Evolution vector for static scheduling
                    # v = self.evolutionVectorForNode(nodeID)
                    # for cyclo static we need the new fifo state
-                   newB = self.evolutionVectorForNode(nodeID) + b
+                   newB = self.evolutionVectorForNode(node.sortedNodeID) + b
                    # New fifos size after this evolution
                    # For static scheduling, fifo update would have been
                    # newB = np.dot(t,v) + b
                    #print(newB)
-
+            
                    # Check that there is no FIFO underflow:
                    if np.all(newB >= 0):
                       # Total FIFO size for this possible execution
@@ -745,11 +907,11 @@ class Graph():
                       theMin = (1.0*np.array(newB) / normV).max()
                       # If this possible evolution is giving smaller FIFO size
                       # (measured in occupancy number) then it is selected
+                      
                       if theMin <= minVal:
                          minVal = theMin
-                         selected = nodeID 
+                         selected = node.sortedNodeID 
 
-                nodeID = nodeID + 1
 
             # No node could be scheduled because of not enough data
             # in the FIFOs. It should not occur if there is a null
@@ -783,7 +945,7 @@ class Graph():
             n = n - v
 
 
-            if config.displayFIFOSizes:
+            if config.displayFIFOSizes and not mustDoSinkPrioritization:
                print(b)
             
             bMax = np.maximum(b,bMax)
@@ -791,14 +953,24 @@ class Graph():
 
             # Analyze FIFOs to know if a FIFOs write is
             # followed immediately by a FIFO read of same size
-            analyzeStep(fifoChange,allFIFOs,evolutionTime)
+            if not mustDoSinkPrioritization:
+               analyzeStep(fifoChange,allFIFOs,evolutionTime)
             evolutionTime = evolutionTime + 1
 
         fifoMax=np.floor(bMax).astype(np.int32)
+
+        if mustDoSinkPrioritization:
+           schedule = self.computeTopologicalOrderSchedule(normV,allFIFOs,initB,bMax,initN,config)
         
         allBuffers=self.initializeFIFODescriptions(config,allFIFOs,fifoMax,evolutionTime)
         self._allFIFOs = allFIFOs 
         self._allBuffers = allBuffers
+
+        if config.dumpSchedule:
+            print("Schedule")
+            for nodeID in schedule:
+                print(self._sortedNodes[nodeID].nodeName)
+            print("")
         return(Schedule(self,self._sortedNodes,self._sortedEdges,schedule))
 
 

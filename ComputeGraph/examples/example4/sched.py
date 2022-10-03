@@ -157,6 +157,12 @@ def scheduler(dispbuf):
        cgStaticError = toReal.run()
        if cgStaticError < 0:
           break
+       cgStaticError = audioOverlap.run()
+       if cgStaticError < 0:
+          break
+       cgStaticError = sink.run()
+       if cgStaticError < 0:
+          break
        cgStaticError = audioWin.run()
        if cgStaticError < 0:
           break
@@ -175,12 +181,6 @@ def scheduler(dispbuf):
        if cgStaticError < 0:
           break
        cgStaticError = icfft.run()
-       if cgStaticError < 0:
-          break
-       cgStaticError = audioOverlap.run()
-       if cgStaticError < 0:
-          break
-       cgStaticError = sink.run()
        if cgStaticError < 0:
           break
        cgStaticError = toReal.run()

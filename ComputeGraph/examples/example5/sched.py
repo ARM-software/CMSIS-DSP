@@ -103,13 +103,7 @@ def scheduler(mfccConfig,dispbuf):
        cgStaticError = toMono.run()
        if cgStaticError < 0:
           break
-       cgStaticError = src.run()
-       if cgStaticError < 0:
-          break
        cgStaticError = audioWin.run()
-       if cgStaticError < 0:
-          break
-       cgStaticError = toMono.run()
        if cgStaticError < 0:
           break
        cgStaticError = mfcc.run()
@@ -136,10 +130,10 @@ def scheduler(mfccConfig,dispbuf):
        cgStaticError = src.run()
        if cgStaticError < 0:
           break
-       cgStaticError = audioWin.run()
+       cgStaticError = toMono.run()
        if cgStaticError < 0:
           break
-       cgStaticError = toMono.run()
+       cgStaticError = audioWin.run()
        if cgStaticError < 0:
           break
        cgStaticError = mfcc.run()
@@ -166,10 +160,10 @@ def scheduler(mfccConfig,dispbuf):
        cgStaticError = src.run()
        if cgStaticError < 0:
           break
-       cgStaticError = audioWin.run()
+       cgStaticError = toMono.run()
        if cgStaticError < 0:
           break
-       cgStaticError = toMono.run()
+       cgStaticError = audioWin.run()
        if cgStaticError < 0:
           break
        cgStaticError = mfcc.run()
@@ -196,10 +190,10 @@ def scheduler(mfccConfig,dispbuf):
        cgStaticError = src.run()
        if cgStaticError < 0:
           break
-       cgStaticError = audioWin.run()
+       cgStaticError = toMono.run()
        if cgStaticError < 0:
           break
-       cgStaticError = toMono.run()
+       cgStaticError = audioWin.run()
        if cgStaticError < 0:
           break
        cgStaticError = mfcc.run()
@@ -226,10 +220,10 @@ def scheduler(mfccConfig,dispbuf):
        cgStaticError = src.run()
        if cgStaticError < 0:
           break
-       cgStaticError = audioWin.run()
+       cgStaticError = toMono.run()
        if cgStaticError < 0:
           break
-       cgStaticError = toMono.run()
+       cgStaticError = audioWin.run()
        if cgStaticError < 0:
           break
        cgStaticError = mfcc.run()
@@ -256,10 +250,10 @@ def scheduler(mfccConfig,dispbuf):
        cgStaticError = src.run()
        if cgStaticError < 0:
           break
-       cgStaticError = audioWin.run()
+       cgStaticError = toMono.run()
        if cgStaticError < 0:
           break
-       cgStaticError = toMono.run()
+       cgStaticError = audioWin.run()
        if cgStaticError < 0:
           break
        cgStaticError = mfcc.run()
@@ -286,10 +280,10 @@ def scheduler(mfccConfig,dispbuf):
        cgStaticError = src.run()
        if cgStaticError < 0:
           break
-       cgStaticError = audioWin.run()
+       cgStaticError = toMono.run()
        if cgStaticError < 0:
           break
-       cgStaticError = toMono.run()
+       cgStaticError = audioWin.run()
        if cgStaticError < 0:
           break
        cgStaticError = mfcc.run()
@@ -316,10 +310,10 @@ def scheduler(mfccConfig,dispbuf):
        cgStaticError = src.run()
        if cgStaticError < 0:
           break
-       cgStaticError = audioWin.run()
+       cgStaticError = toMono.run()
        if cgStaticError < 0:
           break
-       cgStaticError = toMono.run()
+       cgStaticError = audioWin.run()
        if cgStaticError < 0:
           break
        cgStaticError = mfcc.run()
@@ -346,10 +340,10 @@ def scheduler(mfccConfig,dispbuf):
        cgStaticError = src.run()
        if cgStaticError < 0:
           break
-       cgStaticError = audioWin.run()
+       cgStaticError = toMono.run()
        if cgStaticError < 0:
           break
-       cgStaticError = toMono.run()
+       cgStaticError = audioWin.run()
        if cgStaticError < 0:
           break
        cgStaticError = mfcc.run()
@@ -376,10 +370,10 @@ def scheduler(mfccConfig,dispbuf):
        cgStaticError = src.run()
        if cgStaticError < 0:
           break
-       cgStaticError = audioWin.run()
+       cgStaticError = toMono.run()
        if cgStaticError < 0:
           break
-       cgStaticError = toMono.run()
+       cgStaticError = audioWin.run()
        if cgStaticError < 0:
           break
        cgStaticError = mfcc.run()
@@ -406,10 +400,10 @@ def scheduler(mfccConfig,dispbuf):
        cgStaticError = src.run()
        if cgStaticError < 0:
           break
-       cgStaticError = audioWin.run()
+       cgStaticError = toMono.run()
        if cgStaticError < 0:
           break
-       cgStaticError = toMono.run()
+       cgStaticError = audioWin.run()
        if cgStaticError < 0:
           break
        cgStaticError = mfcc.run()
@@ -436,10 +430,10 @@ def scheduler(mfccConfig,dispbuf):
        cgStaticError = src.run()
        if cgStaticError < 0:
           break
-       cgStaticError = audioWin.run()
+       cgStaticError = toMono.run()
        if cgStaticError < 0:
           break
-       cgStaticError = toMono.run()
+       cgStaticError = audioWin.run()
        if cgStaticError < 0:
           break
        cgStaticError = mfcc.run()
@@ -466,10 +460,10 @@ def scheduler(mfccConfig,dispbuf):
        cgStaticError = src.run()
        if cgStaticError < 0:
           break
-       cgStaticError = audioWin.run()
+       cgStaticError = toMono.run()
        if cgStaticError < 0:
           break
-       cgStaticError = toMono.run()
+       cgStaticError = audioWin.run()
        if cgStaticError < 0:
           break
        cgStaticError = mfcc.run()
@@ -496,10 +490,10 @@ def scheduler(mfccConfig,dispbuf):
        cgStaticError = src.run()
        if cgStaticError < 0:
           break
-       cgStaticError = audioWin.run()
+       cgStaticError = toMono.run()
        if cgStaticError < 0:
           break
-       cgStaticError = toMono.run()
+       cgStaticError = audioWin.run()
        if cgStaticError < 0:
           break
        cgStaticError = mfcc.run()
@@ -526,10 +520,10 @@ def scheduler(mfccConfig,dispbuf):
        cgStaticError = src.run()
        if cgStaticError < 0:
           break
-       cgStaticError = audioWin.run()
+       cgStaticError = toMono.run()
        if cgStaticError < 0:
           break
-       cgStaticError = toMono.run()
+       cgStaticError = audioWin.run()
        if cgStaticError < 0:
           break
        cgStaticError = mfcc.run()
@@ -556,10 +550,10 @@ def scheduler(mfccConfig,dispbuf):
        cgStaticError = src.run()
        if cgStaticError < 0:
           break
-       cgStaticError = audioWin.run()
+       cgStaticError = toMono.run()
        if cgStaticError < 0:
           break
-       cgStaticError = toMono.run()
+       cgStaticError = audioWin.run()
        if cgStaticError < 0:
           break
        cgStaticError = mfcc.run()
@@ -586,10 +580,10 @@ def scheduler(mfccConfig,dispbuf):
        cgStaticError = src.run()
        if cgStaticError < 0:
           break
-       cgStaticError = audioWin.run()
+       cgStaticError = toMono.run()
        if cgStaticError < 0:
           break
-       cgStaticError = toMono.run()
+       cgStaticError = audioWin.run()
        if cgStaticError < 0:
           break
        cgStaticError = mfcc.run()
@@ -616,10 +610,10 @@ def scheduler(mfccConfig,dispbuf):
        cgStaticError = src.run()
        if cgStaticError < 0:
           break
-       cgStaticError = audioWin.run()
+       cgStaticError = toMono.run()
        if cgStaticError < 0:
           break
-       cgStaticError = toMono.run()
+       cgStaticError = audioWin.run()
        if cgStaticError < 0:
           break
        cgStaticError = mfcc.run()
@@ -646,10 +640,10 @@ def scheduler(mfccConfig,dispbuf):
        cgStaticError = src.run()
        if cgStaticError < 0:
           break
-       cgStaticError = audioWin.run()
+       cgStaticError = toMono.run()
        if cgStaticError < 0:
           break
-       cgStaticError = toMono.run()
+       cgStaticError = audioWin.run()
        if cgStaticError < 0:
           break
        cgStaticError = mfcc.run()
@@ -676,10 +670,10 @@ def scheduler(mfccConfig,dispbuf):
        cgStaticError = src.run()
        if cgStaticError < 0:
           break
-       cgStaticError = audioWin.run()
+       cgStaticError = toMono.run()
        if cgStaticError < 0:
           break
-       cgStaticError = toMono.run()
+       cgStaticError = audioWin.run()
        if cgStaticError < 0:
           break
        cgStaticError = mfcc.run()
@@ -706,10 +700,10 @@ def scheduler(mfccConfig,dispbuf):
        cgStaticError = src.run()
        if cgStaticError < 0:
           break
-       cgStaticError = audioWin.run()
+       cgStaticError = toMono.run()
        if cgStaticError < 0:
           break
-       cgStaticError = toMono.run()
+       cgStaticError = audioWin.run()
        if cgStaticError < 0:
           break
        cgStaticError = mfcc.run()
@@ -736,10 +730,10 @@ def scheduler(mfccConfig,dispbuf):
        cgStaticError = src.run()
        if cgStaticError < 0:
           break
-       cgStaticError = audioWin.run()
+       cgStaticError = toMono.run()
        if cgStaticError < 0:
           break
-       cgStaticError = toMono.run()
+       cgStaticError = audioWin.run()
        if cgStaticError < 0:
           break
        cgStaticError = mfcc.run()
@@ -766,10 +760,10 @@ def scheduler(mfccConfig,dispbuf):
        cgStaticError = src.run()
        if cgStaticError < 0:
           break
-       cgStaticError = audioWin.run()
+       cgStaticError = toMono.run()
        if cgStaticError < 0:
           break
-       cgStaticError = toMono.run()
+       cgStaticError = audioWin.run()
        if cgStaticError < 0:
           break
        cgStaticError = mfcc.run()
@@ -796,10 +790,10 @@ def scheduler(mfccConfig,dispbuf):
        cgStaticError = src.run()
        if cgStaticError < 0:
           break
-       cgStaticError = audioWin.run()
+       cgStaticError = toMono.run()
        if cgStaticError < 0:
           break
-       cgStaticError = toMono.run()
+       cgStaticError = audioWin.run()
        if cgStaticError < 0:
           break
        cgStaticError = mfcc.run()
@@ -826,10 +820,10 @@ def scheduler(mfccConfig,dispbuf):
        cgStaticError = src.run()
        if cgStaticError < 0:
           break
-       cgStaticError = audioWin.run()
+       cgStaticError = toMono.run()
        if cgStaticError < 0:
           break
-       cgStaticError = toMono.run()
+       cgStaticError = audioWin.run()
        if cgStaticError < 0:
           break
        cgStaticError = mfcc.run()
@@ -856,10 +850,10 @@ def scheduler(mfccConfig,dispbuf):
        cgStaticError = src.run()
        if cgStaticError < 0:
           break
-       cgStaticError = audioWin.run()
+       cgStaticError = toMono.run()
        if cgStaticError < 0:
           break
-       cgStaticError = toMono.run()
+       cgStaticError = audioWin.run()
        if cgStaticError < 0:
           break
        cgStaticError = mfcc.run()
@@ -886,10 +880,10 @@ def scheduler(mfccConfig,dispbuf):
        cgStaticError = src.run()
        if cgStaticError < 0:
           break
-       cgStaticError = audioWin.run()
+       cgStaticError = toMono.run()
        if cgStaticError < 0:
           break
-       cgStaticError = toMono.run()
+       cgStaticError = audioWin.run()
        if cgStaticError < 0:
           break
        cgStaticError = mfcc.run()
@@ -916,13 +910,19 @@ def scheduler(mfccConfig,dispbuf):
        cgStaticError = src.run()
        if cgStaticError < 0:
           break
-       cgStaticError = audioWin.run()
-       if cgStaticError < 0:
-          break
        cgStaticError = toMono.run()
        if cgStaticError < 0:
           break
+       cgStaticError = audioWin.run()
+       if cgStaticError < 0:
+          break
        cgStaticError = mfcc.run()
+       if cgStaticError < 0:
+          break
+       cgStaticError = src.run()
+       if cgStaticError < 0:
+          break
+       cgStaticError = toMono.run()
        if cgStaticError < 0:
           break
        cgStaticError = src.run()

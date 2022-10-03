@@ -52,14 +52,14 @@ g.connect(overlap.o,sink.i)
 print("Generate graphviz and code")
 
 
+conf=Configuration()
 
-#print(g.nullVector())
-sched = g.computeSchedule()
+#conf.dumpSchedule = True 
+sched = g.computeSchedule(conf)
 #print(sched.schedule)
 print("Schedule length = %d" % sched.scheduleLength)
 print("Memory usage %d bytes" % sched.memory)
 #
-conf=Configuration()
 conf.debugLimit=42
 conf.pyOptionalArgs="dispbuf"
 #conf.dumpFIFO=True

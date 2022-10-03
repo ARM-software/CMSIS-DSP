@@ -252,6 +252,11 @@ class BaseNode:
 
         self._positionInCycle = 0
 
+        self.sortedNodeID = 0
+        # Updated during toplogical sorts to find the current
+        # sinks of the truncated graph
+        self.nbOutputsForTopologicalSort = 0
+
     def __getattr__(self,name):
         """Present inputs / outputs as attributes"""
         if name in self._inputs:
@@ -517,6 +522,14 @@ class BaseNode:
     @property
     def hasManyIOs(self):
         return (self.hasManyInputs or self.hasManyOutputs)
+
+    @property
+    def nbInputs(self):
+        return(len(self._inputs.keys()))
+
+    @property
+    def nbOutputs(self):
+        return(len(self._outputs.keys()))
 
     @property
     def nbEmptyInputs(self):
