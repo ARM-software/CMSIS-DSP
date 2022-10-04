@@ -239,6 +239,11 @@ The wrapper is now containing the compute graph Python scripts and you should re
 
 # Change history
 
+## Version 1.9.1:
+
+* Small fix to the compute graph generator. The `#ifdef` at beginning of the custom header should be different for different scheduler names
+* Improve `addLiteralArg` and `addVariableArg` in compute graph to use variable number of arguments
+
 ## Version 1.9.0:
 
 * New scheduling mode, in the compute graph generator, giving priority to sinks in the scheduling. The idea is to try to decrease the latency between sinks and sources.

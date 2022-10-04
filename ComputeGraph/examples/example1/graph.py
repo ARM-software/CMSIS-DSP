@@ -37,8 +37,7 @@ class ProcessingNode(Node):
 floatType=CType(F32)
 src=Source("source",floatType,5)
 b=ProcessingNode("filter",floatType,7,5)
-b.addLiteralArg(4)
-b.addLiteralArg("Test")
+b.addLiteralArg(4,"Test")
 b.addVariableArg("someVariable")
 sink=Sink("sink",floatType,5)
 

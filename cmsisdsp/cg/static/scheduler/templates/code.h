@@ -7,8 +7,8 @@ The support classes and code is covered by CMSIS-DSP license.
 
 */
 
-#ifndef _SCHED_H_ 
-#define _SCHED_H_
+#ifndef _{{config.schedulerCFileName |replace(".h","")|upper()}}_H_ 
+#define _{{config.schedulerCFileName |replace(".h","")|upper()}}_H_
 
 {% macro optionalargs() -%}
 {% if config.cOptionalArgs %},{{config.cOptionalArgs}}{% endif %}
