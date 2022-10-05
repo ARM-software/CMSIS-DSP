@@ -107,12 +107,21 @@ class Configuration:
         self.customCName = "custom.h"
         self.customPythonName = "custom"
 
+        # Name of post custom files
+        self.postCustomCName = ""
+
         # Name of generic nodes headers
         self.genericNodeCName = "GenericNodes.h"
 
         # Name of scheduler source and header files
         self.schedulerCFileName = "scheduler"
         self.schedulerPythonFileName = "sched"
+
+        # True is C API for the scheduler
+        self.CAPI = True
+
+        # By default arm_math.h is included
+        self.CMSISDSP = True
 
     @property
     def debug(self):

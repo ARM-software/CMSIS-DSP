@@ -209,6 +209,14 @@ When `debugLimit` is > 0, the number of iterations of the scheduling is limited 
 
 When true, generate some code to dump the FIFO content at runtime. Only useful for debug.
 
+In C code generation, it is only available when using the mode `codeArray == False`.
+
+When this mode is enabled, the first line of the scheduler file is :
+
+`#define DEBUGSCHED 1`
+
+and it also enable some debug code in `GenericNodes.h`
+
 #### schedName (default = "scheduler")
 
 Name of the scheduler function used in the generated code.
@@ -247,6 +255,10 @@ Enable the generation of `CMSIS EventRecorder` intrumentation in the code.
 
 Name of custom header in generated C code. If you use several scheduler, you may want to use different headers for each one.
 
+##### postCustomCName (default = "")
+
+Name of custom header in generated C code coming after all of the other includes. 
+
 ##### genericNodeCName (default = "GenericNodes.h")
 
 Name of GenericNodes header in generated C code. If you use several scheduler, you may want to use different headers for each one.
@@ -260,6 +272,14 @@ Name of AppNodes header in generated C code. If you use several scheduler, you m
 Name of scheduler cpp and header in generated C code. If you use several scheduler, you may want to use different headers for each one.
 
 If the option is set to `xxx`, the names generated will be `xxx.cpp` and `xxx.h`
+
+##### CAPI (default = True)
+
+By default, the scheduler function is callable from C. When false, it is a standard C++ API.
+
+##### CMSISDSP (default = True)
+
+If you don't use any of the datatypes or functions of the CMSIS-DSP, you don't need to include the `arm_math.h` in the scheduler file. This option can thus be set to `False`.
 
 #### Options for Python code generation only
 

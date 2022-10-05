@@ -14,10 +14,12 @@ The support classes and code is covered by CMSIS-DSP license.
 {% if config.cOptionalArgs %},{{config.cOptionalArgs}}{% endif %}
 {% endmacro -%}
 
+{% if config.CAPI -%}
 #ifdef   __cplusplus
 extern "C"
 {
 #endif
+{% endif %}
 
 {% if config.eventRecorder %}
 #include "EventRecorder.h"
@@ -32,9 +34,11 @@ extern "C"
 
 extern uint32_t {{config.schedName}}(int *error{{optionalargs()}});
 
+{% if config.CAPI -%}
 #ifdef   __cplusplus
 }
 #endif
+{% endif %}
 
 #endif
 

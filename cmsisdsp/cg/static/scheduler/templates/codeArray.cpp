@@ -11,11 +11,16 @@ The support classes and code is covered by CMSIS-DSP license.
 #define DEBUGSCHED 1
 {% endif %}
 
+{% if config.CMSISDSP -%}
 #include "arm_math.h"
+{% endif %}
 #include "{{config.customCName}}"
 #include "{{config.genericNodeCName}}"
 #include "{{config.appNodesCName}}"
 #include "{{config.schedulerCFileName}}.h"
+{% if config.postCustomCName -%}
+#include "{{config.postCustomCName}}"
+{% endif %}
 
 {% include "defineConfig.h" %}
 

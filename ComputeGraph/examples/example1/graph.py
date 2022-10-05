@@ -63,7 +63,13 @@ print("Schedule length = %d" % sched.scheduleLength)
 print("Memory usage %d bytes" % sched.memory)
 #
 
-#conf.codeArray=True
+
+#conf.postCustomCName = "post.h"
+#conf.CAPI = True
+#conf.prefix="global"
+#conf.dumpFIFO = True
+#conf.CMSISDSP = False
+#conf.switchCase = False
 sched.ccode("generated",conf)
 
 with open("test.dot","w") as f:
