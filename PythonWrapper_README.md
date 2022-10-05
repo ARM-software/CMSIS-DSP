@@ -239,6 +239,13 @@ The wrapper is now containing the compute graph Python scripts and you should re
 
 # Change history
 
+## Version 1.9.2:
+
+* New customization options for the compute graph:
+  * CAPI
+  * CMSISDSP
+  * postCustomCName
+
 ## Version 1.9.1:
 
 * Small fix to the compute graph generator. The `#ifdef` at beginning of the custom header should be different for different scheduler names

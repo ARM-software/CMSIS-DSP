@@ -7,8 +7,8 @@ The support classes and code is covered by CMSIS-DSP license.
 
 */
 
-#ifndef _SCHED_H_ 
-#define _SCHED_H_
+#ifndef _SCHEDULER_H_ 
+#define _SCHEDULER_H_
 
 #ifdef   __cplusplus
 extern "C"
