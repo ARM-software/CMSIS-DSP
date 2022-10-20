@@ -91,7 +91,10 @@ scaled=a * w.T
 ref=np.sum(scaled,axis=0)/np.sum(w)
 print(ref)
 
-result=dsp.arm_barycenter_f32(np.array(a).reshape(12*3),w.reshape(12),12,3)
+points = np.array(a).reshape(12*3)
+weights = w.reshape(12)
+
+result=dsp.arm_barycenter_f32(points,weights,12,3)
 print(result)
 
 assert_allclose(ref,result,1e-6)

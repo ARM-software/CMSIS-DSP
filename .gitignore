@@ -28,3 +28,5 @@ Doxygen/history.txt
 Doxygen/dsp.dxy
 __pycache__/
 *.pyd
+.DS_Store
+.swiftpm/
