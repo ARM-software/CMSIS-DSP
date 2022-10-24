@@ -120,16 +120,19 @@ project:
         - file: ../Source/Tests/UnaryTestsQ15.cpp
         - file: ../Source/Tests/UnaryTestsQ31.cpp
 
-  components:
-    - component: ARM::CMSIS:CORE
-    - component: ARM::CMSIS:DSP&Source@1.11.0
+  # A CMSIS-DSP Layer is used to be able to build
+  # and test with the current source version
+  # without requring to install a CMSIS Pack
+  layers:
+    - layer: boot.clayer.yml 
+    - layer: dsp.clayer.yml 
       not-for-type: 
         - +FVP_A5Neon
         - +FVP_A7Neon
         - +FVP_A9Neon
     # CMSIS-DSP cannot be built with Neon intrinsics for A9
     # because of lack of Fused MAC on A9
-    - component: ARM::CMSIS:DSP&Source@1.11.0
+    - layer: dsp.clayer.yml 
       defines:
         - ARM_MATH_NEON
         - DISABLEFLOAT16
@@ -138,52 +141,13 @@ project:
         - +FVP_A7Neon
     # On A9, CMSIS-DSP is built with auto-vectorization
     # but no use of Neon intrinsics
-    - component: ARM::CMSIS:DSP&Source@1.11.0
+    - layer: dsp.clayer.yml 
       defines:
         - ARM_MATH_AUTOVECTORIZE
         - DISABLEFLOAT16
       for-type: 
         - +FVP_A9Neon
-    - component: Device:Startup&C Startup
-      not-for-type: 
-        - +VHT-Corstone-300 
-        - +VHT-Corstone-310
-        - +FVP_A5Neon
-        - +FVP_A7Neon
-        - +FVP_A9Neon
-    - component: Device:Startup
-      for-type: 
-        - +FVP_A5Neon
-        - +FVP_A7Neon
-        - +FVP_A9Neon
-    - component: Device:IRQ Controller
-      for-type: 
-        - +FVP_A5Neon
-        - +FVP_A7Neon
-        - +FVP_A9Neon
-    - component: Device:OS Tick
-      for-type: 
-        - +FVP_A5Neon
-        - +FVP_A7Neon
-        - +FVP_A9Neon
-    - component: ARM::Device:Definition
-      for-type: 
-        - +VHT-Corstone-300 
-        - +VHT-Corstone-310
-    - component: ARM::Device:Startup&Baremetal
-      for-type: 
-        - +VHT-Corstone-300 
-        - +VHT-Corstone-310
-    - component: ARM::Native Driver:Timeout
-      for-type: 
-        - +VHT-Corstone-300 
-        - +VHT-Corstone-310
-    - component: ARM::Native Driver:SysCounter
-      for-type: 
-        - +VHT-Corstone-300 
-        - +VHT-Corstone-310
-    - component: ARM::Native Driver:SysTimer
-      for-type: 
-        - +VHT-Corstone-300 
-        - +VHT-Corstone-310
 
+  components:
+    - component: ARM::CMSIS:CORE
+    

@@ -168,7 +168,10 @@ class HTMLFormatter:
                 print("<td>%s</td>\n" % (params))
              else:
                 print("<td></td>\n")
-             print("<td>%d</td>" % cycles)
+             if (cycles > 0):
+                print("<td>%d</td>" % cycles)
+             else:
+                print("<td>NA</td>")
              print("</tr>")
 
              if passed != 1:

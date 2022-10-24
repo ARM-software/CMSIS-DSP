@@ -14,22 +14,22 @@
     <compiler name="AC6" version="6.18.0"/>
   </compilers>
 
-  <target Dfpu="NO_FPU" Dname="ARMCM3" Dsecure="Non-secure" Dvendor="ARM:82">
-    <output intdir="tmp/test/VHT_M3/Release" name="test.Release+VHT_M3" outdir="out/test/VHT_M3/Release" rtedir="RTE" type="exe"/>
+  <target Dfpu="DP_FPU" Dname="ARMCM7_DP" Dsecure="Non-secure" Dvendor="ARM:82">
+    <output intdir="tmp/test/VHT_M7_UNROLLED/Release" name="test.Release+VHT_M7_UNROLLED" outdir="out/test/VHT_M7_UNROLLED/Release" rtedir="RTE" type="exe"/>
     <asflags add="-masm=auto" compiler="AC6"/>
     <cflags add="-std=c11 -Ofast -ffast-math" compiler="AC6"/>
     <cxxflags add="-std=c++11 -Ofast -ffast-math" compiler="AC6"/>
-    <ldflags add="--entry=Reset_Handler --info=summarysizes --info=sizes --info=totals --info=unused --info=veneers" compiler="AC6" file="RTE/Device/ARMCM3/ARMCM3_ac6.sct"/>
-    <defines>EMBEDDED;NORMALFVP;CORTEXM</defines>
+    <ldflags add="--entry=Reset_Handler --info=summarysizes --info=sizes --info=totals --info=unused --info=veneers" compiler="AC6" file="RTE/Device/ARMCM7_DP/ARMCM7_ac6.sct"/>
+    <defines>EMBEDDED;NORMALFVP;CORTEXM;ARM_MATH_LOOPUNROLL</defines>
     <includes>../../Include;../../PrivateInclude;../FrameworkInclude;../GeneratedInclude;../Include/Tests</includes>
   </target>
 
   <components>
     <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="5.6.0"/>
     <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cvendor="ARM" Cversion="2.0.3">
-      <file attr="config" category="linkerScript" name="Device/ARM/ARMCM3/Source/ARM/ARMCM3_ac6.sct" version="1.0.0"/>
-      <file attr="config" category="sourceC" name="Device/ARM/ARMCM3/Source/startup_ARMCM3.c" version="2.0.3"/>
-      <file attr="config" category="sourceC" name="Device/ARM/ARMCM3/Source/system_ARMCM3.c" version="1.0.1"/>
+      <file attr="config" category="linkerScript" name="Device/ARM/ARMCM7/Source/ARM/ARMCM7_ac6.sct" version="1.0.0"/>
+      <file attr="config" category="sourceC" name="Device/ARM/ARMCM7/Source/startup_ARMCM7.c" version="2.0.3"/>
+      <file attr="config" category="sourceC" name="Device/ARM/ARMCM7/Source/system_ARMCM7.c" version="1.0.1"/>
     </component>
   </components>
 

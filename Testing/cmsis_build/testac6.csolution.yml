@@ -27,7 +27,6 @@ solution:
       - NORMALFVP
 
   packs:
-    - pack: ARM::CMSIS-DSP@1.11.0
     - pack: ARM::CMSIS@5.9.0
     - pack: ARM::V2M_MPS3_SSE_300_BSP@1.3.0
     - pack: ARM::V2M_MPS3_SSE_310_BSP@1.0.0
@@ -58,6 +57,12 @@ solution:
       device: ARMCM7_DP
       defines:
         - CORTEXM
+
+    - type: VHT_M7_UNROLLED
+      device: ARMCM7_DP
+      defines:
+        - CORTEXM
+        - ARM_MATH_LOOPUNROLL
 
     - type: VHT_M4
       device: ARMCM4_FP
