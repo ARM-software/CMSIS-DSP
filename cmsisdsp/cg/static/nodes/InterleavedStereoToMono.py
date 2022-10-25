@@ -1,7 +1,7 @@
 ###########################################
 # Project:      CMSIS DSP Library
-# Title:        StereoToMono.py
-# Description:  Stereo to mono in Q15
+# Title:        InterleavedStereoToMono.py
+# Description:  Interleaved Stereo to mono in Q15
 # 
 # $Date:        06 August 2021
 # $Revision:    V1.10.0
@@ -29,7 +29,7 @@ from .simu import *
 import numpy as np 
 import cmsisdsp as dsp
 
-class StereoToMono(GenericNode):
+class InterleavedStereoToMono(GenericNode):
     def __init__(self,inputSize,outputSize,fifoin,fifoout):
         GenericNode.__init__(self,inputSize,outputSize,fifoin,fifoout)
         if fifoin.type == np.dtype(np.float32):

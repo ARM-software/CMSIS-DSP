@@ -2,6 +2,10 @@
 
 ## Introduction
 
+Embedded systems are often used to implement streaming solutions : the software is processing and / or generating stream of samples. The software is made of components that have no concept of streams : they are working with buffers. As a consequence, implementing a streaming solution is forcing the developer to think about scheduling questions, FIFO sizing etc ...
+
+The CMSIS-DSP compute graph is a low overhead solution to this problem : it makes it easier to build streaming solutions by connecting components and computing a scheduling at build time. The use of C++ template also enables the compiler to have more information about the components for better code generation.
+
 A dataflow graph is a representation of how compute blocks are connected to implement a streaming processing. 
 
 Here is an example with 3 nodes:
@@ -57,13 +61,13 @@ Without any scheduling tool for a dataflow graph, there is a problem of modulari
 
 With the CMSIS-DSP Compute Graph (CG) Tools you don't have to think about those details while you are still experimenting with your data processing pipeline. It makes it easier to experiment, add or remove blocks, change their parameters.
 
-The tools will generate a schedule and the FIFOs. Even if you don't use this at the end for a final implementation, the information could be useful : is the schedule too long ? Are the FIFOs too big ?
+The tools will generate a schedule and the FIFOs. Even if you don't use this at the end for a final implementation, the information could be useful : is the schedule too long ? Are the FIFOs too big ? Is there too much latency between the sources and the sinks ?
 
 Let's look at an (artificial) example:
 
 <img src="documentation/graph1.PNG" alt="graph1" style="zoom:50%;" />
 
-Without a tool, the user would probably try to modify the sample values so that the number of sample produced is equal to the number of samples consumed. With the CG Tools  we know that such a graph can be scheduled and that the FIFO sizes need to be 11 and 5.
+Without a tool, the user would probably try to modify the number of samples so that the number of sample produced is equal to the number of samples consumed. With the CG Tools  we know that such a graph can be scheduled and that the FIFO sizes need to be 11 and 5.
 
 The periodic schedule generated for this graph has a length of 19. It is big for such a small graph and it is because, indeed 5 and 7 are not very well chosen values. But, it is working even with those values.
 
@@ -97,15 +101,15 @@ First, you must install the `CMSIS-DSP` PythonWrapper:
 pip install cmsisdsp
 ```
 
-The script inside the cmsisdsp wrapper can be used to describe and generate the schedule.
+The functions and classes inside the cmsisdsp wrapper can be used to describe and generate the schedule.
 
-You can create a `graph.py` and include :
+To start, you can create a `graph.py` file and include :
 
 ```python
 from cmsisdsp.cg.static.scheduler import *
 ```
 
-You can describe new type of blocks that you need in the compute graph if they are not provided by the python package by default.
+In this file, you can describe new type of blocks that you need in the compute graph if they are not provided by the python package by default.
 
 Finally, you can execute `graph.py` to generate the C++ files.
 
@@ -113,7 +117,7 @@ The generated files need to include the `ComputeGraph/cg/static/src/GenericNodes
 
 If you have declared new nodes in `graph.py` then you'll need to provide an implementation.
 
-More details and explanations can be found in the documentation for the examples. The first example is giving all the details about the Python and C++ sides of the tool: 
+More details and explanations can be found in the documentation for the examples. The first example is a deep dive giving all the details about the Python and C++ sides of the tool: 
 
 * [Example 1 : how to describe a simple graph](documentation/example1.md)
 * [Example 2 : More complex example with delay and CMSIS-DSP](documentation/example2.md)
@@ -125,6 +129,10 @@ Examples 5 and 6 are showing how to use the CMSIS-DSP MFCC with a synchronous da
 Example 7 is communicating with OpenModelica. The Modelica model (PythonTest) in the example is implementing a Larsen effect.
 
 Example 8 is showing how to define a new custom datatype for the IOs of the nodes. Example 8 is also demonstrating a new feature where an IO can be connected up to 3 inputs and the static scheduler will automatically generate duplicate nodes.
+
+## Frequently asked questions:
+
+There is a [FAQ](FAQ.md) document.
 
 ## Cyclo static scheduling
 
@@ -147,7 +155,7 @@ In the second case, we have the flexibility but it is no more synchronous becaus
 
 But we can observe that even if is is no more stationary, it is periodic. After consuming 160 samples the behavior should repeat.
 
-One can use the resampler in the [SpeexDSP](https://gitlab.xiph.org/xiph/speexdsp) project to test. If we decide to consume only 40 samples in input to have less latency, then the resample of SpeexDSP will produce 37,37,37 and 36 samples for the first 4 executions.
+One can use the resampler in the [SpeexDSP](https://gitlab.xiph.org/xiph/speexdsp) project to test. If we decide to consume only 40 samples in input to have less latency, then the resampler of SpeexDSP will produce 37,37,37 and 36 samples for the first 4 executions.
 
 And (40+40+40+40)/(37+37+37+36) = 160 / 147.
 
@@ -370,9 +378,6 @@ It is a first version and there are lots of limitations and probably bugs:
 - Some checks are missing : for instance you can connect several nodes to the same io port. And io port must be connected to only one other io port. It is not checked by the script.
 - The code is requiring a lot more comments and cleaning
 - A C version of the code generator is missing
-- The scheduling algorithm could provide different heuristics:
-  - Optimizing code size
-  - Optimizing memory usage 
 - The code generation could provide more flexibility for memory allocation with a choice between:
   - Global
   - Stack

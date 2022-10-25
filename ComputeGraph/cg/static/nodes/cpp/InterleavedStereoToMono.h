@@ -1,7 +1,7 @@
 /* ----------------------------------------------------------------------
  * Project:      CMSIS DSP Library
- * Title:        StereoToMonoQ15.h
- * Description:  Stereo to mno stream in Q15
+ * Title:        InterleavedStereoToMono.h
+ * Description:  Interleaved Stereo to mono stream in Q15
  *
  * $Date:        06 August 2021
  * $Revision:    V1.10.0
@@ -31,13 +31,13 @@
 
 
 template<typename IN, int inputSize,typename OUT,int outputSize>
-class StereoToMono;
+class InterleavedStereoToMono;
 
 template<int inputSize,int outputSize>
-class StereoToMono<q15_t,inputSize,q15_t,outputSize>: public GenericNode<q15_t,inputSize,q15_t,outputSize>
+class InterleavedStereoToMono<q15_t,inputSize,q15_t,outputSize>: public GenericNode<q15_t,inputSize,q15_t,outputSize>
 {
 public:
-    StereoToMono(FIFOBase<q15_t> &src,FIFOBase<q15_t> &dst):
+    InterleavedStereoToMono(FIFOBase<q15_t> &src,FIFOBase<q15_t> &dst):
     GenericNode<q15_t,inputSize,q15_t,outputSize>(src,dst){};
 
    
@@ -54,10 +54,10 @@ public:
 };
 
 template<int inputSize,int outputSize>
-class StereoToMono<q31_t,inputSize,q31_t,outputSize>: public GenericNode<q31_t,inputSize,q31_t,outputSize>
+class InterleavedStereoToMono<q31_t,inputSize,q31_t,outputSize>: public GenericNode<q31_t,inputSize,q31_t,outputSize>
 {
 public:
-    StereoToMono(FIFOBase<q31_t> &src,FIFOBase<q31_t> &dst):
+    InterleavedStereoToMono(FIFOBase<q31_t> &src,FIFOBase<q31_t> &dst):
     GenericNode<q31_t,inputSize,q31_t,outputSize>(src,dst){};
 
    
@@ -74,10 +74,10 @@ public:
 };
 
 template<int inputSize,int outputSize>
-class StereoToMono<float32_t,inputSize,float32_t,outputSize>: public GenericNode<float32_t,inputSize,float32_t,outputSize>
+class InterleavedStereoToMono<float32_t,inputSize,float32_t,outputSize>: public GenericNode<float32_t,inputSize,float32_t,outputSize>
 {
 public:
-    StereoToMono(FIFOBase<float32_t> &src,FIFOBase<float32_t> &dst):
+    InterleavedStereoToMono(FIFOBase<float32_t> &src,FIFOBase<float32_t> &dst):
     GenericNode<float32_t,inputSize,float32_t,outputSize>(src,dst){};
 
    

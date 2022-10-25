@@ -29,7 +29,7 @@
    * \section intro Introduction
    *
    * This user manual describes the CMSIS DSP software library,
-   * a suite of common signal processing functions for use on Cortex-M and Cortex-A processor 
+   * a suite of common compute processing functions for use on Cortex-M and Cortex-A processor 
    * based devices.
    *
    * The library is divided into a number of functions each covering a specific category:
@@ -49,7 +49,7 @@
    * - \ref groupQuaternionMath "Quaternion functions"
    *
    * The library has generally separate functions for operating on 8-bit integers, 16-bit integers,
-   * 32-bit integer and 32-bit floating-point values.
+   * 32-bit integer and 32-bit floating-point values and 64-bit floating-point values.
    *
    * The library is providing vectorized versions of most algorthms for Helium
    * and of most f32 algorithms for Neon.
@@ -58,6 +58,10 @@
    * a buffer (3 words) because the vectorized code may read a little bit after the end
    * of a buffer. You don't have to modify your buffers but just ensure that the
    * end of buffer + padding is not outside of a memory region.
+   *
+   * CMSIS-DSP pack is containing an optional project : The CMSIS-DSP
+   * Compute Graph. The documentation for this project is available
+   * on the <a href="https://github.com/ARM-software/CMSIS-DSP/blob/main/ComputeGraph/README.md">CMSIS-DSP github repository.</a> 
    *
    * \section using Using the Library
    *

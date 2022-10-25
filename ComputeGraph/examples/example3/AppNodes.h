@@ -42,6 +42,8 @@ using namespace std;
 
 #include "ToComplex.h"
 #include "ToReal.h"
+#include "SlidingBuffer.h"
+#include "OverlapAndAdd.h"
 
 
 

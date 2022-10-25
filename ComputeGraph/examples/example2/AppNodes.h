@@ -31,6 +31,7 @@
 #include <iostream>
 
 #include "Unzip.h"
+#include "SlidingBuffer.h"
 
 template<typename IN, int inputSize>
 class TFLite: public GenericSink<IN, inputSize>

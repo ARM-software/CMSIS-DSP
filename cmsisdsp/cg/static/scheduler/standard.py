@@ -114,7 +114,7 @@ class NullSink(GenericSink):
     def typeName(self):
         return "NullSink"
 
-class StereoToMono(GenericNode):
+class InterleavedStereoToMono(GenericNode):
     def __init__(self,name,theType,outLength):
         GenericNode.__init__(self,name)
         self.addInput("i",theType,2*outLength)
@@ -122,7 +122,7 @@ class StereoToMono(GenericNode):
 
     @property
     def typeName(self):
-        return "StereoToMono"
+        return "InterleavedStereoToMono"
 
 
 class MFCC(GenericNode):

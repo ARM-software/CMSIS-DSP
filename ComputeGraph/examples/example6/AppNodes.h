@@ -38,6 +38,7 @@ using namespace std;
 #include "host/FileSink.h"
 #include "host/FileSource.h"
 #include "MFCC.h"
+#include "SlidingBuffer.h"
 
 
 
