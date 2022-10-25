@@ -125,7 +125,7 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <div class="contents">
 <div class="textblock"><h1><a class="anchor" id="intro"></a>
 Introduction</h1>
-<p >This user manual describes the CMSIS DSP software library, a suite of common signal processing functions for use on Cortex-M and Cortex-A processor based devices.</p>
+<p >This user manual describes the CMSIS DSP software library, a suite of common compute processing functions for use on Cortex-M and Cortex-A processor based devices.</p>
 <p >The library is divided into a number of functions each covering a specific category:</p><ul>
 <li><a class="el" href="group__groupMath.html">Basic math functions</a></li>
 <li><a class="el" href="group__groupFastMath.html">Fast math functions</a></li>
@@ -142,9 +142,10 @@ Introduction</h1>
 <li><a class="el" href="group__groupDistance.html">Distance functions</a></li>
 <li><a class="el" href="group__groupQuaternionMath.html">Quaternion functions</a></li>
 </ul>
-<p >The library has generally separate functions for operating on 8-bit integers, 16-bit integers, 32-bit integer and 32-bit floating-point values.</p>
+<p >The library has generally separate functions for operating on 8-bit integers, 16-bit integers, 32-bit integer and 32-bit floating-point values and 64-bit floating-point values.</p>
 <p >The library is providing vectorized versions of most algorthms for Helium and of most f32 algorithms for Neon.</p>
 <p >When using a vectorized version, provide a little bit of padding after the end of a buffer (3 words) because the vectorized code may read a little bit after the end of a buffer. You don't have to modify your buffers but just ensure that the end of buffer + padding is not outside of a memory region.</p>
+<p >CMSIS-DSP pack is containing an optional project : The CMSIS-DSP Compute Graph. The documentation for this project is available on the <a href="https://github.com/ARM-software/CMSIS-DSP/blob/main/ComputeGraph/README.md">CMSIS-DSP github repository.</a></p>
 <h1><a class="anchor" id="using"></a>
 Using the Library</h1>
 <p >The library is released in source form. It is strongly advised to compile the library using -Ofast to have the best performances.</p>
