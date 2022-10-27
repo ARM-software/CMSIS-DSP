@@ -37,7 +37,7 @@ Q7  = 5
 
 def printCUInt32Array(f,name,arr):
     nb = 0
-    print("uint32_t %s[%d]={" % (name,len(arr)),file=f)
+    print("const uint32_t %s[%d]={" % (name,len(arr)),file=f)
 
     for d in arr:
         val = "%d," % d
@@ -51,7 +51,7 @@ def printCUInt32Array(f,name,arr):
 
 def printCFloat32Array(f,name,arr):
     nb = 0
-    print("float32_t %s[%d]={" % (name,len(arr)),file=f)
+    print("const float32_t %s[%d]={" % (name,len(arr)),file=f)
 
     for d in arr:
         val = "%.20ff," % f32(d)
@@ -65,7 +65,7 @@ def printCFloat32Array(f,name,arr):
 
 def printCFloat16Array(f,name,arr):
     nb = 0
-    print("float16_t %s[%d]={" % (name,len(arr)),file=f)
+    print("const float16_t %s[%d]={" % (name,len(arr)),file=f)
 
     for d in arr:
         val = "(float16_t)%.13ff," % f16(d)
@@ -79,7 +79,7 @@ def printCFloat16Array(f,name,arr):
 
 def printCQ31Array(f,name,arr):
     nb = 0
-    print("q31_t %s[%d]={" % (name,len(arr)),file=f)
+    print("const q31_t %s[%d]={" % (name,len(arr)),file=f)
 
     for d in arr:
         val = "%s," % Tools.to_q31(d)
@@ -93,7 +93,7 @@ def printCQ31Array(f,name,arr):
 
 def printCQ15Array(f,name,arr):
     nb = 0
-    print("q15_t %s[%d]={" % (name,len(arr)),file=f)
+    print("const q15_t %s[%d]={" % (name,len(arr)),file=f)
 
     for d in arr:
         val = "%s," % Tools.to_q15(d)
@@ -107,7 +107,7 @@ def printCQ15Array(f,name,arr):
 
 def printCQ7Array(f,name,arr):
     nb = 0
-    print("q7_t %s[%d]={" % (name,len(arr)),file=f)
+    print("const q7_t %s[%d]={" % (name,len(arr)),file=f)
 
     for d in arr:
         val = "%s," % Tools.to_q7(d)
@@ -120,22 +120,22 @@ def printCQ7Array(f,name,arr):
     print("};\n",file=f)
 
 def printHUInt32Array(f,name,arr):
- print("extern uint32_t %s[%d];" % (name,len(arr)),file=f)
+ print("extern const uint32_t %s[%d];" % (name,len(arr)),file=f)
 
 def printHFloat32Array(f,name,arr):
- print("extern float32_t %s[%d];" % (name,len(arr)),file=f)
+ print("extern const float32_t %s[%d];" % (name,len(arr)),file=f)
 
 def printHFloat16Array(f,name,arr):
- print("extern float16_t %s[%d];" % (name,len(arr)),file=f)
+ print("extern const float16_t %s[%d];" % (name,len(arr)),file=f)
 
 def printHQ31Array(f,name,arr):
- print("extern q31_t %s[%d];" % (name,len(arr)),file=f)
+ print("extern const q31_t %s[%d];" % (name,len(arr)),file=f)
 
 def printHQ15Array(f,name,arr):
- print("extern q15_t %s[%d];" % (name,len(arr)),file=f)
+ print("extern const q15_t %s[%d];" % (name,len(arr)),file=f)
 
 def printHQ7Array(f,name,arr):
- print("extern q7_t %s[%d];" % (name,len(arr)),file=f)
+ print("extern const q7_t %s[%d];" % (name,len(arr)),file=f)
 
 def twiddle(n):
     a=2.0*math.pi*np.linspace(0,n,num=n,endpoint=False)/n

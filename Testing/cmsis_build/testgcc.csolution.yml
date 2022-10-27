@@ -109,6 +109,7 @@ solution:
     - type: Release
       optimize: max
       debug: off
+      
 
   projects:
     - project: ./test.cproject.yml
