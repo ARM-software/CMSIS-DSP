@@ -418,7 +418,7 @@ void arm_correlate_f16(
         pA++;
     }
 
-    for (i = block3 - 1; i >= 0; i -= 2)
+    for (i = block3 - 1; i > 0; i -= 2)
     {
 
         uint32_t  count = (i + 1);

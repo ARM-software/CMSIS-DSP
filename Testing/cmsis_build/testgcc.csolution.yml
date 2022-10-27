@@ -35,9 +35,6 @@ solution:
     #- type: VHT-Corstone-310
     #  device: ARM::SSE-310-MPS3
 
-    #- type: VHT-Corstone-300
-    #  device: ARM::SSE-300-MPS3
-
     - type: FVP_M55
       device: ARMCM55
       defines:

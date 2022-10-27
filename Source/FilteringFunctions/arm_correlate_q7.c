@@ -220,7 +220,7 @@ void arm_correlate_q7(
         pA++;
     }
 
-    for (i = block3 - 1; i >= 0; i -= 2)
+    for (i = block3 - 1; i > 0; i -= 2)
     {
         uint32_t  count = (i + 1);
         int32_t   acc0 = 0LL;
