@@ -47,6 +47,12 @@ if (HELIUM OR MVEF OR SUPPORT)
    target_include_directories(${project} PRIVATE "${DSP}/PrivateInclude")
 endif()
 
+if (MVEI OR MVEF OR HELIUM)
+    # By default, GCC does not enable implicit conversion between vectors of different numbers or types of elements
+    # which is required by some code in CMSIS-DSP
+    target_compile_options(${project} PRIVATE $<$<STREQUAL:${CMAKE_C_COMPILER_ID},GNU>:-flax-vector-conversions>)
+endif()
+
 if (DISABLEFLOAT16)
     target_compile_definitions(${project} PRIVATE DISABLEFLOAT16) 
 endif()
