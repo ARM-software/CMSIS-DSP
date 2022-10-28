@@ -47,7 +47,7 @@ src [label=<
 toMono [label=<
 <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
   <TR>
-    <TD ALIGN="CENTER" PORT="i">toMono<BR/>(StereoToMono)</TD>
+    <TD ALIGN="CENTER" PORT="i">toMono<BR/>(InterleavedStereoToMono)</TD>
   </TR>
 </TABLE>>];
 

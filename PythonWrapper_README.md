@@ -239,6 +239,12 @@ The wrapper is now containing the compute graph Python scripts and you should re
 
 # Change history
 
+## Version 1.9.3:
+
+* Corrected real FFTs in the wrapper
+* Corrected arm_fir_decimate and arm_fir_interpolate
+* Possibility to customize the FIFO class on a connection for the Python wrapper
+
 ## Version 1.9.2:
 
 * New customization options for the compute graph:

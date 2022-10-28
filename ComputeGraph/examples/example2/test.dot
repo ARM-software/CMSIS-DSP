@@ -109,7 +109,7 @@ toMono [label=<
 </TABLE>>];
 
 
-srcDelay [label=<
+srctoMonoDelay [label=<
 <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
   <TR>
     <TD ALIGN="CENTER" PORT="i">10</TD>
@@ -117,10 +117,10 @@ srcDelay [label=<
 </TABLE>>];
 
 
-src:i -> srcDelay:i [label="",taillabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >320</FONT>
+src:i -> srctoMonoDelay:i [label="",taillabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >320</FONT>
 </TD></TR></TABLE>>]
 
-srcDelay:i -> toMono:i [label="f32(330)"
+srctoMonoDelay:i -> toMono:i [label="f32(330)"
 ,headlabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >320</FONT>
 </TD></TR></TABLE>>]
 

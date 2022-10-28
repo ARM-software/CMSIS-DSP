@@ -93,11 +93,12 @@ void arm_split_rifft_q15(
 | 8192        | 1.15          | 13.3           | 0                         |
   
   @par
-                   If the input buffer is of length N, the output buffer must have length 2*N.
+                   If the input buffer is of length N (fftLenReal), the output buffer must have length 2N + 2
+                   since it is containing the conjugate part. (N/2 + 1 + N/2 complex samples)
                    The input buffer is modified by this function.
   @par
-                   For the RIFFT, the source buffer must at least have length 
-                   fftLenReal + 2.
+                   For the RIFFT, the source buffer must have at least length 
+                   fftLenReal + 2 which is (N/2 + 1 complex samples). It is not using the conjugate part.
                    The last two elements must be equal to what would be generated
                    by the RFFT:
                      (pSrc[0] - pSrc[1]) >> 1 and 0

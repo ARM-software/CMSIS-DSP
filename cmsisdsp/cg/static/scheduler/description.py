@@ -90,6 +90,7 @@ class FIFODesc:
         self.dst = None 
         # FIFO delay
         self.delay=0
+        self.fifoClass = "FIFO"
 
         # Used for liveliness analysis
         # To share buffers between FIFO in memory optimization
@@ -169,6 +170,7 @@ class Graph():
         self._totalMemory=0
         self._allFIFOs = None 
         self._allBuffers = None
+        self._FIFOClasses = {}
         # Topological sorting of nodes
         # computed during topology matrix
         # and used for some scheduling
@@ -211,11 +213,11 @@ class Graph():
         #print(self._topologicalSort)
 
 
-    def connectDup(self,destination,outputIO,theId):
+    def connectDup(self,destination,outputIO,theId,fifoClass="FIFO"):
         if (destination[theId][1]!=0):
-            self.connectWithDelay(outputIO,destination[theId][0],destination[theId][1],dupAllowed=False)
+            self.connectWithDelay(outputIO,destination[theId][0],destination[theId][1],dupAllowed=False,fifoClass=destination[theId][2])
         else:
-            self.connect(outputIO,destination[theId][0],dupAllowed=False)
+            self.connect(outputIO,destination[theId][0],dupAllowed=False,fifoClass=destination[theId][2])
 
 
 
@@ -287,12 +289,17 @@ class Graph():
                         nodea = f[0]
                         nodeb = f[1]
 
+                        fifoClass = "FIFO"
+                        if (nodea,nodeb) in self._FIFOClasses:
+                            fifoClass = self._FIFOClasses[(nodea,nodeb)]
+
+                        
                         if (nodea,nodeb) in self._delays:
                            delay = self._delays[(nodea,nodeb)]
                         else:
                            delay = 0
 
-                        destinations.append((nodeb,delay))
+                        destinations.append((nodeb,delay,fifoClass))
 
                         nodea.fifo=None 
                         nodeb.fifo=None
@@ -309,6 +316,8 @@ class Graph():
                         if self._g.has_edge(nodea.owner,nodeb.owner):
                            self._g.remove_edge(nodea.owner,nodeb.owner)
                         del self._edges[(nodea,nodeb)]
+                        if (nodea,nodeb) in self._FIFOClasses:
+                            del self._FIFOClasses[(nodea,nodeb)]
                         if (nodea,nodeb) in self._delays:
                            del self._delays[(nodea,nodeb)]
 
@@ -333,7 +342,7 @@ class Graph():
 
                
 
-    def connect(self,nodea,nodeb,dupAllowed=True):
+    def connect(self,nodea,nodeb,dupAllowed=True,fifoClass="FIFO"):
         # When connecting to a constant node we do nothing
         # since there is no FIFO in this case
         # and it does not participate to the scheduling.
@@ -353,6 +362,7 @@ class Graph():
                    nodea.fifo=(nodea,nodeb)
                    nodeb.fifo=(nodea,nodeb)
                 self._edges[(nodea,nodeb)]=True
+                self._FIFOClasses[(nodea,nodeb)] = fifoClass
                 if not (nodea.owner in self._nodes):
                    self._nodes[nodea.owner]=True
                 if not (nodeb.owner in self._nodes):
@@ -360,12 +370,12 @@ class Graph():
             else:
                 raise IncompatibleIO
 
-    def connectWithDelay(self,nodea,nodeb,delay,dupAllowed=True):
+    def connectWithDelay(self,nodea,nodeb,delay,dupAllowed=True,fifoClass="FIFO"):
         # We cannot connect with delay to a constant node
         if (isinstance(nodea,Constant)):
             raise CannotDelayConstantError
         else:
-            self.connect(nodea,nodeb,dupAllowed=dupAllowed)
+            self.connect(nodea,nodeb,dupAllowed=dupAllowed,fifoClass=fifoClass)
             self._delays[(nodea,nodeb)] = delay
     
     def __str__(self):
@@ -384,6 +394,9 @@ class Graph():
             edge = self._sortedEdges[fifo.fifoID]
             fifo.length = fifoLengths[fifo.fifoID]
             src,dst = edge
+            if edge in self._FIFOClasses:
+               fifoClass = self._FIFOClasses[edge]
+               fifo.fifoClass = fifoClass
             fifo.src=src
             fifo.dst=dst 
             fifo.delay=self.getDelay(edge)

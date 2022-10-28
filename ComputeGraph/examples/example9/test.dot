@@ -60,7 +60,7 @@ dup0 -> sink:i [label="f32(5)"
 ,headlabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >5</FONT>
 </TD></TR></TABLE>>
 ]
-dup0Delay [label=<
+dup0filterDelay [label=<
 <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
   <TR>
     <TD ALIGN="CENTER" PORT="i">5</TD>
@@ -69,9 +69,9 @@ dup0Delay [label=<
 
 
  
-dup0 -> dup0Delay:i [label=""]
+dup0 -> dup0filterDelay:i [label=""]
 
-dup0Delay:i -> filter:ib [label="f32(5)"
+dup0filterDelay:i -> filter:ib [label="f32(5)"
 ,headlabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >5</FONT>
 </TD></TR></TABLE>>]
 

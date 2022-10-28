@@ -71,9 +71,10 @@ assert i==-10
 
 print("Barycenter")
 
-a=[0] * 12
-w=np.array([[2] * 12])
-w[0,11]=3
+a=np.zeros((12,3))
+w=np.array([[2.0] * 12])[0]
+w[0]=3
+w[11]=3
 a[0] =[0., 0., -0.951057]
 a[1] =[0., 0., 0.951057]
 a[2] =[-0.850651, 0., -0.425325]
@@ -87,15 +88,19 @@ a[9] =[-0.262866, 0.809017, -0.425325]
 a[10]=[0.262866, -0.809017, 0.425325]
 a[11]=[0.262866, 0.809017, 0.425325]
 
-scaled=a * w.T
+
+scaled= np.dot(a.T , w)
 ref=np.sum(scaled,axis=0)/np.sum(w)
-print(ref)
+#print(ref)
 
 points = np.array(a).reshape(12*3)
 weights = w.reshape(12)
 
+#print(points)
+#print(weights)
+
 result=dsp.arm_barycenter_f32(points,weights,12,3)
-print(result)
+#print(result)
 
 assert_allclose(ref,result,1e-6)
 

@@ -15,7 +15,7 @@
 {{constEdges[theID][1].owner.nodeID}}:{{constEdges[theID][1].name}}
 {% endmacro -%}
 
-{% macro delayBoxID(id) -%}{{fifos[id].src.owner.nodeID}}Delay{%- endmacro %}
+{% macro delayBoxID(id) -%}{{fifos[id].src.owner.nodeID}}{{fifos[id].dst.owner.nodeID}}Delay{%- endmacro %}
 
 {% macro delayBox(edge) -%}
 {% if fifos[edge].hasDelay %}

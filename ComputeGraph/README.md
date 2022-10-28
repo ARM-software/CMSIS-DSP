@@ -319,7 +319,17 @@ Horizontal or vertical layout for the graph.
 
 By default, the graph is displaying the FIFO sizes. If you want to know with FIFO variable is used in the code, you can set this option to true and the graph will display the FIFO variable names.
 
+### Options for connections
 
+It is now possible to write something like:
+
+```python
+g.connect(src.o,b.i,fifoClass="FIFOSource")
+```
+
+The `fifoClass` argument allows to choose a specific FIFO class in the generated C++ or Python.
+
+Only the `FIFO` class is provided by default. Any new implementation must inherit from `FIFObase<T>`
 
 ## How to build the examples
 

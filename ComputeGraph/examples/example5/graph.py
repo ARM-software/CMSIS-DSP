@@ -18,7 +18,7 @@ src=WavSource("src",NBCHANNELS*AUDIO_INTERRUPT_LENGTH)
 src.addLiteralArg(True)
 src.addLiteralArg("test_stereo.wav")
 
-toMono=StereoToMono("toMono",q15Type,AUDIO_INTERRUPT_LENGTH)
+toMono=InterleavedStereoToMono("toMono",q15Type,AUDIO_INTERRUPT_LENGTH)
 
 slidingAudio=SlidingBuffer("audioWin",q15Type,FFTSize,AudioOverlap)
 slidingMFCC=SlidingBuffer("mfccWin",q15Type,numOfDctOutputs*nbMFCCOutputs,numOfDctOutputs*nbMFCCOutputs>>1)

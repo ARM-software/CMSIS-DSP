@@ -4711,6 +4711,7 @@ cmsis_arm_fir_decimate_f32(PyObject *obj, PyObject *args)
   float32_t *pSrc_converted=NULL; // input
   float32_t *pDst=NULL; // output
   uint32_t blockSize; // input
+  uint32_t outBlockSize; // input
 
   if (PyArg_ParseTuple(args,"OO",&S,&pSrc))
   {
@@ -4718,12 +4719,13 @@ cmsis_arm_fir_decimate_f32(PyObject *obj, PyObject *args)
     dsp_arm_fir_decimate_instance_f32Object *selfS = (dsp_arm_fir_decimate_instance_f32Object *)S;
     GETARGUMENT(pSrc,NPY_DOUBLE,double,float32_t);
     blockSize = arraySizepSrc ;
+    outBlockSize = arraySizepSrc / selfS->instance->M;
 
-    pDst=PyMem_Malloc(sizeof(float32_t)*blockSize);
+    pDst=PyMem_Malloc(sizeof(float32_t)*outBlockSize);
 
 
     arm_fir_decimate_f32(selfS->instance,pSrc_converted,pDst,blockSize);
- FLOATARRAY1(pDstOBJ,blockSize,pDst);
+ FLOATARRAY1(pDstOBJ,outBlockSize,pDst);
 
     PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
 
@@ -4779,19 +4781,21 @@ cmsis_arm_fir_decimate_q15(PyObject *obj, PyObject *args)
   q15_t *pSrc_converted=NULL; // input
   q15_t *pDst=NULL; // output
   uint32_t blockSize; // input
+  uint32_t outBlockSize; // input
 
   if (PyArg_ParseTuple(args,"OO",&S,&pSrc))
   {
 
     dsp_arm_fir_decimate_instance_q15Object *selfS = (dsp_arm_fir_decimate_instance_q15Object *)S;
     GETARGUMENT(pSrc,NPY_INT16,int16_t,int16_t);
-    blockSize = arraySizepSrc ;
+    blockSize = arraySizepSrc;
+    outBlockSize = arraySizepSrc / selfS->instance->M;
 
-    pDst=PyMem_Malloc(sizeof(q15_t)*blockSize);
+    pDst=PyMem_Malloc(sizeof(q15_t)*outBlockSize);
 
 
     arm_fir_decimate_q15(selfS->instance,pSrc_converted,pDst,blockSize);
- INT16ARRAY1(pDstOBJ,blockSize,pDst);
+ INT16ARRAY1(pDstOBJ,outBlockSize,pDst);
 
     PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
 
@@ -4813,6 +4817,7 @@ cmsis_arm_fir_decimate_fast_q15(PyObject *obj, PyObject *args)
   q15_t *pSrc_converted=NULL; // input
   q15_t *pDst=NULL; // output
   uint32_t blockSize; // input
+  uint32_t outBlockSize; // input
 
   if (PyArg_ParseTuple(args,"OO",&S,&pSrc))
   {
@@ -4820,12 +4825,13 @@ cmsis_arm_fir_decimate_fast_q15(PyObject *obj, PyObject *args)
     dsp_arm_fir_decimate_instance_q15Object *selfS = (dsp_arm_fir_decimate_instance_q15Object *)S;
     GETARGUMENT(pSrc,NPY_INT16,int16_t,int16_t);
     blockSize = arraySizepSrc ;
+    outBlockSize = arraySizepSrc / selfS->instance->M;
 
-    pDst=PyMem_Malloc(sizeof(q15_t)*blockSize);
+    pDst=PyMem_Malloc(sizeof(q15_t)*outBlockSize);
 
 
     arm_fir_decimate_fast_q15(selfS->instance,pSrc_converted,pDst,blockSize);
- INT16ARRAY1(pDstOBJ,blockSize,pDst);
+ INT16ARRAY1(pDstOBJ,outBlockSize,pDst);
 
     PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
 
@@ -4881,6 +4887,7 @@ cmsis_arm_fir_decimate_q31(PyObject *obj, PyObject *args)
   q31_t *pSrc_converted=NULL; // input
   q31_t *pDst=NULL; // output
   uint32_t blockSize; // input
+  uint32_t outBlockSize; // input
 
   if (PyArg_ParseTuple(args,"OO",&S,&pSrc))
   {
@@ -4888,12 +4895,13 @@ cmsis_arm_fir_decimate_q31(PyObject *obj, PyObject *args)
     dsp_arm_fir_decimate_instance_q31Object *selfS = (dsp_arm_fir_decimate_instance_q31Object *)S;
     GETARGUMENT(pSrc,NPY_INT32,int32_t,int32_t);
     blockSize = arraySizepSrc ;
+    outBlockSize = arraySizepSrc / selfS->instance->M;
 
-    pDst=PyMem_Malloc(sizeof(q31_t)*blockSize);
+    pDst=PyMem_Malloc(sizeof(q31_t)*outBlockSize);
 
 
     arm_fir_decimate_q31(selfS->instance,pSrc_converted,pDst,blockSize);
- INT32ARRAY1(pDstOBJ,blockSize,pDst);
+ INT32ARRAY1(pDstOBJ,outBlockSize,pDst);
 
     PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
 
@@ -4915,19 +4923,21 @@ cmsis_arm_fir_decimate_fast_q31(PyObject *obj, PyObject *args)
   q31_t *pSrc_converted=NULL; // input
   q31_t *pDst=NULL; // output
   uint32_t blockSize; // input
+  uint32_t outBlockSize; // input
 
   if (PyArg_ParseTuple(args,"OO",&S,&pSrc))
   {
 
     dsp_arm_fir_decimate_instance_q31Object *selfS = (dsp_arm_fir_decimate_instance_q31Object *)S;
     GETARGUMENT(pSrc,NPY_INT32,int32_t,int32_t);
-    blockSize = arraySizepSrc ;
+    blockSize = arraySizepSrc;
+    outBlockSize = arraySizepSrc / selfS->instance->M;
 
-    pDst=PyMem_Malloc(sizeof(q31_t)*blockSize);
+    pDst=PyMem_Malloc(sizeof(q31_t)*outBlockSize);
 
 
     arm_fir_decimate_fast_q31(selfS->instance,pSrc_converted,pDst,blockSize);
- INT32ARRAY1(pDstOBJ,blockSize,pDst);
+ INT32ARRAY1(pDstOBJ,outBlockSize,pDst);
 
     PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
 
@@ -4983,6 +4993,7 @@ cmsis_arm_fir_interpolate_q15(PyObject *obj, PyObject *args)
   q15_t *pSrc_converted=NULL; // input
   q15_t *pDst=NULL; // output
   uint32_t blockSize; // input
+  uint32_t outBlockSize; // input
 
   if (PyArg_ParseTuple(args,"OO",&S,&pSrc))
   {
@@ -4990,12 +5001,13 @@ cmsis_arm_fir_interpolate_q15(PyObject *obj, PyObject *args)
     dsp_arm_fir_interpolate_instance_q15Object *selfS = (dsp_arm_fir_interpolate_instance_q15Object *)S;
     GETARGUMENT(pSrc,NPY_INT16,int16_t,int16_t);
     blockSize = arraySizepSrc ;
+    outBlockSize = arraySizepSrc * selfS->instance->L;
 
-    pDst=PyMem_Malloc(sizeof(q15_t)*blockSize);
+    pDst=PyMem_Malloc(sizeof(q15_t)*outBlockSize);
 
 
     arm_fir_interpolate_q15(selfS->instance,pSrc_converted,pDst,blockSize);
- INT16ARRAY1(pDstOBJ,blockSize,pDst);
+ INT16ARRAY1(pDstOBJ,outBlockSize,pDst);
 
     PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
 
@@ -5051,6 +5063,7 @@ cmsis_arm_fir_interpolate_q31(PyObject *obj, PyObject *args)
   q31_t *pSrc_converted=NULL; // input
   q31_t *pDst=NULL; // output
   uint32_t blockSize; // input
+  uint32_t outBlockSize; // input
 
   if (PyArg_ParseTuple(args,"OO",&S,&pSrc))
   {
@@ -5058,12 +5071,13 @@ cmsis_arm_fir_interpolate_q31(PyObject *obj, PyObject *args)
     dsp_arm_fir_interpolate_instance_q31Object *selfS = (dsp_arm_fir_interpolate_instance_q31Object *)S;
     GETARGUMENT(pSrc,NPY_INT32,int32_t,int32_t);
     blockSize = arraySizepSrc ;
+    outBlockSize = arraySizepSrc * selfS->instance->L;
 
-    pDst=PyMem_Malloc(sizeof(q31_t)*blockSize);
+    pDst=PyMem_Malloc(sizeof(q31_t)*outBlockSize);
 
 
     arm_fir_interpolate_q31(selfS->instance,pSrc_converted,pDst,blockSize);
- INT32ARRAY1(pDstOBJ,blockSize,pDst);
+ INT32ARRAY1(pDstOBJ,outBlockSize,pDst);
 
     PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
 
@@ -5119,19 +5133,21 @@ cmsis_arm_fir_interpolate_f32(PyObject *obj, PyObject *args)
   float32_t *pSrc_converted=NULL; // input
   float32_t *pDst=NULL; // output
   uint32_t blockSize; // input
+  uint32_t outBlockSize; // input
 
   if (PyArg_ParseTuple(args,"OO",&S,&pSrc))
   {
 
     dsp_arm_fir_interpolate_instance_f32Object *selfS = (dsp_arm_fir_interpolate_instance_f32Object *)S;
     GETARGUMENT(pSrc,NPY_DOUBLE,double,float32_t);
-    blockSize = arraySizepSrc ;
+    blockSize = arraySizepSrc;
+    outBlockSize = arraySizepSrc * selfS->instance->L;
 
-    pDst=PyMem_Malloc(sizeof(float32_t)*blockSize);
+    pDst=PyMem_Malloc(sizeof(float32_t)*outBlockSize);
 
 
     arm_fir_interpolate_f32(selfS->instance,pSrc_converted,pDst,blockSize);
- FLOATARRAY1(pDstOBJ,blockSize,pDst);
+ FLOATARRAY1(pDstOBJ,outBlockSize,pDst);
 
     PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
 

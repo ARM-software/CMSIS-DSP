@@ -1817,8 +1817,8 @@ void typeRegistration(PyObject *module) {
   ADDTYPE(arm_cfft_instance_f32);
   ADDTYPE(arm_rfft_instance_q15);
   ADDTYPE(arm_rfft_instance_q31);
-  ADDTYPE(arm_rfft_instance_f32);
   ADDTYPE(arm_rfft_fast_instance_f32);
+  ADDTYPE(arm_rfft_fast_instance_f64);
   ADDTYPE(arm_dct4_instance_f32);
   ADDTYPE(arm_dct4_instance_q31);
   ADDTYPE(arm_dct4_instance_q15);
@@ -2206,7 +2206,7 @@ cmsis_arm_cfft_f64(PyObject *obj, PyObject *args)
     GETARGUMENT(p1,NPY_DOUBLE,double,float64_t);
 
     arm_cfft_f64(selfS->instance,p1_converted,(uint8_t)ifftFlag,(uint8_t)bitReverseFlag);
-    FLOATARRAY1(p1OBJ,2*selfS->instance->fftLen,p1_converted);
+    FLOAT64ARRAY1(p1OBJ,2*selfS->instance->fftLen,p1_converted);
 
     PyObject *pythonResult = Py_BuildValue("O",p1OBJ);
 
@@ -2283,15 +2283,28 @@ cmsis_arm_rfft_q15(PyObject *obj, PyObject *args)
 
   if (PyArg_ParseTuple(args,"OO",&S,&pSrc))
   {
+     int inputSize;
+     int outputSize;
 
-    dsp_arm_rfft_instance_q15Object *selfS = (dsp_arm_rfft_instance_q15Object *)S;
+     dsp_arm_rfft_instance_q15Object *selfS = (dsp_arm_rfft_instance_q15Object *)S;
+
+     inputSize=selfS->instance->fftLenReal;
+     if (selfS->instance->ifftFlagR)
+     {
+        outputSize = inputSize-2;
+     }
+     else
+     {
+        outputSize = 2*inputSize+2;
+     }
+
     GETARGUMENT(pSrc,NPY_INT16,int16_t,int16_t);
 
-    pDst=PyMem_Malloc(sizeof(q15_t)*2*selfS->instance->fftLenReal);
+    pDst=PyMem_Malloc(sizeof(q15_t)*outputSize);
 
 
     arm_rfft_q15(selfS->instance,pSrc_converted,pDst);
- INT16ARRAY1(pDstOBJ,2*selfS->instance->fftLenReal,pDst);
+ INT16ARRAY1(pDstOBJ,outputSize,pDst);
 
     PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
 
@@ -2340,17 +2353,32 @@ cmsis_arm_rfft_q31(PyObject *obj, PyObject *args)
   q31_t *pSrc_converted=NULL; // input
   q31_t *pDst=NULL; // output
 
+
+
   if (PyArg_ParseTuple(args,"OO",&S,&pSrc))
   {
+     int inputSize;
+     int outputSize;
 
-    dsp_arm_rfft_instance_q31Object *selfS = (dsp_arm_rfft_instance_q31Object *)S;
+     dsp_arm_rfft_instance_q31Object *selfS = (dsp_arm_rfft_instance_q31Object *)S;
+
+     inputSize=selfS->instance->fftLenReal;
+     if (selfS->instance->ifftFlagR)
+     {
+        outputSize = inputSize-2;
+     }
+     else
+     {
+        outputSize = 2*inputSize+2;
+     }
+  
     GETARGUMENT(pSrc,NPY_INT32,int32_t,int32_t);
 
-    pDst=PyMem_Malloc(sizeof(q31_t)*2*selfS->instance->fftLenReal);
+    pDst=PyMem_Malloc(sizeof(q31_t)*outputSize);
 
 
     arm_rfft_q31(selfS->instance,pSrc_converted,pDst);
- INT32ARRAY1(pDstOBJ,2*selfS->instance->fftLenReal,pDst);
+ INT32ARRAY1(pDstOBJ,outputSize,pDst);
 
     PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
 
@@ -2465,11 +2493,11 @@ cmsis_arm_rfft_fast_f64(PyObject *obj, PyObject *args)
     dsp_arm_rfft_fast_instance_f64Object *selfS = (dsp_arm_rfft_fast_instance_f64Object *)S;
     GETARGUMENT(p,NPY_DOUBLE,double,float64_t);
 
-    pOut=PyMem_Malloc(sizeof(float64_t)*2*selfS->instance->fftLenRFFT);
+    pOut=PyMem_Malloc(sizeof(float64_t)*selfS->instance->fftLenRFFT);
 
 
     arm_rfft_fast_f64(selfS->instance,p_converted,pOut,(uint8_t)ifftFlag);
- FLOATARRAY1(pOutOBJ,2*selfS->instance->fftLenRFFT,pOut);
+ FLOAT64ARRAY1(pOutOBJ,selfS->instance->fftLenRFFT,pOut);
 
     PyObject *pythonResult = Py_BuildValue("O",pOutOBJ);
 
@@ -3139,9 +3167,8 @@ static PyMethodDef CMSISDSPMethods[] = {
 {"arm_rfft_q15",  cmsis_arm_rfft_q15, METH_VARARGS,""},
 {"arm_rfft_init_q31",  cmsis_arm_rfft_init_q31, METH_VARARGS,""},
 {"arm_rfft_q31",  cmsis_arm_rfft_q31, METH_VARARGS,""},
-{"arm_rfft_init_f32",  cmsis_arm_rfft_init_f32, METH_VARARGS,""},
-{"arm_rfft_f32",  cmsis_arm_rfft_f32, METH_VARARGS,""},
 {"arm_rfft_fast_init_f64",  cmsis_arm_rfft_fast_init_f64, METH_VARARGS,""},
+{"arm_rfft_fast_f64",  cmsis_arm_rfft_fast_f64, METH_VARARGS,""},
 {"arm_rfft_fast_f32",  cmsis_arm_rfft_fast_f32, METH_VARARGS,""},
 {"arm_rfft_fast_init_f32",  cmsis_arm_rfft_fast_init_f32, METH_VARARGS,""},
 {"arm_rfft_fast_f32",  cmsis_arm_rfft_fast_f32, METH_VARARGS,""},
