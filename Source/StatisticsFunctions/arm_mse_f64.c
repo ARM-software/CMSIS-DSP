@@ -42,7 +42,7 @@
   @param[in]     pSrcA       points to the first input vector
   @param[in]     pSrcB       points to the second input vector
   @param[in]     blockSize   number of samples in input vector
-  @param[out]    result      mean square error
+  @param[out]    pResult      mean square error
   @return        none
  */
 
@@ -50,7 +50,7 @@ void arm_mse_f64(
     const float64_t * pSrcA,
     const float64_t * pSrcB,
     uint32_t blockSize,
-    float64_t * result)
+    float64_t * pResult)
 
 {
     
@@ -126,7 +126,7 @@ void arm_mse_f64(
     }
     
     /* Store result in destination buffer */
-    *result = sum / blockSize;
+    *pResult = sum / blockSize;
 }
 
 
