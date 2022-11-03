@@ -403,38 +403,38 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @brief  Minimum value of a Q7 vector.
    * @param[in]  pSrc       is input pointer
    * @param[in]  blockSize  is the number of samples to process
-   * @param[out] result     is output pointer
-   * @param[in]  index      is the array index of the minimum value in the input buffer.
+   * @param[out] pResult     is output pointer
+   * @param[in]  pIndex      is the array index of the minimum value in the input buffer.
    */
   void arm_min_q7(
   const q7_t * pSrc,
         uint32_t blockSize,
-        q7_t * result,
-        uint32_t * index);
+        q7_t * pResult,
+        uint32_t * pIndex);
 
   /**
    * @brief  Minimum value of absolute values of a Q7 vector.
    * @param[in]  pSrc       is input pointer
    * @param[in]  blockSize  is the number of samples to process
-   * @param[out] result     is output pointer
-   * @param[in]  index      is the array index of the minimum value in the input buffer.
+   * @param[out] pResult    is output pointer
+   * @param[in]  pIndex     is the array index of the minimum value in the input buffer.
    */
   void arm_absmin_q7(
   const q7_t * pSrc,
         uint32_t blockSize,
-        q7_t * result,
-        uint32_t * index);
+        q7_t * pResult,
+        uint32_t * pIndex);
 
     /**
    * @brief  Minimum value of absolute values of a Q7 vector.
    * @param[in]  pSrc       is input pointer
    * @param[in]  blockSize  is the number of samples to process
-   * @param[out] result     is output pointer
+   * @param[out] pResult    is output pointer
    */
   void arm_absmin_no_idx_q7(
   const q7_t * pSrc,
         uint32_t blockSize,
-        q7_t * result);
+        q7_t * pResult);
 
 
   /**
