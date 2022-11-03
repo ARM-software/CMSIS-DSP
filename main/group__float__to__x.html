@@ -131,6 +131,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga5e0636b1fa9640c3e192108e0c747830"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__float__to__x.html#ga5e0636b1fa9640c3e192108e0c747830">arm_float_to_f16</a> (const <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pSrc, float16_t *pDst, uint32_t <a class="el" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>)</td></tr>
 <tr class="memdesc:ga5e0636b1fa9640c3e192108e0c747830"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the elements of the floating-point vector to f16 vector.  <a href="group__float__to__x.html#ga5e0636b1fa9640c3e192108e0c747830">More...</a><br /></td></tr>
 <tr class="separator:ga5e0636b1fa9640c3e192108e0c747830"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab44eb2fa9c8aa1051bd669e7b824f74f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__float__to__x.html#gab44eb2fa9c8aa1051bd669e7b824f74f">arm_float_to_f64</a> (const <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pSrc, <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *pDst, uint32_t <a class="el" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>)</td></tr>
+<tr class="memdesc:gab44eb2fa9c8aa1051bd669e7b824f74f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the elements of the floating-point vector to f64 vector.  <a href="group__float__to__x.html#gab44eb2fa9c8aa1051bd669e7b824f74f">More...</a><br /></td></tr>
+<tr class="separator:gab44eb2fa9c8aa1051bd669e7b824f74f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac7696e64963e5051ebb950c88c6ba186"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__float__to__x.html#gac7696e64963e5051ebb950c88c6ba186">arm_float_to_q15</a> (const <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pSrc, <a class="el" href="arm__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *pDst, uint32_t <a class="el" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>)</td></tr>
 <tr class="memdesc:gac7696e64963e5051ebb950c88c6ba186"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the elements of the floating-point vector to Q15 vector.  <a href="group__float__to__x.html#gac7696e64963e5051ebb950c88c6ba186">More...</a><br /></td></tr>
 <tr class="separator:gac7696e64963e5051ebb950c88c6ba186"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -179,6 +182,50 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">pSrc</td><td>points to the f32 input vector </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">pDst</td><td>points to the f16 output vector </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">blockSize</td><td>number of samples in each vector </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
+
+</div>
+</div>
+<a id="gab44eb2fa9c8aa1051bd669e7b824f74f" name="gab44eb2fa9c8aa1051bd669e7b824f74f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab44eb2fa9c8aa1051bd669e7b824f74f">&#9670;&nbsp;</a></span>arm_float_to_f64()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_float_to_f64 </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *&#160;</td>
+          <td class="paramname"><em>pSrc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *&#160;</td>
+          <td class="paramname"><em>pDst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>blockSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Converts the elements of the floating-point vector to 64 bit floating-point vector.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pSrc</td><td>points to the f32 input vector </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pDst</td><td>points to the f64 output vector </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">blockSize</td><td>number of samples in each vector </td></tr>
   </table>
   </dd>

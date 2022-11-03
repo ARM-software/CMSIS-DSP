@@ -128,6 +128,9 @@ $(document).ready(function(){initNavTree('group__q7__to__x.html',''); initResiza
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:gac9ca22ddf0dce6c9454c4b1167058263"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__q7__to__x.html#gac9ca22ddf0dce6c9454c4b1167058263">arm_q7_to_f64</a> (const <a class="el" href="arm__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *pSrc, <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *pDst, uint32_t <a class="el" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>)</td></tr>
+<tr class="memdesc:gac9ca22ddf0dce6c9454c4b1167058263"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the elements of the Q7 vector to 64 bit floating-point vector.  <a href="group__q7__to__x.html#gac9ca22ddf0dce6c9454c4b1167058263">More...</a><br /></td></tr>
+<tr class="separator:gac9ca22ddf0dce6c9454c4b1167058263"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga840d8a0e8499d02a54f459bb29f5d63c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__q7__to__x.html#ga840d8a0e8499d02a54f459bb29f5d63c">arm_q7_to_float</a> (const <a class="el" href="arm__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *pSrc, <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pDst, uint32_t <a class="el" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>)</td></tr>
 <tr class="memdesc:ga840d8a0e8499d02a54f459bb29f5d63c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the elements of the Q7 vector to floating-point vector.  <a href="group__q7__to__x.html#ga840d8a0e8499d02a54f459bb29f5d63c">More...</a><br /></td></tr>
 <tr class="separator:ga840d8a0e8499d02a54f459bb29f5d63c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -140,6 +143,52 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="gac9ca22ddf0dce6c9454c4b1167058263" name="gac9ca22ddf0dce6c9454c4b1167058263"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac9ca22ddf0dce6c9454c4b1167058263">&#9670;&nbsp;</a></span>arm_q7_to_f64()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_q7_to_f64 </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="arm__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *&#160;</td>
+          <td class="paramname"><em>pSrc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *&#160;</td>
+          <td class="paramname"><em>pDst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>blockSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pSrc</td><td>points to the Q7 input vector </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pDst</td><td>points to the 64 bit floating-point output vector </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">blockSize</td><td>number of samples in each vector </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>none</dd></dl>
+<dl class="section user"><dt>Details</dt><dd>The equation used for the conversion process is: <pre>
+     pDst[n] = (float64_t) pSrc[n] / 128;   0 &lt;= n &lt; blockSize.
+ </pre> </dd></dl>
+
+</div>
+</div>
 <a id="ga840d8a0e8499d02a54f459bb29f5d63c" name="ga840d8a0e8499d02a54f459bb29f5d63c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga840d8a0e8499d02a54f459bb29f5d63c">&#9670;&nbsp;</a></span>arm_q7_to_float()</h2>
 

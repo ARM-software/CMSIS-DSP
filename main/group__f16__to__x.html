@@ -128,6 +128,9 @@ $(document).ready(function(){initNavTree('group__f16__to__x.html',''); initResiz
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:ga65602866bb11a307a8e97dbb6047c38e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__f16__to__x.html#ga65602866bb11a307a8e97dbb6047c38e">arm_f16_to_f64</a> (const float16_t *pSrc, <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *pDst, uint32_t <a class="el" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>)</td></tr>
+<tr class="memdesc:ga65602866bb11a307a8e97dbb6047c38e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the elements of the f16 vector to f64 vector.  <a href="group__f16__to__x.html#ga65602866bb11a307a8e97dbb6047c38e">More...</a><br /></td></tr>
+<tr class="separator:ga65602866bb11a307a8e97dbb6047c38e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga809b0be376f5cbfe044239cefe36d246"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__f16__to__x.html#ga809b0be376f5cbfe044239cefe36d246">arm_f16_to_float</a> (const float16_t *pSrc, <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pDst, uint32_t <a class="el" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>)</td></tr>
 <tr class="memdesc:ga809b0be376f5cbfe044239cefe36d246"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the elements of the f16 vector to f32 vector.  <a href="group__f16__to__x.html#ga809b0be376f5cbfe044239cefe36d246">More...</a><br /></td></tr>
 <tr class="separator:ga809b0be376f5cbfe044239cefe36d246"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -137,6 +140,50 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="ga65602866bb11a307a8e97dbb6047c38e" name="ga65602866bb11a307a8e97dbb6047c38e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga65602866bb11a307a8e97dbb6047c38e">&#9670;&nbsp;</a></span>arm_f16_to_f64()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_f16_to_f64 </td>
+          <td>(</td>
+          <td class="paramtype">const float16_t *&#160;</td>
+          <td class="paramname"><em>pSrc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *&#160;</td>
+          <td class="paramname"><em>pDst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>blockSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Converts the elements of the 16 bit floating-point vector to 64 bit floating-point vector.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pSrc</td><td>points to the f16 input vector </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pDst</td><td>points to the f64 output vector </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">blockSize</td><td>number of samples in each vector </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
+
+</div>
+</div>
 <a id="ga809b0be376f5cbfe044239cefe36d246" name="ga809b0be376f5cbfe044239cefe36d246"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga809b0be376f5cbfe044239cefe36d246">&#9670;&nbsp;</a></span>arm_f16_to_float()</h2>
 

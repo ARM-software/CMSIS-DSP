@@ -5,6 +5,7 @@ var group__groupSupport =
     [ "Vector sorting algorithms", "group__Sorting.html", "group__Sorting" ],
     [ "Vector Copy", "group__copy.html", "group__copy" ],
     [ "Convert 16-bit floating point value", "group__f16__to__x.html", "group__f16__to__x" ],
+    [ "Convert 64-bit floating point value", "group__f64__to__x.html", "group__f64__to__x" ],
     [ "Vector Fill", "group__Fill.html", "group__Fill" ],
     [ "Convert 32-bit floating point value", "group__float__to__x.html", "group__float__to__x" ],
     [ "Convert 16-bit fixed point value", "group__q15__to__x.html", "group__q15__to__x" ],

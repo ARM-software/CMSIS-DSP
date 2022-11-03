@@ -21,12 +21,13 @@ var searchData=
   ['convert_2016_2dbit_20floating_20point_20value_18',['Convert 16-bit floating point value',['../group__f16__to__x.html',1,'']]],
   ['convert_2032_2dbit_20fixed_20point_20value_19',['Convert 32-bit fixed point value',['../group__q31__to__x.html',1,'']]],
   ['convert_2032_2dbit_20floating_20point_20value_20',['Convert 32-bit floating point value',['../group__float__to__x.html',1,'']]],
-  ['convert_208_2dbit_20fixed_20point_20value_21',['Convert 8-bit fixed point value',['../group__q7__to__x.html',1,'']]],
-  ['convolution_22',['Convolution',['../group__Conv.html',1,'']]],
-  ['convolution_20example_23',['Convolution Example',['../group__ConvolutionExample.html',1,'']]],
-  ['correlation_24',['Correlation',['../group__Corr.html',1,'']]],
-  ['correlation_20distance_25',['Correlation distance',['../group__Correlation.html',1,'']]],
-  ['cosine_26',['Cosine',['../group__cos.html',1,'']]],
-  ['cosine_20distance_27',['Cosine distance',['../group__CosineDist.html',1,'']]],
-  ['cubic_20spline_20interpolation_28',['Cubic Spline Interpolation',['../group__SplineInterpolate.html',1,'']]]
+  ['convert_2064_2dbit_20floating_20point_20value_21',['Convert 64-bit floating point value',['../group__f64__to__x.html',1,'']]],
+  ['convert_208_2dbit_20fixed_20point_20value_22',['Convert 8-bit fixed point value',['../group__q7__to__x.html',1,'']]],
+  ['convolution_23',['Convolution',['../group__Conv.html',1,'']]],
+  ['convolution_20example_24',['Convolution Example',['../group__ConvolutionExample.html',1,'']]],
+  ['correlation_25',['Correlation',['../group__Corr.html',1,'']]],
+  ['correlation_20distance_26',['Correlation distance',['../group__Correlation.html',1,'']]],
+  ['cosine_27',['Cosine',['../group__cos.html',1,'']]],
+  ['cosine_20distance_28',['Cosine distance',['../group__CosineDist.html',1,'']]],
+  ['cubic_20spline_20interpolation_29',['Cubic Spline Interpolation',['../group__SplineInterpolate.html',1,'']]]
 ];
