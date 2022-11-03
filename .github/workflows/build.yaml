@@ -38,8 +38,8 @@ jobs:
 
       - name: Install doxygen 1.9.2
         run: |
-          wget https://sourceforge.net/projects/doxygen/files/rel-1.9.2/doxygen-1.9.2.linux.bin.tar.gz/download
-          sudo tar -C /opt -xf doxygen-1.9.2.linux.bin.tar.gz
+          wget -O doxygen.tgz https://sourceforge.net/projects/doxygen/files/rel-1.9.2/doxygen-1.9.2.linux.bin.tar.gz/download
+          sudo tar -C /opt -xf doxygen.tgz
           sudo ln -s /opt/doxygen-1.9.2/bin/doxygen /usr/local/bin/
           which doxygen
           doxygen --version
