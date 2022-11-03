@@ -878,7 +878,7 @@ cmsis_arm_barycenter_f32(PyObject *obj, PyObject *args)
   float32_t *pDst=NULL; // output
   uint32_t nbVectors,vecDim;
 
-  if (PyArg_ParseTuple(args,"OOkk",&pSrcA,&pSrcB,&nbVectors,&vecDim))
+  if (PyArg_ParseTuple(args,"OOII",&pSrcA,&pSrcB,&nbVectors,&vecDim))
   {
     GETARGUMENT(pSrcA,NPY_DOUBLE,double,float32_t);
     GETARGUMENT(pSrcB,NPY_DOUBLE,double,float32_t);
