@@ -24,7 +24,7 @@ using namespace std;
 // Reference patterns are ignored in this case.
 #include "TestDrive.h"
 
-extern "C" void testmain_hook      (void) __attribute__ ((weak));
+extern "C" void testmain_hook(void) __attribute__ ((weak));
 
 void testmain_hook(void)
 {

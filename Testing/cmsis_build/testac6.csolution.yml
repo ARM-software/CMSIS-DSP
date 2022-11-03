@@ -2,10 +2,20 @@ solution:
   compiler: AC6
   misc:
     - C:
+      - -Wsign-compare 
+      - -Wdouble-promotion 
+      - -DNDEBUG 
+      - -Wall 
+      - -Wextra  
+      - -Werror
       - -std=c11 
       - -Ofast 
       - -ffast-math
     - CPP:
+      - -fno-rtti 
+      - -DNDEBUG 
+      - -Wall 
+      - -Wextra  
       - -std=c++11 
       - -Ofast 
       - -ffast-math

@@ -34,7 +34,7 @@ template<typename IN,int windowSize, int overlap>
 class OverlapAdd: public GenericNode<IN,windowSize,IN,windowSize-overlap>
 {
 public:
-    OverlapAdd(FIFOBase<IN> &src,FIFOBase<IN> &dst):GenericNode<IN,windowSize,IN,overlap>(src,dst)
+    OverlapAdd(FIFOBase<IN> &src,FIFOBase<IN> &dst):GenericNode<IN,windowSize,IN,windowSize-overlap>(src,dst)
     {
         static_assert((windowSize-overlap)>0, "Overlap is too big");
         memory.resize(overlap);

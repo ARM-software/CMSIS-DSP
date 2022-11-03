@@ -1,7 +1,7 @@
 ECHO OFF
 ECHO "Gen Test"
 cd .. 
-python processTests.py -f Output.pickle -e SupportBarTestsF32
+python processTests.py -f Output.pickle -e StatsTests
 cd cmsis_build 
 
 ECHO "Build"

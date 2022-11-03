@@ -58,7 +58,6 @@ void arm_absmax_no_idx_q15(
     q15_t   const *pSrcVec;
     uint16x8_t    curExtremValVec = vdupq_n_u16(Q15_ABSMIN);
     uint16_t           maxValue = Q15_ABSMIN;
-    mve_pred16_t    p0;
 
 
     pSrcVec = (q15_t const *) pSrc;
