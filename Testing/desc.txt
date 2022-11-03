@@ -359,6 +359,9 @@ group Root {
                 Test nb=4n+1 arm_mse_q31:test_mse_q31
                 Test long    arm_mse_q31:test_mse_q31
 
+                Test saturation  arm_absmax_no_idx_q31:test_absmax_no_idx_q31
+                Test saturation  arm_absmax_q31:test_absmax_q31
+
               }
 
            }
@@ -452,6 +455,9 @@ group Root {
                 Test nb=8n   arm_mse_q15:test_mse_q15
                 Test nb=8n+1 arm_mse_q15:test_mse_q15
                 Test long    arm_mse_q15:test_mse_q15
+
+                Test saturation  arm_absmax_no_idx_q15:test_absmax_no_idx_q15
+                Test saturation  arm_absmax_q15:test_absmax_q15
 
               }
 
@@ -547,6 +553,9 @@ group Root {
                 Test nb=16n   arm_mse_q7:test_mse_q7
                 Test nb=16n+1 arm_mse_q7:test_mse_q7
                 Test long     arm_mse_q7:test_mse_q7
+
+                Test saturation  arm_absmax_no_idx_q7:test_absmax_no_idx_q7
+                Test saturation  arm_absmax_q7:test_absmax_q7
 
               }
 

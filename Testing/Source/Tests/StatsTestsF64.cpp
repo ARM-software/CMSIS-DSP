@@ -4,14 +4,14 @@
 #include "Test.h"
 
 
-#define SNR_THRESHOLD 303
+#define SNR_THRESHOLD 300
 /* 
 
 Reference patterns are generated with
 a double precision computation.
 
 */
-#define REL_ERROR (2.0e-15)
+#define REL_ERROR (4.0e-15)
 
     void StatsTestsF64::test_max_f64()
     {

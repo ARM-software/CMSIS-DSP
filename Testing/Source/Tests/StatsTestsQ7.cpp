@@ -764,7 +764,10 @@ But the tests are kept for when they will be available.
                output.create(1,StatsTestsQ7::OUT_Q7_ID,mgr);
                index.create(1,StatsTestsQ7::OUT_S16_ID,mgr);
 
-               refOffset = 3;
+               // Because pattern is containing
+               // another test for saturation but which
+               // is only used for absmax_no_idx
+               refOffset = 4;
             }
             break;
 
@@ -977,6 +980,34 @@ But the tests are kept for when they will be available.
                refOffset = 3;
             }
             break;
+
+            case StatsTestsQ7::TEST_ABSMAX_NO_IDX_Q7_39:
+            {
+               inputA.reload(StatsTestsQ7::INPUTNEW1_Q7_ID,mgr);
+              
+               ref.reload(StatsTestsQ7::ABSMAXVALS_Q7_ID,mgr);
+               
+               output.create(1,StatsTestsQ7::OUT_Q7_ID,mgr);
+
+               refOffset = 3;
+            }
+            break;
+
+            case StatsTestsQ7::TEST_ABSMAX_Q7_40:
+            {
+               inputA.reload(StatsTestsQ7::INPUTNEW1_Q7_ID,mgr);
+              
+               maxIndexes.reload(StatsTestsQ7::ABSMAXINDEXES_S16_ID,mgr);
+               ref.reload(StatsTestsQ7::ABSMAXVALS_Q7_ID,mgr);
+               
+               output.create(1,StatsTestsQ7::OUT_Q7_ID,mgr);
+               index.create(1,StatsTestsQ7::OUT_S16_ID,mgr);
+
+               refOffset = 3;
+            }
+            break;
+
+
           
         }
         

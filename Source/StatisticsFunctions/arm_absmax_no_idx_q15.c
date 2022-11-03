@@ -53,50 +53,35 @@ void arm_absmax_no_idx_q15(
         uint32_t blockSize,
         q15_t * pResult)
 {
-    uint16_t        blkCnt;           /* loop counters */
+    int32_t        blkCnt;           /* loop counters */
     q15x8_t       vecSrc;
     q15_t   const *pSrcVec;
-    uint16x8_t    curExtremValVec = vdupq_n_s16(Q15_ABSMIN);
-    q15_t           maxValue = Q15_ABSMIN;
+    uint16x8_t    curExtremValVec = vdupq_n_u16(Q15_ABSMIN);
+    uint16_t           maxValue = Q15_ABSMIN;
     mve_pred16_t    p0;
 
 
     pSrcVec = (q15_t const *) pSrc;
-    blkCnt = blockSize >> 3;
-    while (blkCnt > 0U)
+    blkCnt = blockSize;
+    while (blkCnt > 0)
     {
-        vecSrc = vld1q(pSrcVec); 
+        mve_pred16_t    p = vctp16q(blkCnt);
+        vecSrc = vld1q_z_s16(pSrcVec,p); 
         pSrcVec += 8;
         /*
          * update per-lane max.
          */
-        curExtremValVec = vmaxaq(curExtremValVec, vecSrc);
+        curExtremValVec = vmaxaq_m(curExtremValVec, vecSrc,p);
         /*
          * Decrement the blockSize loop counter
          */
-        blkCnt--;
-    }
-    /*
-     * tail
-     * (will be merged thru tail predication)
-     */
-    blkCnt = blockSize & 7;
-    if (blkCnt > 0U)
-    {
-        vecSrc = vld1q(pSrcVec); 
-        pSrcVec += 8;
-        p0 = vctp16q(blkCnt);
-        /*
-         * Get current max per lane and current index per lane
-         * when a max is selected
-         */
-         curExtremValVec = vmaxaq_m(curExtremValVec, vecSrc, p0);
+        blkCnt -= 8;
     }
     /*
      * Get max value across the vector
      */
-    maxValue = vmaxavq(maxValue, (q15x8_t)curExtremValVec);
-    *pResult = maxValue;
+    maxValue = vmaxvq(maxValue, curExtremValVec);
+    *pResult = __USAT(maxValue, 15);
 }
 
 #else

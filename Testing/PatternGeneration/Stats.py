@@ -273,8 +273,15 @@ def generateMaxAbsTests(config,nb,format,data):
     indexes.append(index)
     maxvals.append(maxvalue)
 
+    if format == Tools.Q7 or format == Tools.Q15 or format == Tools.Q31:
+       index=np.argmax(data)
+       maxvalue=data[index]
+   
+       indexes.append(index)
+       maxvals.append(maxvalue)
+
     if format == 7:
-      # Force max at position 280
+      # Force max at position 280 with a new test
   
       nbiters = 280
   
@@ -291,8 +298,10 @@ def generateMaxAbsTests(config,nb,format,data):
 
       config.writeInput(nb, data,"InputAbsMaxIndexMax")
 
+
     config.writeReference(nb, maxvals,"AbsMaxVals")
     config.writeInputS16(nb, indexes,"AbsMaxIndexes")
+    
     return(nb+1)
 
 def generateMinAbsTests(config,nb,format,data):
@@ -484,6 +493,17 @@ def writeNewsTests(config,nb,format):
     data2=np.random.randn(NBSAMPLES)
     data2 = Tools.normalize(data2)
 
+    # Add max negative value
+    # to test saturation
+    if format == Tools.Q7:
+        data1 = np.hstack((data1,np.array([-1.0])))
+        
+    if format == Tools.Q15:
+        data1 = np.hstack((data1,np.array([-1.0])))
+
+    if format == Tools.Q31:
+        data1 = np.hstack((data1,np.array([-1.0])))
+     
     config.writeInput(1, data1,"InputNew")
 
     nb=generateMaxAbsTests(config,nb,format,data1)

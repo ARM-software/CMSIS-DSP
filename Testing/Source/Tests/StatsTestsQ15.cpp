@@ -887,6 +887,32 @@ a double precision computation.
             }
             break;
 
+            case StatsTestsQ15::TEST_ABSMAX_NO_IDX_Q15_44:
+            {
+               inputA.reload(StatsTestsQ15::INPUTNEW1_Q15_ID,mgr);
+              
+               ref.reload(StatsTestsQ15::ABSMAXVALS_Q15_ID,mgr);
+               
+               output.create(1,StatsTestsQ15::OUT_Q15_ID,mgr);
+
+               refOffset = 3;
+            }
+            break;
+
+            case StatsTestsQ15::TEST_ABSMAX_Q15_45:
+            {
+               inputA.reload(StatsTestsQ15::INPUTNEW1_Q15_ID,mgr);
+              
+               maxIndexes.reload(StatsTestsQ15::ABSMAXINDEXES_S16_ID,mgr);
+               ref.reload(StatsTestsQ15::ABSMAXVALS_Q15_ID,mgr);
+               
+               output.create(1,StatsTestsQ15::OUT_Q15_ID,mgr);
+               index.create(1,StatsTestsQ15::OUT_S16_ID,mgr);
+
+               refOffset = 3;
+            }
+            break;
+
           
         }
         

@@ -40,6 +40,7 @@ a double precision computation.
         outp[0] = result;
         ind[0] = indexval;
 
+
         ASSERT_EQ(result,refp[this->refOffset]);
         ASSERT_EQ((int16_t)indexval,refind[this->refOffset]);
 
@@ -65,6 +66,7 @@ a double precision computation.
 
         outp[0] = result;
         ind[0] = indexval;
+
 
         ASSERT_EQ(result,refp[this->refOffset]);
         ASSERT_EQ((int16_t)indexval,refind[this->refOffset]);
@@ -887,6 +889,32 @@ a double precision computation.
             }
             break;
 
+            case StatsTestsQ31::TEST_ABSMAX_NO_IDX_Q31_44:
+            {
+               inputA.reload(StatsTestsQ31::INPUTNEW1_Q31_ID,mgr);
+              
+               ref.reload(StatsTestsQ31::ABSMAXVALS_Q31_ID,mgr);
+               
+               output.create(1,StatsTestsQ31::OUT_Q31_ID,mgr);
+
+               refOffset = 3;
+            }
+            break;
+
+            case StatsTestsQ31::TEST_ABSMAX_Q31_45:
+            {
+               inputA.reload(StatsTestsQ31::INPUTNEW1_Q31_ID,mgr);
+              
+               maxIndexes.reload(StatsTestsQ31::ABSMAXINDEXES_S16_ID,mgr);
+               ref.reload(StatsTestsQ31::ABSMAXVALS_Q31_ID,mgr);
+               
+               output.create(1,StatsTestsQ31::OUT_Q31_ID,mgr);
+               index.create(1,StatsTestsQ31::OUT_S16_ID,mgr);
+
+               refOffset = 3;
+            }
+            break;
+
           
         }
         
@@ -895,22 +923,4 @@ a double precision computation.
     void StatsTestsQ31::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
       (void)id;
-      switch(id)
-      {
-            case StatsTestsQ31::TEST_MAX_Q31_1:
-            case StatsTestsQ31::TEST_MAX_Q31_2:
-            case StatsTestsQ31::TEST_MAX_Q31_3:
-              index.dump(mgr);
-              output.dump(mgr);
-            break;
-
-            case TEST_POWER_Q31_10:
-            case TEST_POWER_Q31_11:
-            case TEST_POWER_Q31_12:
-              outputPower.dump(mgr);
-            break;
-
-            default:
-              output.dump(mgr);
-      }
     }

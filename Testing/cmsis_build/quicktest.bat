@@ -1,8 +1,9 @@
 ECHO OFF
 ECHO "Gen Test"
 cd .. 
-python processTests.py -f Output.pickle -e MISC
+python processTests.py -f Output.pickle -e StatsTests
 cd cmsis_build 
+
 ECHO "Build"
 cbuild "test.Release+VHT-Corstone-300.cprj" 
 ECHO "Run"
