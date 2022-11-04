@@ -28,6 +28,8 @@
 
 #include "dsp/support_functions_f16.h"
 
+#if defined(ARM_FLOAT16_SUPPORTED)
+
 /**
   @ingroup groupSupport
  */
@@ -78,3 +80,4 @@ void arm_f64_to_f16(
   @} end of f64_to_x group
  */
 
+#endif /* #if defined(ARM_FLOAT16_SUPPORTED) */ 
