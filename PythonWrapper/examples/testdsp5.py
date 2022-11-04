@@ -90,7 +90,8 @@ a[11]=[0.262866, 0.809017, 0.425325]
 
 
 scaled= np.dot(a.T , w)
-ref=np.sum(scaled,axis=0)/np.sum(w)
+print(scaled)
+ref=scaled/np.sum(w)
 #print(ref)
 
 points = np.array(a).reshape(12*3)
@@ -100,9 +101,9 @@ weights = w.reshape(12)
 #print(weights)
 
 result=dsp.arm_barycenter_f32(points,weights,12,3)
-#print(result)
 
-assert_allclose(ref,result,1e-6)
+
+assert_allclose(ref,result,rtol=1e-6,atol=1e-6)
 
 print("Weighted sum")
 

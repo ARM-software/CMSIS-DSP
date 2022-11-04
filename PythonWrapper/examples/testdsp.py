@@ -266,17 +266,6 @@ resultR=Q15toF32(resultR)
 resultI = realToIm1D(resultR)*16
 print(resultI)
 
-nb = 128
-signal = np.cos(2 * np.pi * np.arange(nb) / nb)
-
-result=np.fft.fft(signal)
-print(result)
-cfftradix4f32=dsp.arm_cfft_radix4_instance_f32()
-rfftf32=dsp.arm_rfft_instance_f32()
-status=dsp.arm_rfft_init_f32(rfftf32,cfftradix4f32,nb,0,1)
-print(status)
-resultI = dsp.arm_rfft_f32(rfftf32,signal)
-print(result)
 
 nb = 128
 signal = np.cos(2 * np.pi * np.arange(nb) / nb)
@@ -310,16 +299,6 @@ nb2=64
 signal = np.cos(2 * np.pi * np.arange(nb) / nb)
 result=dct(signal,4,norm='ortho')
 print(result)
-
-cfftradix4f32=dsp.arm_cfft_radix4_instance_f32()
-rfftf32=dsp.arm_rfft_instance_f32()
-dct4f32=dsp.arm_dct4_instance_f32()
-status=dsp.arm_dct4_init_f32(dct4f32,rfftf32,cfftradix4f32,nb,nb2,0.125)
-print(status)
-state=np.zeros(2*nb)
-resultI = dsp.arm_dct4_f32(dct4f32,state,signal)
-print(resultI)
-
 
 signal = signal / 10.0
 result=dct(signal,4,norm='ortho')
