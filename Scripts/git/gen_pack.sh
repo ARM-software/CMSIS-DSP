@@ -113,9 +113,11 @@ PACK_BASE_FILES="
   ComputeGraph/cg/static/src/GenericNodes.h
   ComputeGraph/cg/static/nodes/cpp/CFFT.h
   ComputeGraph/cg/static/nodes/cpp/ICFFT.h
+  ComputeGraph/cg/static/nodes/cpp/InterleavedStereoToMono.h
   ComputeGraph/cg/static/nodes/cpp/MFCC.h
   ComputeGraph/cg/static/nodes/cpp/NullSink.h
-  ComputeGraph/cg/static/nodes/cpp/StereoToMono.h
+  ComputeGraph/cg/static/nodes/cpp/OverlapAndAdd.h
+  ComputeGraph/cg/static/nodes/cpp/SlidingBuffer.h
   ComputeGraph/cg/static/nodes/cpp/StreamingSink.h
   ComputeGraph/cg/static/nodes/cpp/StreamingSource.h
   ComputeGraph/cg/static/nodes/cpp/ToComplex.h
