@@ -2,9 +2,22 @@ solution:
   compiler: GCC
   misc:
     - C:
-      - -ffunction-sections -mfp16-format=ieee -fdata-sections -std=c11 -Ofast -ffast-math  -flax-vector-conversions
+      - -ffunction-sections 
+      - -mfp16-format=ieee 
+      - -fdata-sections 
+      - -std=c11 
+      - -Ofast 
+      - -ffast-math  
+      - -flax-vector-conversions
     - CPP:
-      - -ffunction-sections -mfp16-format=ieee -fdata-sections  -std=c++11 -Ofast -ffast-math  -flax-vector-conversions -Wno-unused-parameter
+      - -ffunction-sections 
+      - -mfp16-format=ieee 
+      - -fdata-sections  
+      - -std=c++11 
+      - -Ofast 
+      - -ffast-math  
+      - -flax-vector-conversions 
+      - -Wno-unused-parameter
     - ASM:
       - -masm=auto
     - Link:
@@ -35,7 +48,7 @@ solution:
     #- type: VHT-Corstone-310
     #  device: ARM::SSE-310-MPS3
 
-    - type: FVP_M55
+    - type: VHT_M55
       device: ARMCM55
       defines:
         - CORTEXM
@@ -70,38 +83,6 @@ solution:
       defines:
         - CORTEXM
       
-# ARMCA5, ARMCA7 and ARMCA9 are not configured
-# with Neon in the pack. 
-# And the standard .cmake in CMSIS Build tools
-# is not supporting Cortex-A yet.
-# Since the goal is to run the Neon code of CMSIS-DSP,
-# we have added Cortex-A support to the .cmake
-# and forced Neon support without taking into account
-# the FPU variable from the pack.
-# If you want to build those targets, you'll have to add
-# Cortex-A support to the .cmake of CMSIS Build tools
-# in the same way (forcing Neon)
-#
-# Also, the packs have an issue with the scatter file for gcc
-# with is categorized as "Other" instead of "linkerScript"
-# in CMSIS 5.9.0
-# You'll need a more recent version where the problem 
-# is solved
-    - type: FVP_A5Neon
-      device: ARMCA5
-      defines:
-        - CORTEXA
-          
-    - type: FVP_A7Neon
-      device: ARMCA7
-      defines:
-        - CORTEXA
-
-    - type: FVP_A9Neon
-      device: ARMCA9
-      defines:
-        - CORTEXA
-
   build-types:
     - type: Release
       optimize: max

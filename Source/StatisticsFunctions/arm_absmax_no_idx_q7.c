@@ -45,6 +45,7 @@
   @return        none
  */
 
+
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include <stdint.h>

@@ -16,7 +16,7 @@ a double precision computation.
 #define REL_ERROR_ACCUMULATE (7.0e-3)
 
 #define REL_KULLBACK_ERROR (5.0e-3)
-#define ABS_KULLBACK_ERROR (5.0e-3)
+#define ABS_KULLBACK_ERROR (1.0e-2)
 
     void StatsTestsF16::test_max_f16()
     {
@@ -820,7 +820,7 @@ a double precision computation.
 
             case StatsTestsF16::TEST_MAX_NO_IDX_F16_27:
             {
-               inputA.reload(StatsTestsF16::INPUT1_F16_ID,mgr,8);
+               inputA.reload(StatsTestsF16::INPUT1_F16_ID,mgr,16);
               
                ref.reload(StatsTestsF16::MAXVALS_F16_ID,mgr);
                
@@ -832,7 +832,7 @@ a double precision computation.
 
             case StatsTestsF16::TEST_MAX_NO_IDX_F16_28:
             {
-               inputA.reload(StatsTestsF16::INPUT1_F16_ID,mgr,11);
+               inputA.reload(StatsTestsF16::INPUT1_F16_ID,mgr,23);
               
                ref.reload(StatsTestsF16::MAXVALS_F16_ID,mgr);
                

@@ -121,12 +121,14 @@ class TextFormatter:
 
 # Return test result as a text tree
 class HTMLFormatter:
-      def __init__(self):
+      def __init__(self,append=False):
         self.nb=1
         self.suite=False
+        self.append = append
 
       def start(self):
-          print("<html><head><title>Test Results</title></head><body>") 
+          if not self.append:
+             print("<html><head><title>Test Results</title></head><body>") 
 
       def printGroup(self,elem,theId):
         if elem is None:
@@ -138,9 +140,13 @@ class HTMLFormatter:
            if elem.kind == TestScripts.Parser.TreeElem.GROUP:
               kind = "Group"
            if kind == "Group":
-              print("<h%d> %s (%d) </h%d>" % (self.nb,message,theId,self.nb)) 
+              if not self.append:
+                 print("<h%d> %s (%d) </h%d>" % (self.nb,message,theId,self.nb)) 
            else:
-              print("<h%d> %s (%d) </h%d>" % (self.nb,message,theId,self.nb)) 
+              if not self.append:
+                 print("<h%d> %s (%d) </h%d>" % (self.nb,message,theId,self.nb)) 
+              else:
+                 print("<h%d> %s (%d) </h%d>" % (3,message,theId,self.nb)) 
               self.suite=True
               print("<table style=\"width:100%\">")
               print("<tr>")
@@ -160,19 +166,23 @@ class HTMLFormatter:
              p="<font color=\"red\">FAILED</font>"
              if passed == 1:
                 p= "<font color=\"green\">PASSED</font>"
-             print("<tr>")
-             print("<td><pre>%s</pre></td>" % (message,))
-             print("<td>%d</td>" % theId)
-             print("<td>%s</td>" % p)
-             if params:
-                print("<td>%s</td>\n" % (params))
-             else:
-                print("<td></td>\n")
-             if (cycles > 0):
-                print("<td>%d</td>" % cycles)
-             else:
-                print("<td>NA</td>")
-             print("</tr>")
+             # Green status is not displayed when
+             # generating the full summary in append mode
+             # In summary mode, only errors are displayed
+             if passed != 1 or not self.append:
+                print("<tr>")
+                print("<td><pre>%s</pre></td>" % (message,))
+                print("<td>%d</td>" % theId)
+                print("<td>%s</td>" % p)
+                if params:
+                   print("<td>%s</td>\n" % (params))
+                else:
+                   print("<td></td>\n")
+                if (cycles > 0):
+                   print("<td>%d</td>" % cycles)
+                else:
+                   print("<td>NA</td>")
+                print("</tr>")
 
              if passed != 1:
 
@@ -187,7 +197,8 @@ class HTMLFormatter:
           self.suite=False
 
       def end(self):
-        print("</body></html>")
+        if not self.append:
+           print("</body></html>")
 
 # Return test result as a CSV
 class CSVFormatter:
@@ -539,6 +550,8 @@ def analyze(root,results,args,trace):
      analyseResult(resultPath,root,results,args.e,args.b,trace,CSVFormatter())
   elif args.html:
      analyseResult(resultPath,root,results,args.e,args.b,trace,HTMLFormatter())
+  elif args.ahtml:
+     analyseResult(resultPath,root,results,args.e,args.b,trace,HTMLFormatter(append=True))
   elif args.m:
      analyseResult(resultPath,root,results,args.e,args.b,trace,MathematicaFormatter())
   else:
@@ -556,6 +569,8 @@ parser.add_argument('-f', nargs='?',type = str, default="Output.pickle", help="T
 parser.add_argument('-r', nargs='?',type = str, default=None, help="Result file path")
 parser.add_argument('-c', action='store_true', help="CSV output")
 parser.add_argument('-html', action='store_true', help="HTML output")
+parser.add_argument('-ahtml', action='store_true', help="Partial HTML output")
+
 parser.add_argument('-e', action='store_true', help="Embedded test")
 # -o needed when -e is true to know where to extract the output files
 parser.add_argument('-o', nargs='?',type = str, default="Output", help="Output dir path")
