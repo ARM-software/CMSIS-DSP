@@ -47,7 +47,7 @@
 #define TOTAL_S_DDR4_SIZE         (0x10000000) /* 256 MB */
 
 /* Heap and Stack sizes for secure and nonsecure applications */
-#define HEAP_SIZE                 (0x00100000) /* 1 KiB */
+#define HEAP_SIZE                 (0x00020000) /* 1 KiB */
 #define STACK_SIZE                (0x00002000) /* 1 KiB */
 
 #endif /* __REGION_LIMITS_H__ */

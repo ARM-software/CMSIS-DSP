@@ -35,6 +35,7 @@
 
 #include "dsp/basic_math_functions.h"
 
+#include <math.h>
 
 #ifdef   __cplusplus
 extern "C"
@@ -251,6 +252,16 @@ __STATIC_FORCEINLINE arm_status arm_sqrt_f32(
       *pOut = sqrtf(in);
   #endif
 
+#elif defined ( __ARMCC_VERSION ) && ( __ARMCC_VERSION >= 6010050 )
+      *pOut = _sqrtf(in);
+#elif defined(__GNUC_PYTHON__)
+      *pOut = sqrtf(in);
+#elif defined ( __GNUC__ )
+  #if defined (__VFP_FP__) && !defined(__SOFTFP__)
+      __ASM("VSQRT.F32 %0,%1" : "=t"(*pOut) : "t"(in));
+  #else
+      *pOut = sqrtf(in);
+  #endif
 #else
       *pOut = sqrtf(in);
 #endif

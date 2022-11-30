@@ -7,9 +7,14 @@ import colorama
 from colorama import init,Fore, Back, Style
 
 parser = argparse.ArgumentParser(description='Parse test description')
-parser.add_argument('-avh', nargs='?',type = str, default="C:/Keil_v5/ARM/VHT_11.18.29", help="AVH folder")
+parser.add_argument('-avh', nargs='?',type = str, default="C:/Keil_v5/ARM/VHT", help="AVH folder")
+parser.add_argument('-d', action='store_true', help="Debug log")
+
 args = parser.parse_args()
 
+DEBUG=False 
+if args.d:
+    DEBUG=True
 
 init()
 
@@ -66,7 +71,10 @@ class Result:
 # disable the dump of stderr
 def run(*args,mustPrint=False,dumpStdErr=True):
     global ERROR_OCCURED
+    global DEBUG
     try:
+        if DEBUG:
+            print(" ".join(args))
         result=subprocess.run(args,text=True,capture_output=True,timeout=600)
         if result.returncode !=0 :
              ERROR_OCCURED = True
@@ -79,6 +87,7 @@ def run(*args,mustPrint=False,dumpStdErr=True):
             print(result.stdout)
         return(Result(result.stdout))
     except Exception as e:
+        printError("Exception occured")
         ERROR_OCCURED = True
         return(Result(str(e),error=True))
 
@@ -148,6 +157,13 @@ for t in tests:
 # Test suite and output pickle needed to decode the result
 #print(allSuites)
 
+allSuites=[("ComplexTestsF32","../Output.pickle"),
+("DistanceTestsF32","../Output.pickle"),
+("UnaryTestsF32","../Output.pickle"),
+("QuaternionTestsF32","../Output.pickle"),
+("StatsTestsF32","../Output.pickle")
+]
+
 #allSuites=[("BasicTestsF32","../Output.pickle"),
 #("BasicTestsQ31","../Output.pickle")]
 
@@ -160,24 +176,25 @@ for t in tests:
 # and the configuration file
 solutions={
     'testac6.csolution.yml':[
-      ("VHT-Corstone-310","CS310"),
+    #  ("VHT-Corstone-310","CS310"),
       ("VHT-Corstone-300","CS300"),
-      #("VHT_M33","M33_DSP_FP"),
+    #  #("VHT_M33","M33_DSP_FP"),
       ("VHT_M7","M7DP"),
       ("VHT_M7_UNROLLED","M7DP"),
-      #("VHT_M4","M4FP"),
-      #("VHT_M3","M3"),
-      #("VHT_M23","M23"),
+    #  #("VHT_M4","M4FP"),
+    #  #("VHT_M3","M3"),
+    #  #("VHT_M23","M23"),
       ("VHT_M0P","M0plus")
     ],
     'testgcc.csolution.yml':[
+      #("VHT-Corstone-310","CS310"),
       ("VHT_M55","M55"),
-      #("VHT_M33","M33_DSP_FP"),
+      ##("VHT_M33","M33_DSP_FP"),
       ("VHT_M7","M7DP"),
       ("VHT_M7_UNROLLED","M7DP"),
-      #("VHT_M4","M4FP"),
-      #("VHT_M3","M3"),
-      #("VHT_M23","M23"),
+      ##("VHT_M4","M4FP"),
+      ##("VHT_M3","M3"),
+      ##("VHT_M23","M23"),
       ("VHT_M0P","M0plus")
     ]
 }
@@ -199,7 +216,13 @@ with open("summary.html","w") as f:
     print(HTMLHEADER,file=f)
     for s in solutions:
         printTitle("Process solution %s" % s)
-        run("csolution","convert","-s",s)
+        res=run("csolution","convert","-s",s)
+        if res.error:
+            printError("Error csolution")
+            print("<p><font color=\"red\">Error converting csolution %s</font></p><PRE>" % s,file=f)
+            print(res.msg,file=f)
+            print("</PRE>",file=f)
+            continue
         print("<h1>Solution %s</h1>" % s,file=f)
         maxNbBuilds=len(solutions[s])
         buildNb=0

@@ -5,6 +5,9 @@ layer:
   
 
   components:
+    - component: DMA350
+      for-type: 
+        - +VHT-Corstone-310
     - component: Device:Startup&C Startup
       not-for-type: 
         - +VHT-Corstone-300 
@@ -34,6 +37,9 @@ layer:
     - component: ARM::Device:Startup&Baremetal
       for-type: 
         - +VHT-Corstone-300 
+        - +VHT-Corstone-310
+    - component: ARM::Native Driver:DMA350 Remap
+      for-type: 
         - +VHT-Corstone-310
     - component: ARM::Native Driver:Timeout
       for-type: 

@@ -1,5 +1,5 @@
 solution:
-  compiler: GCC
+  compiler: GCC@12.2.0
   misc:
     - C:
       - -ffunction-sections 
@@ -37,16 +37,18 @@ solution:
   packs:
     - pack: ARM::CMSIS@5.9.0
     - pack: ARM::V2M_MPS3_SSE_300_BSP@1.3.0
-    - pack: ARM::V2M_MPS3_SSE_310_BSP@1.0.0
+    - pack: ARM::V2M_MPS3_SSE_310_BSP@1.1.0
     - pack: Keil::ARM_Compiler@1.7.2
+    - pack: ARM::DMA350@1.0.0
 
   target-types:
-# There is not yet any gcc support in the pack
-# for Corstone.
-# V2M_MPS3_SSE_300_BSP@1.3.0
-# ARM::V2M_MPS3_SSE_310_BSP@1.0.0
-    #- type: VHT-Corstone-310
-    #  device: ARM::SSE-310-MPS3
+# There is no   gcc support in the pack
+# for Corstone CS300.
+
+    - type: VHT-Corstone-310
+      device: ARM::SSE-310-MPS3
+      defines:
+        - CORTEXM
 
     - type: VHT_M55
       device: ARMCM55
