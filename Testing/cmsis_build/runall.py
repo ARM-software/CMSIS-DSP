@@ -9,6 +9,7 @@ from colorama import init,Fore, Back, Style
 parser = argparse.ArgumentParser(description='Parse test description')
 parser.add_argument('-avh', nargs='?',type = str, default="C:/Keil_v5/ARM/VHT", help="AVH folder")
 parser.add_argument('-d', action='store_true', help="Debug log")
+parser.add_argument('-n', action='store_true', help="No force rebuild")
 
 args = parser.parse_args()
 
@@ -157,15 +158,15 @@ for t in tests:
 # Test suite and output pickle needed to decode the result
 #print(allSuites)
 
-allSuites=[("ComplexTestsF32","../Output.pickle"),
-("DistanceTestsF32","../Output.pickle"),
-("UnaryTestsF32","../Output.pickle"),
-("QuaternionTestsF32","../Output.pickle"),
-("StatsTestsF32","../Output.pickle")
-]
+#allSuites=[("ComplexTestsF32","../Output.pickle"),
+#("DistanceTestsF32","../Output.pickle"),
+#("UnaryTestsF32","../Output.pickle"),
+#("QuaternionTestsF32","../Output.pickle"),
+#("StatsTestsF32","../Output.pickle")
+#]
 
-#allSuites=[("BasicTestsF32","../Output.pickle"),
-#("BasicTestsQ31","../Output.pickle")]
+allSuites=[("WindowTestsF32","../Output.pickle"),
+("WindowTestsF64","../Output.pickle")]
 
 #allSuites=[("StatsTestsQ7","../Output.pickle")]
 
@@ -188,7 +189,7 @@ solutions={
     ],
     'testgcc.csolution.yml':[
       #("VHT-Corstone-310","CS310"),
-      ("VHT_M55","M55"),
+      #("VHT_M55","M55"),
       ##("VHT_M33","M33_DSP_FP"),
       ("VHT_M7","M7DP"),
       ("VHT_M7_UNROLLED","M7DP"),
@@ -198,6 +199,7 @@ solutions={
       ("VHT_M0P","M0plus")
     ]
 }
+
 
 HTMLHEADER="""<html>
 <header>
@@ -249,7 +251,10 @@ with open("summary.html","w") as f:
                    # between different solutions
                    # (Like one using AC6 and the other
                    # using gcc)
-                   res=run("cbuild","-r",buildFile)
+                   if args.n:
+                      res=run("cbuild",buildFile)
+                   else:
+                      res=run("cbuild","-r",buildFile)
                 else:
                    res=run("cbuild",buildFile)
                 if res.error:

@@ -119,6 +119,8 @@ project:
         - file: ../Source/Tests/UnaryTestsQ7.cpp
         - file: ../Source/Tests/UnaryTestsQ15.cpp
         - file: ../Source/Tests/UnaryTestsQ31.cpp
+        - file: ../Source/Tests/WindowTestsF32.cpp
+        - file: ../Source/Tests/WindowTestsF64.cpp
 
   # A CMSIS-DSP Layer is used to be able to build
   # and test with the current source version

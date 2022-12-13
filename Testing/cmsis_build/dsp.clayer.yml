@@ -39,4 +39,4 @@ layer:
         - file: ../../Source/TransformFunctions/TransformFunctions.c
         - file: ../../Source/TransformFunctions/TransformFunctionsF16.c
         - file: ../../Source/ControllerFunctions/ControllerFunctions.c
-     
+        - file: ../../Source/WindowFunctions/WindowFunctions.c

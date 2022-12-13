@@ -14,16 +14,17 @@ from cmsisdsp_fastmath import *
 from cmsisdsp_distance import *
 from cmsisdsp_bayes import *
 from cmsisdsp_svm import *
+from cmsisdsp_window import *
 
 
 __version__ = cmsisdsp.version.__version__
 
 # CMSIS-DSP Version used to build the wrapper
-cmsis_dsp_version="1.14.2"
+cmsis_dsp_version="1.15.0"
 
 
 # CMSIS-DSP Commit hash used to build the wrapper
-commit_hash="0705c6756809e0dac25ac2986f455c2088dad5c2"
+commit_hash="4c2501f71b9e021ea1f914df865890f16d539172"
 
 # True if development version of CMSIS-DSP used
 # (So several CMSIS-DSP versions may have same version number hence the commit hash)

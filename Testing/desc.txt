@@ -4787,199 +4787,120 @@ group Root {
 
             }
         }
-    }
 
-    group NN Tests {
-       class = NNTests
-       folder = NN
+        group Window Tests {
+           class = WindowTests
+           folder = Window
 
-       suite Fully Connected {
-         class = FullyConnected 
-         folder = FullyConnected
+           suite Window Tests F32 {
+              class = WindowTestsF32 
+              folder = WindowF32 
 
-         // TestCase_[nbBatches]_[colDim]_[rowDim]_xxx_[testNb].txt
-         // 1
-         Pattern INPUT1_S8_ID : TestCase_1_10_4_input_1.txt
-         Pattern BIAS1_S8_ID : TestCase_1_10_4_bias_1.txt
-         Pattern WEIGHT1_S8_ID : TestCase_1_10_4_weights_1.txt
-         Pattern REF1_S8_ID : TestCase_1_10_4_output_1.txt
+              
+              Pattern REF1_WELCH_F32_ID : RefWelch_1_f32.txt
+              Pattern REF2_BARTLETT_F32_ID : RefBartlett_2_f32.txt
+              Pattern REF3_HAMMING_F32_ID : RefHamming_3_f32.txt
+              Pattern REF4_HANNING_F32_ID : RefHanning_4_f32.txt
+              Pattern REF5_NUTTALL3_F32_ID : RefNuttall3_5_f32.txt
+              Pattern REF6_NUTTALL4_F32_ID : RefNuttall4_6_f32.txt
+              Pattern REF7_NUTTALL3A_F32_ID : RefNuttall3a_7_f32.txt
+              Pattern REF8_NUTTALL3B_F32_ID : RefNuttall3b_8_f32.txt
+              Pattern REF9_NUTTALL4A_F32_ID : RefNuttall4a_9_f32.txt
+              Pattern REF10_BLACKMAN_HARRIS_92DB_F32_ID : RefBlackman_harris_92db_10_f32.txt
+              Pattern REF11_NUTTALL4B_F32_ID : RefNuttall4b_11_f32.txt
+              Pattern REF12_NUTTALL4C_F32_ID : RefNuttall4c_12_f32.txt
+              Pattern REF13_HFT90D_F32_ID : RefHft90d_13_f32.txt
+              Pattern REF14_HFT95_F32_ID : RefHft95_14_f32.txt
+              Pattern REF15_HFT116D_F32_ID : RefHft116d_15_f32.txt
+              Pattern REF16_HFT144D_F32_ID : RefHft144d_16_f32.txt
+              Pattern REF17_HFT169D_F32_ID : RefHft169d_17_f32.txt
+              Pattern REF18_HFT196D_F32_ID : RefHft196d_18_f32.txt
+              Pattern REF19_HFT223D_F32_ID : RefHft223d_19_f32.txt
+              Pattern REF20_HFT248D_F32_ID : RefHft248d_20_f32.txt
+              
+              Output  OUT_F32_ID : Output
+              Output  TMP_F32_ID : Temp
 
-         // 2
-         Pattern INPUT2_S8_ID : TestCase_1_8_9_input_2.txt
-         Pattern BIAS2_S8_ID : TestCase_1_8_9_bias_2.txt
-         Pattern WEIGHT2_S8_ID : TestCase_1_8_9_weights_2.txt
-         Pattern REF2_S8_ID : TestCase_1_8_9_output_2.txt
+              Functions {
+                Test arm_welch_f32:test_welch_f32
+                Test arm_bartlett_f32:test_bartlett_f32
+                Test arm_hamming_f32:test_hamming_f32
+                Test arm_hanning_f32:test_hanning_f32
+                Test arm_nuttall3_f32:test_nuttall3_f32
+                Test arm_nuttall4_f32:test_nuttall4_f32
+                Test arm_nuttall3a_f32:test_nuttall3a_f32
+                Test arm_nuttall3b_f32:test_nuttall3b_f32
+                Test arm_nuttall4a_f32:test_nuttall4a_f32
+                Test arm_blackman_harris_92db_f32:test_blackman_harris_92db_f32
+                Test arm_nuttall4b_f32:test_nuttall4b_f32
+                Test arm_nuttall4c_f32:test_nuttall4c_f32
+                Test arm_hft90d_f32:test_hft90d_f32
+                Test arm_hft95_f32:test_hft95_f32
+                Test arm_hft116d_f32:test_hft116d_f32
+                Test arm_hft144d_f32:test_hft144d_f32
+                Test arm_hft169d_f32:test_hft169d_f32
+                Test arm_hft196d_f32:test_hft196d_f32
+                Test arm_hft223d_f32:test_hft223d_f32
+                Test arm_hft248d_f32:test_hft248d_f32
+              }
 
-         // 3
-         Pattern INPUT3_S8_ID : TestCase_1_10_4_input_3.txt
-         Pattern BIAS3_S8_ID : TestCase_1_10_4_bias_3.txt
-         Pattern WEIGHT3_S8_ID : TestCase_1_10_4_weights_3.txt
-         Pattern REF3_S8_ID : TestCase_1_10_4_output_3.txt
+           }
 
-         // 4
-         Pattern INPUT4_S8_ID : TestCase_1_9_1_input_4.txt
-         Pattern BIAS4_S8_ID : TestCase_1_9_1_bias_4.txt
-         Pattern WEIGHT4_S8_ID : TestCase_1_9_1_weights_4.txt
-         Pattern REF4_S8_ID : TestCase_1_9_1_output_4.txt
 
-         // 5
-         Pattern INPUT5_S8_ID : TestCase_1_8_8_input_5.txt
-         Pattern BIAS5_S8_ID : TestCase_1_8_8_bias_5.txt
-         Pattern WEIGHT5_S8_ID : TestCase_1_8_8_weights_5.txt
-         Pattern REF5_S8_ID : TestCase_1_8_8_output_5.txt
+           suite Window Tests F64 {
+              class = WindowTestsF64 
+              folder = WindowF64 
 
-         // 6
-         Pattern INPUT6_S8_ID : TestCase_9_6_1_input_6.txt
-         Pattern BIAS6_S8_ID : TestCase_9_6_1_bias_6.txt
-         Pattern WEIGHT6_S8_ID : TestCase_9_6_1_weights_6.txt
-         Pattern REF6_S8_ID : TestCase_9_6_1_output_6.txt
+              
+              Pattern REF1_WELCH_F64_ID : RefWelch_1_f64.txt
+              Pattern REF2_BARTLETT_F64_ID : RefBartlett_2_f64.txt
+              Pattern REF3_HAMMING_F64_ID : RefHamming_3_f64.txt
+              Pattern REF4_HANNING_F64_ID : RefHanning_4_f64.txt
+              Pattern REF5_NUTTALL3_F64_ID : RefNuttall3_5_f64.txt
+              Pattern REF6_NUTTALL4_F64_ID : RefNuttall4_6_f64.txt
+              Pattern REF7_NUTTALL3A_F64_ID : RefNuttall3a_7_f64.txt
+              Pattern REF8_NUTTALL3B_F64_ID : RefNuttall3b_8_f64.txt
+              Pattern REF9_NUTTALL4A_F64_ID : RefNuttall4a_9_f64.txt
+              Pattern REF10_BLACKMAN_HARRIS_92DB_F64_ID : RefBlackman_harris_92db_10_f64.txt
+              Pattern REF11_NUTTALL4B_F64_ID : RefNuttall4b_11_f64.txt
+              Pattern REF12_NUTTALL4C_F64_ID : RefNuttall4c_12_f64.txt
+              Pattern REF13_HFT90D_F64_ID : RefHft90d_13_f64.txt
+              Pattern REF14_HFT95_F64_ID : RefHft95_14_f64.txt
+              Pattern REF15_HFT116D_F64_ID : RefHft116d_15_f64.txt
+              Pattern REF16_HFT144D_F64_ID : RefHft144d_16_f64.txt
+              Pattern REF17_HFT169D_F64_ID : RefHft169d_17_f64.txt
+              Pattern REF18_HFT196D_F64_ID : RefHft196d_18_f64.txt
+              Pattern REF19_HFT223D_F64_ID : RefHft223d_19_f64.txt
+              Pattern REF20_HFT248D_F64_ID : RefHft248d_20_f64.txt
+              
+              Output  OUT_F64_ID : Output
+              Output  TMP_F64_ID : Temp
 
-         // 7
-         Pattern INPUT7_S8_ID : TestCase_8_8_1_input_7.txt
-         Pattern BIAS7_S8_ID : TestCase_8_8_1_bias_7.txt
-         Pattern WEIGHT7_S8_ID : TestCase_8_8_1_weights_7.txt
-         Pattern REF7_S8_ID : TestCase_8_8_1_output_7.txt
+              Functions {
+                Test arm_welch_f64:test_welch_f64
+                Test arm_bartlett_f64:test_bartlett_f64
+                Test arm_hamming_f64:test_hamming_f64
+                Test arm_hanning_f64:test_hanning_f64
+                Test arm_nuttall3_f64:test_nuttall3_f64
+                Test arm_nuttall4_f64:test_nuttall4_f64
+                Test arm_nuttall3a_f64:test_nuttall3a_f64
+                Test arm_nuttall3b_f64:test_nuttall3b_f64
+                Test arm_nuttall4a_f64:test_nuttall4a_f64
+                Test arm_blackman_harris_92db_f64:test_blackman_harris_92db_f64
+                Test arm_nuttall4b_f64:test_nuttall4b_f64
+                Test arm_nuttall4c_f64:test_nuttall4c_f64
+                Test arm_hft90d_f64:test_hft90d_f64
+                Test arm_hft95_f64:test_hft95_f64
+                Test arm_hft116d_f64:test_hft116d_f64
+                Test arm_hft144d_f64:test_hft144d_f64
+                Test arm_hft169d_f64:test_hft169d_f64
+                Test arm_hft196d_f64:test_hft196d_f64
+                Test arm_hft223d_f64:test_hft223d_f64
+                Test arm_hft248d_f64:test_hft248d_f64
+              }
+           }
+        }
 
-         // 8
-         Pattern INPUT8_S8_ID : TestCase_4_10_1_input_8.txt
-         Pattern BIAS8_S8_ID : TestCase_4_10_1_bias_8.txt
-         Pattern WEIGHT8_S8_ID : TestCase_4_10_1_weights_8.txt
-         Pattern REF8_S8_ID : TestCase_4_10_1_output_8.txt
-
-         // 9
-         Pattern INPUT9_S8_ID : TestCase_9_6_1_input_9.txt
-         Pattern BIAS9_S8_ID : TestCase_9_6_1_bias_9.txt
-         Pattern WEIGHT9_S8_ID : TestCase_9_6_1_weights_9.txt
-         Pattern REF9_S8_ID : TestCase_9_6_1_output_9.txt
-
-         // 10
-         Pattern INPUT10_S8_ID : TestCase_4_10_1_input_10.txt
-         Pattern BIAS10_S8_ID : TestCase_4_10_1_bias_10.txt
-         Pattern WEIGHT10_S8_ID : TestCase_4_10_1_weights_10.txt
-         Pattern REF10_S8_ID : TestCase_4_10_1_output_10.txt
-
-         // 11
-         Pattern INPUT11_S8_ID : TestCase_8_8_1_input_11.txt
-         Pattern BIAS11_S8_ID : TestCase_8_8_1_bias_11.txt
-         Pattern WEIGHT11_S8_ID : TestCase_8_8_1_weights_11.txt
-         Pattern REF11_S8_ID : TestCase_8_8_1_output_11.txt
-
-         // 12
-         Pattern INPUT12_S8_ID : TestCase_9_8_4_input_12.txt
-         Pattern BIAS12_S8_ID : TestCase_9_8_4_bias_12.txt
-         Pattern WEIGHT12_S8_ID : TestCase_9_8_4_weights_12.txt
-         Pattern REF12_S8_ID : TestCase_9_8_4_output_12.txt
-
-         // 13
-         Pattern INPUT13_S8_ID : TestCase_8_8_5_input_13.txt
-         Pattern BIAS13_S8_ID : TestCase_8_8_5_bias_13.txt
-         Pattern WEIGHT13_S8_ID : TestCase_8_8_5_weights_13.txt
-         Pattern REF13_S8_ID : TestCase_8_8_5_output_13.txt
-
-         // 14
-         Pattern INPUT14_S8_ID : TestCase_4_7_3_input_14.txt
-         Pattern BIAS14_S8_ID : TestCase_4_7_3_bias_14.txt
-         Pattern WEIGHT14_S8_ID : TestCase_4_7_3_weights_14.txt
-         Pattern REF14_S8_ID : TestCase_4_7_3_output_14.txt
-
-         // 15
-         Pattern INPUT15_S8_ID : TestCase_8_7_4_input_15.txt
-         Pattern BIAS15_S8_ID : TestCase_8_7_4_bias_15.txt
-         Pattern WEIGHT15_S8_ID : TestCase_8_7_4_weights_15.txt
-         Pattern REF15_S8_ID : TestCase_8_7_4_output_15.txt
-
-         Output  OUTPUT_S8_ID : Output
-         Output  TEMP_S16_ID : Temp
-         
-         Functions {
-            fully_connected_tflite_s8 test1:test_fully_connected_tflite_s8
-            fully_connected_tflite_s8 test2:test_fully_connected_tflite_s8
-            fully_connected_tflite_s8 test3:test_fully_connected_tflite_s8
-            fully_connected_tflite_s8 test4:test_fully_connected_tflite_s8
-            fully_connected_tflite_s8 test5:test_fully_connected_tflite_s8
-            matmul_tflite_s8 test6:test_fully_connected_tflite_s8
-            matmul_tflite_s8 test7:test_fully_connected_tflite_s8
-            matmul_tflite_s8 test8:test_fully_connected_tflite_s8
-            matmul_tflite_s8 test9:test_fully_connected_tflite_s8
-            matmul_tflite_s8 test10:test_fully_connected_tflite_s8
-            matmul_tflite_s8 test11:test_fully_connected_tflite_s8
-            matmul_tflite_s8 test12:test_fully_connected_tflite_s8
-            matmul_tflite_s8 test13:test_fully_connected_tflite_s8
-            matmul_tflite_s8 test14:test_fully_connected_tflite_s8
-            matmul_tflite_s8 test15:test_fully_connected_tflite_s8
-         }
-       }
-
-       suite Pooling {
-          class = Pooling
-          folder = Pooling
-
-          Pattern INPUT1_S8_ID : Input1.txt
-          Pattern REF1_S8_ID : Ref1.txt
-
-          Pattern INPUT2_S8_ID : Input2.txt
-          Pattern REF2_S8_ID : Ref2.txt
-
-          Pattern INPUT3_S8_ID : Input3.txt
-          Pattern REF3_S8_ID : Ref3.txt
-
-          Pattern INPUT4_S8_ID : Input4.txt
-          Pattern REF4_S8_ID : Ref4.txt
-
-          Pattern INPUT5_S8_ID : Input5.txt
-          Pattern REF5_S8_ID : Ref5.txt
-
-          Pattern INPUT6_S8_ID : Input6.txt
-          Pattern REF6_S8_ID : Ref6.txt
-
-          Pattern INPUT7_S8_ID : Input7.txt
-          Pattern REF7_S8_ID : Ref7.txt
-
-          Pattern INPUT8_S8_ID : Input8.txt
-          Pattern REF8_S8_ID : Ref8.txt
-
-          Output  OUTPUT_S8_ID : Output
-          Output  TEMP_S8_ID : Temp
-          Output  TEMPINPUT_S8_ID : TempInput
-
-          Functions {
-            arm_avgpool_s8 Test 1:test_avgpool_s8
-            arm_avgpool_s8 Test 2:test_avgpool_s8
-            arm_avgpool_s8 Test 3:test_avgpool_s8
-            arm_avgpool_s8 Test 4:test_avgpool_s8
-            arm_avgpool_s8 Test 5:test_avgpool_s8
-            arm_avgpool_s8 Test 6:test_avgpool_s8
-            arm_avgpool_s8 Test 7:test_avgpool_s8
-            arm_avgpool_s8 Test 8:test_avgpool_s8
-          }
-       }
-
-       suite Softmax {
-          class = Softmax
-          folder = SoftmaxQ7
-
-          Pattern INPUT1_Q7_ID : InputA1_q7.txt
-          Pattern DIMS1_S16_ID : Dims1_s16.txt
-          Pattern REF1_S16_ID : Ref1_s16.txt
-          Pattern SAMPLES1_Q7_ID : Samples1_q7.txt
-          
-          Output  OUTPUT_S16_ID : Output
-          Output  TEMP_Q7_ID : Temp
-
-          Functions {
-            arm_softmax_q7 Test 1:test_softmax_q7
-            arm_softmax_with_batch_q7 Test 2:test_softmax_with_batch_q7
-          }
-       }
-
-       suite NNSupport {
-          class = NNSupport
-          folder = SupportQ7
-
-          Functions {
-            test_nn_elementwise_add_s8 Test 1:test_nn_elementwise_add_s8
-          }
-       }
     }
 
     group Example Tests {

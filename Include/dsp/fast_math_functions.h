@@ -54,6 +54,11 @@ extern "C"
   #define PI               3.14159265358979f
 #endif
 
+#ifndef PI_F64 
+  #define PI_F64 3.14159265358979323846
+#endif
+
+
 
 /**
  * @defgroup groupFastMath Fast Math Functions

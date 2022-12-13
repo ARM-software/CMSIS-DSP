@@ -126,6 +126,12 @@ try:
 except:
   pass
 
+window = glob.glob(os.path.join(ROOT,"Source","WindowFunctions","*.c"))
+try:
+  window.remove(os.path.join(ROOT,"Source","WindowFunctions","WindowFunctions.c"))
+except:
+  pass
+
 # Add dependencies
 transformMod = transform + common + basic + complexf + fastmath + matrix + statistics
 statisticsMod = statistics + common + fastmath + basic
@@ -143,6 +149,7 @@ distanceMod = distance + common + basic + statistics + fastmath
 bayesMod = bayes + fastmath + common + statistics + basic
 svmMod = svm + fastmath + common + basic
 
+windowMod = window
 
 filteringMod.append(os.path.join("PythonWrapper","cmsisdsp_pkg","src","cmsisdsp_filtering.c"))
 matrixMod.append(os.path.join("PythonWrapper","cmsisdsp_pkg","src","cmsisdsp_matrix.c"))
@@ -158,6 +165,7 @@ fastmathMod.append(os.path.join("PythonWrapper","cmsisdsp_pkg","src","cmsisdsp_f
 distanceMod.append(os.path.join("PythonWrapper","cmsisdsp_pkg","src","cmsisdsp_distance.c"))
 bayesMod.append(os.path.join("PythonWrapper","cmsisdsp_pkg","src","cmsisdsp_bayes.c"))
 svmMod.append(os.path.join("PythonWrapper","cmsisdsp_pkg","src","cmsisdsp_svm.c"))
+windowMod.append(os.path.join("PythonWrapper","cmsisdsp_pkg","src","cmsisdsp_window.c"))
 
 
 
@@ -195,6 +203,7 @@ fastmath = list(filter(isnotmissing,list(filter(notf16, fastmathMod))))
 distance = list(filter(isnotmissing,list(filter(notf16, distanceMod))))
 bayes = list(filter(isnotmissing,list(filter(notf16, bayesMod))))
 svm = list(filter(isnotmissing,list(filter(notf16, svmMod))))
+window = list(filter(isnotmissing,list(filter(notf16, windowMod))))
 
 #for l in filtering:
 #  print(os.path.basename(l))
@@ -228,6 +237,7 @@ moduleFastmath = mkModule('cmsisdsp_fastmath',fastmath,"FastMathFunctions",flags
 moduleDistance = mkModule('cmsisdsp_distance',distance,"DistanceFunctions",flagsForCommonWithoutFFT)
 moduleBayes = mkModule('cmsisdsp_bayes',bayes,"BayesFunctions",flagsForCommonWithoutFFT)
 moduleSVM = mkModule('cmsisdsp_svm',svm,"SVMFunctions",flagsForCommonWithoutFFT)
+moduleWindow = mkModule('cmsisdsp_window',window,"WindowFunctions",flagsForCommonWithoutFFT)
 
 
 
@@ -266,7 +276,8 @@ def build():
                         moduleFastmath,
                         moduleDistance,
                         moduleBayes,
-                        moduleSVM
+                        moduleSVM,
+                        moduleWindow
                         ],
          include_package_data=True,
          author = 'Copyright (C) 2010-2022 ARM Limited or its affiliates. All rights reserved.',

@@ -47,6 +47,7 @@
    * - \ref groupBayes "Bayes classifier functions"
    * - \ref groupDistance "Distance functions"
    * - \ref groupQuaternionMath "Quaternion functions"
+   * - \ref groupWindow "Window functions"
    *
    * The library has generally separate functions for operating on 8-bit integers, 16-bit integers,
    * 32-bit integer and 32-bit floating-point values and 64-bit floating-point values.
@@ -63,6 +64,12 @@
    * Compute Graph. The documentation for this project is available
    * on the <a href="https://github.com/ARM-software/CMSIS-DSP/blob/main/ComputeGraph/README.md">CMSIS-DSP github repository.</a> 
    *
+   * A Python wrapper is also available with a Python API as close as possible
+   * to the C one. It can be used to start developing and testing an algorithm with NumPy and
+   * SciPy before writing the C version. Is is available on <a href="https://pypi.org/project/cmsisdsp/">PyPI.org</a>.
+   * It can be installed with : pip install cmsisdsp
+   * 
+   * 
    * \section using Using the Library
    *
    * The library is released in source form. It is strongly advised to compile the library using -Ofast to

@@ -37,6 +37,7 @@ option(BAYES                "Bayesian Estimators"               ON)
 option(DISTANCE             "Distance Functions"                ON)
 option(INTERPOLATION        "Interpolation Functions"                ON)
 option(QUATERNIONMATH       "Quaternion Math Functions"                ON)
+option(WINDOW               "Window Functions"                ON)
 
 # When OFF it is the default behavior : all tables are included.
 option(CONFIGTABLE          "Configuration of table allowed"    OFF)
@@ -281,6 +282,10 @@ endif()
 
 if (INTERPOLATION)
   include(InterpolationFunctions/Config.cmake)
+endif()
+
+if (WINDOW)
+  include(WindowFunctions/Config.cmake)
 endif()
 
 ### Includes

@@ -46,7 +46,8 @@ SRCS := $(CMSIS_DSP)/Source/BasicMathFunctions/BasicMathFunctions.c \
  $(CMSIS_DSP)/Source/FastMathFunctions/FastMathFunctions.c \
  $(CMSIS_DSP)/Source/SupportFunctions/SupportFunctions.c \
  $(CMSIS_DSP)/Source/FilteringFunctions/FilteringFunctions.c \
- $(CMSIS_DSP)/Source/TransformFunctions/TransformFunctions.c
+ $(CMSIS_DSP)/Source/TransformFunctions/TransformFunctions.c \
+ $(CMSIS_DSP)/Source/WindowFunctions/WindowFunctions.c
 
 # Includes
 DSP_INCLUDES := $(CMSIS_DSP)/Include \
