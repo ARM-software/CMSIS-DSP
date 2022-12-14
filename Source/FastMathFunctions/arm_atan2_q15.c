@@ -43,16 +43,17 @@ atan for argument between in [0, 1.0]
 
 #define ATAN2_NB_COEFS_Q15 10
 
-static const q15_t atan2_coefs_q15[ATAN2_NB_COEFS_Q15]={0x0000
-,0x7fff
-,0xffff
-,0xd567
-,0xff70
-,0x1bad
-,0xfd58
-,0xe9a9
-,0x1129
-,0xfbdb
+static const q15_t atan2_coefs_q15[ATAN2_NB_COEFS_Q15]={
+     0, // 0x0000
+ 32767, // 0x7fff
+    -1, // 0xffff
+-10905, // 0xd567
+  -144, // 0xff70
+  7085, // 0x1bad
+  -680, // 0xfd58
+ -5719, // 0xe9a9
+  4393, // 0x1129
+ -1061  // 0xfbdb
 };
 
 __STATIC_FORCEINLINE q15_t arm_atan_limited_q15(q15_t x)
