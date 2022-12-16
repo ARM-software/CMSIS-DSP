@@ -49,12 +49,13 @@ var searchData=
   ['finite_20impulse_20response_20_28fir_29_20lattice_20filters_46',['Finite Impulse Response (FIR) Lattice Filters',['../group__FIR__Lattice.html',1,'']]],
   ['finite_20impulse_20response_20_28fir_29_20sparse_20filters_47',['Finite Impulse Response (FIR) Sparse Filters',['../group__FIR__Sparse.html',1,'']]],
   ['fir_20lowpass_20filter_20example_48',['FIR Lowpass Filter Example',['../group__FIRLPF.html',1,'']]],
-  ['fircoeff_5ff32_49',['FIRCoeff_f32',['../arm__signal__converge__example__f32_8c.html#aede8780f021b7f5c33df0c5ee2183ee6',1,'FIRCoeff_f32():&#160;arm_signal_converge_data.c'],['../arm__signal__converge__data_8c.html#aede8780f021b7f5c33df0c5ee2183ee6',1,'FIRCoeff_f32():&#160;arm_signal_converge_data.c']]],
+  ['fircoeff_5ff32_49',['FIRCoeff_f32',['../arm__signal__converge__data_8c.html#aede8780f021b7f5c33df0c5ee2183ee6',1,'FIRCoeff_f32():&#160;arm_signal_converge_data.c'],['../arm__signal__converge__example__f32_8c.html#aede8780f021b7f5c33df0c5ee2183ee6',1,'FIRCoeff_f32():&#160;arm_signal_converge_data.c']]],
   ['fircoeffs32_50',['firCoeffs32',['../arm__fir__example__f32_8c.html#a51bd6e9a6b2f1946b05ad7db85ad5eb9',1,'arm_fir_example_f32.c']]],
   ['firstatef32_51',['firStateF32',['../arm__signal__converge__example__f32_8c.html#a7d9829fb8d2b8bc25b743bbc3604c074',1,'arm_signal_converge_example_f32.c']]],
   ['fixed_20point_20division_52',['Fixed point division',['../group__divide.html',1,'']]],
-  ['float_20distances_53',['Float Distances',['../group__FloatDist.html',1,'']]],
-  ['float32_5ft_54',['float32_t',['../arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715',1,'arm_math_types.h']]],
-  ['float64_5ft_55',['float64_t',['../arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4',1,'arm_math_types.h']]],
-  ['frequency_20bin_20example_56',['Frequency Bin Example',['../group__FrequencyBin.html',1,'']]]
+  ['flat_2dtop_20window_20functions_53',['Flat-top window functions',['../group__WindowFlat.html',1,'']]],
+  ['float_20distances_54',['Float Distances',['../group__FloatDist.html',1,'']]],
+  ['float32_5ft_55',['float32_t',['../arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715',1,'arm_math_types.h']]],
+  ['float64_5ft_56',['float64_t',['../arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4',1,'arm_math_types.h']]],
+  ['frequency_20bin_20example_57',['Frequency Bin Example',['../group__FrequencyBin.html',1,'']]]
 ];

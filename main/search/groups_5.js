@@ -9,6 +9,7 @@ var searchData=
   ['finite_20impulse_20response_20_28fir_29_20sparse_20filters_6',['Finite Impulse Response (FIR) Sparse Filters',['../group__FIR__Sparse.html',1,'']]],
   ['fir_20lowpass_20filter_20example_7',['FIR Lowpass Filter Example',['../group__FIRLPF.html',1,'']]],
   ['fixed_20point_20division_8',['Fixed point division',['../group__divide.html',1,'']]],
-  ['float_20distances_9',['Float Distances',['../group__FloatDist.html',1,'']]],
-  ['frequency_20bin_20example_10',['Frequency Bin Example',['../group__FrequencyBin.html',1,'']]]
+  ['flat_2dtop_20window_20functions_9',['Flat-top window functions',['../group__WindowFlat.html',1,'']]],
+  ['float_20distances_10',['Float Distances',['../group__FloatDist.html',1,'']]],
+  ['frequency_20bin_20example_11',['Frequency Bin Example',['../group__FrequencyBin.html',1,'']]]
 ];

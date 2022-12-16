@@ -141,11 +141,13 @@ Introduction</h1>
 <li><a class="el" href="group__groupBayes.html">Bayes classifier functions</a></li>
 <li><a class="el" href="group__groupDistance.html">Distance functions</a></li>
 <li><a class="el" href="group__groupQuaternionMath.html">Quaternion functions</a></li>
+<li><a class="el" href="group__groupWindow.html">Window functions</a></li>
 </ul>
 <p >The library has generally separate functions for operating on 8-bit integers, 16-bit integers, 32-bit integer and 32-bit floating-point values and 64-bit floating-point values.</p>
 <p >The library is providing vectorized versions of most algorthms for Helium and of most f32 algorithms for Neon.</p>
 <p >When using a vectorized version, provide a little bit of padding after the end of a buffer (3 words) because the vectorized code may read a little bit after the end of a buffer. You don't have to modify your buffers but just ensure that the end of buffer + padding is not outside of a memory region.</p>
 <p >CMSIS-DSP pack is containing an optional project : The CMSIS-DSP Compute Graph. The documentation for this project is available on the <a href="https://github.com/ARM-software/CMSIS-DSP/blob/main/ComputeGraph/README.md">CMSIS-DSP github repository.</a></p>
+<p >A Python wrapper is also available with a Python API as close as possible to the C one. It can be used to start developing and testing an algorithm with NumPy and SciPy before writing the C version. Is is available on <a href="https://pypi.org/project/cmsisdsp/">PyPI.org</a>. It can be installed with : pip install cmsisdsp</p>
 <h1><a class="anchor" id="using"></a>
 Using the Library</h1>
 <p >The library is released in source form. It is strongly advised to compile the library using -Ofast to have the best performances.</p>
