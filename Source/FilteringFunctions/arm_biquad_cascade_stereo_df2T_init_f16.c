@@ -76,9 +76,6 @@ void arm_biquad_cascade_stereo_df2T_init_f16(
   /* Assign coefficient pointer */
   S->pCoeffs = pCoeffs;
 
-  /* Clear state buffer and size is always 4 * numStages */
-  memset(pState, 0, (4U * (uint32_t) numStages) * sizeof(float16_t));
-
   /* Assign state pointer */
   S->pState = pState;
 }

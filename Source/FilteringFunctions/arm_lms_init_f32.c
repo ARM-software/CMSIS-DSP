@@ -66,9 +66,6 @@ void arm_lms_init_f32(
   /* Assign coefficient pointer */
   S->pCoeffs = pCoeffs;
 
-  /* Clear state buffer and size is always blockSize + numTaps */
-  memset(pState, 0, (numTaps + (blockSize - 1)) * sizeof(float32_t));
-
   /* Assign state pointer */
   S->pState = pState;
 

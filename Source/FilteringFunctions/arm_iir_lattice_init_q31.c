@@ -65,9 +65,6 @@ void arm_iir_lattice_init_q31(
   /* Assign ladder coefficient pointer */
   S->pvCoeffs = pvCoeffs;
 
-  /* Clear state buffer and size is always blockSize + numStages */
-  memset(pState, 0, (numStages + blockSize) * sizeof(q31_t));
-
   /* Assign state pointer */
   S->pState = pState;
 }

@@ -81,9 +81,6 @@ void arm_fir_sparse_init_q15(
   /* reset the stateIndex to 0 */
   S->stateIndex = 0U;
 
-  /* Clear state buffer and size is always maxDelay + blockSize */
-  memset(pState, 0, (maxDelay + blockSize) * sizeof(q15_t));
-
   /* Assign state pointer */
   S->pState = pState;
 }

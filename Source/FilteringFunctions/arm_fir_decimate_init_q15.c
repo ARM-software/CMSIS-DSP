@@ -85,9 +85,6 @@ arm_status arm_fir_decimate_init_q15(
     /* Assign coefficient pointer */
     S->pCoeffs = pCoeffs;
 
-    /* Clear the state buffer. The size is always (blockSize + numTaps - 1) */
-    memset(pState, 0, (numTaps + (blockSize - 1U)) * sizeof(q15_t));
-
     /* Assign state pointer */
     S->pState = pState;
 

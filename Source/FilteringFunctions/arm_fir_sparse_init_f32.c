@@ -81,9 +81,6 @@ void arm_fir_sparse_init_f32(
   /* reset the stateIndex to 0 */
   S->stateIndex = 0U;
 
-  /* Clear state buffer and size is always maxDelay + blockSize */
-  memset(pState, 0, (maxDelay + blockSize) * sizeof(float32_t));
-
   /* Assign state pointer */
   S->pState = pState;
 }

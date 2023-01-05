@@ -73,8 +73,6 @@ void arm_fir_init_f64(
     /* Assign coefficient pointer */
     S->pCoeffs = pCoeffs;
     
-    /* Clear state buffer. The size is always (blockSize + numTaps - 1) */
-    memset(pState, 0, (numTaps + (blockSize - 1U)) * sizeof(float64_t));
     /* Assign state pointer */
     S->pState = pState;
 }

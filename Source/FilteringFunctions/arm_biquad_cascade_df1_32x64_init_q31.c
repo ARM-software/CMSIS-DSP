@@ -82,9 +82,6 @@ void arm_biquad_cas_df1_32x64_init_q31(
   /* Assign coefficient pointer */
   S->pCoeffs = pCoeffs;
 
-  /* Clear state buffer and size is always 4 * numStages */
-  memset(pState, 0, (4U * (uint32_t) numStages) * sizeof(q63_t));
-
   /* Assign state pointer */
   S->pState = pState;
 }

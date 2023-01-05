@@ -89,9 +89,6 @@ arm_status arm_fir_interpolate_init_q15(
     /* Assign polyPhaseLength */
     S->phaseLength = numTaps / L;
 
-    /* Clear state buffer and size of buffer is always phaseLength + blockSize - 1 */
-    memset(pState, 0, (blockSize + ((uint32_t) S->phaseLength - 1U)) * sizeof(q15_t));
-
     /* Assign state pointer */
     S->pState = pState;
 

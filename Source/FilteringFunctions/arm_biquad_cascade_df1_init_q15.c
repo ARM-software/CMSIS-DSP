@@ -84,9 +84,6 @@ void arm_biquad_cascade_df1_init_q15(
   /* Assign coefficient pointer */
   S->pCoeffs = pCoeffs;
 
-  /* Clear state buffer and size is always 4 * numStages */
-  memset(pState, 0, (4U * (uint32_t) numStages) * sizeof(q15_t));
-
   /* Assign state pointer */
   S->pState = pState;
 }

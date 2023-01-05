@@ -58,9 +58,6 @@ void arm_fir_lattice_init_q15(
   /* Assign coefficient pointer */
   S->pCoeffs = pCoeffs;
 
-  /* Clear state buffer and size is always numStages */
-  memset(pState, 0, (numStages) * sizeof(q15_t));
-
   /* Assign state pointer */
   S->pState = pState;
 }
