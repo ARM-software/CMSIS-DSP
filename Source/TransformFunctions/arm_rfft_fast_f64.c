@@ -28,7 +28,7 @@
 
 #include "dsp/transform_functions.h"
 
-void stage_rfft_f64(
+static void stage_rfft_f64(
   const arm_rfft_fast_instance_f64 * S,
         float64_t * p,
         float64_t * pOut)
@@ -115,7 +115,7 @@ void stage_rfft_f64(
 }
 
 /* Prepares data for inverse cfft */
-void merge_rfft_f64(
+static void merge_rfft_f64(
   const arm_rfft_fast_instance_f64 * S,
         float64_t * p,
         float64_t * pOut)

@@ -34,7 +34,7 @@
 
 #if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-void stage_rfft_f16(
+static void stage_rfft_f16(
   const arm_rfft_fast_instance_f16 * S,
         float16_t * p,
         float16_t * pOut)
@@ -194,7 +194,7 @@ void stage_rfft_f16(
 }
 
 /* Prepares data for inverse cfft */
-void merge_rfft_f16(
+static void merge_rfft_f16(
   const arm_rfft_fast_instance_f16 * S,
         float16_t * p,
         float16_t * pOut)
@@ -313,7 +313,7 @@ void merge_rfft_f16(
 
 }
 #else
-void stage_rfft_f16(
+static void stage_rfft_f16(
   const arm_rfft_fast_instance_f16 * S,
         float16_t * p,
         float16_t * pOut)
@@ -402,7 +402,7 @@ void stage_rfft_f16(
 }
 
 /* Prepares data for inverse cfft */
-void merge_rfft_f16(
+static void merge_rfft_f16(
   const arm_rfft_fast_instance_f16 * S,
         float16_t * p,
         float16_t * pOut)

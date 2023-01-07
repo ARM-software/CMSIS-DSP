@@ -29,7 +29,7 @@
 #include "dsp/transform_functions.h"
 
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
-void stage_rfft_f32(
+static void stage_rfft_f32(
   const arm_rfft_fast_instance_f32 * S,
         float32_t * p,
         float32_t * pOut)
@@ -188,7 +188,7 @@ void stage_rfft_f32(
 }
 
 /* Prepares data for inverse cfft */
-void merge_rfft_f32(
+static void merge_rfft_f32(
   const arm_rfft_fast_instance_f32 * S,
         float32_t * p,
         float32_t * pOut)
@@ -307,7 +307,7 @@ void merge_rfft_f32(
 
 }
 #else
-void stage_rfft_f32(
+static void stage_rfft_f32(
   const arm_rfft_fast_instance_f32 * S,
         float32_t * p,
         float32_t * pOut)
@@ -396,7 +396,7 @@ void stage_rfft_f32(
 }
 
 /* Prepares data for inverse cfft */
-void merge_rfft_f32(
+static void merge_rfft_f32(
   const arm_rfft_fast_instance_f32 * S,
         float32_t * p,
         float32_t * pOut)
