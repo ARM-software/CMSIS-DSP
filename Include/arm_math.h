@@ -52,7 +52,7 @@
    * The library has generally separate functions for operating on 8-bit integers, 16-bit integers,
    * 32-bit integer and 32-bit floating-point values and 64-bit floating-point values.
    *
-   * The library is providing vectorized versions of most algorthms for Helium
+   * The library is providing vectorized versions of most algorithms for Helium
    * and of most f32 algorithms for Neon.
    *
    * When using a vectorized version, provide a little bit of padding after the end of
