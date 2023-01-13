@@ -10,6 +10,8 @@ parser = argparse.ArgumentParser(description='Parse test description')
 parser.add_argument('-avh', nargs='?',type = str, default="C:/Keil_v5/ARM/VHT", help="AVH folder")
 parser.add_argument('-d', action='store_true', help="Debug log")
 parser.add_argument('-n', action='store_true', help="No force rebuild")
+parser.add_argument('-r', action='store_true', help="Raw results only")
+parser.add_argument('-c', action='store_true', help="Display cycles (so passing test are displayed)")
 
 args = parser.parse_args()
 
@@ -165,8 +167,7 @@ for t in tests:
 #("StatsTestsF32","../Output.pickle")
 #]
 
-allSuites=[("WindowTestsF32","../Output.pickle"),
-("WindowTestsF64","../Output.pickle")]
+allSuites=[("DistanceTestsF32","../Output.pickle")]
 
 #allSuites=[("StatsTestsQ7","../Output.pickle")]
 
@@ -200,6 +201,18 @@ solutions={
     ]
 }
 
+solutions={
+    'testac6.csolution.yml':[
+    #  ("VHT-Corstone-310","CS310"),
+      ("VHT-Corstone-300","CS300")
+    ],
+    'testgcc.csolution.yml':[
+      #("VHT-Corstone-310","CS310"),
+      #("VHT_M55","M55"),
+      ##("VHT_M33","M33_DSP_FP"),
+      ("VHT_M7","M7DP"),
+    ]
+}
 
 HTMLHEADER="""<html>
 <header>
@@ -274,18 +287,24 @@ with open("summary.html","w") as f:
                 else:
                     with open("results.txt","w") as o:
                         print(res.msg,file=o)
-                res=run(sys.executable,"../processResult.py","-f",pickle,"-e","-ahtml","-r","results.txt",dumpStdErr=False)
-                if res.error:
-                    printError("Error processResult")
-                    print("<p><font color=\"red\">Error processing %s result</font></p><PRE>" % s,file=f)
-                    print(res.msg,file=f)
-                    print("</PRE>",file=f)
-                    continue
-                else:
-                    pass
-                    # When no error the section is not
-                    # included in final file
-                    #print(res.msg,file=f)
+                    # Dump raw result
+                    if args.r:
+                        print(res.msg)
+                # If raw result, no post processing
+                if not args.r:
+                    res=run(sys.executable,"../processResult.py","-f",pickle,"-e","-ahtml","-r","results.txt",dumpStdErr=False)
+                    if res.error:
+                        printError("Error processResult")
+                        print("<p><font color=\"red\">Error processing %s result</font></p><PRE>" % s,file=f)
+                        print(res.msg,file=f)
+                        print("</PRE>",file=f)
+                        continue
+                    else:
+                        # When no error the section is 
+                        # included in final file on when 
+                        # cycles are requested
+                        if args.c:
+                           print(res.msg,file=f)
     print(HTMLFOOTER,file=f)
 
 if ERROR_OCCURED:

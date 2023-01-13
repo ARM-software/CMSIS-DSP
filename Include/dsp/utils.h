@@ -40,6 +40,9 @@ extern "C"
 
 #define INDEX_MASK         0x0000003F
 
+#define MIN(x,y) ((x) < (y) ? (x) : (y))
+
+#define MAX(x,y) ((x) > (y) ? (x) : (y))
 
 #define SQ(x) ((x) * (x))
 

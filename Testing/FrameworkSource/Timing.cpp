@@ -2,7 +2,7 @@
 
 #ifdef CORTEXM
 
-#define SYSTICK_INITIAL_VALUE       0xFFFFFF
+#define SYSTICK_INITIAL_VALUE       0x0FFFFFF
 static uint32_t startCycles=0;
 
 #if   defined ARMCM0
@@ -53,6 +53,8 @@ static uint32_t startCycles=0;
   #include "ARMCM55.h"
 #elif defined ARMCM85
   #include "ARMCM85.h"
+#elif defined SSE300MPS3
+  #include "SSE300MPS3.h"
 #elif defined ARMv7A
   /* TODO */
 #else
@@ -144,9 +146,6 @@ void cycleMeasurementStart()
 
     SysTick->CTRL = SysTick_CTRL_ENABLE_Msk | SysTick_CTRL_CLKSOURCE_Msk;  
 
-    while(SysTick->VAL == 0);
-    
-
     startCycles = SysTick->VAL;
 
 
@@ -189,15 +188,17 @@ return(0);
     return(0);
     #else
     uint32_t v = SysTick->VAL;
-    Testing::cycles_t result;
-    if (v < startCycles)
+    int32_t result;
+   
+    result = (int32_t)startCycles - (int32_t)v;
+
+    if (result < 0) 
     {
-      result = startCycles - v;
+        result += SYSTICK_INITIAL_VALUE;
     }
-    else
-    {
-      result = SYSTICK_INITIAL_VALUE - (v - startCycles);
-    }
+
+    
+    
     /* SysTick tested and tuned on IPSS.
        On other FVP, the value is forced to 0
        because measurement is wrong.

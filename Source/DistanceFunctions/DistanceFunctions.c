@@ -49,3 +49,6 @@
 #include "arm_sokalmichener_distance.c"
 #include "arm_sokalsneath_distance.c"
 #include "arm_yule_distance.c"
+#include "arm_dtw_distance_f32.c"
+#include "arm_dtw_path_f32.c"
+#include "arm_dtw_init_window_q7.c"

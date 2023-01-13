@@ -9,6 +9,12 @@ NBTESTSAMPLES = 10
 
 VECDIM = [35,14,20]
 
+query=np.array([ 0.08387197,  0.68082274,  1.06756417,  0.88914541,  0.42513398, -0.3259053,
+ -0.80934885, -0.90979435, -0.64026483,  0.06923695])
+
+template=np.array([ 1.00000000e+00,  7.96326711e-04, -9.99998732e-01, -2.38897811e-03,
+  9.99994927e-01])
+
 def euclidean(xa,xb):
         r = scipy.spatial.distance.euclidean(xa,xb)
         return(r)
@@ -81,6 +87,22 @@ def yule(xa,xb):
         r = scipy.spatial.distance.yule (xa,xb)
         return(r)
 
+def writeDTW(config):
+    config.setOverwrite(True)
+    config.writeInput(10, query,"Query")
+    config.writeInput(10, template,"Template")
+    query_index    = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9]
+    template_index = [0, 0, 0, 0, 0, 1, 2, 2, 2, 3, 4]
+    path = np.array(list(zip(query_index,template_index))).flatten()
+    config.writeReferenceS16(10,path ,"PathRef")
+    # Distance computed with different windows
+    references=[0.29962325787495825,
+                0.41319151913793334,
+                0.6170999383691333
+               ]
+    config.writeReference(10, references,"DTWRef")
+    config.setOverwrite(False)
+
 def writeFTest(config,funcList):
     dims=[] 
     dimsM=[]
@@ -144,6 +166,9 @@ def writeFTest(config,funcList):
 
     config.writeReference(8, outputJen,"Ref")
     config.writeReference(9, outputMin,"Ref")
+
+    writeDTW(config)
+    
 
 def writeBTest(config,funcList):
     dims=[] 
@@ -234,6 +259,7 @@ def  generatePatterns():
      configf16=Tools.Config(PATTERNDIR,PARAMDIR,"f16")
      configu32=Tools.Config(PATTERNDIR,PARAMDIR,"u32")
      
+     configf64.setOverwrite(False)
      configf32.setOverwrite(False)
      configf16.setOverwrite(False)
      configu32.setOverwrite(False)

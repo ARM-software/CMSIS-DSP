@@ -2092,6 +2092,9 @@ group Root {
               Pattern INPUTA_JEN_F32_ID : InputA8_f32.txt
               Pattern INPUTB_JEN_F32_ID : InputB8_f32.txt
 
+              Pattern INPUT_QUERY_F32_ID : Query10_f32.txt
+              Pattern INPUT_TEMPLATE_F32_ID : Template10_f32.txt
+
               Pattern REF1_F32_ID : Ref1_f32.txt
               Pattern REF2_F32_ID : Ref2_f32.txt
               Pattern REF3_F32_ID : Ref3_f32.txt
@@ -2102,9 +2105,15 @@ group Root {
               Pattern REF8_F32_ID : Ref8_f32.txt
               Pattern REF9_F32_ID : Ref9_f32.txt
 
+              Pattern REF10_F32_ID : DTWRef10_f32.txt
+              Pattern REF10_S16_PATH_ID : PathRef10_s16.txt
+
               Output  OUT_F32_ID : Output
               Output  TMPA_F32_ID : TmpA
               Output  TMPB_F32_ID : TmpB
+              Output  TMPC_Q7_ID : TmpC
+              Output  OUTA_S16_ID : OutA
+              Output  OUTB_S16_ID : OutB
 
               Functions {
                  arm_braycurtis_distance_f32:test_braycurtis_distance_f32
@@ -2116,6 +2125,7 @@ group Root {
                  arm_euclidean_distance_f32:test_euclidean_distance_f32
                  arm_jensenshannon_distance_f32:test_jensenshannon_distance_f32
                  arm_minkowski_distance_f32:test_minkowski_distance_f32
+                 arm_dtw_distance_f32:test_dtw_distance_f32
               }
            }
 

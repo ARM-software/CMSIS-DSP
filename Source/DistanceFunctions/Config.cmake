@@ -25,6 +25,9 @@ target_sources(CMSISDSP PRIVATE DistanceFunctions/arm_russellrao_distance.c)
 target_sources(CMSISDSP PRIVATE DistanceFunctions/arm_sokalmichener_distance.c)
 target_sources(CMSISDSP PRIVATE DistanceFunctions/arm_sokalsneath_distance.c)
 target_sources(CMSISDSP PRIVATE DistanceFunctions/arm_yule_distance.c)
+target_sources(CMSISDSP PRIVATE DistanceFunctions/arm_dtw_distance_f32.c)
+target_sources(CMSISDSP PRIVATE DistanceFunctions/arm_dtw_path_f32.c)
+target_sources(CMSISDSP PRIVATE DistanceFunctions/arm_dtw_init_window_q7.c)
 
 
 target_include_directories(CMSISDSP PRIVATE "DistanceFunctions")

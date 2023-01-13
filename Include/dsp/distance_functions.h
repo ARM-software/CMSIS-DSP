@@ -36,6 +36,7 @@
 #include "dsp/statistics_functions.h"
 #include "dsp/basic_math_functions.h"
 #include "dsp/fast_math_functions.h"
+#include "dsp/matrix_functions.h"
 
 #ifdef   __cplusplus
 extern "C"
@@ -332,8 +333,53 @@ float32_t arm_sokalsneath_distance(const uint32_t *pA, const uint32_t *pB, uint3
 
 float32_t arm_yule_distance(const uint32_t *pA, const uint32_t *pB, uint32_t numberOfBools);
 
+typedef enum
+  {
+    ARM_DTW_SAKOE_CHIBA_WINDOW = 1,
+    /*ARM_DTW_ITAKURA_WINDOW = 2,*/
+    ARM_DTW_SLANTED_BAND_WINDOW = 3
+  } arm_dtw_window;
+
+/**
+ * @brief        Window for dynamic time warping computation
+ * @param[in]    windowType  Type of window
+ * @param[in]    windowSize  Window size 
+ * @param[in,out] pWindow Window
+ * @return Error if window type not recognized
+ *
+ */
+arm_status arm_dtw_init_window_q7(const arm_dtw_window windowType,
+                             const int32_t windowSize,
+                             arm_matrix_instance_q7 *pWindow);
+
+/**
+ * @brief        Dynamic Time Warping distance
+ * @param[in]    pDistance  Distance matrix (Query rows * Template columns)
+ * @param[in]    pWindow  Windowing (can be NULL if no windowing used)
+ * @param[out]   pDTW Temporary cost buffer (same size)
+ * @param[out]   distance Distance
+ * @return Error in case no path can be found with window constraint
+ *
+ */
+
+arm_status arm_dtw_distance_f32(const arm_matrix_instance_f32 *pDistance,
+                               const arm_matrix_instance_q7 *pWindow,
+                               arm_matrix_instance_f32 *pDTW,
+                               float32_t *distance);
 
 
+/**
+ * @brief        Mapping between query and template
+ * @param[in]    pDTW  Cost matrix (Query rows * Template columns)
+ * @param[out]   pPath Warping path in cost matrix 2*nb rows + nb columns)
+ * @param[out]   pathLength Length of path in number of points
+ * @return none
+ * 
+ */
+
+void arm_dtw_path_f32(const arm_matrix_instance_f32 *pDTW,
+                      int16_t *pPath,
+                      uint32_t *pathLength);
 #ifdef   __cplusplus
 }
 #endif

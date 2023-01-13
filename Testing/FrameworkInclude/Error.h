@@ -154,6 +154,8 @@ Macros to use to implement tests.
 
 */
 #define ASSERT_EQ(A,B) Client::assert_equal(__LINE__,A,B)
+#define ASSERT_EQ_PARTIAL(NB,A,B) Client::assert_equal_partial(__LINE__,NB,A,B)
+
 #define ASSERT_NEAR_EQ(A,B,THRESH) Client::assert_near_equal(__LINE__,A,B,THRESH)
 #define ASSERT_REL_ERROR(A,B,THRESH) Client::assert_relative_error(__LINE__,A,B,THRESH)
 #define ASSERT_CLOSE_ERROR(A,B,ABSTHRESH,RELTHRESH) Client::assert_close_error(__LINE__,A,B,ABSTHRESH,RELTHRESH)
@@ -175,6 +177,43 @@ void assert_equal(unsigned long nb,T pa, T pb)
          throw (Error(EQUAL_ERROR,nb));
     }
    
+};
+
+template <typename T> 
+void assert_equal_partial(unsigned long nb,unsigned long nbSamples,AnyPattern<T> &pa, AnyPattern<T> &pb)
+{
+    ASSERT_NOT_EMPTY(pa);
+    ASSERT_NOT_EMPTY(pb);
+    
+    if (pa.nbSamples() < nbSamples)
+    {
+        throw (Error(EQUAL_ERROR,nb));
+    }
+
+    if (pb.nbSamples() < nbSamples)
+    {
+        throw (Error(EQUAL_ERROR,nb));
+    }
+
+    unsigned long i=0;
+    char id[40];
+
+    T *ptrA = pa.ptr();
+    T *ptrB = pb.ptr();
+
+    for(i=0; i < nbSamples; i++)
+    {
+       try
+       {
+          assert_equal(nb,ptrA[i],ptrB[i]);
+       }
+       catch(Error &err)
+       {          
+          sprintf(id," (nb=%lu)",i);
+          strcat(err.details,id);
+          throw(err);
+       }
+    }
 };
 
 template <typename T> 

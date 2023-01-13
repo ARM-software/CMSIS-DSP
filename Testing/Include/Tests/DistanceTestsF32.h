@@ -19,12 +19,19 @@ class DistanceTestsF32:public Client::Suite
             Client::LocalPattern<float32_t> output;
             Client::LocalPattern<float32_t> tmpA;
             Client::LocalPattern<float32_t> tmpB;
+            Client::LocalPattern<q7_t> tmpC;
+
+            Client::LocalPattern<int16_t> outPath;
 
             // Reference patterns are not loaded when we are in dump mode
             Client::RefPattern<float32_t> ref;
+            Client::RefPattern<int16_t> refPath;
 
             int vecDim;
             int nbPatterns;
+
+            int queryLength;
+            int templateLength;
 
 
     };

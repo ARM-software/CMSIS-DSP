@@ -11,6 +11,19 @@ solution:
       - -std=c11 
       - -Ofast 
       - -ffast-math
+      - -Wno-packed 
+      - -Wno-missing-variable-declarations 
+      - -Wno-missing-prototypes 
+      - -Wno-missing-noreturn 
+      - -Wno-sign-conversion 
+      - -Wno-nonportable-include-path 
+      - -Wno-reserved-id-macro 
+      - -Wno-unused-macros 
+      - -Wno-documentation-unknown-command 
+      - -Wno-documentation 
+      - -Wno-license-management 
+      - -Wno-parentheses-equality 
+      - -Wno-reserved-identifier
     - CPP:
       - -fno-rtti 
       - -DNDEBUG 
@@ -34,7 +47,6 @@ solution:
       - ../Include/Tests
   defines:
       - EMBEDDED
-      - NORMALFVP
 
   packs:
     - pack: ARM::CMSIS@5.9.0
@@ -48,37 +60,44 @@ solution:
       device: ARM::SSE-310-MPS3
       defines:
         - CORTEXM
+        - SSE310MPS3
 
     - type: VHT-Corstone-300
       device: ARM::SSE-300-MPS3
       defines:
         - CORTEXM
+        - SSE300MPS3
 
     - type: VHT_M33
       device: ARMCM33_DSP_FP
       defines:
         - CORTEXM
+        - ARMCM33_DSP_FP
 
     - type: VHT_M7
       device: ARMCM7_DP
       defines:
         - CORTEXM
+        - ARMCM7_DP
 
     - type: VHT_M7_UNROLLED
       device: ARMCM7_DP
       defines:
         - CORTEXM
         - ARM_MATH_LOOPUNROLL
+        - ARMCM7_DP
 
     - type: VHT_M4
       device: ARMCM4_FP
       defines:
         - CORTEXM
+        - ARMCM4_FP
 
     - type: VHT_M3
       device: ARMCM3
       defines:
         - CORTEXM
+        - ARMCM3
 
     - type: VHT_M23
       device: ARMCM23
@@ -89,6 +108,7 @@ solution:
       device: ARMCM0P
       defines:
         - CORTEXM
+        - ARMCM0P
 
   build-types:
     - type: Release
