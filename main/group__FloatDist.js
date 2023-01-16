@@ -6,6 +6,7 @@ var group__FloatDist =
     [ "Cityblock (Manhattan) distance", "group__Manhattan.html", "group__Manhattan" ],
     [ "Correlation distance", "group__Correlation.html", "group__Correlation" ],
     [ "Cosine distance", "group__CosineDist.html", "group__CosineDist" ],
+    [ "Dynamic Time Warping Distance", "group__DTW.html", "group__DTW" ],
     [ "Euclidean distance", "group__Euclidean.html", "group__Euclidean" ],
     [ "Jensen-Shannon distance", "group__JensenShannon.html", "group__JensenShannon" ],
     [ "Minkowski distance", "group__Minkowski.html", "group__Minkowski" ]

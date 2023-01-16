@@ -132,6 +132,10 @@ Macros</h2></td></tr>
 <tr class="memitem:a29f839928f4752b73c8858d6dbb55294"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a29f839928f4752b73c8858d6dbb55294">INDEX_MASK</a>&#160;&#160;&#160;0x0000003F</td></tr>
 <tr class="memdesc:a29f839928f4752b73c8858d6dbb55294"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macros required for reciprocal calculation in Normalized LMS.  <a href="utils_8h.html#a29f839928f4752b73c8858d6dbb55294">More...</a><br /></td></tr>
 <tr class="separator:a29f839928f4752b73c8858d6dbb55294"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74e75242132eaabbc1c512488a135926"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a74e75242132eaabbc1c512488a135926">MIN</a>(x,  y)&#160;&#160;&#160;((x) &lt; (y) ? (x) : (y))</td></tr>
+<tr class="separator:a74e75242132eaabbc1c512488a135926"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aacc3ee1a7f283f8ef65cea31f4436a95"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>(x,  y)&#160;&#160;&#160;((x) &gt; (y) ? (x) : (y))</td></tr>
+<tr class="separator:aacc3ee1a7f283f8ef65cea31f4436a95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac3644f84794a8bfdacf39c4b2c2495fc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#ac3644f84794a8bfdacf39c4b2c2495fc">SQ</a>(x)&#160;&#160;&#160;((x) * (x))</td></tr>
 <tr class="separator:ac3644f84794a8bfdacf39c4b2c2495fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad87787b5538eaab218a223b037413930"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#ad87787b5538eaab218a223b037413930">ROUND_UP</a>(N,  S)&#160;&#160;&#160;((((N) + (S) - 1) / (S)) * (S))</td></tr>
@@ -160,6 +164,62 @@ Functions</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">#define INDEX_MASK&#160;&#160;&#160;0x0000003F</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aacc3ee1a7f283f8ef65cea31f4436a95" name="aacc3ee1a7f283f8ef65cea31f4436a95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aacc3ee1a7f283f8ef65cea31f4436a95">&#9670;&nbsp;</a></span>MAX</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MAX</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">x, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">y&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;((x) &gt; (y) ? (x) : (y))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a74e75242132eaabbc1c512488a135926" name="a74e75242132eaabbc1c512488a135926"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74e75242132eaabbc1c512488a135926">&#9670;&nbsp;</a></span>MIN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MIN</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">x, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">y&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;((x) &lt; (y) ? (x) : (y))</td>
         </tr>
       </table>
 </div><div class="memdoc">

@@ -121,11 +121,22 @@ $(document).ready(function(){initNavTree('distance__functions_8h.html',''); init
 
 <div class="header">
   <div class="summary">
+<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">distance_functions.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:aaf7ee1df9b342c53aa5e5ee1e0dde42d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="distance__functions_8h.html#aaf7ee1df9b342c53aa5e5ee1e0dde42d">arm_dtw_window</a> { <br />
+&#160;&#160;<a class="el" href="distance__functions_8h.html#aaf7ee1df9b342c53aa5e5ee1e0dde42dacd2f302702a2f20ba654f81d5b71a650">ARM_DTW_SAKOE_CHIBA_WINDOW</a> = 1
+, <br />
+&#160;&#160;<a class="el" href="distance__functions_8h.html#aaf7ee1df9b342c53aa5e5ee1e0dde42da929c420aaf307e7891bba384ebc3d904">ARM_DTW_SLANTED_BAND_WINDOW</a> = 3
+<br />
+ }</td></tr>
+<tr class="separator:aaf7ee1df9b342c53aa5e5ee1e0dde42d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ga838f0a157454dfd95996691309c3828e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Euclidean.html#ga838f0a157454dfd95996691309c3828e">arm_euclidean_distance_f32</a> (const <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pA, const <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pB, uint32_t <a class="el" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>)</td></tr>
@@ -194,7 +205,35 @@ Functions</h2></td></tr>
 <tr class="memitem:gadf19a7f20bde43c32fd7a62c775a01ac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__BoolDist.html#gadf19a7f20bde43c32fd7a62c775a01ac">arm_yule_distance</a> (const uint32_t *pA, const uint32_t *pB, uint32_t numberOfBools)</td></tr>
 <tr class="memdesc:gadf19a7f20bde43c32fd7a62c775a01ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Yule distance between two vectors.  <a href="group__BoolDist.html#gadf19a7f20bde43c32fd7a62c775a01ac">More...</a><br /></td></tr>
 <tr class="separator:gadf19a7f20bde43c32fd7a62c775a01ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaec9aeb4005af427929bd3dbb9ba4376e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math__types_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DTW.html#gaec9aeb4005af427929bd3dbb9ba4376e">arm_dtw_init_window_q7</a> (const <a class="el" href="distance__functions_8h.html#aaf7ee1df9b342c53aa5e5ee1e0dde42d">arm_dtw_window</a> windowType, const int32_t windowSize, <a class="el" href="structarm__matrix__instance__q7.html">arm_matrix_instance_q7</a> *pWindow)</td></tr>
+<tr class="memdesc:gaec9aeb4005af427929bd3dbb9ba4376e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Window for dynamic time warping computation.  <a href="group__DTW.html#gaec9aeb4005af427929bd3dbb9ba4376e">More...</a><br /></td></tr>
+<tr class="separator:gaec9aeb4005af427929bd3dbb9ba4376e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3054a8c2bd87ec5ab533e1e31363837a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math__types_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DTW.html#ga3054a8c2bd87ec5ab533e1e31363837a">arm_dtw_distance_f32</a> (const <a class="el" href="structarm__matrix__instance__f32.html">arm_matrix_instance_f32</a> *pDistance, const <a class="el" href="structarm__matrix__instance__q7.html">arm_matrix_instance_q7</a> *pWindow, <a class="el" href="structarm__matrix__instance__f32.html">arm_matrix_instance_f32</a> *pDTW, <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *distance)</td></tr>
+<tr class="memdesc:ga3054a8c2bd87ec5ab533e1e31363837a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dynamic Time Warping distance.  <a href="group__DTW.html#ga3054a8c2bd87ec5ab533e1e31363837a">More...</a><br /></td></tr>
+<tr class="separator:ga3054a8c2bd87ec5ab533e1e31363837a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab413c9d09441e997b1d8d74da4b7245f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DTW.html#gab413c9d09441e997b1d8d74da4b7245f">arm_dtw_path_f32</a> (const <a class="el" href="structarm__matrix__instance__f32.html">arm_matrix_instance_f32</a> *pDTW, int16_t *pPath, uint32_t *pathLength)</td></tr>
+<tr class="memdesc:gab413c9d09441e997b1d8d74da4b7245f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mapping between query and template.  <a href="group__DTW.html#gab413c9d09441e997b1d8d74da4b7245f">More...</a><br /></td></tr>
+<tr class="separator:gab413c9d09441e997b1d8d74da4b7245f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="aaf7ee1df9b342c53aa5e5ee1e0dde42d" name="aaf7ee1df9b342c53aa5e5ee1e0dde42d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf7ee1df9b342c53aa5e5ee1e0dde42d">&#9670;&nbsp;</a></span>arm_dtw_window</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="distance__functions_8h.html#aaf7ee1df9b342c53aa5e5ee1e0dde42d">arm_dtw_window</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="aaf7ee1df9b342c53aa5e5ee1e0dde42dacd2f302702a2f20ba654f81d5b71a650" name="aaf7ee1df9b342c53aa5e5ee1e0dde42dacd2f302702a2f20ba654f81d5b71a650"></a>ARM_DTW_SAKOE_CHIBA_WINDOW&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="aaf7ee1df9b342c53aa5e5ee1e0dde42da929c420aaf307e7891bba384ebc3d904" name="aaf7ee1df9b342c53aa5e5ee1e0dde42da929c420aaf307e7891bba384ebc3d904"></a>ARM_DTW_SLANTED_BAND_WINDOW&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

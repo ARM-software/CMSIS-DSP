@@ -1,5 +1,9 @@
 var NAVTREEINDEX3 =
 {
+"group__WindowNUTTALL4C.html":[3,15,1,10],
+"group__WindowNUTTALL4C.html#gaa9331aca61f30f17a8dc26edae6509f6":[3,15,1,10,1],
+"group__WindowNUTTALL4C.html#gabd3379d83aab1c08510ae914fdf409d2":[3,15,1,10,0],
+"group__WindowNormal.html":[3,15,1],
 "group__WindowWELCH.html":[3,15,1,11],
 "group__WindowWELCH.html#ga3c960052a7ab472dcbbf2ae101851675":[3,15,1,11,1],
 "group__WindowWELCH.html#gab2f914fee61a530dd871ad48c4c82ba6":[3,15,1,11,0],
@@ -175,8 +179,8 @@ var NAVTREEINDEX3 =
 "group__weightedsum.html":[3,12,11],
 "group__weightedsum.html#ga06e10e847786d8d96c5459fb36d5c752":[3,12,11,0],
 "group__weightedsum.html#gaffef5e0e3e1d0289e419c23853e20850":[3,12,11,1],
-"index.html":[0],
 "index.html":[],
+"index.html":[0],
 "index.html#example":[0,2],
 "index.html#intro":[0,0],
 "index.html#license":[0,7],
@@ -245,9 +249,5 @@ var NAVTREEINDEX3 =
 "structarm__biquad__casd__df1__inst__q15.html#ae29dfdb736374fcddaeaec4b7770170c":[4,13,3],
 "structarm__biquad__casd__df1__inst__q15.html#ae85d417edcdce57e9a54f8c841580578":[4,13,1],
 "structarm__biquad__casd__df1__inst__q15.html#af59c4ceb94f92d6613492b37e7c949de":[4,13,0],
-"structarm__biquad__casd__df1__inst__q31.html":[4,14],
-"structarm__biquad__casd__df1__inst__q31.html#a74050e9f36542bd56f4052381a82ae8f":[4,14,2],
-"structarm__biquad__casd__df1__inst__q31.html#a80e7fdf4747dbda8eadb2663fb4be317":[4,14,1],
-"structarm__biquad__casd__df1__inst__q31.html#adee4ba3ee8869865af7d8fa08ca913d6":[4,14,3],
-"structarm__biquad__casd__df1__inst__q31.html#aed9c8a6224cd149e8e12b17b25b9b767":[4,14,0]
+"structarm__biquad__casd__df1__inst__q31.html":[4,14]
 };
