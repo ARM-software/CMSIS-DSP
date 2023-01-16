@@ -30,6 +30,13 @@
 #define MODINITNAME cmsisdsp_distance
 
 #include "cmsisdsp_module.h"
+MATRIXFROMNUMPY(f32,float32_t,double,NPY_DOUBLE);
+CREATEMATRIX(f32,float32_t);
+NUMPYARRAYFROMMATRIX(f32,NPY_FLOAT);
+
+MATRIXFROMNUMPY(q7,q7_t,int8_t,NPY_BYTE);
+CREATEMATRIX(q7,q7_t);
+NUMPYARRAYFROMMATRIX(q7,NPY_BYTE);
 
 
 NUMPYVECTORFROMBUFFER(f32,float32_t,NPY_FLOAT);
@@ -209,6 +216,140 @@ INTDIST(sokalmichener_distance);
 INTDIST(sokalsneath_distance);
 INTDIST(yule_distance);
 
+static PyObject *
+cmsis_arm_dtw_init_window_q7(PyObject *obj, 
+                             PyObject *args)
+{
+
+  PyObject *pSrc=NULL; // input
+  int32_t winType;
+  int32_t winSize;
+  arm_matrix_instance_q7 pSrc_converted; // input
+   
+
+  if (PyArg_ParseTuple(args,"iiO",&winType,&winSize,&pSrc));
+  {
+
+    q7MatrixFromNumpy(&pSrc_converted,pSrc);
+    uint32_t row = pSrc_converted.numCols ;
+    uint32_t column = pSrc_converted.numRows ;
+
+    arm_status returnValue = 
+    arm_dtw_init_window_q7(winType,
+                           winSize,
+                           &pSrc_converted
+                           );
+    PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
+    PyObject* dstOBJ=NumpyArrayFromq7Matrix(&pSrc_converted);
+
+    PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,dstOBJ);
+
+    Py_DECREF(theReturnOBJ);
+    Py_DECREF(dstOBJ);
+    return(pythonResult);
+
+  }
+  Py_RETURN_NONE;
+}
+
+static PyObject *
+cmsis_arm_dtw_distance_f32(PyObject *obj, 
+                    PyObject *args)
+{
+
+  PyObject *pDist=NULL; // input
+  arm_matrix_instance_f32 pDist_converted; // input
+   
+  PyObject *pWin=NULL; // input
+  arm_matrix_instance_q7 pWin_converted; // input
+  arm_matrix_instance_q7 *pWinMatrix;
+
+  arm_matrix_instance_f32 dtw_converted;
+
+
+  if (PyArg_ParseTuple(args,"OO",&pDist,&pWin));
+  {
+
+    f32MatrixFromNumpy(&pDist_converted,pDist);
+    if (pWin != Py_None)
+    {
+       q7MatrixFromNumpy(&pWin_converted,pWin);
+       pWinMatrix = &pWin_converted;
+    }
+    else
+    {
+        pWinMatrix = NULL;
+    }
+
+    uint32_t column = pDist_converted.numCols ;
+    uint32_t row = pDist_converted.numRows ;
+    createf32Matrix(&dtw_converted,row,column);
+    float32_t distance;
+
+    arm_status returnValue = 
+    arm_dtw_distance_f32(&pDist_converted,
+                         pWinMatrix,
+                         &dtw_converted,
+                         &distance
+                         );
+
+    
+    PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
+    PyObject* distOBJ=Py_BuildValue("f",distance);
+
+    PyObject* dstOBJ=NumpyArrayFromf32Matrix(&dtw_converted);
+
+
+    PyObject *pythonResult = Py_BuildValue("OOO",theReturnOBJ,distOBJ,dstOBJ);
+
+    Py_DECREF(theReturnOBJ);
+    Py_DECREF(distOBJ);
+
+    FREEMATRIX(&pDist_converted);
+    if (pWinMatrix)
+    {
+        FREEMATRIX(pWinMatrix);
+    }
+    Py_DECREF(dstOBJ);
+
+    return(pythonResult);
+
+  }
+  Py_RETURN_NONE;
+}
+
+static PyObject *
+cmsis_arm_dtw_path_f32(PyObject *obj, 
+                       PyObject *args)
+{
+  PyObject *pCost=NULL; // input
+  arm_matrix_instance_f32 pCost_converted; // input
+  int16_t *pDst=NULL; // output
+
+  if (PyArg_ParseTuple(args,"O",&pCost))
+  {
+     f32MatrixFromNumpy(&pCost_converted,pCost);
+
+     uint32_t pathLength;
+     int32_t blockSize;
+     blockSize=2*(pCost_converted.numRows+pCost_converted.numCols);
+     pDst=PyMem_Malloc(sizeof(int16_t)*blockSize);
+
+
+     arm_dtw_path_f32(&pCost_converted,
+                      pDst,
+                      &pathLength);
+
+     INT16ARRAY1(pDstOBJ,2*pathLength,pDst);
+
+     PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
+
+     FREEMATRIX(&pCost_converted);
+     Py_DECREF(pDstOBJ);
+     return(pythonResult);
+  }
+
+}
 
 static PyMethodDef CMSISDSPMethods[] = {
 
@@ -240,6 +381,10 @@ static PyMethodDef CMSISDSPMethods[] = {
     {"arm_sokalmichener_distance",cmsis_arm_sokalmichener_distance, METH_VARARGS,""},
     {"arm_sokalsneath_distance",cmsis_arm_sokalsneath_distance, METH_VARARGS,""},
     {"arm_yule_distance",cmsis_arm_yule_distance, METH_VARARGS,""},
+
+    {"arm_dtw_init_window_q7",  cmsis_arm_dtw_init_window_q7, METH_VARARGS,""},
+    {"arm_dtw_distance_f32",  cmsis_arm_dtw_distance_f32, METH_VARARGS,""},
+    {"arm_dtw_path_f32",  cmsis_arm_dtw_path_f32, METH_VARARGS,""},
 
     {"error_out", (PyCFunction)error_out, METH_NOARGS, NULL},
     {NULL, NULL, 0, NULL}        /* Sentinel */

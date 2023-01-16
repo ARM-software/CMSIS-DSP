@@ -24,7 +24,7 @@ cmsis_dsp_version="1.15.0"
 
 
 # CMSIS-DSP Commit hash used to build the wrapper
-commit_hash="4c2501f71b9e021ea1f914df865890f16d539172"
+commit_hash=" b46a2f86b5c9d8247ea5417fc0e0022876b80dcf"
 
 # True if development version of CMSIS-DSP used
 # (So several CMSIS-DSP versions may have same version number hence the commit hash)
@@ -35,3 +35,7 @@ __all__ = ["datatype", "fixedpoint", "mfcc"]
 # Default values
 DEFAULT_HOUSEHOLDER_THRESHOLD_F64=1.0e-16
 DEFAULT_HOUSEHOLDER_THRESHOLD_F32=1.0e-12
+
+# DTW Window Types
+ARM_DTW_SAKOE_CHIBA_WINDOW = 1
+ARM_DTW_SLANTED_BAND_WINDOW = 3

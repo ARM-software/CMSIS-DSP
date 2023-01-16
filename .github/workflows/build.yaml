@@ -68,7 +68,7 @@ jobs:
 
       - name: Archive documentation
         if: ${{ github.event_name == 'pull_request' }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: documentation
           path: Documentation/html/
@@ -92,7 +92,7 @@ jobs:
       
       - name: Archive pack
         if: ${{ github.event_name != 'release' }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           path: output/*.pack
           retention-days: 1
@@ -108,7 +108,7 @@ jobs:
           tag: ${{ github.ref }}
           overwrite: true
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         if: ${{ github.event_name == 'release' || github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
         with:
           ref: gh-pages

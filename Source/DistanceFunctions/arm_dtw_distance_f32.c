@@ -63,11 +63,11 @@
 
 
 /**
- * @brief        Dynamic Time Warping distance
- * @param[in]    pDistance  Distance matrix (Query rows * Template columns)
- * @param[in]    pWindow  Windowing matrix (can be NULL if no windowing used)
- * @param[out]   pDTW Temporary cost buffer (same size)
- * @param[out]   distance Distance
+ * @brief         Dynamic Time Warping distance
+ * @param[in]     pDistance  Distance matrix (Query rows * Template columns)
+ * @param[in]     pWindow  Windowing matrix (can be NULL if no windowing used)
+ * @param[out]    pDTW Temporary cost buffer (same size)
+ * @param[out]    distance Distance
  * @return ARM_MATH_ARGUMENT_ERROR in case no path can be found with window constraint
  *
  * @par Windowing matrix

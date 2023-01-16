@@ -35,7 +35,6 @@
 #endif
 
 #include <Python.h>
-#define MAX(A,B) ((A) < (B) ? (B) : (A))
 
 #define CAT1(A,B) A##B
 #define CAT(A,B) CAT1(A,B)

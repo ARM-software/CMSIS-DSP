@@ -2186,6 +2186,7 @@ cmsis_arm_mat_solve_upper_triangular_f64(PyObject *obj, PyObject *args)
   Py_RETURN_NONE;
 }
 
+
 static PyMethodDef CMSISDSPMethods[] = {
 
 {"arm_mat_add_f32",  cmsis_arm_mat_add_f32, METH_VARARGS,""},
@@ -2238,6 +2239,7 @@ static PyMethodDef CMSISDSPMethods[] = {
 {"arm_householder_f64",  cmsis_arm_householder_f64, METH_VARARGS,""},
 {"arm_mat_qr_f32",  cmsis_arm_mat_qr_f32, METH_VARARGS,""},
 {"arm_mat_qr_f64",  cmsis_arm_mat_qr_f64, METH_VARARGS,""},
+
 {"error_out", (PyCFunction)error_out, METH_NOARGS, NULL},
 
     {NULL, NULL, 0, NULL}        /* Sentinel */

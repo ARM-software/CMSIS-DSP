@@ -349,15 +349,15 @@ typedef enum
  *
  */
 arm_status arm_dtw_init_window_q7(const arm_dtw_window windowType,
-                             const int32_t windowSize,
-                             arm_matrix_instance_q7 *pWindow);
+                                  const int32_t windowSize,
+                                  arm_matrix_instance_q7 *pWindow);
 
 /**
- * @brief        Dynamic Time Warping distance
- * @param[in]    pDistance  Distance matrix (Query rows * Template columns)
- * @param[in]    pWindow  Windowing (can be NULL if no windowing used)
- * @param[out]   pDTW Temporary cost buffer (same size)
- * @param[out]   distance Distance
+ * @brief         Dynamic Time Warping distance
+ * @param[in]     pDistance  Distance matrix (Query rows * Template columns)
+ * @param[in]     pWindow  Windowing (can be NULL if no windowing used)
+ * @param[out]    pDTW Temporary cost buffer (same size)
+ * @param[out]    distance Distance
  * @return Error in case no path can be found with window constraint
  *
  */
@@ -371,7 +371,7 @@ arm_status arm_dtw_distance_f32(const arm_matrix_instance_f32 *pDistance,
 /**
  * @brief        Mapping between query and template
  * @param[in]    pDTW  Cost matrix (Query rows * Template columns)
- * @param[out]   pPath Warping path in cost matrix 2*nb rows + nb columns)
+ * @param[out]   pPath Warping path in cost matrix 2*(nb rows + nb columns)
  * @param[out]   pathLength Length of path in number of points
  * @return none
  * 

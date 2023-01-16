@@ -239,6 +239,12 @@ The wrapper is now containing the compute graph Python scripts and you should re
 
 # Change history
 
+## Version 1.10.0:
+
+* Dynamic Time Warping API
+* New asynchronous mode for the compute graph
+(see [compute graph documentation](https://github.com/ARM-software/CMSIS-DSP/tree/main/ComputeGraph) for more details.
+
 ## Version 1.9.3:
 
 * Corrected real FFTs in the wrapper
