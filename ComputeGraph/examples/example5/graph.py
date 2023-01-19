@@ -1,6 +1,6 @@
 import numpy as np 
 
-from cmsisdsp.cg.static.scheduler import *
+from cmsisdsp.cg.scheduler import *
 
 
 from sharedconfig import *

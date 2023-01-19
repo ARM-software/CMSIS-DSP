@@ -25,16 +25,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ############################################
-from cmsisdsp.cg.static.nodes.simu import *
+from cmsisdsp.cg.nodes.simu import *
 from custom import *
 
 # Host only nodes
-from cmsisdsp.cg.static.nodes.host.NumpySink import *
-from cmsisdsp.cg.static.nodes.host.WavSource import *
+from cmsisdsp.cg.nodes.host.NumpySink import *
+from cmsisdsp.cg.nodes.host.WavSource import *
 
 # Embedded nodes
-from cmsisdsp.cg.static.nodes.StereoToMono import *
-from cmsisdsp.cg.static.nodes.MFCC import *
+from cmsisdsp.cg.nodes.InterleavedStereoToMono import *
+from cmsisdsp.cg.nodes.MFCC import *
 
 
 

@@ -1,4 +1,4 @@
-from cmsisdsp.cg.static.nodes.simu import *
+from cmsisdsp.cg.nodes.simu import *
 
 import numpy as np 
 import cmsisdsp as dsp

@@ -49,7 +49,7 @@ The CMSIS-DSP Compute Graph Tools are a set of Python scripts and C++ classes wi
 - The Python script will generate a C++ implementation of the static schedule 
 - The Python script can also generate a Python implementation of the static schedule (for use with the CMSIS-DSP Python wrapper)
 
-
+(There is no FIFO underflow or overflow due to the scheduling. If there are not enough cycles to run the processing, the real-time will be broken and the solution won't work But this problem is independent from the scheduling itself. )
 
 ## Why it is useful
 
@@ -93,6 +93,10 @@ The schedule is (the size of the FIFOs after the execution of the node displayed
 
 At the end, both FIFOs are empty so the schedule can be run again : it is periodic !
 
+The latest version of the compute graph also supports dynamic scheduling.
+
+![supported_configs](documentation/supported_configs.png)
+
 ## How to use the static scheduler generator
 
 First, you must install the `CMSIS-DSP` PythonWrapper:
@@ -129,6 +133,8 @@ Examples 5 and 6 are showing how to use the CMSIS-DSP MFCC with a synchronous da
 Example 7 is communicating with OpenModelica. The Modelica model (PythonTest) in the example is implementing a Larsen effect.
 
 Example 8 is showing how to define a new custom datatype for the IOs of the nodes. Example 8 is also demonstrating a new feature where an IO can be connected up to 3 inputs and the static scheduler will automatically generate duplicate nodes.
+
+
 
 ## Frequently asked questions:
 
@@ -181,9 +187,59 @@ The drawback of cyclo static scheduling is that the schedule length is increased
 
 Since schedule tend to be bigger with cyclo static scheduling, a new code generation mode has been introduced and is enabled by default : now instead of having a sequence of function calls, the schedule is coded by an array of number and there is a switch / case to select the function to be called.
 
+## Dynamic Data Flow
+
+Versions of the compute graph corresponding to CMSIS-DSP Version >= 1.14.4 and Python wrapper version >= 1.10.0 are supporting  a new dynamic / asynchronous mode.
+
+ With a dynamic flow, the flow of data is potentially changing at each execution. The IOs can generate or consume a different amount of data at each execution of their node (including no data).
+
+This can be useful for sample oriented use cases where not all samples are available but a processing must nevertheless take place each time a subset of samples is available (samples could come from sensors).
+
+With a dynamic flow and scheduling, there is no more any way to ensure that there won't be FIFO underflow of overflow due to scheduling. As consequence, the nodes must be able to check for this problem and decide what to do.
+
+* A sink may decide to generate fake data in case of FIFO underflow
+* A source may decide to skip some data in case of FIFO overflow
+* Another node may decide to do nothing and skip the execution
+* Another node may decide to raise an error.
+
+With dynamic scheduling, a node must implement the function `prepareForRunning` and decide what to do.
+
+3 error / status codes are reserved for this. They are defined in the header `cg_status.h`. This header is not included by default, but if you define you own error codes, they should be coherent with `cg_status` and use the same values for the 3 status / error codes which are used in dynamic mode:
+
+* `CG_SUCCESS`  = 0 : Node can execute
+* `CG_SKIP_EXECUTION` = -5 : Node will skip the execution
+* `CG_BUFFER_ERROR` = -6 : Unrecoverable error due to FIFO underflow / overflow (only raised in pure function like CMSIS-DSP ones called directly)
+
+Any other returned value will stop the execution.
+
+The dynamic mode (also named asynchronous), is enabled with option : `asynchronous`
+
+The system will still compute a scheduling and FIFO sizes as if the flow was static. We can see the static flow as an average of the dynamic flow. In dynamic mode, the FIFOs may need to be bigger than the ones computed in static mode.  The static estimation is giving a first idea of what the size of the FIFOs should be. The size can be increased by specifying a percent increase with option `FIFOIncrease`.
+
+For pure compute functions (like CMSIS-DSP ones), which are not packaged into a C++ class, there is no way to customize the decision logic in case of a problem with FIFO. There is a global option : `asyncDefaultSkip`. 
+
+When `true`, a pure function that cannot run will just skip the execution. With `false`, the execution will stop. For any other decision algorithm, the pure function needs to be packaged in a C++ class.
+
+`Duplicate` nodes are skipping the execution in case of problems with FIFOs. If it is not the wanted behavior, you can either:
+
+* Replace the Duplicate class by a custom one by changing the class name with option `duplicateNodeClassName` on the graph.
+* Don't use the automatic duplication feature and introduce your duplicate nodes in the compute graph
+
+When you don't want to generate or consume data in a node, just don't call the functions `getReadBuffer` or `getWriteBuffer` for your IOs.
+
 ## Options
 
 Several options and be used to control the schedule generation. Some options are used by the scheduling algorithm and other options are used by the code generator:
+
+### Options for the graph
+
+#### defaultFIFOClass (default = "FIFO")
+
+Class used for FIFO by default. Can also be customized for each connection (`connect` of `connectWithDelay` call)
+
+#### duplicateNodeClassName(default="Duplicate")
+
+Prefix used to generate the duplicate node classes like `Duplicate2`, `Duplicate3` ...
 
 ### Options for the scheduling
 
@@ -234,6 +290,8 @@ Name of the scheduler function used in the generated code.
 Prefix to add before the FIFO buffer definition. Those buffers are not static and are global. If you want to use several schedulers in your code, the buffer names used by each should be different.
 
 Another possibility would be to make the buffer static by redefining the macro `CG_BEFORE_BUFFER`
+
+
 
 #### Options for C Code Generation only
 
@@ -288,6 +346,30 @@ By default, the scheduler function is callable from C. When false, it is a stand
 ##### CMSISDSP (default = True)
 
 If you don't use any of the datatypes or functions of the CMSIS-DSP, you don't need to include the `arm_math.h` in the scheduler file. This option can thus be set to `False`.
+
+##### asynchronous (default = False)
+
+When true, the scheduling is for a dynamic / asynchronous flow. A node may not always produce or consume the same amount of data. As consequence, a scheduling can fail. Each node needs to implement a `prepareForRunning` function to identify and recover from FIFO underflows and overflows.
+
+A synchronous schedule is used as start and should describe the average case.
+
+This implies `codeArray` and `switchCase`. This disables `memoryOptimizations`.
+
+Synchronous FIFOs that are just buffers will be considered as FIFOs in asynchronous mode.
+
+##### FIFOIncrease (default 0)
+
+In case of asynchronous scheduling, the FIFOs may need to be bigger than what is computed assuming a synchronous scheduling. This option is used to increase the FIFO size. It represents a percent increase.
+
+For instance, a value of 10 means the FIFO will have their size updated from `oldSize` to `1.1 * oldSize` which is ` (1 + 10%)* oldSize`
+
+##### asyncDefaultSkip (default True)
+
+Behavior of a pure function (like CMSIS-DSP) in asynchronous mode. When `True`, the execution is skipped if the function can't be executed. If `False`, an error is raised.
+
+If another error recovery is needed, the function must be packaged into a C++ class to implement a `prepareForRun` function.
+
+
 
 #### Options for Python code generation only
 

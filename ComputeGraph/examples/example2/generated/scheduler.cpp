@@ -72,6 +72,7 @@ The support classes and code is covered by CMSIS-DSP license.
 
 CG_AFTER_INCLUDES
 
+
 /*
 
 Description of the scheduling. 
@@ -153,15 +154,15 @@ uint32_t scheduler(int *error,int opt1,int opt2)
     /*
     Create FIFOs objects
     */
-    FIFO<float32_t,FIFOSIZE0,0> fifo0(buf1,10);
-    FIFO<float32_t,FIFOSIZE1,1> fifo1(buf2);
-    FIFO<float32_t,FIFOSIZE2,1> fifo2(buf3);
-    FIFO<float32_t,FIFOSIZE3,1> fifo3(buf4);
-    FIFO<float32_t,FIFOSIZE4,1> fifo4(buf5);
-    FIFO<float32_t,FIFOSIZE5,0> fifo5(buf6);
-    FIFO<float32_t,FIFOSIZE6,1> fifo6(buf7);
-    FIFO<float32_t,FIFOSIZE7,0> fifo7(buf8);
-    FIFO<float32_t,FIFOSIZE8,1> fifo8(buf9);
+    FIFO<float32_t,FIFOSIZE0,0,0> fifo0(buf1,10);
+    FIFO<float32_t,FIFOSIZE1,1,0> fifo1(buf2);
+    FIFO<float32_t,FIFOSIZE2,1,0> fifo2(buf3);
+    FIFO<float32_t,FIFOSIZE3,1,0> fifo3(buf4);
+    FIFO<float32_t,FIFOSIZE4,1,0> fifo4(buf5);
+    FIFO<float32_t,FIFOSIZE5,0,0> fifo5(buf6);
+    FIFO<float32_t,FIFOSIZE6,1,0> fifo6(buf7);
+    FIFO<float32_t,FIFOSIZE7,0,0> fifo7(buf8);
+    FIFO<float32_t,FIFOSIZE8,1,0> fifo8(buf9);
 
     CG_BEFORE_NODE_INIT;
     /* 
@@ -183,6 +184,7 @@ uint32_t scheduler(int *error,int opt1,int opt2)
         for(unsigned long id=0 ; id < 302; id++)
         {
             CG_BEFORE_NODE_EXECUTION;
+
             switch(schedule[id])
             {
                 case 0:
@@ -193,42 +195,48 @@ uint32_t scheduler(int *error,int opt1,int opt2)
 
                 case 1:
                 {
-                   {
-         float32_t* i0;
-         float32_t* i1;
-         float32_t* o2;
-         i0=fifo3.getReadBuffer(160);
-         i1=fifo4.getReadBuffer(160);
-         o2=fifo5.getWriteBuffer(160);
-         arm_add_f32(i0,i1,o2,160);
-         cgStaticError = 0;
-}
+                   
+                  {
+
+                   float32_t* i0;
+                   float32_t* i1;
+                   float32_t* o2;
+                   i0=fifo3.getReadBuffer(160);
+                   i1=fifo4.getReadBuffer(160);
+                   o2=fifo5.getWriteBuffer(160);
+                   arm_add_f32(i0,i1,o2,160);
+                   cgStaticError = 0;
+                  }
                 }
                 break;
 
                 case 2:
                 {
-                   {
-         float32_t* i0;
-         float32_t* o2;
-         i0=fifo1.getReadBuffer(160);
-         o2=fifo3.getWriteBuffer(160);
-         arm_scale_f32(i0,HALF,o2,160);
-         cgStaticError = 0;
-}
+                   
+                  {
+
+                   float32_t* i0;
+                   float32_t* o2;
+                   i0=fifo1.getReadBuffer(160);
+                   o2=fifo3.getWriteBuffer(160);
+                   arm_scale_f32(i0,HALF,o2,160);
+                   cgStaticError = 0;
+                  }
                 }
                 break;
 
                 case 3:
                 {
-                   {
-         float32_t* i0;
-         float32_t* o2;
-         i0=fifo2.getReadBuffer(160);
-         o2=fifo4.getWriteBuffer(160);
-         arm_scale_f32(i0,HALF,o2,160);
-         cgStaticError = 0;
-}
+                   
+                  {
+
+                   float32_t* i0;
+                   float32_t* o2;
+                   i0=fifo2.getReadBuffer(160);
+                   o2=fifo4.getWriteBuffer(160);
+                   arm_scale_f32(i0,HALF,o2,160);
+                   cgStaticError = 0;
+                  }
                 }
                 break;
 

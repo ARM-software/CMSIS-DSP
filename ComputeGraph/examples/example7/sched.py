@@ -10,7 +10,7 @@ import sys
 
 import numpy as np
 import cmsisdsp as dsp
-from cmsisdsp.cg.static.nodes.simu import *
+from cmsisdsp.cg.nodes.simu import *
 from appnodes import * 
 from custom import *
 

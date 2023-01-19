@@ -1,6 +1,6 @@
 import numpy as np 
 
-from cmsisdsp.cg.static.scheduler import *
+from cmsisdsp.cg.scheduler import *
 
 
 FS=16000
@@ -53,6 +53,7 @@ conf.debugLimit=40
 #conf.memoryOptimization=True
 
 #conf.dumpSchedule = True 
+
 sched = g.computeSchedule(conf)
 #print(sched.schedule)
 print("Schedule length = %d" % sched.scheduleLength)

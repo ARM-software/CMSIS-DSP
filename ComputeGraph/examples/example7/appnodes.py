@@ -25,17 +25,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ############################################
-from cmsisdsp.cg.static.nodes.simu import *
+from cmsisdsp.cg.nodes.simu import *
 from custom import *
 
-from cmsisdsp.cg.static.nodes.host.FileSink import *
-from cmsisdsp.cg.static.nodes.host.FileSource import *
-from cmsisdsp.cg.static.nodes.CFFT import *
-from cmsisdsp.cg.static.nodes.ICFFT import *
-from cmsisdsp.cg.static.nodes.ToComplex import *
-from cmsisdsp.cg.static.nodes.ToReal import *
+from cmsisdsp.cg.nodes.host.FileSink import *
+from cmsisdsp.cg.nodes.host.FileSource import *
+from cmsisdsp.cg.nodes.CFFT import *
+from cmsisdsp.cg.nodes.ICFFT import *
+from cmsisdsp.cg.nodes.ToComplex import *
+from cmsisdsp.cg.nodes.ToReal import *
 
-from cmsisdsp.cg.static.nodes.host.VHTCGSTATIC import *
+from cmsisdsp.cg.nodes.host.VHTCGSTATIC import *
 
 
 

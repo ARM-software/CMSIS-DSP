@@ -1,4 +1,4 @@
-from cmsisdsp.cg.static.scheduler import *
+from cmsisdsp.cg.scheduler import *
 
 ### Define new types of Nodes 
 

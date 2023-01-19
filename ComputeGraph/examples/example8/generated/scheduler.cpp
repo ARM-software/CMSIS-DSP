@@ -72,6 +72,7 @@ The support classes and code is covered by CMSIS-DSP license.
 
 CG_AFTER_INCLUDES
 
+
 /*
 
 Description of the scheduling. 
@@ -131,12 +132,12 @@ uint32_t scheduler(int *error,int someVariable)
     /*
     Create FIFOs objects
     */
-    FIFO<complex,FIFOSIZE0,0> fifo0(buf1);
-    FIFO<complex,FIFOSIZE1,1> fifo1(buf2);
-    FIFO<complex,FIFOSIZE2,1> fifo2(buf3);
-    FIFO<complex,FIFOSIZE3,1> fifo3(buf4);
-    FIFO<complex,FIFOSIZE4,1> fifo4(buf5);
-    FIFO<complex,FIFOSIZE5,1> fifo5(buf6);
+    FIFO<complex,FIFOSIZE0,0,0> fifo0(buf1);
+    FIFO<complex,FIFOSIZE1,1,0> fifo1(buf2);
+    FIFO<complex,FIFOSIZE2,1,0> fifo2(buf3);
+    FIFO<complex,FIFOSIZE3,1,0> fifo3(buf4);
+    FIFO<complex,FIFOSIZE4,1,0> fifo4(buf5);
+    FIFO<complex,FIFOSIZE5,1,0> fifo5(buf6);
 
     CG_BEFORE_NODE_INIT;
     /* 
@@ -159,6 +160,7 @@ uint32_t scheduler(int *error,int someVariable)
         for(unsigned long id=0 ; id < 37; id++)
         {
             CG_BEFORE_NODE_EXECUTION;
+
             switch(schedule[id])
             {
                 case 0:
