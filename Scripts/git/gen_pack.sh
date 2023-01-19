@@ -110,20 +110,20 @@ PACK_DIRS="
 # Specify file names to be added to pack base directory
 PACK_BASE_FILES="
   LICENSE.txt
-  ComputeGraph/cg/static/src/GenericNodes.h
-  ComputeGraph/cg/static/nodes/cpp/CFFT.h
-  ComputeGraph/cg/static/nodes/cpp/ICFFT.h
-  ComputeGraph/cg/static/nodes/cpp/InterleavedStereoToMono.h
-  ComputeGraph/cg/static/nodes/cpp/MFCC.h
-  ComputeGraph/cg/static/nodes/cpp/NullSink.h
-  ComputeGraph/cg/static/nodes/cpp/OverlapAndAdd.h
-  ComputeGraph/cg/static/nodes/cpp/SlidingBuffer.h
-  ComputeGraph/cg/static/nodes/cpp/StreamingSink.h
-  ComputeGraph/cg/static/nodes/cpp/StreamingSource.h
-  ComputeGraph/cg/static/nodes/cpp/ToComplex.h
-  ComputeGraph/cg/static/nodes/cpp/ToReal.h
-  ComputeGraph/cg/static/nodes/cpp/Unzip.h
-  ComputeGraph/cg/static/nodes/cpp/Zip.h
+  ComputeGraph/cg/src/GenericNodes.h
+  ComputeGraph/cg/nodes/cpp/CFFT.h
+  ComputeGraph/cg/nodes/cpp/ICFFT.h
+  ComputeGraph/cg/nodes/cpp/InterleavedStereoToMono.h
+  ComputeGraph/cg/nodes/cpp/MFCC.h
+  ComputeGraph/cg/nodes/cpp/NullSink.h
+  ComputeGraph/cg/nodes/cpp/OverlapAndAdd.h
+  ComputeGraph/cg/nodes/cpp/SlidingBuffer.h
+  ComputeGraph/cg/nodes/cpp/StreamingSink.h
+  ComputeGraph/cg/nodes/cpp/StreamingSource.h
+  ComputeGraph/cg/nodes/cpp/ToComplex.h
+  ComputeGraph/cg/nodes/cpp/ToReal.h
+  ComputeGraph/cg/nodes/cpp/Unzip.h
+  ComputeGraph/cg/nodes/cpp/Zip.h
   ComputeGraph/cg.scvd
 "
 
