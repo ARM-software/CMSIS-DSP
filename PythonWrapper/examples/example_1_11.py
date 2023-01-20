@@ -7,7 +7,6 @@ from colorama import init,Fore, Back, Style
 from numpy.testing import assert_allclose
 
 from numpy.linalg import norm
-from dtw import *
 
 import matplotlib
 import matplotlib as mpl

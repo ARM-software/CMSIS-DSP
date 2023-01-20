@@ -239,6 +239,10 @@ The wrapper is now containing the compute graph Python scripts and you should re
 
 # Change history
 
+## Version 1.9.5:
+
+Same as 1.9.4 but will work in Google Colab.
+
 ## Version 1.9.4:
 
 * Dynamic Time Warping API

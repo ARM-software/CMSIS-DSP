@@ -27,7 +27,14 @@
  */
 #ifndef CMSISMODULE_H
 #define CMSISMODULE_H
-#define NPY_NO_DEPRECATED_API NPY_1_15_API_VERSION
+#define NPY_NO_DEPRECATED_API NPY_1_21_API_VERSION
+
+#include <numpy/numpyconfig.h>
+
+// API version used on google colab
+#if (NPY_API_VERSION != 0x0000000E )
+#error("Error building with wrong NumPy API version")
+#endif
 
 #ifdef WIN
 #pragma warning( disable : 4013 ) 
