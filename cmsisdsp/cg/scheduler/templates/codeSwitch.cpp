@@ -55,7 +55,10 @@ static unsigned int schedule[{{schedLen}}]=
             }
 
             if (cgStaticError == CG_SKIP_EXECUTION_ID_CODE)
-                continue;
+            { 
+              cgStaticError = 0;
+              continue;
+            }
 
             {% if config.eventRecorder -%}
             if (cgStaticError<0)

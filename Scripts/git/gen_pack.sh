@@ -111,6 +111,7 @@ PACK_DIRS="
 PACK_BASE_FILES="
   LICENSE.txt
   ComputeGraph/cg/src/GenericNodes.h
+  ComputeGraph/cg/src/cg_status.h
   ComputeGraph/cg/nodes/cpp/CFFT.h
   ComputeGraph/cg/nodes/cpp/ICFFT.h
   ComputeGraph/cg/nodes/cpp/InterleavedStereoToMono.h
