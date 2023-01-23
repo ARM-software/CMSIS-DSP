@@ -26,7 +26,7 @@ Let's analyze the file `graph.py` in the `example1` folder. This file is describ
 First, we add some path so that the example can find the CG static packages when run from example1 folder.
 
 ```python
-from cmsisdsp.cg.static.scheduler import *
+from cmsisdsp.cg.scheduler import *
 ```
 
 
@@ -93,7 +93,7 @@ class ProcessingNode(Node):
 
 We just define its type.
 
-Once it is done, we can start creating instance of those nodes. We will also need to define the type for the samples (float32 in this example). The functions and constants are defined in `cg.static.types`.
+Once it is done, we can start creating instance of those nodes. We will also need to define the type for the samples (float32 in this example). The functions and constants are defined in `cg.types`.
 
 ```python
 floatType=CType(F32)

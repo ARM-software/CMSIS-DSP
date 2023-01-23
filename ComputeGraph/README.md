@@ -110,7 +110,7 @@ The functions and classes inside the cmsisdsp wrapper can be used to describe an
 To start, you can create a `graph.py` file and include :
 
 ```python
-from cmsisdsp.cg.static.scheduler import *
+from cmsisdsp.cg.scheduler import *
 ```
 
 In this file, you can describe new type of blocks that you need in the compute graph if they are not provided by the python package by default.

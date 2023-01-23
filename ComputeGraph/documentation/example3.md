@@ -98,7 +98,7 @@ The run function is applying the `arm_cfft_f32`. Since this function is modifyin
 
 
 
-This node is provided in `cg/static/nodes/cpp` so no need to define it. You can just use it by including the right headers.
+This node is provided in `cg/nodes/cpp` so no need to define it. You can just use it by including the right headers.
 
 It can be used by just doing in your `AppNodes.h` file :
 
@@ -109,6 +109,6 @@ It can be used by just doing in your `AppNodes.h` file :
 From Python side it would be:
 
 ```python
-from cmsisdsp.cg.static.nodes.CFFT import *
+from cmsisdsp.cg.nodes.CFFT import *
 ```
 
