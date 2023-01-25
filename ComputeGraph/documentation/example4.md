@@ -30,12 +30,12 @@ This file is defining the new nodes which were used in `graph.py`. In `graph.py`
 In `appnodes.py` we including new kind of nodes for simulation purpose:
 
 ```python
-from cmsisdsp.cg.nodes.CFFT import *
+from cmsisdsp.cg.scheduler import *
 ```
 
 
 
-The CFFT is vey similar to the C++ version of example 3:
+The CFFT is very similar to the C++ version of example 3. But there is no `prepareForRunning`. Dynamic / asynchronous mode is not implemented for Python.
 
 ```python
 class CFFT(GenericNode):

@@ -76,8 +76,20 @@ public:
          arm_status status;
          status=arm_cfft_init_f32(&sfft,inputSize>>1);
     };
+    
+    int prepareForRunning() override
+    {
+        if (this->willOverflow() ||
+            this->willUnderflow()
+           )
+        {
+           return(CG_SKIP_EXECUTION_ID_CODE); // Skip execution
+        }
 
-    int run(){
+        return(0);
+    };
+
+    int run() override {
         IN *a=this->getReadBuffer();
         OUT *b=this->getWriteBuffer();
         memcpy((void*)b,(void*)a,outputSize*sizeof(IN));
@@ -109,6 +121,7 @@ It can be used by just doing in your `AppNodes.h` file :
 From Python side it would be:
 
 ```python
-from cmsisdsp.cg.nodes.CFFT import *
+from cmsisdsp.cg.scheduler import *
 ```
 
+The scheduler module is automatically including the default nodes.

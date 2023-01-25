@@ -142,14 +142,14 @@ uint32_t scheduler(int *error)
     /*
     Create FIFOs objects
     */
-    FIFO<float32_t,FIFOSIZE0,0,1> fifo0(buf1);
-    FIFO<float32_t,FIFOSIZE1,0,1> fifo1(buf2);
-    FIFO<float32_t,FIFOSIZE2,0,1> fifo2(buf3);
-    FIFO<float32_t,FIFOSIZE3,0,1> fifo3(buf4);
-    FIFO<float32_t,FIFOSIZE4,0,1> fifo4(buf5);
-    FIFO<float32_t,FIFOSIZE5,0,1> fifo5(buf6);
-    FIFO<float32_t,FIFOSIZE6,0,1> fifo6(buf7);
-    FIFO<float32_t,FIFOSIZE7,0,1> fifo7(buf8);
+    FIFO<float32_t,FIFOSIZE0,0,0> fifo0(buf1);
+    FIFO<float32_t,FIFOSIZE1,1,0> fifo1(buf2);
+    FIFO<float32_t,FIFOSIZE2,1,0> fifo2(buf3);
+    FIFO<float32_t,FIFOSIZE3,1,0> fifo3(buf4);
+    FIFO<float32_t,FIFOSIZE4,1,0> fifo4(buf5);
+    FIFO<float32_t,FIFOSIZE5,1,0> fifo5(buf6);
+    FIFO<float32_t,FIFOSIZE6,1,0> fifo6(buf7);
+    FIFO<float32_t,FIFOSIZE7,0,0> fifo7(buf8);
 
     CG_BEFORE_NODE_INIT;
     /* 
@@ -173,84 +173,6 @@ uint32_t scheduler(int *error)
         for(unsigned long id=0 ; id < 25; id++)
         {
             CG_BEFORE_NODE_EXECUTION;
-
-            cgStaticError = 0;
-            switch(schedule[id])
-            {
-                case 0:
-                {
-                                        
-                    bool canRun=true;
-                    canRun &= !fifo1.willUnderflowWith(256);
-                    canRun &= !fifo2.willOverflowWith(256);
-
-                    if (!canRun)
-                    {
-                      cgStaticError = CG_SKIP_EXECUTION_ID_CODE;
-                    }
-                    else
-                    {
-                        cgStaticError = 0;
-                    }
-                }
-                break;
-
-                case 1:
-                {
-                    cgStaticError = audioOverlap.prepareForRunning();
-                }
-                break;
-
-                case 2:
-                {
-                    cgStaticError = audioWin.prepareForRunning();
-                }
-                break;
-
-                case 3:
-                {
-                    cgStaticError = cfft.prepareForRunning();
-                }
-                break;
-
-                case 4:
-                {
-                    cgStaticError = icfft.prepareForRunning();
-                }
-                break;
-
-                case 5:
-                {
-                    cgStaticError = sink.prepareForRunning();
-                }
-                break;
-
-                case 6:
-                {
-                    cgStaticError = src.prepareForRunning();
-                }
-                break;
-
-                case 7:
-                {
-                    cgStaticError = toCmplx.prepareForRunning();
-                }
-                break;
-
-                case 8:
-                {
-                    cgStaticError = toReal.prepareForRunning();
-                }
-                break;
-
-                default:
-                break;
-            }
-
-            if (cgStaticError == CG_SKIP_EXECUTION_ID_CODE)
-                continue;
-
-            CHECKERROR;
 
             switch(schedule[id])
             {

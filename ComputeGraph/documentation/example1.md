@@ -179,7 +179,6 @@ There are other fields for the configuration:
 - `cOptionalArgs` and pyOptionalArgs for passing additional arguments to the scheduling function
 - `prefix` to prefix the same of the global buffers
 - `memoryOptimization` : Experimental. It is attempting to reuse buffer memory and share it between several FIFOs 
-- `pathToSDFModule` : Path to the Python SDF module so that the generated Python code can find it
 - `codeArray` : Experimental. When a schedule is very long, representing it as a sequence of function calls is not good for the code size of the generated solution. When this option is enabled, the schedule is described with an array. It implies that the pure function calls cannot be inlined any more and are replaced by new nodes which are automatically generated.
 - `eventRecorder` : Enable the support for the CMSIS Event Recorder.
 
@@ -254,7 +253,17 @@ class Sink: public GenericSink<IN, inputSize>
 public:
     Sink(FIFOBase<IN> &src):GenericSink<IN,inputSize>(src){};
 
-    int run()
+    int prepareForRunning() override
+    {
+        if (this->willUnderflow())
+        {
+           return(CG_SKIP_EXECUTION_ID_CODE); // Skip execution
+        }
+
+        return(0);
+    };
+    
+    int run() override
     {
         IN *b=this->getReadBuffer();
         printf("Sink\n");
@@ -272,11 +281,13 @@ public:
 
 The `Sink` is inheriting from the `GenericSink`. In the constructor we pass the fifos : input fifos first (output fifos are always following the input fifos when they are used. For a sink, we have no output fifos).
 
-In the template parameters ,we pass the type/length for each io : input first then followed by outputs (when there are some outputs).
+In the template parameters , we pass the type/length for each io : input first then followed by outputs (when there are some outputs).
 
-The node must have a run function which is implementing the processing.
+The node must have a `run` function which is implementing the processing.
 
-Here we just dump to stdout the content of the buffer. The amount of data read by `getReadBuffer` is defined in the `GenericSink` and is coming from the template parameter.
+The `prepareForRunning` function is used only in dynamic / asynchronous mode. But it must be defined (even if not used) in static / synchronous mode or the code won#t build.
+
+Here the sink is just dumping to stdout the content of the buffer. The amount of data read by `getReadBuffer` is defined in the `GenericSink` and is coming from the template parameter.
 
 The `Source` definition is very similar:
 
@@ -287,7 +298,18 @@ class Source: GenericSource<OUT,outputSize>
 public:
     Source(FIFOBase<OUT> &dst):GenericSource<OUT,outputSize>(dst),mCounter(0){};
 
-    int run(){
+    int prepareForRunning() override
+    {
+        if (this->willOverflow())
+        {
+           return(CG_SKIP_EXECUTION_ID_CODE); // Skip execution
+        }
+
+        return(0);
+    };
+    
+    int run()  override
+    {
         OUT *b=this->getWriteBuffer();
 
         printf("Source\n");
@@ -318,7 +340,20 @@ class ProcessingNode: public GenericNode<IN,inputSize,OUT,outputSize>
 public:
     ProcessingNode(FIFOBase<IN> &src,FIFOBase<OUT> &dst,int,const char*,int):GenericNode<IN,inputSize,OUT,outputSize>(src,dst){};
 
-    int run(){
+    int prepareForRunning() override
+    {
+        if (this->willOverflow() ||
+            this->willUnderflow()
+           )
+        {
+           return(CG_SKIP_EXECUTION_ID_CODE); // Skip execution
+        }
+
+        return(0);
+    };
+    
+    int run() override
+    {
         printf("ProcessingNode\n");
         IN *a=this->getReadBuffer();
         OUT *b=this->getWriteBuffer();
@@ -331,7 +366,7 @@ public:
 
 The processing node is (very arbitrary) copying the value at index 3 to index 0 of the output.
 
-The processing node is taking 3 arguments after the FIFOs in the constructor.
+The processing node is taking 3 arguments after the FIFOs in the constructor because the Python script is defining 3 additional arguments for this node : `int`, `string` and another `int` but passed trough a variable in the scheduler.
 
 ### scheduler.cpp
 
@@ -377,6 +412,8 @@ A value `<0` in `error` means there was an error during the execution.
 
 The returned valued is the number of schedules fully executed when the error occurred.
 
+The `someVariable` is defined in the Python script. The Python script can add as many arguments as needed with whatever type is needed.
+
 The scheduling function is starting with a definition of some variables used for debug and statistics:
 
 ```C++
@@ -406,6 +443,8 @@ Sink<float32_t,5> sink(fifo1);
 Source<float32_t,5> source(fifo0);
 ```
 
+One can see that the processing nodes has 3 additional arguments in addition to the FIFOs. Those arguments are defined in the Python script. The third argument is `someVariable` and this variable must be in the scope. That's why the Python script is adding an argument `someVariable` to the scheduler API. So, one can pass information to nay node from the outside of the scheduler using those additional arguments.
+
 And finally, the function is entering the scheduling loop:
 
 ```C++
@@ -417,7 +456,7 @@ And finally, the function is entering the scheduling loop:
        CHECKERROR;
 ```
 
-`CHECKERROR` is a macro defined in `Sched.h`. It is just testing if `cgStaticError< 0` and breaking out of the loop if it is the case.
+`CHECKERROR` is a macro defined in `Sched.h`. It is just testing if `cgStaticError< 0` and breaking out of the loop if it is the case. This can be redefined by the user.
 
 Since an application may want to use several SDF graphs, the name of the `sched` and `customInit` functions can be customized in the `configuration` object on the Python side:
 
@@ -436,8 +475,9 @@ config.prefix="bufferPrefix"
 It looks complex because there is a lot of information but the process is always the same:
 
 1. You define new kind of nodes in the Python. They define the IOs, type and amount of data read/written on each IO
-2. You create instance of those new kind of Nodes
+2. You create Python instance of those new kind of Nodes
 3. You connect them in a graph and generate a schedule
 4. In you AppNodes.h, you implement the new kind of nodes with a C++ template:
-   1. It is generally defining the IO and the function to call when run
+   1. The template is generally defining the IO and the function to call when run
+   1. It should be minimal. The template is just a wrapper. Don't forget those nodes are created on the stack in the scheduler function. So they should not be too big. They should just be simple wrappers
 5. If you need more control on the initialization, it is possible to pass additional arguments to the nodes constructors and to the scheduler function.
