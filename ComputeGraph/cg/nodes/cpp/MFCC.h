@@ -70,7 +70,8 @@ public:
         return(0);
     };
 
-    int run(){
+    int run() override
+    {
         float32_t *a=this->getReadBuffer();
         float32_t *b=this->getWriteBuffer();
         arm_mfcc_f32(mfccConfig,a,b,memory.data());
@@ -112,7 +113,8 @@ public:
         return(0);
     };
 
-    int run(){
+    int run() override
+    {
         float16_t *a=this->getReadBuffer();
         float16_t *b=this->getWriteBuffer();
         arm_mfcc_f16(mfccConfig,a,b,memory.data());
@@ -150,7 +152,8 @@ public:
         return(0);
     };
 
-    int run(){
+    int run() override
+    {
         q31_t *a=this->getReadBuffer();
         q31_t *b=this->getWriteBuffer();
         arm_mfcc_q31(mfccConfig,a,b,memory.data());
@@ -187,7 +190,8 @@ public:
         return(0);
     };
 
-    int run(){
+    int run() override
+    {
         q15_t *a=this->getReadBuffer();
         q15_t *b=this->getWriteBuffer();
         arm_mfcc_q15(mfccConfig,a,b,memory.data());

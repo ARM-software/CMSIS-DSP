@@ -62,7 +62,8 @@ public:
     /*
           2*outputSize1 == 2*outSize2 == inputSize
     */
-    int run(){
+    int run() override
+    {
         IN *a=this->getReadBuffer();
         IN *b1=this->getWriteBuffer1();
         IN *b2=this->getWriteBuffer2();

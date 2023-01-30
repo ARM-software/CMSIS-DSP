@@ -55,7 +55,8 @@ public:
         return(0);
     };
 
-    int run(){
+    int run() override
+    {
         IN *a=this->getReadBuffer();
         IN *b=this->getWriteBuffer();
         for(int i=0;i<outputSize;i++)

@@ -46,7 +46,7 @@ public:
         return(0);
     };
     
-    int run()
+    int run() override
     {
         IN *b=this->getReadBuffer();
 

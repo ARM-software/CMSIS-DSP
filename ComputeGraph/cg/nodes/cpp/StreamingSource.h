@@ -49,7 +49,8 @@ public:
         return(0);
     };
 
-    int run(){
+    int run() override
+    {
         OUT *b=this->getWriteBuffer();
         /* 
            Try to reserve a buffer. If no buffer is available, the task running

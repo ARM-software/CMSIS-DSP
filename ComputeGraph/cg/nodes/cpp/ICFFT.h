@@ -57,7 +57,8 @@ public:
         return(0);
     };
 
-    int run(){
+    int run() override
+    {
         float32_t *a=this->getReadBuffer();
         float32_t *b=this->getWriteBuffer();
         memcpy((void*)b,(void*)a,inputSize*sizeof(float32_t));
@@ -96,7 +97,8 @@ public:
         return(0);
     };
 
-    int run(){
+    int run() override
+    {
         float16_t *a=this->getReadBuffer();
         float16_t *b=this->getWriteBuffer();
         memcpy((void*)b,(void*)a,inputSize*sizeof(float16_t));
@@ -135,7 +137,8 @@ public:
         return(0);
     };
     
-    int run(){
+    int run() override
+    {
         q15_t *a=this->getReadBuffer();
         q15_t *b=this->getWriteBuffer();
         memcpy((void*)b,(void*)a,inputSize*sizeof(q15_t));

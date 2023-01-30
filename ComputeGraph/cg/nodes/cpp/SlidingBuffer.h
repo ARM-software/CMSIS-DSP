@@ -52,7 +52,8 @@ public:
         return(0);
     };
 
-    int run(){
+    int run() override
+    {
         IN *a=this->getReadBuffer();
         IN *b=this->getWriteBuffer();
         memcpy((void*)b,(void*)memory.data(),overlap*sizeof(IN));

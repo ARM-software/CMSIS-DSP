@@ -52,7 +52,8 @@ public:
         return(0);
     };
 
-    int run(){
+    int run() override
+    {
         q15_t *a=this->getReadBuffer();
         q15_t *b=this->getWriteBuffer();
         for(int i = 0; i<outputSize; i++)
@@ -83,7 +84,8 @@ public:
         return(0);
     };
 
-    int run(){
+    int run() override
+    {
         q31_t *a=this->getReadBuffer();
         q31_t *b=this->getWriteBuffer();
         for(int i = 0; i<outputSize; i++)
@@ -114,7 +116,8 @@ public:
         return(0);
     };
     
-    int run(){
+    int run() override
+    {
         float32_t *a=this->getReadBuffer();
         float32_t *b=this->getWriteBuffer();
         for(int i = 0; i<outputSize; i++)

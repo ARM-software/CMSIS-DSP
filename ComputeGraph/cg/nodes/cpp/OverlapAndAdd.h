@@ -52,7 +52,8 @@ public:
         return(0);
     };
 
-    int run(){
+    int run() override
+    {
         int i;
         IN *a=this->getReadBuffer();
         IN *b=this->getWriteBuffer();

@@ -57,7 +57,8 @@ public:
         return(0);
     };
 
-    int run(){
+    int run() override
+    {
         string str;
         int i;
         float32_t *b=this->getWriteBuffer();
