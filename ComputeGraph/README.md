@@ -100,6 +100,8 @@ Here is a summary of the different configuration supported by the compute graph.
 
 ![supported_configs](documentation/supported_configs.png)
 
+More details about the maths behind the code generator are available in a [separate document](MATHS.md).
+
 ## How to use the static scheduler generator
 
 First, you must install the `CMSIS-DSP` PythonWrapper:
