@@ -42,7 +42,7 @@
 
 
 /**
-  @brief         Initialization of the MFCC F32 instance structure
+  @brief         Initialization of the MFCC Q15 instance structure
   @param[out]    S       points to the mfcc instance structure
   @param[in]     fftLen  fft length
   @param[in]     nbMelFilters  number of Mel filters
