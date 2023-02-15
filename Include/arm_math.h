@@ -205,6 +205,7 @@
 #include "dsp/transform_functions.h"
 #include "dsp/filtering_functions.h"
 #include "dsp/quaternion_math_functions.h"
+#include "dsp/window_functions.h"
 
 
 

@@ -87,7 +87,6 @@ solution:
       
   build-types:
     - type: Release
-      optimize: max
       debug: off
       
 
