@@ -104,9 +104,14 @@ def mkModule(name,srcs,funcDir):
   lib = ["CMSISDSP"]
   extraobjs=[]
   
-  if sys.platform.startswith('linux') or sys.platform.startswith('darwin'):
+  if sys.platform.startswith('linux'):
     lib = []
     extraobjs = [os.path.join(ROOT,"PythonWrapper","build_linux","bin_dsp","libCMSISDSP.a")]
+    libdir = []
+ 
+  if sys.platform.startswith('darwin'):
+    lib = []
+    extraobjs = [os.path.join(ROOT,"PythonWrapper","build_darwin","bin_dsp","libCMSISDSP.a")]
     libdir = []
  
   return(Extension(name,
