@@ -37,8 +37,8 @@ class ProcessingNode(Node):
 floatType=CType(F32)
 src=Source("source",floatType,5)
 b=ProcessingNode("filter",floatType,7,5)
-b.addLiteralArg(4,"Test")
-b.addVariableArg("someVariable")
+b.addLiteralArg(4)
+b.addVariableArg("testString","someVariable")
 sink=Sink("sink",floatType,5)
 
 g = Graph()
@@ -51,7 +51,9 @@ print("Generate graphviz and code")
 
 conf=Configuration()
 conf.debugLimit=1
-conf.cOptionalArgs="int someVariable"
+conf.cOptionalArgs=["const char *testString"
+                   ,"int someVariable"
+                   ]
 #conf.displayFIFOSizes=True
 # Prefix for global FIFO buffers
 #conf.prefix="sched1"

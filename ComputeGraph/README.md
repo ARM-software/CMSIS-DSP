@@ -235,6 +235,8 @@ Another possibility would be to make the buffer static by redefining the macro `
 
 Optional arguments to pass to the C API of the scheduler function
 
+It can either use a `string` or a list of `string` where an element is an argument of the function (and should be valid `C`).
+
 ##### codeArray (default = True)
 
 When true, the scheduling is defined as an array. Otherwise, a list of function calls is generated.
@@ -305,6 +307,8 @@ In case of dynamic / asynchronous scheduling, the FIFOs may need to be bigger th
 
 For instance, a value of 10 means the FIFO will have their size updated from `oldSize` to `1.1 * oldSize` which is ` (1 + 10%)* oldSize`
 
+If the value is a `float` instead of an `int` it will be used as is. For instance, `1.1` would increase the size by `1.1` and be equivalent to the setting `10` (for 10 percent).
+
 ##### asyncDefaultSkip (default True)
 
 Behavior of a pure function (like CMSIS-DSP) in asynchronous mode. When `True`, the execution is skipped if the function can't be executed. If `False`, an error is raised.
@@ -352,6 +356,14 @@ g.connect(src.o,b.i,fifoClass="FIFOSource")
 The `fifoClass` argument allows to choose a specific FIFO class in the generated C++ or Python.
 
 Only the `FIFO` class is provided by default. Any new implementation must inherit from `FIFObase<T>`
+
+There is also an option to set the scaling factor when used in asynchronous mode:
+
+```python
+g.connect(odd.o,debug.i,fifoScale=3.0)
+```
+
+When this option is set, it will be used (instead of the global setting). This must be a float.
 
 ## How to build the examples
 

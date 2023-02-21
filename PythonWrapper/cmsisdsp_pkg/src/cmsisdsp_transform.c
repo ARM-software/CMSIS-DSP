@@ -2291,11 +2291,11 @@ cmsis_arm_rfft_q15(PyObject *obj, PyObject *args)
      inputSize=selfS->instance->fftLenReal;
      if (selfS->instance->ifftFlagR)
      {
-        outputSize = inputSize-2;
+        outputSize = inputSize;
      }
      else
      {
-        outputSize = 2*inputSize+2;
+        outputSize = 2*inputSize;
      }
 
     GETARGUMENT(pSrc,NPY_INT16,int16_t,int16_t);
@@ -2365,11 +2365,11 @@ cmsis_arm_rfft_q31(PyObject *obj, PyObject *args)
      inputSize=selfS->instance->fftLenReal;
      if (selfS->instance->ifftFlagR)
      {
-        outputSize = inputSize-2;
+        outputSize = inputSize;
      }
      else
      {
-        outputSize = 2*inputSize+2;
+        outputSize = 2*inputSize;
      }
   
     GETARGUMENT(pSrc,NPY_INT32,int32_t,int32_t);

@@ -78,9 +78,9 @@ CG_AFTER_INCLUDES
 Description of the scheduling. 
 
 */
-static unsigned int schedule[7]=
+static unsigned int schedule[9]=
 { 
-5,6,2,0,1,3,4,
+7,8,2,1,4,0,3,5,6,
 };
 
 CG_BEFORE_FIFO_BUFFERS
@@ -93,8 +93,10 @@ FIFO buffers
 #define FIFOSIZE1 2
 #define FIFOSIZE2 2
 #define FIFOSIZE3 2
-#define FIFOSIZE4 2
+#define FIFOSIZE4 3
 #define FIFOSIZE5 2
+#define FIFOSIZE6 2
+#define FIFOSIZE7 2
 
 #define BUFFERSIZE1 2
 CG_BEFORE_BUFFER
@@ -112,13 +114,21 @@ int16_t buf3[BUFFERSIZE3]={0};
 CG_BEFORE_BUFFER
 int16_t buf4[BUFFERSIZE4]={0};
 
-#define BUFFERSIZE5 2
+#define BUFFERSIZE5 3
 CG_BEFORE_BUFFER
 int16_t buf5[BUFFERSIZE5]={0};
 
 #define BUFFERSIZE6 2
 CG_BEFORE_BUFFER
 int16_t buf6[BUFFERSIZE6]={0};
+
+#define BUFFERSIZE7 2
+CG_BEFORE_BUFFER
+int16_t buf7[BUFFERSIZE7]={0};
+
+#define BUFFERSIZE8 2
+CG_BEFORE_BUFFER
+int16_t buf8[BUFFERSIZE8]={0};
 
 
 CG_BEFORE_SCHEDULER_FUNCTION
@@ -138,17 +148,21 @@ uint32_t scheduler(int *error)
     FIFO<int16_t,FIFOSIZE3,0,1> fifo3(buf4);
     FIFO<int16_t,FIFOSIZE4,0,1> fifo4(buf5);
     FIFO<int16_t,FIFOSIZE5,0,1> fifo5(buf6);
+    FIFO<int16_t,FIFOSIZE6,0,1> fifo6(buf7);
+    FIFO<int16_t,FIFOSIZE7,0,1> fifo7(buf8);
 
     CG_BEFORE_NODE_INIT;
     /* 
     Create node objects
     */
-    Duplicate2<int16_t,1,int16_t,1,int16_t,1> dup0(fifo3,fifo4,fifo5);
-    ProcessingOddEven<int16_t,1,int16_t,1,int16_t,1> proc(fifo0,fifo1,fifo2);
-    SinkAsync<int16_t,1> sinka(fifo4);
-    SinkAsync<int16_t,1> sinkb(fifo5);
-    SourceEven<int16_t,1> sourceEven(fifo1);
-    SourceOdd<int16_t,1> sourceOdd(fifo0);
+    NullSink<int16_t,1> debug(fifo4);
+    Duplicate2<int16_t,1,int16_t,1,int16_t,1> dup0(fifo2,fifo3,fifo4);
+    Duplicate2<int16_t,1,int16_t,1,int16_t,1> dup1(fifo5,fifo6,fifo7);
+    ProcessingOddEven<int16_t,1,int16_t,1,int16_t,1> proc(fifo3,fifo0,fifo1);
+    SinkAsync<int16_t,1> sinka(fifo6);
+    SinkAsync<int16_t,1> sinkb(fifo7);
+    SourceEven<int16_t,1> sourceEven(fifo0);
+    SourceOdd<int16_t,1> sourceOdd(fifo2);
 
     /* Run several schedule iterations */
     CG_BEFORE_SCHEDULE;
@@ -156,7 +170,7 @@ uint32_t scheduler(int *error)
     {
         /* Run a schedule iteration */
         CG_BEFORE_ITERATION;
-        for(unsigned long id=0 ; id < 7; id++)
+        for(unsigned long id=0 ; id < 9; id++)
         {
             CG_BEFORE_NODE_EXECUTION;
 
@@ -167,8 +181,8 @@ uint32_t scheduler(int *error)
                 {
                                         
                     bool canRun=true;
-                    canRun &= !fifo2.willUnderflowWith(1);
-                    canRun &= !fifo3.willOverflowWith(1);
+                    canRun &= !fifo1.willUnderflowWith(1);
+                    canRun &= !fifo5.willOverflowWith(1);
 
                     if (!canRun)
                     {
@@ -183,35 +197,47 @@ uint32_t scheduler(int *error)
 
                 case 1:
                 {
-                    cgStaticError = dup0.prepareForRunning();
+                    cgStaticError = debug.prepareForRunning();
                 }
                 break;
 
                 case 2:
                 {
-                    cgStaticError = proc.prepareForRunning();
+                    cgStaticError = dup0.prepareForRunning();
                 }
                 break;
 
                 case 3:
                 {
-                    cgStaticError = sinka.prepareForRunning();
+                    cgStaticError = dup1.prepareForRunning();
                 }
                 break;
 
                 case 4:
                 {
-                    cgStaticError = sinkb.prepareForRunning();
+                    cgStaticError = proc.prepareForRunning();
                 }
                 break;
 
                 case 5:
                 {
-                    cgStaticError = sourceEven.prepareForRunning();
+                    cgStaticError = sinka.prepareForRunning();
                 }
                 break;
 
                 case 6:
+                {
+                    cgStaticError = sinkb.prepareForRunning();
+                }
+                break;
+
+                case 7:
+                {
+                    cgStaticError = sourceEven.prepareForRunning();
+                }
+                break;
+
+                case 8:
                 {
                     cgStaticError = sourceOdd.prepareForRunning();
                 }
@@ -222,7 +248,10 @@ uint32_t scheduler(int *error)
             }
 
             if (cgStaticError == CG_SKIP_EXECUTION_ID_CODE)
-                continue;
+            { 
+              cgStaticError = 0;
+              continue;
+            }
 
             CHECKERROR;
 
@@ -235,8 +264,8 @@ uint32_t scheduler(int *error)
 
                    int16_t* i0;
                    int16_t* o1;
-                   i0=fifo2.getReadBuffer(1);
-                   o1=fifo3.getWriteBuffer(1);
+                   i0=fifo1.getReadBuffer(1);
+                   o1=fifo5.getWriteBuffer(1);
                    compute(i0,o1,1);
                    cgStaticError = 0;
                   }
@@ -245,35 +274,47 @@ uint32_t scheduler(int *error)
 
                 case 1:
                 {
-                   cgStaticError = dup0.run();
+                   cgStaticError = debug.run();
                 }
                 break;
 
                 case 2:
                 {
-                   cgStaticError = proc.run();
+                   cgStaticError = dup0.run();
                 }
                 break;
 
                 case 3:
                 {
-                   cgStaticError = sinka.run();
+                   cgStaticError = dup1.run();
                 }
                 break;
 
                 case 4:
                 {
-                   cgStaticError = sinkb.run();
+                   cgStaticError = proc.run();
                 }
                 break;
 
                 case 5:
                 {
-                   cgStaticError = sourceEven.run();
+                   cgStaticError = sinka.run();
                 }
                 break;
 
                 case 6:
+                {
+                   cgStaticError = sinkb.run();
+                }
+                break;
+
+                case 7:
+                {
+                   cgStaticError = sourceEven.run();
+                }
+                break;
+
+                case 8:
                 {
                    cgStaticError = sourceOdd.run();
                 }

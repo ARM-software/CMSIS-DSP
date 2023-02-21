@@ -119,8 +119,6 @@ PACK_BASE_FILES="
   ComputeGraph/cg/nodes/cpp/NullSink.h
   ComputeGraph/cg/nodes/cpp/OverlapAndAdd.h
   ComputeGraph/cg/nodes/cpp/SlidingBuffer.h
-  ComputeGraph/cg/nodes/cpp/StreamingSink.h
-  ComputeGraph/cg/nodes/cpp/StreamingSource.h
   ComputeGraph/cg/nodes/cpp/ToComplex.h
   ComputeGraph/cg/nodes/cpp/ToReal.h
   ComputeGraph/cg/nodes/cpp/Unzip.h

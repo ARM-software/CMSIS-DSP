@@ -1,4 +1,7 @@
 dist/
-build/
 examples/rec_2.dat
-
+build/bin_dsp    
+build/cmake_install.cmake  
+build/CMakeFiles  
+build/Makefile
+build/CMakeCache.txt       

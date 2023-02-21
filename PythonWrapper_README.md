@@ -61,13 +61,16 @@ Since the [CMSIS-DSP](https://github.com/ARM-software/CMSIS-DSP) wrapper is usin
     > pip install numpy
 
 Once `NumPy` is installed, you can build the [CMSIS-DSP](https://github.com/ARM-software/CMSIS-DSP) python wrapper. Go to folder `CMSIS/DSP`.
-(In a previous version you had to go to the `PythonWrapper` folder. Now the `setup.py` is inside the DSP folder).
 
 Now, you can install the cmsisdsp package in editable mode:
 
-    > pip install -e "Path To The Folder Containing setup.py"
+    > pip install -e .
 
+Before using this command, you need to rebuild the CMSIS-DSP library which is no more built by the `setup.py` script.
 
+There is a `CMakeLists.txt` in the `PythonWrapper` folder for this. The `build` folders in `PythonWrapper` are giving some examples of the options to use with the `cmake` command to generate the `Makefile` and build the library.
+
+This library is then used by the `setup.py` script to build the Python extension.
 
 ## Running the examples
 
@@ -238,6 +241,12 @@ The wrapper is now containing the compute graph Python scripts and you should re
 
 
 # Change history
+
+## Version 1.9.6:
+
+* Corrections to the RFFTs APIs
+* More flexibility in the compute graph to specify the additional arguments of the scheduler and nodes
+* Possibility to set the FIFO scaling factor at FIFO level (in asynchronous mode)
 
 ## Version 1.9.5:
 

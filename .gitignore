@@ -1,5 +1,4 @@
 DSP_Lib_TestSuite/build/
-PythonWrapper/build/
 PythonWrapper/cmsisdsp.cp36-win_amd64.pyd
 PythonWrapper/internal.cp36-win_amd64.pyd
 PythonWrapper/*.so
@@ -22,7 +21,6 @@ Output/
 Documentation/html/
 PACK.xsd
 *.uvguix.*
-build
 Documentation/html/*
 Doxygen/history.txt
 Doxygen/dsp.dxy
@@ -30,3 +28,4 @@ __pycache__/
 *.pyd
 .DS_Store
 .swiftpm/
+build/

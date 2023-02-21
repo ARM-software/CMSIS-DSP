@@ -16,7 +16,16 @@ compute1 [label=<
   </TR>
 </TABLE>>];
 
+debug [label=<
+<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+  <TR>
+    <TD ALIGN="CENTER" PORT="i">debug<BR/>(NullSink)</TD>
+  </TR>
+</TABLE>>];
+
 dup0 [shape=point,label=dup0]
+
+dup1 [shape=point,label=dup1]
 
 
 proc [label=<
@@ -64,12 +73,6 @@ sourceOdd [label=<
 
 
 
-sourceOdd:i -> proc:ia [label="s16(2)"
-,headlabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >1</FONT>
-</TD></TR></TABLE>>
-,taillabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >1</FONT>
-</TD></TR></TABLE>>]
-
 sourceEven:i -> proc:ib [label="s16(2)"
 ,headlabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >1</FONT>
 </TD></TR></TABLE>>
@@ -82,20 +85,38 @@ proc:o -> compute1:i [label="s16(2)"
 ,taillabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >1</FONT>
 </TD></TR></TABLE>>]
 
-compute1:i ->  
+sourceOdd:i ->  
 dup0 [label="s16(2)"
 
 ,taillabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >1</FONT>
 </TD></TR></TABLE>>]
 
  
-dup0 -> sinka:i [label="s16(2)"
+dup0 -> proc:ia [label="s16(2)"
 ,headlabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >1</FONT>
 </TD></TR></TABLE>>
 ]
 
  
-dup0 -> sinkb:i [label="s16(2)"
+dup0 -> debug:i [label="s16(3)"
+,headlabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >1</FONT>
+</TD></TR></TABLE>>
+]
+
+compute1:i ->  
+dup1 [label="s16(2)"
+
+,taillabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >1</FONT>
+</TD></TR></TABLE>>]
+
+ 
+dup1 -> sinka:i [label="s16(2)"
+,headlabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >1</FONT>
+</TD></TR></TABLE>>
+]
+
+ 
+dup1 -> sinkb:i [label="s16(2)"
 ,headlabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >1</FONT>
 </TD></TR></TABLE>>
 ]

@@ -55,9 +55,7 @@ The Python scripts for the static scheduler generator are part of the CMSIS-DSP 
 
 The header files are part of the CMSIS-DSP pack (version 1.10.2 and above).
 
-The audio streaming nodes on top of CMSIS-RTOS2 are not part of the CMSIS-DSP pack but can be found in the repository. They are demo quality only. They can only be used with Arm Virtual Hardware.
-
-The Compute Graph is making it easier to implement a streaming solution : connecting different compute kernels each consuming and producing different amount of data.
+he Compute Graph is making it easier to implement a streaming solution : connecting different compute kernels each consuming and producing different amount of data.
 
 ## Support / Contact
 
@@ -222,6 +220,44 @@ The final executable has no extension in the filename.
 
 Of course, on your fast model or virtual hardware you should use the right configuration file (to enable float, to enable FVP, to enable semihosting if needed for the examples ...)
 
+## Code size
+
+The linker may be able, in some cases, to remove the unused tables (like FFT tables) but:
+
+* It is not a robust solution because it is dependent on how the code is written and the linker is not always able to deduce that some tables are not used
+* It often leads to a coding style where implementation details are visible for the initializations (to help the linker). It thus makes it more difficult to move between different architectures 
+* It often relies on toolchain features which are embedded related but CMSIS-DSP is also used on very high end system where those features may be missing
+
+For all those reasons, compilation options have been introduced to control what's included in the library build. Those options are providing a more complex but more robust and portable solution. 
+
+If no new option is defined, everything will behave as usual and as consequence all tables will be included in the build. There are lot of FFT tables and some are big (F64, 4096 samples for instance).
+
+If `ARM_DSP_CONFIG_TABLES` is defined then the new compilation options will be taken into account.
+
+It is strongly suggested to use the new Python script `cmsisdspconfig.py` to generate the `-D` options to use on the compiler command line.
+
+    pip install streamlit
+    streamlit run cmsisdspconfig.py
+
+If you use `cmake`, it is also easy since high level options are defined and they will select the right compilation options. 
+
+For instance, if you want to use the `arm_rfft_fast_f32` for a 32 sample RFFT, in` fft.cmake` you'll see an option `RFFT_FAST_F32_32`.
+
+If you don't use cmake nor the Python script, you can just look at `fft.cmake` or `interpol.cmake` in `Source` to see which compilation options are needed.
+
+We see, that the following symbols need to be enabled for `RFFT_FAST_F32_32` with 32 samples:
+
+* `ARM_TABLE_TWIDDLECOEF_F32_16 `
+* `ARM_TABLE_BITREVIDX_FLT_16`
+* `ARM_TABLE_TWIDDLECOEF_RFFT_F32_32`
+* `ARM_TABLE_TWIDDLECOEF_F32_16`
+
+In addition to that, `ARM_FFT_ALLOW_TABLES` must also be defined.
+
+This last symbol is required because if no transform functions are included in the build, then by default all flags related to FFT tables are ignored.
+
+
+
 ## Folders and files
 
 The only folders required to build and use CMSIS-DSP Library are:
@@ -279,33 +315,4 @@ And we have a script to make it easier to customize the build:
 
 * cmsisdspconfig.py:
   * Web browser UI to generate build configurations (temporary until the CMSIS-DSP configuration is reworked to be simpler and more maintainable)
-
-
-## Compilation symbols for tables
-
-Some new compilations symbols have been introduced to avoid including all the tables if they are not needed.
-
-If no new symbol is defined, everything will behave as usual. If `ARM_DSP_CONFIG_TABLES` is defined then the new symbols will be taken into account.
-
-It is strongly suggested to use the new Python script `cmsisdspconfig.py` to generate the -D options to use on the compiler command line.
-
-    pip install streamlit
-    streamlit run cmsisdspconfig.py
-
-If you use `cmake`, it is also easy since high level options are defined and they will select the right compilation symbols. 
-
-For instance, if you want to use the `arm_rfft_fast_f32`, in` fft.cmake` you'll see an option `RFFT_FAST_F32_32`.
-
-If you don't use cmake nor the Python script, you can just look at `fft.cmake` or `interpol.cmake` in `Source` to see which compilation symbols are needed.
-
-We see, for `arm_rfft_fast_f32`, that the following symbols need to be enabled :
-
-* `ARM_TABLE_TWIDDLECOEF_F32_16 `
-* `ARM_TABLE_BITREVIDX_FLT_16`
-* `ARM_TABLE_TWIDDLECOEF_RFFT_F32_32`
-* `ARM_TABLE_TWIDDLECOEF_F32_16`
-
-In addition to that, `ARM_DSP_CONFIG_TABLES` must be enabled and finally `ARM_FFT_ALLOW_TABLES` must also be defined.
-
-This last symbol is required because if no transform functions are included in the build, then by default all flags related to FFT tables are ignored.
 

@@ -74,7 +74,7 @@ class FifoBuffer:
 
 class FIFODesc:
     """A FIFO connecting two nodes"""
-    def __init__(self,fifoid,fifoClass):
+    def __init__(self,fifoid,fifoClass,fifoScale):
         # The FIFO is in fact just an array
         self.isArray=False 
         # FIFO length
@@ -93,6 +93,7 @@ class FIFODesc:
         # FIFO delay
         self.delay=0
         self.fifoClass = fifoClass
+        self.fifoScale = fifoScale
 
         # Used for liveliness analysis
         # To share buffers between FIFO in memory optimization
@@ -173,6 +174,9 @@ class Graph():
         self._allFIFOs = None 
         self._allBuffers = None
         self._FIFOClasses = {}
+        # In async mode, scaling factor for a given
+        # FIFO to override the global scaling factor
+        self._FIFOScale = {}
         # Topological sorting of nodes
         # computed during topology matrix
         # and used for some scheduling
@@ -224,9 +228,17 @@ class Graph():
 
     def connectDup(self,destination,outputIO,theId):
         if (destination[theId][1]!=0):
-            self.connectWithDelay(outputIO,destination[theId][0],destination[theId][1],dupAllowed=False,fifoClass=destination[theId][2])
+            self.connectWithDelay(outputIO,destination[theId][0],
+                                           destination[theId][1],
+                                           dupAllowed=False,
+                                           fifoClass=destination[theId][2],
+                                           fifoScale=destination[theId][3])
         else:
-            self.connect(outputIO,destination[theId][0],dupAllowed=False,fifoClass=destination[theId][2])
+            self.connect(outputIO,destination[theId][0],
+                                  dupAllowed=False,
+                                  fifoClass=destination[theId][2],
+                                  fifoScale=destination[theId][3]
+                                  )
 
 
 
@@ -289,6 +301,7 @@ class Graph():
                     destinations = []
                     delays = []
 
+
                     self._sortedNodes = None
                     self._sortedEdges = None
                     for f in fifo:
@@ -299,16 +312,19 @@ class Graph():
                         nodeb = f[1]
 
                         fifoClass = self.defaultFIFOClass
+                        fifoScale = 1.0
                         if (nodea,nodeb) in self._FIFOClasses:
                             fifoClass = self._FIFOClasses[(nodea,nodeb)]
 
-                        
+                        if (nodea,nodeb) in self._FIFOScale:
+                            fifoScale = self._FIFOScale[(nodea,nodeb)]
+
                         if (nodea,nodeb) in self._delays:
                            delay = self._delays[(nodea,nodeb)]
                         else:
                            delay = 0
 
-                        destinations.append((nodeb,delay,fifoClass))
+                        destinations.append((nodeb,delay,fifoClass,fifoScale))
 
                         nodea.fifo=None 
                         nodeb.fifo=None
@@ -327,6 +343,8 @@ class Graph():
                         del self._edges[(nodea,nodeb)]
                         if (nodea,nodeb) in self._FIFOClasses:
                             del self._FIFOClasses[(nodea,nodeb)]
+                        if (nodea,nodeb) in self._FIFOScale:
+                            del self._FIFOScale[(nodea,nodeb)]
                         if (nodea,nodeb) in self._delays:
                            del self._delays[(nodea,nodeb)]
 
@@ -351,7 +369,7 @@ class Graph():
 
                
 
-    def connect(self,nodea,nodeb,dupAllowed=True,fifoClass=None):
+    def connect(self,nodea,nodeb,dupAllowed=True,fifoClass=None,fifoScale = 1.0):
         if fifoClass is None:
             fifoClass = self.defaultFIFOClass
         # When connecting to a constant node we do nothing
@@ -374,6 +392,7 @@ class Graph():
                    nodeb.fifo=(nodea,nodeb)
                 self._edges[(nodea,nodeb)]=True
                 self._FIFOClasses[(nodea,nodeb)] = fifoClass
+                self._FIFOScale[(nodea,nodeb)] = fifoScale
                 if not (nodea.owner in self._nodes):
                    self._nodes[nodea.owner]=True
                 if not (nodeb.owner in self._nodes):
@@ -381,14 +400,14 @@ class Graph():
             else:
                 raise IncompatibleIO
 
-    def connectWithDelay(self,nodea,nodeb,delay,dupAllowed=True,fifoClass=None):
+    def connectWithDelay(self,nodea,nodeb,delay,dupAllowed=True,fifoClass=None,fifoScale=1.0):
         if fifoClass is None:
             fifoClass = self.defaultFIFOClass
         # We cannot connect with delay to a constant node
         if (isinstance(nodea,Constant)):
             raise CannotDelayConstantError
         else:
-            self.connect(nodea,nodeb,dupAllowed=dupAllowed,fifoClass=fifoClass)
+            self.connect(nodea,nodeb,dupAllowed=dupAllowed,fifoClass=fifoClass,fifoScale = fifoScale)
             self._delays[(nodea,nodeb)] = delay
     
     def __str__(self):
@@ -406,7 +425,19 @@ class Graph():
         for fifo in allFIFOs:
             edge = self._sortedEdges[fifo.fifoID]
             if config.asynchronous:
-               fifo.length = int(math.ceil(fifoLengths[fifo.fifoID] * (1.0 + 1.0*config.FIFOIncrease/100)))
+               if edge in self._FIFOScale:
+                  fifoScale = self._FIFOScale[edge]
+                  fifo.fifoScale = fifoScale
+               
+               if fifoScale != 1.0:
+                  scale = fifoScale
+               else:
+                 scale = 1.0
+                 if type(config.FIFOIncrease) == float:
+                    scale = config.FIFOIncrease
+                 else:
+                    scale = (1.0 + 1.0*config.FIFOIncrease/100)
+               fifo.length = int(math.ceil(fifoLengths[fifo.fifoID] * scale))
             else:
                fifo.length = fifoLengths[fifo.fifoID]
             src,dst = edge
@@ -866,7 +897,7 @@ class Graph():
         nbFIFOS = t.shape[0]
         allFIFOs = [] 
         for i in range(nbFIFOS):
-            allFIFOs.append(FIFODesc(i,self.defaultFIFOClass))
+            allFIFOs.append(FIFODesc(i,self.defaultFIFOClass,1.0))
 
         # Normalization vector
         # For static scheduling it is

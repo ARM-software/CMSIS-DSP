@@ -302,19 +302,34 @@ class BaseNode:
         else:
             return(0)
 
+    def _addLiteralItem(self,item):
+        if self.schedArgs:
+            self.schedArgs.append(ArgLiteral(item))
+        else:
+            self.schedArgs=[ArgLiteral(item)]
+
     def addLiteralArg(self,*ls):
         for l in ls:
-            if self.schedArgs:
-                self.schedArgs.append(ArgLiteral(l))
+            if isinstance(l, list):
+                for i in l:
+                    self._addLiteralItem(i)
             else:
-                self.schedArgs=[ArgLiteral(l)]
+                self._addLiteralItem(l)
+
+    def _addVariableItem(self,item):
+        if self.schedArgs:
+            self.schedArgs.append(VarLiteral(item))
+        else:
+            self.schedArgs=[VarLiteral(item)]
 
     def addVariableArg(self,*ls):
         for l in ls:
-            if self.schedArgs:
-                self.schedArgs.append(VarLiteral(l))
+            if isinstance(l, list):
+               for i in l:
+                  self._addVariableItem(i)
             else:
-                self.schedArgs=[VarLiteral(l)]
+              self._addVariableItem(l)
+           
 
     @property
     def isConstantNode(self):

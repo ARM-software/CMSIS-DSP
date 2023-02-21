@@ -41,6 +41,10 @@ def gencode(sched,directory,config):
     
     schedDescription=""
 
+    if isinstance(config.cOptionalArgs,list):
+       spc = " " * 30
+       config.cOptionalArgs = f",\n{spc}".join(config.cOptionalArgs)
+
     # Asychronous implies code array and switchCase
     if config.asynchronous:
        config.codeArray = True 

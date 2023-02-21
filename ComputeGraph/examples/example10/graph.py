@@ -55,6 +55,8 @@ comp=Unary("compute",dataType,1)
 sinka=SinkAsync("sinka",dataType,1)
 sinkb=SinkAsync("sinkb",dataType,1)
 
+debug=NullSink("debug",dataType,1)
+
 g = Graph()
 
 # Option to customize the default class
@@ -67,6 +69,11 @@ g.duplicateNodeClassName = "Duplicate"
 
 g.connect(odd.o,proc.ia)
 g.connect(even.o,proc.ib)
+# Just for checking duplicate nodes
+# with scaling factor are working.
+# In practice, all edge of a duplicate nodes
+# should have same FIFO size
+g.connect(odd.o,debug.i,fifoScale=3.0)
 
 g.connect(proc.o,comp.i)
 g.connect(comp.o,sinka.i)
@@ -95,8 +102,8 @@ conf.asynchronous = True
 # Increase size of synchronous FIFOs by 100%
 # for the asynchronous case (so 2 samples
 # instead of 1 in this example)
-conf.FIFOIncrease = 100 # percent
-
+#conf.FIFOIncrease = 100 # percent
+conf.FIFOIncrease = 2.0
 
 #conf.displayFIFOSizes=True
 # Prefix for global FIFO buffers

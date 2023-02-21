@@ -16,7 +16,8 @@ extern "C"
 #endif
 
 
-extern uint32_t scheduler(int *error,int someVariable);
+extern uint32_t scheduler(int *error,const char *testString,
+                              int someVariable);
 
 #ifdef   __cplusplus
 }

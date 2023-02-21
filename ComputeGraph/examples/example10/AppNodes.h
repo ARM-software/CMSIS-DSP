@@ -31,6 +31,8 @@
 #include <iostream>
 #include <cstdio>
 
+#include "NullSink.h"
+
 static int count=0;
 
 template<typename OUT,int outputSize>

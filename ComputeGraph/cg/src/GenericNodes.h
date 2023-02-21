@@ -65,8 +65,9 @@ class FIFOBase{
 public:
     virtual T* getWriteBuffer(int nb)=0;
     virtual T* getReadBuffer(int nb)=0;
-    virtual bool willUnderflowWith(int nb)=0;
-    virtual bool willOverflowWith(int nb)=0;
+    virtual bool willUnderflowWith(int nb) const = 0;
+    virtual bool willOverflowWith(int nb) const = 0;
+    virtual int nbSamplesInFIFO() const = 0;
 
 };
 
@@ -82,8 +83,9 @@ class FIFO<T,length,0,0>: public FIFOBase<T>
         FIFO(uint8_t *buffer,int delay=0):mBuffer((T*)buffer),readPos(0),writePos(delay) {};
 
         /* Not used in synchronous mode */
-        bool willUnderflowWith(int nb) override {return false;};
-        bool willOverflowWith(int nb) override {return false;};
+        bool willUnderflowWith(int nb) const override {return false;};
+        bool willOverflowWith(int nb) const override {return false;};
+        int nbSamplesInFIFO() const override {return 0;};
 
         T * getWriteBuffer(int nb) override
         {
@@ -142,8 +144,10 @@ class FIFO<T,length,1,0>: public FIFOBase<T>
         FIFO(T *buffer,int delay=0):mBuffer(buffer),readPos(0),writePos(delay) {};
         FIFO(uint8_t *buffer,int delay=0):mBuffer((T*)buffer),readPos(0),writePos(delay) {};
 
-        bool willUnderflowWith(int nb) override {return false;};
-        bool willOverflowWith(int nb) override {return false;};
+        /* Not used in synchronous mode */
+        bool willUnderflowWith(int nb) const override {return false;};
+        bool willOverflowWith(int nb) const override {return false;};
+        int nbSamplesInFIFO() const override {return 0;};
 
         T * getWriteBuffer(int nb) override
         {
@@ -226,15 +230,17 @@ class FIFO<T,length,0,1>: public FIFOBase<T>
             return(ret);
         }
 
-        bool willUnderflowWith(int nb) override
+        bool willUnderflowWith(int nb) const override
         {
             return((nbSamples - nb)<0);
         }
 
-        bool willOverflowWith(int nb) override
+        bool willOverflowWith(int nb) const override
         {
             return((nbSamples + nb)>length);
         }
+
+        int nbSamplesInFIFO() const override {return nbSamples;};
 
         #ifdef DEBUGSCHED
         void dump()

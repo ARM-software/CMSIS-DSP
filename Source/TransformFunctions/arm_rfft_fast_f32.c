@@ -479,9 +479,8 @@ void merge_rfft_f32(
   @par
                    The real sequence is initially treated as if it were complex to perform a CFFT.
                    Later, a processing stage reshapes the data to obtain half of the frequency spectrum
-                   in complex format. Except the first complex number that contains the two real numbers
-                   X[0] and X[N/2] all the data is complex. In other words, the first complex sample
-                   contains two real values packed.
+                   in complex format. 
+
   @par
                    The input for the inverse RFFT should keep the same format as the output of the
                    forward RFFT. A first processing stage pre-process the data to later perform an
@@ -500,16 +499,21 @@ void merge_rfft_f32(
   @par
                    The FFT of a real N-point sequence has even symmetry in the frequency domain. 
                    The second half of the data equals the conjugate of the first half flipped in frequency. 
-                   Looking at the data, we see that we can uniquely represent the FFT using only N/2 complex numbers.
-                   These are packed into the output array in alternating real and imaginary components:
+                   This conjugate part is not computed by the float RFFT. As consequence, the output of 
+                   a N point real FFT should be a N//2 + 1 complex numbers so N + 2 floats.
   @par
-                   X = { real[0], imag[0], real[1], imag[1], real[2], imag[2] ...
-                   real[(N/2)-1], imag[(N/2)-1 }
+                   It happens that the first complex of number of the RFFT output is actually
+                   all real. Its real part represents the DC offset.
+                   The value at Nyquist frequency is also real.
+
   @par
-                   It happens that the first complex number (real[0], imag[0]) is actually
-                   all real. real[0] represents the DC offset, and imag[0] should be 0.
-                   (real[1], imag[1]) is the fundamental frequency, (real[2], imag[2]) is
-                   the first harmonic and so on.
+                   Those two complex numbers can be encoded with 2 floats rather than using two numbers
+                   with an imaginary part set to zero.
+  @par
+                   The implementation is using a trick so that the output buffer can be N float :
+                   the last real is packaged in the imaginary part of the first complex (since
+                   this imaginary part is not used and is zero).
+
   @par
                    The real FFT functions pack the frequency domain data in this fashion.
                    The forward transform outputs the data in this form and the inverse
@@ -519,7 +523,16 @@ void merge_rfft_f32(
                    samples.
   @par           Q15 and Q31
                    The real algorithms are defined in a similar manner and utilize N/2 complex
-                   transforms behind the scenes.
+                   transforms behind the scenes. 
+
+  @par
+                   But warning, contrary to the float version, the fixed point implementation
+                   RFFT is also computing the conjugate part (except for MVE version) so the 
+                   output buffer must be bigger.
+                   Also the fixed point RFFTs are not using any trick to pack the DC and Nyquist
+                   frequency in the same complex number.
+                   The RIFFT is not using the conjugate part but it is still using the Nyquist
+                   frequency value. The details are given in the documentation for the functions.
   @par
                    The complex transforms used internally include scaling to prevent fixed-point
                    overflows.  The overall scaling equals 1/(fftLen/2).
