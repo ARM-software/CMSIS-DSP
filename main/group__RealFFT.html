@@ -180,7 +180,7 @@ Functions</h2></td></tr>
 <div class="caption">
 Real Fast Fourier Transform</div></div>
  </dd></dl>
-<dl class="section user"><dt></dt><dd>The real sequence is initially treated as if it were complex to perform a CFFT. Later, a processing stage reshapes the data to obtain half of the frequency spectrum in complex format. Except the first complex number that contains the two real numbers X[0] and X[N/2] all the data is complex. In other words, the first complex sample contains two real values packed. </dd></dl>
+<dl class="section user"><dt></dt><dd>The real sequence is initially treated as if it were complex to perform a CFFT. Later, a processing stage reshapes the data to obtain half of the frequency spectrum in complex format.</dd></dl>
 <dl class="section user"><dt></dt><dd>The input for the inverse RFFT should keep the same format as the output of the forward RFFT. A first processing stage pre-process the data to later perform an inverse CFFT. </dd></dl>
 <dl class="section user"><dt></dt><dd><div class="image">
 <img src="RIFFT.gif" alt=""/>
@@ -189,11 +189,13 @@ Real Inverse Fast Fourier Transform</div></div>
  </dd></dl>
 <dl class="section user"><dt></dt><dd>The algorithms for floating-point, Q15, and Q31 data are slightly different and we describe each algorithm in turn. </dd></dl>
 <dl class="section user"><dt>Floating-point</dt><dd>The main functions are <a class="el" href="group__RealFFT.html#ga5d2ec62f3e35575eba467d09ddcd98b5">arm_rfft_fast_f32()</a> and <a class="el" href="group__RealFFT.html#gac5fceb172551e7c11eb4d0e17ef15aa3">arm_rfft_fast_init_f32()</a>. The older functions <a class="el" href="group__RealFFT.html#ga3df1766d230532bc068fc4ed69d0fcdc">arm_rfft_f32()</a> and <a class="el" href="group__RealFFT.html#ga10717ee326bf50832ef1c25b85a23068">arm_rfft_init_f32()</a> have been deprecated but are still documented. For f16, the functions are <a class="el" href="group__RealFFT.html#gaf018157c88626e83de3d9143f5273d18">arm_rfft_fast_f16()</a> and <a class="el" href="group__RealFFT.html#gacc1c721dd5a690a4c90cfb0264058659">arm_rfft_fast_init_f16()</a>. For f64, the functions are <a class="el" href="group__RealFFT.html#gae3b00f039305039732f7364171da89fb">arm_rfft_fast_f64()</a> and <a class="el" href="group__RealFFT.html#ga51ca806ce1aa56a231684add8d2820bb">arm_rfft_fast_init_f64()</a>. </dd></dl>
-<dl class="section user"><dt></dt><dd>The FFT of a real N-point sequence has even symmetry in the frequency domain. The second half of the data equals the conjugate of the first half flipped in frequency. Looking at the data, we see that we can uniquely represent the FFT using only N/2 complex numbers. These are packed into the output array in alternating real and imaginary components: </dd></dl>
-<dl class="section user"><dt></dt><dd>X = { real[0], imag[0], real[1], imag[1], real[2], imag[2] ... real[(N/2)-1], imag[(N/2)-1 } </dd></dl>
-<dl class="section user"><dt></dt><dd>It happens that the first complex number (real[0], imag[0]) is actually all real. real[0] represents the DC offset, and imag[0] should be 0. (real[1], imag[1]) is the fundamental frequency, (real[2], imag[2]) is the first harmonic and so on. </dd></dl>
+<dl class="section user"><dt></dt><dd>The FFT of a real N-point sequence has even symmetry in the frequency domain. The second half of the data equals the conjugate of the first half flipped in frequency. This conjugate part is not computed by the float RFFT. As consequence, the output of a N point real FFT should be a N//2 + 1 complex numbers so N + 2 floats. </dd></dl>
+<dl class="section user"><dt></dt><dd>It happens that the first complex of number of the RFFT output is actually all real. Its real part represents the DC offset. The value at Nyquist frequency is also real.</dd></dl>
+<dl class="section user"><dt></dt><dd>Those two complex numbers can be encoded with 2 floats rather than using two numbers with an imaginary part set to zero. </dd></dl>
+<dl class="section user"><dt></dt><dd>The implementation is using a trick so that the output buffer can be N float : the last real is packaged in the imaginary part of the first complex (since this imaginary part is not used and is zero).</dd></dl>
 <dl class="section user"><dt></dt><dd>The real FFT functions pack the frequency domain data in this fashion. The forward transform outputs the data in this form and the inverse transform expects input data in this form. The function always performs the needed bitreversal so that the input and output data is always in normal order. The functions support lengths of [32, 64, 128, ..., 4096] samples. </dd></dl>
-<dl class="section user"><dt>Q15 and Q31</dt><dd>The real algorithms are defined in a similar manner and utilize N/2 complex transforms behind the scenes. </dd></dl>
+<dl class="section user"><dt>Q15 and Q31</dt><dd>The real algorithms are defined in a similar manner and utilize N/2 complex transforms behind the scenes.</dd></dl>
+<dl class="section user"><dt></dt><dd>But warning, contrary to the float version, the fixed point implementation RFFT is also computing the conjugate part (except for MVE version) so the output buffer must be bigger. Also the fixed point RFFTs are not using any trick to pack the DC and Nyquist frequency in the same complex number. The RIFFT is not using the conjugate part but it is still using the Nyquist frequency value. The details are given in the documentation for the functions. </dd></dl>
 <dl class="section user"><dt></dt><dd>The complex transforms used internally include scaling to prevent fixed-point overflows. The overall scaling equals 1/(fftLen/2). Due to the use of complex transform internally, the source buffer is modified by the rfft. </dd></dl>
 <dl class="section user"><dt></dt><dd>A separate instance structure must be defined for each transform used but twiddle factor and bit reversal tables can be reused. </dd></dl>
 <dl class="section user"><dt></dt><dd>There is also an associated initialization function for each data type. The initialization function performs the following operations:<ul>
@@ -249,8 +251,7 @@ Real Inverse Fast Fourier Transform</div></div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>none</dd></dl>
-<dl class="section user"><dt></dt><dd>For the RIFFT, the source buffer must at least have length fftLenReal + 2. The last two elements must be equal to what would be generated by the RFFT: (pSrc[0] - pSrc[1]) and 0.0f </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
 
 </div>
 </div>
@@ -835,8 +836,8 @@ Real Inverse Fast Fourier Transform</div></div>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyRight">8192   </td><td class="markdownTableBodyRight">1.15   </td><td class="markdownTableBodyRight">13.3   </td><td class="markdownTableBodyRight">0   </td></tr>
 </table>
-<dl class="section user"><dt></dt><dd>If the input buffer is of length N (fftLenReal), the output buffer must have length 2N + 2 since it is containing the conjugate part. (N/2 + 1 + N/2 complex samples) The input buffer is modified by this function. </dd></dl>
-<dl class="section user"><dt></dt><dd>For the RIFFT, the source buffer must have at least length fftLenReal + 2 which is (N/2 + 1 complex samples). It is not using the conjugate part. The last two elements must be equal to what would be generated by the RFFT: (pSrc[0] - pSrc[1]) &gt;&gt; 1 and 0 </dd></dl>
+<dl class="section user"><dt></dt><dd>If the input buffer is of length N (fftLenReal), the output buffer must have length 2N since it is containing the conjugate part (except for MVE version where N+2 is enough). The input buffer is modified by this function. </dd></dl>
+<dl class="section user"><dt></dt><dd>For the RIFFT, the source buffer must have length N+2 since the Nyquist frequency value is needed but conjugate part is ignored. It is not using the packing trick of the float version. </dd></dl>
 
 </div>
 </div>
@@ -927,8 +928,8 @@ Real Inverse Fast Fourier Transform</div></div>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyRight">8192   </td><td class="markdownTableBodyRight">1.31   </td><td class="markdownTableBodyRight">13.19   </td><td class="markdownTableBodyRight">0   </td></tr>
 </table>
-<dl class="section user"><dt></dt><dd>If the input buffer is of length N (fftLenReal), the output buffer must have length 2N + 2 since it is containing the conjugate part. (N/2 + 1 + N/2 complex samples) The input buffer is modified by this function. </dd></dl>
-<dl class="section user"><dt></dt><dd>For the RIFFT, the source buffer must have at least length fftLenReal + 2 which is (N/2 + 1 complex samples). It is not using the conjugate part. The last two elements must be equal to what would be generated by the RFFT: (pSrc[0] - pSrc[1]) &gt;&gt; 1 and 0 </dd></dl>
+<dl class="section user"><dt></dt><dd>If the input buffer is of length N (fftLenReal), the output buffer must have length 2N since it is containing the conjugate part (except for MVE version where N+2 is enough). The input buffer is modified by this function. </dd></dl>
+<dl class="section user"><dt></dt><dd>For the RIFFT, the source buffer must have length N+2 since the Nyquist frequency value is needed but conjugate part is ignored. It is not using the packing trick of the float version. </dd></dl>
 
 </div>
 </div>
