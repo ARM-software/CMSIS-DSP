@@ -12,7 +12,7 @@ The FIFO sizes are doubled with:
 
 The graph implemented in this example is:
 
-![graph10](graph10.png)
+![graph10](docassets/graph10.png)
 
 There is a global iteration count corresponding to one execution of the schedule.
 

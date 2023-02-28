@@ -128,11 +128,11 @@ If you have declared new nodes in `graph.py` then you'll need to provide an impl
 
 More details and explanations can be found in the documentation for the examples. The first example is a deep dive giving all the details about the Python and C++ sides of the tool: 
 
-* [Example 1 : how to describe a simple graph](documentation/example1.md)
-* [Example 2 : More complex example with delay and CMSIS-DSP](documentation/example2.md)
-* [Example 3 : Working example with CMSIS-DSP and FFT](documentation/example3.md)
-* [Example 4 : Same as example 3 but with the CMSIS-DSP Python wrapper](documentation/example4.md)
-* [Example 10 : The asynchronous mode](documentation/example10.md)
+* [Example 1 : how to describe a simple graph](documentation/examples/example1/README.md)
+* [Example 2 : More complex example with delay and CMSIS-DSP](documentation/examples/example2/README.md)
+* [Example 3 : Working example with CMSIS-DSP and FFT](documentation/examples/example3/README.md)
+* [Example 4 : Same as example 3 but with the CMSIS-DSP Python wrapper](documentation/examples/example4/README.md)
+* [Example 10 : The asynchronous mode](documentation/examples/example10/README.md)
 
 Examples 5 and 6 are showing how to use the CMSIS-DSP MFCC with a synchronous data flow.
 

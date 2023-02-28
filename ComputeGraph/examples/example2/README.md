@@ -10,7 +10,7 @@ In this example. we are just analyzing a much more complex example to see some n
 
 The graph is:
 
-![graph2](graph2.PNG)
+![graph2](docassets/graph2.PNG)
 
 It is much more complex:
 

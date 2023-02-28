@@ -2,7 +2,7 @@
 
 In this example we will see how to describe the following graph:
 
-<img src="graph1.PNG" alt="graph1" style="zoom:50%;" />
+<img src="docassets/graph1.PNG" alt="graph1" style="zoom:50%;" />
 
 The framework is coming with some default blocks. But for this example, we will create new blocks. The blocks that you to create need must be described with a simple Python class and a corresponding simple C++ class.
 

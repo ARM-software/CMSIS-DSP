@@ -6,7 +6,7 @@ project(Example3)
 
 add_executable(example3 main.cpp custom.cpp)
 
-sdf(example3)
+sdf(example3 graph.py test)
 add_sdf_dir(example3)
 
 target_include_directories(example3 PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

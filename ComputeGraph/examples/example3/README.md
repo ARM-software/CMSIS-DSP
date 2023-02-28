@@ -2,7 +2,7 @@
 
 This example is implementing a working example with FFT. The graph is:
 
-![graph3](graph3.PNG)
+![graph3](docassets/graph3.PNG)
 
 The example is:
 
