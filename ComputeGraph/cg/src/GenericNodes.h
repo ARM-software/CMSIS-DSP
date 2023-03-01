@@ -83,11 +83,11 @@ class FIFO<T,length,0,0>: public FIFOBase<T>
         FIFO(uint8_t *buffer,int delay=0):mBuffer((T*)buffer),readPos(0),writePos(delay) {};
 
         /* Not used in synchronous mode */
-        bool willUnderflowWith(int nb) const override {return false;};
-        bool willOverflowWith(int nb) const override {return false;};
-        int nbSamplesInFIFO() const override {return 0;};
+        bool willUnderflowWith(int nb) const final {return false;};
+        bool willOverflowWith(int nb) const final {return false;};
+        int nbSamplesInFIFO() const final {return 0;};
 
-        T * getWriteBuffer(int nb) override
+        T * getWriteBuffer(int nb) final
         {
             
             T *ret;
@@ -103,7 +103,7 @@ class FIFO<T,length,0,0>: public FIFOBase<T>
             return(ret);
         };
 
-        T* getReadBuffer(int nb) override
+        T* getReadBuffer(int nb) final
         {
             
             T *ret = mBuffer + readPos;
@@ -145,16 +145,16 @@ class FIFO<T,length,1,0>: public FIFOBase<T>
         FIFO(uint8_t *buffer,int delay=0):mBuffer((T*)buffer),readPos(0),writePos(delay) {};
 
         /* Not used in synchronous mode */
-        bool willUnderflowWith(int nb) const override {return false;};
-        bool willOverflowWith(int nb) const override {return false;};
-        int nbSamplesInFIFO() const override {return 0;};
+        bool willUnderflowWith(int nb) const final {return false;};
+        bool willOverflowWith(int nb) const final {return false;};
+        int nbSamplesInFIFO() const final {return 0;};
 
-        T * getWriteBuffer(int nb) override
+        T * getWriteBuffer(int nb) const final
         {
             return(mBuffer);
         };
 
-        T* getReadBuffer(int nb) override
+        T* getReadBuffer(int nb) const final
         {
             return(mBuffer);
         }
@@ -198,7 +198,7 @@ class FIFO<T,length,0,1>: public FIFOBase<T>
         before using this function 
         
         */
-        T * getWriteBuffer(int nb) override
+        T * getWriteBuffer(int nb) final
         {
             
             T *ret;
@@ -221,7 +221,7 @@ class FIFO<T,length,0,1>: public FIFOBase<T>
         before using this function 
         
         */
-        T* getReadBuffer(int nb) override
+        T* getReadBuffer(int nb) final
         {
            
             T *ret = mBuffer + readPos;
@@ -230,17 +230,17 @@ class FIFO<T,length,0,1>: public FIFOBase<T>
             return(ret);
         }
 
-        bool willUnderflowWith(int nb) const override
+        bool willUnderflowWith(int nb) const final
         {
             return((nbSamples - nb)<0);
         }
 
-        bool willOverflowWith(int nb) const override
+        bool willOverflowWith(int nb) const final
         {
             return((nbSamples + nb)>length);
         }
 
-        int nbSamplesInFIFO() const override {return nbSamples;};
+        int nbSamplesInFIFO() const final {return nbSamples;};
 
         #ifdef DEBUGSCHED
         void dump()
@@ -423,7 +423,7 @@ public:
     Duplicate2(FIFOBase<IN> &src,FIFOBase<IN> &dst1,FIFOBase<IN> &dst2):
     GenericNode12<IN,inputSize,IN,inputSize,IN,inputSize>(src,dst1,dst2){};
 
-    int prepareForRunning() override
+    int prepareForRunning() final
     {
         if (this->willUnderflow() || 
             this->willOverflow1() ||
@@ -435,7 +435,7 @@ public:
         return(0);
     };
 
-    int run() override {
+    int run() final {
         IN *a=this->getReadBuffer();
         IN *b1=this->getWriteBuffer1();
         IN *b2=this->getWriteBuffer2();
@@ -475,7 +475,7 @@ public:
                   IN,inputSize,
                   IN,inputSize>(src,dst1,dst2,dst3){};
 
-    int prepareForRunning() override
+    int prepareForRunning() final
     {
         if (this->willUnderflow() || 
             this->willOverflow1() ||
@@ -489,7 +489,7 @@ public:
         return(0);
     };
 
-    int run() override {
+    int run() final {
         IN *a=this->getReadBuffer();
         IN *b1=this->getWriteBuffer1();
         IN *b2=this->getWriteBuffer2();

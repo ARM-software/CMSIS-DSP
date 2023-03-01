@@ -13,7 +13,7 @@ With a dynamic flow and scheduling, there is no more any way to ensure that ther
 * Another node may decide to do nothing and skip the execution
 * Another node may decide to raise an error.
 
-With dynamic scheduling, a node must implement the function `prepareForRunning` and decide what to do.
+With dynamic flow, a node must implement the function `prepareForRunning` and decide what to do.
 
 3 error / status codes are reserved for this. They are defined in the header `cg_status.h`. This header is not included by default, but if you define you own error codes, they should be coherent with `cg_status` and use the same values for the 3 status / error codes which are used in dynamic mode:
 
@@ -23,9 +23,9 @@ With dynamic scheduling, a node must implement the function `prepareForRunning` 
 
 Any other returned value will stop the execution.
 
-The dynamic mode (also named asynchronous), is enabled with option : `asynchronous`
+The dynamic mode (also named asynchronous), is enabled with option : `asynchronous` of the configuration object used with the scheduling functions.
 
-The system will still compute a scheduling and FIFO sizes as if the flow was static. We can see the static flow as an average of the dynamic flow. In dynamic mode, the FIFOs may need to be bigger than the ones computed in static mode.  The static estimation is giving a first idea of what the size of the FIFOs should be. The size can be increased by specifying a percent increase with option `FIFOIncrease`.
+The system will still compute a synchronous scheduling and FIFO sizes as if the flow was static. We can see the static flow as an average of the dynamic flow. In dynamic mode, the FIFOs may need to be bigger than the ones computed in static mode.  The static estimation is giving a first idea of what the size of the FIFOs should be. The size can be increased by specifying a percent increase with option `FIFOIncrease`.
 
 For pure compute functions (like CMSIS-DSP ones), which are not packaged into a C++ class, there is no way to customize the decision logic in case of a problem with FIFO. There is a global option : `asyncDefaultSkip`. 
 
@@ -82,7 +82,7 @@ If the `getReadBuffer` and `getWriteBuffer` are causing an underflow or overflow
 
 ## Graph constraints
 
-The dynamic / asynchronous mode is using a synchronous graph as average / ideal case. But it is important to understand that we are no more in static / synchronous mode and some static graph may be too complex for the dynamic mode. Let's take the following graph as example:
+The dynamic mode is using a synchronous graph as average / ideal case. But it is important to understand that we are no more in static / synchronous mode and some static graph may be too complex for the dynamic mode. Let's take the following graph as example:
 
 ![async_topological2](documentation/async_topological2.png)
 
@@ -104,14 +104,14 @@ sink
 
 If we use a strategy of skipping the execution of a node in case of overflow / underflow, what will happen is:
 
-* Schedule execution 1
+* Schedule iteration  1
   * First `src` node execution is successful since there is a sample
   * All other execution attempts will be skipped 
-* Schedule execution 2
+* Schedule iteration  2
   * First `src` node execution is successful since there is a sample
   * All other execution attempt will be skipped 
 * ...
-* Schedule execution 5:
+* Schedule iteration  5:
   * First `src` node execution is successful since there is a sample
   * 4 other `src` node executions are skipped
   * The `filter` execution can finally take place since enough data has been generated
@@ -143,5 +143,3 @@ As consequence, the recommendation in dynamic / asynchronous mode is to:
 * Ensure that the amount of data produced and consumed on each FIFO end is the same (so that each node execution is attempted only once during a schedule)
 * Use the maximum amount of samples required on both ends of the FIFO
   * Here `sink` is generating  at most `1` sample, `filter` needs 5. So we use `5` on both ends of the FIFO
-* More complex graphs will create a useless overhead in dynamic / asynchronous mode
-

@@ -1,5 +1,7 @@
 # README
 
+This example is inside the folder `examples/simple` of the Compute graph folder.
+
 This example explains how to create a very simple synchronous compute graph with 3 nodes:
 
 ![simple](docassets/simple.png)
@@ -22,7 +24,7 @@ The processing node is working on packets of 7 values.
 
 The graph is described with a Python script `create.py` and this document will explain how to write this Python script to define the nodes and their connections.
 
-When this Python script is executed, it will compute a static schedule and generate a C++ implementation. This implementation is using some C++ nodes that must have been defined somewhere. This document will explain how to write those nodes and make them available to the C++ scheduler.
+When this Python script is executed, it will compute a static schedule and generate a C++ implementation. This implementation is using some C++ wrapper that must have been defined somewhere. This document will explain how to write those wrappers and make them available to the C++ scheduler.
 
 To run the script you first must install the CMSIS-DSP Python package:
 
@@ -42,13 +44,15 @@ A graphical representation of the graph is generated in graphviz dot format. If 
 
 `dot -Tpng -o simple.png simple.dot`
 
+The executable can be built (as explained below) by compiling the files `scheduler.cpp` and `main.cpp`.
+
 ## How to write the Python script
 
-Let's look at the required steps in reverse order starting first with how to generate some C++ code.
+Let's look at the required steps in reverse order starting first with how to generate the C++ code for the scheduler.
 
 ### Generating the C++ code and the Graphviz representation
 
-The file `create.py` will generate the C++ scheduler when run. This file is assuming that the nodes and the graph have already been defined somewhere else. The first lines of this script are including the nodes and graph definitions:
+The Python script `create.py` will generate the C++ scheduler when run. This file is assuming that the nodes and the graph have already been defined somewhere else. The first lines of this script are including the nodes and graph definitions:
 
 ```python
 from nodes import * 
@@ -85,7 +89,7 @@ print("Schedule length = %d" % scheduling.scheduleLength)
 print("Memory usage %d bytes" % scheduling.memory)
 ```
 
-The scheduling length is the number of node executions required for one scheduling iterations.
+The scheduling length is the number of node executions required for one scheduling iteration.
 
 The memory usage is the space required by all the FIFOs expressed in bytes.
 
@@ -108,10 +112,9 @@ Now that we have computed the scheduling, we are ready to generate the C++ imple
 
 ```python
 scheduling.ccode("generated",conf)
-
 ```
 
-`"generated" ` is the name of the folder where the files are generated (relative to the working directory of the script). It is possible to customize the naming of the generated files using the `Configuration` object `conf` we created to limit the number of iterations.
+`"generated" ` is the name of the folder where the files are generated (relative to the working directory of the script). It is possible to customize the naming of the generated files using the `Configuration` object `conf` .
 
 We can also generated a `graphviz` file that can then be processed with the `dot` tool to generate a picture of the graph:
 
@@ -139,9 +142,11 @@ We need the definitions from the CMSIS-DSP Python wrapper to define the datatype
 floatType = CType(F32)
 ```
 
+#### How to instantiate the nodes
+
 The nodes are created like any other Python object. The API is not standardized. The compute graph should be able to work with any library of standard components. In this example, the node APIs are first listing the input, then the outputs. And for each IO, we define the data type and the number of samples produced or consumed.
 
-#### How to instantiate the source:
+##### How to instantiate the source:
 
 ```python
 src = Source("source",floatType,5)
@@ -149,21 +154,21 @@ src = Source("source",floatType,5)
 
 A Python object `src` is created from the Python class `Source`. In the generated code, and in the pictures of the graph, this node will be named "source". This name must thus be a valid C variable name.
 
-The datatype is the second argument of the constructor. It is the float datatype we defined just before. The last argument is the number of sample produced by the node ar each execution : 5 samples.
+The datatype is the second argument of the constructor. It is the float datatype we defined just before. The last argument is the number of sample produced by the node at each execution : 5 samples.
 
-#### How to instantiate the processing node:
+##### How to instantiate the processing node:
 
 ```python
 processing = ProcessingNode("processing",floatType,7,7)
 ```
 
-It is very similar to the sink. We just need to specify two sizes : the number of samples consumed and number of samples produced. This node is using the same data type for both input and output.
+It is very similar to the source. We just need to specify two sizes : the number of samples consumed and number of samples produced. This node is using the same data type for both input and output.
 
 As we will see later, the C++ implementation of the node is only supporting the case where the number of samples produced is equal to the number of samples consumed. If it is not the case, the solution won't build. It is caught at the type system level. This constraint could have been enforced at the Python level.
 
-It demonstrates that a Python description of a node can be very generic and anticipate on future use cases and implementation without introducing problem at runtime since some validation is occurring on the C++ side.
+It demonstrates that a Python description of a node can be very generic and anticipate on future use cases without introducing problem at runtime since some validation is occurring on the C++ side.
 
-#### How to instantiate the sink:
+##### How to instantiate the sink:
 
 ```python
 sink = Sink("sink",floatType,5)
@@ -204,8 +209,6 @@ The script `nodes.py` is defining the nodes needed for this example. The first l
 from cmsisdsp.cg.scheduler import GenericNode,GenericSink,GenericSource
 ```
 
-
-
 #### The source
 
 The source is defined with:
@@ -220,8 +223,6 @@ class Source(GenericSource):
     def typeName(self):
         return "Source"
 ```
-
-
 
 It is a lot but it is not complex. Let's detail each part of this definition:
 
@@ -257,7 +258,7 @@ There is a last part in the definition of the node:
         return "Source"
 ```
 
-This defines the name of the C++ class implementing the node.
+This defines the name of the C++ wrapper implementing the node.
 
 #### The processing node
 
@@ -307,11 +308,11 @@ The C++ template is also providing some entry points to enable the scheduler to 
 * Access to the FIFOs
 * Running of the code
 
-Those C++ templates should thus be very light.
+Those C++ templates should thus be very light and that's why we prefer to speak of C++ wrappers rather than C++ objects. The code for the algorithms will generally be outside of those wrappers (and will often be in C).
 
-Those templates are defined in a file `AppNodes.h` included by the scheduler (it is possible to change the name from the Pyuthon script). This file must be provided by the user of the ComputeGraph framework.
+Those templates are defined in a file `AppNodes.h` included by the scheduler (it is possible to change the name from the Python script). This file must be provided by the user of the ComputeGraph framework.
 
-### The source
+### The source C++ wrapper
 
 First, like with Python, we need to define the datatype:
 
@@ -335,10 +336,16 @@ This template can be used to implement different kind of `Source` classes : with
 
 You don't need to be knowledgeable in C++ template to start using them in the context of the compute graph. They are just here to define the plumbing.
 
-Now, when you have declared a C++ template, you need to implement it. There are two ways to do it:
+The only thing to understand is that:
 
-* You can define a generic implementation
-* And/or you can define specialized implementations for specific datatypes or sizes.
+* `Source<X,Y>` is the datatype where the template argument has been replaced by the types `X` and `Y`. 
+* `Source<X,Y>` is a different datatype than `Source<X',Y'>` if `X` and `X'` are for instance different types
+* `X` and `Y` may be numbers (so a number is considered as a type in this context)
+
+When you have declared a C++ template, you need to implement it. There are two ways to do it:
+
+* You can define a generic implementation for `Source`
+* And/or you can define specialized implementations for specific types (`Source<X,Y>`).
 
 For the `Source` we have defined a generic implementation so we need (like in Python case) to inherit from `GenericSource`:
 
@@ -360,7 +367,7 @@ We also need to initialize the `GenericSource` parent since we are inheriting fr
 
 The constructor is here doing nothing more than initializing the parent and the implementation is empty `{}`
 
- Then, the implementation needs to provide an entry point to be usable from the scheduler. It is the `run` function. As said before, since the algorithm is very simple it has been implemented in `run`. In general, `run` is just calling an external function with the buffers coming from the FIFOs.
+The implementation of `Source` needs to provide an entry point to be usable from the scheduler. It is the `run` function. As said before, since the algorithm is very simple it has been implemented in `run`. In general, `run` is just calling an external function with the buffers coming from the FIFOs.
 
 ```C++
 int run() final {
@@ -375,15 +382,17 @@ int run() final {
     };
 ```
 
-
-
 The first line is the important one:
 
 ```C++
 OUT *b=this->getWriteBuffer();
 ```
 
-We get a pointer to be able to write in the output FIFO. This pointer has the datatype OUT coming from the template so can be anything. **Those functions (`getWriteBuffer` and/or `getReadBuffer`)  must always be used even if the node is doing nothing because FIFOs are only updated when those functions are used.**
+We get a pointer to be able to write in the output FIFO. This pointer has the datatype OUT coming from the template so can be anything. 
+
+**Those functions (`getWriteBuffer` and/or `getReadBuffer`)  must always be used even if the node is doing nothing because FIFOs are only updated when those functions are used.**
+
+So for each IO, the corresponding function must be called even if nothing is read or written on this IO. Of course, in a synchronous mode it would not make sense to do nothing with an IO. But, sometimes, for debug, it can be interesting to have nodes like a `NullSink` that would just consume everything but do nothing.
 
 The code in the loop is casting an `int` (the loop index) into the `OUT` datatype. If it is not possible it won't typecheck and build.
 
@@ -394,7 +403,7 @@ for(int i=0;i<outputSize;i++)
 }
 ```
 
-So, although we have not provided a specific implementation of the template, this template can only work with specific `OUT` datatypes.
+So, although we have not provided a specific implementation of the template, this template can only work with specific `OUT` datatypes because of the implementation. It is not a generic implementation.
 
 The return of the function `run` is to inform the scheduler that no error occurred. In synchronous mode, errors (like underflow or overflow) cannot occur due to the scheduling but only because of a broken real time. So any error returned by a node will stop the scheduling.
 
@@ -421,7 +430,7 @@ class ProcessingNode<IN,inputOutputSize,IN,inputOutputSize>
 
 This enforces that the `OUT` datatype is equal to the `IN` datatype since `IN` is used in both arguments.
 
-It also envorces that the input and output sizes are the same since `inputOutputSize` is used in the two arguments for the size.
+It also enforces that the input and output sizes are the same since `inputOutputSize` is used in the two arguments for the size.
 
 Since the arguments of the template are still not fully specified and there is some remaining degree of freedom, we need to continue to define some template parameters:
 
@@ -445,6 +454,8 @@ template<typename IN, int inputSize, typename OUT, int outputSize>
 class ProcessingNode: 
       public GenericNode<IN,inputSize,OUT,outputSize>
 ```
+
+In the generic implementation we do not use `<>` after `ProcessingNode` since we do not specify specific values of the template arguments.
 
 It is possible to have several specialization of the same class.
 
@@ -484,7 +495,7 @@ It is a C API that can be used from C code.
 
 In case of error, the function is returning :
 
-* the number of schedule iterations computed since 
+* the number of schedule iterations computed since the beginning
 * an error code.
 
 It is possible, from the Python script, to add arguments to this API when there is the need to pass additional information to the nodes.

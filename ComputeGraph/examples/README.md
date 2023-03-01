@@ -1,5 +1,15 @@
 ## How to build the examples
 
+First, you must install the `CMSIS-DSP` PythonWrapper:
+
+```
+pip install cmsisdsp
+```
+
+The functions and classes inside the cmsisdsp wrapper can be used to describe and generate the schedule.
+
+You need a recent Graphviz dot tool supporting the HTML-like labels. You'll need `cmake` and `make`
+
 In folder `ComputeGraph/example/build`, type the `cmake` command:
 
 ```bash
@@ -9,7 +19,7 @@ cmake -DHOST=YES \
    -G "Unix Makefiles" ..
 ```
 
-The Graphviz dot tool is requiring a recent version supporting the HTML-like labels.
+The core include directory is `...CMSIS_5/Core` ...
 
 If cmake is successful, you can type `make` to build the examples. It will also build CMSIS-DSP for the host.
 
@@ -34,4 +44,19 @@ For `example3` which is using an input file, `cmake` should have copied the inpu
 python main.py
 ```
 
-`example7` is communicating with `OpenModelica`. You need to install the VHTModelica blocks from the [VHT-SystemModeling](https://github.com/ARM-software/VHT-SystemModeling) project on our GitHub
+`example7` is communicating with `OpenModelica`. You need to install the VHTModelica blocks from the [AVH-SystemModeling](https://github.com/ARM-software/VHT-SystemModeling) project on our GitHub
+
+# List of examples
+
+* [Simple example](simple/README.md) : How to get started
+* [Example 1](example1/README.md) : Sample as the simple example but explaining how to add arguments to the scheduler API and node constructors
+* [Example 2](example2/README.md) : Explain how to use CMSIS-DSP pure functions (no state) and add delay on the arcs of the graph. Explain some configuration options for the schedule generation.
+* [Example 3 ](example3/README.md) : A full signal processing example with CMSIS-DSP using FFT and sliding windows and overlap and add node
+* [Example 4](example4/README.md) : Same as examples 3 but where we generate a Python implementation rather than a C++ implementation. The resulting graph can be executed than to the CMSIS-DSP Python wrapper
+* [Example 5](example5/README.md) : Another pure Python example showing how to compute a sequence of Q15 MFCC and generate an animation (using also the CMSIS-DSP Python wrapper)
+* [Example 6](example6/README.md) : Same as example 5 but with C++ code generation
+* [Example 7](example7/README.md) : Pure Python example demonstrating a communication between the compute graph and OpenModelica to generate a Larsen effect
+* [Example 8](example8/README.md) : Introduce structured datatype for the samples and implicit `Duplicate` nodes for the graph
+* [Example 9](example9/README.md) : Check that duplicate nodes and arc delays are working together and a scheduling is generated
+* [Example 10 : The dynamic dataflow mode](example10/README.md)
+
