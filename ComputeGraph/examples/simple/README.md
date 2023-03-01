@@ -383,13 +383,20 @@ The first line is the important one:
 OUT *b=this->getWriteBuffer();
 ```
 
-We get a pointer to be able to write in the output FIFO. This pointer has the datatype OUT coming from the template so can be anything.
+We get a pointer to be able to write in the output FIFO. This pointer has the datatype OUT coming from the template so can be anything. **Those functions (`getWriteBuffer` and/or `getReadBuffer`)  must always be used even if the node is doing nothing because FIFOs are only updated when those functions are used.**
 
 The code in the loop is casting an `int` (the loop index) into the `OUT` datatype. If it is not possible it won't typecheck and build.
 
+```C++
+for(int i=0;i<outputSize;i++)
+{
+    b[i] = (OUT)i;
+}
+```
+
 So, although we have not provided a specific implementation of the template, this template can only work with specific `OUT` datatypes.
 
-The return of the function is to inform the scheduler that no error occurred. In synchronous mode, errors (like underflow or overflow) cannot occur due to the scheduling but only because of a broken real time. So any error returned by a node will stop the scheduling.
+The return of the function `run` is to inform the scheduler that no error occurred. In synchronous mode, errors (like underflow or overflow) cannot occur due to the scheduling but only because of a broken real time. So any error returned by a node will stop the scheduling.
 
 ### The processing node
 
@@ -515,7 +522,72 @@ The headers required by the software are:
   * It is coming from the `../../cg/src` folder.
   * It provides the basic definitions needed by the framework like `GenericNode`, `GenericSink`,`GenericSource`, `FIFO` ...
 
-  
+
+### Expected output
+
+There are 7 executions of the `Sink` and `Source` and 5 executions of the `ProcessingNode`.
+
+```
+Start
+Source
+Source
+ProcessingNode
+Sink
+1
+2
+3
+4
+5
+Source
+ProcessingNode
+Sink
+1
+2
+3
+4
+5
+Source
+Source
+ProcessingNode
+Sink
+1
+2
+3
+4
+5
+Sink
+1
+2
+3
+4
+5
+Source
+ProcessingNode
+Sink
+1
+2
+3
+4
+5
+Source
+ProcessingNode
+Sink
+1
+2
+3
+4
+5
+Sink
+1
+2
+3
+4
+5
+```
+
+
+
+
 
 
 

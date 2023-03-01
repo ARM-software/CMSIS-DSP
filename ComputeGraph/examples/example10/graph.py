@@ -2,7 +2,7 @@ from cmsisdsp.cg.scheduler import *
 
 ### Define new types of Nodes 
 
-  
+
 
 class SinkAsync(GenericSink):
     def __init__(self,name,theType,inLength):

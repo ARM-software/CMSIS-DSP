@@ -2,6 +2,8 @@
 
 It is exactly the same example as example 3 but the code generation is generating Python code instead of C++.
 
+![graph4](docassets/graph4.png)
+
 The Python code is generated with:
 
 ```python
@@ -11,6 +13,12 @@ sched.pythoncode(".",config=conf)
 and it will generate a `sched.py` file.
 
 A file `custom.py` and `appnodes.py` are also required.
+
+The example can be run with:
+
+`python main.py`
+
+Do not confuse `graph.py,` which is used to describe the graph, with the other Python files that are used to execute the graph.
 
 ## custom.py
 
@@ -25,15 +33,13 @@ An array HANN is defined for the Hann window.
 
 ## appnodes.py
 
-This file is defining the new nodes which were used in `graph.py`. In `graph.py` which are just defining new kind of nodes for scheduling purpose : type and sizes.
+This file is defining the new nodes which were used in `graph.py`. 
 
 In `appnodes.py` we including new kind of nodes for simulation purpose:
 
 ```python
 from cmsisdsp.cg.scheduler import *
 ```
-
-
 
 The CFFT is very similar to the C++ version of example 3. But there is no `prepareForRunning`. Dynamic / asynchronous mode is not implemented for Python.
 
@@ -110,3 +116,22 @@ DISPBUF = np.zeros(16000)
 nb,error = s.scheduler(DISPBUF)
 ```
 
+The example can be run with:
+
+`python main.py`
+
+
+
+## Expected outputs
+
+```
+Generate graphviz and code
+Schedule length = 25
+Memory usage 11264 bytes
+```
+
+And when executed:
+
+![sine](docassets/sine.png)
+
+As you can see at the beginning, there is a small delay during which the output signal is zero.
