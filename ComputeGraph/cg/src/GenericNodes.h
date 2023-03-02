@@ -156,12 +156,12 @@ class FIFO<T,length,1,0>: public FIFOBase<T>
         bool willOverflowWith(int nb) const final {return false;};
         int nbSamplesInFIFO() const final {return 0;};
 
-        T * getWriteBuffer(int nb) const final
+        T * getWriteBuffer(int nb) final
         {
             return(mBuffer);
         };
 
-        T* getReadBuffer(int nb) const final
+        T* getReadBuffer(int nb) final
         {
             return(mBuffer);
         }
