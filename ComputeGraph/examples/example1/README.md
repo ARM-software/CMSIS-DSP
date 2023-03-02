@@ -4,7 +4,7 @@ Please refer to the [simple example](../simple/README.md) to have an overview of
 
 * How to define new arguments for the C implementation of the nodes
 * How to define new arguments for the C API of the scheduler function
-* More detailed description of the generated C++ scheduler
+* Detailed description of the generated C++ scheduler
 
 The graph is is nearly the same as the one in the  [simple example](../simple/README.md) but the processing node is just generating 5 samples in this example:
 

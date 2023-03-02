@@ -93,6 +93,13 @@ class FIFO<T,length,0,0>: public FIFOBase<T>
             T *ret;
             if (readPos > 0)
             {
+                /* This is re-aligning the read buffer.
+                   Aligning buffer is better for vectorized code.
+                   But it has an impact since more memcpy are
+                   executed than required.
+                   This is likely to be not so useful in practice
+                   so a future version will optimize the memcpy usage
+                   */
                 memcpy((void*)mBuffer,(void*)(mBuffer+readPos),(writePos-readPos)*sizeof(T));
                 writePos -= readPos;
                 readPos = 0;

@@ -1,18 +1,18 @@
-#### Options for Python code generation only
+# Options for Python code generation
 
-##### pyOptionalArgs (default = "")
+## pyOptionalArgs (default = "")
 
 Optional arguments to pass to the Python version of the scheduler function
 
-##### customPythonName (default = "custom")
+## customPythonName (default = "custom")
 
 Name of custom header in generated Python code. If you use several scheduler, you may want to use different headers for each one.
 
-##### appNodesPythonName (default = "appnodes")
+## appNodesPythonName (default = "appnodes")
 
 Name of AppNodes header in generated Python code. If you use several scheduler, you may want to use different headers for each one.
 
-##### schedulerPythonFileName (default = "sched")
+## schedulerPythonFileName (default = "sched")
 
 Name of scheduler file in generated Python code. If you use several scheduler, you may want to use different headers for each one.
 

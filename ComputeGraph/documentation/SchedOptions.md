@@ -1,4 +1,4 @@
-### Options for the scheduling
+# Options for the scheduling
 
 Those options needs to be used on a configuration objects passed as argument of the scheduling function. For instance:
 
@@ -8,24 +8,24 @@ conf.debugLimit = 10
 sched = g.computeSchedule(config = conf)
 ```
 
-Note that the configuration object also contain options for the code generators.
+Note that the configuration object also contain options for the code generators. They are described in different part of the documentation.
 
-#### memoryOptimization (default = False)
+## memoryOptimization (default = False)
 
 When the amount of data written to a FIFO and read from the FIFO is the same, the FIFO is just an array. In this case, depending on the scheduling, the memory used by different arrays may be reused if those arrays are not needed at the same time.
 
 This option is enabling an analysis to optimize the memory usage by merging some buffers when it is possible.
 
-#### sinkPriority (default = True)
+## sinkPriority (default = True)
 
 Try to prioritize the scheduling of the sinks to minimize the latency between sources and sinks.
 
 When  this option is enabled, the tool may not be able to find a schedule in all cases. If it can't find a schedule, it will raise a `DeadLock` exception.
 
-#### displayFIFOSizes (default = False)
+## displayFIFOSizes (default = False)
 
 During computation of the schedule, the evolution of the FIFO sizes is generated on `stdout`.
 
-#### dumpSchedule (default = False)
+## dumpSchedule (default = False)
 
 During computation of the schedule, the human readable schedule is generated on `stdout`.
