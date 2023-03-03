@@ -8,15 +8,17 @@ Python APIs to describe the nodes and graph and generate the C++, Python or Grap
 
 3. ## Scheduler
 
-   1. ### [Scheduler options](SchedOptions.md)
+   1. ### [Schedule computation](SchedOptions.md)
 
-   2. ### [Code generation](CodegenOptions.md)
+   2. ### Code generation
 
-      1. #### [C Code generation](CCodeGen.md)
+      1. #### [C++ Code generation](CCodeGen.md)
 
       2. #### [Python code generation](PythonGen.md)
 
-   3. ### [Graphviz representation](GraphvizGen.md)
+      3. #### [Graphviz representation](GraphvizGen.md)
+   
+      4. #### [Common options](CodegenOptions.md)
 
 
 

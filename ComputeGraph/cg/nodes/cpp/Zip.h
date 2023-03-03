@@ -39,7 +39,7 @@ public:
     Zip(FIFOBase<IN> &src1,FIFOBase<IN> &src2,FIFOBase<IN> &dst):
     GenericNode21<IN,inputSize,IN,inputSize,IN,outputSize>(src1,src2,dst){};
 
-    int prepareForRunning() override
+    int prepareForRunning() final
     {
         if (this->willOverflow() ||
             this->willUnderflow1() ||
@@ -52,7 +52,7 @@ public:
         return(0);
     };
 
-    int run() override
+    int run() final
     {
         IN *a1=this->getReadBuffer1();
         IN *a2=this->getReadBuffer2();

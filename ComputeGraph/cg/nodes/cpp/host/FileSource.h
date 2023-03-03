@@ -46,7 +46,7 @@ public:
 
     };
 
-    int prepareForRunning() override
+    int prepareForRunning() final
     {
         if (this->willOverflow()
            )
@@ -57,7 +57,7 @@ public:
         return(0);
     };
 
-    int run() override
+    int run() final
     {
         string str;
         int i;

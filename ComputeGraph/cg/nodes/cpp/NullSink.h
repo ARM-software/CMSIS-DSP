@@ -35,7 +35,7 @@ class NullSink: public GenericSink<IN, inputSize>
 public:
     NullSink(FIFOBase<IN> &src):GenericSink<IN,inputSize>(src){};
 
-    int prepareForRunning() override
+    int prepareForRunning() final
     {
         if (this->willUnderflow()
            )
@@ -46,7 +46,7 @@ public:
         return(0);
     };
 
-    int run() override
+    int run() final
     {
         IN *b=this->getReadBuffer();
 

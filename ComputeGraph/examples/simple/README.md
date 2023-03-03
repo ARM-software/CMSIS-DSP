@@ -40,7 +40,7 @@ This will generate the following files:
 * `generated/scheduler.h`
 * `simple.dot` (the graphviz representation of the graph)
 
-A graphical representation of the graph is generated in graphviz dot format. If you have graphviz installed, you can generated a `png` file representing the graph with:
+A graphical representation of the graph is generated in graphviz dot format. If you have graphviz installed, you can generate a `png` file representing the graph with:
 
 `dot -Tpng -o simple.png simple.dot`
 
@@ -297,7 +297,7 @@ class Sink(GenericSink):
 
 For each node datatype defined in the Python side, we need to provide an implementation on the C++ side.
 
-The C++ class templates that we will define are just wrappers around algorithms. In this example, since the algorithms are very simple, they have been implemented directly in the wrappers. It does not have to be the case for a more complex algorithms. The C++ template are serving the same purposes as the Python definitions : defining the datatype of a node:
+The C++ class templates that we will define are just wrappers around algorithms. In this example, since the algorithms are very simple, they have been implemented directly in the wrappers. It does not have to be the case for a more complex algorithms. The C++ template are serving the same purposes as the Python definitions : defining the datatype of a node.
 
 * The number of IOs
 * Their datatype
@@ -306,13 +306,13 @@ The C++ class templates that we will define are just wrappers around algorithms.
 The C++ template is also providing some entry points to enable the scheduler to do its works :
 
 * Access to the FIFOs
-* Running of the code
+* Running the code
 
 Those C++ templates should thus be very light and that's why we prefer to speak of C++ wrappers rather than C++ objects. The code for the algorithms will generally be outside of those wrappers (and will often be in C).
 
 Those templates are defined in a file `AppNodes.h` included by the scheduler (it is possible to change the name from the Python script). This file must be provided by the user of the ComputeGraph framework.
 
-### The source C++ wrapper
+### The C++ wrapper for Source
 
 First, like with Python, we need to define the datatype:
 
@@ -407,12 +407,13 @@ So, although we have not provided a specific implementation of the template, thi
 
 The return of the function `run` is to inform the scheduler that no error occurred. In synchronous mode, errors (like underflow or overflow) cannot occur due to the scheduling but only because of a broken real time. So any error returned by a node will stop the scheduling.
 
-### The processing node
+### The C++ wrapper for the Processing node
 
 It is similar but now we have one input and one output. The template is:
 
 ```C++
-template<typename IN, int inputSize,typename OUT,int outputSize>
+template<typename IN, int inputSize,
+         typename OUT,int outputSize>
 class ProcessingNode;
 ```
 
@@ -425,7 +426,8 @@ Here is how we implement a specialized version of the template.
 First we define the arguments of the template. It is no more generic. We have to give all the arguments:
 
 ```C++
-class ProcessingNode<IN,inputOutputSize,IN,inputOutputSize>
+class ProcessingNode<IN,inputOutputSize,
+                     IN,inputOutputSize>
 ```
 
 This enforces that the `OUT` datatype is equal to the `IN` datatype since `IN` is used in both arguments.
@@ -436,26 +438,31 @@ Since the arguments of the template are still not fully specified and there is s
 
 ```C++
 template<typename IN, int inputOutputSize>
-class ProcessingNode<IN,inputOutputSize,IN,inputOutputSize>
+class ProcessingNode<IN,inputOutputSize,
+                     IN,inputOutputSize>
 ```
 
 And finally, like before, we inherit from `GenericNode` using the same template arguments:
 
 ```C++
 template<typename IN, int inputOutputSize>
-class ProcessingNode<IN,inputOutputSize,IN,inputOutputSize>: 
-      public GenericNode<IN,inputOutputSize,IN,inputOutputSize>
+class ProcessingNode<IN,inputOutputSize,
+                     IN,inputOutputSize>: 
+      public GenericNode<IN,inputOutputSize,
+                         IN,inputOutputSize>
 ```
 
 To be compared with the generic implementation:
 
 ```C++
-template<typename IN, int inputSize, typename OUT, int outputSize>
+template<typename IN, int inputSize, 
+         typename OUT, int outputSize>
 class ProcessingNode: 
-      public GenericNode<IN,inputSize,OUT,outputSize>
+      public GenericNode<IN,inputSize,
+                         OUT,outputSize>
 ```
 
-In the generic implementation we do not use `<>` after `ProcessingNode` since we do not specify specific values of the template arguments.
+In a generic implementation, we do not use `<>` after `ProcessingNode` since we do not specify specific values of the template arguments.
 
 It is possible to have several specialization of the same class.
 
@@ -463,15 +470,17 @@ One could also have another specialization like:
 
 ```C++
 template<int inputOutputSize>
-class ProcessingNode<q15_t,inputOutputSize,q15_t,inputOutputSize>: 
-      public GenericNode<q15_tIN,inputOutputSize,q15_t,inputOutputSize>
+class ProcessingNode<q15_t,inputOutputSize,
+                     q15_t,inputOutputSize>: 
+      public GenericNode<q15_tIN,inputOutputSize,
+                         q15_t,inputOutputSize>
 ```
 
 Just working `q15_t` datatype
 
 The `run` function of the processing node has access to `getReadBuffer` and `getWriteBuffer` to access to the FIFO buffers.
 
-### The sink
+### The C++ wrapper for the Sink
 
 The definition of the `Sink` should be clear now:
 

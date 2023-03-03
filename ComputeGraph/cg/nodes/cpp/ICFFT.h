@@ -45,7 +45,7 @@ public:
          status=arm_cfft_init_f32(&sifft,inputSize>>1);
     };
 
-    int prepareForRunning() override
+    int prepareForRunning() final
     {
         if (this->willOverflow() ||
             this->willUnderflow()
@@ -57,7 +57,7 @@ public:
         return(0);
     };
 
-    int run() override
+    int run() final
     {
         float32_t *a=this->getReadBuffer();
         float32_t *b=this->getWriteBuffer();
@@ -85,7 +85,7 @@ public:
          status=arm_cfft_init_f16(&sifft,inputSize>>1);
     };
 
-    int prepareForRunning() override
+    int prepareForRunning() final
     {
         if (this->willOverflow() ||
             this->willUnderflow()
@@ -97,7 +97,7 @@ public:
         return(0);
     };
 
-    int run() override
+    int run() final
     {
         float16_t *a=this->getReadBuffer();
         float16_t *b=this->getWriteBuffer();
@@ -125,7 +125,7 @@ public:
          status=arm_cfft_init_q15(&sifft,inputSize>>1);
     };
 
-    int prepareForRunning() override
+    int prepareForRunning() final
     {
         if (this->willOverflow() ||
             this->willUnderflow()
@@ -137,7 +137,7 @@ public:
         return(0);
     };
     
-    int run() override
+    int run() final
     {
         q15_t *a=this->getReadBuffer();
         q15_t *b=this->getWriteBuffer();

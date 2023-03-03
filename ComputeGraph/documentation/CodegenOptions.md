@@ -1,4 +1,4 @@
-# Options for the code generator
+# Common options for the code generators
 
 Global options for the code generators. There are specific options for the C, Python and Graphviz generators. They are described in different part of the documentation.
 

@@ -35,7 +35,7 @@ class FileSink: public GenericSink<IN, inputSize>
 public:
     FileSink(FIFOBase<IN> &src, std::string name):GenericSink<IN,inputSize>(src),output(name){};
 
-    int prepareForRunning() override
+    int prepareForRunning() final
     {
         if (this->willUnderflow()
            )
@@ -46,7 +46,7 @@ public:
         return(0);
     };
     
-    int run() override
+    int run() final
     {
         IN *b=this->getReadBuffer();
 

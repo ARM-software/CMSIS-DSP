@@ -46,7 +46,7 @@ public:
     Unzip(FIFOBase<IN> &src,FIFOBase<IN> &dst1,FIFOBase<IN> &dst2):
     GenericNode12<IN,inputSize,IN,output1Size,IN,output2Size>(src,dst1,dst2){};
 
-    int prepareForRunning() override
+    int prepareForRunning() final
     {
         if (this->willOverflow1() ||
             this->willOverflow2() ||
@@ -62,7 +62,7 @@ public:
     /*
           2*outputSize1 == 2*outSize2 == inputSize
     */
-    int run() override
+    int run() final
     {
         IN *a=this->getReadBuffer();
         IN *b1=this->getWriteBuffer1();

@@ -44,7 +44,7 @@ public:
     ToComplex(FIFOBase<IN> &src,FIFOBase<IN> &dst):GenericNode<IN,inputSize,IN,outputSize>(src,dst){
     };
 
-    int prepareForRunning() override
+    int prepareForRunning() final
     {
         if (this->willOverflow() ||
             this->willUnderflow()
@@ -56,7 +56,7 @@ public:
         return(0);
     };
 
-    int run() override
+    int run() final
     {
         IN *a=this->getReadBuffer();
         IN *b=this->getWriteBuffer();

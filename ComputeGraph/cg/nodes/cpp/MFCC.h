@@ -58,7 +58,7 @@ public:
 #endif
     };
 
-    int prepareForRunning() override
+    int prepareForRunning() final
     {
         if (this->willOverflow() ||
             this->willUnderflow()
@@ -70,7 +70,7 @@ public:
         return(0);
     };
 
-    int run() override
+    int run() final
     {
         float32_t *a=this->getReadBuffer();
         float32_t *b=this->getWriteBuffer();
@@ -101,7 +101,7 @@ public:
 #endif
     };
 
-    int prepareForRunning() override
+    int prepareForRunning() final
     {
         if (this->willOverflow() ||
             this->willUnderflow()
@@ -113,7 +113,7 @@ public:
         return(0);
     };
 
-    int run() override
+    int run() final
     {
         float16_t *a=this->getReadBuffer();
         float16_t *b=this->getWriteBuffer();
@@ -140,7 +140,7 @@ public:
          memory.resize(2*inputSize);
     };
 
-    int prepareForRunning() override
+    int prepareForRunning() final
     {
         if (this->willOverflow() ||
             this->willUnderflow()
@@ -152,7 +152,7 @@ public:
         return(0);
     };
 
-    int run() override
+    int run() final
     {
         q31_t *a=this->getReadBuffer();
         q31_t *b=this->getWriteBuffer();
@@ -178,7 +178,7 @@ public:
          memory.resize(2*inputSize);
     };
 
-    int prepareForRunning() override
+    int prepareForRunning() final
     {
         if (this->willOverflow() ||
             this->willUnderflow()
@@ -190,7 +190,7 @@ public:
         return(0);
     };
 
-    int run() override
+    int run() final
     {
         q15_t *a=this->getReadBuffer();
         q15_t *b=this->getWriteBuffer();
