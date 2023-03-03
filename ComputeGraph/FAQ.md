@@ -20,8 +20,8 @@ The read buffer and write buffers used to interact with a FIFO have the alignmen
 
 If the number of samples read is `NR` and the number of samples written if `NW`, the alignments (in number of samples) may be:
 
-* `r0 . NR` (where `r0 ` if an integer with `r0 >= 0`)
-* `w . NW - r1 . NR` (where `r1 ` and `w` are integers with `r1 >= 0` and `w >= 0`)
+* `r0 . NR` for a read buffer in the FIFO (where `r0 ` if an integer with `r0 >= 0`)
+* `w . NW - r1 . NR` for a write buffer in the FIFO (where `r1 ` and `w` are integers with `r1 >= 0` and `w >= 0`)
 
 If you need a stronger alignment, you'll need to chose `NR` and `NW` in the right way.
 
@@ -42,21 +42,23 @@ If you share memory, you are using reference semantic and it should be hidden fr
 One could define an audio buffer data type :
 
 ```c++
-template<int nbSamples,int refCount>
+template<int nbSamples,
+         int refCount>
 struct SharedAudioBuf
 {
  float32_t *buf;
  static int getNbSamples() {return nbSamples;};
 };
 
-template<int nbSamples,int refCount>
+template<int nbSamples,
+         int refCount>
 using SharedBuf = struct SharedAudioBuf<nbSamples,refCount>;
 
 ```
 
-The template tracks the number of samples and the reference count.
+The template tracks the number of samples and the reference count statically. `refCount` is not a value of the struct. It is a template argument : a number at type level.
 
-The FIFO are no more containing the float samples but only the shared buffers.
+The FIFOs are no more containing the audio samples but only a pointer to a shared buffers of samples.
 
 In this example, instead of having a length of 128 `float` samples, a FIFO would have a length of one `SharedBuf<128,r>` samples.
 
@@ -64,7 +66,7 @@ An example of compute graph could be:
 
 ![shared_buffer](documentation/shared_buffer.png)
 
-The copy of a `SharedBuf<NB,REF>` is copying a pointer to a buffer and not the buffer. It is reference semantic and the buffer should not be modified if the ref count if > 1.
+A copy of the struct `SharedBuf<NB,REF>` is copying a pointer to a buffer and not the buffer. It is reference semantic and the buffer should not be modified if the ref count is > 1.
 
 In the above graph, there is a processing node doing in-place modification of the buffer and it could have a template specialization defined as:
 
@@ -84,7 +86,7 @@ public GenericNode<SharedBuf<NB,1>,1,
 The meaning is:
 
 * The input and output FIFOs have a length of 1 sample
-* The sample has a type `SharedBuf<NB,1>`
+* The sample has a type `SharedBuf<NB,1>` for both input and output
 * The reference count is statically known to be 1 so it is safe to do in place modifications of the buffer and the output buffer is a pointer to the input one
 
 In case of duplication, the template specialization could look like:
