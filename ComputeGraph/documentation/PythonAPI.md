@@ -4,7 +4,7 @@ Python APIs to describe the nodes and graph and generate the C++, Python or Grap
 
 1. ## [Graph class](Graph.md)
 
-2. ## [Generic Node, Source and Sink classes](Generic.md)
+2. ## [Generic and function nodes](Generic.md)
 
 3. ## Scheduler
 

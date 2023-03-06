@@ -1,5 +1,7 @@
 # Cyclo static scheduling
 
+This feature is illustrated in the  [cyclo](examples/cyclo/README.md) example.
+
 Beginning with the version `1.7.0` of the Python wrapper and version >= `1.12` of CMSIS-DSP, cyclo static scheduling has been added.
 
 ## What is the problem it is trying to solve ?

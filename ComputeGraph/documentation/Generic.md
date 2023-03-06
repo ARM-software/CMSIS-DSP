@@ -1,12 +1,22 @@
-# Generic Nodes
+# Generic and functions bodes
 
-The generic node classes are used to build new kind of nodes. There are 3 classes provided by the framework :
+The generic and function nodes are the basic nodes that you use to create other kind of nodes in the graph.
+
+There are 3 generic classes provided by the framework to be used to create new nodes :
 
 * `GenericSource`
 * `GenericNode`
 * `GenericSink`
 
 They are defined in `cmsisdsp.cg.scheduler`
+
+There are 3 other classes that can be used to create new nodes from functions:
+
+* `Unary`
+* `Binary`
+* `Dsp`
+
+## Generic Nodes
 
 Any new kind of node must inherit from one of those classes. Those classes are providing the methods `addInput` and/or `addOutput` to define new IOs.
 
@@ -28,7 +38,7 @@ class ProcessingNode(GenericNode):
 
 See the [simple](../examples/simple/README.md) example for more explanation about how to define a new node.
 
-## Methods
+### Methods
 
 The constructor of the node is using the `addInput` and/or `addOutput` to define new IOs.
 
@@ -56,7 +66,7 @@ def typeName(self):
 
 This method defines the name of the C++ class implementing the wrapper for this node.
 
-## Datatypes
+### Datatypes
 
 Datatypes for the IOs are inheriting from `CGStaticType`.
 
@@ -65,7 +75,7 @@ Currently there are two classes defined:
 * `CType` for the standard CMSIS-DSP types
 * `CStructType` for a C struct
 
-### CType
+#### CType
 
 You create such a type with `CType(id)` where `id` is one of the constant coming from the Python wrapper:
 
@@ -84,7 +94,7 @@ You create such a type with `CType(id)` where `id` is one of the constant coming
 
 For instance, to define a `float32_t` type for an IO you can use `CType(F32)`
 
-### CStructType
+#### CStructType
 
 The constructor has the following definition
 
@@ -101,3 +111,19 @@ In Python, there is no `struct`. This datatype is mapped to an object. Object ha
 As consequence, in Python side you should never copy those structs since it would copy the reference. You should instead copy the members of the struct.
 
 If you don't plan on generating a Python scheduler, you can just use whatever name you want for the `python_name`. It will be ignored by the C++ code generation.
+
+## Function and constant nodes
+
+A Compute graph C++ wrapper is useful when the software components you use have a state that needs to be initialized in the C++ constructor, and preserved between successive calls to the `run` method of the wrapper.
+
+Most CMSIS-DSP functions have no state. The compute graph framework is providing some ways to easily use functions in the graph without having to write a wrapper.
+
+This feature is relying on the nodes:
+
+* `Unary`
+* `Binary`
+* `Dsp`
+* `Constant`
+
+All of this is explained in detail in the [simple example with CMSIS-DSP](../examples/simpledsp/README.md).
+

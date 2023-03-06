@@ -4,7 +4,11 @@
 
 1. ### [Introduction](Introduction.md)
 
-2. ### [How to get started](examples/simple/README.md)
+2. ### How to get started
+
+   1. [Simple graph creation example](examples/simple/README.md)
+
+   2. [Simple graph creation example with CMSIS-DSP](examples/simpledsp/README.md)
 
 3. ### [Examples](examples/README.md)
 

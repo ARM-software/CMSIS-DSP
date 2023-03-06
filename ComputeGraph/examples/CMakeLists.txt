@@ -74,6 +74,8 @@ add_subdirectory(example8 bin_example8)
 add_subdirectory(example9 bin_example9)
 add_subdirectory(example10 bin_example10)
 add_subdirectory(simple bin_simple)
+add_subdirectory(simpledsp bin_simpledsp)
+add_subdirectory(cyclo bin_cyclo)
 
 # Python examples
 add_subdirectory(example4 bin_example4)

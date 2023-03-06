@@ -2,11 +2,11 @@
 
 Please refer to the [simple example](../simple/README.md) to have an overview of how to define a graph and it nodes and how to generate the C++ code for the static scheduler. 
 
+The [simple example with CMSIS-DSP](../simpledsp/README.md) is giving more details about `Constant` nodes and CMSIS-DSP functions in the compute graph.
+
 In this example. we are just analyzing a much more complex example to see some new features:
 
 - Delay
-- CMSIS-DSP function
-- Constant node 
 - SlidingBuffer
 
 This example is not really using a MFCC or a TensorFlow Lite node. It is just providing some wrappers to show how such a nodes could be included in a graph:

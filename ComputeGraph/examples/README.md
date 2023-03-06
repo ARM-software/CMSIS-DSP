@@ -48,8 +48,9 @@ python main.py
 
 # List of examples
 
-* [Simple example](simple/README.md) : How to get started
-* [Example 1](example1/README.md) : Same as the simple example but explaining how to add arguments to the scheduler API and node constructors. This example is also giving a very detailed explanation of the C++ code generated for the scheduler
+* [Simple example without CMSIS-DSP](simple/README.md) : **How to get started**
+* [Simple example with CMSIS-DSP](simpledsp/README.md) : **How to get started with CMSIS-DSP**
+* [Example 1](example1/README.md) : Same as the simple example but explaining how to add arguments to the scheduler API and node constructors. This example is also giving a **detailed explanation of the C++ code** generated for the scheduler
 * [Example 2](example2/README.md) : Explain how to use CMSIS-DSP pure functions (no state) and add delay on the arcs of the graph. Explain some configuration options for the schedule generation.
 * [Example 3](example3/README.md) : A full signal processing example with CMSIS-DSP using FFT and sliding windows and overlap and add node
 * [Example 4](example4/README.md) : Same as example 3 but where we generate a Python implementation rather than a C++ implementation. The resulting graph can be executed thanks to the CMSIS-DSP Python wrapper
@@ -59,4 +60,5 @@ python main.py
 * [Example 8](example8/README.md) : Introduce structured datatype for the samples and implicit `Duplicate` nodes for the graph
 * [Example 9](example9/README.md) : Check that duplicate nodes and arc delays are working together and a scheduling is generated
 * [Example 10 : The dynamic dataflow mode](example10/README.md)
+* [Cyclo-static scheduling](cyclo/README.md)
 

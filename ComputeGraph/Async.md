@@ -1,5 +1,7 @@
 # Dynamic Data Flow
 
+This feature is illustrated in the [Example 10 : The dynamic dataflow mode](examples/example10/README.md)
+
 Versions of the compute graph corresponding to CMSIS-DSP Version >= `1.14.3` and Python wrapper version >= `1.10.0` are supporting  a new dynamic / asynchronous mode.
 
  With a dynamic flow, the flow of data is potentially changing at each execution. The IOs can generate or consume a different amount of data at each execution of their node (including no data).
