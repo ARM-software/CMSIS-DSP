@@ -3,13 +3,11 @@
  * Title:        SlidingBuffer.h
  * Description:  Sliding buffer
  *
- * $Date:        25 October 2022
- * $Revision:    V1.10.0
  *
  * Target Processor: Cortex-M and Cortex-A cores
- * -------------------------------------------------------------------- */
-/*
- * Copyright (C) 2010-2022 ARM Limited or its affiliates. All rights reserved.
+ * -------------------------------------------------------------------- 
+ *
+ * Copyright (C) 2021-2023 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -40,7 +38,7 @@ public:
         memory.resize(overlap);
     };
 
-    int prepareForRunning() override
+    int prepareForRunning() final
     {
         if (this->willOverflow() ||
             this->willUnderflow()
@@ -52,7 +50,7 @@ public:
         return(0);
     };
 
-    int run() override
+    int run() final
     {
         IN *a=this->getReadBuffer();
         IN *b=this->getWriteBuffer();

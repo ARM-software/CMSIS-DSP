@@ -3,13 +3,11 @@
  * Title:        ToComplex.h
  * Description:  Node to convert real to complex 
  *
- * $Date:        30 July 2021
- * $Revision:    V1.10.0
  *
  * Target Processor: Cortex-M and Cortex-A cores
- * -------------------------------------------------------------------- */
-/*
- * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
+ * -------------------------------------------------------------------- 
+ *
+ * Copyright (C) 2021-2023 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -44,7 +42,7 @@ public:
     ToComplex(FIFOBase<IN> &src,FIFOBase<IN> &dst):GenericNode<IN,inputSize,IN,outputSize>(src,dst){
     };
 
-    int prepareForRunning() override
+    int prepareForRunning() final
     {
         if (this->willOverflow() ||
             this->willUnderflow()
@@ -56,7 +54,7 @@ public:
         return(0);
     };
 
-    int run() override
+    int run() final
     {
         IN *a=this->getReadBuffer();
         IN *b=this->getWriteBuffer();

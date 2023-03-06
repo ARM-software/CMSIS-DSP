@@ -36,42 +36,29 @@ class ProcessingNode(Node):
 ### Define nodes
 floatType=CType(F32)
 src=Source("source",floatType,5)
-b=ProcessingNode("filter",floatType,7,5)
-b.addLiteralArg(4)
-b.addVariableArg("testString","someVariable")
+processing=ProcessingNode("processing",floatType,7,5)
+processing.addLiteralArg(4,"testString")
+processing.addVariableArg("someVariable")
 sink=Sink("sink",floatType,5)
 
 g = Graph()
 
-g.connect(src.o,b.i)
-g.connect(b.o,sink.i)
+g.connect(src.o,processing.i)
+g.connect(processing.o,sink.i)
 
 
 print("Generate graphviz and code")
 
 conf=Configuration()
 conf.debugLimit=1
-conf.cOptionalArgs=["const char *testString"
-                   ,"int someVariable"
+conf.cOptionalArgs=["int someVariable"
                    ]
-#conf.displayFIFOSizes=True
-# Prefix for global FIFO buffers
-#conf.prefix="sched1"
 
-#conf.dumpSchedule = True 
 sched = g.computeSchedule(config=conf)
-#print(sched.schedule)
+
 print("Schedule length = %d" % sched.scheduleLength)
 print("Memory usage %d bytes" % sched.memory)
-#
 
-
-#conf.postCustomCName = "post.h"
-#conf.CAPI = True
-#conf.prefix="global"
-#conf.dumpFIFO = True
-#conf.CMSISDSP = False
-#conf.switchCase = False
 sched.ccode("generated",conf)
 
 with open("test.dot","w") as f:

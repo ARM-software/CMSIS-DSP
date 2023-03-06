@@ -3,13 +3,11 @@
 # Title:        ICFFT.py
 # Description:  Node for CMSIS-DSP icfft f32
 # 
-# $Date:        30 July 2021
-# $Revision:    V1.10.0
 # 
 # Target Processor: Cortex-M and Cortex-A cores
 # -------------------------------------------------------------------- */
 # 
-# Copyright (C) 2010-2023 ARM Limited or its affiliates. All rights reserved.
+# Copyright (C) 2021-2023 ARM Limited or its affiliates. All rights reserved.
 # 
 # SPDX-License-Identifier: Apache-2.0
 # 

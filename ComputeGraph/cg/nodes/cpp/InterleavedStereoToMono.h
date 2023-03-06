@@ -3,13 +3,11 @@
  * Title:        InterleavedStereoToMono.h
  * Description:  Interleaved Stereo to mono stream in Q15
  *
- * $Date:        06 August 2021
- * $Revision:    V1.10.0
  *
  * Target Processor: Cortex-M and Cortex-A cores
- * -------------------------------------------------------------------- */
-/*
- * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
+ * -------------------------------------------------------------------- 
+ *
+ * Copyright (C) 2021-2023 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -40,7 +38,7 @@ public:
     InterleavedStereoToMono(FIFOBase<q15_t> &src,FIFOBase<q15_t> &dst):
     GenericNode<q15_t,inputSize,q15_t,outputSize>(src,dst){};
 
-    int prepareForRunning() override
+    int prepareForRunning() final
     {
         if (this->willOverflow() ||
             this->willUnderflow()
@@ -52,7 +50,7 @@ public:
         return(0);
     };
 
-    int run() override
+    int run() final
     {
         q15_t *a=this->getReadBuffer();
         q15_t *b=this->getWriteBuffer();
@@ -72,7 +70,7 @@ public:
     InterleavedStereoToMono(FIFOBase<q31_t> &src,FIFOBase<q31_t> &dst):
     GenericNode<q31_t,inputSize,q31_t,outputSize>(src,dst){};
 
-    int prepareForRunning() override
+    int prepareForRunning() final
     {
         if (this->willOverflow() ||
             this->willUnderflow()
@@ -84,7 +82,7 @@ public:
         return(0);
     };
 
-    int run() override
+    int run() final
     {
         q31_t *a=this->getReadBuffer();
         q31_t *b=this->getWriteBuffer();
@@ -104,7 +102,7 @@ public:
     InterleavedStereoToMono(FIFOBase<float32_t> &src,FIFOBase<float32_t> &dst):
     GenericNode<float32_t,inputSize,float32_t,outputSize>(src,dst){};
 
-    int prepareForRunning() override
+    int prepareForRunning() final
     {
         if (this->willOverflow() ||
             this->willUnderflow()
@@ -116,7 +114,7 @@ public:
         return(0);
     };
     
-    int run() override
+    int run() final
     {
         float32_t *a=this->getReadBuffer();
         float32_t *b=this->getWriteBuffer();

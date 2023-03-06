@@ -3,13 +3,11 @@
  * Title:        FileSource.h
  * Description:  Node for creating File sources
  *
- * $Date:        30 July 2021
- * $Revision:    V1.10.0
  *
  * Target Processor: Cortex-M and Cortex-A cores
- * -------------------------------------------------------------------- */
-/*
- * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
+ * -------------------------------------------------------------------- 
+ *
+ * Copyright (C) 2021-2023 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -46,7 +44,7 @@ public:
 
     };
 
-    int prepareForRunning() override
+    int prepareForRunning() final
     {
         if (this->willOverflow()
            )
@@ -57,7 +55,7 @@ public:
         return(0);
     };
 
-    int run() override
+    int run() final
     {
         string str;
         int i;

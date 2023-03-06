@@ -5,22 +5,22 @@ set(Python_FIND_REGISTRY "LAST")
 
 find_package (Python COMPONENTS Interpreter)
 
-function(sdf TARGET)
+function(sdf TARGET SCRIPT DOTNAME)
     if (DOT)
     add_custom_command(TARGET ${TARGET} PRE_BUILD 
-        BYPRODUCTS ${CMAKE_CURRENT_SOURCE_DIR}/test.pdf
-        COMMAND ${DOT} -Tpdf -o ${CMAKE_CURRENT_SOURCE_DIR}/test.pdf ${CMAKE_CURRENT_SOURCE_DIR}/test.dot
+        BYPRODUCTS ${CMAKE_CURRENT_SOURCE_DIR}/${DOTNAME}.pdf
+        COMMAND ${DOT} -Tpdf -o ${CMAKE_CURRENT_SOURCE_DIR}/${DOTNAME}.pdf ${CMAKE_CURRENT_SOURCE_DIR}/${DOTNAME}.dot
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/test.dot
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/${DOTNAME}.dot
         VERBATIM
         )
     endif()
 
     add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/generated/scheduler.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/test.dot
-        COMMAND ${Python_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/graph.py
+        ${CMAKE_CURRENT_SOURCE_DIR}/${DOTNAME}.dot
+        COMMAND ${Python_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/${SCRIPT}
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/graph.py
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/${SCRIPT}
         VERBATIM
         )
     target_sources(${TARGET} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/generated/scheduler.cpp)
@@ -73,6 +73,9 @@ add_subdirectory(example6 bin_example6)
 add_subdirectory(example8 bin_example8)
 add_subdirectory(example9 bin_example9)
 add_subdirectory(example10 bin_example10)
+add_subdirectory(simple bin_simple)
+add_subdirectory(simpledsp bin_simpledsp)
+add_subdirectory(cyclo bin_cyclo)
 
 # Python examples
 add_subdirectory(example4 bin_example4)

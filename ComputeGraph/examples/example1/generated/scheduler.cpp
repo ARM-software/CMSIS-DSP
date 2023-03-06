@@ -102,8 +102,7 @@ float32_t buf2[BUFFERSIZE2]={0};
 
 
 CG_BEFORE_SCHEDULER_FUNCTION
-uint32_t scheduler(int *error,const char *testString,
-                              int someVariable)
+uint32_t scheduler(int *error,int someVariable)
 {
     int cgStaticError=0;
     uint32_t nbSchedule=0;
@@ -120,7 +119,7 @@ uint32_t scheduler(int *error,const char *testString,
     /* 
     Create node objects
     */
-    ProcessingNode<float32_t,7,float32_t,5> filter(fifo0,fifo1,4,testString,someVariable);
+    ProcessingNode<float32_t,7,float32_t,5> processing(fifo0,fifo1,4,"testString",someVariable);
     Sink<float32_t,5> sink(fifo1);
     Source<float32_t,5> source(fifo0);
 
@@ -138,7 +137,7 @@ uint32_t scheduler(int *error,const char *testString,
             {
                 case 0:
                 {
-                   cgStaticError = filter.run();
+                   cgStaticError = processing.run();
                 }
                 break;
 
