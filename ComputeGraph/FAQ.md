@@ -29,7 +29,7 @@ For instance, if you need an alignment on a multiple of `16` bytes with a buffer
 
 If you can't choose freely the values of `NR` and `NW` then you may need to do a copy inside your component to align the buffer (of course only if the overhead due to the lack of alignment is bigger than doing a copy.)
 
-## Memory sharing
+## Memory sharing example
 
 When the `memoryOptimization` is enabled, the memory may be reused for different FIFOs to minimize the memory usage. But the scheduling algorithm is not trying to optimize this. So depending on how the graph was scheduled, the level of sharing may be different.
 

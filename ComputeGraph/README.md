@@ -20,9 +20,11 @@
 
 7. ### Extensions
 
-   1. #### [Cyclo-static scheduling](CycloStatic.md)
+   1. #### [Memory optimizations](documentation/Memory.md)
 
-   2. #### [Dynamic / Asynchronous mode](Async.md)
+   2. #### [Cyclo-static scheduling](CycloStatic.md)
+
+   3. #### [Dynamic / Asynchronous mode](Async.md)
 
 8. ### [Maths principles](MATHS.md)
 

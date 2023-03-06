@@ -1,15 +1,12 @@
 /* ----------------------------------------------------------------------
  * Project:      CMSIS DSP Library
  * Title:        AppNodes.h
- * Description:  Application nodes for Example 1
- *
- * $Date:        29 July 2021
- * $Revision:    V1.10.0
+ * Description:  Application nodes for Example cyclo
  *
  * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2021-2023 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
