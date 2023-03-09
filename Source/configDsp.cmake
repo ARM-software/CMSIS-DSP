@@ -50,7 +50,13 @@ endif()
 if (MVEI OR MVEF OR HELIUM)
     # By default, GCC does not enable implicit conversion between vectors of different numbers or types of elements
     # which is required by some code in CMSIS-DSP
-    target_compile_options(${project} PRIVATE $<$<STREQUAL:${CMAKE_C_COMPILER_ID},GNU>:-flax-vector-conversions>)
+    if (LAXVECTORCONVERSIONS)
+       target_compile_options(${project} PRIVATE $<$<STREQUAL:${CMAKE_C_COMPILER_ID},GNU>:-flax-vector-conversions>)
+       target_compile_options(${project} PRIVATE $<$<STREQUAL:${CMAKE_C_COMPILER_ID},ARMClang>:-flax-vector-conversions=all>)
+    else()
+       target_compile_options(${project} PRIVATE $<$<STREQUAL:${CMAKE_C_COMPILER_ID},GNU>:-fno-lax-vector-conversions>)
+       target_compile_options(${project} PRIVATE $<$<STREQUAL:${CMAKE_C_COMPILER_ID},ARMClang>:-flax-vector-conversions=none>)
+    endif()
 endif()
 
 if (DISABLEFLOAT16)

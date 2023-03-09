@@ -18,6 +18,7 @@ option(MVEFLOAT16 "Float16 MVE intrinsics supported" OFF)
 option(DISABLEFLOAT16 "Disable building float16 kernels" OFF)
 option(HOST "Build for host" OFF)
 option(AUTOVECTORIZE "Prefer autovectorizable code to one using C intrinsics" OFF)
+option(LAXVECTORCONVERSIONS "Lax vector conversions" ON)
 
 # Select which parts of the CMSIS-DSP must be compiled.
 # There are some dependencies between the parts but they are not tracked
