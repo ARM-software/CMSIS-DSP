@@ -151,7 +151,7 @@ Functions</h2></td></tr>
   {
     uint16_t numRows;
     uint16_t numCols;
-    float32_t *pData;
+    const float32_t *pData;
 } <a class="el" href="structarm__bilinear__interp__instance__f32.html" title="Instance structure for the floating-point bilinear interpolation function.">arm_bilinear_interp_instance_f32</a>;
 </pre></dd></dl>
 <dl class="section user"><dt></dt><dd>where <code>numRows</code> specifies the number of rows in the table; <code>numCols</code> specifies the number of columns in the table; and <code>pData</code> points to an array of size <code>numRows*numCols</code> values. The data table <code>pTable</code> is organized in row order and the supplied data values fall on integer indexes. That is, table element (x,y) is located at <code>pTable[x + y*numCols]</code> where x and y are integers.</dd></dl>
