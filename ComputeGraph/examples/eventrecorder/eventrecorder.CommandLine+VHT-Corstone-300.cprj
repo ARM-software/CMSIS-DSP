@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<cprj schemaVersion="1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="CPRJ.xsd">
+  <created timestamp="2023-03-08T09:18:22" tool="csolution 1.4.0"/>
+
+  <info isLayer="false">
+    <description>Automatically generated project</description>
+  </info>
+
+  <packages>
+    <package name="CMSIS-DSP" vendor="ARM" version="1.14.3:1.14.3"/>
+    <package name="CMSIS" vendor="ARM" version="5.9.0:5.9.0"/>
+    <package name="V2M_MPS3_SSE_300_BSP" vendor="ARM" version="1.3.0:1.3.0"/>
+    <package name="ARM_Compiler" vendor="Keil" version="1.7.2:1.7.2"/>
+  </packages>
+
+  <compilers>
+    <compiler name="AC6" version="6.19.0"/>
+  </compilers>
+
+  <target Ddsp="DSP" Dfpu="DP_FPU" Dmve="FP_MVE" Dname="SSE-300-MPS3" Dsecure="Non-secure" Dtz="TZ" Dvendor="ARM:82">
+    <output intdir="tmp/eventrecorder/VHT-Corstone-300/CommandLine" name="eventrecorder.CommandLine+VHT-Corstone-300" outdir="out/eventrecorder/VHT-Corstone-300/CommandLine" rtedir="RTE" type="exe"/>
+    <options debug="off"/>
+    <asflags add="-masm=auto" compiler="AC6"/>
+    <cflags add="-Wsign-compare -Wdouble-promotion -DNDEBUG -Wall -Wextra -Werror -std=c11 -Ofast -ffast-math -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier" compiler="AC6"/>
+    <cxxflags add="-fno-rtti -DNDEBUG -Wall -Wextra -std=c++11 -Ofast -ffast-math" compiler="AC6"/>
+    <ldflags add="--entry=Reset_Handler --info=summarysizes --info=sizes --info=totals --info=unused --info=veneers" compiler="AC6" file="RTE/Device/SSE-300-MPS3/fvp_sse300_mps3_s.sct"/>
+    <defines>COMMAND_LINE</defines>
+    <includes>generated;.</includes>
+  </target>
+
+  <components>
+    <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="5.6.0"/>
+    <component Cclass="CMSIS" Cgroup="DSP" Cvariant="Source" Cvendor="ARM" Cversion="1.14.3"/>
+    <component Cclass="CMSIS" Cgroup="DSP" Csub="Compute Graph" Cvendor="ARM" Cversion="1.14.3"/>
+    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source" Cvendor="ARM" Cversion="5.5.4">
+      <file attr="config" category="source" name="CMSIS/RTOS2/RTX/Config/RTX_Config.c" version="5.1.1"/>
+      <file attr="config" category="header" name="CMSIS/RTOS2/RTX/Config/RTX_Config.h" version="5.5.2"/>
+    </component>
+    <component Cclass="Device" Cgroup="Definition" Cvendor="ARM" Cversion="1.2.0" rtedir="RTE">
+      <file attr="config" category="header" name="Board/Platform/platform_base_address.h" version="1.1.2"/>
+    </component>
+    <component Cclass="Device" Cgroup="Startup" Cvariant="Baremetal" Cvendor="ARM" Cversion="1.2.0" rtedir="RTE">
+      <file attr="config" category="header" name="CMSIS_Driver/Config/Baremetal/cmsis_driver_config.h" version="1.1.1"/>
+      <file attr="config" category="header" name="CMSIS_Driver/Config/RTE_Device.h" version="1.1.0"/>
+      <file attr="config" category="header" name="Device/Config/Baremetal/device_cfg.h" version="1.1.3"/>
+      <file attr="config" category="header" name="Device/Include/region_defs.h" version="1.0.0"/>
+      <file attr="config" category="header" name="Device/Include/region_limits.h" version="1.0.0"/>
+      <file attr="config" category="header" name="Device/Include/system_SSE300MPS3.h" version="1.1.1"/>
+      <file attr="config" category="linkerScript" name="Device/Source/armclang/fvp_sse300_mps3_s.sct" version="1.1.0"/>
+      <file attr="config" category="source" name="Device/Source/startup_fvp_sse300_mps3.c" version="1.1.1"/>
+      <file attr="config" category="source" name="Device/Source/system_SSE300MPS3.c" version="1.1.1"/>
+    </component>
+    <component Cclass="Native Driver" Cgroup="SysCounter" Cvendor="ARM" Cversion="1.1.0"/>
+    <component Cclass="Native Driver" Cgroup="SysTimer" Cvendor="ARM" Cversion="1.1.0"/>
+    <component Cclass="Native Driver" Cgroup="Timeout" Cvendor="ARM" Cversion="1.0.0"/>
+    <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="Event Recorder" Cvariant="Semihosting" Cvendor="Keil" Cversion="1.5.1">
+      <file attr="config" category="header" name="Config/EventRecorderConf.h" version="1.1.0"/>
+    </component>
+  </components>
+
+  <files>
+    <group name="App">
+      <file category="sourceCpp" name="main.cpp"/>
+      <file category="sourceCpp" name="generated/scheduler.cpp"/>
+    </group>
+  </files>
+</cprj>
+

@@ -1,0 +1,41 @@
+
+(testenv) C:\benchresults\cmsis\CMSIS-DSP\ComputeGraph\examples\eventrecorder>C:\benchresults\eventlist-windows64\eventlist.exe  -a out\eventrecorder\VHT-Corstone-300\CommandLine\eventrecorder.CommandLine+VHT-Corstone-300.axf  -I C:\Keil_v5\ARM\PACK\ARM\CMSIS-DSP\1.14.3\ComputeGraph\cg.scvd  -I C:\Keil_v5\ARM\PACK\Keil\ARM_Compiler\1.7.2\EventRecorder.scvd  -I C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.9.0\ARM.CMSIS.pdsc  -I C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\RTOS2\RTX\RTX5.scvd  -b EventRecorder.log 
+[C:\benchresults\eventlist-windows64\eventlist.exe -a out\eventrecorder\VHT-Corstone-300\CommandLine\eventrecorder.CommandLine+VHT-Corstone-300.axf -I C:\Keil_v5\ARM\PACK\ARM\CMSIS-DSP\1.14.3\ComputeGraph\cg.scvd -I C:\Keil_v5\ARM\PACK\Keil\ARM_Compiler\1.7.2\EventRecorder.scvd -I C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.9.0\ARM.CMSIS.pdsc -I C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\RTOS2\RTX\RTX5.scvd -b EventRecorder.log]
+   Start/Stop event statistic
+   --------------------------
+
+Event count      total       min         max         average     first       last
+----- -----      -----       ---         ---         -------     -----       ----
+
+   Detailed event list
+   -------------------
+
+Index Time (s)   Component    Event Property          Value
+----- --------   ---------    --------------          -----
+    0 0.00000012 EvCtrl       EventRecorderInitialize Restart Count = 1, Timestamp Frequency = 50000000
+    1 0.00000046 EvCtrl       EventRecorderStart      
+    2 0.00002752 RTX MsgQueue ThreadCreated           thread_id=30001640
+    3 0.00002862 RTX MsgQueue ThreadCreated           thread_id=300097e0
+    4 0.00002992 RTX MsgQueue ThreadCreated           thread_id=30009824
+    5 0.00003060 RTX MsgQueue ThreadSwitched          thread_id=30009824
+    6 0.00003182 RTX MsgQueue ThreadSwitched          thread_id=30001640
+    7 0.00003684 CG           ScheduleIteration       nb=0
+    8 0.00003724 CG           NodeExecution           ID=2
+    9 0.00004022 CG           NodeExecution           ID=2
+   10 0.00004320 CG           NodeExecution           ID=0
+   11 0.00004780 CG           NodeExecution           ID=1
+   12 0.00008716 CG           NodeExecution           ID=2
+   13 0.00009022 CG           NodeExecution           ID=0
+   14 0.00009490 CG           NodeExecution           ID=1
+   15 0.00013430 CG           NodeExecution           ID=2
+   16 0.00013736 CG           NodeExecution           ID=2
+   17 0.00014034 CG           NodeExecution           ID=0
+   18 0.00014502 CG           NodeExecution           ID=1
+   19 0.00018422 CG           NodeExecution           ID=1
+   20 0.00022376 CG           NodeExecution           ID=2
+   21 0.00022682 CG           NodeExecution           ID=0
+   22 0.00023152 CG           NodeExecution           ID=1
+   23 0.00027072 CG           NodeExecution           ID=2
+   24 0.00027378 CG           NodeExecution           ID=0
+   25 0.00027846 CG           NodeExecution           ID=1
+   26 0.00031784 CG           NodeExecution           ID=1

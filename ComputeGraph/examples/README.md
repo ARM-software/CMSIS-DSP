@@ -61,4 +61,5 @@ python main.py
 * [Example 9](example9/README.md) : Check that duplicate nodes and arc delays are working together and a scheduling is generated
 * [Example 10 : The dynamic dataflow mode](example10/README.md)
 * [Cyclo-static scheduling](cyclo/README.md)
+* [Simple example with the event recorder](eventrecorder/README.md)
 

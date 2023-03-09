@@ -59,7 +59,6 @@ endfunction()
 
 project(Examples)
 
-
 # Add DSP folder to module path
 list(APPEND CMAKE_MODULE_PATH ${DSP})
 

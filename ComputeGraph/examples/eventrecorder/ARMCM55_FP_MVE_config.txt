@@ -1,0 +1,9 @@
+core_clk.mul=50000000
+mps3_board.visualisation.disable-visualisation=1
+cpu0.semihosting-enable=0
+cpu0.FPU=1
+cpu0.MVE=2
+cpu0.SAU=0
+cpu0.SECEXT=1
+cpu0.INITSVTOR=0
+cpu0.INITNSVTOR=0

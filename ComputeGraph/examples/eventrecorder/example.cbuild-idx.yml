@@ -1,0 +1,9 @@
+build-idx:
+  csolution: example.csolution_ac6.yml
+  cprojects:
+    - cproject: eventrecorder.cproject.yml
+      clayers:
+        - clayer: vht.clayer.yml
+  cbuilds:
+    - cbuild: eventrecorder.CommandLine+VHT-Corstone-300.cbuild.yml
+    - cbuild: eventrecorder.IDE+VHT-Corstone-300.cbuild.yml

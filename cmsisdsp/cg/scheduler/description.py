@@ -278,6 +278,7 @@ class Graph():
                     inputSize = output.nbSamples
                     theType = output.theType
 
+
                     # We create a duplicate node
                     if len(fifo)==2:
                         dup = Duplicate2("dup%d" % dupNb,theType,inputSize,className=self.duplicateNodeClassName)

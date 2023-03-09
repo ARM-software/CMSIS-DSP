@@ -18,17 +18,17 @@
 
 6. ### [Python default nodes](documentation/PythonNodes.md)
 
-7. ### Extensions
+7. ### [Memory optimizations](documentation/Memory.md)
 
-   1. #### [Memory optimizations](documentation/Memory.md)
+8. ### Extensions
 
-   2. #### [Cyclo-static scheduling](CycloStatic.md)
+   1. #### [Cyclo-static scheduling](CycloStatic.md)
 
-   3. #### [Dynamic / Asynchronous mode](Async.md)
+   2. #### [Dynamic / Asynchronous mode](Async.md)
 
-8. ### [Maths principles](MATHS.md)
+9. ### [Maths principles](MATHS.md)
 
-9. ### [FAQ](FAQ.md)
+10. ### [FAQ](FAQ.md)
 
 
 

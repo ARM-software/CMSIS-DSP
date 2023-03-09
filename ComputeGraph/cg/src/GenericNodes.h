@@ -81,8 +81,8 @@ class FIFO<T,length,0,0>: public FIFOBase<T>
         FIFO(uint8_t *buffer,int delay=0):mBuffer((T*)buffer),readPos(0),writePos(delay) {};
 
         /* Not used in synchronous mode */
-        bool willUnderflowWith(int nb) const final {return false;};
-        bool willOverflowWith(int nb) const final {return false;};
+        bool willUnderflowWith(int nb) const final {(void)nb;return false;};
+        bool willOverflowWith(int nb) const final {(void)nb;return false;};
         int nbSamplesInFIFO() const final {return 0;};
 
         T * getWriteBuffer(int nb) final
@@ -150,17 +150,19 @@ class FIFO<T,length,1,0>: public FIFOBase<T>
         FIFO(uint8_t *buffer,int delay=0):mBuffer((T*)buffer),readPos(0),writePos(delay) {};
 
         /* Not used in synchronous mode */
-        bool willUnderflowWith(int nb) const final {return false;};
-        bool willOverflowWith(int nb) const final {return false;};
+        bool willUnderflowWith(int nb) const final {(void)nb;return false;};
+        bool willOverflowWith(int nb) const final {(void)nb;return false;};
         int nbSamplesInFIFO() const final {return 0;};
 
         T * getWriteBuffer(int nb) final
         {
+            (void)nb;
             return(mBuffer);
         };
 
         T* getReadBuffer(int nb) final
         {
+            (void)nb;
             return(mBuffer);
         }
 
