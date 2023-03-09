@@ -52,7 +52,7 @@ if (MVEI OR MVEF OR HELIUM)
     # which is required by some code in CMSIS-DSP
     if (LAXVECTORCONVERSIONS)
        target_compile_options(${project} PRIVATE $<$<STREQUAL:${CMAKE_C_COMPILER_ID},GNU>:-flax-vector-conversions>)
-       target_compile_options(${project} PRIVATE $<$<STREQUAL:${CMAKE_C_COMPILER_ID},ARMClang>:-flax-vector-conversions=all>)
+       target_compile_options(${project} PRIVATE $<$<STREQUAL:${CMAKE_C_COMPILER_ID},ARMClang>:-flax-vector-conversions=integer>)
     else()
        target_compile_options(${project} PRIVATE $<$<STREQUAL:${CMAKE_C_COMPILER_ID},GNU>:-fno-lax-vector-conversions>)
        target_compile_options(${project} PRIVATE $<$<STREQUAL:${CMAKE_C_COMPILER_ID},ARMClang>:-flax-vector-conversions=none>)
