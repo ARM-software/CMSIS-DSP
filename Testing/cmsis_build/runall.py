@@ -167,7 +167,12 @@ for t in tests:
 #("StatsTestsF32","../Output.pickle")
 #]
 
-allSuites=[("DistanceTestsF32","../Output.pickle")]
+allSuites=[("InterpolationTestsF32","../Output.pickle"),
+("InterpolationTestsQ31","../Output.pickle"),
+("InterpolationTestsQ15","../Output.pickle"),
+("InterpolationTestsQ7","../Output.pickle"),
+("InterpolationTestsF16","../Output_f16.pickle"),
+]
 
 #allSuites=[("StatsTestsQ7","../Output.pickle")]
 
@@ -201,18 +206,19 @@ solutions={
     ]
 }
 
-solutions={
-    'testac6.csolution.yml':[
-    #  ("VHT-Corstone-310","CS310"),
-      ("VHT-Corstone-300","CS300")
-    ],
-    'testgcc.csolution.yml':[
-      #("VHT-Corstone-310","CS310"),
-      #("VHT_M55","M55"),
-      ##("VHT_M33","M33_DSP_FP"),
-      ("VHT_M7","M7DP"),
-    ]
-}
+# Override previous solutions for more restricted testing.
+#solutions={
+#    'testac6.csolution.yml':[
+#    #  ("VHT-Corstone-310","CS310"),
+#      ("VHT-Corstone-300","CS300")
+#    ],
+#    'testgcc.csolution.yml':[
+#      #("VHT-Corstone-310","CS310"),
+#      #("VHT_M55","M55"),
+#      ##("VHT_M33","M33_DSP_FP"),
+#      ("VHT_M7","M7DP"),
+#    ]
+#}
 
 HTMLHEADER="""<html>
 <header>

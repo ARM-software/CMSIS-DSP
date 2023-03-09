@@ -57,7 +57,7 @@
     float16_t y0, y1;                            /* Nearest output values */
     float16_t xSpacing = S->xSpacing;            /* spacing between input values */
     int32_t i;                                   /* Index variable */
-    float16_t *pYData = S->pYData;               /* pointer to output table */
+    const float16_t *pYData = S->pYData;               /* pointer to output table */
 
     /* Calculation of index */
     i = (int32_t) (((_Float16)x - (_Float16)S->x1) / (_Float16)xSpacing);

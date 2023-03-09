@@ -51,7 +51,7 @@
    *   {
    *     uint16_t numRows;
    *     uint16_t numCols;
-   *     float32_t *pData;
+   *     const float32_t *pData;
    * } arm_bilinear_interp_instance_f32;
    * </pre>
    *
@@ -105,7 +105,7 @@
   {
     float32_t out;
     float32_t f00, f01, f10, f11;
-    float32_t *pData = S->pData;
+    const float32_t *pData = S->pData;
     int32_t xIndex, yIndex, index;
     float32_t xdiff, ydiff;
     float32_t b1, b2, b3, b4;

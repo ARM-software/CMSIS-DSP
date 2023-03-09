@@ -55,7 +55,7 @@ extern "C"
           uint32_t nValues;           /**< nValues */
           float32_t x1;               /**< x1 */
           float32_t xSpacing;         /**< xSpacing */
-          float32_t *pYData;          /**< pointer to the table of Y values */
+          const float32_t *pYData;          /**< pointer to the table of Y values */
   } arm_linear_interp_instance_f32;
 
   /**
@@ -65,7 +65,7 @@ extern "C"
   {
           uint16_t numRows;   /**< number of rows in the data table. */
           uint16_t numCols;   /**< number of columns in the data table. */
-          float32_t *pData;   /**< points to the data table. */
+          const float32_t *pData;   /**< points to the data table. */
   } arm_bilinear_interp_instance_f32;
 
    /**
@@ -75,7 +75,7 @@ extern "C"
   {
           uint16_t numRows;   /**< number of rows in the data table. */
           uint16_t numCols;   /**< number of columns in the data table. */
-          q31_t *pData;       /**< points to the data table. */
+          const q31_t *pData;       /**< points to the data table. */
   } arm_bilinear_interp_instance_q31;
 
    /**
@@ -85,7 +85,7 @@ extern "C"
   {
           uint16_t numRows;   /**< number of rows in the data table. */
           uint16_t numCols;   /**< number of columns in the data table. */
-          q15_t *pData;       /**< points to the data table. */
+          const q15_t *pData;       /**< points to the data table. */
   } arm_bilinear_interp_instance_q15;
 
    /**
@@ -95,7 +95,7 @@ extern "C"
   {
           uint16_t numRows;   /**< number of rows in the data table. */
           uint16_t numCols;   /**< number of columns in the data table. */
-          q7_t *pData;        /**< points to the data table. */
+          const q7_t *pData;        /**< points to the data table. */
   } arm_bilinear_interp_instance_q7;
 
 

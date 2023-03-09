@@ -57,7 +57,7 @@
   {
     float16_t out;
     float16_t f00, f01, f10, f11;
-    float16_t *pData = S->pData;
+    const float16_t *pData = S->pData;
     int32_t xIndex, yIndex, index;
     float16_t xdiff, ydiff;
     float16_t b1, b2, b3, b4;

@@ -55,7 +55,7 @@
     q31_t xfract, yfract;                        /* X, Y fractional parts */
     q7_t x1, x2, y1, y2;                         /* Nearest output values */
     int32_t rI, cI;                              /* Row and column indices */
-    q7_t *pYData = S->pData;                     /* pointer to output table values */
+    const q7_t *pYData = S->pData;                     /* pointer to output table values */
     uint32_t nCols = S->numCols;                 /* num of rows */
 
     /* Input is in 12.20 format */
