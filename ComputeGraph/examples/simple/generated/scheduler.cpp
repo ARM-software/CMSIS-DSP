@@ -13,6 +13,7 @@ The support classes and code is covered by CMSIS-DSP license.
 #include "AppNodes.h"
 #include "scheduler.h"
 
+
 #if !defined(CHECKERROR)
 #define CHECKERROR       if (cgStaticError < 0) \
        {\

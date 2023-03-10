@@ -64,9 +64,8 @@ class CStructType(CGStaticType):
       All structures with same name must have same size in bytes
       Name must be a valid C and Python identifier
    """
-   def __init__(self,name,python_name,size_in_bytes):
+   def __init__(self,name,size_in_bytes):
         self._name=name 
-        self._python_name=python_name 
         self._size_in_bytes=size_in_bytes
 
    def __eq__(self, other):
@@ -74,7 +73,7 @@ class CStructType(CGStaticType):
 
    @property
    def fillValue(self):
-        return("%s()" % self._python_name) 
+        return("None") 
 
    @property
    def bytes(self):
@@ -91,6 +90,36 @@ class CStructType(CGStaticType):
    @property
    def graphViztype(self):
       return(self._name)
+
+class PythonClassType(CGStaticType):
+   """A Python class
+
+   """
+   def __init__(self,python_name):
+        self._python_name=python_name 
+
+   def __eq__(self, other):
+      return(CGStaticType.__eq__(self,other) and self._python_name == other._python_name)
+
+   @property
+   def fillValue(self):
+        return("%s()" % self._python_name) 
+
+   @property
+   def bytes(self):
+       return(0)
+
+   @property
+   def ctype(self):
+      return("void")
+
+   @property
+   def nptype(self):
+      return("object")
+
+   @property
+   def graphViztype(self):
+      return(self._python_name)
 
 class CType(CGStaticType):
     """A C Scalar element"""

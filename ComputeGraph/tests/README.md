@@ -8,7 +8,7 @@ Some tests to validate some parts of the Compute graph. They all rely on the CMS
   * Create a complex graph containing all classes defined in `GenericNodes.h` (synchronous mode). Used to test that it builds and that there are no errors in the templates
   * `cbuild "cprj\syncgraph.CommandLine+VHT-Corstone-300.cprj" `
 * `create_async.py`
-  * Create a complex graph containing all classes defined in `GenericNodes.h` (ssynchronous mode). Used to test that it builds and that there are no errors in the templates
+  * Create a complex graph containing all classes defined in `GenericNodes.h` (asynchronous mode). Used to test that it builds and that there are no errors in the templates
   * `cbuild "cprj\asyncgraph.CommandLine+VHT-Corstone-300.cprj" `
 * `create_fifobench_sync.py`
   * Create a graph with FFT / IFFT : the graph is decomposing a signal and rebuilding it. It is used to test the performance of different FIFOs implementations (synchronous mode)

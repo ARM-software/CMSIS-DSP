@@ -205,11 +205,11 @@ def build():
                 "Intended Audience :: Developers",
           ],
           keywords=['development','dsp','cmsis','cmsis-dsp','Arm','signal processing','maths','ml','cortex-m','cortex-a'],
-          install_requires=['numpy>=1.21, < 1.22 ',
+          install_requires=['numpy>=1.22, < 1.23 ',
           'networkx>=3.0',
-          'jinja2>= 2.11.3, <3.0',
+          'jinja2>= 3.1.2, <4.0',
           'sympy>=1.7.1',
-          'markupsafe>=2.0.1, <2.1'
+          'MarkupSafe>=2.1.2, <3.0'
           ],
           project_urls={  # Optional
              'Bug Reports': 'https://github.com/ARM-software/CMSIS-DSP/issues',

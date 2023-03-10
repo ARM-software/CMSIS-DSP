@@ -42,7 +42,13 @@ class Source(GenericSource):
 # Modify the fields of the objects, or create a totally new
 # object.
 
-complexType=CStructType("complex","MyComplex",8)
+GEN_PYTHON = False 
+
+
+if GEN_PYTHON:
+   complexType=PythonClassType("MyComplex")
+else:
+   complexType=CStructType("complex",8)
 
 src=Source("source",complexType,5)
 b=ProcessingNode("filter",complexType,7,5)
@@ -71,7 +77,6 @@ g.connect(b.oa,nc.i)
 
 g.connect(b.ob,nd.i)
 
-GEN_PYTHON = False 
 
 print("Generate graphviz and code")
 

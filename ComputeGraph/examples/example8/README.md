@@ -11,11 +11,15 @@ This example is illustrating :
 
 It is  possible to use a custom datatype:
 
+For the C++ version of the scheduler it would be:
+
 ```python
-complexType=CStructType("complex","MyComplex",8)
+complexType=CStructType("MyComplex",8)
 ```
 
-This is defining a new datatype that is mapped to the type `complex` in C/C++ and the class `MyComplex` in Python. The last argument is the size in bytes of the struct in C.
+This is defining a new datatype that is mapped to the type `complex` in C/C++.
+
+The last argument is the size in bytes of the struct in C.
 
 The type complex may be defined with:
 
@@ -25,6 +29,15 @@ typedef struct {
     float im;
 } complex;
 ```
+
+For the Python version of the scheduler:
+
+```python
+complexType=PythonClassType("MyComplex")
+```
+
+The class `MyComplex` is used in Python. 
+
 
 **Note that:**
 

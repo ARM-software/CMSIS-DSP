@@ -27,12 +27,13 @@
  */
 #ifndef CMSISMODULE_H
 #define CMSISMODULE_H
-#define NPY_NO_DEPRECATED_API NPY_1_21_API_VERSION
+#define NPY_NO_DEPRECATED_API NPY_1_22_API_VERSION
 
 #include <numpy/numpyconfig.h>
 
 // API version used on google colab
-#if (NPY_API_VERSION != 0x0000000E )
+// List on https://github.com/numpy/numpy/blob/main/numpy/core/include/numpy/numpyconfig.h
+#if (NPY_API_VERSION != 0x0000000F )
 #error("Error building with wrong NumPy API version")
 #endif
 

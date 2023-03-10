@@ -32,6 +32,8 @@ using namespace std;
 #include <cstdio>
 #include "arm_math.h"
 
+#include "cg_status.h"
+
 #include "host/FileSink.h"
 #include "host/FileSource.h"
 #include "CFFT.h"

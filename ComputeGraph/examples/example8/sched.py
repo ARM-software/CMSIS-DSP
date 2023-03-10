@@ -10,7 +10,7 @@ import sys
 
 import numpy as np
 import cmsisdsp as dsp
-from cmsisdsp.cg.static.nodes.simu import *
+from cmsisdsp.cg.nodes.simu import *
 from appnodes import * 
 from custom import *
 
@@ -102,37 +102,13 @@ def scheduler(someVariable):
        cgStaticError = dup0.run()
        if cgStaticError < 0:
           break
-       cgStaticError = sc.run()
+       cgStaticError = sa.run()
        if cgStaticError < 0:
           break
        cgStaticError = sb.run()
        if cgStaticError < 0:
           break
-       cgStaticError = sa.run()
-       if cgStaticError < 0:
-          break
-       cgStaticError = source.run()
-       if cgStaticError < 0:
-          break
-       cgStaticError = filter.run()
-       if cgStaticError < 0:
-          break
-       cgStaticError = source.run()
-       if cgStaticError < 0:
-          break
-       cgStaticError = sd.run()
-       if cgStaticError < 0:
-          break
-       cgStaticError = dup0.run()
-       if cgStaticError < 0:
-          break
        cgStaticError = sc.run()
-       if cgStaticError < 0:
-          break
-       cgStaticError = sb.run()
-       if cgStaticError < 0:
-          break
-       cgStaticError = sa.run()
        if cgStaticError < 0:
           break
        cgStaticError = source.run()
@@ -147,37 +123,19 @@ def scheduler(someVariable):
        cgStaticError = dup0.run()
        if cgStaticError < 0:
           break
-       cgStaticError = sc.run()
+       cgStaticError = sa.run()
        if cgStaticError < 0:
           break
        cgStaticError = sb.run()
        if cgStaticError < 0:
           break
-       cgStaticError = sa.run()
-       if cgStaticError < 0:
-          break
-       cgStaticError = source.run()
-       if cgStaticError < 0:
-          break
-       cgStaticError = filter.run()
-       if cgStaticError < 0:
-          break
-       cgStaticError = source.run()
-       if cgStaticError < 0:
-          break
-       cgStaticError = sd.run()
-       if cgStaticError < 0:
-          break
-       cgStaticError = dup0.run()
-       if cgStaticError < 0:
-          break
        cgStaticError = sc.run()
        if cgStaticError < 0:
           break
-       cgStaticError = sb.run()
+       cgStaticError = source.run()
        if cgStaticError < 0:
           break
-       cgStaticError = sa.run()
+       cgStaticError = source.run()
        if cgStaticError < 0:
           break
        cgStaticError = filter.run()
@@ -189,13 +147,55 @@ def scheduler(someVariable):
        cgStaticError = dup0.run()
        if cgStaticError < 0:
           break
-       cgStaticError = sc.run()
+       cgStaticError = sa.run()
        if cgStaticError < 0:
           break
        cgStaticError = sb.run()
        if cgStaticError < 0:
           break
+       cgStaticError = sc.run()
+       if cgStaticError < 0:
+          break
+       cgStaticError = source.run()
+       if cgStaticError < 0:
+          break
+       cgStaticError = filter.run()
+       if cgStaticError < 0:
+          break
+       cgStaticError = sd.run()
+       if cgStaticError < 0:
+          break
+       cgStaticError = dup0.run()
+       if cgStaticError < 0:
+          break
        cgStaticError = sa.run()
+       if cgStaticError < 0:
+          break
+       cgStaticError = sb.run()
+       if cgStaticError < 0:
+          break
+       cgStaticError = sc.run()
+       if cgStaticError < 0:
+          break
+       cgStaticError = source.run()
+       if cgStaticError < 0:
+          break
+       cgStaticError = filter.run()
+       if cgStaticError < 0:
+          break
+       cgStaticError = sd.run()
+       if cgStaticError < 0:
+          break
+       cgStaticError = dup0.run()
+       if cgStaticError < 0:
+          break
+       cgStaticError = sa.run()
+       if cgStaticError < 0:
+          break
+       cgStaticError = sb.run()
+       if cgStaticError < 0:
+          break
+       cgStaticError = sc.run()
        if cgStaticError < 0:
           break
 

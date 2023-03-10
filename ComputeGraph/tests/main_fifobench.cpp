@@ -113,11 +113,11 @@ int main(void)
   cycleMeasurementStart();
   nbSched=scheduler(&error,input_buffer,output_buffer);
   cycleMeasurementStop();
-  int32_t cycles = getCycles() - overhead;
+  int32_t cycles = (getCycles() - overhead)/nbSched;
 
   printf("Number of schedule iterations = %d\n\r",nbSched);
   printf("Error code = %d\n\r",error);
-  printf("Cycles = %d\n\r",cycles);
+  printf("Cycles per iteration = %d\n\r",cycles);
 
 
 #if defined(COMMAND_LINE)

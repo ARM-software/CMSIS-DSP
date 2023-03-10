@@ -9,6 +9,9 @@
 #include  CMSIS_device_header
 #include "cmsis_os2.h"
 
+#if defined(RTE_Compiler_EventRecorder)
+#include "EventRecorder.h"
+#endif 
 
 void app_main (void *argument)
 {
