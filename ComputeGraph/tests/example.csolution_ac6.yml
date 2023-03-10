@@ -1,0 +1,72 @@
+solution:
+  compiler: AC6
+  misc:
+    - C:
+      - -Wsign-compare 
+      - -Wdouble-promotion 
+      - -DNDEBUG 
+      - -Wall 
+      - -Wextra  
+      - -Werror
+      - -std=c11 
+      - -Ofast 
+      - -ffast-math
+      - -Wno-packed 
+      - -Wno-missing-variable-declarations 
+      - -Wno-missing-prototypes 
+      - -Wno-missing-noreturn 
+      - -Wno-sign-conversion 
+      - -Wno-nonportable-include-path 
+      - -Wno-reserved-id-macro 
+      - -Wno-unused-macros 
+      - -Wno-documentation-unknown-command 
+      - -Wno-documentation 
+      - -Wno-license-management 
+      - -Wno-parentheses-equality 
+      - -Wno-reserved-identifier
+    - CPP:
+      - -fno-rtti 
+      - -DNDEBUG 
+      - -Wall 
+      - -Wextra  
+      - -std=c++11 
+      - -Ofast 
+      - -ffast-math
+    - ASM:
+      - -masm=auto
+    - Link:
+      - --entry=Reset_Handler
+      - --info=summarysizes
+      - --info=sizes
+      - --info=totals
+      - --info=unused
+      - --info=veneers
+
+  packs:
+    - pack: ARM::CMSIS-DSP@1.14.3
+    - pack: ARM::CMSIS@5.9.0
+    - pack: ARM::V2M_MPS3_SSE_300_BSP@1.3.0
+    - pack: Keil::ARM_Compiler@1.7.2
+
+
+  target-types:
+    - type: VHT-Corstone-300
+      device: ARM::SSE-300-MPS3
+
+
+  build-types:
+    - type: CommandLine
+      debug: off
+      define:
+        - COMMAND_LINE
+
+    - type: IDE
+      debug: off
+
+
+  projects:
+    - project: ./syncgraph.cproject.yml    
+    - project: ./asyncgraph.cproject.yml
+    - project: ./fifobench_sync.cproject.yml
+    - project: ./fifobench_async.cproject.yml
+    - project: ./fifo.cproject.yml

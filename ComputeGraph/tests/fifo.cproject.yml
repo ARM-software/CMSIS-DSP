@@ -1,0 +1,26 @@
+project:
+  groups:
+    - group: App
+      files:
+        - file: main_fifo.cpp
+
+  add-path:
+    - .
+       
+  components:
+    - component: ARM::CMSIS:DSP&Source@1.14.3
+    - component: ARM::CMSIS:RTOS2:Keil RTX5&Source@5.5.4 
+    - component: Keil::Compiler&ARM Compiler:Event Recorder&Semihosting@1.5.1
+      for-type: 
+          - .CommandLine
+    - component: Keil::Compiler&ARM Compiler:Event Recorder&DAP@1.5.1
+      for-type: 
+          - .IDE
+    - component: Keil::Compiler&ARM Compiler:I/O:STDOUT&EVR
+      for-type: 
+          - .IDE
+  
+  layers:
+    - layer: vht.clayer.yml 
+    - layer: cg.clayer.yml
+

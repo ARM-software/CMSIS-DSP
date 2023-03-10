@@ -1,0 +1,30 @@
+layer:  
+  # name: VHT
+  description: Boot code for Virtual Hardware
+
+  components:
+    - component: ARM::CMSIS:CORE
+    - component: Device:Startup&C Startup
+      not-for-type: 
+        - +VHT-Corstone-300 
+        - +VHT-Corstone-310
+    - component: ARM::Device:Definition
+      for-type: 
+        - +VHT-Corstone-300 
+        - +VHT-Corstone-310
+    - component: ARM::Device:Startup&Baremetal
+      for-type: 
+        - +VHT-Corstone-300 
+        - +VHT-Corstone-310
+    - component: ARM::Native Driver:Timeout
+      for-type: 
+        - +VHT-Corstone-300 
+        - +VHT-Corstone-310
+    - component: ARM::Native Driver:SysCounter
+      for-type: 
+        - +VHT-Corstone-300 
+        - +VHT-Corstone-310
+    - component: ARM::Native Driver:SysTimer
+      for-type: 
+        - +VHT-Corstone-300 
+        - +VHT-Corstone-310

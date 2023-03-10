@@ -1,0 +1,34 @@
+build-idx:
+  csolution: ../example.csolution_ac6.yml
+  cprojects:
+    - cproject: ../asyncgraph.cproject.yml
+      clayers:
+        - clayer: ../vht.clayer.yml
+        - clayer: ../cg.clayer.yml
+    - cproject: ../fifo.cproject.yml
+      clayers:
+        - clayer: ../vht.clayer.yml
+        - clayer: ../cg.clayer.yml
+    - cproject: ../fifobench_async.cproject.yml
+      clayers:
+        - clayer: ../vht.clayer.yml
+        - clayer: ../cg.clayer.yml
+    - cproject: ../fifobench_sync.cproject.yml
+      clayers:
+        - clayer: ../vht.clayer.yml
+        - clayer: ../cg.clayer.yml
+    - cproject: ../syncgraph.cproject.yml
+      clayers:
+        - clayer: ../vht.clayer.yml
+        - clayer: ../cg.clayer.yml
+  cbuilds:
+    - cbuild: asyncgraph.CommandLine+VHT-Corstone-300.cbuild.yml
+    - cbuild: asyncgraph.IDE+VHT-Corstone-300.cbuild.yml
+    - cbuild: fifo.CommandLine+VHT-Corstone-300.cbuild.yml
+    - cbuild: fifo.IDE+VHT-Corstone-300.cbuild.yml
+    - cbuild: fifobench_async.CommandLine+VHT-Corstone-300.cbuild.yml
+    - cbuild: fifobench_async.IDE+VHT-Corstone-300.cbuild.yml
+    - cbuild: fifobench_sync.CommandLine+VHT-Corstone-300.cbuild.yml
+    - cbuild: fifobench_sync.IDE+VHT-Corstone-300.cbuild.yml
+    - cbuild: syncgraph.CommandLine+VHT-Corstone-300.cbuild.yml
+    - cbuild: syncgraph.IDE+VHT-Corstone-300.cbuild.yml

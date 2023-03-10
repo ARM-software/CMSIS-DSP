@@ -1,0 +1,301 @@
+build:
+  context: fifobench_sync.IDE+VHT-Corstone-300
+  compiler: AC6
+  device: ARM::SSE-300-MPS3
+  processor:
+    fpu: on
+    trustzone: non-secure
+  packs:
+    - pack: ARM::CMSIS-DSP@1.14.3
+      path: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.14.3
+    - pack: ARM::CMSIS@5.9.0
+      path: ${CMSIS_PACK_ROOT}/ARM/CMSIS/5.9.0
+    - pack: ARM::V2M_MPS3_SSE_300_BSP@1.3.0
+      path: ${CMSIS_PACK_ROOT}/ARM/V2M_MPS3_SSE_300_BSP/1.3.0
+    - pack: Keil::ARM_Compiler@1.7.2
+      path: ${CMSIS_PACK_ROOT}/Keil/ARM_Compiler/1.7.2
+  debug: off
+  misc:
+    ASM:
+      - -masm=auto
+    C:
+      - -Wsign-compare
+      - -Wdouble-promotion
+      - -DNDEBUG
+      - -Wall
+      - -Wextra
+      - -Werror
+      - -std=c11
+      - -Ofast
+      - -ffast-math
+      - -Wno-packed
+      - -Wno-missing-variable-declarations
+      - -Wno-missing-prototypes
+      - -Wno-missing-noreturn
+      - -Wno-sign-conversion
+      - -Wno-nonportable-include-path
+      - -Wno-reserved-id-macro
+      - -Wno-unused-macros
+      - -Wno-documentation-unknown-command
+      - -Wno-documentation
+      - -Wno-license-management
+      - -Wno-parentheses-equality
+      - -Wno-reserved-identifier
+    CPP:
+      - -fno-rtti
+      - -DNDEBUG
+      - -Wall
+      - -Wextra
+      - -std=c++11
+      - -Ofast
+      - -ffast-math
+    Link:
+      - --entry=Reset_Handler
+      - --info=summarysizes
+      - --info=sizes
+      - --info=totals
+      - --info=unused
+      - --info=veneers
+  define:
+    - _RTE_
+  add-path:
+    - ../fifobench_sync
+    - ..
+    - ../../cg/src
+    - ../../cg/nodes/cpp
+    - ../RTE/Device/SSE-300-MPS3
+    - ../RTE/CMSIS
+    - ../RTE/Compiler
+    - ../RTE/_fifobench_sync.IDE_VHT-Corstone-300
+    - ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.14.3/Include
+    - ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.14.3/PrivateInclude
+    - ${CMSIS_PACK_ROOT}/ARM/CMSIS/5.9.0/CMSIS/Core/Include
+    - ${CMSIS_PACK_ROOT}/ARM/CMSIS/5.9.0/CMSIS/RTOS2/Include
+    - ${CMSIS_PACK_ROOT}/ARM/CMSIS/5.9.0/CMSIS/RTOS2/RTX/Include
+    - ${CMSIS_PACK_ROOT}/ARM/V2M_MPS3_SSE_300_BSP/1.3.0/Board/Device_Definition
+    - ${CMSIS_PACK_ROOT}/ARM/V2M_MPS3_SSE_300_BSP/1.3.0/Board/Platform
+    - ${CMSIS_PACK_ROOT}/ARM/V2M_MPS3_SSE_300_BSP/1.3.0/Device/Include
+    - ${CMSIS_PACK_ROOT}/ARM/V2M_MPS3_SSE_300_BSP/1.3.0/Native_Driver
+    - ${CMSIS_PACK_ROOT}/Keil/ARM_Compiler/1.7.2/Include
+  output-type: exe
+  output-dirs:
+    gendir: ../generated
+    intdir: tmp/fifobench_sync/VHT-Corstone-300/IDE
+    outdir: out/fifobench_sync/VHT-Corstone-300/IDE
+    rtedir: ../RTE
+  components:
+    - component: ARM::CMSIS:CORE@5.6.0
+      condition: ARMv6_7_8-M Device
+      from-pack: ARM::CMSIS@5.9.0
+      selected-by: ARM::CMSIS:CORE
+    - component: ARM::CMSIS:DSP&Source@1.14.3
+      condition: CMSISCORE
+      from-pack: ARM::CMSIS-DSP@1.14.3
+      selected-by: ARM::CMSIS:DSP&Source@1.14.3
+      files:
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.14.3/Source/BasicMathFunctions/BasicMathFunctions.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.14.3/Source/BasicMathFunctions/BasicMathFunctionsF16.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.14.3/Source/BayesFunctions/BayesFunctions.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.14.3/Source/BayesFunctions/BayesFunctionsF16.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.14.3/Source/CommonTables/CommonTables.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.14.3/Source/CommonTables/CommonTablesF16.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.14.3/Source/ComplexMathFunctions/ComplexMathFunctions.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.14.3/Source/ComplexMathFunctions/ComplexMathFunctionsF16.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.14.3/Source/ControllerFunctions/ControllerFunctions.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.14.3/Source/DistanceFunctions/DistanceFunctions.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.14.3/Source/DistanceFunctions/DistanceFunctionsF16.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.14.3/Source/FastMathFunctions/FastMathFunctions.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.14.3/Source/FastMathFunctions/FastMathFunctionsF16.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.14.3/Source/FilteringFunctions/FilteringFunctions.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.14.3/Source/FilteringFunctions/FilteringFunctionsF16.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.14.3/Source/InterpolationFunctions/InterpolationFunctions.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.14.3/Source/InterpolationFunctions/InterpolationFunctionsF16.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.14.3/Source/MatrixFunctions/MatrixFunctions.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.14.3/Source/MatrixFunctions/MatrixFunctionsF16.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.14.3/Source/QuaternionMathFunctions/QuaternionMathFunctions.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.14.3/Source/SVMFunctions/SVMFunctions.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.14.3/Source/SVMFunctions/SVMFunctionsF16.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.14.3/Source/StatisticsFunctions/StatisticsFunctions.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.14.3/Source/StatisticsFunctions/StatisticsFunctionsF16.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.14.3/Source/SupportFunctions/SupportFunctions.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.14.3/Source/SupportFunctions/SupportFunctionsF16.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.14.3/Source/TransformFunctions/TransformFunctions.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS-DSP/1.14.3/Source/TransformFunctions/TransformFunctionsF16.c
+          category: source
+    - component: ARM::CMSIS:RTOS2:Keil RTX5&Source@5.5.4
+      condition: RTOS2 RTX5
+      from-pack: ARM::CMSIS@5.9.0
+      selected-by: ARM::CMSIS:RTOS2:Keil RTX5&Source@5.5.4
+      files:
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS/5.9.0/CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS/5.9.0/CMSIS/RTOS2/RTX/Source/rtx_delay.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS/5.9.0/CMSIS/RTOS2/RTX/Source/rtx_evflags.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS/5.9.0/CMSIS/RTOS2/RTX/Source/rtx_evr.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS/5.9.0/CMSIS/RTOS2/RTX/Source/rtx_kernel.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS/5.9.0/CMSIS/RTOS2/RTX/Source/rtx_lib.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS/5.9.0/CMSIS/RTOS2/RTX/Source/rtx_memory.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS/5.9.0/CMSIS/RTOS2/RTX/Source/rtx_mempool.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS/5.9.0/CMSIS/RTOS2/RTX/Source/rtx_msgqueue.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS/5.9.0/CMSIS/RTOS2/RTX/Source/rtx_mutex.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS/5.9.0/CMSIS/RTOS2/RTX/Source/rtx_semaphore.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS/5.9.0/CMSIS/RTOS2/RTX/Source/rtx_system.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS/5.9.0/CMSIS/RTOS2/RTX/Source/rtx_thread.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS/5.9.0/CMSIS/RTOS2/RTX/Source/rtx_timer.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/CMSIS/5.9.0/CMSIS/RTOS2/Source/os_systick.c
+          category: source
+        - file: ../RTE/CMSIS/RTX_Config.c
+          category: source
+          attr: config
+          version: 5.1.1
+        - file: ../RTE/CMSIS/RTX_Config.h
+          category: header
+          attr: config
+          version: 5.5.2
+    - component: ARM::Device:Definition@1.2.0
+      condition: SSE-300-MPS3 Device
+      from-pack: ARM::V2M_MPS3_SSE_300_BSP@1.3.0
+      selected-by: ARM::Device:Definition
+      files:
+        - file: ${CMSIS_PACK_ROOT}/ARM/V2M_MPS3_SSE_300_BSP/1.3.0/Board/Device_Definition/device_definition.c
+          category: source
+        - file: ../RTE/Device/SSE-300-MPS3/platform_base_address.h
+          category: header
+          attr: config
+          version: 1.1.2
+    - component: ARM::Device:Startup&Baremetal@1.2.0
+      condition: SSE-300-MPS3 Device
+      from-pack: ARM::V2M_MPS3_SSE_300_BSP@1.3.0
+      selected-by: ARM::Device:Startup&Baremetal
+      files:
+        - file: ../RTE/Device/SSE-300-MPS3/cmsis_driver_config.h
+          category: header
+          attr: config
+          version: 1.1.1
+        - file: ../RTE/Device/SSE-300-MPS3/RTE_Device.h
+          category: header
+          attr: config
+          version: 1.1.0
+        - file: ../RTE/Device/SSE-300-MPS3/device_cfg.h
+          category: header
+          attr: config
+          version: 1.1.3
+        - file: ../RTE/Device/SSE-300-MPS3/region_defs.h
+          category: header
+          attr: config
+          version: 1.0.0
+        - file: ../RTE/Device/SSE-300-MPS3/region_limits.h
+          category: header
+          attr: config
+          version: 1.0.0
+        - file: ../RTE/Device/SSE-300-MPS3/system_SSE300MPS3.h
+          category: header
+          attr: config
+          version: 1.1.1
+        - file: ../RTE/Device/SSE-300-MPS3/fvp_sse300_mps3_s.sct
+          category: linkerScript
+          attr: config
+          version: 1.1.0
+        - file: ../RTE/Device/SSE-300-MPS3/startup_fvp_sse300_mps3.c
+          category: source
+          attr: config
+          version: 1.1.1
+        - file: ../RTE/Device/SSE-300-MPS3/system_SSE300MPS3.c
+          category: source
+          attr: config
+          version: 1.1.1
+    - component: ARM::Native Driver:SysCounter@1.1.0
+      condition: SSE-300-MPS3 Device
+      from-pack: ARM::V2M_MPS3_SSE_300_BSP@1.3.0
+      selected-by: ARM::Native Driver:SysCounter
+      files:
+        - file: ${CMSIS_PACK_ROOT}/ARM/V2M_MPS3_SSE_300_BSP/1.3.0/Native_Driver/syscounter_armv8-m_cntrl_drv.c
+          category: source
+        - file: ${CMSIS_PACK_ROOT}/ARM/V2M_MPS3_SSE_300_BSP/1.3.0/Native_Driver/syscounter_armv8-m_read_drv.c
+          category: source
+    - component: ARM::Native Driver:SysTimer@1.1.0
+      condition: SSE-300-MPS3 Device
+      from-pack: ARM::V2M_MPS3_SSE_300_BSP@1.3.0
+      selected-by: ARM::Native Driver:SysTimer
+      files:
+        - file: ${CMSIS_PACK_ROOT}/ARM/V2M_MPS3_SSE_300_BSP/1.3.0/Native_Driver/systimer_armv8-m_drv.c
+          category: source
+    - component: ARM::Native Driver:Timeout@1.0.0
+      condition: SSE-300-MPS3 Systimer Syscounter
+      from-pack: ARM::V2M_MPS3_SSE_300_BSP@1.3.0
+      selected-by: ARM::Native Driver:Timeout
+      files:
+        - file: ${CMSIS_PACK_ROOT}/ARM/V2M_MPS3_SSE_300_BSP/1.3.0/Native_Driver/systimer_armv8-m_timeout.c
+          category: source
+    - component: Keil::Compiler&ARM Compiler:Event Recorder&DAP@1.5.1
+      condition: Cortex-M Device
+      from-pack: Keil::ARM_Compiler@1.7.2
+      selected-by: Keil::Compiler&ARM Compiler:Event Recorder&DAP@1.5.1
+      files:
+        - file: ${CMSIS_PACK_ROOT}/Keil/ARM_Compiler/1.7.2/Source/EventRecorder.c
+          category: source
+        - file: ../RTE/Compiler/EventRecorderConf.h
+          category: header
+          attr: config
+          version: 1.1.0
+    - component: Keil::Compiler&ARM Compiler:I/O:STDOUT&EVR@1.2.0
+      condition: ARMCC Cortex-M with EVR
+      from-pack: Keil::ARM_Compiler@1.7.2
+      selected-by: Keil::Compiler&ARM Compiler:I/O:STDOUT&EVR
+      files:
+        - file: ${CMSIS_PACK_ROOT}/Keil/ARM_Compiler/1.7.2/Source/retarget_io.c
+          category: source
+  groups:
+    - group: App
+      files:
+        - file: ../main_fifobench.cpp
+          category: sourceCpp
+        - file: ../fifobench_sync/scheduler.cpp
+          category: sourceCpp
+        - file: ../custom_bench.cpp
+          category: sourceCpp
+        - file: ../timing.c
+          category: sourceC
+  constructed-files:
+    - file: ../RTE/_fifobench_sync.IDE_VHT-Corstone-300/RTE_Components.h
+      category: header

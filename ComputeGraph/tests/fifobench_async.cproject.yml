@@ -1,0 +1,30 @@
+project:
+  groups:
+    - group: App
+      files:
+        - file: main_fifobench.cpp
+        - file: fifobench_async/scheduler.cpp
+        - file: custom_bench.cpp
+        - file: timing.c
+
+  add-path:
+    - fifobench_async
+    - .
+       
+  components:
+    - component: ARM::CMSIS:DSP&Source@1.14.3
+    - component: ARM::CMSIS:RTOS2:Keil RTX5&Source@5.5.4 
+    - component: Keil::Compiler&ARM Compiler:Event Recorder&Semihosting@1.5.1
+      for-type: 
+          - .CommandLine
+    - component: Keil::Compiler&ARM Compiler:Event Recorder&DAP@1.5.1
+      for-type: 
+          - .IDE
+    - component: Keil::Compiler&ARM Compiler:I/O:STDOUT&EVR
+      for-type: 
+          - .IDE
+  
+  layers:
+    - layer: vht.clayer.yml 
+    - layer: cg.clayer.yml
+

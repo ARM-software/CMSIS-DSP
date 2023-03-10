@@ -1,5 +1,12 @@
 # FAQ
 
+## Table of contents
+
+* [Alignment](#alignment)
+* [Memory sharing](#memory-sharing-example)
+* [Latencies](#latencies)
+* [Performances](#performances)
+
 ## Alignment
 
 When the `memoryOptimization` mode is enabled, the memory can be shared between different FIFOs (when the FIFOs are in fact used as simple arrays).

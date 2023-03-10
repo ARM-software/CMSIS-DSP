@@ -39,7 +39,6 @@ class ICFFT<float32_t,inputSize,float32_t,inputSize>: public GenericNode<float32
 {
 public:
     ICFFT(FIFOBase<float32_t> &src,FIFOBase<float32_t> &dst):GenericNode<float32_t,inputSize,float32_t,inputSize>(src,dst){
-         arm_status status;
          status=arm_cfft_init_f32(&sifft,inputSize>>1);
     };
 
@@ -57,6 +56,10 @@ public:
 
     int run() final
     {
+        if (status!=ARM_MATH_SUCCESS)
+        {
+            return(CG_INIT_FAILURE);
+        }
         float32_t *a=this->getReadBuffer();
         float32_t *b=this->getWriteBuffer();
         memcpy((void*)b,(void*)a,inputSize*sizeof(float32_t));
@@ -65,6 +68,7 @@ public:
     };
 
     arm_cfft_instance_f32 sifft;
+    arm_status status;
 
 };
 
@@ -79,7 +83,6 @@ class ICFFT<float16_t,inputSize,float16_t,inputSize>: public GenericNode<float16
 {
 public:
     ICFFT(FIFOBase<float16_t> &src,FIFOBase<float16_t> &dst):GenericNode<float16_t,inputSize,float16_t,inputSize>(src,dst){
-         arm_status status;
          status=arm_cfft_init_f16(&sifft,inputSize>>1);
     };
 
@@ -97,6 +100,10 @@ public:
 
     int run() final
     {
+        if (status!=ARM_MATH_SUCCESS)
+        {
+            return(CG_INIT_FAILURE);
+        }
         float16_t *a=this->getReadBuffer();
         float16_t *b=this->getWriteBuffer();
         memcpy((void*)b,(void*)a,inputSize*sizeof(float16_t));
@@ -105,6 +112,7 @@ public:
     };
 
     arm_cfft_instance_f16 sifft;
+    arm_status status;
 
 };
 #endif
@@ -119,7 +127,6 @@ class ICFFT<q15_t,inputSize,q15_t,inputSize>: public GenericNode<q15_t,inputSize
 {
 public:
     ICFFT(FIFOBase<q15_t> &src,FIFOBase<q15_t> &dst):GenericNode<q15_t,inputSize,q15_t,inputSize>(src,dst){
-         arm_status status;
          status=arm_cfft_init_q15(&sifft,inputSize>>1);
     };
 
@@ -137,6 +144,10 @@ public:
     
     int run() final
     {
+        if (status!=ARM_MATH_SUCCESS)
+        {
+            return(CG_INIT_FAILURE);
+        }
         q15_t *a=this->getReadBuffer();
         q15_t *b=this->getWriteBuffer();
         memcpy((void*)b,(void*)a,inputSize*sizeof(q15_t));
@@ -144,7 +155,8 @@ public:
         return(0);
     };
 
-    arm_cfft_instance_f32 sifft;
+    arm_cfft_instance_q15 sifft;
+    arm_status status;
 
 };
 #endif
