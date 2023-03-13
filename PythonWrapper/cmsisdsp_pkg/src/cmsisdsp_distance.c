@@ -144,7 +144,7 @@ cmsis_arm_minkowski_distance_f32(PyObject *obj, PyObject *args)
   uint32_t blockSize;                                                  
   float32_t result;                                               
                                                                        
-  if (PyArg_ParseTuple(args,"OOl",&pSrcA,&pSrcB,&w))                       
+  if (PyArg_ParseTuple(args,"OOi",&pSrcA,&pSrcB,&w))                       
   {                                                                    
                                                                        
     GETARGUMENT(pSrcA,NPY_DOUBLE,double,float32_t);                    
@@ -183,7 +183,7 @@ cmsis_arm_##NAME (PyObject *obj, PyObject *args)                   \
   float32_t result;                                            \
                                                                     \
                                                                     \
-  if (PyArg_ParseTuple(args,"OOl",&pSrcA,&pSrcB,&blockSize))        \
+  if (PyArg_ParseTuple(args,"OOi",&pSrcA,&pSrcB,&blockSize))        \
   {                                                                 \
                                                                     \
     GETARGUMENT(pSrcA,NPY_UINT32,uint32_t,uint32_t);                \
