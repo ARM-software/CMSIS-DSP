@@ -242,6 +242,12 @@ The wrapper is now containing the compute graph Python scripts and you should re
 
 # Change history
 
+## Version 1.9.7:
+
+* Upgrade for compatibility with google colab 
+* Change to compute graph API for structured datatype
+* Corrected distance issues when using wrapper on aarch64
+
 ## Version 1.9.6:
 
 * Corrections to the RFFTs APIs

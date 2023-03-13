@@ -189,7 +189,7 @@ def build():
          author = 'Copyright (C) 2010-2023 ARM Limited or its affiliates. All rights reserved.',
          author_email = 'christophe.favergeon@arm.com',
          url="https://github.com/ARM-software/CMSIS-DSP",
-         python_requires='>=3.6',
+         python_requires='>=3.7',
          license="License :: OSI Approved :: Apache Software License",
          platforms=['any'],
          classifiers=[

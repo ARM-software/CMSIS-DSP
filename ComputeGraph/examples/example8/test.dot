@@ -64,38 +64,38 @@ source [label=<
 
 
 
-source:i -> filter:i [label="MyComplex(11)"
+source:i -> filter:i [label="complex(11)"
 ,headlabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >7</FONT>
 </TD></TR></TABLE>>
 ,taillabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >5</FONT>
 </TD></TR></TABLE>>]
 
-filter:ob -> sd:i [label="MyComplex(5)"
+filter:ob -> sd:i [label="complex(5)"
 ,headlabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >5</FONT>
 </TD></TR></TABLE>>
 ,taillabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >5</FONT>
 </TD></TR></TABLE>>]
 
 filter:oa ->  
-dup0 [label="MyComplex(5)"
+dup0 [label="complex(5)"
 
 ,taillabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >5</FONT>
 </TD></TR></TABLE>>]
 
  
-dup0 -> sa:i [label="MyComplex(5)"
+dup0 -> sa:i [label="complex(5)"
 ,headlabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >5</FONT>
 </TD></TR></TABLE>>
 ]
 
  
-dup0 -> sb:i [label="MyComplex(5)"
+dup0 -> sb:i [label="complex(5)"
 ,headlabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >5</FONT>
 </TD></TR></TABLE>>
 ]
 
  
-dup0 -> sc:i [label="MyComplex(5)"
+dup0 -> sc:i [label="complex(5)"
 ,headlabel=<<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >5</FONT>
 </TD></TR></TABLE>>
 ]
