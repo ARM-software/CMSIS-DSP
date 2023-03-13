@@ -86,17 +86,37 @@ def checkOrtho(A,err=1e-10):
     print(np.max(np.abs(product)))
     return (np.all(np.abs(product)<=err))
 
-m=np.array([[-0.35564874, -0.07809871, -0.10350569, -0.50633135, -0.65073484],
-            [-0.71887395,  0.45257918,  0.29606363,  0.1497621 ,  0.07002738],
-            [-0.50586141, -0.50613839, -0.01650463, -0.29693649,  0.47667742],
-            [ 0.06802137,  0.07689169, -0.02726221, -0.09996672,  0.15521956],
-            [ 0.21220523, -0.22273009,  0.78247386, -0.2760002 , -0.24438688],
-            [ 0.09683658,  0.62026597,  0.26771763, -0.26935342,  0.18443573],
-            [-0.01014268,  0.27578087, -0.44635721, -0.21827312, -0.26463186],
-            [-0.20420646, -0.12880459,  0.13207738,  0.65319578, -0.3956695 ]])
+rows = 8 
+columns = 5 
+
+def randomIsometry(rows,cols,rank):
+    if rank==1:
+       r=np.random.randn(rows)
+       r = Tools.normalize(r)[np.newaxis]
+       c=np.random.randn(cols)
+       c = Tools.normalize(c)[np.newaxis]
+       result=r.T.dot(c)
+    else:
+        a = np.random.randn(rows,rows)
+        b = np.random.randn(cols,cols)
+
+        diagDim = min(rows,cols)
+        d = np.zeros((rows,cols))
+        
+        diag = np.ones(diagDim)
+        diag[rank:] = 0 
+        np.fill_diagonal(d,diag)
+
+        qa,_ = qr(a)
+        qb,_ = qr(b)
+
+        result = qa .dot(d.dot(qb))
+    return(result)
+
+
+m = randomIsometry(rows,columns,columns-1)
 
 rows,columns = m.shape
-
 
 # The CMSIS-DSP C functions is requiring two temporary arrays
 # To follow the C function as closely as possible, we create
@@ -108,30 +128,6 @@ rows,columns = m.shape
 # Python API. tmpa and tmpb are not modified.
 tmpa=np.zeros(rows)
 tmpb=np.zeros(rows)
-
-printSubTitle("QR F32")
-
-status,r,q,tau = dsp.arm_mat_qr_f32(m,dsp.DEFAULT_HOUSEHOLDER_THRESHOLD_F32,tmpa,tmpb)
-
-# Status different from 0 if matrix dimensions are not right
-# (rows must be >= columns)
-#print(status)
-#print(q)
-#print(r)
-#print(tau)
-
-# Check that the matrix Q is orthogonal
-assert(checkOrtho(q,err=1.0e-6))
-
-# Remove householder vectors from R matrix
-i=1
-for c in r.T:
-    c[i:] = 0
-    i = i+1
-
-# Check that M = Q R
-newm = np.dot(q,r)
-assert_allclose(newm,m,2e-6,1e-7)
 
 
 printSubTitle("QR F64")
@@ -157,3 +153,28 @@ for c in r.T:
 # Check that M = Q R
 newm = np.dot(q,r)
 assert_allclose(newm,m)
+
+printSubTitle("QR F32")
+
+status,r,q,tau = dsp.arm_mat_qr_f32(m,dsp.DEFAULT_HOUSEHOLDER_THRESHOLD_F32,tmpa,tmpb)
+
+# Status different from 0 if matrix dimensions are not right
+# (rows must be >= columns)
+#print(status)
+#print(q)
+#print(r)
+#print(tau)
+
+
+# Check that the matrix Q is orthogonal
+assert(checkOrtho(q,err=1.0e-6))
+
+# Remove householder vectors from R matrix
+i=1
+for c in r.T:
+    c[i:] = 0
+    i = i+1
+
+# Check that M = Q R
+newm = np.dot(q,r)
+assert_allclose(newm,m,2e-6,1e-7)

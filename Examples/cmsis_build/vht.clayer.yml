@@ -4,7 +4,7 @@ layer:
 
   components:
     - component: ARM::CMSIS:CORE
-    - component: ARM::CMSIS:DSP&Source@1.11.0
+    - component: ARM::CMSIS:DSP&Source@1.14.4
     - component: Device:Startup&C Startup
       not-for-type: 
         - +VHT-Corstone-300 

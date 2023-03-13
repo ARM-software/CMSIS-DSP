@@ -2,3 +2,5 @@ build/
 *_debug/
 EventRecorderStub.scvd
 _ARMCM0/
+cmsis_build/tmp
+cmsis_build/out

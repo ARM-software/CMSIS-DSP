@@ -1,5 +1,6 @@
 *_IntDir/
 *_OutDir/
-*.cprj
 *@*
 .*@*
+*.cbuild.yml 
+

@@ -43,7 +43,7 @@ solution:
       - --info=veneers
 
   packs:
-    - pack: ARM::CMSIS-DSP@1.14.3
+    - pack: ARM::CMSIS-DSP@1.14.4
     - pack: ARM::CMSIS@5.9.0
     - pack: ARM::V2M_MPS3_SSE_300_BSP@1.3.0
     - pack: Keil::ARM_Compiler@1.7.2

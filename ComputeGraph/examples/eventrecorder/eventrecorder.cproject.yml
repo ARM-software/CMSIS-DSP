@@ -10,7 +10,7 @@ project:
     - .
        
   components:
-    - component: ARM::CMSIS:DSP&Source@1.14.3
+    - component: ARM::CMSIS:DSP&Source@1.14.4
     - component: ARM::CMSIS:DSP:Compute Graph
     - component: ARM::CMSIS:RTOS2:Keil RTX5&Source@5.5.4 
     - component: Keil::Compiler&ARM Compiler:Event Recorder&Semihosting@1.5.1
