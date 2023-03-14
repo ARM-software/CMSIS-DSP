@@ -42,29 +42,29 @@ extern "C"
 
 #define SCALE_COL_T(T,CAST,A,ROW,v,i)        \
 {                                       \
-  int32_t w;                            \
+  int32_t _w;                            \
   T *data = (A)->pData;                 \
-  const int32_t numCols = (A)->numCols; \
+  const int32_t _numCols = (A)->numCols; \
   const int32_t nb = (A)->numRows - ROW;\
                                         \
-  data += i + numCols * (ROW);          \
+  data += i + _numCols * (ROW);          \
                                         \
-  for(w=0;w < nb; w++)                  \
+  for(_w=0;_w < nb; _w++)                  \
   {                                     \
      *data *= CAST v;                   \
-     data += numCols;                   \
+     data += _numCols;                   \
   }                                     \
 }
 
 #define COPY_COL_T(T,A,ROW,COL,DST)               \
 {                                                 \
-    uint32_t row;                                 \
-    T *pb=DST;                                    \
-    T *pa = (A)->pData + ROW * (A)->numCols + COL;\
-    for(row = ROW; row < (A)->numRows; row ++)    \
+    uint32_t _row;                                \
+    T *_pb=DST;                                    \
+    T *_pa = (A)->pData + ROW * (A)->numCols + COL;\
+    for(_row = ROW; _row < (A)->numRows; _row ++) \
     {                                             \
-         *pb++ = *pa;                             \
-         pa += (A)->numCols;                      \
+         *_pb++ = *_pa;                             \
+         _pa += (A)->numCols;                      \
     }                                             \
 }
 
@@ -74,20 +74,20 @@ extern "C"
 #define SWAP_ROWS_F16(A,COL,i,j)                  \
   {                                               \
     int cnt = ((A)->numCols)-(COL);               \
-    int32_t w;                                   \
+    int32_t _w;                                    \
     float16_t *data = (A)->pData;                 \
-    const int32_t numCols = (A)->numCols;        \
+    const int32_t _numCols = (A)->numCols;        \
                                                   \
-    for(w=(COL);w < numCols; w+=8)                \
+    for(_w=(COL);_w < _numCols; _w+=8)               \
     {                                             \
        f16x8_t tmpa,tmpb;                         \
        mve_pred16_t p0 = vctp16q(cnt);            \
                                                   \
-       tmpa=vldrhq_z_f16(&data[i*numCols + w],p0);\
-       tmpb=vldrhq_z_f16(&data[j*numCols + w],p0);\
+       tmpa=vldrhq_z_f16(&data[i*_numCols + _w],p0);\
+       tmpb=vldrhq_z_f16(&data[j*_numCols + _w],p0);\
                                                   \
-       vstrhq_p(&data[i*numCols + w], tmpb, p0);  \
-       vstrhq_p(&data[j*numCols + w], tmpa, p0);  \
+       vstrhq_p(&data[i*_numCols + _w], tmpb, p0);  \
+       vstrhq_p(&data[j*_numCols + _w], tmpa, p0);  \
                                                   \
        cnt -= 8;                                  \
     }                                             \
@@ -96,17 +96,17 @@ extern "C"
 #define SCALE_ROW_F16(A,COL,v,i)                   \
 {                                                   \
   int cnt = ((A)->numCols)-(COL);                   \
-  int32_t w;                                       \
+  int32_t _w;                                       \
   float16_t *data = (A)->pData;                     \
-  const int32_t numCols = (A)->numCols;            \
+  const int32_t _numCols = (A)->numCols;            \
                                                     \
-  for(w=(COL);w < numCols; w+=8)                    \
+  for(_w=(COL);_w < _numCols; _w+=8)                    \
   {                                                 \
        f16x8_t tmpa;                                \
        mve_pred16_t p0 = vctp16q(cnt);              \
-       tmpa = vldrhq_z_f16(&data[i*numCols + w],p0);\
+       tmpa = vldrhq_z_f16(&data[i*_numCols + _w],p0);\
        tmpa = vmulq_n_f16(tmpa,(_Float16)v);                  \
-       vstrhq_p(&data[i*numCols + w], tmpa, p0);    \
+       vstrhq_p(&data[i*_numCols + _w], tmpa, p0);    \
        cnt -= 8;                                    \
   }                                                 \
                                                     \
@@ -115,19 +115,19 @@ extern "C"
 #define MAC_ROW_F16(COL,A,i,v,B,j)                   \
 {                                                    \
   int cnt = ((A)->numCols)-(COL);                    \
-  int32_t w;                                        \
+  int32_t _w;                                        \
   float16_t *dataA = (A)->pData;                     \
   float16_t *dataB = (B)->pData;                     \
-  const int32_t numCols = (A)->numCols;             \
+  const int32_t _numCols = (A)->numCols;             \
                                                      \
-  for(w=(COL);w < numCols; w+=8)                     \
+  for(_w=(COL);_w < _numCols; _w+=8)                     \
   {                                                  \
        f16x8_t tmpa,tmpb;                            \
        mve_pred16_t p0 = vctp16q(cnt);               \
-       tmpa = vldrhq_z_f16(&dataA[i*numCols + w],p0);\
-       tmpb = vldrhq_z_f16(&dataB[j*numCols + w],p0);\
+       tmpa = vldrhq_z_f16(&dataA[i*_numCols + _w],p0);\
+       tmpb = vldrhq_z_f16(&dataB[j*_numCols + _w],p0);\
        tmpa = vfmaq_n_f16(tmpa,tmpb,v);              \
-       vstrhq_p(&dataA[i*numCols + w], tmpa, p0);    \
+       vstrhq_p(&dataA[i*_numCols + _w], tmpa, p0);    \
        cnt -= 8;                                     \
   }                                                  \
                                                      \
@@ -136,20 +136,20 @@ extern "C"
 #define MAS_ROW_F16(COL,A,i,v,B,j)                   \
 {                                                    \
   int cnt = ((A)->numCols)-(COL);                    \
-  int32_t w;                                        \
+  int32_t _w;                                        \
   float16_t *dataA = (A)->pData;                     \
   float16_t *dataB = (B)->pData;                     \
-  const int32_t numCols = (A)->numCols;             \
+  const int32_t _numCols = (A)->numCols;             \
   f16x8_t vec=vdupq_n_f16(v);                        \
                                                      \
-  for(w=(COL);w < numCols; w+=8)                     \
+  for(_w=(COL);_w < _numCols; _w+=8)                     \
   {                                                  \
        f16x8_t tmpa,tmpb;                            \
        mve_pred16_t p0 = vctp16q(cnt);               \
-       tmpa = vldrhq_z_f16(&dataA[i*numCols + w],p0);\
-       tmpb = vldrhq_z_f16(&dataB[j*numCols + w],p0);\
+       tmpa = vldrhq_z_f16(&dataA[i*_numCols + _w],p0);\
+       tmpb = vldrhq_z_f16(&dataB[j*_numCols + _w],p0);\
        tmpa = vfmsq_f16(tmpa,tmpb,vec);              \
-       vstrhq_p(&dataA[i*numCols + w], tmpa, p0);    \
+       vstrhq_p(&dataA[i*_numCols + _w], tmpa, p0);    \
        cnt -= 8;                                     \
   }                                                  \
                                                      \
@@ -160,16 +160,16 @@ extern "C"
 
 #define SWAP_ROWS_F16(A,COL,i,j)       \
 {                                      \
-  int32_t w;                           \
+  int32_t _w;                           \
   float16_t *dataI = (A)->pData;       \
   float16_t *dataJ = (A)->pData;       \
-  const int32_t numCols = (A)->numCols;\
-  const int32_t nb = numCols-(COL);    \
+  const int32_t _numCols = (A)->numCols;\
+  const int32_t nb = _numCols-(COL);    \
                                        \
-  dataI += i*numCols + (COL);          \
-  dataJ += j*numCols + (COL);          \
+  dataI += i*_numCols + (COL);          \
+  dataJ += j*_numCols + (COL);          \
                                        \
-  for(w=0;w < nb; w++)                 \
+  for(_w=0;_w < nb; _w++)                 \
   {                                    \
      float16_t tmp;                    \
      tmp = *dataI;                     \
@@ -180,14 +180,14 @@ extern "C"
 
 #define SCALE_ROW_F16(A,COL,v,i)       \
 {                                      \
-  int32_t w;                           \
+  int32_t _w;                           \
   float16_t *data = (A)->pData;        \
-  const int32_t numCols = (A)->numCols;\
-  const int32_t nb = numCols-(COL);    \
+  const int32_t _numCols = (A)->numCols;\
+  const int32_t nb = _numCols-(COL);    \
                                        \
-  data += i*numCols + (COL);           \
+  data += i*_numCols + (COL);           \
                                        \
-  for(w=0;w < nb; w++)                 \
+  for(_w=0;_w < nb; _w++)                 \
   {                                    \
      *data++ *= (_Float16)v;           \
   }                                    \
@@ -196,16 +196,16 @@ extern "C"
 
 #define MAC_ROW_F16(COL,A,i,v,B,j)                \
 {                                                 \
-  int32_t w;                                      \
+  int32_t _w;                                      \
   float16_t *dataA = (A)->pData;                  \
   float16_t *dataB = (B)->pData;                  \
-  const int32_t numCols = (A)->numCols;           \
-  const int32_t nb = numCols-(COL);               \
+  const int32_t _numCols = (A)->numCols;           \
+  const int32_t nb = _numCols-(COL);               \
                                                   \
-  dataA += i*numCols + (COL);                     \
-  dataB += j*numCols + (COL);                     \
+  dataA += i*_numCols + (COL);                     \
+  dataB += j*_numCols + (COL);                     \
                                                   \
-  for(w=0;w < nb; w++)                            \
+  for(_w=0;_w < nb; _w++)                            \
   {                                               \
      *dataA++ += (_Float16)v * (_Float16)*dataB++;\
   }                                               \
@@ -213,16 +213,16 @@ extern "C"
 
 #define MAS_ROW_F16(COL,A,i,v,B,j)                \
 {                                                 \
-  int32_t w;                                      \
+  int32_t _w;                                      \
   float16_t *dataA = (A)->pData;                  \
   float16_t *dataB = (B)->pData;                  \
-  const int32_t numCols = (A)->numCols;           \
-  const int32_t nb = numCols-(COL);               \
+  const int32_t _numCols = (A)->numCols;           \
+  const int32_t nb = _numCols-(COL);               \
                                                   \
-  dataA += i*numCols + (COL);                     \
-  dataB += j*numCols + (COL);                     \
+  dataA += i*_numCols + (COL);                     \
+  dataB += j*_numCols + (COL);                     \
                                                   \
-  for(w=0;w < nb; w++)                            \
+  for(_w=0;_w < nb; _w++)                            \
   {                                               \
      *dataA++ -= (_Float16)v * (_Float16)*dataB++;\
   }                                               \
@@ -245,19 +245,19 @@ extern "C"
   {                                               \
     int cnt = ((A)->numCols)-(COL);               \
     float32_t *data = (A)->pData;                 \
-    const int32_t numCols = (A)->numCols;        \
-    int32_t w;                                   \
+    const int32_t _numCols = (A)->numCols;        \
+    int32_t _w;                                   \
                                                   \
-    for(w=(COL);w < numCols; w+=4)                \
+    for(_w=(COL);_w < _numCols; _w+=4)                \
     {                                             \
        f32x4_t tmpa,tmpb;                         \
        mve_pred16_t p0 = vctp32q(cnt);            \
                                                   \
-       tmpa=vldrwq_z_f32(&data[i*numCols + w],p0);\
-       tmpb=vldrwq_z_f32(&data[j*numCols + w],p0);\
+       tmpa=vldrwq_z_f32(&data[i*_numCols + _w],p0);\
+       tmpb=vldrwq_z_f32(&data[j*_numCols + _w],p0);\
                                                   \
-       vstrwq_p(&data[i*numCols + w], tmpb, p0);  \
-       vstrwq_p(&data[j*numCols + w], tmpa, p0);  \
+       vstrwq_p(&data[i*_numCols + _w], tmpb, p0);  \
+       vstrwq_p(&data[j*_numCols + _w], tmpa, p0);  \
                                                   \
        cnt -= 4;                                  \
     }                                             \
@@ -268,17 +268,17 @@ extern "C"
   int cnt = ((A)->numCols)-(COL);                    \
   float32_t *dataA = (A)->pData;                     \
   float32_t *dataB = (B)->pData;                     \
-  const int32_t numCols = (A)->numCols;             \
-  int32_t w;                                        \
+  const int32_t _numCols = (A)->numCols;             \
+  int32_t _w;                                        \
                                                      \
-  for(w=(COL);w < numCols; w+=4)                     \
+  for(_w=(COL);_w < _numCols; _w+=4)                     \
   {                                                  \
        f32x4_t tmpa,tmpb;                            \
        mve_pred16_t p0 = vctp32q(cnt);               \
-       tmpa = vldrwq_z_f32(&dataA[i*numCols + w],p0);\
-       tmpb = vldrwq_z_f32(&dataB[j*numCols + w],p0);\
+       tmpa = vldrwq_z_f32(&dataA[i*_numCols + _w],p0);\
+       tmpb = vldrwq_z_f32(&dataB[j*_numCols + _w],p0);\
        tmpa = vfmaq_n_f32(tmpa,tmpb,v);              \
-       vstrwq_p(&dataA[i*numCols + w], tmpa, p0);    \
+       vstrwq_p(&dataA[i*_numCols + _w], tmpa, p0);    \
        cnt -= 4;                                     \
   }                                                  \
                                                      \
@@ -289,18 +289,18 @@ extern "C"
   int cnt = ((A)->numCols)-(COL);                    \
   float32_t *dataA = (A)->pData;                     \
   float32_t *dataB = (B)->pData;                     \
-  const int32_t numCols = (A)->numCols;             \
-  int32_t w;                                        \
+  const int32_t _numCols = (A)->numCols;             \
+  int32_t _w;                                        \
   f32x4_t vec=vdupq_n_f32(v);                        \
                                                      \
-  for(w=(COL);w < numCols; w+=4)                     \
+  for(_w=(COL);_w < _numCols; _w+=4)                     \
   {                                                  \
        f32x4_t tmpa,tmpb;                            \
        mve_pred16_t p0 = vctp32q(cnt);               \
-       tmpa = vldrwq_z_f32(&dataA[i*numCols + w],p0);\
-       tmpb = vldrwq_z_f32(&dataB[j*numCols + w],p0);\
+       tmpa = vldrwq_z_f32(&dataA[i*_numCols + _w],p0);\
+       tmpb = vldrwq_z_f32(&dataB[j*_numCols + _w],p0);\
        tmpa = vfmsq_f32(tmpa,tmpb,vec);              \
-       vstrwq_p(&dataA[i*numCols + w], tmpa, p0);    \
+       vstrwq_p(&dataA[i*_numCols + _w], tmpa, p0);    \
        cnt -= 4;                                     \
   }                                                  \
                                                      \
@@ -310,16 +310,16 @@ extern "C"
 {                                                   \
   int cnt = ((A)->numCols)-(COL);                   \
   float32_t *data = (A)->pData;                     \
-  const int32_t numCols = (A)->numCols;            \
-  int32_t w;                                       \
+  const int32_t _numCols = (A)->numCols;            \
+  int32_t _w;                                       \
                                                     \
-  for(w=(COL);w < numCols; w+=4)                    \
+  for(_w=(COL);_w < _numCols; _w+=4)                    \
   {                                                 \
        f32x4_t tmpa;                                \
        mve_pred16_t p0 = vctp32q(cnt);              \
-       tmpa = vldrwq_z_f32(&data[i*numCols + w],p0);\
+       tmpa = vldrwq_z_f32(&data[i*_numCols + _w],p0);\
        tmpa = vmulq_n_f32(tmpa,v);                  \
-       vstrwq_p(&data[i*numCols + w], tmpa, p0);    \
+       vstrwq_p(&data[i*_numCols + _w], tmpa, p0);    \
        cnt -= 4;                                    \
   }                                                 \
                                                     \
@@ -329,18 +329,18 @@ extern "C"
 
 #define SWAP_ROWS_F32(A,COL,i,j)       \
 {                                      \
-  int32_t w;                           \
+  int32_t _w;                           \
   float32_t *dataI = (A)->pData;       \
   float32_t *dataJ = (A)->pData;       \
-  const int32_t numCols = (A)->numCols;\
-  const int32_t nb = numCols - COL;    \
+  const int32_t _numCols = (A)->numCols;\
+  const int32_t nb = _numCols - COL;    \
                                        \
-  dataI += i*numCols + (COL);          \
-  dataJ += j*numCols + (COL);          \
+  dataI += i*_numCols + (COL);          \
+  dataJ += j*_numCols + (COL);          \
                                        \
   float32_t tmp;                       \
                                        \
-  for(w=0;w < nb; w++)                 \
+  for(_w=0;_w < nb; _w++)                 \
   {                                    \
      tmp = *dataI;                     \
      *dataI++ = *dataJ;                \
@@ -352,15 +352,15 @@ extern "C"
 {                                      \
   float32_t *dataA = (A)->pData;       \
   float32_t *dataB = (B)->pData;       \
-  const int32_t numCols = (A)->numCols;\
-  const int32_t nb = numCols - (COL);  \
+  const int32_t _numCols = (A)->numCols;\
+  const int32_t nb = _numCols - (COL);  \
   int32_t nbElems;                     \
   f32x4_t vec = vdupq_n_f32(v);        \
                                        \
   nbElems = nb >> 2;                   \
                                        \
-  dataA += i*numCols + (COL);          \
-  dataB += j*numCols + (COL);          \
+  dataA += i*_numCols + (COL);          \
+  dataB += j*_numCols + (COL);          \
                                        \
   while(nbElems>0)                     \
   {                                    \
@@ -386,15 +386,15 @@ extern "C"
 {                                      \
   float32_t *dataA = (A)->pData;       \
   float32_t *dataB = (B)->pData;       \
-  const int32_t numCols = (A)->numCols;\
-  const int32_t nb = numCols - (COL);  \
+  const int32_t _numCols = (A)->numCols;\
+  const int32_t nb = _numCols - (COL);  \
   int32_t nbElems;                     \
   f32x4_t vec = vdupq_n_f32(v);        \
                                        \
   nbElems = nb >> 2;                   \
                                        \
-  dataA += i*numCols + (COL);          \
-  dataB += j*numCols + (COL);          \
+  dataA += i*_numCols + (COL);          \
+  dataB += j*_numCols + (COL);          \
                                        \
   while(nbElems>0)                     \
   {                                    \
@@ -419,14 +419,14 @@ extern "C"
 #define SCALE_ROW_F32(A,COL,v,i)        \
 {                                       \
   float32_t *data = (A)->pData;         \
-  const int32_t numCols = (A)->numCols; \
-  const int32_t nb = numCols - (COL);   \
+  const int32_t _numCols = (A)->numCols; \
+  const int32_t nb = _numCols - (COL);   \
   int32_t nbElems;                      \
   f32x4_t vec = vdupq_n_f32(v);         \
                                         \
   nbElems = nb >> 2;                    \
                                         \
-  data += i*numCols + (COL);            \
+  data += i*_numCols + (COL);            \
   while(nbElems>0)                      \
   {                                     \
        f32x4_t tmpa;                    \
@@ -450,18 +450,18 @@ extern "C"
 
 #define SWAP_ROWS_F32(A,COL,i,j)       \
 {                                      \
-  int32_t w;                           \
+  int32_t _w;                           \
   float32_t tmp;                       \
   float32_t *dataI = (A)->pData;       \
   float32_t *dataJ = (A)->pData;       \
-  const int32_t numCols = (A)->numCols;\
-  const int32_t nb = numCols - COL;    \
+  const int32_t _numCols = (A)->numCols;\
+  const int32_t nb = _numCols - COL;    \
                                        \
-  dataI += i*numCols + (COL);          \
-  dataJ += j*numCols + (COL);          \
+  dataI += i*_numCols + (COL);          \
+  dataJ += j*_numCols + (COL);          \
                                        \
                                        \
-  for(w=0;w < nb; w++)                 \
+  for(_w=0;_w < nb; _w++)                 \
   {                                    \
      tmp = *dataI;                     \
      *dataI++ = *dataJ;                \
@@ -471,14 +471,14 @@ extern "C"
 
 #define SCALE_ROW_F32(A,COL,v,i)       \
 {                                      \
-  int32_t w;                           \
+  int32_t _w;                           \
   float32_t *data = (A)->pData;        \
-  const int32_t numCols = (A)->numCols;\
-  const int32_t nb = numCols - COL;    \
+  const int32_t _numCols = (A)->numCols;\
+  const int32_t nb = _numCols - COL;    \
                                        \
-  data += i*numCols + (COL);           \
+  data += i*_numCols + (COL);           \
                                        \
-  for(w=0;w < nb; w++)                 \
+  for(_w=0;_w < nb; _w++)                 \
   {                                    \
      *data++ *= v;                     \
   }                                    \
@@ -487,16 +487,16 @@ extern "C"
 
 #define MAC_ROW_F32(COL,A,i,v,B,j)     \
 {                                      \
-  int32_t w;                           \
+  int32_t _w;                           \
   float32_t *dataA = (A)->pData;       \
   float32_t *dataB = (B)->pData;       \
-  const int32_t numCols = (A)->numCols;\
-  const int32_t nb = numCols-(COL);    \
+  const int32_t _numCols = (A)->numCols;\
+  const int32_t nb = _numCols-(COL);    \
                                        \
-  dataA = dataA + i*numCols + (COL);   \
-  dataB = dataB + j*numCols + (COL);   \
+  dataA = dataA + i*_numCols + (COL);   \
+  dataB = dataB + j*_numCols + (COL);   \
                                        \
-  for(w=0;w < nb; w++)                 \
+  for(_w=0;_w < nb; _w++)                 \
   {                                    \
      *dataA++ += v* *dataB++;          \
   }                                    \
@@ -504,16 +504,16 @@ extern "C"
 
 #define MAS_ROW_F32(COL,A,i,v,B,j)     \
 {                                      \
-  int32_t w;                           \
+  int32_t _w;                           \
   float32_t *dataA = (A)->pData;       \
   float32_t *dataB = (B)->pData;       \
-  const int32_t numCols = (A)->numCols;\
-  const int32_t nb = numCols-(COL);    \
+  const int32_t _numCols = (A)->numCols;\
+  const int32_t nb = _numCols-(COL);    \
                                        \
-  dataA = dataA + i*numCols + (COL);   \
-  dataB = dataB + j*numCols + (COL);   \
+  dataA = dataA + i*_numCols + (COL);   \
+  dataB = dataB + j*_numCols + (COL);   \
                                        \
-  for(w=0;w < nb; w++)                 \
+  for(_w=0;_w < nb; _w++)                 \
   {                                    \
      *dataA++ -= v* *dataB++;          \
   }                                    \
@@ -522,7 +522,7 @@ extern "C"
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 
-/* Functions with only a scalar version */
+/* Functions _with only a scalar version */
 
 #define COPY_COL_F32(A,ROW,COL,DST) \
   COPY_COL_T(float32_t,A,ROW,COL,DST)
@@ -532,15 +532,15 @@ extern "C"
 
 #define SWAP_COLS_F32(A,COL,i,j)               \
 {                                              \
-  int32_t w;                                  \
+  int32_t _w;                                  \
   float32_t *data = (A)->pData;                \
-  const int32_t numCols = (A)->numCols;       \
-  for(w=(COL);w < numCols; w++)                \
+  const int32_t _numCols = (A)->numCols;       \
+  for(_w=(COL);_w < _numCols; _w++)                \
   {                                            \
      float32_t tmp;                            \
-     tmp = data[w*numCols + i];                \
-     data[w*numCols + i] = data[w*numCols + j];\
-     data[w*numCols + j] = tmp;                \
+     tmp = data[_w*_numCols + i];                \
+     data[_w*_numCols + i] = data[_w*_numCols + j];\
+     data[_w*_numCols + j] = tmp;                \
   }                                            \
 }
 
@@ -549,16 +549,16 @@ extern "C"
 
 #define SWAP_ROWS_F64(A,COL,i,j)       \
 {                                      \
-  int32_t w;                           \
+  int32_t _w;                           \
   float64_t *dataI = (A)->pData;       \
   float64_t *dataJ = (A)->pData;       \
-  const int32_t numCols = (A)->numCols;\
-  const int32_t nb = numCols-(COL);    \
+  const int32_t _numCols = (A)->numCols;\
+  const int32_t nb = _numCols-(COL);    \
                                        \
-  dataI += i*numCols + (COL);          \
-  dataJ += j*numCols + (COL);          \
+  dataI += i*_numCols + (COL);          \
+  dataJ += j*_numCols + (COL);          \
                                        \
-  for(w=0;w < nb; w++)                 \
+  for(_w=0;_w < nb; _w++)                 \
   {                                    \
      float64_t tmp;                    \
      tmp = *dataI;                     \
@@ -569,28 +569,28 @@ extern "C"
 
 #define SWAP_COLS_F64(A,COL,i,j)               \
 {                                              \
-  int32_t w;                                  \
+  int32_t _w;                                  \
   float64_t *data = (A)->pData;                \
-  const int32_t numCols = (A)->numCols;       \
-  for(w=(COL);w < numCols; w++)                \
+  const int32_t _numCols = (A)->numCols;       \
+  for(_w=(COL);_w < _numCols; _w++)                \
   {                                            \
      float64_t tmp;                            \
-     tmp = data[w*numCols + i];                \
-     data[w*numCols + i] = data[w*numCols + j];\
-     data[w*numCols + j] = tmp;                \
+     tmp = data[_w*_numCols + i];                \
+     data[_w*_numCols + i] = data[_w*_numCols + j];\
+     data[_w*_numCols + j] = tmp;                \
   }                                            \
 }
 
 #define SCALE_ROW_F64(A,COL,v,i)       \
 {                                      \
-  int32_t w;                           \
+  int32_t _w;                           \
   float64_t *data = (A)->pData;        \
-  const int32_t numCols = (A)->numCols;\
-  const int32_t nb = numCols-(COL);    \
+  const int32_t _numCols = (A)->numCols;\
+  const int32_t nb = _numCols-(COL);    \
                                        \
-  data += i*numCols + (COL);           \
+  data += i*_numCols + (COL);           \
                                        \
-  for(w=0;w < nb; w++)                 \
+  for(_w=0;_w < nb; _w++)                 \
   {                                    \
      *data++ *= v;                     \
   }                                    \
@@ -601,16 +601,16 @@ extern "C"
 
 #define MAC_ROW_F64(COL,A,i,v,B,j)      \
 {                                       \
-  int32_t w;                           \
+  int32_t _w;                           \
   float64_t *dataA = (A)->pData;        \
   float64_t *dataB = (B)->pData;        \
-  const int32_t numCols = (A)->numCols;\
-  const int32_t nb = numCols-(COL);     \
+  const int32_t _numCols = (A)->numCols;\
+  const int32_t nb = _numCols-(COL);     \
                                         \
-  dataA += i*numCols + (COL);           \
-  dataB += j*numCols + (COL);           \
+  dataA += i*_numCols + (COL);           \
+  dataB += j*_numCols + (COL);           \
                                         \
-  for(w=0;w < nb; w++)                  \
+  for(_w=0;_w < nb; _w++)                  \
   {                                     \
      *dataA++ += v* *dataB++;           \
   }                                     \
@@ -618,16 +618,16 @@ extern "C"
 
 #define MAS_ROW_F64(COL,A,i,v,B,j)      \
 {                                       \
-  int32_t w;                           \
+  int32_t _w;                           \
   float64_t *dataA = (A)->pData;        \
   float64_t *dataB = (B)->pData;        \
-  const int32_t numCols = (A)->numCols;\
-  const int32_t nb = numCols-(COL);     \
+  const int32_t _numCols = (A)->numCols;\
+  const int32_t nb = _numCols-(COL);     \
                                         \
-  dataA += i*numCols + (COL);           \
-  dataB += j*numCols + (COL);           \
+  dataA += i*_numCols + (COL);           \
+  dataB += j*_numCols + (COL);           \
                                         \
-  for(w=0;w < nb; w++)                  \
+  for(_w=0;_w < nb; _w++)                  \
   {                                     \
      *dataA++ -= v* *dataB++;           \
   }                                     \

@@ -102,7 +102,7 @@ arm_status arm_mat_ldlt_f64(
     {
         /* Find pivot */
         float64_t m=F64_MIN,a;
-        int w,r,j=k; 
+        int r,j=k;
 
 
         for(r=k;r<n;r++)
@@ -125,14 +125,14 @@ arm_status arm_mat_ldlt_f64(
 
         a = pA[k*n+k];
 
-        if (fabs(a) < 1.0e-18)
+        if (fabs(a) < 1.0e-18L)
         {
 
             fullRank = 0;
             break;
         }
 
-        for(w=k+1;w<n;w++)
+        for(int w=k+1;w<n;w++)
         {
           int x;
           for(x=k+1;x<n;x++)
@@ -141,7 +141,7 @@ arm_status arm_mat_ldlt_f64(
           }
         }
 
-        for(w=k+1;w<n;w++)
+        for(int w=k+1;w<n;w++)
         {
                pA[w*n+k] = pA[w*n+k] / a;
         }

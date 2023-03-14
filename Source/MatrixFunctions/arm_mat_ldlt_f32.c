@@ -365,7 +365,6 @@ arm_status arm_mat_ldlt_f32(
 
 
         int r;
-        int w;
 
         for(r=k;r<n;r++)
         {
@@ -394,7 +393,7 @@ arm_status arm_mat_ldlt_f32(
             break;
         }
 
-        for(w=k+1;w<n;w++)
+        for(int w=k+1;w<n;w++)
         {
           int x;
           for(x=k+1;x<n;x++)
@@ -403,7 +402,7 @@ arm_status arm_mat_ldlt_f32(
           }
         }
 
-        for(w=k+1;w<n;w++)
+        for(int w=k+1;w<n;w++)
         {
                pA[w*n+k] = pA[w*n+k] / a;
         }

@@ -63,8 +63,8 @@ void stage_rfft_f64(
 
    // real(tw * (xB - xA)) = twR * (xBR - xAR) - twI * (xBI - xAI);
    // imag(tw * (xB - xA)) = twI * (xBR - xAR) + twR * (xBI - xAI);
-   *pOut++ = 0.5 * ( t1a + t1b );
-   *pOut++ = 0.5 * ( t1a - t1b );
+   *pOut++ = 0.5L * ( t1a + t1b );
+   *pOut++ = 0.5L * ( t1a - t1b );
 
    // XA(1) = 1/2*( U1 - imag(U2) +  i*( U1 +imag(U2) ));
    pB  = p + 2*k;
@@ -105,8 +105,8 @@ void stage_rfft_f64(
       p2 = twR * t1b;
       p3 = twI * t1b;
 
-      *pOut++ = 0.5 * (xAR + xBR + p0 + p3 ); //xAR
-      *pOut++ = 0.5 * (xAI - xBI + p1 - p2 ); //xAI
+      *pOut++ = 0.5L * (xAR + xBR + p0 + p3 ); //xAR
+      *pOut++ = 0.5L * (xAI - xBI + p1 - p2 ); //xAI
 
       pA += 2;
       pB -= 2;
@@ -135,8 +135,8 @@ void merge_rfft_f64(
 
    pCoeff += 2 ;
 
-   *pOut++ = 0.5 * ( xAR + xAI );
-   *pOut++ = 0.5 * ( xAR - xAI );
+   *pOut++ = 0.5L * ( xAR + xAI );
+   *pOut++ = 0.5L * ( xAR - xAI );
 
    pB  =  p + 2*k ;
    pA +=  2	   ;
@@ -164,8 +164,8 @@ void merge_rfft_f64(
 
       // real(tw * (xA - xB)) = twR * (xAR - xBR) - twI * (xAI - xBI);
       // imag(tw * (xA - xB)) = twI * (xAR - xBR) + twR * (xAI - xBI);
-      *pOut++ = 0.5 * (xAR + xBR - r - s ); //xAR
-      *pOut++ = 0.5 * (xAI - xBI + t - u ); //xAI
+      *pOut++ = 0.5L * (xAR + xBR - r - s ); //xAR
+      *pOut++ = 0.5L * (xAI - xBI + t - u ); //xAI
 
       pA += 2;
       pB -= 2;
