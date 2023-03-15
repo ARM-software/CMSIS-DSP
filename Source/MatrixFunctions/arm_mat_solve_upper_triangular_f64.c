@@ -100,7 +100,7 @@ arm_status arm_mat_solve_upper_triangular_f64(
                     vecA = vfmsq_f64(vecA,vdupq_n_f64(pUT[n*i + k]),vecX);
                 }
                 
-                if (pUT[n*i + i]==0.0)
+                if (pUT[n*i + i]==0.0L)
                 {
                     return(ARM_MATH_SINGULAR);
                 }
@@ -125,7 +125,7 @@ arm_status arm_mat_solve_upper_triangular_f64(
                     tmp -= ut_row[k] * pX[cols*k+j];
                 }
                 
-                if (ut_row[i]==0.0)
+                if (ut_row[i]==0.0L)
                 {
                     return(ARM_MATH_SINGULAR);
                 }
@@ -194,7 +194,7 @@ arm_status arm_mat_solve_upper_triangular_f64(
                     tmp -= ut_row[k] * pX[cols*k+j];
                 }
                 
-                if (ut_row[i]==0.0)
+                if (ut_row[i]==0.0L)
                 {
                     return(ARM_MATH_SINGULAR);
                 }

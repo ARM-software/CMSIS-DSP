@@ -297,7 +297,7 @@ void arm_cfft_f64(
 
     if (ifftFlag == 1U)
     {
-        invL = 1.0 / (float64_t)L;
+        invL = 1.0L / (float64_t)L;
         /*  Conjugate and scale output data */
         pSrc = p1;
         for(l=0; l<L; l++)

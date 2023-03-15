@@ -28,6 +28,7 @@
  */
 
 #include "dsp/distance_functions.h"
+#include "dsp/matrix_utils.h"
 #include <limits.h>
 #include <math.h>
 

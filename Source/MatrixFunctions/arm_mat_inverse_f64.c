@@ -61,7 +61,7 @@ arm_status arm_mat_inverse_f64(
   uint32_t numCols = pSrc->numCols;              /* Number of Cols in the matrix  */
 
 
-  float64_t pivot = 0.0, newPivot=0.0;                /* Temporary input values  */
+  float64_t pivot = 0.0L, newPivot=0.0L;                /* Temporary input values  */
   uint32_t selectedRow,pivotRow,i, rowNb, rowCnt, flag = 0U, j,column;      /* loop counters */
   arm_status status;                             /* status of matrix inverse */
 
@@ -182,7 +182,7 @@ arm_status arm_mat_inverse_f64(
 
           /* Check if there is a non zero pivot element to
            * replace in the rows below */
-      if ((pivot != 0.0) && (selectedRow != column))
+      if ((pivot != 0.0L) && (selectedRow != column))
       {
             /* Loop over number of columns
              * to the right of the pilot element */
@@ -198,14 +198,14 @@ arm_status arm_mat_inverse_f64(
 
 
       /* Update the status if the matrix is singular */
-      if ((flag != 1U) && (pivot == 0.0))
+      if ((flag != 1U) && (pivot == 0.0L))
       {
         return ARM_MATH_SINGULAR;
       }
 
      
       /* Pivot element of the row */
-      pivot = 1.0 / pivot;
+      pivot = 1.0L / pivot;
 
       SCALE_ROW_F64(pSrc,column,pivot,pivotRow);
       SCALE_ROW_F64(pDst,0,pivot,pivotRow);
@@ -241,12 +241,12 @@ arm_status arm_mat_inverse_f64(
     /* Set status as ARM_MATH_SUCCESS */
     status = ARM_MATH_SUCCESS;
 
-    if ((flag != 1U) && (pivot == 0.0))
+    if ((flag != 1U) && (pivot == 0.0L))
     {
       pIn = pSrc->pData;
       for (i = 0; i < numRows * numCols; i++)
       {
-        if (pIn[i] != 0.0)
+        if (pIn[i] != 0.0L)
             break;
       }
 
