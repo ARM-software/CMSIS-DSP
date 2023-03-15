@@ -56,6 +56,9 @@
                    and then saturated to 1.15 format.
   @par
                    Refer to \ref arm_mat_mult_fast_q15() for a faster but less precise version of this function.
+ 
+  @par             pState
+                   pState will contain the transpose of pSrcB
  */
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
