@@ -340,13 +340,13 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">{                                                 \</div>
-<div class="line">    uint32_t row;                                 \</div>
-<div class="line">    T *pb=DST;                                    \</div>
-<div class="line">    T *pa = (A)-&gt;pData + ROW * (A)-&gt;numCols + COL;\</div>
-<div class="line">    for(row = ROW; row &lt; (A)-&gt;numRows; row ++)    \</div>
+<div class="line">    uint32_t _row;                                \</div>
+<div class="line">    T *_pb=DST;                                    \</div>
+<div class="line">    T *_pa = (A)-&gt;pData + ROW * (A)-&gt;numCols + COL;\</div>
+<div class="line">    for(_row = ROW; _row &lt; (A)-&gt;numRows; _row ++) \</div>
 <div class="line">    {                                             \</div>
-<div class="line">         *pb++ = *pa;                             \</div>
-<div class="line">         pa += (A)-&gt;numCols;                      \</div>
+<div class="line">         *_pb++ = *_pa;                             \</div>
+<div class="line">         _pa += (A)-&gt;numCols;                      \</div>
 <div class="line">    }                                             \</div>
 <div class="line">}</div>
 </div><!-- fragment -->
@@ -436,16 +436,16 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">{                                                 \</div>
-<div class="line">  int32_t w;                                      \</div>
+<div class="line">  int32_t _w;                                      \</div>
 <div class="line">  float16_t *dataA = (A)-&gt;pData;                  \</div>
 <div class="line">  float16_t *dataB = (B)-&gt;pData;                  \</div>
-<div class="line">  const int32_t numCols = (A)-&gt;numCols;           \</div>
-<div class="line">  const int32_t nb = numCols-(COL);               \</div>
+<div class="line">  const int32_t _numCols = (A)-&gt;numCols;           \</div>
+<div class="line">  const int32_t nb = _numCols-(COL);               \</div>
 <div class="line">                                                  \</div>
-<div class="line">  dataA += i*numCols + (COL);                     \</div>
-<div class="line">  dataB += j*numCols + (COL);                     \</div>
+<div class="line">  dataA += i*_numCols + (COL);                     \</div>
+<div class="line">  dataB += j*_numCols + (COL);                     \</div>
 <div class="line">                                                  \</div>
-<div class="line">  for(w=0;w &lt; nb; w++)                            \</div>
+<div class="line">  for(_w=0;_w &lt; nb; _w++)                            \</div>
 <div class="line">  {                                               \</div>
 <div class="line">     *dataA++ += (_Float16)v * (_Float16)*dataB++;\</div>
 <div class="line">  }                                               \</div>
@@ -555,16 +555,16 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">{                                       \</div>
-<div class="line">  int32_t w;                           \</div>
+<div class="line">  int32_t _w;                           \</div>
 <div class="line">  float64_t *dataA = (A)-&gt;pData;        \</div>
 <div class="line">  float64_t *dataB = (B)-&gt;pData;        \</div>
-<div class="line">  const int32_t numCols = (A)-&gt;numCols;\</div>
-<div class="line">  const int32_t nb = numCols-(COL);     \</div>
+<div class="line">  const int32_t _numCols = (A)-&gt;numCols;\</div>
+<div class="line">  const int32_t nb = _numCols-(COL);     \</div>
 <div class="line">                                        \</div>
-<div class="line">  dataA += i*numCols + (COL);           \</div>
-<div class="line">  dataB += j*numCols + (COL);           \</div>
+<div class="line">  dataA += i*_numCols + (COL);           \</div>
+<div class="line">  dataB += j*_numCols + (COL);           \</div>
 <div class="line">                                        \</div>
-<div class="line">  for(w=0;w &lt; nb; w++)                  \</div>
+<div class="line">  for(_w=0;_w &lt; nb; _w++)                  \</div>
 <div class="line">  {                                     \</div>
 <div class="line">     *dataA++ += v* *dataB++;           \</div>
 <div class="line">  }                                     \</div>
@@ -622,16 +622,16 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">{                                                 \</div>
-<div class="line">  int32_t w;                                      \</div>
+<div class="line">  int32_t _w;                                      \</div>
 <div class="line">  float16_t *dataA = (A)-&gt;pData;                  \</div>
 <div class="line">  float16_t *dataB = (B)-&gt;pData;                  \</div>
-<div class="line">  const int32_t numCols = (A)-&gt;numCols;           \</div>
-<div class="line">  const int32_t nb = numCols-(COL);               \</div>
+<div class="line">  const int32_t _numCols = (A)-&gt;numCols;           \</div>
+<div class="line">  const int32_t nb = _numCols-(COL);               \</div>
 <div class="line">                                                  \</div>
-<div class="line">  dataA += i*numCols + (COL);                     \</div>
-<div class="line">  dataB += j*numCols + (COL);                     \</div>
+<div class="line">  dataA += i*_numCols + (COL);                     \</div>
+<div class="line">  dataB += j*_numCols + (COL);                     \</div>
 <div class="line">                                                  \</div>
-<div class="line">  for(w=0;w &lt; nb; w++)                            \</div>
+<div class="line">  for(_w=0;_w &lt; nb; _w++)                            \</div>
 <div class="line">  {                                               \</div>
 <div class="line">     *dataA++ -= (_Float16)v * (_Float16)*dataB++;\</div>
 <div class="line">  }                                               \</div>
@@ -741,16 +741,16 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">{                                       \</div>
-<div class="line">  int32_t w;                           \</div>
+<div class="line">  int32_t _w;                           \</div>
 <div class="line">  float64_t *dataA = (A)-&gt;pData;        \</div>
 <div class="line">  float64_t *dataB = (B)-&gt;pData;        \</div>
-<div class="line">  const int32_t numCols = (A)-&gt;numCols;\</div>
-<div class="line">  const int32_t nb = numCols-(COL);     \</div>
+<div class="line">  const int32_t _numCols = (A)-&gt;numCols;\</div>
+<div class="line">  const int32_t nb = _numCols-(COL);     \</div>
 <div class="line">                                        \</div>
-<div class="line">  dataA += i*numCols + (COL);           \</div>
-<div class="line">  dataB += j*numCols + (COL);           \</div>
+<div class="line">  dataA += i*_numCols + (COL);           \</div>
+<div class="line">  dataB += j*_numCols + (COL);           \</div>
 <div class="line">                                        \</div>
-<div class="line">  for(w=0;w &lt; nb; w++)                  \</div>
+<div class="line">  for(_w=0;_w &lt; nb; _w++)                  \</div>
 <div class="line">  {                                     \</div>
 <div class="line">     *dataA++ -= v* *dataB++;           \</div>
 <div class="line">  }                                     \</div>
@@ -928,17 +928,17 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">{                                       \</div>
-<div class="line">  int32_t w;                            \</div>
+<div class="line">  int32_t _w;                            \</div>
 <div class="line">  T *data = (A)-&gt;pData;                 \</div>
-<div class="line">  const int32_t numCols = (A)-&gt;numCols; \</div>
+<div class="line">  const int32_t _numCols = (A)-&gt;numCols; \</div>
 <div class="line">  const int32_t nb = (A)-&gt;numRows - ROW;\</div>
 <div class="line">                                        \</div>
-<div class="line">  data += i + numCols * (ROW);          \</div>
+<div class="line">  data += i + _numCols * (ROW);          \</div>
 <div class="line">                                        \</div>
-<div class="line">  for(w=0;w &lt; nb; w++)                  \</div>
+<div class="line">  for(_w=0;_w &lt; nb; _w++)                  \</div>
 <div class="line">  {                                     \</div>
 <div class="line">     *data *= CAST v;                   \</div>
-<div class="line">     data += numCols;                   \</div>
+<div class="line">     data += _numCols;                   \</div>
 <div class="line">  }                                     \</div>
 <div class="line">}</div>
 </div><!-- fragment -->
@@ -982,14 +982,14 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">{                                      \</div>
-<div class="line">  int32_t w;                           \</div>
+<div class="line">  int32_t _w;                           \</div>
 <div class="line">  float16_t *data = (A)-&gt;pData;        \</div>
-<div class="line">  const int32_t numCols = (A)-&gt;numCols;\</div>
-<div class="line">  const int32_t nb = numCols-(COL);    \</div>
+<div class="line">  const int32_t _numCols = (A)-&gt;numCols;\</div>
+<div class="line">  const int32_t nb = _numCols-(COL);    \</div>
 <div class="line">                                       \</div>
-<div class="line">  data += i*numCols + (COL);           \</div>
+<div class="line">  data += i*_numCols + (COL);           \</div>
 <div class="line">                                       \</div>
-<div class="line">  for(w=0;w &lt; nb; w++)                 \</div>
+<div class="line">  for(_w=0;_w &lt; nb; _w++)                 \</div>
 <div class="line">  {                                    \</div>
 <div class="line">     *data++ *= (_Float16)v;           \</div>
 <div class="line">  }                                    \</div>
@@ -1036,14 +1036,14 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">{                                       \</div>
 <div class="line">  float32_t *data = (A)-&gt;pData;         \</div>
-<div class="line">  const int32_t numCols = (A)-&gt;numCols; \</div>
-<div class="line">  const int32_t nb = numCols - (COL);   \</div>
+<div class="line">  const int32_t _numCols = (A)-&gt;numCols; \</div>
+<div class="line">  const int32_t nb = _numCols - (COL);   \</div>
 <div class="line">  int32_t nbElems;                      \</div>
 <div class="line">  f32x4_t vec = vdupq_n_f32(v);         \</div>
 <div class="line">                                        \</div>
 <div class="line">  nbElems = nb &gt;&gt; 2;                    \</div>
 <div class="line">                                        \</div>
-<div class="line">  data += i*numCols + (COL);            \</div>
+<div class="line">  data += i*_numCols + (COL);            \</div>
 <div class="line">  while(nbElems&gt;0)                      \</div>
 <div class="line">  {                                     \</div>
 <div class="line">       f32x4_t tmpa;                    \</div>
@@ -1103,14 +1103,14 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">{                                      \</div>
-<div class="line">  int32_t w;                           \</div>
+<div class="line">  int32_t _w;                           \</div>
 <div class="line">  float64_t *data = (A)-&gt;pData;        \</div>
-<div class="line">  const int32_t numCols = (A)-&gt;numCols;\</div>
-<div class="line">  const int32_t nb = numCols-(COL);    \</div>
+<div class="line">  const int32_t _numCols = (A)-&gt;numCols;\</div>
+<div class="line">  const int32_t nb = _numCols-(COL);    \</div>
 <div class="line">                                       \</div>
-<div class="line">  data += i*numCols + (COL);           \</div>
+<div class="line">  data += i*_numCols + (COL);           \</div>
 <div class="line">                                       \</div>
-<div class="line">  for(w=0;w &lt; nb; w++)                 \</div>
+<div class="line">  for(_w=0;_w &lt; nb; _w++)                 \</div>
 <div class="line">  {                                    \</div>
 <div class="line">     *data++ *= v;                     \</div>
 <div class="line">  }                                    \</div>
@@ -1156,15 +1156,15 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">{                                              \</div>
-<div class="line">  int32_t w;                                  \</div>
+<div class="line">  int32_t _w;                                  \</div>
 <div class="line">  float32_t *data = (A)-&gt;pData;                \</div>
-<div class="line">  const int32_t numCols = (A)-&gt;numCols;       \</div>
-<div class="line">  for(w=(COL);w &lt; numCols; w++)                \</div>
+<div class="line">  const int32_t _numCols = (A)-&gt;numCols;       \</div>
+<div class="line">  for(_w=(COL);_w &lt; _numCols; _w++)                \</div>
 <div class="line">  {                                            \</div>
 <div class="line">     float32_t tmp;                            \</div>
-<div class="line">     tmp = data[w*numCols + i];                \</div>
-<div class="line">     data[w*numCols + i] = data[w*numCols + j];\</div>
-<div class="line">     data[w*numCols + j] = tmp;                \</div>
+<div class="line">     tmp = data[_w*_numCols + i];                \</div>
+<div class="line">     data[_w*_numCols + i] = data[_w*_numCols + j];\</div>
+<div class="line">     data[_w*_numCols + j] = tmp;                \</div>
 <div class="line">  }                                            \</div>
 <div class="line">}</div>
 </div><!-- fragment -->
@@ -1208,15 +1208,15 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">{                                              \</div>
-<div class="line">  int32_t w;                                  \</div>
+<div class="line">  int32_t _w;                                  \</div>
 <div class="line">  float64_t *data = (A)-&gt;pData;                \</div>
-<div class="line">  const int32_t numCols = (A)-&gt;numCols;       \</div>
-<div class="line">  for(w=(COL);w &lt; numCols; w++)                \</div>
+<div class="line">  const int32_t _numCols = (A)-&gt;numCols;       \</div>
+<div class="line">  for(_w=(COL);_w &lt; _numCols; _w++)                \</div>
 <div class="line">  {                                            \</div>
 <div class="line">     float64_t tmp;                            \</div>
-<div class="line">     tmp = data[w*numCols + i];                \</div>
-<div class="line">     data[w*numCols + i] = data[w*numCols + j];\</div>
-<div class="line">     data[w*numCols + j] = tmp;                \</div>
+<div class="line">     tmp = data[_w*_numCols + i];                \</div>
+<div class="line">     data[_w*_numCols + i] = data[_w*_numCols + j];\</div>
+<div class="line">     data[_w*_numCols + j] = tmp;                \</div>
 <div class="line">  }                                            \</div>
 <div class="line">}</div>
 </div><!-- fragment -->
@@ -1260,16 +1260,16 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">{                                      \</div>
-<div class="line">  int32_t w;                           \</div>
+<div class="line">  int32_t _w;                           \</div>
 <div class="line">  float16_t *dataI = (A)-&gt;pData;       \</div>
 <div class="line">  float16_t *dataJ = (A)-&gt;pData;       \</div>
-<div class="line">  const int32_t numCols = (A)-&gt;numCols;\</div>
-<div class="line">  const int32_t nb = numCols-(COL);    \</div>
+<div class="line">  const int32_t _numCols = (A)-&gt;numCols;\</div>
+<div class="line">  const int32_t nb = _numCols-(COL);    \</div>
 <div class="line">                                       \</div>
-<div class="line">  dataI += i*numCols + (COL);          \</div>
-<div class="line">  dataJ += j*numCols + (COL);          \</div>
+<div class="line">  dataI += i*_numCols + (COL);          \</div>
+<div class="line">  dataJ += j*_numCols + (COL);          \</div>
 <div class="line">                                       \</div>
-<div class="line">  for(w=0;w &lt; nb; w++)                 \</div>
+<div class="line">  for(_w=0;_w &lt; nb; _w++)                 \</div>
 <div class="line">  {                                    \</div>
 <div class="line">     float16_t tmp;                    \</div>
 <div class="line">     tmp = *dataI;                     \</div>
@@ -1318,18 +1318,18 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">{                                      \</div>
-<div class="line">  int32_t w;                           \</div>
+<div class="line">  int32_t _w;                           \</div>
 <div class="line">  float32_t *dataI = (A)-&gt;pData;       \</div>
 <div class="line">  float32_t *dataJ = (A)-&gt;pData;       \</div>
-<div class="line">  const int32_t numCols = (A)-&gt;numCols;\</div>
-<div class="line">  const int32_t nb = numCols - COL;    \</div>
+<div class="line">  const int32_t _numCols = (A)-&gt;numCols;\</div>
+<div class="line">  const int32_t nb = _numCols - COL;    \</div>
 <div class="line">                                       \</div>
-<div class="line">  dataI += i*numCols + (COL);          \</div>
-<div class="line">  dataJ += j*numCols + (COL);          \</div>
+<div class="line">  dataI += i*_numCols + (COL);          \</div>
+<div class="line">  dataJ += j*_numCols + (COL);          \</div>
 <div class="line">                                       \</div>
 <div class="line">  float32_t tmp;                       \</div>
 <div class="line">                                       \</div>
-<div class="line">  for(w=0;w &lt; nb; w++)                 \</div>
+<div class="line">  for(_w=0;_w &lt; nb; _w++)                 \</div>
 <div class="line">  {                                    \</div>
 <div class="line">     tmp = *dataI;                     \</div>
 <div class="line">     *dataI++ = *dataJ;                \</div>
@@ -1377,16 +1377,16 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">{                                      \</div>
-<div class="line">  int32_t w;                           \</div>
+<div class="line">  int32_t _w;                           \</div>
 <div class="line">  float64_t *dataI = (A)-&gt;pData;       \</div>
 <div class="line">  float64_t *dataJ = (A)-&gt;pData;       \</div>
-<div class="line">  const int32_t numCols = (A)-&gt;numCols;\</div>
-<div class="line">  const int32_t nb = numCols-(COL);    \</div>
+<div class="line">  const int32_t _numCols = (A)-&gt;numCols;\</div>
+<div class="line">  const int32_t nb = _numCols-(COL);    \</div>
 <div class="line">                                       \</div>
-<div class="line">  dataI += i*numCols + (COL);          \</div>
-<div class="line">  dataJ += j*numCols + (COL);          \</div>
+<div class="line">  dataI += i*_numCols + (COL);          \</div>
+<div class="line">  dataJ += j*_numCols + (COL);          \</div>
 <div class="line">                                       \</div>
-<div class="line">  for(w=0;w &lt; nb; w++)                 \</div>
+<div class="line">  for(_w=0;_w &lt; nb; _w++)                 \</div>
 <div class="line">  {                                    \</div>
 <div class="line">     float64_t tmp;                    \</div>
 <div class="line">     tmp = *dataI;                     \</div>
