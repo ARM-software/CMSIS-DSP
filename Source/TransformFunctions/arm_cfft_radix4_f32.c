@@ -51,11 +51,7 @@ void arm_radix4_butterfly_inverse_f32(
 
 
 /**
-  @ingroup groupTransforms
- */
-
-/**
-  @addtogroup ComplexFFT
+  @addtogroup ComplexFFTDeprecated
   @{
  */
 
@@ -92,7 +88,7 @@ void arm_cfft_radix4_f32(
 }
 
 /**
-  @} end of ComplexFFT group
+  @} end of ComplexFFTDeprecated group
  */
 
 /* ----------------------------------------------------------------------

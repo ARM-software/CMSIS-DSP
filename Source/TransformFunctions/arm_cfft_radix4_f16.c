@@ -57,11 +57,7 @@ void arm_cfft_radix4by2_f16(
 
 
 /**
-  @ingroup groupTransforms
- */
-
-/**
-  @addtogroup ComplexFFT
+  @addtogroup ComplexFFTDeprecated
   @{
  */
 
@@ -154,7 +150,7 @@ void arm_cfft_radix4_f16(
 }
 
 /**
-  @} end of ComplexFFT group
+  @} end of ComplexFFTDeprecated group
  */
 
 /* ----------------------------------------------------------------------

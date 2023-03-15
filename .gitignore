@@ -29,3 +29,5 @@ __pycache__/
 .DS_Store
 .swiftpm/
 build/
+Examples/cmsis_build/RTE/_Release*
+Testing/cmsis_build/RTE/_Release*

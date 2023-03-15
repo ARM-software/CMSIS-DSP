@@ -2,41 +2,21 @@ cmake_minimum_required (VERSION 3.14)
 
 
 
-if (CONFIGTABLE AND ALLFAST)
-    target_compile_definitions(CMSISDSP PUBLIC ARM_ALL_FAST_TABLES)  
-endif()
-
-if (NOT CONFIGTABLE OR ALLFAST OR ARM_COS_F32)
 target_sources(CMSISDSP PRIVATE FastMathFunctions/arm_cos_f32.c)
-endif()
 
-if (NOT CONFIGTABLE OR ALLFAST OR ARM_COS_Q15)
 target_sources(CMSISDSP PRIVATE FastMathFunctions/arm_cos_q15.c)
-endif()
 
-if (NOT CONFIGTABLE OR ALLFAST OR ARM_COS_Q31)
 target_sources(CMSISDSP PRIVATE FastMathFunctions/arm_cos_q31.c)
-endif()
 
-if (NOT CONFIGTABLE OR ALLFAST OR ARM_SIN_F32)
 target_sources(CMSISDSP PRIVATE FastMathFunctions/arm_sin_f32.c)
-endif()
 
-if (NOT CONFIGTABLE OR ALLFAST OR ARM_SIN_Q15)
 target_sources(CMSISDSP PRIVATE FastMathFunctions/arm_sin_q15.c)
-endif()
 
-if (NOT CONFIGTABLE OR ALLFAST OR ARM_SIN_Q31)
 target_sources(CMSISDSP PRIVATE FastMathFunctions/arm_sin_q31.c)
-endif()
 
-if (NOT CONFIGTABLE OR ALLFAST OR ARM_SQRT_Q31)
 target_sources(CMSISDSP PRIVATE FastMathFunctions/arm_sqrt_q31.c)
-endif()
 
-if (NOT CONFIGTABLE OR ALLFAST OR ARM_SQRT_Q15)
 target_sources(CMSISDSP PRIVATE FastMathFunctions/arm_sqrt_q15.c)
-endif()
 
 target_sources(CMSISDSP PRIVATE FastMathFunctions/arm_vlog_f32.c)
 target_sources(CMSISDSP PRIVATE FastMathFunctions/arm_vlog_f64.c)

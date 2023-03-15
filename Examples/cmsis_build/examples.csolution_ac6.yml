@@ -3,10 +3,33 @@ solution:
   misc:
     - C:
       - -DSEMIHOSTING 
+      - -Wsign-compare 
+      - -Wdouble-promotion 
+      - -DNDEBUG 
+      - -Wall 
+      - -Wextra  
+      - -Werror
       - -std=c11 
       - -Ofast 
       - -ffast-math
+      - -Wno-packed 
+      - -Wno-missing-variable-declarations 
+      - -Wno-missing-prototypes 
+      - -Wno-missing-noreturn 
+      - -Wno-sign-conversion 
+      - -Wno-nonportable-include-path 
+      - -Wno-reserved-id-macro 
+      - -Wno-unused-macros 
+      - -Wno-documentation-unknown-command 
+      - -Wno-documentation 
+      - -Wno-license-management 
+      - -Wno-parentheses-equality 
+      - -Wno-reserved-identifier
     - CPP:
+      - -fno-rtti 
+      - -DNDEBUG 
+      - -Wall 
+      - -Wextra  
       - -std=c++11 
       - -Ofast 
       - -ffast-math
@@ -42,7 +65,7 @@ solution:
 
   build-types:
     - type: Release
-      debug: off
+      debug: on
 
   projects:
     - project: ./bayes.cproject.yml

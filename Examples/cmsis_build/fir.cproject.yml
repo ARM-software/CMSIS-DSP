@@ -12,4 +12,5 @@ project:
 
   layers:
     - layer: vht.clayer.yml 
+    - layer: ../../Testing/cmsis_build/dsp.clayer.yml
 

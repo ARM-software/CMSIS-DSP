@@ -49,7 +49,7 @@ void arm_split_rifft_q15(
         uint32_t modifier);
 
 /**
-  @addtogroup RealFFT
+  @addtogroup RealFFTQ15
   @{
  */
 
@@ -139,7 +139,7 @@ void arm_rfft_q15(
 }
 
 /**
-  @} end of RealFFT group
+  @} end of RealFFTQ15 group
  */
 
 /**

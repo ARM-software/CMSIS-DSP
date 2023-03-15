@@ -543,12 +543,9 @@ static void arm_cfft_radix4by2_inverse_q31_mve(const arm_cfft_instance_q31 *S, q
 
 }
 
-/**
-  @ingroup groupTransforms
- */
 
 /**
-  @addtogroup ComplexFFT
+  @addtogroup ComplexFFTQ31
   @{
  */
 
@@ -648,11 +645,7 @@ void arm_cfft_radix4by2_inverse_q31(
 
 
 /**
-  @ingroup groupTransforms
- */
-
-/**
-  @addtogroup ComplexFFT
+  @addtogroup ComplexFFTQ31
   @{
  */
 
@@ -722,7 +715,7 @@ void arm_cfft_q31(
 }
 
 /**
-  @} end of ComplexFFT group
+  @} end of ComplexFFTQ31 group
  */
 
 void arm_cfft_radix4by2_q31(

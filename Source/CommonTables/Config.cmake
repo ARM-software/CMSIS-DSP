@@ -5,15 +5,6 @@ cmake_minimum_required (VERSION 3.14)
 target_sources(CMSISDSP PRIVATE CommonTables/arm_common_tables.c 
     CommonTables/arm_common_tables_f16.c)
 
-if (CONFIGTABLE AND ALLFFT)
-    target_compile_definitions(CMSISDSP PUBLIC ARM_ALL_FFT_TABLES) 
-endif()
-
-if (CONFIGTABLE AND ALLFAST)
-    target_compile_definitions(CMSISDSP PUBLIC ARM_ALL_FAST_TABLES) 
-endif()
-
-
 
 target_sources(CMSISDSP PRIVATE CommonTables/arm_const_structs.c)
 target_sources(CMSISDSP PRIVATE CommonTables/arm_const_structs_f16.c)

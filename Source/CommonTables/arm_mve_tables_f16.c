@@ -35,9 +35,6 @@
 
 #if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FFT_ALLOW_TABLES)
-
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_TWIDDLECOEF_F16_16) || defined(ARM_TABLE_TWIDDLECOEF_F16_32)
 
 const uint32_t rearranged_twiddle_tab_stride1_arr_16_f16[2]={
 0,0,};
@@ -66,9 +63,6 @@ const float16_t rearranged_twiddle_stride3_16_f16[8]={
 (float16_t)-0.7070312500000f,(float16_t)0.7070312500000f,
 (float16_t)-0.9238281250000f,(float16_t)-0.3825683593750f,};
 
-#endif
-
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_TWIDDLECOEF_F16_64) || defined(ARM_TABLE_TWIDDLECOEF_F16_128)
 
 const uint32_t rearranged_twiddle_tab_stride1_arr_64_f16[3]={
 0,32,0,};
@@ -144,10 +138,6 @@ const float16_t rearranged_twiddle_stride3_64_f16[40]={
 (float16_t)0.3825683593750f,(float16_t)0.9238281250000f,
 (float16_t)-0.7070312500000f,(float16_t)0.7070312500000f,
 (float16_t)-0.9238281250000f,(float16_t)-0.3825683593750f,};
-
-#endif
-
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_TWIDDLECOEF_F16_256) || defined(ARM_TABLE_TWIDDLECOEF_F16_512)
 
 const uint32_t rearranged_twiddle_tab_stride1_arr_256_f16[4]={
 0,128,160,0,};
@@ -416,9 +406,6 @@ const float16_t rearranged_twiddle_stride3_256_f16[168]={
 (float16_t)-0.7070312500000f,(float16_t)0.7070312500000f,
 (float16_t)-0.9238281250000f,(float16_t)-0.3825683593750f,};
 
-#endif
-
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_TWIDDLECOEF_F16_1024) || defined(ARM_TABLE_TWIDDLECOEF_F16_2048)
 
 const uint32_t rearranged_twiddle_tab_stride1_arr_1024_f16[5]={
 0,512,640,672,0,};
@@ -1455,9 +1442,6 @@ const float16_t rearranged_twiddle_stride3_1024_f16[680]={
 (float16_t)-0.7070312500000f,(float16_t)0.7070312500000f,
 (float16_t)-0.9238281250000f,(float16_t)-0.3825683593750f,};
 
-#endif
-
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_TWIDDLECOEF_F16_4096) || defined(ARM_TABLE_TWIDDLECOEF_F16_8192)
 
 const uint32_t rearranged_twiddle_tab_stride1_arr_4096_f16[6]={
 0,2048,2560,2688,2720,0,};
@@ -5566,11 +5550,6 @@ const float16_t rearranged_twiddle_stride3_4096_f16[2728]={
 (float16_t)-0.7070312500000f,(float16_t)0.7070312500000f,
 (float16_t)-0.9238281250000f,(float16_t)-0.3825683593750f,};
 
-#endif
-
-
-
-#endif /* !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FFT_ALLOW_TABLES) */
 #endif /* defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 #endif /* if defined(ARM_FLOAT16_SUPPORTED) */

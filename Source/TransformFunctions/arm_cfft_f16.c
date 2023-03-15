@@ -507,7 +507,7 @@ static void arm_cfft_radix4by2_inverse_f16_mve(const arm_cfft_instance_f16 * S,f
 
 
 /**
-  @addtogroup ComplexFFT
+  @addtogroup ComplexFFTF16
   @{
  */
 
@@ -601,11 +601,7 @@ extern void arm_radix4_butterfly_f16(
         uint16_t twidCoefModifier);
 
 /**
-  @ingroup groupTransforms
- */
-
-/**
-  @addtogroup ComplexFFT
+  @addtogroup ComplexFFTF16
   @{
  */
 
@@ -682,5 +678,5 @@ void arm_cfft_f16(
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
-  @} end of ComplexFFT group
+  @} end of ComplexFFTF16 group
  */

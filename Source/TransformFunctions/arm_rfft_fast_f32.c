@@ -572,7 +572,14 @@ void merge_rfft_f32(
  */
 
 /**
-  @addtogroup RealFFT
+  @defgroup DeprecatedRealFFT Deprecated Real FFT Functions
+*/
+
+/**
+  @defgroup RealFFTF32 Real FFT F32 Functions
+*/
+/**
+  @addtogroup RealFFTF32
   @{
 */
 
@@ -614,5 +621,5 @@ void arm_rfft_fast_f32(
 }
 
 /**
-* @} end of RealFFT group
+* @} end of RRealFFTF16ealFFT group
 */

@@ -1003,7 +1003,27 @@ EXCLUDE_SYMBOLS        = S \
    arm_cfft_sR_q31_* \
    arm_cfft_sR_q15_* \
    any32x4_t \
-   any32x2_t
+   any32x2_t \
+   CFFTINIT_F32 \
+   CFFT_UNDEF_INIT_F32 \
+   CFFTINIT_F16 \
+   CFFT_UNDEF_INIT_F16 \
+   CFFTINIT_F64 \
+   CFFT_UNDEF_INIT_F64 \
+   CFFTINIT_Q15 \
+   CFFT_UNDEF_INIT_Q15 \
+   CFFTINIT_Q31 \
+   CFFT_UNDEF_INIT_Q31 \
+   RFFTINIT_Q31 \
+   RFFT_UNDEF_INIT_Q31 \
+   RFFTINIT_Q15 \
+   RFFT_UNDEF_INIT_Q15 \
+   MFCC_INIT_F32 \
+   MFCC_INIT_F16 \
+   MFCC_INIT_Q15 \
+   MFCC_INIT_Q31 \
+   FFTINIT
+
 
 # The EXAMPLE_PATH tag can be used to specify one or more files or directories
 # that contain example code fragments that are included (see the \include

@@ -2,21 +2,9 @@ cmake_minimum_required (VERSION 3.14)
 
 
 
-
-
-
-
-if (CONFIGTABLE AND ALLFAST)
-target_compile_definitions(CMSISDSP PUBLIC ARM_ALL_FAST_TABLES)  
-endif()
-
-if (NOT CONFIGTABLE OR ALLFAST OR ARM_LMS_NORM_Q31)
 target_sources(CMSISDSP PRIVATE FilteringFunctions/arm_lms_norm_init_q31.c)
-endif()
 
-if (NOT CONFIGTABLE OR ALLFAST OR ARM_LMS_NORM_Q15)
 target_sources(CMSISDSP PRIVATE FilteringFunctions/arm_lms_norm_init_q15.c)
-endif()
 
 target_sources(CMSISDSP PRIVATE FilteringFunctions/arm_biquad_cascade_df1_32x64_init_q31.c)
 target_sources(CMSISDSP PRIVATE FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c)

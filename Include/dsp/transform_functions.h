@@ -228,6 +228,16 @@ extern "C"
 #endif
   } arm_cfft_instance_q15;
 
+arm_status arm_cfft_init_4096_q15(arm_cfft_instance_q15 * S);
+arm_status arm_cfft_init_2048_q15(arm_cfft_instance_q15 * S);
+arm_status arm_cfft_init_1024_q15(arm_cfft_instance_q15 * S);
+arm_status arm_cfft_init_512_q15(arm_cfft_instance_q15 * S);
+arm_status arm_cfft_init_256_q15(arm_cfft_instance_q15 * S);
+arm_status arm_cfft_init_128_q15(arm_cfft_instance_q15 * S);
+arm_status arm_cfft_init_64_q15(arm_cfft_instance_q15 * S);
+arm_status arm_cfft_init_32_q15(arm_cfft_instance_q15 * S);
+arm_status arm_cfft_init_16_q15(arm_cfft_instance_q15 * S);
+
 arm_status arm_cfft_init_q15(
   arm_cfft_instance_q15 * S,
   uint16_t fftLen);
@@ -256,6 +266,16 @@ void arm_cfft_q15(
    const q31_t *rearranged_twiddle_stride3;
 #endif
   } arm_cfft_instance_q31;
+
+arm_status arm_cfft_init_4096_q31(arm_cfft_instance_q31 * S);
+arm_status arm_cfft_init_2048_q31(arm_cfft_instance_q31 * S);
+arm_status arm_cfft_init_1024_q31(arm_cfft_instance_q31 * S);
+arm_status arm_cfft_init_512_q31(arm_cfft_instance_q31 * S);
+arm_status arm_cfft_init_256_q31(arm_cfft_instance_q31 * S);
+arm_status arm_cfft_init_128_q31(arm_cfft_instance_q31 * S);
+arm_status arm_cfft_init_64_q31(arm_cfft_instance_q31 * S);
+arm_status arm_cfft_init_32_q31(arm_cfft_instance_q31 * S);
+arm_status arm_cfft_init_16_q31(arm_cfft_instance_q31 * S);
 
 arm_status arm_cfft_init_q31(
   arm_cfft_instance_q31 * S,
@@ -287,6 +307,15 @@ void arm_cfft_q31(
   } arm_cfft_instance_f32;
 
 
+arm_status arm_cfft_init_4096_f32(arm_cfft_instance_f32 * S);
+arm_status arm_cfft_init_2048_f32(arm_cfft_instance_f32 * S);
+arm_status arm_cfft_init_1024_f32(arm_cfft_instance_f32 * S);
+arm_status arm_cfft_init_512_f32(arm_cfft_instance_f32 * S);
+arm_status arm_cfft_init_256_f32(arm_cfft_instance_f32 * S);
+arm_status arm_cfft_init_128_f32(arm_cfft_instance_f32 * S);
+arm_status arm_cfft_init_64_f32(arm_cfft_instance_f32 * S);
+arm_status arm_cfft_init_32_f32(arm_cfft_instance_f32 * S);
+arm_status arm_cfft_init_16_f32(arm_cfft_instance_f32 * S);
 
   arm_status arm_cfft_init_f32(
   arm_cfft_instance_f32 * S,
@@ -309,6 +338,16 @@ void arm_cfft_q31(
     const uint16_t *pBitRevTable;      /**< points to the bit reversal table. */
           uint16_t bitRevLength;             /**< bit reversal table length. */
   } arm_cfft_instance_f64;
+
+arm_status arm_cfft_init_4096_f64(arm_cfft_instance_f64 * S);
+arm_status arm_cfft_init_2048_f64(arm_cfft_instance_f64 * S);
+arm_status arm_cfft_init_1024_f64(arm_cfft_instance_f64 * S);
+arm_status arm_cfft_init_512_f64(arm_cfft_instance_f64 * S);
+arm_status arm_cfft_init_256_f64(arm_cfft_instance_f64 * S);
+arm_status arm_cfft_init_128_f64(arm_cfft_instance_f64 * S);
+arm_status arm_cfft_init_64_f64(arm_cfft_instance_f64 * S);
+arm_status arm_cfft_init_32_f64(arm_cfft_instance_f64 * S);
+arm_status arm_cfft_init_16_f64(arm_cfft_instance_f64 * S);
 
   arm_status arm_cfft_init_f64(
   arm_cfft_instance_f64 * S,
@@ -338,6 +377,51 @@ void arm_cfft_q31(
 #endif
   } arm_rfft_instance_q15;
 
+arm_status arm_rfft_init_32_q15(
+        arm_rfft_instance_q15 * S,
+        uint32_t ifftFlagR,
+        uint32_t bitReverseFlag);
+
+arm_status arm_rfft_init_64_q15(
+        arm_rfft_instance_q15 * S,
+        uint32_t ifftFlagR,
+        uint32_t bitReverseFlag);
+
+arm_status arm_rfft_init_128_q15(
+        arm_rfft_instance_q15 * S,
+        uint32_t ifftFlagR,
+        uint32_t bitReverseFlag);
+
+arm_status arm_rfft_init_256_q15(
+        arm_rfft_instance_q15 * S,
+        uint32_t ifftFlagR,
+        uint32_t bitReverseFlag);
+
+arm_status arm_rfft_init_512_q15(
+        arm_rfft_instance_q15 * S,
+        uint32_t ifftFlagR,
+        uint32_t bitReverseFlag);
+
+arm_status arm_rfft_init_1024_q15(
+        arm_rfft_instance_q15 * S,
+        uint32_t ifftFlagR,
+        uint32_t bitReverseFlag);
+
+arm_status arm_rfft_init_2048_q15(
+        arm_rfft_instance_q15 * S,
+        uint32_t ifftFlagR,
+        uint32_t bitReverseFlag);
+
+arm_status arm_rfft_init_4096_q15(
+        arm_rfft_instance_q15 * S,
+        uint32_t ifftFlagR,
+        uint32_t bitReverseFlag);
+
+arm_status arm_rfft_init_8192_q15(
+        arm_rfft_instance_q15 * S,
+        uint32_t ifftFlagR,
+        uint32_t bitReverseFlag);
+
   arm_status arm_rfft_init_q15(
         arm_rfft_instance_q15 * S,
         uint32_t fftLenReal,
@@ -366,6 +450,51 @@ void arm_cfft_q31(
     const arm_cfft_instance_q31 *pCfft;         /**< points to the complex FFT instance. */
 #endif
   } arm_rfft_instance_q31;
+
+  arm_status arm_rfft_init_32_q31(
+        arm_rfft_instance_q31 * S,
+        uint32_t ifftFlagR,
+        uint32_t bitReverseFlag);
+
+  arm_status arm_rfft_init_64_q31(
+        arm_rfft_instance_q31 * S,
+        uint32_t ifftFlagR,
+        uint32_t bitReverseFlag);
+
+  arm_status arm_rfft_init_128_q31(
+        arm_rfft_instance_q31 * S,
+        uint32_t ifftFlagR,
+        uint32_t bitReverseFlag);
+
+  arm_status arm_rfft_init_256_q31(
+        arm_rfft_instance_q31 * S,
+        uint32_t ifftFlagR,
+        uint32_t bitReverseFlag);
+
+  arm_status arm_rfft_init_512_q31(
+        arm_rfft_instance_q31 * S,
+        uint32_t ifftFlagR,
+        uint32_t bitReverseFlag);
+
+  arm_status arm_rfft_init_1024_q31(
+        arm_rfft_instance_q31 * S,
+        uint32_t ifftFlagR,
+        uint32_t bitReverseFlag);
+
+  arm_status arm_rfft_init_2048_q31(
+        arm_rfft_instance_q31 * S,
+        uint32_t ifftFlagR,
+        uint32_t bitReverseFlag);
+
+  arm_status arm_rfft_init_4096_q31(
+        arm_rfft_instance_q31 * S,
+        uint32_t ifftFlagR,
+        uint32_t bitReverseFlag);
+
+  arm_status arm_rfft_init_8192_q31(
+        arm_rfft_instance_q31 * S,
+        uint32_t ifftFlagR,
+        uint32_t bitReverseFlag);
 
   arm_status arm_rfft_init_q31(
         arm_rfft_instance_q31 * S,
@@ -415,6 +544,15 @@ typedef struct
     const float64_t * pTwiddleRFFT;        /**< Twiddle factors real stage  */
   } arm_rfft_fast_instance_f64 ;
 
+arm_status arm_rfft_fast_init_32_f64( arm_rfft_fast_instance_f64 * S );
+arm_status arm_rfft_fast_init_64_f64( arm_rfft_fast_instance_f64 * S );
+arm_status arm_rfft_fast_init_128_f64( arm_rfft_fast_instance_f64 * S );
+arm_status arm_rfft_fast_init_256_f64( arm_rfft_fast_instance_f64 * S );
+arm_status arm_rfft_fast_init_512_f64( arm_rfft_fast_instance_f64 * S );
+arm_status arm_rfft_fast_init_1024_f64( arm_rfft_fast_instance_f64 * S );
+arm_status arm_rfft_fast_init_2048_f64( arm_rfft_fast_instance_f64 * S );
+arm_status arm_rfft_fast_init_4096_f64( arm_rfft_fast_instance_f64 * S );
+
 arm_status arm_rfft_fast_init_f64 (
          arm_rfft_fast_instance_f64 * S,
          uint16_t fftLen);
@@ -435,6 +573,15 @@ typedef struct
           uint16_t fftLenRFFT;             /**< length of the real sequence */
     const float32_t * pTwiddleRFFT;        /**< Twiddle factors real stage  */
   } arm_rfft_fast_instance_f32 ;
+
+arm_status arm_rfft_fast_init_32_f32( arm_rfft_fast_instance_f32 * S );
+arm_status arm_rfft_fast_init_64_f32( arm_rfft_fast_instance_f32 * S );
+arm_status arm_rfft_fast_init_128_f32( arm_rfft_fast_instance_f32 * S );
+arm_status arm_rfft_fast_init_256_f32( arm_rfft_fast_instance_f32 * S );
+arm_status arm_rfft_fast_init_512_f32( arm_rfft_fast_instance_f32 * S );
+arm_status arm_rfft_fast_init_1024_f32( arm_rfft_fast_instance_f32 * S );
+arm_status arm_rfft_fast_init_2048_f32( arm_rfft_fast_instance_f32 * S );
+arm_status arm_rfft_fast_init_4096_f32( arm_rfft_fast_instance_f32 * S );
 
 arm_status arm_rfft_fast_init_f32 (
          arm_rfft_fast_instance_f32 * S,
@@ -605,6 +752,94 @@ typedef struct
 #endif
   } arm_mfcc_instance_f32 ;
 
+arm_status arm_mfcc_init_32_f32(
+  arm_mfcc_instance_f32 * S,
+  uint32_t nbMelFilters,
+  uint32_t nbDctOutputs,
+  const float32_t *dctCoefs,
+  const uint32_t *filterPos,
+  const uint32_t *filterLengths,
+  const float32_t *filterCoefs,
+  const float32_t *windowCoefs
+  );
+
+arm_status arm_mfcc_init_64_f32(
+  arm_mfcc_instance_f32 * S,
+  uint32_t nbMelFilters,
+  uint32_t nbDctOutputs,
+  const float32_t *dctCoefs,
+  const uint32_t *filterPos,
+  const uint32_t *filterLengths,
+  const float32_t *filterCoefs,
+  const float32_t *windowCoefs
+  );
+
+arm_status arm_mfcc_init_128_f32(
+  arm_mfcc_instance_f32 * S,
+  uint32_t nbMelFilters,
+  uint32_t nbDctOutputs,
+  const float32_t *dctCoefs,
+  const uint32_t *filterPos,
+  const uint32_t *filterLengths,
+  const float32_t *filterCoefs,
+  const float32_t *windowCoefs
+  );
+
+arm_status arm_mfcc_init_256_f32(
+  arm_mfcc_instance_f32 * S,
+  uint32_t nbMelFilters,
+  uint32_t nbDctOutputs,
+  const float32_t *dctCoefs,
+  const uint32_t *filterPos,
+  const uint32_t *filterLengths,
+  const float32_t *filterCoefs,
+  const float32_t *windowCoefs
+  );
+
+arm_status arm_mfcc_init_512_f32(
+  arm_mfcc_instance_f32 * S,
+  uint32_t nbMelFilters,
+  uint32_t nbDctOutputs,
+  const float32_t *dctCoefs,
+  const uint32_t *filterPos,
+  const uint32_t *filterLengths,
+  const float32_t *filterCoefs,
+  const float32_t *windowCoefs
+  );
+
+arm_status arm_mfcc_init_1024_f32(
+  arm_mfcc_instance_f32 * S,
+  uint32_t nbMelFilters,
+  uint32_t nbDctOutputs,
+  const float32_t *dctCoefs,
+  const uint32_t *filterPos,
+  const uint32_t *filterLengths,
+  const float32_t *filterCoefs,
+  const float32_t *windowCoefs
+  );
+
+arm_status arm_mfcc_init_2048_f32(
+  arm_mfcc_instance_f32 * S,
+  uint32_t nbMelFilters,
+  uint32_t nbDctOutputs,
+  const float32_t *dctCoefs,
+  const uint32_t *filterPos,
+  const uint32_t *filterLengths,
+  const float32_t *filterCoefs,
+  const float32_t *windowCoefs
+  );
+
+arm_status arm_mfcc_init_4096_f32(
+  arm_mfcc_instance_f32 * S,
+  uint32_t nbMelFilters,
+  uint32_t nbDctOutputs,
+  const float32_t *dctCoefs,
+  const uint32_t *filterPos,
+  const uint32_t *filterLengths,
+  const float32_t *filterCoefs,
+  const float32_t *windowCoefs
+  );
+
 arm_status arm_mfcc_init_f32(
   arm_mfcc_instance_f32 * S,
   uint32_t fftLen,
@@ -652,6 +887,94 @@ typedef struct
 #endif
   } arm_mfcc_instance_q31 ;
 
+arm_status arm_mfcc_init_32_q31(
+  arm_mfcc_instance_q31 * S,
+  uint32_t nbMelFilters,
+  uint32_t nbDctOutputs,
+  const q31_t *dctCoefs,
+  const uint32_t *filterPos,
+  const uint32_t *filterLengths,
+  const q31_t *filterCoefs,
+  const q31_t *windowCoefs
+  );
+
+arm_status arm_mfcc_init_64_q31(
+  arm_mfcc_instance_q31 * S,
+  uint32_t nbMelFilters,
+  uint32_t nbDctOutputs,
+  const q31_t *dctCoefs,
+  const uint32_t *filterPos,
+  const uint32_t *filterLengths,
+  const q31_t *filterCoefs,
+  const q31_t *windowCoefs
+  );
+
+arm_status arm_mfcc_init_128_q31(
+  arm_mfcc_instance_q31 * S,
+  uint32_t nbMelFilters,
+  uint32_t nbDctOutputs,
+  const q31_t *dctCoefs,
+  const uint32_t *filterPos,
+  const uint32_t *filterLengths,
+  const q31_t *filterCoefs,
+  const q31_t *windowCoefs
+  );
+
+arm_status arm_mfcc_init_256_q31(
+  arm_mfcc_instance_q31 * S,
+  uint32_t nbMelFilters,
+  uint32_t nbDctOutputs,
+  const q31_t *dctCoefs,
+  const uint32_t *filterPos,
+  const uint32_t *filterLengths,
+  const q31_t *filterCoefs,
+  const q31_t *windowCoefs
+  );
+
+arm_status arm_mfcc_init_512_q31(
+  arm_mfcc_instance_q31 * S,
+  uint32_t nbMelFilters,
+  uint32_t nbDctOutputs,
+  const q31_t *dctCoefs,
+  const uint32_t *filterPos,
+  const uint32_t *filterLengths,
+  const q31_t *filterCoefs,
+  const q31_t *windowCoefs
+  );
+
+arm_status arm_mfcc_init_1024_q31(
+  arm_mfcc_instance_q31 * S,
+  uint32_t nbMelFilters,
+  uint32_t nbDctOutputs,
+  const q31_t *dctCoefs,
+  const uint32_t *filterPos,
+  const uint32_t *filterLengths,
+  const q31_t *filterCoefs,
+  const q31_t *windowCoefs
+  );
+
+arm_status arm_mfcc_init_2048_q31(
+  arm_mfcc_instance_q31 * S,
+  uint32_t nbMelFilters,
+  uint32_t nbDctOutputs,
+  const q31_t *dctCoefs,
+  const uint32_t *filterPos,
+  const uint32_t *filterLengths,
+  const q31_t *filterCoefs,
+  const q31_t *windowCoefs
+  );
+
+arm_status arm_mfcc_init_4096_q31(
+  arm_mfcc_instance_q31 * S,
+  uint32_t nbMelFilters,
+  uint32_t nbDctOutputs,
+  const q31_t *dctCoefs,
+  const uint32_t *filterPos,
+  const uint32_t *filterLengths,
+  const q31_t *filterCoefs,
+  const q31_t *windowCoefs
+  );
+
 arm_status arm_mfcc_init_q31(
   arm_mfcc_instance_q31 * S,
   uint32_t fftLen,
@@ -698,6 +1021,94 @@ typedef struct
      arm_rfft_instance_q15 rfft;
 #endif
   } arm_mfcc_instance_q15 ;
+
+arm_status arm_mfcc_init_32_q15(
+  arm_mfcc_instance_q15 * S,
+  uint32_t nbMelFilters,
+  uint32_t nbDctOutputs,
+  const q15_t *dctCoefs,
+  const uint32_t *filterPos,
+  const uint32_t *filterLengths,
+  const q15_t *filterCoefs,
+  const q15_t *windowCoefs
+  );
+
+arm_status arm_mfcc_init_64_q15(
+  arm_mfcc_instance_q15 * S,
+  uint32_t nbMelFilters,
+  uint32_t nbDctOutputs,
+  const q15_t *dctCoefs,
+  const uint32_t *filterPos,
+  const uint32_t *filterLengths,
+  const q15_t *filterCoefs,
+  const q15_t *windowCoefs
+  );
+
+arm_status arm_mfcc_init_128_q15(
+  arm_mfcc_instance_q15 * S,
+  uint32_t nbMelFilters,
+  uint32_t nbDctOutputs,
+  const q15_t *dctCoefs,
+  const uint32_t *filterPos,
+  const uint32_t *filterLengths,
+  const q15_t *filterCoefs,
+  const q15_t *windowCoefs
+  );
+
+arm_status arm_mfcc_init_256_q15(
+  arm_mfcc_instance_q15 * S,
+  uint32_t nbMelFilters,
+  uint32_t nbDctOutputs,
+  const q15_t *dctCoefs,
+  const uint32_t *filterPos,
+  const uint32_t *filterLengths,
+  const q15_t *filterCoefs,
+  const q15_t *windowCoefs
+  );
+
+arm_status arm_mfcc_init_512_q15(
+  arm_mfcc_instance_q15 * S,
+  uint32_t nbMelFilters,
+  uint32_t nbDctOutputs,
+  const q15_t *dctCoefs,
+  const uint32_t *filterPos,
+  const uint32_t *filterLengths,
+  const q15_t *filterCoefs,
+  const q15_t *windowCoefs
+  );
+
+arm_status arm_mfcc_init_1024_q15(
+  arm_mfcc_instance_q15 * S,
+  uint32_t nbMelFilters,
+  uint32_t nbDctOutputs,
+  const q15_t *dctCoefs,
+  const uint32_t *filterPos,
+  const uint32_t *filterLengths,
+  const q15_t *filterCoefs,
+  const q15_t *windowCoefs
+  );
+
+arm_status arm_mfcc_init_2048_q15(
+  arm_mfcc_instance_q15 * S,
+  uint32_t nbMelFilters,
+  uint32_t nbDctOutputs,
+  const q15_t *dctCoefs,
+  const uint32_t *filterPos,
+  const uint32_t *filterLengths,
+  const q15_t *filterCoefs,
+  const q15_t *windowCoefs
+  );
+
+arm_status arm_mfcc_init_4096_q15(
+  arm_mfcc_instance_q15 * S,
+  uint32_t nbMelFilters,
+  uint32_t nbDctOutputs,
+  const q15_t *dctCoefs,
+  const uint32_t *filterPos,
+  const uint32_t *filterLengths,
+  const q15_t *filterCoefs,
+  const q15_t *windowCoefs
+  );
 
 arm_status arm_mfcc_init_q15(
   arm_mfcc_instance_q15 * S,

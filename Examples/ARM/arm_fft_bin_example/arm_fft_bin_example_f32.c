@@ -132,7 +132,7 @@ int32_t main(void)
 
   status = ARM_MATH_SUCCESS;
 
-  status=arm_cfft_init_f32(&varInstCfftF32,fftSize);
+  status=arm_cfft_init_1024_f32(&varInstCfftF32);
 
   /* Process the data through the CFFT/CIFFT module */
   arm_cfft_f32(&varInstCfftF32, testInput_f32_10khz, ifftFlag, doBitReverse);

@@ -93,6 +93,17 @@ extern "C"
   } arm_cfft_instance_f16;
 
 
+arm_status arm_cfft_init_4096_f16(arm_cfft_instance_f16 * S);
+arm_status arm_cfft_init_2048_f16(arm_cfft_instance_f16 * S);
+arm_status arm_cfft_init_1024_f16(arm_cfft_instance_f16 * S);
+arm_status arm_cfft_init_512_f16(arm_cfft_instance_f16 * S);
+arm_status arm_cfft_init_256_f16(arm_cfft_instance_f16 * S);
+arm_status arm_cfft_init_128_f16(arm_cfft_instance_f16 * S);
+arm_status arm_cfft_init_64_f16(arm_cfft_instance_f16 * S);
+arm_status arm_cfft_init_32_f16(arm_cfft_instance_f16 * S);
+arm_status arm_cfft_init_16_f16(arm_cfft_instance_f16 * S);
+
+
   arm_status arm_cfft_init_f16(
   arm_cfft_instance_f16 * S,
   uint16_t fftLen);
@@ -112,6 +123,15 @@ typedef struct
           uint16_t fftLenRFFT;             /**< length of the real sequence */
     const float16_t * pTwiddleRFFT;        /**< Twiddle factors real stage  */
   } arm_rfft_fast_instance_f16 ;
+
+arm_status arm_rfft_fast_init_32_f16( arm_rfft_fast_instance_f16 * S );
+arm_status arm_rfft_fast_init_64_f16( arm_rfft_fast_instance_f16 * S );
+arm_status arm_rfft_fast_init_128_f16( arm_rfft_fast_instance_f16 * S );
+arm_status arm_rfft_fast_init_256_f16( arm_rfft_fast_instance_f16 * S );
+arm_status arm_rfft_fast_init_512_f16( arm_rfft_fast_instance_f16 * S );
+arm_status arm_rfft_fast_init_1024_f16( arm_rfft_fast_instance_f16 * S );
+arm_status arm_rfft_fast_init_2048_f16( arm_rfft_fast_instance_f16 * S );
+arm_status arm_rfft_fast_init_4096_f16( arm_rfft_fast_instance_f16 * S );
 
 arm_status arm_rfft_fast_init_f16 (
          arm_rfft_fast_instance_f16 * S,
@@ -170,6 +190,94 @@ typedef struct
 #endif
   } arm_mfcc_instance_f16 ;
 
+arm_status arm_mfcc_init_32_f16(
+  arm_mfcc_instance_f16 * S,
+  uint32_t nbMelFilters,
+  uint32_t nbDctOutputs,
+  const float16_t *dctCoefs,
+  const uint32_t *filterPos,
+  const uint32_t *filterLengths,
+  const float16_t *filterCoefs,
+  const float16_t *windowCoefs
+  );
+
+arm_status arm_mfcc_init_64_f16(
+  arm_mfcc_instance_f16 * S,
+  uint32_t nbMelFilters,
+  uint32_t nbDctOutputs,
+  const float16_t *dctCoefs,
+  const uint32_t *filterPos,
+  const uint32_t *filterLengths,
+  const float16_t *filterCoefs,
+  const float16_t *windowCoefs
+  );
+
+arm_status arm_mfcc_init_128_f16(
+  arm_mfcc_instance_f16 * S,
+  uint32_t nbMelFilters,
+  uint32_t nbDctOutputs,
+  const float16_t *dctCoefs,
+  const uint32_t *filterPos,
+  const uint32_t *filterLengths,
+  const float16_t *filterCoefs,
+  const float16_t *windowCoefs
+  );
+
+arm_status arm_mfcc_init_256_f16(
+  arm_mfcc_instance_f16 * S,
+  uint32_t nbMelFilters,
+  uint32_t nbDctOutputs,
+  const float16_t *dctCoefs,
+  const uint32_t *filterPos,
+  const uint32_t *filterLengths,
+  const float16_t *filterCoefs,
+  const float16_t *windowCoefs
+  );
+
+arm_status arm_mfcc_init_512_f16(
+  arm_mfcc_instance_f16 * S,
+  uint32_t nbMelFilters,
+  uint32_t nbDctOutputs,
+  const float16_t *dctCoefs,
+  const uint32_t *filterPos,
+  const uint32_t *filterLengths,
+  const float16_t *filterCoefs,
+  const float16_t *windowCoefs
+  );
+
+arm_status arm_mfcc_init_1024_f16(
+  arm_mfcc_instance_f16 * S,
+  uint32_t nbMelFilters,
+  uint32_t nbDctOutputs,
+  const float16_t *dctCoefs,
+  const uint32_t *filterPos,
+  const uint32_t *filterLengths,
+  const float16_t *filterCoefs,
+  const float16_t *windowCoefs
+  );
+
+arm_status arm_mfcc_init_2048_f16(
+  arm_mfcc_instance_f16 * S,
+  uint32_t nbMelFilters,
+  uint32_t nbDctOutputs,
+  const float16_t *dctCoefs,
+  const uint32_t *filterPos,
+  const uint32_t *filterLengths,
+  const float16_t *filterCoefs,
+  const float16_t *windowCoefs
+  );
+
+arm_status arm_mfcc_init_4096_f16(
+  arm_mfcc_instance_f16 * S,
+  uint32_t nbMelFilters,
+  uint32_t nbDctOutputs,
+  const float16_t *dctCoefs,
+  const uint32_t *filterPos,
+  const uint32_t *filterLengths,
+  const float16_t *filterCoefs,
+  const float16_t *windowCoefs
+  );
+
 arm_status arm_mfcc_init_f16(
   arm_mfcc_instance_f16 * S,
   uint32_t fftLen,
@@ -181,6 +289,7 @@ arm_status arm_mfcc_init_f16(
   const float16_t *filterCoefs,
   const float16_t *windowCoefs
   );
+
 
 
 /**

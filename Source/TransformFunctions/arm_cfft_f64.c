@@ -236,7 +236,7 @@ void arm_cfft_radix4by2_f64(
 }
 
 /**
-  @addtogroup ComplexFFT
+  @addtogroup ComplexFFTF64
   @{
  */
 
@@ -310,5 +310,5 @@ void arm_cfft_f64(
 }
 
 /**
-  @} end of ComplexFFT group
+  @} end of ComplexFFTF64 group
  */

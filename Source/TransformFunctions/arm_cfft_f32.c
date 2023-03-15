@@ -510,7 +510,7 @@ static void arm_cfft_radix4by2_inverse_f32_mve(const arm_cfft_instance_f32 * S,f
 
 
 /**
-  @addtogroup ComplexFFT
+  @addtogroup ComplexFFTF32
   @{
  */
 
@@ -1113,7 +1113,7 @@ void arm_cfft_radix8by4_f32 (arm_cfft_instance_f32 * S, float32_t * p1)
 }
 
 /**
-  @addtogroup ComplexFFT
+  @addtogroup ComplexFFTF32
   @{
  */
 
@@ -1189,5 +1189,5 @@ void arm_cfft_f32(
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
-  @} end of ComplexFFT group
+  @} end of ComplexFFTF32 group
  */

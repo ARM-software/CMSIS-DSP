@@ -40,13 +40,13 @@
 #define MICRO_Q31 0x08637BD0
 #define SHIFT_MELFILTER_SATURATION_Q31 10
 /**
-  @ingroup groupTransforms
+  @ingroup MFCC
  */
 
 
 
 /**
-  @addtogroup MFCC
+  @addtogroup MFCCQ31
   @{
  */
 
@@ -194,5 +194,5 @@ arm_status arm_mfcc_q31(
 }
 
 /**
-  @} end of MFCC group
+  @} end of MFCCQ31 group
  */

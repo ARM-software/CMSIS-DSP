@@ -47,12 +47,10 @@ extern void arm_bitreversal_f32(
         uint16_t bitRevFactor,
   const uint16_t * pBitRevTab);
 
-/**
-  @ingroup groupTransforms
- */
+
 
 /**
-  @addtogroup ComplexFFT
+  @addtogroup ComplexFFTDeprecated
   @{
  */
 
@@ -92,7 +90,7 @@ const arm_cfft_radix2_instance_f32 * S,
 
 
 /**
-  @} end of ComplexFFT group
+  @} end of ComplexFFTDeprecated group
  */
 
 

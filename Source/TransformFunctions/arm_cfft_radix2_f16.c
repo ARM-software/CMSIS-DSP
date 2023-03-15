@@ -28,6 +28,10 @@
 
 #include "dsp/transform_functions_f16.h"
 
+/**
+ * @defgroup ComplexFFTDeprecated Deprecated Complex FFT functions
+ */
+
 #if defined(ARM_FLOAT16_SUPPORTED)
 
 void arm_radix2_butterfly_f16(
@@ -50,11 +54,11 @@ extern void arm_bitreversal_f16(
   const uint16_t * pBitRevTab);
 
 /**
-  @ingroup groupTransforms
+  @ingroup ComplexFFT
  */
 
 /**
-  @addtogroup ComplexFFT
+  @addtogroup ComplexFFTDeprecated
   @{
  */
 
@@ -94,7 +98,7 @@ const arm_cfft_radix2_instance_f16 * S,
 
 
 /**
-  @} end of ComplexFFT group
+  @} end of ComplexFFTDeprecated group
  */
 
 

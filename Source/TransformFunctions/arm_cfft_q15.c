@@ -511,11 +511,7 @@ static void arm_cfft_radix4by2_inverse_q15_mve(const arm_cfft_instance_q15 *S, q
 }
 
 /**
-  @ingroup groupTransforms
- */
-
-/**
-  @addtogroup ComplexFFT
+  @addtogroup ComplexFFTQ15
   @{
  */
 
@@ -614,12 +610,10 @@ void arm_cfft_radix4by2_inverse_q15(
         uint32_t fftLen,
   const q15_t * pCoef);
 
-/**
-  @ingroup groupTransforms
- */
+
 
 /**
-  @addtogroup ComplexFFT
+  @addtogroup ComplexFFTQ15
   @{
  */
 
@@ -690,7 +684,7 @@ void arm_cfft_q15(
 }
 
 /**
-  @} end of ComplexFFT group
+  @} end of ComplexFFTQ15 group
  */
 
 void arm_cfft_radix4by2_q15(

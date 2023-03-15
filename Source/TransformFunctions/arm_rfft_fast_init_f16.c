@@ -9,7 +9,7 @@
  * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2023 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -33,18 +33,16 @@
 #if defined(ARM_FLOAT16_SUPPORTED)
 
 /**
-  @ingroup groupTransforms
+  @ingroup RealFFT
  */
 
 /**
-  @addtogroup RealFFT
+  @addtogroup RealFFTF16
   @{
  */
 
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F16_16) && (defined(ARM_TABLE_BITREVIDX_FLT_16) || defined(ARM_TABLE_BITREVIDX_FXT_16)) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F16_32))
 
 /**
-  @private
   @brief         Initialization function for the 32pt floating-point real FFT.
   @param[in,out] S  points to an arm_rfft_fast_instance_f16 structure
   @return        execution status
@@ -52,13 +50,13 @@
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
-static arm_status arm_rfft_32_fast_init_f16( arm_rfft_fast_instance_f16 * S ) {
+arm_status arm_rfft_fast_init_32_f16( arm_rfft_fast_instance_f16 * S ) {
 
   arm_status status;
 
   if( !S ) return ARM_MATH_ARGUMENT_ERROR;
 
-  status=arm_cfft_init_f16(&(S->Sint),16);
+  status=arm_cfft_init_16_f16(&(S->Sint));
   if (status != ARM_MATH_SUCCESS)
   {
     return(status);
@@ -69,12 +67,8 @@ static arm_status arm_rfft_32_fast_init_f16( arm_rfft_fast_instance_f16 * S ) {
 
   return ARM_MATH_SUCCESS;
 }
-#endif 
-
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F16_32) && (defined(ARM_TABLE_BITREVIDX_FLT_32) || defined(ARM_TABLE_BITREVIDX_FXT_32)) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F16_64))
 
 /**
-  @private
   @brief         Initialization function for the 64pt floating-point real FFT.
   @param[in,out] S  points to an arm_rfft_fast_instance_f16 structure
   @return        execution status
@@ -82,13 +76,13 @@ static arm_status arm_rfft_32_fast_init_f16( arm_rfft_fast_instance_f16 * S ) {
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
-static arm_status arm_rfft_64_fast_init_f16( arm_rfft_fast_instance_f16 * S ) {
+arm_status arm_rfft_fast_init_64_f16( arm_rfft_fast_instance_f16 * S ) {
 
   arm_status status;
 
   if( !S ) return ARM_MATH_ARGUMENT_ERROR;
 
-  status=arm_cfft_init_f16(&(S->Sint),32);
+  status=arm_cfft_init_32_f16(&(S->Sint));
   if (status != ARM_MATH_SUCCESS)
   {
     return(status);
@@ -99,12 +93,8 @@ static arm_status arm_rfft_64_fast_init_f16( arm_rfft_fast_instance_f16 * S ) {
 
   return ARM_MATH_SUCCESS;
 }
-#endif 
-
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F16_64) && (defined(ARM_TABLE_BITREVIDX_FLT_64) || defined(ARM_TABLE_BITREVIDX_FXT_64)) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F16_128))
 
 /**
-  @private
   @brief         Initialization function for the 128pt floating-point real FFT.
   @param[in,out] S  points to an arm_rfft_fast_instance_f16 structure
   @return        execution status
@@ -112,13 +102,13 @@ static arm_status arm_rfft_64_fast_init_f16( arm_rfft_fast_instance_f16 * S ) {
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
-static arm_status arm_rfft_128_fast_init_f16( arm_rfft_fast_instance_f16 * S ) {
+arm_status arm_rfft_fast_init_128_f16( arm_rfft_fast_instance_f16 * S ) {
 
   arm_status status;
 
   if( !S ) return ARM_MATH_ARGUMENT_ERROR;
 
-  status=arm_cfft_init_f16(&(S->Sint),64);
+  status=arm_cfft_init_64_f16(&(S->Sint));
   if (status != ARM_MATH_SUCCESS)
   {
     return(status);
@@ -129,12 +119,8 @@ static arm_status arm_rfft_128_fast_init_f16( arm_rfft_fast_instance_f16 * S ) {
 
   return ARM_MATH_SUCCESS;
 }
-#endif 
-
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F16_128) && (defined(ARM_TABLE_BITREVIDX_FLT_128) || defined(ARM_TABLE_BITREVIDX_FXT_128)) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F16_256))
 
 /**
-  @private
   @brief         Initialization function for the 256pt floating-point real FFT.
   @param[in,out] S  points to an arm_rfft_fast_instance_f16 structure
   @return        execution status
@@ -142,13 +128,13 @@ static arm_status arm_rfft_128_fast_init_f16( arm_rfft_fast_instance_f16 * S ) {
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
 */
 
-static arm_status arm_rfft_256_fast_init_f16( arm_rfft_fast_instance_f16 * S ) {
+arm_status arm_rfft_fast_init_256_f16( arm_rfft_fast_instance_f16 * S ) {
 
   arm_status status;
 
   if( !S ) return ARM_MATH_ARGUMENT_ERROR;
 
-  status=arm_cfft_init_f16(&(S->Sint),128);
+  status=arm_cfft_init_128_f16(&(S->Sint));
   if (status != ARM_MATH_SUCCESS)
   {
     return(status);
@@ -159,12 +145,8 @@ static arm_status arm_rfft_256_fast_init_f16( arm_rfft_fast_instance_f16 * S ) {
 
   return ARM_MATH_SUCCESS;
 }
-#endif 
-
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F16_256) && (defined(ARM_TABLE_BITREVIDX_FLT_256) || defined(ARM_TABLE_BITREVIDX_FXT_256)) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F16_512))
 
 /**
-  @private
   @brief         Initialization function for the 512pt floating-point real FFT.
   @param[in,out] S  points to an arm_rfft_fast_instance_f16 structure
   @return        execution status
@@ -172,13 +154,13 @@ static arm_status arm_rfft_256_fast_init_f16( arm_rfft_fast_instance_f16 * S ) {
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
-static arm_status arm_rfft_512_fast_init_f16( arm_rfft_fast_instance_f16 * S ) {
+arm_status arm_rfft_fast_init_512_f16( arm_rfft_fast_instance_f16 * S ) {
 
   arm_status status;
 
   if( !S ) return ARM_MATH_ARGUMENT_ERROR;
 
-  status=arm_cfft_init_f16(&(S->Sint),256);
+  status=arm_cfft_init_256_f16(&(S->Sint));
   if (status != ARM_MATH_SUCCESS)
   {
     return(status);
@@ -189,11 +171,8 @@ static arm_status arm_rfft_512_fast_init_f16( arm_rfft_fast_instance_f16 * S ) {
 
   return ARM_MATH_SUCCESS;
 }
-#endif 
 
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F16_512) && (defined(ARM_TABLE_BITREVIDX_FLT_512) || defined(ARM_TABLE_BITREVIDX_FXT_512)) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F16_1024))
 /**
-  @private
   @brief         Initialization function for the 1024pt floating-point real FFT.
   @param[in,out] S  points to an arm_rfft_fast_instance_f16 structure
   @return        execution status
@@ -201,13 +180,13 @@ static arm_status arm_rfft_512_fast_init_f16( arm_rfft_fast_instance_f16 * S ) {
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
-static arm_status arm_rfft_1024_fast_init_f16( arm_rfft_fast_instance_f16 * S ) {
+arm_status arm_rfft_fast_init_1024_f16( arm_rfft_fast_instance_f16 * S ) {
 
   arm_status status;
 
   if( !S ) return ARM_MATH_ARGUMENT_ERROR;
 
-  status=arm_cfft_init_f16(&(S->Sint),512);
+  status=arm_cfft_init_512_f16(&(S->Sint));
   if (status != ARM_MATH_SUCCESS)
   {
     return(status);
@@ -218,24 +197,21 @@ static arm_status arm_rfft_1024_fast_init_f16( arm_rfft_fast_instance_f16 * S ) 
 
   return ARM_MATH_SUCCESS;
 }
-#endif
 
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F16_1024) && (defined(ARM_TABLE_BITREVIDX_FLT_1024) || defined(ARM_TABLE_BITREVIDX_FXT_1024)) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F16_2048))
 /**
-  @private
   @brief         Initialization function for the 2048pt floating-point real FFT.
   @param[in,out] S  points to an arm_rfft_fast_instance_f16 structure
   @return        execution status
                    - \ref ARM_MATH_SUCCESS        : Operation successful
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
-static arm_status arm_rfft_2048_fast_init_f16( arm_rfft_fast_instance_f16 * S ) {
+arm_status arm_rfft_fast_init_2048_f16( arm_rfft_fast_instance_f16 * S ) {
 
   arm_status status;
 
   if( !S ) return ARM_MATH_ARGUMENT_ERROR;
 
-  status=arm_cfft_init_f16(&(S->Sint),1024);
+  status=arm_cfft_init_1024_f16(&(S->Sint));
   if (status != ARM_MATH_SUCCESS)
   {
     return(status);
@@ -246,11 +222,8 @@ static arm_status arm_rfft_2048_fast_init_f16( arm_rfft_fast_instance_f16 * S ) 
 
   return ARM_MATH_SUCCESS;
 }
-#endif
 
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F16_2048) && (defined(ARM_TABLE_BITREVIDX_FLT_2048) || defined(ARM_TABLE_BITREVIDX_FXT_2048)) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F16_4096))
 /**
-  @private
 * @brief         Initialization function for the 4096pt floating-point real FFT.
 * @param[in,out] S  points to an arm_rfft_fast_instance_f16 structure
   @return        execution status
@@ -258,13 +231,13 @@ static arm_status arm_rfft_2048_fast_init_f16( arm_rfft_fast_instance_f16 * S ) 
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
-static arm_status arm_rfft_4096_fast_init_f16( arm_rfft_fast_instance_f16 * S ) {
+arm_status arm_rfft_fast_init_4096_f16( arm_rfft_fast_instance_f16 * S ) {
 
   arm_status status;
 
   if( !S ) return ARM_MATH_ARGUMENT_ERROR;
 
-  status=arm_cfft_init_f16(&(S->Sint),2048);
+  status=arm_cfft_init_2048_f16(&(S->Sint));
   if (status != ARM_MATH_SUCCESS)
   {
     return(status);
@@ -275,10 +248,9 @@ static arm_status arm_rfft_4096_fast_init_f16( arm_rfft_fast_instance_f16 * S ) 
 
   return ARM_MATH_SUCCESS;
 }
-#endif 
 
 /**
-  @brief         Initialization function for the floating-point real FFT.
+  @brief         Generic initialization function for the floating-point real FFT.
   @param[in,out] S       points to an arm_rfft_fast_instance_f16 structure
   @param[in]     fftLen  length of the Real Sequence
   @return        execution status
@@ -290,68 +262,64 @@ static arm_status arm_rfft_4096_fast_init_f16( arm_rfft_fast_instance_f16 * S ) 
                    Supported FFT Lengths are 32, 64, 128, 256, 512, 1024, 2048, 4096.
   @par
                    This Function also initializes Twiddle factor table pointer and Bit reversal table pointer.
+ 
+  @par          
+                This function should be used only if you don't know the FFT sizes that 
+                you'll need at build time. The use of this function will prevent the 
+                linker from removing the FFT tables that are not needed and the library 
+                code size will be bigger than needed.
+
+  @par          
+                If you use CMSIS-DSP as a static library, and if you know the FFT sizes 
+                that you need at build time, then it is better to use the initialization
+                functions defined for each FFT size.
+
  */
 
 arm_status arm_rfft_fast_init_f16(
   arm_rfft_fast_instance_f16 * S,
   uint16_t fftLen)
 {
-  typedef arm_status(*fft_init_ptr)( arm_rfft_fast_instance_f16 *);
-  fft_init_ptr fptr = 0x0;
+  arm_status status;
+
 
   switch (fftLen)
   {
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F16_2048) && (defined(ARM_TABLE_BITREVIDX_FLT_2048) || defined(ARM_TABLE_BITREVIDX_FXT_2048)) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F16_4096))
   case 4096U:
-    fptr = arm_rfft_4096_fast_init_f16;
+    status = arm_rfft_fast_init_4096_f16(S);
     break;
-#endif
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F16_1024) && (defined(ARM_TABLE_BITREVIDX_FLT_1024) || defined(ARM_TABLE_BITREVIDX_FXT_1024)) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F16_2048))
   case 2048U:
-    fptr = arm_rfft_2048_fast_init_f16;
+    status = arm_rfft_fast_init_2048_f16(S);
     break;
-#endif
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F16_512) && (defined(ARM_TABLE_BITREVIDX_FLT_512) || defined(ARM_TABLE_BITREVIDX_FXT_512)) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F16_1024))
   case 1024U:
-    fptr = arm_rfft_1024_fast_init_f16;
+    status = arm_rfft_fast_init_1024_f16(S);
     break;
-#endif
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F16_256) && (defined(ARM_TABLE_BITREVIDX_FLT_256) || defined(ARM_TABLE_BITREVIDX_FXT_256)) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F16_512))
   case 512U:
-    fptr = arm_rfft_512_fast_init_f16;
+    status = arm_rfft_fast_init_512_f16(S);
     break;
-#endif
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F16_128) && (defined(ARM_TABLE_BITREVIDX_FLT_128) || defined(ARM_TABLE_BITREVIDX_FXT_128)) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F16_256))
   case 256U:
-    fptr = arm_rfft_256_fast_init_f16;
+    status = arm_rfft_fast_init_256_f16(S);
     break;
-#endif
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F16_64) && (defined(ARM_TABLE_BITREVIDX_FLT_64) || defined(ARM_TABLE_BITREVIDX_FXT_64)) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F16_128))
   case 128U:
-    fptr = arm_rfft_128_fast_init_f16;
+    status = arm_rfft_fast_init_128_f16(S);
     break;
-#endif
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F16_32) && (defined(ARM_TABLE_BITREVIDX_FLT_32) || defined(ARM_TABLE_BITREVIDX_FXT_32)) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F16_64))
   case 64U:
-    fptr = arm_rfft_64_fast_init_f16;
+    status = arm_rfft_fast_init_64_f16(S);
     break;
-#endif
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F16_16) && (defined(ARM_TABLE_BITREVIDX_FLT_16) || defined(ARM_TABLE_BITREVIDX_FXT_16)) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F16_32))
   case 32U:
-    fptr = arm_rfft_32_fast_init_f16;
+    status = arm_rfft_fast_init_32_f16(S);
     break;
-#endif
   default:
+    return(ARM_MATH_ARGUMENT_ERROR);
     break;
   }
 
-  if( ! fptr ) return ARM_MATH_ARGUMENT_ERROR;
-  return fptr( S );
+  return(status);
 
 }
 
 /**
-  @} end of RealFFT group
+  @} end of RealFFTF16 group
  */
 
 #endif /*  #if defined(ARM_FLOAT16_SUPPORTED) */

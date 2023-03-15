@@ -2,31 +2,15 @@ cmake_minimum_required (VERSION 3.14)
 
 
 
-if (CONFIGTABLE AND ALLFAST)
-    target_compile_definitions(CMSISDSP PUBLIC ARM_ALL_FAST_TABLES)  
-endif()
-
-# Vectorized code is defining sqrt
-# so fast tables required even if Fast Math not built.
-if (CONFIGTABLE AND (HELIUM OR MVEF OR MVEI))
-    target_compile_definitions(CMSISDSP PUBLIC ARM_FAST_ALLOW_TABLES)  
-endif()
-
 
 # MVE code is using a table for computing the fast sqrt arm_cmplx_mag_q31
 # There is the possibility of not compiling this function and not including
 # the table.
-if (NOT CONFIGTABLE OR ALLFAST OR ARM_CMPLX_MAG_Q31 OR (NOT HELIUM AND NOT MVEI))
 target_sources(CMSISDSP PRIVATE ComplexMathFunctions/arm_cmplx_mag_q31.c)
-endif()
 
-if (NOT CONFIGTABLE OR ALLFAST OR ARM_CMPLX_MAG_Q15 OR (NOT HELIUM AND NOT MVEI))
 target_sources(CMSISDSP PRIVATE ComplexMathFunctions/arm_cmplx_mag_q15.c)
-endif()
 
-if (NOT CONFIGTABLE OR ALLFAST OR ARM_CMPLX_MAG_FAST_Q15 OR (NOT HELIUM AND NOT MVEI))
 target_sources(CMSISDSP PRIVATE ComplexMathFunctions/arm_cmplx_mag_fast_q15.c)
-endif()
 
 target_sources(CMSISDSP PRIVATE ComplexMathFunctions/arm_cmplx_conj_f32.c)
 target_sources(CMSISDSP PRIVATE ComplexMathFunctions/arm_cmplx_conj_q15.c)

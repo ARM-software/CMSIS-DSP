@@ -130,8 +130,8 @@ AVHROOT = args.avh
 
 # Run AVH
 def runAVH(build,core):
-    axf="out/test/%s/Release/test.Release+%s.axf" % (build,build)
-    elf="out/test/%s/Release/test.Release+%s.elf" % (build,build)
+    axf="out/test/%s/Release/Release+%s.axf" % (build,build)
+    elf="out/test/%s/Release/Release+%s.elf" % (build,build)
     app = axf 
     if os.path.exists(axf):
         app = axf 
@@ -167,12 +167,25 @@ for t in tests:
 #("StatsTestsF32","../Output.pickle")
 #]
 
-allSuites=[("InterpolationTestsF32","../Output.pickle"),
-("InterpolationTestsQ31","../Output.pickle"),
-("InterpolationTestsQ15","../Output.pickle"),
-("InterpolationTestsQ7","../Output.pickle"),
-("InterpolationTestsF16","../Output_f16.pickle"),
-]
+#allSuites=[
+#("TransformCF64","../Output.pickle"),
+#("TransformCF32","../Output.pickle"),
+#("TransformCQ31","../Output.pickle"),
+#("TransformCQ15","../Output.pickle"),
+#
+#("TransformRF64","../Output.pickle"),
+#("TransformRF32","../Output.pickle"),
+#("TransformRQ31","../Output.pickle"),
+#("TransformRQ15","../Output.pickle"),
+#
+#("MFCCF32","../Output.pickle"),
+#("MFCCQ31","../Output.pickle"),
+#("MFCCQ15","../Output.pickle"),
+#
+#("MFCCF16","../Output_f16.pickle"),
+#("TransformCF16","../Output_f16.pickle"),
+#("TransformRF16","../Output_f16.pickle")
+#]
 
 #allSuites=[("StatsTestsQ7","../Output.pickle")]
 
@@ -210,13 +223,8 @@ solutions={
 #solutions={
 #    'testac6.csolution.yml':[
 #    #  ("VHT-Corstone-310","CS310"),
-#      ("VHT-Corstone-300","CS300")
-#    ],
-#    'testgcc.csolution.yml':[
-#      #("VHT-Corstone-310","CS310"),
-#      #("VHT_M55","M55"),
-#      ##("VHT_M33","M33_DSP_FP"),
-#      ("VHT_M7","M7DP"),
+#    #  ("VHT-Corstone-300","CS300"),
+#      ("VHT_M7_UNROLLED","M7DP"),
 #    ]
 #}
 

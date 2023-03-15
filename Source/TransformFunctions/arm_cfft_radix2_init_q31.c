@@ -30,11 +30,7 @@
 #include "arm_common_tables.h"
 
 /**
-  @ingroup groupTransforms
- */
-
-/**
-  @addtogroup ComplexFFT
+  @addtogroup ComplexFFTDeprecated
   @{
  */
 
@@ -74,10 +70,6 @@ arm_status arm_cfft_radix2_init_q31(
   /*  Initialise the default arm status */
   arm_status status = ARM_MATH_ARGUMENT_ERROR;
 
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FFT_ALLOW_TABLES)
-
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_TWIDDLECOEF_Q31_4096)
-
   /*  Initialise the default arm status */
   status = ARM_MATH_SUCCESS;
 
@@ -92,8 +84,6 @@ arm_status arm_cfft_radix2_init_q31(
 
   /*  Initialise the Flag for calculation Bit reversal or not */
   S->bitReverseFlag = bitReverseFlag;
-
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_BITREV_1024)
 
   /*  Initializations of Instance structure depending on the FFT length */
   switch (S->fftLen)
@@ -180,12 +170,9 @@ arm_status arm_cfft_radix2_init_q31(
     break;
   }
 
-#endif
-#endif 
-#endif
   return (status);
 }
 
 /**
-  @} end of ComplexFFT group
+  @} end of ComplexFFTDeprecated group
  */

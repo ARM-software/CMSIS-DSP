@@ -29,12 +29,13 @@
 #include "dsp/transform_functions.h"
 
 /**
-  @addtogroup DCT4_IDCT4
+  @addtogroup DCT4Q31
   @{
  */
 
 /**
   @brief         Processing function for the Q31 DCT4/IDCT4.
+  @deprecated    Do not use this function. It will be removed in future versions.
   @param[in]     S             points to an instance of the Q31 DCT4 structure.
   @param[in]     pState        points to state buffer.
   @param[in,out] pInlineBuffer points to the in-place input and output buffer.
@@ -384,5 +385,5 @@ void arm_dct4_q31(
 }
 
 /**
-  @} end of DCT4_IDCT4 group
+  @} end of DCT4Q31 group
  */

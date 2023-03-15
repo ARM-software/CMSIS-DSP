@@ -1,0 +1,65 @@
+solution:
+  compiler: GCC@12.2.0
+  misc:
+    - C:
+      - -DSEMIHOSTING 
+      - -ffunction-sections 
+      - -mfp16-format=ieee 
+      - -fdata-sections 
+      - -std=c11 
+      - -Ofast 
+      - -ffast-math  
+      - -flax-vector-conversions
+      - -DDISABLEFLOAT16
+    - CPP:
+      - -fno-rtti 
+      - -ffunction-sections 
+      - -mfp16-format=ieee 
+      - -fdata-sections  
+      - -std=c++11 
+      - -Ofast 
+      - -ffast-math  
+      - -flax-vector-conversions 
+      - -Wno-unused-parameter
+      - -DDISABLEFLOAT16
+    - ASM:
+      - -masm=auto
+    - Link:
+      - --specs=nano.specs
+      - --specs=rdimon.specs
+      - --entry=Reset_Handler 
+      - -Wl,--gc-sections
+
+  packs:
+    - pack: ARM::CMSIS-DSP@1.14.4
+    - pack: ARM::CMSIS@5.9.0
+    - pack: ARM::V2M_MPS3_SSE_300_BSP@1.3.0
+    - pack: ARM::V2M_MPS3_SSE_310_BSP@1.1.0
+    - pack: Keil::ARM_Compiler@1.7.2
+
+  target-types:
+    
+    - type: VHT_M7
+      device: ARMCM7_DP
+
+    - type: VHT_M0P
+      device: ARMCM0P
+
+  build-types:
+    - type: Release
+      debug: on
+
+  projects:
+    - project: ./bayes.cproject.yml
+    - project: ./classmarks.cproject.yml
+    - project: ./convolution.cproject.yml
+    - project: ./dotproduct.cproject.yml
+    - project: ./fftbin.cproject.yml
+    - project: ./fir.cproject.yml
+    - project: ./graphicequalizer.cproject.yml
+    - project: ./linearinterp.cproject.yml
+    - project: ./matrix.cproject.yml
+    - project: ./signalconverge.cproject.yml
+    - project: ./sincos.cproject.yml
+    - project: ./svm.cproject.yml
+    - project: ./variance.cproject.yml

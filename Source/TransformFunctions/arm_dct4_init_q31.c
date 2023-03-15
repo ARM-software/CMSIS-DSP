@@ -30,16 +30,21 @@
 #include "arm_common_tables.h"
 
 /**
-  @ingroup groupTransforms
+ * @defgroup DCT4Q31 DCT4 Q31
+ */
+
+/**
+  @ingroup DCT4_IDCT4
  */
 
  /**
-  @addtogroup DCT4_IDCT4
+  @addtogroup DCT4Q31
   @{
  */
 
 /**
   @brief  Initialization function for the Q31 DCT4/IDCT4.
+  @deprecated    Do not use this function. It will be removed in future versions.
   @param[in,out] S          points to an instance of Q31 DCT4/IDCT4 structure.
   @param[in]     S_RFFT     points to an instance of Q31 RFFT/RIFFT structure
   @param[in]     S_CFFT     points to an instance of Q31 CFFT/CIFFT structure
@@ -90,34 +95,26 @@ arm_status arm_dct4_init_q31(
 
   switch (N)
   {
-  #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_DCT4_Q31_8192)
     /* Initialize the table modifier values */
   case 8192U:
     S->pTwiddle = WeightsQ31_8192;
     S->pCosFactor = cos_factorsQ31_8192;
     break;
-  #endif
 
-  #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_DCT4_Q31_2048)
   case 2048U:
     S->pTwiddle = WeightsQ31_2048;
     S->pCosFactor = cos_factorsQ31_2048;
     break;
-  #endif 
 
-  #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_DCT4_Q31_512)
   case 512U:
     S->pTwiddle = WeightsQ31_512;
     S->pCosFactor = cos_factorsQ31_512;
     break;
-  #endif 
 
-  #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_DCT4_Q31_128)
   case 128U:
     S->pTwiddle = WeightsQ31_128;
     S->pCosFactor = cos_factorsQ31_128;
     break;
-  #endif
   default:
     status = ARM_MATH_ARGUMENT_ERROR;
   }
@@ -130,5 +127,5 @@ arm_status arm_dct4_init_q31(
 }
 
 /**
-  @} end of DCT4_IDCT4 group
+  @} end of DCT4Q31 group
  */

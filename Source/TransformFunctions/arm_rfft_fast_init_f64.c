@@ -30,15 +30,14 @@
 #include "arm_common_tables.h"
 
 /**
-  @ingroup groupTransforms
+  @ingroup RealFFT
  */
 
 /**
-  @addtogroup RealFFT
+  @addtogroup RealFFTF64
   @{
  */
 
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F64_16) && defined(ARM_TABLE_BITREVIDX_FLT64_16) && defined(ARM_TABLE_TWIDDLECOEF_F64_16) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F64_32))
 
 /**
   @brief         Initialization function for the 32pt double precision floating-point real FFT.
@@ -48,7 +47,7 @@
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
-static arm_status arm_rfft_32_fast_init_f64( arm_rfft_fast_instance_f64 * S ) {
+arm_status arm_rfft_fast_init_32_f64( arm_rfft_fast_instance_f64 * S ) {
 
   arm_cfft_instance_f64 * Sint;
 
@@ -65,9 +64,7 @@ static arm_status arm_rfft_32_fast_init_f64( arm_rfft_fast_instance_f64 * S ) {
 
   return ARM_MATH_SUCCESS;
 }
-#endif
 
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F64_32) && defined(ARM_TABLE_BITREVIDX_FLT64_32) && defined(ARM_TABLE_TWIDDLECOEF_F64_32) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F64_64))
 
 /**
   @brief         Initialization function for the 64pt Double Precision floating-point real FFT.
@@ -77,7 +74,7 @@ static arm_status arm_rfft_32_fast_init_f64( arm_rfft_fast_instance_f64 * S ) {
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
-static arm_status arm_rfft_64_fast_init_f64( arm_rfft_fast_instance_f64 * S ) {
+arm_status arm_rfft_fast_init_64_f64( arm_rfft_fast_instance_f64 * S ) {
 
   arm_cfft_instance_f64 * Sint;
 
@@ -94,9 +91,7 @@ static arm_status arm_rfft_64_fast_init_f64( arm_rfft_fast_instance_f64 * S ) {
 
   return ARM_MATH_SUCCESS;
 }
-#endif
 
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F64_64) && defined(ARM_TABLE_BITREVIDX_FLT64_64) && defined(ARM_TABLE_TWIDDLECOEF_F64_64) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F64_128))
 
 /**
   @brief         Initialization function for the 128pt Double Precision floating-point real FFT.
@@ -106,7 +101,7 @@ static arm_status arm_rfft_64_fast_init_f64( arm_rfft_fast_instance_f64 * S ) {
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
-static arm_status arm_rfft_128_fast_init_f64( arm_rfft_fast_instance_f64 * S ) {
+arm_status arm_rfft_fast_init_128_f64( arm_rfft_fast_instance_f64 * S ) {
 
   arm_cfft_instance_f64 * Sint;
 
@@ -123,9 +118,7 @@ static arm_status arm_rfft_128_fast_init_f64( arm_rfft_fast_instance_f64 * S ) {
 
   return ARM_MATH_SUCCESS;
 }
-#endif
 
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F64_128) && defined(ARM_TABLE_BITREVIDX_FLT64_128) && defined(ARM_TABLE_TWIDDLECOEF_F64_128) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F64_256))
 
 /**
   @brief         Initialization function for the 256pt Double Precision floating-point real FFT.
@@ -135,7 +128,7 @@ static arm_status arm_rfft_128_fast_init_f64( arm_rfft_fast_instance_f64 * S ) {
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
 */
 
-static arm_status arm_rfft_256_fast_init_f64( arm_rfft_fast_instance_f64 * S ) {
+arm_status arm_rfft_fast_init_256_f64( arm_rfft_fast_instance_f64 * S ) {
 
   arm_cfft_instance_f64 * Sint;
 
@@ -152,9 +145,7 @@ static arm_status arm_rfft_256_fast_init_f64( arm_rfft_fast_instance_f64 * S ) {
 
   return ARM_MATH_SUCCESS;
 }
-#endif
 
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F64_256) && defined(ARM_TABLE_BITREVIDX_FLT64_256) && defined(ARM_TABLE_TWIDDLECOEF_F64_256) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F64_512))
 
 /**
   @brief         Initialization function for the 512pt Double Precision floating-point real FFT.
@@ -164,7 +155,7 @@ static arm_status arm_rfft_256_fast_init_f64( arm_rfft_fast_instance_f64 * S ) {
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
-static arm_status arm_rfft_512_fast_init_f64( arm_rfft_fast_instance_f64 * S ) {
+arm_status arm_rfft_fast_init_512_f64( arm_rfft_fast_instance_f64 * S ) {
 
   arm_cfft_instance_f64 * Sint;
 
@@ -181,9 +172,7 @@ static arm_status arm_rfft_512_fast_init_f64( arm_rfft_fast_instance_f64 * S ) {
 
   return ARM_MATH_SUCCESS;
 }
-#endif
 
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F64_512) && defined(ARM_TABLE_BITREVIDX_FLT64_512) && defined(ARM_TABLE_TWIDDLECOEF_F64_512) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F64_1024))
 /**
   @brief         Initialization function for the 1024pt Double Precision floating-point real FFT.
   @param[in,out] S  points to an arm_rfft_fast_instance_f64 structure
@@ -192,7 +181,7 @@ static arm_status arm_rfft_512_fast_init_f64( arm_rfft_fast_instance_f64 * S ) {
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
-static arm_status arm_rfft_1024_fast_init_f64( arm_rfft_fast_instance_f64 * S ) {
+arm_status arm_rfft_fast_init_1024_f64( arm_rfft_fast_instance_f64 * S ) {
 
   arm_cfft_instance_f64 * Sint;
 
@@ -209,9 +198,7 @@ static arm_status arm_rfft_1024_fast_init_f64( arm_rfft_fast_instance_f64 * S ) 
 
   return ARM_MATH_SUCCESS;
 }
-#endif
 
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F64_1024) && defined(ARM_TABLE_BITREVIDX_FLT64_1024) && defined(ARM_TABLE_TWIDDLECOEF_F64_1024) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F64_2048))
 /**
   @brief         Initialization function for the 2048pt Double Precision floating-point real FFT.
   @param[in,out] S  points to an arm_rfft_fast_instance_f64 structure
@@ -219,7 +206,7 @@ static arm_status arm_rfft_1024_fast_init_f64( arm_rfft_fast_instance_f64 * S ) 
                    - \ref ARM_MATH_SUCCESS        : Operation successful
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
-static arm_status arm_rfft_2048_fast_init_f64( arm_rfft_fast_instance_f64 * S ) {
+arm_status arm_rfft_fast_init_2048_f64( arm_rfft_fast_instance_f64 * S ) {
 
   arm_cfft_instance_f64 * Sint;
 
@@ -236,9 +223,7 @@ static arm_status arm_rfft_2048_fast_init_f64( arm_rfft_fast_instance_f64 * S ) 
 
   return ARM_MATH_SUCCESS;
 }
-#endif
 
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F64_2048) && defined(ARM_TABLE_BITREVIDX_FLT64_2048) && defined(ARM_TABLE_TWIDDLECOEF_F64_2048) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F64_4096))
 /**
 * @brief         Initialization function for the 4096pt Double Precision floating-point real FFT.
 * @param[in,out] S  points to an arm_rfft_fast_instance_f64 structure
@@ -247,7 +232,7 @@ static arm_status arm_rfft_2048_fast_init_f64( arm_rfft_fast_instance_f64 * S ) 
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
-static arm_status arm_rfft_4096_fast_init_f64( arm_rfft_fast_instance_f64 * S ) {
+arm_status arm_rfft_fast_init_4096_f64( arm_rfft_fast_instance_f64 * S ) {
 
   arm_cfft_instance_f64 * Sint;
 
@@ -264,10 +249,9 @@ static arm_status arm_rfft_4096_fast_init_f64( arm_rfft_fast_instance_f64 * S ) 
 
   return ARM_MATH_SUCCESS;
 }
-#endif
 
 /**
-  @brief         Initialization function for the Double Precision floating-point real FFT.
+  @brief         Generic initialization function for the Double Precision floating-point real FFT.
   @param[in,out] S       points to an arm_rfft_fast_instance_f64 structure
   @param[in]     fftLen  length of the Real Sequence
   @return        execution status
@@ -279,66 +263,62 @@ static arm_status arm_rfft_4096_fast_init_f64( arm_rfft_fast_instance_f64 * S ) 
                    Supported FFT Lengths are 32, 64, 128, 256, 512, 1024, 2048, 4096.
   @par
                    This Function also initializes Twiddle factor table pointer and Bit reversal table pointer.
+ 
+  @par          
+                This function should be used only if you don't know the FFT sizes that 
+                you'll need at build time. The use of this function will prevent the 
+                linker from removing the FFT tables that are not needed and the library 
+                code size will be bigger than needed.
+
+  @par          
+                If you use CMSIS-DSP as a library, and if you know the FFT sizes 
+                that you need at build time, then it is better to use the initialization
+                functions defined for each FFT size.
+
  */
 
 arm_status arm_rfft_fast_init_f64(
   arm_rfft_fast_instance_f64 * S,
   uint16_t fftLen)
 {
-  typedef arm_status(*fft_init_ptr)( arm_rfft_fast_instance_f64 *);
-  fft_init_ptr fptr = 0x0;
+  arm_status status;
+
 
   switch (fftLen)
   {
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F64_2048) && defined(ARM_TABLE_BITREVIDX_FLT64_2048) && defined(ARM_TABLE_TWIDDLECOEF_F64_2048) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F64_4096))
   case 4096U:
-    fptr = arm_rfft_4096_fast_init_f64;
+    status = arm_rfft_fast_init_4096_f64(S);
     break;
-#endif
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F64_1024) && defined(ARM_TABLE_BITREVIDX_FLT64_1024) && defined(ARM_TABLE_TWIDDLECOEF_F64_1024) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F64_2048))
   case 2048U:
-    fptr = arm_rfft_2048_fast_init_f64;
+    status = arm_rfft_fast_init_2048_f64(S);
     break;
-#endif
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F64_512) && defined(ARM_TABLE_BITREVIDX_FLT64_512) && defined(ARM_TABLE_TWIDDLECOEF_F64_512) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F64_1024))
   case 1024U:
-    fptr = arm_rfft_1024_fast_init_f64;
+    status = arm_rfft_fast_init_1024_f64(S);
     break;
-#endif
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F64_256) && defined(ARM_TABLE_BITREVIDX_FLT64_256) && defined(ARM_TABLE_TWIDDLECOEF_F64_256) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F64_512))
   case 512U:
-    fptr = arm_rfft_512_fast_init_f64;
+    status = arm_rfft_fast_init_512_f64(S);
     break;
-#endif
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F64_128) && defined(ARM_TABLE_BITREVIDX_FLT64_128) && defined(ARM_TABLE_TWIDDLECOEF_F64_128) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F64_256))
   case 256U:
-    fptr = arm_rfft_256_fast_init_f64;
+    status = arm_rfft_fast_init_256_f64(S);
     break;
-#endif
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F64_64) && defined(ARM_TABLE_BITREVIDX_FLT64_64) && defined(ARM_TABLE_TWIDDLECOEF_F64_64) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F64_128))
   case 128U:
-    fptr = arm_rfft_128_fast_init_f64;
+    status = arm_rfft_fast_init_128_f64(S);
     break;
-#endif
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F64_32) && defined(ARM_TABLE_BITREVIDX_FLT64_32) && defined(ARM_TABLE_TWIDDLECOEF_F64_32) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F64_64))
   case 64U:
-    fptr = arm_rfft_64_fast_init_f64;
+    status = arm_rfft_fast_init_64_f64(S);
     break;
-#endif
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F64_16) && defined(ARM_TABLE_BITREVIDX_FLT64_16) && defined(ARM_TABLE_TWIDDLECOEF_F64_16) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F64_32))
   case 32U:
-    fptr = arm_rfft_32_fast_init_f64;
+    status = arm_rfft_fast_init_32_f64(S);
     break;
-#endif
   default:
+    return(ARM_MATH_ARGUMENT_ERROR);
     break;
   }
 
-  if( ! fptr ) return ARM_MATH_ARGUMENT_ERROR;
-  return fptr( S );
+  return(status);
 
 }
 
 /**
-  @} end of RealFFT group
+  @} end of RealFFTF64 group
  */

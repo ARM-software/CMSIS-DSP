@@ -46,12 +46,9 @@ void arm_bitreversal_q31(
         uint16_t bitRevFactor,
   const uint16_t * pBitRevTab);
 
-/**
-  @ingroup groupTransforms
- */
 
 /**
-  @addtogroup ComplexFFT
+  @addtogroup ComplexFFTDeprecated
   @{
  */
 
@@ -83,7 +80,7 @@ void arm_cfft_radix2_q31(
 }
 
 /**
-  @} end of ComplexFFT group
+  @} end of ComplexFFTDeprecated group
  */
 
 void arm_radix2_butterfly_q31(

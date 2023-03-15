@@ -4,12 +4,6 @@ if (HOST)
       target_compile_definitions(${project} PUBLIC __GNUC_PYTHON__)
 endif()
 
-if (CONFIGTABLE)
-    # Public because initialization for FFT may be defined in client code 
-    # and needs access to the table.
-    target_compile_definitions(${project} PUBLIC ARM_DSP_CONFIG_TABLES)
-endif()
-
 if (LOOPUNROLL)
   target_compile_definitions(${project} PRIVATE ARM_MATH_LOOPUNROLL)
 endif()
@@ -43,9 +37,7 @@ if (MVEFLOAT16)
     target_compile_definitions(${project} PRIVATE ARM_MATH_MVE_FLOAT16) 
 endif()
 
-if (HELIUM OR MVEF OR SUPPORT)
-   target_include_directories(${project} PRIVATE "${DSP}/PrivateInclude")
-endif()
+target_include_directories(${project} PRIVATE "${DSP}/PrivateInclude")
 
 if (MVEI OR MVEF OR HELIUM)
     # By default, GCC does not enable implicit conversion between vectors of different numbers or types of elements
