@@ -1,3 +1,6 @@
 out/
 results*.txt
 *.html
+*.cbuild.yml
+*.cbuild-idx.yml
+
