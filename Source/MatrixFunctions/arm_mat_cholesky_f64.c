@@ -192,12 +192,12 @@ arm_status arm_mat_cholesky_f64(
                 pG[j * n + i] -= sum;
             }
             
-            if (pG[i * n + i] <= 0.0L)
+            if (pG[i * n + i] <= 0.0)
             {
                 return(ARM_MATH_DECOMPOSITION_FAILURE);
             }
             
-            invSqrtVj = 1.0L/sqrt(pG[i * n + i]);
+            invSqrtVj = 1.0/sqrt(pG[i * n + i]);
             SCALE_COL_F64(pDst,i,invSqrtVj,i);
         }
         
@@ -254,12 +254,12 @@ arm_status arm_mat_cholesky_f64(
                 }
             }
             
-            if (pG[i * n + i] <= 0.0L)
+            if (pG[i * n + i] <= 0.0)
             {
                 return(ARM_MATH_DECOMPOSITION_FAILURE);
             }
             
-            invSqrtVj = 1.0L/sqrt(pG[i * n + i]);
+            invSqrtVj = 1.0/sqrt(pG[i * n + i]);
             SCALE_COL_F64(pDst,i,invSqrtVj,i);
             
         }

@@ -108,7 +108,7 @@ arm_status arm_mat_solve_lower_triangular_f64(
                     vecA = vfmsq_f64(vecA,vdupq_n_f64(pLT[n*i + k]),vecX);
                 }
                 
-                if (pLT[n*i + i]==0.0L)
+                if (pLT[n*i + i]==0.0)
                 {
                     return(ARM_MATH_SINGULAR);
                 }
@@ -131,7 +131,7 @@ arm_status arm_mat_solve_lower_triangular_f64(
                     tmp -= lt_row[k] * pX[cols*k+j];
                 }
                 
-                if (lt_row[i]==0.0L)
+                if (lt_row[i]==0.0)
                 {
                     return(ARM_MATH_SINGULAR);
                 }
@@ -206,7 +206,7 @@ arm_status arm_mat_solve_lower_triangular_f64(
                     tmp -= lt_row[k] * pX[cols*k+j];
                 }
                 
-                if (lt_row[i]==0.0L)
+                if (lt_row[i]==0.0)
                 {
                     return(ARM_MATH_SINGULAR);
                 }

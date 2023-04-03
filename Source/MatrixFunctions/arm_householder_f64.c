@@ -93,12 +93,12 @@ float64_t arm_householder_f64(
     beta =  alpha * alpha + x1norm2;
     beta=sqrt(beta);
 
-    if (alpha > 0.0L)
+    if (alpha > 0.0)
     {
       beta = -beta;
     }
 
-    r = 1.0L / (alpha -beta);
+    r = 1.0 / (alpha -beta);
     arm_scale_f64(pOut,r,pOut,blockSize);
     pOut[0] = 1.0;
 
