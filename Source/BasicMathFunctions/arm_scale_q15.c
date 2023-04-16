@@ -64,7 +64,7 @@ void arm_scale_q15(
 {
     uint32_t  blkCnt;           /* loop counters */
     q15x8_t vecSrc;
-    q15x8_t vecDst;
+    q15x8_t vecDst = { 0 };
     q31x4_t low, high;
 
     /* Compute 8 outputs at a time */

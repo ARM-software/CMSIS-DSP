@@ -64,7 +64,7 @@ void arm_scale_q7(
 {
     uint32_t  blkCnt;           /* loop counters */
     q7x16_t vecSrc;
-    q7x16_t vecDst;
+    q7x16_t vecDst = { 0 };
     q15x8_t low, high;
 
 

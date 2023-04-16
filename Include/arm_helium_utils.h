@@ -112,7 +112,7 @@ __STATIC_FORCEINLINE float16x8_t __mve_cmplx_sum_intra_vec_f16(
     float16x8_t   vecIn)
 {
     float16x8_t   vecTmp, vecOut;
-    uint32_t    tmp;
+    uint32_t    tmp = 0;
 
     vecTmp = (float16x8_t) vrev64q_s32((int32x4_t) vecIn);
     // TO TRACK : using canonical addition leads to unefficient code generation for f16
