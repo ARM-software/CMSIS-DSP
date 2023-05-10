@@ -1,41 +1,39 @@
-# Include definitions from the Python package to
-# define datatype for the IOs and to have access to the
-# Graph class
+# Include definitions from the Python package to define data types for the IOs 
+# and to access to the classes for the Graph Graph.
 from cmsisdsp.cg.scheduler import *
-# Include definition of the nodes
+
+# Include definition of the processing nodes defined in 'nodes.py'.
 from nodes import * 
 
-# Define the datatype we are using for all the IOs in this
-# example
+# Define data type 'float' used for all IOs in this example
 floatType=CType(F32)
 
-# Instantiate a Source node with a float datatype and
-# working with packet of 5 samples (each execution of the
-# source in the C code will generate 5 samples)
-# "source" is the name of the C variable that will identify
-# this node
+# Instantiate a Source processing node that creates a packet of 5 samples.
+# Each execution of the C function "source" generates 5 samples.
 src=Source("source",floatType,5)
-# Instantiate a Processing node using a float data type for
-# both the input and output. The number of samples consumed
-# on the input and produced on the output is 7 each time
-# the node is executed in the C code
-# "processing" is the name of the C variable that will identify
-# this node
+
+# Instantiate a binary operation processing node with 2 inputs and 1 output.
+# Each execution of the C function "arm_offset_f32" consumes and produces 7 samples. 
 processing=Binary("arm_offset_f32",floatType,7)
+
+# Instantiate a processing node that produces a constant value which is defined
+# with the C identifier "OFFSET_VALUE".
 offsetValue=Constant("OFFSET_VALUE")
-# Instantiate a Sink node with a float datatype and consuming
-# 5 samples each time the node is executed in the C code
-# "sink" is the name of the C variable that will identify
-# this node
+
+# Instantiate a Sink processing node that consumes a packet of 5 samples.
+# Each execution of the C function "sink" gets 5 samples as input.
 sink=Sink("sink",floatType,5)
 
-# Create a Graph object
+# Create a Compute Graph object.
 the_graph = Graph()
 
-# Connect the source to the processing node
+# Connect the source output to the input ia of the processing node.
 the_graph.connect(src.o,processing.ia)
+
+# Connect the constant offsetValues to the input ib of the processing node.
 the_graph.connect(offsetValue,processing.ib)
-# Connect the processing node to the sink
+
+# Connect the ouput of the processing node to the input of the sink.
 the_graph.connect(processing.o,sink.i)
 
 
