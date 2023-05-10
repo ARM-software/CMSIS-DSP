@@ -2,7 +2,7 @@
 # and to access to the classes for the Graph Graph.
 from cmsisdsp.cg.scheduler import *
 
-# Include definition of the nodes defined in 'nodes.py'.
+# Include definition of the processing nodes defined in 'nodes.py'.
 from nodes import * 
 
 # Define data type 'float' used for all IOs in this example
