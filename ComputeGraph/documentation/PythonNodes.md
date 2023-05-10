@@ -1,5 +1,9 @@
 # Python Nodes and classes
 
+Python implementation of the nodes to be run from a Python scheduler.
+
+You don't need this if you're only working with C++ schedulers.
+
 (DOCUMENTATION TO BE WRITTEN)
 
 ## Mandatory classes

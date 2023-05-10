@@ -4,7 +4,7 @@
 
 Those classes are defined in `GenericNodes.h` a header that is always included by the scheduler.
 
-As consequence, the definition for those classes is always included : that's the meaning of mandatory.
+As consequence, the definition for those classes is always included.
 
 ### FIFO
 
@@ -82,7 +82,7 @@ template<typename T, int length>
 class FIFO<T,length,0,1>: public FIFOBase<T> 
 ```
 
-This implementation is a bit more heavy and is providing implementations of following function that is doing something useful :
+This implementation is a bit more heavy and is providing implementations of following function :
 
 ```C++
 bool willUnderflowWith(int nb) const;
@@ -92,7 +92,7 @@ int nbSamplesInFIFO() const;
 
 ### Nodes
 
-Nodes are inheriting from the virtual class:
+All nodes are inheriting from the virtual class `NodeBase`:
 
 ```C++
 class NodeBase
@@ -269,7 +269,7 @@ class InterleavedStereoToMono;
 
 For specialization `q15_t` and `q31_t`, the inputs are divided by 2 before being added to avoid any overflow.
 
-For specialization `float32_t` : The output is multiplied by `0.5f` for consistency for the fixed point version.
+For specialization `float32_t` : The output is multiplied by `0.5f` for consistency with the fixed point version.
 
 ### MFCC
 
@@ -317,7 +317,7 @@ The implementation is generic but will only build for a type `IN` having an addi
 
 This node is using a little memory (C++ vector) of size `overlap` that is allocated during creation of the node.
 
-This node will overlap input data by `overlap` samples and add the common overlapping samples.
+This node will overlap input data by `overlap` samples and sum the common overlapping samples.
 
 ### SlidingBuffer
 
@@ -443,9 +443,9 @@ template<typename OUT,int outputSize> class FileSource;
 
 There is only one specialization for the `float32_t` type.
 
-It is reading text file with one float per file and generating a stream of float.
+It is reading text file with one float per line and generating a stream of float.
 
-At the end of file, 0s are generated on the output indefinitely.
+At the end of file, 0.0f  are generated on the output indefinitely.
 
 The constructor has an additional argument : the name/path of the input file:
 

@@ -12,11 +12,11 @@
 
 3. ### [Examples](examples/README.md)
 
-4. ### [Python API](documentation/PythonAPI.md)
+4. ### [Python API for creating graphs and schedulers](documentation/PythonAPI.md)
 
-5. ### [C++ Default nodes](documentation/CPPNodes.md)
+5. ### [C++ default nodes for C++ schedulers](documentation/CPPNodes.md)
 
-6. ### [Python default nodes](documentation/PythonNodes.md)
+6. ### [Python default nodes for Python schedulers](documentation/PythonNodes.md)
 
 7. ### [Memory optimizations](documentation/Memory.md)
 

@@ -1,4 +1,4 @@
-# API of the Graph Class
+# Adding nodes to the graph
 
 ## Creating a connection
 
@@ -13,13 +13,14 @@ Typically this method is used as:
 ```python
 the_graph = Graph()
 
-# Connect the source output to the processing node input
+# Connect the source output to the processing node input and add this directed
+# edge to the object the_graph
 the_graph.connect(src.o,processing.i)
 ```
 
-There are two optional arguments:
+There are two optional arguments for the `connect` function:
 
-* `fifoClass` : To use a different C++ class for implementing the connection between the two IOs. (it is also possible to change the FIFO class globally by setting an option on the graph. See below). Only the `FIFO` class is provided by default. Any new implementation must inherit from `FIFObase<T>`
+* `fifoClass` : To use a different C++ class for implementing the connection between the two IOs. (it is also possible to change the FIFO class globally by setting an option on the graph. See below). The `FIFO` class is provided by default. Any new implementation must inherit from `FIFObase<T>`
 * `fifoScale` : In asynchronous mode, it is a scaling factor to increase the length of the FIFO compared to what has been computed by the synchronous approximation. This setting can also be set globally using the scheduler options. `fifoScale` is overriding the global setting. It must be a `float` (not an `int`).
 
 ```python
@@ -54,4 +55,8 @@ Class used for FIFO by default. Can also be customized for each connection (`con
 ### duplicateNodeClassName(default="Duplicate")
 
 Prefix used to generate the duplicate node classes like `Duplicate2`, `Duplicate3` ...
+
+Those nodes are inserted automatically to implement one-to-many connections.
+
+If you need to connect an output to more than 3 nodes, you'll have to create the `Duplicate` nodes.
 

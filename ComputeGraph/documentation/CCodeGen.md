@@ -1,4 +1,4 @@
-# C Code generation
+# C++ Code generation
 
 ## API
 
@@ -21,10 +21,16 @@ Optional arguments to pass to the C API of the scheduler function
 
 It can either use a `string` or a list of `string` where an element is an argument of the function (and should be valid `C`).
 
-For instance:
+For instance, with:
 
 ```Python
 conf.cOptionalArgs=["int someVariable"]
+```
+
+The API of the generated scheduler function would be:
+
+```C++
+uint32_t scheduler(int *error,int someVariable)
 ```
 
 ### codeArray (default = True)
