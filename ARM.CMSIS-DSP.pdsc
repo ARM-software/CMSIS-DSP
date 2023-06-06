@@ -105,15 +105,6 @@
       </files>
     </component>
 
-    <component Cclass="CMSIS" Cgroup="DSP" Csub="Compute Graph" Cversion="0.0.0" isDefaultVariant="true" condition="CMSISDSPLIB">
-      <description>CMSIS-DSP Compute Graph</description>
-      <files>
-          <file category="header" name="ComputeGraph/cg/src/GenericNodes.h"/>
-          <file category="include"  name="ComputeGraph/cg/nodes/cpp/"/>
-          <file category="include"  name="ComputeGraph/cg/src/"/>
-          <file category="other"  name="ComputeGraph/cg.scvd" />
-      </files>
-    </component>
   </components>
 
   <examples>
