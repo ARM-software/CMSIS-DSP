@@ -20,6 +20,9 @@ This repository contains the CMSIS-DSP library and several other projects:
 
 You don't need any of the other projects to build and use CMSIS-DSP library. Building the other projects may require installation of other libraries (CMSIS), other tools (Arm Virtual Hardware) or CMSIS build tools.
 
+### License Terms
+
+CMSIS-DSP is licensed under [Apache License 2.0](LICENSE).
 
 ### CMSIS-DSP Kernels
 
