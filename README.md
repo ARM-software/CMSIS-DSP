@@ -294,7 +294,7 @@ Other folders are part of different projects, tests or examples.
 Some files are needed to generate the PythonWrapper:
 
 * PythonWrapper_README.md
-* LICENSE.txt
+* LICENSE
 * MANIFEST.in
 * pyproject.toml
 * setup.py

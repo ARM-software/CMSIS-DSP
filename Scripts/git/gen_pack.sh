@@ -109,21 +109,7 @@ PACK_DIRS="
 
 # Specify file names to be added to pack base directory
 PACK_BASE_FILES="
-  LICENSE.txt
-  ComputeGraph/cg/src/GenericNodes.h
-  ComputeGraph/cg/src/cg_status.h
-  ComputeGraph/cg/nodes/cpp/CFFT.h
-  ComputeGraph/cg/nodes/cpp/ICFFT.h
-  ComputeGraph/cg/nodes/cpp/InterleavedStereoToMono.h
-  ComputeGraph/cg/nodes/cpp/MFCC.h
-  ComputeGraph/cg/nodes/cpp/NullSink.h
-  ComputeGraph/cg/nodes/cpp/OverlapAndAdd.h
-  ComputeGraph/cg/nodes/cpp/SlidingBuffer.h
-  ComputeGraph/cg/nodes/cpp/ToComplex.h
-  ComputeGraph/cg/nodes/cpp/ToReal.h
-  ComputeGraph/cg/nodes/cpp/Unzip.h
-  ComputeGraph/cg/nodes/cpp/Zip.h
-  ComputeGraph/cg.scvd
+  LICENSE
 "
 
 # Specify file names to be deleted from pack build directory

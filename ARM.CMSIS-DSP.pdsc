@@ -4,7 +4,7 @@
   <name>CMSIS-DSP</name>
   <description>CMSIS Embedded Compute Library</description>
   <vendor>ARM</vendor>
-  <license>LICENSE.txt</license>
+  <license>LICENSE</license>
   <url>https://www.keil.com/pack/</url>
 
   <releases>
