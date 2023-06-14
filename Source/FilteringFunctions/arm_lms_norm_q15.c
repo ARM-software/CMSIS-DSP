@@ -116,6 +116,7 @@ void arm_lms_norm_q15(
     /* Update the energy calculation */
     energy -= (((q31_t) x0 * (x0)) >> 15);
     energy += (((q31_t) in * (in)) >> 15);
+    energy = (q15_t) __SSAT(energy, 16);
 
     /* Set the accumulator to zero */
     acc = 0;

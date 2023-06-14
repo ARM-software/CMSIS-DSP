@@ -115,8 +115,9 @@ void arm_lms_norm_q31(
 
     /* Update the energy calculation */
     energy = (q31_t) ((((q63_t) energy << 32) - (((q63_t) x0 * x0) << 1)) >> 32);
-    energy = (q31_t) (((((q63_t) in * in) << 1) + (energy << 32)) >> 32);
-
+    energy = ((((q63_t) in * in) << 1) + (energy << 32)) >> 32;
+    energy = clip_q63_to_q31(energy);
+    
     /* Set the accumulator to zero */
     acc = 0;
 
