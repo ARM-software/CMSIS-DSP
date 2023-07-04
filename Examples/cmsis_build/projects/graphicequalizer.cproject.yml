@@ -1,0 +1,15 @@
+project:
+  groups:
+    - group: App
+      files:
+        - file: ../../ARM/arm_graphic_equalizer_example/arm_graphic_equalizer_example_q31.c
+        - file: ../../ARM/arm_graphic_equalizer_example/arm_graphic_equalizer_data.c
+        - file: ../../ARM/arm_graphic_equalizer_example/math_helper.c
+  add-path:
+    - ../../ARM/arm_graphic_equalizer_example
+
+       
+
+  layers:
+    - layer: ../vht.clayer.yml
+    - layer: ../../../Testing/cmsis_build/dsp.clayer.yml

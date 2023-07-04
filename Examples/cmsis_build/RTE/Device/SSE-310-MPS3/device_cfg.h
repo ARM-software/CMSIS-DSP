@@ -143,6 +143,11 @@
 #define DMA350_DMA0_S
 #define DMA350_DMA0_DEV             DMA350_DMA0_DEV_S
 
+#define DMA350_CH0_S
+#define DMA350_DMA0_CH0_S
+#define DMA350_CH1_S
+#define DMA350_DMA0_CH1_S
+
 /* ARM SPI PL022 */
 /* Invalid device stubs are not defined */
 #define DEFAULT_SPI_SPEED_HZ  4000000U /* 4MHz */

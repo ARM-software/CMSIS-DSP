@@ -1,0 +1,10 @@
+project:
+  groups:
+    - group: App
+      files:
+        - file: ../../ARM/arm_svm_example/arm_svm_example_f32.c
+  
+  layers:
+    - layer: ../vht.clayer.yml
+    - layer: ../../../Testing/cmsis_build/dsp.clayer.yml
+

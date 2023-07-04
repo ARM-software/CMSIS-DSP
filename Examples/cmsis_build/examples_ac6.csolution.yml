@@ -1,0 +1,83 @@
+solution:
+  compiler: AC6
+  misc:
+    - C:
+      - -DSEMIHOSTING 
+      - -Wsign-compare 
+      - -Wdouble-promotion 
+      - -DNDEBUG 
+      - -Wall 
+      - -Wextra  
+      - -Werror
+      - -std=c11 
+      - -Ofast 
+      - -ffast-math
+      - -Wno-packed 
+      - -Wno-missing-variable-declarations 
+      - -Wno-missing-prototypes 
+      - -Wno-missing-noreturn 
+      - -Wno-sign-conversion 
+      - -Wno-nonportable-include-path 
+      - -Wno-reserved-id-macro 
+      - -Wno-unused-macros 
+      - -Wno-documentation-unknown-command 
+      - -Wno-documentation 
+      - -Wno-license-management 
+      - -Wno-parentheses-equality 
+      - -Wno-reserved-identifier
+    - CPP:
+      - -fno-rtti 
+      - -DNDEBUG 
+      - -Wall 
+      - -Wextra  
+      - -std=c++11 
+      - -Ofast 
+      - -ffast-math
+    - ASM:
+      - -masm=auto
+    - Link:
+      - --entry=Reset_Handler
+      - --info=summarysizes
+      - --info=sizes
+      - --info=totals
+      - --info=unused
+      - --info=veneers
+
+  packs:
+    - pack: ARM::CMSIS-DSP@1.14.4
+    - pack: ARM::CMSIS@5.9.0
+    - pack: ARM::V2M_MPS3_SSE_300_BSP@1.3.0
+    - pack: ARM::V2M_MPS3_SSE_310_BSP@1.1.0
+    - pack: Keil::ARM_Compiler@1.7.2
+
+  target-types:
+    - type: VHT-Corstone-310
+      device: ARM::SSE-310-MPS3
+     
+    - type: VHT-Corstone-300
+      device: ARM::SSE-300-MPS3
+      
+    - type: VHT_M7
+      device: ARMCM7_DP
+      
+    - type: VHT_M0P
+      device: ARMCM0P
+      
+  build-types:
+    - type: Release
+      debug: on
+
+  projects:
+    - project: ./projects/bayes.cproject.yml
+    - project: ./projects/classmarks.cproject.yml
+    - project: ./projects/convolution.cproject.yml
+    - project: ./projects/dotproduct.cproject.yml
+    - project: ./projects/fftbin.cproject.yml
+    - project: ./projects/fir.cproject.yml
+    - project: ./projects/graphicequalizer.cproject.yml
+    - project: ./projects/linearinterp.cproject.yml
+    - project: ./projects/matrix.cproject.yml
+    - project: ./projects/signalconverge.cproject.yml
+    - project: ./projects/sincos.cproject.yml
+    - project: ./projects/svm.cproject.yml
+    - project: ./projects/variance.cproject.yml

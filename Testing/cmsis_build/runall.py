@@ -130,8 +130,8 @@ AVHROOT = args.avh
 
 # Run AVH
 def runAVH(build,core):
-    axf="out/test/%s/Release/Release+%s.axf" % (build,build)
-    elf="out/test/%s/Release/Release+%s.elf" % (build,build)
+    axf="out/test/%s/Release/test.axf" % (build,)
+    elf="out/test/%s/Release/test.elf" % (build,)
     app = axf 
     if os.path.exists(axf):
         app = axf 
@@ -195,7 +195,7 @@ for t in tests:
 # AVH identification is used to find the executable
 # and the configuration file
 solutions={
-    'testac6.csolution.yml':[
+    'test_ac6.csolution.yml':[
     #  ("VHT-Corstone-310","CS310"),
       ("VHT-Corstone-300","CS300"),
     #  #("VHT_M33","M33_DSP_FP"),
@@ -206,7 +206,7 @@ solutions={
     #  #("VHT_M23","M23"),
       ("VHT_M0P","M0plus")
     ],
-    'testgcc.csolution.yml':[
+    'test_gcc.csolution.yml':[
       #("VHT-Corstone-310","CS310"),
       #("VHT_M55","M55"),
       ##("VHT_M33","M33_DSP_FP"),
@@ -220,13 +220,12 @@ solutions={
 }
 
 # Override previous solutions for more restricted testing.
-#solutions={
-#    'testac6.csolution.yml':[
-#    #  ("VHT-Corstone-310","CS310"),
-#    #  ("VHT-Corstone-300","CS300"),
-#      ("VHT_M7_UNROLLED","M7DP"),
-#    ]
-#}
+solutions={
+    'test_ac6.csolution.yml':[
+    #  ("VHT-Corstone-310","CS310"),
+      ("VHT-Corstone-300","CS300"),
+    ]
+}
 
 HTMLHEADER="""<html>
 <header>

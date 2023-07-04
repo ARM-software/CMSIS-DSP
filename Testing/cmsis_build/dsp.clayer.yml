@@ -1,6 +1,6 @@
 layer:  
   description: CMSIS-DSP
-
+  type: DSP
 
   add-path:
     - ../../Include 

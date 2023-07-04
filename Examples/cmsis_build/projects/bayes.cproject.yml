@@ -1,0 +1,11 @@
+project:
+  groups:
+    - group: App
+      files:
+        - file: ../../ARM/arm_bayes_example/arm_bayes_example_f32.c
+       
+
+  layers:
+    - layer: ../vht.clayer.yml
+    - layer: ../../../Testing/cmsis_build/dsp.clayer.yml
+

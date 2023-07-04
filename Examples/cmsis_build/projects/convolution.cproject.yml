@@ -1,0 +1,15 @@
+project:
+  groups:
+    - group: App
+      files:
+        - file: ../../ARM/arm_convolution_example/arm_convolution_example_f32.c
+        - file: ../../ARM/arm_convolution_example/math_helper.c
+  add-path:
+    - ../../ARM/arm_convolution_example
+
+       
+
+  layers:
+    - layer: ../vht.clayer.yml
+    - layer: ../../../Testing/cmsis_build/dsp.clayer.yml
+

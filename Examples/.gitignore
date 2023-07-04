@@ -4,3 +4,5 @@ EventRecorderStub.scvd
 _ARMCM0/
 cmsis_build/tmp
 cmsis_build/out
+cmsis_build/examples_ac6.cbuild-idx.yml
+*.cbuild.yml

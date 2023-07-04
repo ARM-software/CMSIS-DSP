@@ -1,4 +1,26 @@
 project:
+  setups:
+    - setup:
+      define:
+        - ARM_MATH_AUTOVECTORIZE
+        - DISABLEFLOAT16
+      for-context: 
+        - +FVP_A9Neon
+
+    - setup:
+      define:
+        - ARM_MATH_NEON
+        - DISABLEFLOAT16
+      for-context: 
+        - +FVP_A5Neon
+        - +FVP_A7Neon
+
+    - setup:
+      not-for-context: 
+        - +FVP_A5Neon
+        - +FVP_A7Neon
+        - +FVP_A9Neon
+
   groups:
     - group: App
       files:
@@ -128,27 +150,7 @@ project:
   layers:
     - layer: boot.clayer.yml 
     - layer: dsp.clayer.yml 
-      not-for-type: 
-        - +FVP_A5Neon
-        - +FVP_A7Neon
-        - +FVP_A9Neon
-    # CMSIS-DSP cannot be built with Neon intrinsics for A9
-    # because of lack of Fused MAC on A9
-    - layer: dsp.clayer.yml 
-      define:
-        - ARM_MATH_NEON
-        - DISABLEFLOAT16
-      for-type: 
-        - +FVP_A5Neon
-        - +FVP_A7Neon
-    # On A9, CMSIS-DSP is built with auto-vectorization
-    # but no use of Neon intrinsics
-    - layer: dsp.clayer.yml 
-      define:
-        - ARM_MATH_AUTOVECTORIZE
-        - DISABLEFLOAT16
-      for-type: 
-        - +FVP_A9Neon
+    
 
   components:
     - component: ARM::CMSIS:CORE

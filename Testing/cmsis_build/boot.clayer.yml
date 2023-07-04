@@ -6,50 +6,50 @@ layer:
 
   components:
     - component: DMA350
-      for-type: 
+      for-context: 
         - +VHT-Corstone-310
     - component: Device:Startup&C Startup
-      not-for-type: 
+      not-for-context: 
         - +VHT-Corstone-300 
         - +VHT-Corstone-310
         - +FVP_A5Neon
         - +FVP_A7Neon
         - +FVP_A9Neon
     - component: Device:Startup
-      for-type: 
+      for-context: 
         - +FVP_A5Neon
         - +FVP_A7Neon
         - +FVP_A9Neon
     - component: Device:IRQ Controller
-      for-type: 
+      for-context: 
         - +FVP_A5Neon
         - +FVP_A7Neon
         - +FVP_A9Neon
     - component: Device:OS Tick
-      for-type: 
+      for-context: 
         - +FVP_A5Neon
         - +FVP_A7Neon
         - +FVP_A9Neon
     - component: ARM::Device:Definition
-      for-type: 
+      for-context: 
         - +VHT-Corstone-300 
         - +VHT-Corstone-310
     - component: ARM::Device:Startup&Baremetal
-      for-type: 
+      for-context: 
         - +VHT-Corstone-300 
         - +VHT-Corstone-310
     - component: ARM::Native Driver:DMA350 Remap
-      for-type: 
+      for-context: 
         - +VHT-Corstone-310
     - component: ARM::Native Driver:Timeout
-      for-type: 
+      for-context: 
         - +VHT-Corstone-300 
         - +VHT-Corstone-310
     - component: ARM::Native Driver:SysCounter
-      for-type: 
+      for-context: 
         - +VHT-Corstone-300 
         - +VHT-Corstone-310
     - component: ARM::Native Driver:SysTimer
-      for-type: 
+      for-context: 
         - +VHT-Corstone-300 
         - +VHT-Corstone-310
