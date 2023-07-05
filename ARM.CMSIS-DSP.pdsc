@@ -16,18 +16,11 @@
  
   <!-- conditions are dependency rules that can apply to a component or an individual file -->
   <conditions>
-    <!-- compiler -->
-    <condition id="ARMCC GCC IAR">
-      <accept Tcompiler="ARMCC"/>
-      <accept Tcompiler="GCC"/>
-      <accept Tcompiler="IAR"/>
-    </condition>
-
+   
    
     <!-- CMSIS -->
     <condition id="CMSISCORE">
       <description>Components required for CMSIS Core</description>
-      <require condition="ARMCC GCC IAR"/>
       <require Cclass="CMSIS" Cgroup="CORE"/>
     </condition>
 
