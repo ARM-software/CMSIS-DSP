@@ -26,11 +26,11 @@ solution:
       - --entry=Reset_Handler 
       - -Wl,--gc-sections
      
-  add-paths:
+  add-path:
       - ../FrameworkInclude
       - ../GeneratedInclude
       - ../Include/Tests
-  defines:
+  define:
       - EMBEDDED
       - NORMALFVP
 
@@ -47,42 +47,42 @@ solution:
 
     - type: VHT-Corstone-310
       device: ARM::SSE-310-MPS3
-      defines:
+      define:
         - CORTEXM
 
     - type: VHT_M55
       device: ARMCM55
-      defines:
+      define:
         - CORTEXM
 
     - type: VHT_M33
       device: ARMCM33_DSP_FP
-      defines:
+      define:
         - CORTEXM
     
     - type: VHT_M7
       device: ARMCM7_DP
-      defines:
+      define:
         - CORTEXM
       
     - type: VHT_M4
       device: ARMCM4_FP
-      defines:
+      define:
         - CORTEXM
       
     - type: VHT_M3
       device: ARMCM3
-      defines:
+      define:
         - CORTEXM
       
     - type: VHT_M23
       device: ARMCM23
-      defines:
+      define:
         - CORTEXM
       
     - type: VHT_M0P
       device: ARMCM0P
-      defines:
+      define:
         - CORTEXM
       
   build-types:
