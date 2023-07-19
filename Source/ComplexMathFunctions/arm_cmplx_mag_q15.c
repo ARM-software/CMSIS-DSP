@@ -131,7 +131,7 @@ void arm_cmplx_mag_q15(
       acc0 = __SMUAD(in, in);
   
       /* store result in 2.14 format in destination buffer. */
-      arm_sqrt_q31(acc0  >> 1 , &res);
+      arm_sqrt_q31((uint32_t)acc0  >> 1 , &res);
       *pDst++ = res >> 16;
   
   
@@ -170,22 +170,22 @@ void arm_cmplx_mag_q15(
     in = read_q15x2_ia (&pSrc);
     acc0 = __SMUAD(in, in);
     /* store result in 2.14 format in destination buffer. */
-    arm_sqrt_q31(acc0  >> 1 , &res);
+    arm_sqrt_q31((uint32_t)acc0  >> 1 , &res);
     *pDst++ = res >> 16;
 
     in = read_q15x2_ia (&pSrc);
     acc0 = __SMUAD(in, in);
-    arm_sqrt_q31(acc0  >> 1 , &res);
+    arm_sqrt_q31((uint32_t)acc0  >> 1 , &res);
     *pDst++ = res >> 16;
 
     in = read_q15x2_ia (&pSrc);
     acc0 = __SMUAD(in, in);
-    arm_sqrt_q31(acc0  >> 1 , &res);
+    arm_sqrt_q31((uint32_t)acc0  >> 1 , &res);
     *pDst++ = res >> 16;
 
     in = read_q15x2_ia (&pSrc);
     acc0 = __SMUAD(in, in);
-    arm_sqrt_q31(acc0  >> 1 , &res);
+    arm_sqrt_q31((uint32_t)acc0  >> 1 , &res);
     *pDst++ = res >> 16;
 #else
     real = *pSrc++;
@@ -194,28 +194,28 @@ void arm_cmplx_mag_q15(
     acc1 = ((q31_t) imag * imag);
 
     /* store result in 2.14 format in destination buffer. */
-    arm_sqrt_q31((acc0 + acc1) >> 1 , &res);
+    arm_sqrt_q31(((uint32_t)acc0 + (uint32_t)acc1) >> 1 , &res);
     *pDst++ = res >> 16;
 
     real = *pSrc++;
     imag = *pSrc++;
     acc0 = ((q31_t) real * real);
     acc1 = ((q31_t) imag * imag);
-    arm_sqrt_q31((acc0 + acc1) >> 1 , &res);
+    arm_sqrt_q31(((uint32_t)acc0 + (uint32_t)acc1) >> 1 , &res);
     *pDst++ = res >> 16;
 
     real = *pSrc++;
     imag = *pSrc++;
     acc0 = ((q31_t) real * real);
     acc1 = ((q31_t) imag * imag);
-    arm_sqrt_q31((acc0 + acc1) >> 1 , &res);
+    arm_sqrt_q31(((uint32_t)acc0 + (uint32_t)acc1) >> 1 , &res);
     *pDst++ = res >> 16;
 
     real = *pSrc++;
     imag = *pSrc++;
     acc0 = ((q31_t) real * real);
     acc1 = ((q31_t) imag * imag);
-    arm_sqrt_q31((acc0 + acc1) >> 1 , &res);
+    arm_sqrt_q31(((uint32_t)acc0 + (uint32_t)acc1) >> 1 , &res);
     *pDst++ = res >> 16;
 #endif /* #if defined (ARM_MATH_DSP) */
 
@@ -240,9 +240,8 @@ void arm_cmplx_mag_q15(
 #if defined (ARM_MATH_DSP)
     in = read_q15x2_ia (&pSrc);
     acc0 = __SMUAD(in, in);
-
     /* store result in 2.14 format in destination buffer. */
-    arm_sqrt_q31(acc0  >> 1 , &res);
+    arm_sqrt_q31((uint32_t)acc0  >> 1 , &res);
     *pDst++ = res >> 16;
 #else
     real = *pSrc++;
@@ -251,7 +250,7 @@ void arm_cmplx_mag_q15(
     acc1 = ((q31_t) imag * imag);
 
     /* store result in 2.14 format in destination buffer. */
-    arm_sqrt_q31((acc0 + acc1) >> 1 , &res);
+    arm_sqrt_q31(((uint32_t)acc0 + (uint32_t)acc1) >> 1 , &res);
     *pDst++ = res >> 16;
  
 #endif

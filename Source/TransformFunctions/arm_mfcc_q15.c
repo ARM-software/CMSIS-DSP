@@ -72,7 +72,6 @@
                    point computations may saturate.
 
  */
-
 arm_status arm_mfcc_q15(
   const arm_mfcc_instance_q15 * S,
   q15_t *pSrc,
@@ -163,7 +162,11 @@ arm_status arm_mfcc_q15(
 
     }
 
-
+    if (m != 0)
+    {
+      arm_scale_q31(pTmp,m<<16,0,pTmp,S->nbMelFilters);
+    }
+   
     // q34.29 - fftShift - satShift
     /* Compute the log */
     arm_vlog_q31(pTmp,pTmp,S->nbMelFilters);

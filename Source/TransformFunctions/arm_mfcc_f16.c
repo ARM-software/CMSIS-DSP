@@ -94,7 +94,10 @@ void arm_mfcc_f16(
   /* Normalize */
   arm_absmax_f16(pSrc,S->fftLen,&maxValue,&index);
 
-  arm_scale_f16(pSrc,1.0f16/(_Float16)maxValue,pSrc,S->fftLen);
+  if ((_Float16)maxValue != 0.0f16)
+  {
+     arm_scale_f16(pSrc,1.0f16/(_Float16)maxValue,pSrc,S->fftLen);
+  }
 
   /* Multiply by window */
   arm_mult_f16(pSrc,S->windowCoefs,pSrc,S->fftLen);
@@ -125,6 +128,10 @@ void arm_mfcc_f16(
   pTmp[1]=0.0f;
 #endif
   arm_cmplx_mag_f16(pTmp,pSrc,S->fftLen);
+  if ((_Float16)maxValue != 0.0f16)
+  {
+     arm_scale_f16(pSrc,maxValue,pSrc,S->fftLen);
+  }
 
   /* Apply MEL filters */
   for(i=0; i<S->nbMelFilters; i++)

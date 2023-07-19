@@ -84,7 +84,10 @@ void arm_mfcc_f32(
   /* Normalize */
   arm_absmax_f32(pSrc,S->fftLen,&maxValue,&index);
 
-  arm_scale_f32(pSrc,1.0f/maxValue,pSrc,S->fftLen);
+  if (maxValue != 0.0f)
+  {
+     arm_scale_f32(pSrc,1.0f/maxValue,pSrc,S->fftLen);
+  }
 
   /* Multiply by window */
   arm_mult_f32(pSrc,S->windowCoefs,pSrc,S->fftLen);
@@ -115,6 +118,10 @@ void arm_mfcc_f32(
   pTmp[1]=0.0f;
 #endif
   arm_cmplx_mag_f32(pTmp,pSrc,S->fftLen);
+  if (maxValue != 0.0f)
+  {
+     arm_scale_f32(pSrc,maxValue,pSrc,S->fftLen);
+  }
 
   /* Apply MEL filters */
   for(i=0; i<S->nbMelFilters; i++)
