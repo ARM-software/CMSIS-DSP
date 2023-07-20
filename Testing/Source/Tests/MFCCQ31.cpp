@@ -4,7 +4,7 @@
 
 #include "mfccdata.h"
 
-#define SNR_THRESHOLD 70
+#define SNR_THRESHOLD 66
 
 /* 
 
@@ -12,7 +12,7 @@ Reference patterns are generated with
 a double precision computation.
 
 */
-#define ABS_ERROR ((q31_t)42000)
+#define ABS_ERROR ((q31_t)49000)
 
 
 

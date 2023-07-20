@@ -105,12 +105,12 @@ class MFCCConfig:
       self._dctMatrixFilters = dctMatrix(numOfDctOutputs, numOfMelFilters)
 
    def mfcc(self,audio):
-       m = np.amax(np.abs(audio))
-       if m != 0:
-          s = 1.0 / m
-       else:
-          s = 1.0
-       audio = audio * s
+       #m = np.amax(np.abs(audio))
+       #if m != 0:
+       #   s = 1.0 / m
+       #else:
+       #   s = 1.0
+       #audio = audio * s
 
        audioWin = audio * self._window
 
@@ -122,6 +122,8 @@ class MFCCConfig:
          print(audioFFT)
 
        audioPower = np.abs(audioFFT)
+       #if m != 0:
+       #   audioPower = audioPower * m
        if DEBUG:
          print(audioPower)
 
@@ -247,7 +249,7 @@ def writeTests(config,format):
 
         # Sine
         audio=noisySineSignal(0.1,0.8,nb)
-        #audio = Tools.normalize(audio)
+        audio = Tools.normalize(audio)
         inputsSine += list(audio)
         refSine=mfccConfig.mfcc(audio)
         if format == Tools.Q15:
@@ -276,10 +278,10 @@ def generatePatterns():
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
     #configq7=Tools.Config(PATTERNDIR,PARAMDIR,"q7")
 
-    configf32.setOverwrite(False)
-    configf16.setOverwrite(False)
-    configq31.setOverwrite(False)
-    configq15.setOverwrite(False)
+    configf32.setOverwrite(True)
+    configf16.setOverwrite(True)
+    configq31.setOverwrite(True)
+    configq15.setOverwrite(True)
 
    
     writeTests(configf32,0)

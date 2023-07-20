@@ -160,6 +160,12 @@ for t in tests:
 # Test suite and output pickle needed to decode the result
 #print(allSuites)
 
+allSuites=[("MFCCF32","../Output.pickle"),
+("MFCCQ31","../Output.pickle"),
+("MFCCQ15","../Output.pickle"),
+("MFCCF16","../Output_f16.pickle"),
+]
+
 #allSuites=[("ComplexTestsF32","../Output.pickle"),
 #("DistanceTestsF32","../Output.pickle"),
 #("UnaryTestsF32","../Output.pickle"),
