@@ -50,7 +50,9 @@ extern "C"
 
 #define SQ(x) ((x) * (x))
 
-#define ROUND_UP(N, S) ((((N) + (S) - 1) / (S)) * (S))
+#ifndef ROUND_UP
+  #define ROUND_UP(N, S) ((((N) + (S) - 1) / (S)) * (S))
+#endif
 
 
   /**
