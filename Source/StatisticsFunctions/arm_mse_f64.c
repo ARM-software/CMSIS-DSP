@@ -111,8 +111,7 @@ void arm_mse_f64(
 #endif
 #endif
 
-#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050) && \
-    defined(ARM_MATH_NEON) && defined(__aarch64__)
+#if defined(__clang__) && defined(ARM_MATH_NEON) && defined(__aarch64__)
     #pragma clang loop vectorize(enable) unroll(disable)
 #endif
     while (blkCnt > 0U)
