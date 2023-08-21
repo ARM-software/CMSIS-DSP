@@ -96,7 +96,7 @@ arm_status arm_mfcc_q31(
     // q31
     arm_absmax_q31(pSrc,S->fftLen,&m,&index);
 
-    if (m !=0)
+    if ((m != 0) && (m != 0x7FFFFFFF))
     {
        q31_t quotient;
        int16_t shift;
@@ -165,7 +165,7 @@ arm_status arm_mfcc_q31(
 
     }
 
-    if (m != 0)
+    if ((m != 0) && (m != 0x7FFFFFFF))
     {
       arm_scale_q31(pTmp,m,0,pTmp,S->nbMelFilters);
     }

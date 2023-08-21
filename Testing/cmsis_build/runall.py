@@ -160,11 +160,11 @@ for t in tests:
 # Test suite and output pickle needed to decode the result
 #print(allSuites)
 
-allSuites=[("MFCCF32","../Output.pickle"),
-("MFCCQ31","../Output.pickle"),
-("MFCCQ15","../Output.pickle"),
-("MFCCF16","../Output_f16.pickle"),
-]
+#allSuites=[
+#("MFCCQ15","../Output.pickle"),
+#("MFCCQ31","../Output.pickle"),
+#("SupportTestsF16","../Output_f16.pickle"),
+#]
 
 #allSuites=[("ComplexTestsF32","../Output.pickle"),
 #("DistanceTestsF32","../Output.pickle"),
@@ -204,10 +204,10 @@ solutions={
     'test_ac6.csolution.yml':[
     #  ("VHT-Corstone-310","CS310"),
       ("VHT-Corstone-300","CS300"),
-    #  #("VHT_M33","M33_DSP_FP"),
+      ("VHT_M33","M33_DSP_FP"),
       ("VHT_M7","M7DP"),
       ("VHT_M7_UNROLLED","M7DP"),
-    #  #("VHT_M4","M4FP"),
+      ("VHT_M4","M4FP"),
     #  #("VHT_M3","M3"),
     #  #("VHT_M23","M23"),
       ("VHT_M0P","M0plus")
@@ -218,7 +218,7 @@ solutions={
       ##("VHT_M33","M33_DSP_FP"),
       ("VHT_M7","M7DP"),
       ("VHT_M7_UNROLLED","M7DP"),
-      ##("VHT_M4","M4FP"),
+      ("VHT_M4","M4FP"),
       ##("VHT_M3","M3"),
       ##("VHT_M23","M23"),
       ("VHT_M0P","M0plus")
@@ -226,12 +226,14 @@ solutions={
 }
 
 # Override previous solutions for more restricted testing.
-solutions={
-    'test_ac6.csolution.yml':[
-    #  ("VHT-Corstone-310","CS310"),
-      ("VHT-Corstone-300","CS300"),
-    ]
-}
+#solutions={
+#    'test_ac6.csolution.yml':[
+#    #  ("VHT-Corstone-310","CS310"),
+#      ("VHT_M7","M7DP"),
+#      ("VHT_M7_UNROLLED","M7DP"),
+#      ("VHT_M0P","M0plus")
+#    ]
+#}
 
 HTMLHEADER="""<html>
 <header>

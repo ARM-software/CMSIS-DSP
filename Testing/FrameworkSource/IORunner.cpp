@@ -198,7 +198,7 @@ fast models.
       {
         Testing::TestStatus finalResult = Testing::kTestPassed;
         int nbTests = s->getNbTests();
-        int failedTests=0;
+        //int failedTests=0;
         Testing::errorID_t error=0;
         unsigned long line = 0;
         char details[200];
@@ -378,7 +378,7 @@ fast models.
 
             if (result == Testing::kTestFailed)
             {
-              failedTests ++;
+              //failedTests ++;
               finalResult = Testing::kTestFailed;
             }
         }
@@ -392,7 +392,7 @@ fast models.
       Testing::TestStatus IORunner::run(Group *g) 
       {
         int nbTests = g->getNbContainer();
-        int failedTests=0;
+        //int failedTests=0;
 
 
         // Read Node identification
@@ -411,7 +411,7 @@ fast models.
 
                 if (result == Testing::kTestFailed)
                 {
-                   failedTests ++;
+                   //failedTests ++;
                    finalResult = Testing::kTestFailed;
                 }
             }

@@ -1,5 +1,5 @@
 solution:
-  compiler: AC6@6.18.0
+  compiler: AC6@6.20.100
   misc:
     - C:
       - -Wsign-compare 
