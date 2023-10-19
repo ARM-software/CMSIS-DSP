@@ -60,10 +60,6 @@
    * of a buffer. You don't have to modify your buffers but just ensure that the
    * end of buffer + padding is not outside of a memory region.
    *
-   * CMSIS-DSP pack is containing an optional project : The CMSIS-DSP
-   * Compute Graph. The documentation for this project is available
-   * on the <a href="https://github.com/ARM-software/CMSIS-DSP/blob/main/ComputeGraph/README.md">CMSIS-DSP github repository.</a> 
-   *
    * A Python wrapper is also available with a Python API as close as possible
    * to the C one. It can be used to start developing and testing an algorithm with NumPy and
    * SciPy before writing the C version. Is is available on <a href="https://pypi.org/project/cmsisdsp/">PyPI.org</a>.
@@ -160,7 +156,7 @@
    *
    * \section license License
    * 
-   * The CMSIS-DSP is provided free of charge under the <a href="LICENSE.txt">Apache 2.0 License</a>.
+   * The CMSIS-DSP is provided free of charge under the <a href="LICENSE">Apache 2.0 License</a>.
    */
 
 
