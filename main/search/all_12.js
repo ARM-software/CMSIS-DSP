@@ -30,6 +30,5 @@ var searchData=
   ['rfft_27',['rfft',['../structarm__mfcc__instance__f16.html#a47d443febad23272d9aaf97f91f788b9',1,'arm_mfcc_instance_f16::rfft()'],['../structarm__mfcc__instance__q15.html#ac625335e6a9c7ad9d658b148bb0d650a',1,'arm_mfcc_instance_q15::rfft()'],['../structarm__mfcc__instance__q31.html#a206846138151d79997417b826993f638',1,'arm_mfcc_instance_q31::rfft()'],['../structarm__mfcc__instance__f32.html#a489f76388c886ac258175e4d27970b0c',1,'arm_mfcc_instance_f32::rfft()']]],
   ['ri_28',['RI',['../arm__rotation2quaternion__f32_8c.html#a0671bc9d0dfb2fb2926884f1d70c4673',1,'arm_rotation2quaternion_f32.c']]],
   ['root_20mean_20square_20_28rms_29_29',['Root mean square (RMS)',['../group__RMS.html',1,'']]],
-  ['rotation_20to_20quaternion_30',['Rotation to Quaternion',['../group__RotQuat.html',1,'']]],
-  ['round_5fup_31',['ROUND_UP',['../utils_8h.html#ad87787b5538eaab218a223b037413930',1,'utils.h']]]
+  ['rotation_20to_20quaternion_30',['Rotation to Quaternion',['../group__RotQuat.html',1,'']]]
 ];

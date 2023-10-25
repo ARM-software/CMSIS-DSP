@@ -136,10 +136,10 @@ Macros</h2></td></tr>
 <tr class="separator:a74e75242132eaabbc1c512488a135926"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aacc3ee1a7f283f8ef65cea31f4436a95"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#aacc3ee1a7f283f8ef65cea31f4436a95">MAX</a>(x,  y)&#160;&#160;&#160;((x) &gt; (y) ? (x) : (y))</td></tr>
 <tr class="separator:aacc3ee1a7f283f8ef65cea31f4436a95"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3644f84794a8bfdacf39c4b2c2495fc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#ac3644f84794a8bfdacf39c4b2c2495fc">SQ</a>(x)&#160;&#160;&#160;((x) * (x))</td></tr>
-<tr class="separator:ac3644f84794a8bfdacf39c4b2c2495fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad87787b5538eaab218a223b037413930"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#ad87787b5538eaab218a223b037413930">ROUND_UP</a>(N,  S)&#160;&#160;&#160;((((N) + (S) - 1) / (S)) * (S))</td></tr>
-<tr class="separator:ad87787b5538eaab218a223b037413930"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a3c5d7bb7f8078f5b640a8a831ccdeb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a4a3c5d7bb7f8078f5b640a8a831ccdeb">ARM_SQ</a>(x)&#160;&#160;&#160;((x) * (x))</td></tr>
+<tr class="separator:a4a3c5d7bb7f8078f5b640a8a831ccdeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0cf1b6f6ee22895a8f35ae8991fa06f4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a0cf1b6f6ee22895a8f35ae8991fa06f4">ARM_ROUND_UP</a>(N,  S)&#160;&#160;&#160;((((N) + (S) - 1) / (S)) * (S))</td></tr>
+<tr class="separator:a0cf1b6f6ee22895a8f35ae8991fa06f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -156,6 +156,52 @@ Functions</h2></td></tr>
 <tr class="separator:a1918d5856c8cd62fc8a878ab5109634f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a0cf1b6f6ee22895a8f35ae8991fa06f4" name="a0cf1b6f6ee22895a8f35ae8991fa06f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0cf1b6f6ee22895a8f35ae8991fa06f4">&#9670;&nbsp;</a></span>ARM_ROUND_UP</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ARM_ROUND_UP</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">N, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">S&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;((((N) + (S) - 1) / (S)) * (S))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4a3c5d7bb7f8078f5b640a8a831ccdeb" name="a4a3c5d7bb7f8078f5b640a8a831ccdeb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a3c5d7bb7f8078f5b640a8a831ccdeb">&#9670;&nbsp;</a></span>ARM_SQ</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ARM_SQ</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">x</td><td>)</td>
+          <td>&#160;&#160;&#160;((x) * (x))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a29f839928f4752b73c8858d6dbb55294" name="a29f839928f4752b73c8858d6dbb55294"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a29f839928f4752b73c8858d6dbb55294">&#9670;&nbsp;</a></span>INDEX_MASK</h2>
 
@@ -220,52 +266,6 @@ Functions</h2></td></tr>
           <td></td>
           <td>)</td>
           <td></td><td>&#160;&#160;&#160;((x) &lt; (y) ? (x) : (y))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ad87787b5538eaab218a223b037413930" name="ad87787b5538eaab218a223b037413930"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad87787b5538eaab218a223b037413930">&#9670;&nbsp;</a></span>ROUND_UP</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ROUND_UP</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">N, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">S&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td>&#160;&#160;&#160;((((N) + (S) - 1) / (S)) * (S))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ac3644f84794a8bfdacf39c4b2c2495fc" name="ac3644f84794a8bfdacf39c4b2c2495fc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac3644f84794a8bfdacf39c4b2c2495fc">&#9670;&nbsp;</a></span>SQ</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SQ</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">x</td><td>)</td>
-          <td>&#160;&#160;&#160;((x) * (x))</td>
         </tr>
       </table>
 </div><div class="memdoc">
