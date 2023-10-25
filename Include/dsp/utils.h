@@ -48,10 +48,12 @@ extern "C"
   #define MAX(x,y) ((x) > (y) ? (x) : (y))
 #endif 
 
-#define SQ(x) ((x) * (x))
+#ifndef ARM_SQ
+#define ARM_SQ(x) ((x) * (x))
+#endif
 
-#ifndef ROUND_UP
-  #define ROUND_UP(N, S) ((((N) + (S) - 1) / (S)) * (S))
+#ifndef ARM_ROUND_UP
+  #define ARM_ROUND_UP(N, S) ((((N) + (S) - 1) / (S)) * (S))
 #endif
 
 
@@ -251,6 +253,7 @@ __STATIC_INLINE int32_t arm_div_int64_to_int32(int64_t num, int32_t den)
     return result;
 }
 
+#undef INDEX_MASK
 
 #ifdef   __cplusplus
 }

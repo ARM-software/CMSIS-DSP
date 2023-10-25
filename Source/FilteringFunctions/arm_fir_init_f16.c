@@ -89,7 +89,7 @@ void arm_fir_init_f16(
 
   /* Clear state buffer. The size is always (blockSize + numTaps - 1) */
 #if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
-  memset(pState, 0, (numTaps + (blockSize - 1U) + ROUND_UP(blockSize, 8)) * sizeof(float16_t));
+  memset(pState, 0, (numTaps + (blockSize - 1U) + ARM_ROUND_UP(blockSize, 8)) * sizeof(float16_t));
 #else
   memset(pState, 0, (numTaps + (blockSize - 1U)) * sizeof(float16_t));
 #endif 

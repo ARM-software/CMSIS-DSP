@@ -244,7 +244,7 @@ void arm_fir_f16(const arm_fir_instance_f16 * S,
   float16_t * pDst, 
   uint32_t blockSize)
 {
-    float16_t *pRefStatePtr = S->pState + ROUND_UP(blockSize, 8);
+    float16_t *pRefStatePtr = S->pState + ARM_ROUND_UP(blockSize, 8);
     float16_t *pState = pRefStatePtr ;      /* State pointer */
     const float16_t *pCoeffs = S->pCoeffs;      /* Coefficient pointer */
     const float16_t *pSamples;  /* Temporary pointer to the sample buffer */

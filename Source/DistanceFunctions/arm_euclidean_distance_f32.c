@@ -122,7 +122,7 @@ float32_t arm_euclidean_distance_f32(const float32_t *pA,const float32_t *pB, ui
    while(blkCnt > 0)
    {
       tmp = *pA++ - *pB++;
-      accum += SQ(tmp);
+      accum += ARM_SQ(tmp);
       blkCnt --;
    }
    arm_sqrt_f32(accum,&tmp);
@@ -137,7 +137,7 @@ float32_t arm_euclidean_distance_f32(const float32_t *pA,const float32_t *pB, ui
    while(blockSize > 0)
    {
       tmp = *pA++ - *pB++;
-      accum += SQ(tmp);
+      accum += ARM_SQ(tmp);
       blockSize --;
    }
    arm_sqrt_f32(accum,&tmp);

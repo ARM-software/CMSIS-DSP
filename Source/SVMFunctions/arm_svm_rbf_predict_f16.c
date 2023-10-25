@@ -334,7 +334,7 @@ void arm_svm_rbf_predict_f16(
         dot=0.0f16;
         for(j=0; j < S->vectorDimension; j++)
         {
-            dot = dot + SQ((_Float16)in[j] - (_Float16) *pSupport);
+            dot = dot + ARM_SQ((_Float16)in[j] - (_Float16) *pSupport);
             pSupport++;
         }
         sum += (_Float16)S->dualCoefficients[i] * (_Float16)expf((float32_t)(-(_Float16)S->gamma * (_Float16)dot));

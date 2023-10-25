@@ -413,10 +413,10 @@ void arm_svm_rbf_predict_f32(
         blkCnt = S->vectorDimension & 3;
         while (blkCnt > 0U)
         {
-            dotV = vsetq_lane_f32(vgetq_lane_f32(dotV,0) + SQ(*pIn - *pSupporta), dotV,0);
-            dotV = vsetq_lane_f32(vgetq_lane_f32(dotV,1) + SQ(*pIn - *pSupportb), dotV,1);
-            dotV = vsetq_lane_f32(vgetq_lane_f32(dotV,2) + SQ(*pIn - *pSupportc), dotV,2);
-            dotV = vsetq_lane_f32(vgetq_lane_f32(dotV,3) + SQ(*pIn - *pSupportd), dotV,3);
+            dotV = vsetq_lane_f32(vgetq_lane_f32(dotV,0) + ARM_SQ(*pIn - *pSupporta), dotV,0);
+            dotV = vsetq_lane_f32(vgetq_lane_f32(dotV,1) + ARM_SQ(*pIn - *pSupportb), dotV,1);
+            dotV = vsetq_lane_f32(vgetq_lane_f32(dotV,2) + ARM_SQ(*pIn - *pSupportc), dotV,2);
+            dotV = vsetq_lane_f32(vgetq_lane_f32(dotV,3) + ARM_SQ(*pIn - *pSupportd), dotV,3);
 
             pSupporta++;
             pSupportb++;
@@ -478,7 +478,7 @@ void arm_svm_rbf_predict_f32(
         while (blkCnt > 0U)
         {
 
-            dot = dot + SQ(*pIn - *pSupport);
+            dot = dot + ARM_SQ(*pIn - *pSupport);
             pIn++;
             pSupport++;
 
@@ -507,7 +507,7 @@ void arm_svm_rbf_predict_f32(
         dot=0;
         for(j=0; j < S->vectorDimension; j++)
         {
-            dot = dot + SQ(in[j] - *pSupport);
+            dot = dot + ARM_SQ(in[j] - *pSupport);
             pSupport++;
         }
         sum += S->dualCoefficients[i] * expf(-S->gamma * dot);

@@ -226,14 +226,11 @@ solutions={
 }
 
 # Override previous solutions for more restricted testing.
-#solutions={
-#    'test_ac6.csolution.yml':[
-#    #  ("VHT-Corstone-310","CS310"),
-#      ("VHT_M7","M7DP"),
-#      ("VHT_M7_UNROLLED","M7DP"),
-#      ("VHT_M0P","M0plus")
-#    ]
-#}
+solutions={
+    'test_ac6.csolution.yml':[
+      ("VHT-Corstone-300","CS300"),
+    ]
+}
 
 HTMLHEADER="""<html>
 <header>

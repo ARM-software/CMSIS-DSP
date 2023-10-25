@@ -96,10 +96,10 @@ void arm_quaternion_inverse_f32(const float32_t *pInputQuaternions,
    for(i=0; i < nbQuaternions; i++)
    {
 
-      temp = SQ(pInputQuaternions[4 * i + 0]) +
-             SQ(pInputQuaternions[4 * i + 1]) +
-             SQ(pInputQuaternions[4 * i + 2]) +
-             SQ(pInputQuaternions[4 * i + 3]);
+      temp = ARM_SQ(pInputQuaternions[4 * i + 0]) +
+             ARM_SQ(pInputQuaternions[4 * i + 1]) +
+             ARM_SQ(pInputQuaternions[4 * i + 2]) +
+             ARM_SQ(pInputQuaternions[4 * i + 3]);
 
       pInverseQuaternions[4 * i + 0] = pInputQuaternions[4 * i + 0] / temp;
       pInverseQuaternions[4 * i + 1] = -pInputQuaternions[4 * i + 1] / temp;
