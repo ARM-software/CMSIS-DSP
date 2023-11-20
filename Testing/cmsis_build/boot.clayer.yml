@@ -11,6 +11,7 @@ layer:
     - component: Device:Startup&C Startup
       not-for-context: 
         - +VHT-Corstone-300 
+        - +VHT-Corstone-300-NOMVE
         - +VHT-Corstone-310
         - +FVP_A5Neon
         - +FVP_A7Neon
@@ -33,10 +34,12 @@ layer:
     - component: ARM::Device:Definition
       for-context: 
         - +VHT-Corstone-300 
+        - +VHT-Corstone-300-NOMVE
         - +VHT-Corstone-310
     - component: ARM::Device:Startup&Baremetal
       for-context: 
         - +VHT-Corstone-300 
+        - +VHT-Corstone-300-NOMVE
         - +VHT-Corstone-310
     - component: ARM::Native Driver:DMA350 Remap
       for-context: 
@@ -44,12 +47,15 @@ layer:
     - component: ARM::Native Driver:Timeout
       for-context: 
         - +VHT-Corstone-300 
+        - +VHT-Corstone-300-NOMVE
         - +VHT-Corstone-310
     - component: ARM::Native Driver:SysCounter
       for-context: 
         - +VHT-Corstone-300 
+        - +VHT-Corstone-300-NOMVE
         - +VHT-Corstone-310
     - component: ARM::Native Driver:SysTimer
       for-context: 
         - +VHT-Corstone-300 
+        - +VHT-Corstone-300-NOMVE
         - +VHT-Corstone-310

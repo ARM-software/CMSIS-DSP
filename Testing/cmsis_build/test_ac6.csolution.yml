@@ -1,5 +1,5 @@
 solution:
-  compiler: AC6@6.20.100
+  compiler: AC6@6.22.0
   misc:
     - C:
       - -Wsign-compare 
@@ -68,6 +68,16 @@ solution:
         - CORTEXM
         - SSE300MPS3
 
+    - type: VHT-Corstone-300-NOMVE
+      device: ARM::SSE-300-MPS3
+      misc:
+        - C: 
+          - -mcpu=cortex-m55+nomve
+      define:
+        - CORTEXM
+        - SSE300MPS3
+        - ARM_MATH_AUTOVECTORIZE
+
     - type: VHT_M33
       device: ARMCM33_DSP_FP
       define:
@@ -112,7 +122,7 @@ solution:
 
   build-types:
     - type: Release
-      debug: off
+      debug: on
 
   projects:
     - project: ./test.cproject.yml

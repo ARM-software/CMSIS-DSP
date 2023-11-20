@@ -195,6 +195,11 @@ for t in tests:
 
 #allSuites=[("StatsTestsQ7","../Output.pickle")]
 
+allSuites=[
+("ComplexTestsF16","../Output_f16.pickle"),
+#("FIRF16","../Output_f16.pickle")
+]
+
 # Solution and build file for all
 # the tests
 # It is a pair : csolution target type and AVH identification
@@ -228,7 +233,7 @@ solutions={
 # Override previous solutions for more restricted testing.
 solutions={
     'test_ac6.csolution.yml':[
-      ("VHT-Corstone-300","CS300"),
+      ("VHT-Corstone-300-NOMVE","CS300"),
     ]
 }
 
