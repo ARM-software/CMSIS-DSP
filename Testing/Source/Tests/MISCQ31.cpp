@@ -70,6 +70,7 @@ For tests of the error value of the Levinson Durbin algorithm
           inpB, inputB.nbSamples(),
           outp);
 
+        ASSERT_EMPTY_TAIL(output);
         ASSERT_SNR(ref,output,(q31_t)SNR_THRESHOLD);
         ASSERT_NEAR_EQ(ref,output,ABS_ERROR_Q31);
 

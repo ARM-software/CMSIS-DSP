@@ -55,6 +55,7 @@
   @remark
                    Refer to \ref arm_conv_opt_q7() for a faster implementation of this function.
  */
+
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 #include "arm_helium_utils.h"
 
@@ -186,7 +187,7 @@ void arm_conv_q7(
         pA++;
     }
 
-    for (i = block3; i >= 1; i -= 2)
+    for (i = block3; i >= 2; i -= 2)
     {
         uint32_t  count = i;
         int32_t   acc0 = 0;
@@ -200,7 +201,7 @@ void arm_conv_q7(
         *pDst++ = (q7_t) acc1;
         pA += 2;
     }
-    for (; i >= 1; i--)
+    for (; i > 0; i--)
     {
         uint32_t  count = i;
         int32_t   acc = 0;
@@ -212,6 +213,7 @@ void arm_conv_q7(
         *pDst++ = (q7_t) acc;
         pA++;
     }
+
 }
 
 #else

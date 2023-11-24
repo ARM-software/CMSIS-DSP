@@ -196,7 +196,9 @@ for t in tests:
 #allSuites=[("StatsTestsQ7","../Output.pickle")]
 
 allSuites=[
-("ComplexTestsF16","../Output_f16.pickle"),
+("MISCQ31","../Output.pickle"),
+("MISCQ15","../Output.pickle"),
+("MISCQ7","../Output.pickle"),
 #("FIRF16","../Output_f16.pickle")
 ]
 
@@ -233,7 +235,7 @@ solutions={
 # Override previous solutions for more restricted testing.
 solutions={
     'test_ac6.csolution.yml':[
-      ("VHT-Corstone-300-NOMVE","CS300"),
+      ("VHT-Corstone-300","CS300"),
     ]
 }
 

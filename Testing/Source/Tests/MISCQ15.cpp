@@ -42,6 +42,7 @@ a double precision computation.
           inpB, inputB.nbSamples(),
           outp);
 
+        ASSERT_EMPTY_TAIL(output);
         ASSERT_SNR(ref,output,(q15_t)SNR_THRESHOLD);
         ASSERT_NEAR_EQ(ref,output,ABS_ERROR_Q15);
 

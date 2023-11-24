@@ -84,6 +84,7 @@ void arm_conv_q31(
     uint32_t  vddupStartIdx = 3;
     uint32x4_t decrIdxVec = vddupq_u32(vddupStartIdx, 1);
 
+
     if (srcALen < srcBLen)
     {
         /*
@@ -219,7 +220,6 @@ void arm_conv_q31(
         *pDst++ = (q31_t) acc;
         pA++;
     }
-
 }
 
 #else
