@@ -196,9 +196,9 @@ for t in tests:
 #allSuites=[("StatsTestsQ7","../Output.pickle")]
 
 allSuites=[
-("MISCQ31","../Output.pickle"),
-("MISCQ15","../Output.pickle"),
-("MISCQ7","../Output.pickle"),
+("UnaryTestsF32","../Output.pickle"),
+#("MISCQ15","../Output.pickle"),
+#("MISCQ7","../Output.pickle"),
 #("FIRF16","../Output_f16.pickle")
 ]
 

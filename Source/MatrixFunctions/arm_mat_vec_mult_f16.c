@@ -293,7 +293,8 @@ void arm_mat_vec_mult_f16(const arm_matrix_instance_f16 *pSrcMat, const float16_
     const float16_t *pInA4;      /* input data matrix pointer A of Q31 type */
     const float16_t *pInVec;     /* input data matrix pointer B of Q31 type */
     float16_t *px;               /* Temporary output data matrix pointer */
-    uint16_t i, row, colCnt; /* loop counters */
+    uint32_t i;
+    uint16_t row, colCnt; /* loop counters */
     float16_t matData, matData2, vecData, vecData2;
 
 
