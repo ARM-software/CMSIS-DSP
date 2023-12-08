@@ -40,10 +40,9 @@
  * -------------------------------------------------------------------- */
 
 /**
- * @ingroup groupExamples
- */
-
-/**
+ * @addtogroup groupExamples
+ * @{
+ *
  * @defgroup FrequencyBin Frequency Bin Example
  *
  * \par Description
@@ -87,12 +86,9 @@
  * <b> Refer  </b>
  * \link arm_fft_bin_example_f32.c \endlink
  *
- */
-
-
-/** \example arm_fft_bin_example_f32.c
-  */
-
+ * \example arm_fft_bin_example_f32.c
+ *
+ * @}*/
 
 #include "arm_math.h"
 #include "arm_const_structs.h"

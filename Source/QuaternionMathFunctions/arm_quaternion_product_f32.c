@@ -60,7 +60,6 @@
   @param[in]     qb                  second array of quaternions
   @param[out]    qr                   elementwise product of quaternions
   @param[in]     nbQuaternions       number of quaternions in the array
-  @return        none
  */
 
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)

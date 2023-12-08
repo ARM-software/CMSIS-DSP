@@ -40,10 +40,9 @@
  * -------------------------------------------------------------------- */
 
 /**
- * @ingroup groupExamples
- */
-
-/**
+ * @addtogroup groupExamples
+ * @{
+ *
  * @defgroup GEQ5Band Graphic Audio Equalizer Example
  *
  * \par Description:
@@ -119,12 +118,9 @@
  * <b> Refer  </b>
  * \link arm_graphic_equalizer_example_q31.c \endlink
  *
- */
-
-
-/** \example arm_graphic_equalizer_example_q31.c
- */
-
+ * \example arm_graphic_equalizer_example_q31.c
+ *
+ * @} */
 
 #include "arm_math.h"
 #include "math_helper.h"

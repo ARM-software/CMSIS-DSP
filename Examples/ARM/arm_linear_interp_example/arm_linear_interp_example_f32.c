@@ -41,10 +41,9 @@
 
 
 /**
- * @ingroup groupExamples
- */
-
-/**
+ * @addtogroup groupExamples
+ * @{
+ *
  * @defgroup LinearInterpExample Linear Interpolate Example
  *
  * <b> CMSIS DSP Software Library -- Linear Interpolate Example  </b>
@@ -78,11 +77,9 @@
  * <b> Refer  </b>
  * \link arm_linear_interp_example_f32.c \endlink
  *
- */
-
-
-/** \example arm_linear_interp_example_f32.c
-  */
+ * \example arm_linear_interp_example_f32.c
+ *
+ * @} */
 
 #include "arm_math.h"
 #include "math_helper.h"

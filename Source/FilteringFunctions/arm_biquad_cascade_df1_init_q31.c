@@ -44,7 +44,6 @@
   @param[in]     pCoeffs     points to the filter coefficients.
   @param[in]     pState      points to the state buffer.
   @param[in]     postShift   Shift to be applied after the accumulator.  Varies according to the coefficients format
-  @return        none
 
   @par           Coefficient and State Ordering
                    The coefficients are stored in the array <code>pCoeffs</code> in the following order:

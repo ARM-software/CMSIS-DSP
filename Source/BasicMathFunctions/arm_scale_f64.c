@@ -43,7 +43,6 @@
   @param[in]     scale      scale factor to be applied
   @param[out]    pDst       points to the output vector
   @param[in]     blockSize  number of samples in each vector
-  @return        none
  */
 
 void arm_scale_f64(

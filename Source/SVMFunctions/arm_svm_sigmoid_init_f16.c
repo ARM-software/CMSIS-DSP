@@ -59,7 +59,6 @@
  * @param[in]    classes                Array of 2 classes ID
  * @param[in]    coef0                  coeff0 (scikit-learn terminology)
  * @param[in]    gamma                  gamma (scikit-learn terminology)
- * @return none.
  *
  */
 

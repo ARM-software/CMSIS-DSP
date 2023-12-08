@@ -40,10 +40,9 @@
  * -------------------------------------------------------------------- */
 
 /**
- * @ingroup groupExamples
- */
-
-/**
+ * @addtogroup groupExamples
+ * @{
+ *
  * @defgroup MatrixExample Matrix Example
  *
  * \par Description:
@@ -83,11 +82,9 @@
  * <b> Refer  </b>
  * \link arm_matrix_example_f32.c \endlink
  *
- */
-
-
-/** \example arm_matrix_example_f32.c
-  */
+ * \example arm_matrix_example_f32.c
+ *
+ * @} */
 
 #include "arm_math.h"
 #include "math_helper.h"

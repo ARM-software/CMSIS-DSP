@@ -49,7 +49,6 @@
   @param[in]     pInputQuaternions            points to the input vector of quaternions
   @param[out]    pInverseQuaternions          points to the output vector of inverse quaternions
   @param[in]     nbQuaternions                number of quaternions in each vector
-  @return        none
  */
 
 

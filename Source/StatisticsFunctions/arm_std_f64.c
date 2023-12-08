@@ -42,7 +42,6 @@
   @param[in]     pSrc       points to the input vector
   @param[in]     blockSize  number of samples in input vector
   @param[out]    pResult    standard deviation value returned here
-  @return        none
  */
 void arm_std_f64(
   const float64_t * pSrc,

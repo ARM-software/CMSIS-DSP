@@ -43,7 +43,6 @@
   @param[in]     numStages  number of filter stages
   @param[in]     pCoeffs    points to the coefficient buffer.  The array is of length numStages
   @param[in]     pState     points to the state buffer.  The array is of length numStages
-  @return        none
  */
 
 void arm_fir_lattice_init_q31(

@@ -61,7 +61,6 @@ void arm_radix4_butterfly_inverse_f32(
   @deprecated    Do not use this function. It has been superseded by \ref arm_cfft_f32 and will be removed in the future.
   @param[in]     S    points to an instance of the floating-point Radix-4 CFFT/CIFFT structure
   @param[in,out] pSrc points to the complex data buffer of size <code>2*fftLen</code>. Processing occurs in-place
-  @return        none
  */
 
 void arm_cfft_radix4_f32(

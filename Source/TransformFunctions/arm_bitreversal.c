@@ -36,7 +36,6 @@
   @param[in]     fftSize      length of FFT
   @param[in]     bitRevFactor bit reversal modifier that supports different size FFTs with the same bit reversal table
   @param[in]     pBitRevTab   points to bit reversal table
-  @return        none
  */
 
 void arm_bitreversal_f32(
@@ -107,7 +106,6 @@ void arm_bitreversal_f32(
   @param[in]     fftLen       length of FFT.
   @param[in]     bitRevFactor bit reversal modifier that supports different size FFTs with the same bit reversal table
   @param[in]     pBitRevTab   points to bit reversal table
-  @return        none
 */
 
 void arm_bitreversal_q31(
@@ -178,7 +176,6 @@ void arm_bitreversal_q31(
   @param[in]     fftLen       length of FFT
   @param[in]     bitRevFactor bit reversal modifier that supports different size FFTs with the same bit reversal table
   @param[in]     pBitRevTab   points to bit reversal table
-  @return        none
 */
 
 void arm_bitreversal_q15(

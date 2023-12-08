@@ -1,3 +1,0 @@
-[filter "git-version"]
-	clean  = ./Scripts/git/git-version.clean
-	smudge = ./Scripts/git/git-version.smudge

@@ -126,7 +126,6 @@
   @param[in]     S             points to an instance of the floating-point DCT4/IDCT4 structure
   @param[in]     pState        points to state buffer
   @param[in,out] pInlineBuffer points to the in-place input and output buffer
-  @return        none
  */
 
 void arm_dct4_f32(

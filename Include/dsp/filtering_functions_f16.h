@@ -222,7 +222,6 @@ extern "C"
   @param[out]    a        autoregressive coefficients
   @param[out]    err      prediction error (variance)
   @param[in]     nbCoefs  number of autoregressive coefficients
-  @return        none
  */
 void arm_levinson_durbin_f16(const float16_t *phi,
   float16_t *a, 

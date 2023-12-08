@@ -53,8 +53,6 @@
   @param[out]     pDst  points to the output MFCC values
   @param[inout]     pTmp  points to a temporary buffer of complex
 
-  @return        none
-
   @par           Description
                    The number of input samples if the FFT length used
                    when initializing the instance data structure.

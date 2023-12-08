@@ -195,7 +195,6 @@ void merge_rfft_f64(
   @param[in]     ifftFlag
                    - value = 0: RFFT
                    - value = 1: RIFFT
-  @return        none
 */
 
 void arm_rfft_fast_f64(

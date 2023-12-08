@@ -39,7 +39,6 @@
   @param[in]     theta    input value in degrees
   @param[out]    pSinVal  points to processed sine output
   @param[out]    pCosVal  points to processed cosine output
-  @return        none
  */
 
 void arm_sin_cos_f32(

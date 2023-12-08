@@ -36,7 +36,6 @@
 /**
   @brief         Reset function for the Q15 PID Control.
   @param[in,out] S  points to an instance of the Q15 PID structure
-  @return        none
 
   @par           Details
                    The function resets the state buffer to zeros.

@@ -50,7 +50,6 @@
   @param[in]     qa       first quaternion
   @param[in]     qb       second quaternion
   @param[out]    qr       product of two quaternions
-  @return        none
  */
 
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)

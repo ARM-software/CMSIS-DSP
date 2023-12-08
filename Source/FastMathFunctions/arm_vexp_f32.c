@@ -53,7 +53,6 @@
   @param[in]     pSrc       points to the input vector
   @param[out]    pDst       points to the output vector
   @param[in]     blockSize  number of samples in each vector
-  @return        none
  */
 void arm_vexp_f32(
   const float32_t * pSrc,

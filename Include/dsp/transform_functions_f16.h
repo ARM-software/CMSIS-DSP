@@ -298,7 +298,6 @@ arm_status arm_mfcc_init_f16(
   @param[in]     pSrc points to the input samples
   @param[out]     pDst  points to the output MFCC values
   @param[inout]     pTmp  points to a temporary buffer of complex
-  @return        none
  */
   void arm_mfcc_f16(
   const arm_mfcc_instance_f16 * S,

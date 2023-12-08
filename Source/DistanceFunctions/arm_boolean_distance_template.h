@@ -60,7 +60,6 @@
  * @param[in]    pA              First vector of packed booleans
  * @param[in]    pB              Second vector of packed booleans
  * @param[in]    numberOfBools   Number of booleans
- * @return None
  *
  */
 

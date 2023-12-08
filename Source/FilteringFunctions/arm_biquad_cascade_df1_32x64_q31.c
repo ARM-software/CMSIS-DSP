@@ -157,7 +157,6 @@
   @param[in]     pSrc      points to the block of input data
   @param[out]    pDst      points to the block of output data
   @param[in]     blockSize number of samples to process
-  @return        none
 
   @par           Details
                    The function is implemented using an internal 64-bit accumulator.

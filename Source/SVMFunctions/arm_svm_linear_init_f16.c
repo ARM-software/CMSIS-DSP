@@ -58,7 +58,6 @@
  * @param[in]    dualCoefficients       Array of dual coefficients
  * @param[in]    supportVectors         Array of support vectors
  * @param[in]    classes                Array of 2 classes ID
- * @return none.
  *
  */
 

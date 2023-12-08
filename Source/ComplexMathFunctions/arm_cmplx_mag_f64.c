@@ -44,7 +44,6 @@
   @param[in]     pSrc        points to input vector
   @param[out]    pDst        points to output vector
   @param[in]     numSamples  number of samples in each vector
-  @return        none
  */
 void arm_cmplx_mag_f64(
   const float64_t * pSrc,

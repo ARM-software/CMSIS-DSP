@@ -29,6 +29,9 @@
 }
 
 #nav-tree .selected {
+  background-image: none;
+  background-repeat:no-repeat;
+  text-shadow: none;
   border: 1.5px solid var(--arm_blue);
   border-left-width: 5px;
   margin-left:-10px; /*correction to place selection border on the edge screen edge */
@@ -42,6 +45,7 @@
 }
 
 #nav-tree a {
+  color: var(--nav-text-normal-color);
   text-decoration:none;
   padding:0px;
   padding-left:0px;
@@ -62,7 +66,6 @@
 #nav-tree .label a {
   padding-left:6px;
   line-height: 30px;
-  color: var(--arm_black);
 }
 
 #nav-tree .selected a {
@@ -82,7 +85,6 @@
 #nav-tree {
   padding: 0px 0px;
   padding-left: 10px;  /*correction to add space before the first arrow in nav-tree */
-  background-color: #FAFAFF;
   overflow:auto;
 }
 
@@ -100,7 +102,7 @@
   display:block;
   position: absolute;
   left: 0px;
-  width: 340px;
+  width: 330px;
 }
 
 .ui-resizable .ui-resizable-handle {
@@ -108,14 +110,14 @@
 }
 
 .ui-resizable-e {
-  background-color: var(--arm_light_gray);
+  background-color: var(--nav-splitbar-color);
   background-repeat:repeat-y;
   background-attachment: scroll;
   cursor:ew-resize;
   height:100%;
   right:0;
   top:0;
-  width:2px;
+  width:1px;
 }
 
 .ui-resizable-handle {
@@ -130,7 +132,7 @@
 }
 
 #nav-tree {
-  background-color: white;
+
   -webkit-overflow-scrolling : touch; /* iOS 5+ */
 }
 
@@ -139,14 +141,15 @@
   top:5px;
   right:24px;
   z-index:0;
+  opacity:0;
 }
 
 #nav-sync img {
-  opacity:0.0;
+  opacity:0;
 }
 
 #nav-sync img:hover {
-  opacity:0.0;
+  opacity:0;
 }
 
 #nav-tree a:hover {

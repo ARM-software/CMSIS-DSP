@@ -45,8 +45,6 @@
   @param[in]     pSrc       points to the f32 input vector
   @param[out]    pDst       points to the f16 output vector
   @param[in]     blockSize  number of samples in each vector
-  @return        none
-
  */
 
 #if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE) && defined(__CMSIS_GCC_H)

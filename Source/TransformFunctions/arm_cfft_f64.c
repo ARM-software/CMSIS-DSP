@@ -51,7 +51,6 @@ extern void arm_bitreversal_64(
 * @param[in]      fftLen           length of the FFT.
 * @param[in]      *pCoef           points to the twiddle coefficient buffer.
 * @param[in]      twidCoefModifier twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table.
-* @return none.
 */
 
 void arm_radix4_butterfly_f64(
@@ -185,7 +184,6 @@ void arm_radix4_butterfly_f64(
 * @param[in]      fftLen           length of the FFT.
 * @param[in]      *pCoef           points to the twiddle coefficient buffer.
 * @param[in]      twidCoefModifier twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table.
-* @return none.
 */
 
 void arm_cfft_radix4by2_f64(
@@ -250,7 +248,6 @@ void arm_cfft_radix4by2_f64(
   @param[in]     bitReverseFlag flag that enables / disables bit reversal of output
                    - value = 0: disables bit reversal of output
                    - value = 1: enables bit reversal of output
-  @return        none
  */
 
 void arm_cfft_f64(

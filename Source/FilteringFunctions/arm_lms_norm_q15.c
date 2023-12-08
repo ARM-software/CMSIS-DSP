@@ -45,7 +45,6 @@
   @param[out]    pOut      points to the block of output data
   @param[out]    pErr      points to the block of error data
   @param[in]     blockSize number of samples to process
-  @return        none
 
   @par           Scaling and Overflow Behavior
                    The function is implemented using a 64-bit internal accumulator.

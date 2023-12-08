@@ -35,7 +35,6 @@
   @param[in,out] pSrc        points to in-place buffer of unknown 64-bit data type
   @param[in]     bitRevLen   bit reversal table length
   @param[in]     pBitRevTab  points to bit reversal table
-  @return        none
 */
 
 void arm_bitreversal_64(
@@ -70,7 +69,6 @@ void arm_bitreversal_64(
   @param[in,out] pSrc        points to in-place buffer of unknown 32-bit data type
   @param[in]     bitRevLen   bit reversal table length
   @param[in]     pBitRevTab  points to bit reversal table
-  @return        none
 */
 
 void arm_bitreversal_32(
@@ -105,7 +103,6 @@ void arm_bitreversal_32(
   @param[in,out] pSrc        points to in-place buffer of unknown 16-bit data type
   @param[in]     bitRevLen   bit reversal table length
   @param[in]     pBitRevTab  points to bit reversal table
-  @return        none
 */
 
 void arm_bitreversal_16(

@@ -54,7 +54,6 @@
   @brief         Nuttall3 window generating function (f32).
   @param[out]    pDst       points to the output generated window
   @param[in]     blockSize  number of samples in the window
-  @return        none
  
   @par Parameters of the window
   

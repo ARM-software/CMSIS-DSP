@@ -40,10 +40,9 @@
  * -------------------------------------------------------------------- */
 
 /**
- * @ingroup groupExamples
- */
-
-/**
+ * @addtogroup groupExamples
+ * @{
+ *
  * @defgroup SignalConvergence Signal Convergence Example
  *
  * \par Description:
@@ -100,11 +99,9 @@
  * <b> Refer  </b>
  * \link arm_signal_converge_example_f32.c \endlink
  *
- */
-
-
-/** \example arm_signal_converge_example_f32.c
-  */
+ * \example arm_signal_converge_example_f32.c
+ *
+ * @} */
 
 #include "arm_math.h"
 #include "math_helper.h"

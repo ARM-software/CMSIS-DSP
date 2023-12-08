@@ -42,7 +42,6 @@
  * @param[in]    S          Pointer to an instance of the linear SVM structure.
  * @param[in]    in         Pointer to input vector
  * @param[out]   pResult    Decision value
- * @return none.
  *
  */
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)

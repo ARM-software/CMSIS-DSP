@@ -61,7 +61,6 @@
  * @param[in]    supportVectors         Array of support vectors
  * @param[in]    classes                Array of 2 classes ID
  * @param[in]    gamma                  gamma (scikit-learn terminology)
- * @return none.
  *
  */
 

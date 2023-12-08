@@ -62,7 +62,6 @@
  * @param[in]    degree                 Polynomial degree
  * @param[in]    coef0                  coeff0 (scikit-learn terminology)
  * @param[in]    gamma                  gamma (scikit-learn terminology)
- * @return none.
  *
  */
 

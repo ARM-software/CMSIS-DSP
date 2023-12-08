@@ -39,10 +39,9 @@
  * -------------------------------------------------------------------- */
 
 /**
- * @ingroup groupExamples
- */
-
-/**
+ * @addtogroup groupExamples
+ * @{
+ *
  * @defgroup DotproductExample Dot Product Example
  *
  * \par Description:
@@ -77,11 +76,9 @@
  * <b> Refer  </b>
  * \link arm_dotproduct_example_f32.c \endlink
  *
- */
-
-
-/** \example arm_dotproduct_example_f32.c
-  */
+ * \example arm_dotproduct_example_f32.c
+ *
+ * @} */
 
 #include <math.h>
 #include "arm_math.h"

@@ -67,7 +67,6 @@ void arm_cfft_radix4by2_f16(
 * @param[in]      fftLen           length of the FFT.
 * @param[in]      *pCoef           points to the twiddle coefficient buffer.
 * @param[in]      twidCoefModifier twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table.
-* @return none.
 */
 
 void arm_cfft_radix4by2_f16(
@@ -123,7 +122,6 @@ void arm_cfft_radix4by2_f16(
   @deprecated    Do not use this function. It has been superseded by \ref arm_cfft_f16 and will be removed in the future.
   @param[in]     S    points to an instance of the floating-point Radix-4 CFFT/CIFFT structure
   @param[in,out] pSrc points to the complex data buffer of size <code>2*fftLen</code>. Processing occurs in-place
-  @return        none
  */
 
 void arm_cfft_radix4_f16(
@@ -163,7 +161,6 @@ void arm_cfft_radix4_f16(
 * @param[in]      fftLen           length of the FFT.
 * @param[in]      *pCoef           points to the twiddle coefficient buffer.
 * @param[in]      twidCoefModifier twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table.
-* @return none.
 */
 
 void arm_radix4_butterfly_f16(
@@ -667,7 +664,6 @@ uint16_t twidCoefModifier)
 * @param[in]      *pCoef           points to twiddle coefficient buffer.
 * @param[in]      twidCoefModifier twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table.
 * @param[in]      onebyfftLen      value of 1/fftLen.
-* @return none.
 */
 
 void arm_radix4_butterfly_inverse_f16(

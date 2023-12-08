@@ -52,7 +52,6 @@
  * @param[in]       pInputRotations points to an array 3x3 rotation matrix (in row order)
  * @param[out]      pOutputQuaternions points to an array quaternions
  * @param[in]       nbQuaternions number of quaternions in the array
- * @return none.
  *
  * q and -q are representing the same rotation. This ambiguity must be taken into
  * account when using the output of this function.

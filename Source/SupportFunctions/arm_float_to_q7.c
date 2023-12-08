@@ -42,7 +42,6 @@
  * @param[in]       *pSrc points to the floating-point input vector
  * @param[out]      *pDst points to the Q7 output vector
  * @param[in]       blockSize length of the input vector
- * @return none.
  *
  *\par Description:
  * \par

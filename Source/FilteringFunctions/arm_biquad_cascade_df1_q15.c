@@ -43,7 +43,6 @@
   @param[in]     pSrc      points to the block of input data
   @param[out]    pDst      points to the location where the output result is written
   @param[in]     blockSize number of samples to process
-  @return        none
 
   @par           Scaling and Overflow Behavior
                    The function is implemented using a 64-bit internal accumulator.

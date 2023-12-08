@@ -43,7 +43,6 @@
   @param[in]     pSrc      points to the block of input data
   @param[out]    pDst      points to the block of output data
   @param[in]     blockSize number of samples to process per call
-  @return        none
 
   @par           Scaling and Overflow Behavior
                    This fast version uses a 32-bit accumulator with 2.30 format.

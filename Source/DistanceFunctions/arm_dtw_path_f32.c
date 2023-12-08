@@ -47,7 +47,6 @@
  * @param[in]    pDTW  Cost matrix (Query rows * Template columns)
  * @param[out]   pPath Warping path in cost matrix 2*(nb rows + nb columns)
  * @param[out]   pathLength Length of path in number of points
- * @return none
  * 
  * @par Warping path
  * 

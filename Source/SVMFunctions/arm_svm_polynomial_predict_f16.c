@@ -74,7 +74,6 @@ __STATIC_INLINE float16_t arm_exponent_f16(float16_t x, int32_t nb)
  * @param[in]    S          Pointer to an instance of the polynomial SVM structure.
  * @param[in]    in         Pointer to input vector
  * @param[out]   pResult    Decision value
- * @return none.
  *
  */
 void arm_svm_polynomial_predict_f16(
@@ -333,7 +332,6 @@ void arm_svm_polynomial_predict_f16(
  * @param[in]    S          Pointer to an instance of the polynomial SVM structure.
  * @param[in]    in         Pointer to input vector
  * @param[out]   pResult    Decision value
- * @return none.
  *
  */
 void arm_svm_polynomial_predict_f16(

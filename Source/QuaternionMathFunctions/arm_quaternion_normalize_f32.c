@@ -49,7 +49,6 @@
   @param[in]     pInputQuaternions            points to the input vector of quaternions
   @param[out]    pNormalizedQuaternions       points to the output vector of normalized quaternions
   @param[in]     nbQuaternions                number of quaternions in each vector
-  @return        none
  */
 
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)

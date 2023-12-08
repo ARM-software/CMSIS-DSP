@@ -43,7 +43,6 @@
   @param[in]     pSrcB      points to second input vector
   @param[out]    pDst       points to output vector
   @param[in]     blockSize  number of samples in each vector
-  @return        none
  */
 
 void arm_add_f64(

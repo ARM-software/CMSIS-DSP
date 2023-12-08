@@ -43,7 +43,6 @@
   @param[in]     pSrc      points to the block of input data
   @param[out]    pDst      points to the block of output data
   @param[in]     blockSize number of samples to process per call
-  @return        none
 
   @par           Scaling and Overflow Behavior
                    This function is optimized for speed at the expense of fixed-point precision and overflow protection.

@@ -43,7 +43,6 @@
   @param[in]     pSrcB       points to the second input vector
   @param[in]     blockSize   number of samples in input vector
   @param[out]    result      mean square error
-  @return        none
  */
 
 #if !defined(ARM_MATH_AUTOVECTORIZE)

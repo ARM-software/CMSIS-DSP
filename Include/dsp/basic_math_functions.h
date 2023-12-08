@@ -652,7 +652,6 @@ const float64_t * pSrc,
    * @param[in]     pSrcB      points to input vector B
    * @param[out]    pDst       points to output vector
    * @param[in]     blockSize  number of samples in each vector
-   * @return        none
    */
   void arm_and_u16(
     const uint16_t * pSrcA,
@@ -666,7 +665,6 @@ const float64_t * pSrc,
    * @param[in]     pSrcB      points to input vector B
    * @param[out]    pDst       points to output vector
    * @param[in]     blockSize  number of samples in each vector
-   * @return        none
    */
   void arm_and_u32(
     const uint32_t * pSrcA,
@@ -680,7 +678,6 @@ const float64_t * pSrc,
    * @param[in]     pSrcB      points to input vector B
    * @param[out]    pDst       points to output vector
    * @param[in]     blockSize  number of samples in each vector
-   * @return        none
    */
   void arm_and_u8(
     const uint8_t * pSrcA,
@@ -694,7 +691,6 @@ const float64_t * pSrc,
    * @param[in]     pSrcB      points to input vector B
    * @param[out]    pDst       points to output vector
    * @param[in]     blockSize  number of samples in each vector
-   * @return        none
    */
   void arm_or_u16(
     const uint16_t * pSrcA,
@@ -708,7 +704,6 @@ const float64_t * pSrc,
    * @param[in]     pSrcB      points to input vector B
    * @param[out]    pDst       points to output vector
    * @param[in]     blockSize  number of samples in each vector
-   * @return        none
    */
   void arm_or_u32(
     const uint32_t * pSrcA,
@@ -722,7 +717,6 @@ const float64_t * pSrc,
    * @param[in]     pSrcB      points to input vector B
    * @param[out]    pDst       points to output vector
    * @param[in]     blockSize  number of samples in each vector
-   * @return        none
    */
   void arm_or_u8(
     const uint8_t * pSrcA,
@@ -735,7 +729,6 @@ const float64_t * pSrc,
    * @param[in]     pSrc       points to input vector 
    * @param[out]    pDst       points to output vector
    * @param[in]     blockSize  number of samples in each vector
-   * @return        none
    */
   void arm_not_u16(
     const uint16_t * pSrc,
@@ -747,7 +740,6 @@ const float64_t * pSrc,
    * @param[in]     pSrc       points to input vector 
    * @param[out]    pDst       points to output vector
    * @param[in]     blockSize  number of samples in each vector
-   * @return        none
    */
   void arm_not_u32(
     const uint32_t * pSrc,
@@ -759,7 +751,6 @@ const float64_t * pSrc,
    * @param[in]     pSrc       points to input vector 
    * @param[out]    pDst       points to output vector
    * @param[in]     blockSize  number of samples in each vector
-   * @return        none
    */
   void arm_not_u8(
     const uint8_t * pSrc,
@@ -772,7 +763,6 @@ const float64_t * pSrc,
    * @param[in]     pSrcB      points to input vector B
    * @param[out]    pDst       points to output vector
    * @param[in]     blockSize  number of samples in each vector
-   * @return        none
    */
   void arm_xor_u16(
     const uint16_t * pSrcA,
@@ -786,7 +776,6 @@ const float64_t * pSrc,
    * @param[in]     pSrcB      points to input vector B
    * @param[out]    pDst       points to output vector
    * @param[in]     blockSize  number of samples in each vector
-   * @return        none
    */
   void arm_xor_u32(
     const uint32_t * pSrcA,
@@ -800,7 +789,6 @@ const float64_t * pSrc,
    * @param[in]     pSrcB      points to input vector B
    * @param[out]    pDst       points to output vector
    * @param[in]     blockSize  number of samples in each vector
-   * @return        none
    */
   void arm_xor_u8(
     const uint8_t * pSrcA,
@@ -815,7 +803,6 @@ const float64_t * pSrc,
   @param[in]     low           lower bound
   @param[in]     high          higher bound
   @param[in]     numSamples    number of samples to clip
-  @return        none
  */
 
 void arm_clip_f32(const float32_t * pSrc, 
@@ -831,7 +818,6 @@ void arm_clip_f32(const float32_t * pSrc,
   @param[in]     low           lower bound
   @param[in]     high          higher bound
   @param[in]     numSamples    number of samples to clip
-  @return        none
  */
 
 void arm_clip_q31(const q31_t * pSrc, 
@@ -847,7 +833,6 @@ void arm_clip_q31(const q31_t * pSrc,
   @param[in]     low           lower bound
   @param[in]     high          higher bound
   @param[in]     numSamples    number of samples to clip
-  @return        none
  */
 
 void arm_clip_q15(const q15_t * pSrc, 
@@ -863,7 +848,6 @@ void arm_clip_q15(const q15_t * pSrc,
   @param[in]     low           lower bound
   @param[in]     high          higher bound
   @param[in]     numSamples    number of samples to clip
-  @return        none
  */
 
 void arm_clip_q7(const q7_t * pSrc, 
