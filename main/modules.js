@@ -5,7 +5,7 @@ var modules =
     [ "Bayesian estimators", "group__groupBayes.html", "group__groupBayes" ],
     [ "Complex Math Functions", "group__groupCmplxMath.html", "group__groupCmplxMath" ],
     [ "Controller Functions", "group__groupController.html", "group__groupController" ],
-    [ "Distance functions", "group__groupDistance.html", "group__groupDistance" ],
+    [ "Distance Functions", "group__groupDistance.html", "group__groupDistance" ],
     [ "Fast Math Functions", "group__groupFastMath.html", "group__groupFastMath" ],
     [ "Filtering Functions", "group__groupFilters.html", "group__groupFilters" ],
     [ "Interpolation Functions", "group__groupInterpolation.html", "group__groupInterpolation" ],

@@ -13,6 +13,7 @@ var searchData=
   ['hft90d_20window_20function_20_2890_2e2_20db_29_10',['Hft90d window function (90.2 dB)',['../group__WindowHFT90D.html',1,'']]],
   ['hft95_20window_20function_20_2895_2e0_20db_29_11',['Hft95 window function (95.0 dB)',['../group__WindowHFT95.html',1,'']]],
   ['high_20precision_20q31_20biquad_20cascade_20filter_12',['High Precision Q31 Biquad Cascade Filter',['../group__BiquadCascadeDF1__32x64.html',1,'']]],
-  ['history_2etxt_13',['history.txt',['../history_8txt.html',1,'']]],
-  ['householder_20transform_20of_20a_20vector_14',['Householder transform of a vector',['../group__MatrixHouseholder.html',1,'']]]
+  ['history_2emd_13',['history.md',['../history_8md.html',1,'']]],
+  ['history_2etxt_14',['history.txt',['../history_8txt.html',1,'']]],
+  ['householder_20transform_20of_20a_20vector_15',['Householder transform of a vector',['../group__MatrixHouseholder.html',1,'']]]
 ];

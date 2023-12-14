@@ -25,36 +25,23 @@
 var NAVTREE =
 [
   [ "CMSIS-DSP", "index.html", [
-    [ "CMSIS DSP Software Library", "index.html", [
-      [ "Introduction", "index.html#intro", null ],
-      [ "Using the Library", "index.html#using", null ],
-      [ "Examples", "index.html#example", null ],
-      [ "Toolchain Support", "index.html#toolchain", null ],
-      [ "Preprocessor Macros", "index.html#preprocessor", null ],
-      [ "CMSIS-DSP in ARM::CMSIS Pack", "index.html#pack", null ],
-      [ "Revision History of CMSIS-DSP", "index.html#rev", null ],
-      [ "License", "index.html#license", null ]
-    ] ],
-    [ "Revision History", "ChangeLog_pg.html", null ],
+    [ "Overview", "index.html", "index" ],
+    [ "Revision History", "rev_hist.html", null ],
     [ "Deprecated List", "deprecated.html", null ],
-    [ " API Reference", "modules.html", "modules" ],
-    [ "Data Structures", "annotated.html", "annotated" ],
-    [ "Data Fields", "functions.html", [
-      [ "All", "functions.html", "functions_dup" ],
-      [ "Variables", "functions_vars.html", "functions_vars" ]
+    [ "API Reference", "modules.html", "modules" ],
+    [ "Data Structures", "annotated.html", [
+      [ "Data Structures", "annotated.html", "annotated_dup" ]
     ] ]
   ] ]
 ];
 
 var NAVTREEINDEX =
 [
-"ChangeLog_pg.html",
-"group__Chebyshev.html#ga5cf07beec12cfe0ad126aadc9a6f5f97",
-"group__Kullback-Leibler.html#gad7364ce09f552a2dd45538c0b9f3515e",
-"group__RealFFTF16.html#gae6cf3e1a399970085ceee5fe1d8c0c7c",
-"group__mean.html#gad53642208dd6246ba943acf3534d939e",
-"structarm__dct4__instance__q15.html#afa64b1618089e35c2b55cff71cb29715",
-"structarm__mfcc__instance__q31.html#adb2eef6a7ff4b4c20143a902612f915e"
+"annotated.html",
+"group__ComplexFFTF16.html#ga961c5441c9b8c843cf36758b3a4f053d",
+"group__MFCCF32.html#ga3e3cf0c0a9aba3f9a54391afb17ca0ec",
+"group__RealFFTF64.html#ga929146fd0fb2b347866b5dbafcc4fdd5",
+"group__q15__to__x.html#ga5a75381e7d63ea3a3a315344615281cf"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

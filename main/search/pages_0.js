@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['cmsis_20dsp_20software_20library_0',['CMSIS DSP Software Library',['../index.html',1,'']]]
+  ['deprecated_20list_0',['Deprecated List',['../deprecated.html',1,'']]]
 ];
