@@ -24,7 +24,7 @@ jobs:
         run: |
           git fetch --tags --force
 
-     - uses: Open-CMSIS-Pack/gen-pack-action@main
+      - uses: Open-CMSIS-Pack/gen-pack-action@main
         with:
           doxygen-version: 1.9.6
           packchk-version: 1.4.1
