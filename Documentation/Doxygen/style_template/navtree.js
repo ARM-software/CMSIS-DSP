@@ -443,6 +443,10 @@ function navTo(o,root,hash,relpath)
   } else {
     getScript(relpath+'navtreeindex'+i,function(){
       navTreeSubIndices[i] = eval('NAVTREEINDEX'+i);
+      /* ensures first section is expanded when opening index */
+      if ((root=="index.html") && (!navTreeSubIndices[i]["index.html"].length)) {
+        navTreeSubIndices[i]["index.html"]=[0];
+      }
       if (navTreeSubIndices[i]) {
         gotoNode(o,i,root,hash,relpath);
       }

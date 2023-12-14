@@ -57,7 +57,6 @@ void arm_bitreversal_q31(
   @deprecated    Do not use this function. It has been superseded by \ref arm_cfft_q31 and will be removed in the future.
   @param[in]     S    points to an instance of the fixed-point CFFT/CIFFT structure
   @param[in,out] pSrc points to the complex data buffer of size <code>2*fftLen</code>. Processing occurs in-place
-  @return        none
  */
 
 void arm_cfft_radix2_q31(

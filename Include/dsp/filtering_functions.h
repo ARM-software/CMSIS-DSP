@@ -1216,7 +1216,6 @@ arm_status arm_fir_decimate_init_f32(
   @param[in]     numStages         number of 2nd order stages in the filter.
   @param[in]     pCoeffs           points to the original filter coefficients.
   @param[in]     pComputedCoeffs   points to the new computed coefficients for the vectorized version.
-  @return        none
 */
 void arm_biquad_cascade_df2T_compute_coefs_f32(
   uint8_t numStages,
@@ -1891,7 +1890,6 @@ void arm_correlate_opt_q15(
   @param[in]     pSrcB      points to the second input sequence
   @param[in]     srcBLen    length of the second input sequence
   @param[out]    pDst       points to the location where the output result is written.  Length 2 * max(srcALen, srcBLen) - 1.
-  @return        none
  */
 void arm_correlate_fast_q15(
   const q15_t * pSrcA,
@@ -2501,7 +2499,6 @@ void arm_correlate_fast_q31(
   @param[out]    a        autoregressive coefficients
   @param[out]    err      prediction error (variance)
   @param[in]     nbCoefs  number of autoregressive coefficients
-  @return        none
  */
 void arm_levinson_durbin_f32(const float32_t *phi,
   float32_t *a, 
@@ -2515,7 +2512,6 @@ void arm_levinson_durbin_f32(const float32_t *phi,
   @param[out]    a        autoregressive coefficients
   @param[out]    err      prediction error (variance)
   @param[in]     nbCoefs  number of autoregressive coefficients
-  @return        none
  */
 void arm_levinson_durbin_q31(const q31_t *phi,
   q31_t *a, 

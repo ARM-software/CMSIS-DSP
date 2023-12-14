@@ -48,7 +48,6 @@
   @param[in]     numSamples  number of samples in each vector
   @param[out]    realResult  real part of the result returned here
   @param[out]    imagResult  imaginary part of the result returned here
-  @return        none
  */
 
 #if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)

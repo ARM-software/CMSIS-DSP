@@ -166,7 +166,6 @@ float16x8_t vlogq_lut_f16(float16x8_t vecIn)
   @param[in]     pSrc       points to the input vector
   @param[out]    pDst       points to the output vector
   @param[in]     blockSize  number of samples in each vector
-  @return        none
  */
 
 

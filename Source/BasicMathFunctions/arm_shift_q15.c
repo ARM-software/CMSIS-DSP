@@ -43,7 +43,6 @@
   @param[in]     shiftBits  number of bits to shift.  A positive value shifts left; a negative value shifts right.
   @param[out]    pDst       points to the output vector
   @param[in]     blockSize  number of samples in each vector
-  @return        none
 
   @par           Scaling and Overflow Behavior
                    The function uses saturating arithmetic.

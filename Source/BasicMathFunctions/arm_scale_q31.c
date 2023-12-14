@@ -44,7 +44,6 @@
   @param[in]     shift      number of bits to shift the result by
   @param[out]    pDst       points to the output vector
   @param[in]     blockSize  number of samples in each vector
-  @return        none
 
   @par           Scaling and Overflow Behavior
                    The input data <code>*pSrc</code> and <code>scaleFract</code> are in 1.31 format.

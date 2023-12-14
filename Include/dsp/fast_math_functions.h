@@ -128,7 +128,6 @@ extern "C"
   @param[in]     pSrc       points to the input vector
   @param[out]    pDst       points to the output vector
   @param[in]     blockSize  number of samples in each vector
-  @return        none
  */
   void arm_vlog_f32(
   const float32_t * pSrc,
@@ -142,7 +141,6 @@ extern "C"
   @param[in]     pSrc       points to the input vector
   @param[out]    pDst       points to the output vector
   @param[in]     blockSize  number of samples in each vector
-  @return        none
  */
   void arm_vlog_f64(
   const float64_t * pSrc,
@@ -156,7 +154,6 @@ extern "C"
    * @param[in]     pSrc       points to the input vector in q31
    * @param[out]    pDst       points to the output vector in q5.26
    * @param[in]     blockSize  number of samples in each vector
-   * @return        none
    */
   void arm_vlog_q31(const q31_t * pSrc,
         q31_t * pDst,
@@ -167,7 +164,6 @@ extern "C"
    * @param[in]     pSrc       points to the input vector in q15
    * @param[out]    pDst       points to the output vector in q4.11
    * @param[in]     blockSize  number of samples in each vector
-   * @return        none
    */
   void arm_vlog_q15(const q15_t * pSrc,
         q15_t * pDst,
@@ -180,7 +176,6 @@ extern "C"
   @param[in]     pSrc       points to the input vector
   @param[out]    pDst       points to the output vector
   @param[in]     blockSize  number of samples in each vector
-  @return        none
  */
   void arm_vexp_f32(
   const float32_t * pSrc,
@@ -194,7 +189,6 @@ extern "C"
   @param[in]     pSrc       points to the input vector
   @param[out]    pDst       points to the output vector
   @param[in]     blockSize  number of samples in each vector
-  @return        none
  */
   void arm_vexp_f64(
   const float64_t * pSrc,

@@ -50,7 +50,6 @@
   @param[in]     pSrcB       points to the second input vector
   @param[in]     blockSize   number of samples in input vector
   @param[out]    pResult     mean square error
-  @return        none
  */
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 void arm_mse_q7(

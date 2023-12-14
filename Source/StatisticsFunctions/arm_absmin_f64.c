@@ -43,7 +43,6 @@
   @param[in]     blockSize  number of samples in input vector
   @param[out]    pResult    minimum value returned here
   @param[out]    pIndex     index of minimum value returned here
-  @return        none
  */
 void arm_absmin_f64(
   const float64_t * pSrc,

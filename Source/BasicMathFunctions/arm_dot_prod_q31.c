@@ -43,7 +43,6 @@
   @param[in]     pSrcB      points to the second input vector.
   @param[in]     blockSize  number of samples in each vector.
   @param[out]    result     output result returned here.
-  @return        none
 
   @par           Scaling and Overflow Behavior
                    The intermediate multiplications are in 1.31 x 1.31 = 2.62 format and these

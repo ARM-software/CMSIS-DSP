@@ -68,7 +68,6 @@ typedef struct
    * @param[in,out] S  is an instance of the floating-point Linear Interpolation structure
    * @param[in]     x  input sample to process
    * @return y processed output sample.
-   *
    */
   float16_t arm_linear_interp_f16(
   arm_linear_interp_instance_f16 * S,

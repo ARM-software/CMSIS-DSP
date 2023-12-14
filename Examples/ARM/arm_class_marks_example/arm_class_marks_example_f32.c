@@ -40,10 +40,9 @@
 * -------------------------------------------------------------------- */
 
 /**
- * @ingroup groupExamples
- */
-
-/**
+ * @addtogroup groupExamples
+ * @{
+ *
  * @defgroup ClassMarks Class Marks Example
  *
  * \par Description:
@@ -76,11 +75,10 @@
  * <b> Refer  </b>
  * \link arm_class_marks_example_f32.c \endlink
  *
- */
+ * \example arm_class_marks_example_f32.c
+ *
+ * @} */
 
-
-/** \example arm_class_marks_example_f32.c
-  */
 #include "arm_math.h"
 
 #if defined(SEMIHOSTING)

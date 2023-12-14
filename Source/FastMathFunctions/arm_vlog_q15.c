@@ -216,8 +216,6 @@ q15x8_t vlogq_q15(q15x8_t src)
   @param[in]     pSrc       points to the input vector in q15
   @param[out]    pDst       points to the output vector in q4.11
   @param[in]     blockSize  number of samples in each vector
-  @return        none
-
  */
 
 void arm_vlog_q15(

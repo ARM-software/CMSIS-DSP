@@ -39,10 +39,9 @@
 * -------------------------------------------------------------------- */
 
 /**
- * @ingroup groupExamples
- */
-
-/**
+ * @addtogroup groupExamples
+ * @{
+ *
  * @defgroup VarianceExample Variance Example
  *
  * \par Description:
@@ -85,11 +84,9 @@
  * <b> Refer  </b>
  * \link arm_variance_example_f32.c \endlink
  *
- */
-
-
-/** \example arm_variance_example_f32.c
-  */
+ * \example arm_variance_example_f32.c
+ *
+ * @} */
 
 #include <math.h>
 #include "arm_math.h"

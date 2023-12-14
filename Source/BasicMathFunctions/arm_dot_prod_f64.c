@@ -43,7 +43,6 @@
   @param[in]     pSrcB      points to the second input vector.
   @param[in]     blockSize  number of samples in each vector.
   @param[out]    result     output result returned here.
-  @return        none
  */
 #if defined(ARM_MATH_NEON) && defined(__aarch64__)
 void arm_dot_prod_f64(

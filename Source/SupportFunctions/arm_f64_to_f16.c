@@ -48,7 +48,6 @@
   @param[in]     pSrc       points to the f64 input vector
   @param[out]    pDst       points to the f16 output vector
   @param[in]     blockSize  number of samples in each vector
-  @return        none
 
  */
 

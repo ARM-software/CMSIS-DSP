@@ -42,7 +42,6 @@
   @param[in]     pSrc       points to the Q31 input vector
   @param[out]    pDst       points to the Q7 output vector
   @param[in]     blockSize  number of samples in each vector
-  @return        none
 
   @par           Details
                    The equation used for the conversion process is:

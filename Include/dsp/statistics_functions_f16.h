@@ -179,13 +179,12 @@ extern "C"
  * @param[in]  pSrcA        Array of input values.
  * @param[in]  blockSize    Number of samples in the input array.
  * @return     Entropy      -Sum(p ln p)
- *
  */
-
-
 float16_t arm_entropy_f16(const float16_t * pSrcA,uint32_t blockSize);
 
+
 float16_t arm_logsumexp_f16(const float16_t *in, uint32_t blockSize);
+
 
 /**
  * @brief Dot product with log arithmetic
@@ -197,14 +196,12 @@ float16_t arm_logsumexp_f16(const float16_t *in, uint32_t blockSize);
  * @param[in]       blockSize number of samples in each vector
  * @param[in]       pTmpBuffer temporary buffer of length blockSize
  * @return The log of the dot product .
- *
  */
-
-
 float16_t arm_logsumexp_dot_prod_f16(const float16_t * pSrcA,
   const float16_t * pSrcB,
   uint32_t blockSize,
   float16_t *pTmpBuffer);
+
 
 /**
  * @brief Kullback-Leibler
@@ -213,35 +210,35 @@ float16_t arm_logsumexp_dot_prod_f16(const float16_t * pSrcA,
  * @param[in]  pSrcB         Pointer to an array of input values for probability distribution B.
  * @param[in]  blockSize     Number of samples in the input array.
  * @return Kullback-Leibler  Divergence D(A || B)
- *
  */
 float16_t arm_kullback_leibler_f16(const float16_t * pSrcA
   ,const float16_t * pSrcB
   ,uint32_t blockSize);
+
 
 /**
     @brief         Maximum value of a floating-point vector.
     @param[in]     pSrc       points to the input vector
     @param[in]     blockSize  number of samples in input vector
     @param[out]    pResult    maximum value returned here
-    @return        none
    */
   void arm_max_no_idx_f16(
       const float16_t *pSrc,
       uint32_t   blockSize,
       float16_t *pResult);
 
+
 /**
     @brief         Minimum value of a floating-point vector.
     @param[in]     pSrc       points to the input vector
     @param[in]     blockSize  number of samples in input vector
     @param[out]    pResult    minimum value returned here
-    @return        none
    */
   void arm_min_no_idx_f16(
       const float16_t *pSrc,
       uint32_t   blockSize,
       float16_t *pResult);
+
 
 /**
   @brief         Mean square error between two half precision float vectors.
@@ -249,9 +246,7 @@ float16_t arm_kullback_leibler_f16(const float16_t * pSrcA
   @param[in]     pSrcB       points to the second input vector
   @param[in]     blockSize  number of samples in input vector
   @param[out]    pResult    mean square error
-  @return        none 
 */
-  
 void arm_mse_f16(
   const float16_t * pSrcA,
   const float16_t * pSrcB,

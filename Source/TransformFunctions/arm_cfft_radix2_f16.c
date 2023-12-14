@@ -67,7 +67,6 @@ extern void arm_bitreversal_f16(
   @deprecated    Do not use this function. It has been superseded by \ref arm_cfft_f16 and will be removed in the future
   @param[in]     S    points to an instance of the floating-point Radix-2 CFFT/CIFFT structure
   @param[in,out] pSrc points to the complex data buffer of size <code>2*fftLen</code>. Processing occurs in-place
-  @return        none
  */
 
 void arm_cfft_radix2_f16(
@@ -113,7 +112,6 @@ const arm_cfft_radix2_instance_f16 * S,
 * @param[in]      fftLen           length of the FFT.
 * @param[in]      *pCoef           points to the twiddle coefficient buffer.
 * @param[in]      twidCoefModifier twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table.
-* @return none.
 */
 
 void arm_radix2_butterfly_f16(

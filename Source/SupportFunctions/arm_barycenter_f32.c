@@ -46,7 +46,6 @@
  * @param[out]   *out        Barycenter
  * @param[in]    nbVectors   Number of vectors
  * @param[in]    vecDim      Dimension of space (vector dimension)
- * @return       None
  *
  */
 

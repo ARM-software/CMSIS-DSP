@@ -43,7 +43,6 @@
   @param[in]     blockSize  number of samples in input vector
   @param[out]    pResult    maximum value returned here
   @param[out]    pIndex     index of maximum value returned here
-  @return        none
  */
 void arm_max_f64(
   const float64_t * pSrc,

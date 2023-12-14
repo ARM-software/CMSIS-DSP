@@ -59,7 +59,6 @@ void arm_bitreversal_q15(
   @deprecated          Do not use this function.  It has been superseded by \ref arm_cfft_q15 and will be removed in the future.
   @param[in]     S     points to an instance of the Q15 CFFT/CIFFT structure.
   @param[in,out] pSrc  points to the complex data buffer. Processing occurs in-place.
-  @return        none
  
   @par Input and output formats:
                  Internally input is downscaled by 2 for every stage to avoid saturations inside CFFT/CIFFT process.
@@ -150,7 +149,6 @@ void arm_cfft_radix4_q15(
   @param[in]     fftLen           length of the FFT
   @param[in]     pCoef16         points to twiddle coefficient buffer
   @param[in]     twidCoefModifier twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table
-  @return        none
  */
 
 void arm_radix4_butterfly_q15(
@@ -980,7 +978,6 @@ void arm_radix4_butterfly_q15(
   @param[in]     fftLen           length of the FFT
   @param[in]     pCoef16          points to twiddle coefficient buffer
   @param[in]     twidCoefModifier twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table.
-  @return        none
  */
 
 /*

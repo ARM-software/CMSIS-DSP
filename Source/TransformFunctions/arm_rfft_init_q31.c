@@ -348,17 +348,15 @@ RFFTINIT_Q31(32,16,256);
                    Set(=1) bitReverseFlag for output to be in normal order otherwise output is in bit reversed order.
   @par
                    This function also initializes Twiddle factor table.
-
-  @par          
-                This function should be used only if you don't know the FFT sizes that 
-                you'll need at build time. The use of this function will prevent the 
-                linker from removing the FFT tables that are not needed and the library 
-                code size will be bigger than needed.
-
-  @par          
-                If you use CMSIS-DSP as a static library, and if you know the FFT sizes 
-                that you need at build time, then it is better to use the initialization
-                functions defined for each FFT size.
+  @par
+                   This function should be used only if you don't know the FFT sizes that 
+                   you'll need at build time. The use of this function will prevent the 
+                   linker from removing the FFT tables that are not needed and the library 
+                   code size will be bigger than needed.
+  @par
+                   If you use CMSIS-DSP as a static library, and if you know the FFT sizes 
+                   that you need at build time, then it is better to use the initialization
+                   functions defined for each FFT size.
 
 */
 

@@ -42,7 +42,6 @@
   @param[in]     pSrc       points to the input vector.
   @param[out]    pDst       points to the output vector.
   @param[in]     blockSize  number of samples in each vector.
-  @return        none
 
   @par           Conditions for optimum performance
                    Input and output buffers should be aligned by 32-bit

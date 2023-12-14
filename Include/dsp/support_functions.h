@@ -522,7 +522,6 @@ float32_t arm_weighted_sum_f32(const float32_t *in
  * @param[out]   out        Barycenter
  * @param[in]    nbVectors  Number of vectors
  * @param[in]    vecDim     Dimension of space (vector dimension)
- * @return       None
  *
  */
 void arm_barycenter_f32(const float32_t *in

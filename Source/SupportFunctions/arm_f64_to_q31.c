@@ -43,7 +43,6 @@
   @param[in]     pSrc       points to the 64 bit floating-point input vector
   @param[out]    pDst       points to the Q31 output vector
   @param[in]     blockSize  number of samples in each vector
-  @return        none
 
   @par           Details
                    The equation used for the conversion process is:

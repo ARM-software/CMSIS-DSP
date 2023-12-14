@@ -45,8 +45,6 @@
   @param[in]     pSrc       points to the f32 input vector
   @param[out]    pDst       points to the f64 output vector
   @param[in]     blockSize  number of samples in each vector
-  @return        none
-
  */
 
 void arm_float_to_f64(

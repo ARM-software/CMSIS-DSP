@@ -82,7 +82,6 @@ void arm_split_rifft_f32(
   @param[in]     S    points to an instance of the floating-point RFFT/RIFFT structure
   @param[in]     pSrc points to the input buffer
   @param[out]    pDst points to the output buffer
-  @return        none
 
  */
 
@@ -140,7 +139,6 @@ void arm_rfft_f32(
   @param[in]     pBTable   points to twiddle Coef B buffer
   @param[out]    pDst      points to output buffer
   @param[in]     modifier  twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table
-  @return        none
  */
 
 void arm_split_rfft_f32(
@@ -236,7 +234,6 @@ void arm_split_rfft_f32(
   @param[in]     pBTable   points to twiddle Coef B buffer
   @param[out]    pDst      points to output buffer
   @param[in]     modifier  twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table
-  @return        none
  */
 
 void arm_split_rifft_f32(

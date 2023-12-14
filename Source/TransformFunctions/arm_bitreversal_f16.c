@@ -34,7 +34,6 @@
 * @param[in]      fftSize      length of the FFT.
 * @param[in]      bitRevFactor bit reversal modifier that supports different size FFTs with the same bit reversal table.
 * @param[in]      *pBitRevTab  points to the bit reversal table.
-* @return none.
 */
 
 #if defined(ARM_FLOAT16_SUPPORTED)

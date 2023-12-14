@@ -43,7 +43,6 @@
   @param[in]     pSrc       points to input vector.
   @param[out]    pDst       points to output vector.
   @param[in]     blockSize  number of samples in each vector.
-  @return        none
  */
 
 #if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)

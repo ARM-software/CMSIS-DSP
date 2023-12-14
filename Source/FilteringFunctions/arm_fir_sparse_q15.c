@@ -45,7 +45,6 @@
   @param[in]     pScratchIn  points to a temporary buffer of size blockSize
   @param[in]     pScratchOut points to a temporary buffer of size blockSize
   @param[in]     blockSize   number of input samples to process per call
-  @return        none
 
   @par           Scaling and Overflow Behavior
                    The function is implemented using an internal 32-bit accumulator.

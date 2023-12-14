@@ -43,7 +43,6 @@
   @param[in]     pSrcB       points to the second input vector
   @param[in]     blockSize   number of samples in input vector
   @param[out]    pResult      mean square error
-  @return        none
  */
 
 void arm_mse_f64(

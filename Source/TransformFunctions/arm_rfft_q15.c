@@ -58,7 +58,6 @@ void arm_split_rifft_q15(
   @param[in]     S     points to an instance of the Q15 RFFT/RIFFT structure
   @param[in]     pSrc  points to input buffer (Source buffer is modified by this function.)
   @param[out]    pDst  points to output buffer
-  @return        none
 
   @par           Input an output formats
                    Internally input is downscaled by 2 for every stage to avoid saturations inside CFFT/CIFFT process.
@@ -150,7 +149,6 @@ void arm_rfft_q15(
   @param[in]     pBTable   points to twiddle Coef B buffer
   @param[out]    pDst      points to output buffer
   @param[in]     modifier  twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table
-  @return        none
 
   @par
                    The function implements a Real FFT
@@ -382,7 +380,6 @@ void arm_split_rfft_q15(
   @param[in]     pBTable   points to twiddle Coef B buffer
   @param[out]    pDst      points to output buffer
   @param[in]     modifier  twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table
-  @return        none
 
   @par
                    The function implements a Real IFFT

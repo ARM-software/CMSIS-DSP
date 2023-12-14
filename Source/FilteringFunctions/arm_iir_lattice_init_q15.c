@@ -45,7 +45,6 @@
   @param[in] pvCoeffs   points to ladder coefficient buffer.  The array is of length numStages+1
   @param[in] pState     points to state buffer.  The array is of length numStages+blockSize
   @param[in] blockSize  number of samples to process
-  @return        none
  */
 
 void arm_iir_lattice_init_q15(

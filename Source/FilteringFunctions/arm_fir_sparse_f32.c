@@ -107,7 +107,6 @@
   @param[out]    pDst        points to the block of output data
   @param[in]     pScratchIn  points to a temporary buffer of size blockSize
   @param[in]     blockSize   number of input samples to process
-  @return        none
  */
 
 void arm_fir_sparse_f32(

@@ -39,7 +39,6 @@
   @param[in]     resetStateFlag
                    - value = 0: no change in state
                    - value = 1: reset state
-  @return        none
 
   @par           Details
                    The <code>resetStateFlag</code> specifies whether to set state to zero or not. \n

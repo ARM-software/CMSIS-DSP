@@ -77,7 +77,6 @@ __STATIC_FORCEINLINE arm_status arm_sqrt_f16(
   @param[in]     pSrc       points to the input vector
   @param[out]    pDst       points to the output vector
   @param[in]     blockSize  number of samples in each vector
-  @return        none
  */
   void arm_vlog_f16(
   const float16_t * pSrc,
@@ -89,7 +88,6 @@ __STATIC_FORCEINLINE arm_status arm_sqrt_f16(
   @param[in]     pSrc       points to the input vector
   @param[out]    pDst       points to the output vector
   @param[in]     blockSize  number of samples in each vector
-  @return        none
  */
   void arm_vexp_f16(
   const float16_t * pSrc,
@@ -101,7 +99,6 @@ __STATIC_FORCEINLINE arm_status arm_sqrt_f16(
   @param[in]     pSrc       points to the input vector
   @param[out]    pDst       points to the output vector
   @param[in]     blockSize  number of samples in each vector
-  @return        none
  */
   void arm_vinverse_f16(
   const float16_t * pSrc,

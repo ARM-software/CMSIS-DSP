@@ -43,7 +43,6 @@
   @param[in]     pSrc       points to the input vector
   @param[in]     blockSize  number of samples in input vector
   @param[out]    pResult    maximum value returned here
-  @return        none
  */
 #if defined(ARM_MATH_NEON) && defined(__aarch64__)
 void arm_max_no_idx_f64(

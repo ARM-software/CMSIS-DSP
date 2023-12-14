@@ -40,10 +40,9 @@
  * -------------------------------------------------------------------- */
 
 /**
- * @ingroup groupExamples
- */
-
-/**
+ * @addtogroup groupExamples
+ * @{
+ *
  * @defgroup FIRLPF FIR Lowpass Filter Example
  *
  * \par Description:
@@ -112,11 +111,9 @@
  * <b> Refer  </b>
  * \link arm_fir_example_f32.c \endlink
  *
- */
-
-
-/** \example arm_fir_example_f32.c
- */
+ * \example arm_fir_example_f32.c
+ *
+ * @} */
 
 /* ----------------------------------------------------------------------
 ** Include Files

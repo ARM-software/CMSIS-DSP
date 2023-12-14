@@ -59,7 +59,6 @@
    @param[in]       pInputQuaternions points to an array of normalized quaternions
    @param[out]      pOutputRotations points to an array of 3x3 rotations (in row order)
    @param[in]       nbQuaternions number of quaternions in the array
-   @return none.
   
    @par
    Format of rotation matrix

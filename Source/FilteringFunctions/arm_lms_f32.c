@@ -160,7 +160,6 @@
   @param[out]    pOut       points to the block of output data
   @param[out]    pErr       points to the block of error data
   @param[in]     blockSize  number of samples to process
-  @return        none
  */
 #if defined(ARM_MATH_NEON)
 void arm_lms_f32(

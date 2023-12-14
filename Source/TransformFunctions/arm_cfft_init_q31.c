@@ -255,13 +255,13 @@ CFFTINIT_Q31(16,16);
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  
-  @par          
+  @par
                 This function should be used only if you don't know the FFT sizes that 
                 you'll need at build time. The use of this function will prevent the 
                 linker from removing the FFT tables that are not needed and the library 
                 code size will be bigger than needed.
 
-  @par          
+  @par
                 If you use CMSIS-DSP as a static library, and if you know the FFT sizes 
                 that you need at build time, then it is better to use the initialization
                 functions defined for each FFT size.

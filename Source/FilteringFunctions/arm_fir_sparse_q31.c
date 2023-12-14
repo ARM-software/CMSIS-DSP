@@ -44,7 +44,6 @@
   @param[out]    pDst        points to the block of output data
   @param[in]     pScratchIn  points to a temporary buffer of size blockSize
   @param[in]     blockSize   number of input samples to process
-  @return        none
 
   @par           Scaling and Overflow Behavior
                    The function is implemented using an internal 32-bit accumulator.

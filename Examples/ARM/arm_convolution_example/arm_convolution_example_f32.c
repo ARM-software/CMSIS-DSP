@@ -39,10 +39,9 @@
 * -------------------------------------------------------------------- */
 
 /**
- * @ingroup groupExamples
- */
-
-/**
+ * @addtogroup groupExamples
+ * @{
+ *
  * @defgroup ConvolutionExample Convolution Example
  *
  * \par Description:
@@ -96,11 +95,9 @@
  * <b> Refer  </b>
  * \link arm_convolution_example_f32.c \endlink
  *
- */
-
-
-/** \example arm_convolution_example_f32.c
-  */
+ * \example arm_convolution_example_f32.c
+ *
+ * @} */
 
 #include "arm_math.h"
 #include "math_helper.h"
