@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Version: 3.0
 # Date: 2023-11-06
-# This bash script generates CMSIS-NN Documentation:
+# This bash script generates CMSIS-DSP Documentation:
 #
 # Pre-requisites:
 # - bash shell (for Windows: install git for Windows)

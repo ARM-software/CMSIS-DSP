@@ -1477,6 +1477,7 @@ div.headertitle
 dl
 {
     padding: 0 0 0 10px;
+    max-width: var(--max_textblock_width);
 }
 
 /* dl.note, dl.warning, dl.attention, dl.pre, dl.post, dl.invariant, dl.deprecated, dl.todo, dl.test, dl.bug */
