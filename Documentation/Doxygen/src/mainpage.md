@@ -44,7 +44,7 @@ The library is now tested on Fast Models building with cmake. Core M0, M4, M7, M
 
 ## Access to CMSIS-DSP {#pack}
 
-CMSIS-DSP is actively maintained in the [**CMSIS-DSP GitHub repository**](https://github.com/ARM-software/CMSIS-RTX) and is released as a standalone [**CMSIS-DSP pack**](https://www.keil.arm.com/packs/cmsis-dsp-arm/versions/) in the [CMSIS-Pack format](https://open-cmsis-pack.github.io/Open-CMSIS-Pack-Spec/main/html/index.html).
+CMSIS-DSP is actively maintained in the [**CMSIS-DSP GitHub repository**](https://github.com/ARM-software/CMSIS-DSP) and is released as a standalone [**CMSIS-DSP pack**](https://www.keil.arm.com/packs/cmsis-dsp-arm/versions/) in the [CMSIS-Pack format](https://open-cmsis-pack.github.io/Open-CMSIS-Pack-Spec/main/html/index.html).
 
 The table below explains the content of **ARM::CMSIS-DSP** pack.
 
