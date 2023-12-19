@@ -1,7 +1,7 @@
 *.bak
 Documentation/html/
 Documentation/Doxygen/dsp.dxy
-Documentation/Doxygen/history.txt
+Documentation/Doxygen/src/history.txt
 DSP_Lib_TestSuite/build/
 PythonWrapper/cmsisdsp.cp36-win_amd64.pyd
 PythonWrapper/internal.cp36-win_amd64.pyd
