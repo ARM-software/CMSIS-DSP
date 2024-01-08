@@ -6,6 +6,7 @@
   <vendor>ARM</vendor>
   <license>LICENSE</license>
   <url>https://www.keil.com/pack/</url>
+  <repository type="git">https://github.com/ARM-software/CMSIS-DSP.git</repository>
 
   <releases>
     <release version="0.0.0">
