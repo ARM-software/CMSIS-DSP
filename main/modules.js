@@ -1,6 +1,7 @@
 var modules =
 [
     [ "Examples", "group__groupExamples.html", "group__groupExamples" ],
+    [ "Generic Types", "group__genericTypes.html", "group__genericTypes" ],
     [ "Basic Math Functions", "group__groupMath.html", "group__groupMath" ],
     [ "Bayesian estimators", "group__groupBayes.html", "group__groupBayes" ],
     [ "Complex Math Functions", "group__groupCmplxMath.html", "group__groupCmplxMath" ],

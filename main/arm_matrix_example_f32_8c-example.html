@@ -186,7 +186,7 @@ $(document).ready(function(){initNavTree('arm_matrix_example_f32_8c-example.html
 <div class="line"><span class="comment">* and tapSize</span></div>
 <div class="line"><span class="comment">* --------------------------------------------------------------------------------- */</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">const</span> <a class="code hl_typedef" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> <a id="a0" name="a0"></a><a class="code hl_variable" href="arm__matrix__example__f32_8c.html#a974d5f0aace6a99e29ca767907fb3b9f">B_f32</a>[4] =</div>
+<div class="line"><span class="keyword">const</span> <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> <a id="a0" name="a0"></a><a class="code hl_variable" href="arm__matrix__example__f32_8c.html#a974d5f0aace6a99e29ca767907fb3b9f">B_f32</a>[4] =</div>
 <div class="line">{</div>
 <div class="line">  782.0, 7577.0, 470.0, 4505.0</div>
 <div class="line">};</div>
@@ -195,7 +195,7 @@ $(document).ready(function(){initNavTree('arm_matrix_example_f32_8c-example.html
 <div class="line"><span class="comment">* Formula to fit is  C1 + C2 * numTaps + C3 * blockSize + C4 * numTaps * blockSize</span></div>
 <div class="line"><span class="comment">* -------------------------------------------------------------------------------- */</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">const</span> <a class="code hl_typedef" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> <a id="a1" name="a1"></a><a class="code hl_variable" href="arm__matrix__example__f32_8c.html#aed27b92d9847194d9dcce40cecf2b48a">A_f32</a>[16] =</div>
+<div class="line"><span class="keyword">const</span> <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> <a id="a1" name="a1"></a><a class="code hl_variable" href="arm__matrix__example__f32_8c.html#aed27b92d9847194d9dcce40cecf2b48a">A_f32</a>[16] =</div>
 <div class="line">{</div>
 <div class="line">  <span class="comment">/* Const,   numTaps,   blockSize,   numTaps*blockSize */</span></div>
 <div class="line">  1.0,     32.0,      4.0,     128.0,</div>
@@ -209,20 +209,20 @@ $(document).ready(function(){initNavTree('arm_matrix_example_f32_8c-example.html
 <div class="line"><span class="comment">* Temporary buffers  for storing intermediate values</span></div>
 <div class="line"><span class="comment">* ------------------------------------------------------------------- */</span></div>
 <div class="line"><span class="comment">/* Transpose of A Buffer */</span></div>
-<div class="line"><a class="code hl_typedef" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> <a id="a2" name="a2"></a><a class="code hl_variable" href="arm__matrix__example__f32_8c.html#a46dc2aa6dfc692af7b4a1379d7329ccd">AT_f32</a>[16];</div>
+<div class="line"><a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> <a id="a2" name="a2"></a><a class="code hl_variable" href="arm__matrix__example__f32_8c.html#a46dc2aa6dfc692af7b4a1379d7329ccd">AT_f32</a>[16];</div>
 <div class="line"><span class="comment">/* (Transpose of A * A) Buffer */</span></div>
-<div class="line"><a class="code hl_typedef" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> <a id="a3" name="a3"></a><a class="code hl_variable" href="arm__matrix__example__f32_8c.html#a867497c6bf86014513bf2ad3551aa896">ATMA_f32</a>[16];</div>
+<div class="line"><a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> <a id="a3" name="a3"></a><a class="code hl_variable" href="arm__matrix__example__f32_8c.html#a867497c6bf86014513bf2ad3551aa896">ATMA_f32</a>[16];</div>
 <div class="line"><span class="comment">/* Inverse(Transpose of A * A)  Buffer */</span></div>
-<div class="line"><a class="code hl_typedef" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> <a id="a4" name="a4"></a><a class="code hl_variable" href="arm__matrix__example__f32_8c.html#a44425c149c52b326a3b7a77676686f00">ATMAI_f32</a>[16];</div>
+<div class="line"><a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> <a id="a4" name="a4"></a><a class="code hl_variable" href="arm__matrix__example__f32_8c.html#a44425c149c52b326a3b7a77676686f00">ATMAI_f32</a>[16];</div>
 <div class="line"><span class="comment">/* Test Output Buffer */</span></div>
-<div class="line"><a class="code hl_typedef" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> <a id="a5" name="a5"></a><a class="code hl_variable" href="arm__matrix__example__f32_8c.html#a98c67c0fc0cb5f2df51b21482d31d21c">X_f32</a>[4];</div>
+<div class="line"><a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> <a id="a5" name="a5"></a><a class="code hl_variable" href="arm__matrix__example__f32_8c.html#a98c67c0fc0cb5f2df51b21482d31d21c">X_f32</a>[4];</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">* Reference ouput buffer C1, C2, C3 and C4 taken from MATLAB</span></div>
 <div class="line"><span class="comment">* ------------------------------------------------------------------- */</span></div>
-<div class="line"><span class="keyword">const</span> <a class="code hl_typedef" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> <a id="a6" name="a6"></a><a class="code hl_variable" href="arm__matrix__example__f32_8c.html#a6184758419722fa16bb883097c2f596b">xRef_f32</a>[4] = {73.0, 8.0, 21.25, 2.875};</div>
+<div class="line"><span class="keyword">const</span> <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> <a id="a6" name="a6"></a><a class="code hl_variable" href="arm__matrix__example__f32_8c.html#a6184758419722fa16bb883097c2f596b">xRef_f32</a>[4] = {73.0, 8.0, 21.25, 2.875};</div>
 <div class="line"> </div>
-<div class="line"><a class="code hl_typedef" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> <a id="a7" name="a7"></a><a class="code hl_variable" href="arm__convolution__example__f32_8c.html#af06013f588a7003278de222913c9d819">snr</a>;</div>
+<div class="line"><a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> <a id="a7" name="a7"></a><a class="code hl_variable" href="arm__convolution__example__f32_8c.html#af06013f588a7003278de222913c9d819">snr</a>;</div>
 <div class="line"> </div>
 <div class="line"> </div>
 <div class="line"><span class="comment">/* ----------------------------------------------------------------------</span></div>
@@ -232,20 +232,20 @@ $(document).ready(function(){initNavTree('arm_matrix_example_f32_8c-example.html
 <div class="line">int32_t <a id="a8" name="a8"></a><a class="code hl_function" href="arm__bayes__example__f32_8c.html#a52d2cba30e6946c95578be946ac12a65">main</a>(<span class="keywordtype">void</span>)</div>
 <div class="line">{</div>
 <div class="line"> </div>
-<div class="line">  <a id="_a9" name="_a9"></a><a class="code hl_struct" href="matrix__functions_8h.html#structarm__matrix__instance__f32" title="Instance structure for the floating-point matrix structure.">arm_matrix_instance_f32</a> A;      <span class="comment">/* Matrix A Instance */</span></div>
-<div class="line">  <a class="code hl_struct" href="matrix__functions_8h.html#structarm__matrix__instance__f32" title="Instance structure for the floating-point matrix structure.">arm_matrix_instance_f32</a> AT;     <span class="comment">/* Matrix AT(A transpose) instance */</span></div>
-<div class="line">  <a class="code hl_struct" href="matrix__functions_8h.html#structarm__matrix__instance__f32" title="Instance structure for the floating-point matrix structure.">arm_matrix_instance_f32</a> ATMA;   <span class="comment">/* Matrix ATMA( AT multiply with A) instance */</span></div>
-<div class="line">  <a class="code hl_struct" href="matrix__functions_8h.html#structarm__matrix__instance__f32" title="Instance structure for the floating-point matrix structure.">arm_matrix_instance_f32</a> ATMAI;  <span class="comment">/* Matrix ATMAI(Inverse of ATMA) instance */</span></div>
-<div class="line">  <a class="code hl_struct" href="matrix__functions_8h.html#structarm__matrix__instance__f32" title="Instance structure for the floating-point matrix structure.">arm_matrix_instance_f32</a> B;      <span class="comment">/* Matrix B instance */</span></div>
-<div class="line">  <a class="code hl_struct" href="matrix__functions_8h.html#structarm__matrix__instance__f32" title="Instance structure for the floating-point matrix structure.">arm_matrix_instance_f32</a> X;      <span class="comment">/* Matrix X(Unknown Matrix) instance */</span></div>
+<div class="line">  <a id="_a9" name="_a9"></a><a class="code hl_struct" href="structarm__matrix__instance__f32.html" title="Instance structure for the floating-point matrix structure.">arm_matrix_instance_f32</a> A;      <span class="comment">/* Matrix A Instance */</span></div>
+<div class="line">  <a class="code hl_struct" href="structarm__matrix__instance__f32.html" title="Instance structure for the floating-point matrix structure.">arm_matrix_instance_f32</a> AT;     <span class="comment">/* Matrix AT(A transpose) instance */</span></div>
+<div class="line">  <a class="code hl_struct" href="structarm__matrix__instance__f32.html" title="Instance structure for the floating-point matrix structure.">arm_matrix_instance_f32</a> ATMA;   <span class="comment">/* Matrix ATMA( AT multiply with A) instance */</span></div>
+<div class="line">  <a class="code hl_struct" href="structarm__matrix__instance__f32.html" title="Instance structure for the floating-point matrix structure.">arm_matrix_instance_f32</a> ATMAI;  <span class="comment">/* Matrix ATMAI(Inverse of ATMA) instance */</span></div>
+<div class="line">  <a class="code hl_struct" href="structarm__matrix__instance__f32.html" title="Instance structure for the floating-point matrix structure.">arm_matrix_instance_f32</a> B;      <span class="comment">/* Matrix B instance */</span></div>
+<div class="line">  <a class="code hl_struct" href="structarm__matrix__instance__f32.html" title="Instance structure for the floating-point matrix structure.">arm_matrix_instance_f32</a> X;      <span class="comment">/* Matrix X(Unknown Matrix) instance */</span></div>
 <div class="line"> </div>
 <div class="line">  uint32_t srcRows, srcColumns;  <span class="comment">/* Temporary variables */</span></div>
-<div class="line">  <a class="code hl_enumeration" href="arm__math__types_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6" title="Error status returned by some functions in the library.">arm_status</a> <a id="a10" name="a10"></a><a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#a88ccb294236ab22b00310c47164c53c3">status</a>;</div>
+<div class="line">  <a class="code hl_enumeration" href="group__genericTypes.html#ga5e459c6409dfcd2927bb8a57491d7cf6" title="Error status returned by some functions in the library.">arm_status</a> status;</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Initialise A Matrix Instance with numRows, numCols and data array(A_f32) */</span></div>
 <div class="line">  srcRows = 4;</div>
 <div class="line">  srcColumns = 4;</div>
-<div class="line">  <a id="a11" name="a11"></a><a class="code hl_function" href="group__MatrixInit.html#ga11e3dc41592a6401c13182fef9416a27" title="Floating-point matrix initialization.">arm_mat_init_f32</a>(&amp;A, srcRows, srcColumns, (<a class="code hl_typedef" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> *)<a class="code hl_variable" href="arm__matrix__example__f32_8c.html#aed27b92d9847194d9dcce40cecf2b48a">A_f32</a>);</div>
+<div class="line">  <a id="a10" name="a10"></a><a class="code hl_function" href="group__MatrixInit.html#ga11e3dc41592a6401c13182fef9416a27" title="Floating-point matrix initialization.">arm_mat_init_f32</a>(&amp;A, srcRows, srcColumns, (<a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> *)<a class="code hl_variable" href="arm__matrix__example__f32_8c.html#aed27b92d9847194d9dcce40cecf2b48a">A_f32</a>);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Initialise Matrix Instance AT with numRows, numCols and data array(AT_f32) */</span></div>
 <div class="line">  srcRows = 4;</div>
@@ -253,7 +253,7 @@ $(document).ready(function(){initNavTree('arm_matrix_example_f32_8c-example.html
 <div class="line">  <a class="code hl_function" href="group__MatrixInit.html#ga11e3dc41592a6401c13182fef9416a27" title="Floating-point matrix initialization.">arm_mat_init_f32</a>(&amp;AT, srcRows, srcColumns, <a class="code hl_variable" href="arm__matrix__example__f32_8c.html#a46dc2aa6dfc692af7b4a1379d7329ccd">AT_f32</a>);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* calculation of A transpose */</span></div>
-<div class="line">  <a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#a88ccb294236ab22b00310c47164c53c3">status</a> = <a id="a12" name="a12"></a><a class="code hl_function" href="group__MatrixTrans.html#gad7dd9f108429da13d3864696ceeec789" title="Floating-point matrix transpose.">arm_mat_trans_f32</a>(&amp;A, &amp;AT);</div>
+<div class="line">  status = <a id="a11" name="a11"></a><a class="code hl_function" href="group__MatrixTrans.html#gad7dd9f108429da13d3864696ceeec789" title="Floating-point matrix transpose.">arm_mat_trans_f32</a>(&amp;A, &amp;AT);</div>
 <div class="line"> </div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Initialise ATMA Matrix Instance with numRows, numCols and data array(ATMA_f32) */</span></div>
@@ -262,7 +262,7 @@ $(document).ready(function(){initNavTree('arm_matrix_example_f32_8c-example.html
 <div class="line">  <a class="code hl_function" href="group__MatrixInit.html#ga11e3dc41592a6401c13182fef9416a27" title="Floating-point matrix initialization.">arm_mat_init_f32</a>(&amp;ATMA, srcRows, srcColumns, <a class="code hl_variable" href="arm__matrix__example__f32_8c.html#a867497c6bf86014513bf2ad3551aa896">ATMA_f32</a>);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* calculation of AT Multiply with A */</span></div>
-<div class="line">  <a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#a88ccb294236ab22b00310c47164c53c3">status</a> = <a id="a13" name="a13"></a><a class="code hl_function" href="group__MatrixMult.html#ga917bf0270310c1d3f0eda1fc7c0026a0" title="Floating-point matrix multiplication.">arm_mat_mult_f32</a>(&amp;AT, &amp;A, &amp;ATMA);</div>
+<div class="line">  status = <a id="a12" name="a12"></a><a class="code hl_function" href="group__MatrixMult.html#ga917bf0270310c1d3f0eda1fc7c0026a0" title="Floating-point matrix multiplication.">arm_mat_mult_f32</a>(&amp;AT, &amp;A, &amp;ATMA);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Initialise ATMAI Matrix Instance with numRows, numCols and data array(ATMAI_f32) */</span></div>
 <div class="line">  srcRows = 4;</div>
@@ -270,15 +270,15 @@ $(document).ready(function(){initNavTree('arm_matrix_example_f32_8c-example.html
 <div class="line">  <a class="code hl_function" href="group__MatrixInit.html#ga11e3dc41592a6401c13182fef9416a27" title="Floating-point matrix initialization.">arm_mat_init_f32</a>(&amp;ATMAI, srcRows, srcColumns, <a class="code hl_variable" href="arm__matrix__example__f32_8c.html#a44425c149c52b326a3b7a77676686f00">ATMAI_f32</a>);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* calculation of Inverse((Transpose(A) * A) */</span></div>
-<div class="line">  <a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#a88ccb294236ab22b00310c47164c53c3">status</a> = <a id="a14" name="a14"></a><a class="code hl_function" href="group__MatrixInv.html#ga542be7aabbf7a2297a4b62cf212910e3" title="Floating-point matrix inverse.">arm_mat_inverse_f32</a>(&amp;ATMA, &amp;ATMAI);</div>
+<div class="line">  status = <a id="a13" name="a13"></a><a class="code hl_function" href="group__MatrixInv.html#ga542be7aabbf7a2297a4b62cf212910e3" title="Floating-point matrix inverse.">arm_mat_inverse_f32</a>(&amp;ATMA, &amp;ATMAI);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* calculation of (Inverse((Transpose(A) * A)) *  Transpose(A)) */</span></div>
-<div class="line">  <a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#a88ccb294236ab22b00310c47164c53c3">status</a> = <a class="code hl_function" href="group__MatrixMult.html#ga917bf0270310c1d3f0eda1fc7c0026a0" title="Floating-point matrix multiplication.">arm_mat_mult_f32</a>(&amp;ATMAI, &amp;AT, &amp;ATMA);</div>
+<div class="line">  status = <a class="code hl_function" href="group__MatrixMult.html#ga917bf0270310c1d3f0eda1fc7c0026a0" title="Floating-point matrix multiplication.">arm_mat_mult_f32</a>(&amp;ATMAI, &amp;AT, &amp;ATMA);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Initialise B Matrix Instance with numRows, numCols and data array(B_f32) */</span></div>
 <div class="line">  srcRows = 4;</div>
 <div class="line">  srcColumns = 1;</div>
-<div class="line">  <a class="code hl_function" href="group__MatrixInit.html#ga11e3dc41592a6401c13182fef9416a27" title="Floating-point matrix initialization.">arm_mat_init_f32</a>(&amp;B, srcRows, srcColumns, (<a class="code hl_typedef" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> *)<a class="code hl_variable" href="arm__matrix__example__f32_8c.html#a974d5f0aace6a99e29ca767907fb3b9f">B_f32</a>);</div>
+<div class="line">  <a class="code hl_function" href="group__MatrixInit.html#ga11e3dc41592a6401c13182fef9416a27" title="Floating-point matrix initialization.">arm_mat_init_f32</a>(&amp;B, srcRows, srcColumns, (<a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> *)<a class="code hl_variable" href="arm__matrix__example__f32_8c.html#a974d5f0aace6a99e29ca767907fb3b9f">B_f32</a>);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Initialise X Matrix Instance with numRows, numCols and data array(X_f32) */</span></div>
 <div class="line">  srcRows = 4;</div>
@@ -286,17 +286,17 @@ $(document).ready(function(){initNavTree('arm_matrix_example_f32_8c-example.html
 <div class="line">  <a class="code hl_function" href="group__MatrixInit.html#ga11e3dc41592a6401c13182fef9416a27" title="Floating-point matrix initialization.">arm_mat_init_f32</a>(&amp;X, srcRows, srcColumns, <a class="code hl_variable" href="arm__matrix__example__f32_8c.html#a98c67c0fc0cb5f2df51b21482d31d21c">X_f32</a>);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* calculation ((Inverse((Transpose(A) * A)) *  Transpose(A)) * B) */</span></div>
-<div class="line">  <a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#a88ccb294236ab22b00310c47164c53c3">status</a> = <a class="code hl_function" href="group__MatrixMult.html#ga917bf0270310c1d3f0eda1fc7c0026a0" title="Floating-point matrix multiplication.">arm_mat_mult_f32</a>(&amp;ATMA, &amp;B, &amp;X);</div>
+<div class="line">  status = <a class="code hl_function" href="group__MatrixMult.html#ga917bf0270310c1d3f0eda1fc7c0026a0" title="Floating-point matrix multiplication.">arm_mat_mult_f32</a>(&amp;ATMA, &amp;B, &amp;X);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Comparison of reference with test output */</span></div>
-<div class="line">  <a class="code hl_variable" href="arm__convolution__example__f32_8c.html#af06013f588a7003278de222913c9d819">snr</a> = arm_snr_f32((<a class="code hl_typedef" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> *)<a class="code hl_variable" href="arm__matrix__example__f32_8c.html#a6184758419722fa16bb883097c2f596b">xRef_f32</a>, <a class="code hl_variable" href="arm__matrix__example__f32_8c.html#a98c67c0fc0cb5f2df51b21482d31d21c">X_f32</a>, 4);</div>
+<div class="line">  <a class="code hl_variable" href="arm__convolution__example__f32_8c.html#af06013f588a7003278de222913c9d819">snr</a> = arm_snr_f32((<a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> *)<a class="code hl_variable" href="arm__matrix__example__f32_8c.html#a6184758419722fa16bb883097c2f596b">xRef_f32</a>, <a class="code hl_variable" href="arm__matrix__example__f32_8c.html#a98c67c0fc0cb5f2df51b21482d31d21c">X_f32</a>, 4);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/*------------------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">  *            Initialise status depending on SNR calculations</span></div>
 <div class="line"><span class="comment">  *------------------------------------------------------------------------------*/</span></div>
-<div class="line">  <a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#a88ccb294236ab22b00310c47164c53c3">status</a> = (<a class="code hl_variable" href="arm__convolution__example__f32_8c.html#af06013f588a7003278de222913c9d819">snr</a> &lt; <a id="a15" name="a15"></a><a class="code hl_define" href="arm__convolution__example__f32_8c.html#af08ec3fef897d77c6817638bf0e0c5c6">SNR_THRESHOLD</a>) ? <a id="a16" name="a16"></a><a class="code hl_enumvalue" href="arm__math__types_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a09457f2be656b35015fd6d36202fa376">ARM_MATH_TEST_FAILURE</a> : <a id="a17" name="a17"></a><a class="code hl_enumvalue" href="arm__math__types_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>;</div>
+<div class="line">  status = (<a class="code hl_variable" href="arm__convolution__example__f32_8c.html#af06013f588a7003278de222913c9d819">snr</a> &lt; <a id="a14" name="a14"></a><a class="code hl_define" href="arm__convolution__example__f32_8c.html#af08ec3fef897d77c6817638bf0e0c5c6">SNR_THRESHOLD</a>) ? <a id="a15" name="a15"></a><a class="code hl_enumvalue" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a09457f2be656b35015fd6d36202fa376">ARM_MATH_TEST_FAILURE</a> : <a id="a16" name="a16"></a><a class="code hl_enumvalue" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>;</div>
 <div class="line">  </div>
-<div class="line">  <span class="keywordflow">if</span> (<a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#a88ccb294236ab22b00310c47164c53c3">status</a> != <a class="code hl_enumvalue" href="arm__math__types_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>)</div>
+<div class="line">  <span class="keywordflow">if</span> (status != <a class="code hl_enumvalue" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>)</div>
 <div class="line">  {</div>
 <div class="line"><span class="preprocessor">#if defined (SEMIHOSTING)</span></div>
 <div class="line">    printf(<span class="stringliteral">&quot;FAILURE\n&quot;</span>);</div>

@@ -136,10 +136,10 @@ $(document).ready(function(){initNavTree('group__BiquadCascadeDF1__32x64.html','
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga426cd78591a717e87d66d1eaa9a3d074"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__BiquadCascadeDF1__32x64.html#ga426cd78591a717e87d66d1eaa9a3d074">arm_biquad_cas_df1_32x64_init_q31</a> (<a class="el" href="filtering__functions_8h.html#structarm__biquad__cas__df1__32x64__ins__q31">arm_biquad_cas_df1_32x64_ins_q31</a> *S, uint8_t numStages, const <a class="el" href="arm__math__types_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *pCoeffs, <a class="el" href="arm__math__types_8h.html#a5aea1cb12fc02d9d44c8abf217eaa5c6">q63_t</a> *pState, uint8_t postShift)</td></tr>
+<tr class="memitem:ga426cd78591a717e87d66d1eaa9a3d074"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__BiquadCascadeDF1__32x64.html#ga426cd78591a717e87d66d1eaa9a3d074">arm_biquad_cas_df1_32x64_init_q31</a> (<a class="el" href="structarm__biquad__cas__df1__32x64__ins__q31.html">arm_biquad_cas_df1_32x64_ins_q31</a> *S, uint8_t numStages, const <a class="el" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *pCoeffs, <a class="el" href="group__genericTypes.html#ga5aea1cb12fc02d9d44c8abf217eaa5c6">q63_t</a> *pState, uint8_t postShift)</td></tr>
 <tr class="memdesc:ga426cd78591a717e87d66d1eaa9a3d074"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialization function for the Q31 Biquad cascade 32x64 filter.  <br /></td></tr>
 <tr class="separator:ga426cd78591a717e87d66d1eaa9a3d074"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae71a3095b94939418618ddf83caf739a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__BiquadCascadeDF1__32x64.html#gae71a3095b94939418618ddf83caf739a">arm_biquad_cas_df1_32x64_q31</a> (const <a class="el" href="filtering__functions_8h.html#structarm__biquad__cas__df1__32x64__ins__q31">arm_biquad_cas_df1_32x64_ins_q31</a> *S, const <a class="el" href="arm__math__types_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *pSrc, <a class="el" href="arm__math__types_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *pDst, uint32_t <a class="el" href="arm__fir__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>)</td></tr>
+<tr class="memitem:gae71a3095b94939418618ddf83caf739a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__BiquadCascadeDF1__32x64.html#gae71a3095b94939418618ddf83caf739a">arm_biquad_cas_df1_32x64_q31</a> (const <a class="el" href="structarm__biquad__cas__df1__32x64__ins__q31.html">arm_biquad_cas_df1_32x64_ins_q31</a> *S, const <a class="el" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *pSrc, <a class="el" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *pDst, uint32_t blockSize)</td></tr>
 <tr class="memdesc:gae71a3095b94939418618ddf83caf739a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processing function for the Q31 Biquad cascade 32x64 filter.  <br /></td></tr>
 <tr class="separator:gae71a3095b94939418618ddf83caf739a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -171,7 +171,7 @@ Single Biquad filter stage</div></div>
 </ul>
 </dd></dl>
 <dl class="section user"><dt></dt><dd>Use of the initialization function is optional. However, if the initialization function is used, then the instance structure cannot be placed into a const data section. To place an instance structure into a const data section, the instance structure must be manually initialized. Set the values in the state buffer to zeros before static initialization. For example, to statically initialize the filter instance structure use <pre>
-    <a class="el" href="filtering__functions_8h.html#structarm__biquad__cas__df1__32x64__ins__q31" title="Instance structure for the high precision Q31 Biquad cascade filter.">arm_biquad_cas_df1_32x64_ins_q31</a> S1 = {numStages, pState, pCoeffs, postShift};
+    <a class="el" href="structarm__biquad__cas__df1__32x64__ins__q31.html" title="Instance structure for the high precision Q31 Biquad cascade filter.">arm_biquad_cas_df1_32x64_ins_q31</a> S1 = {numStages, pState, pCoeffs, postShift};
 </pre> where <code>numStages</code> is the number of Biquad stages in the filter; <code>pState</code> is the address of the state buffer; <code>pCoeffs</code> is the address of the coefficient buffer; <code>postShift</code> shift to be applied which is described in detail below. </dd></dl>
 <dl class="section user"><dt>Fixed-Point Behavior</dt><dd>Care must be taken while using Biquad Cascade 32x64 filter function. Following issues must be considered:<ul>
 <li>Scaling of coefficients</li>
@@ -200,7 +200,7 @@ Fixed-point Biquad with shift by postShift bits after accumulator</div></div>
         <tr>
           <td class="memname">void arm_biquad_cas_df1_32x64_init_q31 </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="filtering__functions_8h.html#structarm__biquad__cas__df1__32x64__ins__q31">arm_biquad_cas_df1_32x64_ins_q31</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="structarm__biquad__cas__df1__32x64__ins__q31.html">arm_biquad_cas_df1_32x64_ins_q31</a> *&#160;</td>
           <td class="paramname"><em>S</em>, </td>
         </tr>
         <tr>
@@ -212,13 +212,13 @@ Fixed-point Biquad with shift by postShift bits after accumulator</div></div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="arm__math__types_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *&#160;</td>
           <td class="paramname"><em>pCoeffs</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="arm__math__types_8h.html#a5aea1cb12fc02d9d44c8abf217eaa5c6">q63_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="group__genericTypes.html#ga5aea1cb12fc02d9d44c8abf217eaa5c6">q63_t</a> *&#160;</td>
           <td class="paramname"><em>pState</em>, </td>
         </tr>
         <tr>
@@ -264,19 +264,19 @@ Fixed-point Biquad with shift by postShift bits after accumulator</div></div>
         <tr>
           <td class="memname">void arm_biquad_cas_df1_32x64_q31 </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="filtering__functions_8h.html#structarm__biquad__cas__df1__32x64__ins__q31">arm_biquad_cas_df1_32x64_ins_q31</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="structarm__biquad__cas__df1__32x64__ins__q31.html">arm_biquad_cas_df1_32x64_ins_q31</a> *&#160;</td>
           <td class="paramname"><em>S</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="arm__math__types_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *&#160;</td>
           <td class="paramname"><em>pSrc</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="arm__math__types_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *&#160;</td>
           <td class="paramname"><em>pDst</em>, </td>
         </tr>
         <tr>

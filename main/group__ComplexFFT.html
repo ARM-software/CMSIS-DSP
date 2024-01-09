@@ -162,7 +162,7 @@ Content</h2></td></tr>
 <dl class="section user"><dt></dt><dd><code>arm_cfft_f32(arm_cfft_sR_f32_len64, pSrc, 1, 1)</code> </dd></dl>
 <dl class="section user"><dt></dt><dd>computes a 64-point inverse complex FFT including bit reversal. The data structures are treated as constant data and not modified during the calculation. The same data structure can be reused for multiple transforms including mixing forward and inverse transforms. </dd></dl>
 <dl class="section user"><dt></dt><dd>Earlier releases of the library provided separate radix-2 and radix-4 algorithms that operated on floating-point data. These functions are still provided but are deprecated. The older functions are slower and less general than the new functions. </dd></dl>
-<dl class="section user"><dt></dt><dd>An example of initialization of the constants for the arm_cfft_f32 function follows: <div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keyword">static</span> <a class="code hl_struct" href="transform__functions_8h.html#structarm__cfft__instance__f32" title="Instance structure for the floating-point CFFT/CIFFT function.">arm_cfft_instance_f32</a> *S;</div>
+<dl class="section user"><dt></dt><dd>An example of initialization of the constants for the arm_cfft_f32 function follows: <div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keyword">static</span> <a class="code hl_struct" href="structarm__cfft__instance__f32.html" title="Instance structure for the floating-point CFFT/CIFFT function.">arm_cfft_instance_f32</a> *S;</div>
 <div class="line">...</div>
 <div class="line">switch (length) {</div>
 <div class="line">  <span class="keywordflow">case</span> 16:</div>
@@ -201,7 +201,7 @@ Content</h2></td></tr>
 <dl class="section user"><dt></dt><dd><code>arm_cfft_q31(arm_cfft_sR_q31_len64, pSrc, 1, 1)</code> </dd></dl>
 <dl class="section user"><dt></dt><dd>computes a 64-point inverse complex FFT including bit reversal. The data structures are treated as constant data and not modified during the calculation. The same data structure can be reused for multiple transforms including mixing forward and inverse transforms. </dd></dl>
 <dl class="section user"><dt></dt><dd>Earlier releases of the library provided separate radix-2 and radix-4 algorithms that operated on floating-point data. These functions are still provided but are deprecated. The older functions are slower and less general than the new functions. </dd></dl>
-<dl class="section user"><dt></dt><dd>An example of initialization of the constants for the arm_cfft_q31 function follows: <div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keyword">static</span> <a class="code hl_struct" href="transform__functions_8h.html#structarm__cfft__instance__q31" title="Instance structure for the fixed-point CFFT/CIFFT function.">arm_cfft_instance_q31</a> *S;</div>
+<dl class="section user"><dt></dt><dd>An example of initialization of the constants for the arm_cfft_q31 function follows: <div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keyword">static</span> <a class="code hl_struct" href="structarm__cfft__instance__q31.html" title="Instance structure for the fixed-point CFFT/CIFFT function.">arm_cfft_instance_q31</a> *S;</div>
 <div class="line">...</div>
 <div class="line">  <span class="keywordflow">switch</span> (length) {</div>
 <div class="line">    <span class="keywordflow">case</span> 16:</div>

@@ -142,78 +142,16 @@ $(document).ready(function(){initNavTree('bayes__functions__f16_8h.html',''); in
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:structarm__gaussian__naive__bayes__instance__f16"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bayes__functions__f16_8h.html#structarm__gaussian__naive__bayes__instance__f16">arm_gaussian_naive_bayes_instance_f16</a></td></tr>
-<tr class="memdesc:structarm__gaussian__naive__bayes__instance__f16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Instance structure for Naive Gaussian Bayesian estimator.  <a href="bayes__functions__f16_8h.html#structarm__gaussian__naive__bayes__instance__f16">More...</a><br /></td></tr>
-<tr class="separator:structarm__gaussian__naive__bayes__instance__f16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__gaussian__naive__bayes__instance__f16.html">arm_gaussian_naive_bayes_instance_f16</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Instance structure for Naive Gaussian Bayesian estimator.  <a href="structarm__gaussian__naive__bayes__instance__f16.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga6f7cde3d37f85f99bd1a125601a718a0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__groupBayes.html#ga6f7cde3d37f85f99bd1a125601a718a0">arm_gaussian_naive_bayes_predict_f16</a> (const <a class="el" href="bayes__functions__f16_8h.html#structarm__gaussian__naive__bayes__instance__f16">arm_gaussian_naive_bayes_instance_f16</a> *S, const float16_t *in, float16_t *pOutputProbabilities, float16_t *pBufferB)</td></tr>
+<tr class="memitem:ga6f7cde3d37f85f99bd1a125601a718a0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__groupBayes.html#ga6f7cde3d37f85f99bd1a125601a718a0">arm_gaussian_naive_bayes_predict_f16</a> (const <a class="el" href="structarm__gaussian__naive__bayes__instance__f16.html">arm_gaussian_naive_bayes_instance_f16</a> *S, const float16_t *in, float16_t *pOutputProbabilities, float16_t *pBufferB)</td></tr>
 <tr class="memdesc:ga6f7cde3d37f85f99bd1a125601a718a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Naive Gaussian Bayesian Estimator.  <br /></td></tr>
 <tr class="separator:ga6f7cde3d37f85f99bd1a125601a718a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="structarm__gaussian__naive__bayes__instance__f16" id="structarm__gaussian__naive__bayes__instance__f16"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#structarm__gaussian__naive__bayes__instance__f16">&#9670;&#160;</a></span>arm_gaussian_naive_bayes_instance_f16</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct arm_gaussian_naive_bayes_instance_f16</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"><p>Instance structure for Naive Gaussian Bayesian estimator. </p>
-</div><table class="fieldtable">
-<tr><th colspan="3">Data Fields</th></tr>
-<tr><td class="fieldtype">
-<a id="a4551f17c68969bd504e9eb2745cfb38e" name="a4551f17c68969bd504e9eb2745cfb38e"></a>const float16_t *</td>
-<td class="fieldname">
-classPriors</td>
-<td class="fielddoc">
-<p>Class prior probabilities </p>
-</td></tr>
-<tr><td class="fieldtype">
-<a id="a3e8f818ca8817326747ea17945c1751b" name="a3e8f818ca8817326747ea17945c1751b"></a>float16_t</td>
-<td class="fieldname">
-epsilon</td>
-<td class="fielddoc">
-<p>Additive value to variances </p>
-</td></tr>
-<tr><td class="fieldtype">
-<a id="a40aa206e9576a40e06c7eafbf881b49e" name="a40aa206e9576a40e06c7eafbf881b49e"></a>uint32_t</td>
-<td class="fieldname">
-numberOfClasses</td>
-<td class="fielddoc">
-<p>Number of different classes <br  />
- </p>
-</td></tr>
-<tr><td class="fieldtype">
-<a id="a6c451b7a4776c42c20a475e6e673a16d" name="a6c451b7a4776c42c20a475e6e673a16d"></a>const float16_t *</td>
-<td class="fieldname">
-sigma</td>
-<td class="fielddoc">
-<p>Variances for the Gaussians </p>
-</td></tr>
-<tr><td class="fieldtype">
-<a id="a77e000dd719b33c501b58dca1e29278a" name="a77e000dd719b33c501b58dca1e29278a"></a>const float16_t *</td>
-<td class="fieldname">
-theta</td>
-<td class="fielddoc">
-<p>Mean values for the Gaussians </p>
-</td></tr>
-<tr><td class="fieldtype">
-<a id="ac0020a4e04df9d200969b1ba84799d88" name="ac0020a4e04df9d200969b1ba84799d88"></a>uint32_t</td>
-<td class="fieldname">
-vectorDimension</td>
-<td class="fielddoc">
-<p>Dimension of vector space </p>
-</td></tr>
-</table>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

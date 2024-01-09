@@ -191,7 +191,7 @@ $(document).ready(function(){initNavTree('arm_dotproduct_example_f32_8c-example.
 <div class="line"><span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">** Test input data of srcA for blockSize 32</span></div>
 <div class="line"><span class="comment">** ------------------------------------------------------------------- */</span></div>
-<div class="line"><a class="code hl_typedef" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> <a id="a0" name="a0"></a><a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#a87f734db569e9b7d0be86c4d276b6143">srcA_buf_f32</a>[<a id="a1" name="a1"></a><a class="code hl_define" href="arm__convolution__example__f32_8c.html#af8a1d2ed31f7c9a00fec46a798edb61b">MAX_BLOCKSIZE</a>] =</div>
+<div class="line"><a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> <a id="a0" name="a0"></a><a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#a87f734db569e9b7d0be86c4d276b6143">srcA_buf_f32</a>[<a id="a1" name="a1"></a><a class="code hl_define" href="arm__convolution__example__f32_8c.html#af8a1d2ed31f7c9a00fec46a798edb61b">MAX_BLOCKSIZE</a>] =</div>
 <div class="line">{</div>
 <div class="line">  -0.4325648115282207,  -1.6655843782380970,  0.1253323064748307,</div>
 <div class="line">   0.2876764203585489,  -1.1464713506814637,  1.1909154656429988,</div>
@@ -209,7 +209,7 @@ $(document).ready(function(){initNavTree('arm_dotproduct_example_f32_8c-example.
 <div class="line"><span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">** Test input data of srcB for blockSize 32</span></div>
 <div class="line"><span class="comment">** ------------------------------------------------------------------- */</span></div>
-<div class="line"><a class="code hl_typedef" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> <a id="a2" name="a2"></a><a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#a6c8673b506124011a16e0cf96ff06582">srcB_buf_f32</a>[<a class="code hl_define" href="arm__convolution__example__f32_8c.html#af8a1d2ed31f7c9a00fec46a798edb61b">MAX_BLOCKSIZE</a>] =</div>
+<div class="line"><a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> <a id="a2" name="a2"></a><a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#a6c8673b506124011a16e0cf96ff06582">srcB_buf_f32</a>[<a class="code hl_define" href="arm__convolution__example__f32_8c.html#af8a1d2ed31f7c9a00fec46a798edb61b">MAX_BLOCKSIZE</a>] =</div>
 <div class="line">{</div>
 <div class="line">   1.7491401329284098,  0.1325982188803279,   0.3252281811989881,</div>
 <div class="line">  -0.7938091410349637,  0.3149236145048914,  -0.5272704888029532,</div>
@@ -225,38 +225,38 @@ $(document).ready(function(){initNavTree('arm_dotproduct_example_f32_8c-example.
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">/* Reference dot product output */</span></div>
-<div class="line"><a class="code hl_typedef" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a>  <a id="a3" name="a3"></a><a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#ad57c1f9ad68d098d79b15ec6844a26fc">refDotProdOut</a> = 5.9273644806352142;</div>
+<div class="line"><a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a>  <a id="a3" name="a3"></a><a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#ad57c1f9ad68d098d79b15ec6844a26fc">refDotProdOut</a> = 5.9273644806352142;</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">* Declare Global variables</span></div>
 <div class="line"><span class="comment">* ------------------------------------------------------------------- */</span></div>
-<div class="line"><a class="code hl_typedef" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> <a id="a4" name="a4"></a><a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#a9c673ab85519f3053023cfe9661196ff">multOutput</a>[<a class="code hl_define" href="arm__convolution__example__f32_8c.html#af8a1d2ed31f7c9a00fec46a798edb61b">MAX_BLOCKSIZE</a>];  <span class="comment">/* Intermediate output */</span></div>
-<div class="line"><a class="code hl_typedef" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> <a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#a324833b61eae796082e07d078a67c34f">testOutput</a>;  <span class="comment">/* Final ouput */</span></div>
+<div class="line"><a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> <a id="a4" name="a4"></a><a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#a9c673ab85519f3053023cfe9661196ff">multOutput</a>[<a class="code hl_define" href="arm__convolution__example__f32_8c.html#af8a1d2ed31f7c9a00fec46a798edb61b">MAX_BLOCKSIZE</a>];  <span class="comment">/* Intermediate output */</span></div>
+<div class="line"><a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> <a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#a324833b61eae796082e07d078a67c34f">testOutput</a>;  <span class="comment">/* Final ouput */</span></div>
 <div class="line"> </div>
-<div class="line"><a class="code hl_enumeration" href="arm__math__types_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6" title="Error status returned by some functions in the library.">arm_status</a> <a id="a5" name="a5"></a><a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#a88ccb294236ab22b00310c47164c53c3">status</a>;   <span class="comment">/* Status of the example */</span></div>
+<div class="line"><a class="code hl_enumeration" href="group__genericTypes.html#ga5e459c6409dfcd2927bb8a57491d7cf6" title="Error status returned by some functions in the library.">arm_status</a> status;   <span class="comment">/* Status of the example */</span></div>
 <div class="line"> </div>
-<div class="line">int32_t <a id="a6" name="a6"></a><a class="code hl_function" href="arm__bayes__example__f32_8c.html#a52d2cba30e6946c95578be946ac12a65">main</a>(<span class="keywordtype">void</span>)</div>
+<div class="line">int32_t <a id="a5" name="a5"></a><a class="code hl_function" href="arm__bayes__example__f32_8c.html#a52d2cba30e6946c95578be946ac12a65">main</a>(<span class="keywordtype">void</span>)</div>
 <div class="line">{</div>
 <div class="line">  uint32_t i;       <span class="comment">/* Loop counter */</span></div>
-<div class="line">  <a class="code hl_typedef" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> diff;     <span class="comment">/* Difference between reference and test outputs */</span></div>
+<div class="line">  <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> diff;     <span class="comment">/* Difference between reference and test outputs */</span></div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Multiplication of two input buffers */</span></div>
-<div class="line">  <a id="a7" name="a7"></a><a class="code hl_function" href="group__BasicMult.html#gacf950935141cad927bea886e88fd9e9b" title="Floating-point vector multiplication.">arm_mult_f32</a>(<a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#a87f734db569e9b7d0be86c4d276b6143">srcA_buf_f32</a>, <a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#a6c8673b506124011a16e0cf96ff06582">srcB_buf_f32</a>, <a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#a9c673ab85519f3053023cfe9661196ff">multOutput</a>, <a class="code hl_define" href="arm__convolution__example__f32_8c.html#af8a1d2ed31f7c9a00fec46a798edb61b">MAX_BLOCKSIZE</a>);</div>
+<div class="line">  <a id="a6" name="a6"></a><a class="code hl_function" href="group__BasicMult.html#gacf950935141cad927bea886e88fd9e9b" title="Floating-point vector multiplication.">arm_mult_f32</a>(<a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#a87f734db569e9b7d0be86c4d276b6143">srcA_buf_f32</a>, <a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#a6c8673b506124011a16e0cf96ff06582">srcB_buf_f32</a>, <a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#a9c673ab85519f3053023cfe9661196ff">multOutput</a>, <a class="code hl_define" href="arm__convolution__example__f32_8c.html#af8a1d2ed31f7c9a00fec46a798edb61b">MAX_BLOCKSIZE</a>);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Accumulate the multiplication output values to</span></div>
 <div class="line"><span class="comment">     get the dot product of the two inputs */</span></div>
 <div class="line">  <span class="keywordflow">for</span>(i=0; i&lt; <a class="code hl_define" href="arm__convolution__example__f32_8c.html#af8a1d2ed31f7c9a00fec46a798edb61b">MAX_BLOCKSIZE</a>; i++)</div>
 <div class="line">  {</div>
-<div class="line">    <a id="a8" name="a8"></a><a class="code hl_function" href="group__BasicAdd.html#gabfef1e86e458314a61f4baa441d9765e" title="Floating-point vector addition.">arm_add_f32</a>(&amp;testOutput, &amp;<a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#a9c673ab85519f3053023cfe9661196ff">multOutput</a>[i], &amp;testOutput, 1);</div>
+<div class="line">    <a id="a7" name="a7"></a><a class="code hl_function" href="group__BasicAdd.html#gabfef1e86e458314a61f4baa441d9765e" title="Floating-point vector addition.">arm_add_f32</a>(&amp;testOutput, &amp;<a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#a9c673ab85519f3053023cfe9661196ff">multOutput</a>[i], &amp;testOutput, 1);</div>
 <div class="line">  }</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* absolute value of difference between ref and test */</span></div>
 <div class="line">  diff = fabsf(<a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#ad57c1f9ad68d098d79b15ec6844a26fc">refDotProdOut</a> - testOutput);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Comparison of dot product value with reference */</span></div>
-<div class="line">  <a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#a88ccb294236ab22b00310c47164c53c3">status</a> = (diff &gt; <a id="a9" name="a9"></a><a class="code hl_define" href="arm__convolution__example__f32_8c.html#a3fd2b1bcd7ddcf506237987ad780f495">DELTA</a>) ? <a id="a10" name="a10"></a><a class="code hl_enumvalue" href="arm__math__types_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a09457f2be656b35015fd6d36202fa376">ARM_MATH_TEST_FAILURE</a> : <a id="a11" name="a11"></a><a class="code hl_enumvalue" href="arm__math__types_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>;</div>
+<div class="line">  status = (diff &gt; <a id="a8" name="a8"></a><a class="code hl_define" href="arm__convolution__example__f32_8c.html#a3fd2b1bcd7ddcf506237987ad780f495">DELTA</a>) ? <a id="a9" name="a9"></a><a class="code hl_enumvalue" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a09457f2be656b35015fd6d36202fa376">ARM_MATH_TEST_FAILURE</a> : <a id="a10" name="a10"></a><a class="code hl_enumvalue" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>;</div>
 <div class="line">  </div>
-<div class="line">  <span class="keywordflow">if</span> (<a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#a88ccb294236ab22b00310c47164c53c3">status</a> != <a class="code hl_enumvalue" href="arm__math__types_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>)</div>
+<div class="line">  <span class="keywordflow">if</span> (status != <a class="code hl_enumvalue" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>)</div>
 <div class="line">  {</div>
 <div class="line"><span class="preprocessor">#if defined (SEMIHOSTING)</span></div>
 <div class="line">    printf(<span class="stringliteral">&quot;FAILURE\n&quot;</span>);</div>
