@@ -128,8 +128,8 @@ extern "C"
   #endif
 #endif
 
-#endif /*defined(__ARM_FEATURE_MVE)*/
-#endif /*!defined(ARM_MATH_AUTOVECTORIZE)*/
+#endif /* defined (__ARM_FEATURE_MVE) */
+#endif /* !defined (ARM_MATH_AUTOVECTORIZE) */
 
 
 #if defined (ARM_MATH_HELIUM)
@@ -282,6 +282,11 @@ extern "C"
 {
 #endif
 
+/**
+ * @defgroup genericTypes Generic Types
+ * @{
+*/
+
  /**
    * @brief 8-bit fractional data type in 1.7 format.
    */
@@ -318,6 +323,7 @@ extern "C"
    * @brief vector types
    */
 #if defined(ARM_MATH_NEON) || (defined (ARM_MATH_MVEI)  && !defined(ARM_MATH_AUTOVECTORIZE))
+
   /**
    * @brief 64-bit fractional 128-bit vector data type in 1.63 format
    */
@@ -402,6 +408,7 @@ extern "C"
 #endif
 
 #if defined(ARM_MATH_NEON) || (defined(ARM_MATH_MVEF)  && !defined(ARM_MATH_AUTOVECTORIZE)) /* floating point vector*/
+
   /**
    * @brief 32-bit floating-point 128-bit vector type
    */
@@ -454,7 +461,6 @@ extern "C"
    */
   typedef float32x4x3_t f32x4x3_t;
 
-
   /**
    * @brief 32-bit fractional 128-bit vector triplet data type in 1.31 format
    */
@@ -484,7 +490,6 @@ extern "C"
    * @brief 32-bit floating-point 64-bit vector quadruplet data type
    */
   typedef float32x2x4_t f32x2x4_t;
-
 
   /**
    * @brief 32-bit fractional 64-bit vector pair data type in 1.31 format
@@ -540,7 +545,6 @@ extern "C"
       int32x2_t       i;
   } any32x2_t;
 
-
   /**
    * @brief 32-bit status 64-bit vector data type.
    */
@@ -558,8 +562,24 @@ extern "C"
 
 #endif
 
+  /**
+   * @brief Error status returned by some functions in the library.
+   */
+  typedef enum
+  {
+    ARM_MATH_SUCCESS                 =  0,        /**< No error */
+    ARM_MATH_ARGUMENT_ERROR          = -1,        /**< One or more arguments are incorrect */
+    ARM_MATH_LENGTH_ERROR            = -2,        /**< Length of data buffer is incorrect */
+    ARM_MATH_SIZE_MISMATCH           = -3,        /**< Size of matrices is not compatible with the operation */
+    ARM_MATH_NANINF                  = -4,        /**< Not-a-number (NaN) or infinity is generated */
+    ARM_MATH_SINGULAR                = -5,        /**< Input matrix is singular and cannot be inverted */
+    ARM_MATH_TEST_FAILURE            = -6,        /**< Test Failed */
+    ARM_MATH_DECOMPOSITION_FAILURE   = -7         /**< Decomposition Failed */
+  } arm_status;
 
-
+/**
+ * @} // endgroup generic
+*/
 
 
 #define F64_MAX   ((float64_t)DBL_MAX)
@@ -597,23 +617,6 @@ extern "C"
 
   /* Dimension C vector space */
   #define CMPLX_DIM 2
-
-  /**
-   * @brief Error status returned by some functions in the library.
-   */
-
-  typedef enum
-  {
-    ARM_MATH_SUCCESS                 =  0,        /**< No error */
-    ARM_MATH_ARGUMENT_ERROR          = -1,        /**< One or more arguments are incorrect */
-    ARM_MATH_LENGTH_ERROR            = -2,        /**< Length of data buffer is incorrect */
-    ARM_MATH_SIZE_MISMATCH           = -3,        /**< Size of matrices is not compatible with the operation */
-    ARM_MATH_NANINF                  = -4,        /**< Not-a-number (NaN) or infinity is generated */
-    ARM_MATH_SINGULAR                = -5,        /**< Input matrix is singular and cannot be inverted */
-    ARM_MATH_TEST_FAILURE            = -6,        /**< Test Failed */
-    ARM_MATH_DECOMPOSITION_FAILURE   = -7         /**< Decomposition Failed */
-  } arm_status;
-
 
 #ifdef   __cplusplus
 }
