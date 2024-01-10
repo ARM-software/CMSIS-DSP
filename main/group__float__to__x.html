@@ -338,7 +338,9 @@ Functions</h2></td></tr>
     pDst[n] = (q31_t)(pSrc[n] * 2147483648);   0 &lt;= n &lt; blockSize.
 </pre></dd></dl>
 <dl class="section user"><dt>Scaling and Overflow Behavior</dt><dd>The function uses saturating arithmetic. Results outside of the allowable Q31 range[0x80000000 0x7FFFFFFF] are saturated.</dd></dl>
-<dl class="section note"><dt>Note</dt><dd>In order to apply rounding, the library should be rebuilt with the ROUNDING macro defined in the preprocessor section of project options. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>In order to apply rounding, the library should be rebuilt with the ROUNDING macro defined in the preprocessor section of project options.</dd>
+<dd>
+If the input float values are very big (2**32) then the function won't be able to saturate to the right values. If you expect very big float values in the input array then you should force those values to +1 or -1 before calling this function. For reasonable float values (&lt; 2**32), the function will saturate correctly. </dd></dl>
 
 </div>
 </div>
