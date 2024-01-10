@@ -77,7 +77,7 @@
    *
    */
   float32_t arm_linear_interp_f32(
-  arm_linear_interp_instance_f32 * S,
+  const arm_linear_interp_instance_f32 * S,
   float32_t x)
   {
     float32_t y;

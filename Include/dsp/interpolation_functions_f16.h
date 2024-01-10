@@ -70,7 +70,7 @@ typedef struct
    * @return y processed output sample.
    */
   float16_t arm_linear_interp_f16(
-  arm_linear_interp_instance_f16 * S,
+  const arm_linear_interp_instance_f16 * S,
   float16_t x);
 
     /**

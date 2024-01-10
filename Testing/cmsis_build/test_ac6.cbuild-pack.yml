@@ -1,0 +1,17 @@
+cbuild-pack:
+  resolved-packs:
+    - resolved-pack: ARM::CMSIS@5.9.0
+      selected-by:
+        - ARM::CMSIS@5.9.0
+    - resolved-pack: ARM::DMA350@1.0.0
+      selected-by:
+        - ARM::DMA350@1.0.0
+    - resolved-pack: ARM::V2M_MPS3_SSE_300_BSP@1.3.0
+      selected-by:
+        - ARM::V2M_MPS3_SSE_300_BSP@1.3.0
+    - resolved-pack: ARM::V2M_MPS3_SSE_310_BSP@1.3.0
+      selected-by:
+        - ARM::V2M_MPS3_SSE_310_BSP@1.3.0
+    - resolved-pack: Keil::ARM_Compiler@1.7.2
+      selected-by:
+        - Keil::ARM_Compiler@1.7.2

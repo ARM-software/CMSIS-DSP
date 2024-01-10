@@ -1,13 +1,13 @@
 project:
   setups:
-    - setup:
+    - setup: Cortex-A9
       define:
         - ARM_MATH_AUTOVECTORIZE
         - DISABLEFLOAT16
       for-context: 
         - +FVP_A9Neon
 
-    - setup:
+    - setup: Cortex-A5 or A7
       define:
         - ARM_MATH_NEON
         - DISABLEFLOAT16
@@ -15,7 +15,7 @@ project:
         - +FVP_A5Neon
         - +FVP_A7Neon
 
-    - setup:
+    - setup: Any Cortex-M
       not-for-context: 
         - +FVP_A5Neon
         - +FVP_A7Neon
