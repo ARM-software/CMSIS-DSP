@@ -60,6 +60,12 @@
   @note
                    In order to apply rounding, the library should be rebuilt with the ROUNDING macro
                    defined in the preprocessor section of project options.
+ 
+  @note         If the input float values are very big (2**32) then the function
+                won't be able to saturate to the right values.
+                If you expect very big float values in the input array then you
+                should force those values to +1 or -1 before calling this function.
+                For reasonable float values (< 2**32), the function will saturate correctly.
  */
 
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
