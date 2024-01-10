@@ -136,12 +136,12 @@ $(document).ready(function(){initNavTree('group__LinearInterpolate.html',''); in
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaa20337e0f054738623b29d5eb7cc7470"><td class="memItemLeft" align="right" valign="top">float16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__LinearInterpolate.html#gaa20337e0f054738623b29d5eb7cc7470">arm_linear_interp_f16</a> (<a class="el" href="structarm__linear__interp__instance__f16.html">arm_linear_interp_instance_f16</a> *S, float16_t x)</td></tr>
-<tr class="memdesc:gaa20337e0f054738623b29d5eb7cc7470"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process function for the floating-point Linear Interpolation Function.  <br /></td></tr>
-<tr class="separator:gaa20337e0f054738623b29d5eb7cc7470"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7d0a7f29f5048aa5c5d68fa26d39eda4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__LinearInterpolate.html#ga7d0a7f29f5048aa5c5d68fa26d39eda4">arm_linear_interp_f32</a> (<a class="el" href="structarm__linear__interp__instance__f32.html">arm_linear_interp_instance_f32</a> *S, <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> x)</td></tr>
-<tr class="memdesc:ga7d0a7f29f5048aa5c5d68fa26d39eda4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process function for the floating-point Linear Interpolation Function.  <br /></td></tr>
-<tr class="separator:ga7d0a7f29f5048aa5c5d68fa26d39eda4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga314d406f1d606e1fa17562225b6ff13b"><td class="memItemLeft" align="right" valign="top">float16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__LinearInterpolate.html#ga314d406f1d606e1fa17562225b6ff13b">arm_linear_interp_f16</a> (const <a class="el" href="structarm__linear__interp__instance__f16.html">arm_linear_interp_instance_f16</a> *S, float16_t x)</td></tr>
+<tr class="memdesc:ga314d406f1d606e1fa17562225b6ff13b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process function for the floating-point Linear Interpolation Function.  <br /></td></tr>
+<tr class="separator:ga314d406f1d606e1fa17562225b6ff13b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacb413eed3385ab2ed8611cc321e23bda"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__LinearInterpolate.html#gacb413eed3385ab2ed8611cc321e23bda">arm_linear_interp_f32</a> (const <a class="el" href="structarm__linear__interp__instance__f32.html">arm_linear_interp_instance_f32</a> *S, <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> x)</td></tr>
+<tr class="memdesc:gacb413eed3385ab2ed8611cc321e23bda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process function for the floating-point Linear Interpolation Function.  <br /></td></tr>
+<tr class="separator:gacb413eed3385ab2ed8611cc321e23bda"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad1dcffdc94c2a0ade62cc0db60e8ada9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__genericTypes.html#gab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__LinearInterpolate.html#gad1dcffdc94c2a0ade62cc0db60e8ada9">arm_linear_interp_q15</a> (const <a class="el" href="group__genericTypes.html#gab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *pYData, <a class="el" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0">q31_t</a> x, uint32_t nValues)</td></tr>
 <tr class="memdesc:gad1dcffdc94c2a0ade62cc0db60e8ada9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process function for the Q15 Linear Interpolation Function.  <br /></td></tr>
 <tr class="separator:gad1dcffdc94c2a0ade62cc0db60e8ada9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -168,8 +168,8 @@ Linear interpolation</div></div>
 <dl class="section user"><dt></dt><dd>This set of functions implements Linear interpolation process for Q7, Q15, Q31, and floating-point data types. The functions operate on a single sample of data and each call to the function returns a single processed value. <code>S</code> points to an instance of the Linear Interpolate function data structure. <code>x</code> is the input sample value. The functions returns the output value.</dd></dl>
 <dl class="section user"><dt></dt><dd>if x is outside of the table boundary, Linear interpolation returns first value of the table if x is below input range and returns last value of table if x is above range. </dd></dl>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="gaa20337e0f054738623b29d5eb7cc7470" name="gaa20337e0f054738623b29d5eb7cc7470"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaa20337e0f054738623b29d5eb7cc7470">&#9670;&#160;</a></span>arm_linear_interp_f16()</h2>
+<a id="ga314d406f1d606e1fa17562225b6ff13b" name="ga314d406f1d606e1fa17562225b6ff13b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga314d406f1d606e1fa17562225b6ff13b">&#9670;&#160;</a></span>arm_linear_interp_f16()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -177,7 +177,7 @@ Linear interpolation</div></div>
         <tr>
           <td class="memname">float16_t arm_linear_interp_f16 </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structarm__linear__interp__instance__f16.html">arm_linear_interp_instance_f16</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="structarm__linear__interp__instance__f16.html">arm_linear_interp_instance_f16</a> *&#160;</td>
           <td class="paramname"><em>S</em>, </td>
         </tr>
         <tr>
@@ -206,8 +206,8 @@ Linear interpolation</div></div>
 
 </div>
 </div>
-<a id="ga7d0a7f29f5048aa5c5d68fa26d39eda4" name="ga7d0a7f29f5048aa5c5d68fa26d39eda4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga7d0a7f29f5048aa5c5d68fa26d39eda4">&#9670;&#160;</a></span>arm_linear_interp_f32()</h2>
+<a id="gacb413eed3385ab2ed8611cc321e23bda" name="gacb413eed3385ab2ed8611cc321e23bda"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gacb413eed3385ab2ed8611cc321e23bda">&#9670;&#160;</a></span>arm_linear_interp_f32()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -215,7 +215,7 @@ Linear interpolation</div></div>
         <tr>
           <td class="memname"><a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> arm_linear_interp_f32 </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structarm__linear__interp__instance__f32.html">arm_linear_interp_instance_f32</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="structarm__linear__interp__instance__f32.html">arm_linear_interp_instance_f32</a> *&#160;</td>
           <td class="paramname"><em>S</em>, </td>
         </tr>
         <tr>
