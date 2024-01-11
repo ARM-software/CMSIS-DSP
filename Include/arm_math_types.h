@@ -119,7 +119,7 @@ extern "C"
   #endif
 #endif
 
-#if (__ARM_FEATURE_MVE & 2)
+#if defined(__ARM_FEATURE_MVE) && (__ARM_FEATURE_MVE & 2)
   #if !defined(ARM_MATH_MVEF)
     #define ARM_MATH_MVEF
   #endif

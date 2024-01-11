@@ -49,16 +49,16 @@ If it is not available, f16 version of the kernels
 won't be built.
 
 */
-#if !(__ARM_FEATURE_MVE & 2)
+#if defined(__ARM_FEATURE_MVE) &&  (__ARM_FEATURE_MVE & 2)
+/* When Vector float16, this flag is always defined and can't be disabled */
+  #define ARM_FLOAT16_SUPPORTED
+#else
   #if !defined(DISABLEFLOAT16)
     #if defined(__ARM_FP16_FORMAT_IEEE) || defined(__ARM_FP16_FORMAT_ALTERNATIVE)
       typedef __fp16 float16_t;
       #define ARM_FLOAT16_SUPPORTED
     #endif
   #endif
-#else
-  /* When Vector float16, this flag is always defined and can't be disabled */
-  #define ARM_FLOAT16_SUPPORTED
 #endif
 
 #if defined(ARM_MATH_NEON) || (defined(ARM_MATH_MVEF)  && !defined(ARM_MATH_AUTOVECTORIZE)) /* floating point vector*/
