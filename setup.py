@@ -160,12 +160,7 @@ def build():
 
   setup (name = 'cmsisdsp',
          version = main_ns['__version__'],
-         packages=["cmsisdsp",
-                   "cmsisdsp.cg",
-                   "cmsisdsp.cg.nodes",
-                   "cmsisdsp.cg.nodes.host",
-                   "cmsisdsp.cg.scheduler",
-                   "cmsisdsp.cg.scheduler.templates"],
+         packages=["cmsisdsp"],
          description = 'CMSIS-DSP Python API',
          long_description=open("PythonWrapper_README.md").read(),
          long_description_content_type='text/markdown',
@@ -205,7 +200,8 @@ def build():
                 "Intended Audience :: Developers",
           ],
           keywords=['development','dsp','cmsis','cmsis-dsp','Arm','signal processing','maths','ml','cortex-m','cortex-a'],
-          install_requires=['numpy>=1.22, < 1.23 ',
+          install_requires=[
+          'numpy>=1.22',
           'networkx>=3.0',
           'jinja2>= 3.1.2, <4.0',
           'sympy>=1.7.1',

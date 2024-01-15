@@ -11,17 +11,13 @@ The signal processing chain can thus be tested and developed in a Python environ
 A tutorial is also available but with less details than this README:
 https://developer.arm.com/documentation/102463/latest/
 
-This wrapper is also containing the scripts for the new [CMSIS-DSP compute graph framework](https://github.com/ARM-software/CMSIS-DSP/tree/main/ComputeGraph) (CG).
-
-CG is also including some nodes to communicate with Modelica using the VHT Modelica blocks developed as part of our [VHT-SystemModeling](https://github.com/ARM-software/VHT-SystemModeling) demos.
-
 An history of the changes to this wrapper is available at the end of the README.
 
 # How to build and install
 
 ## Tested configurations
 
-The building of this package has been tested on Windows with the Python install from python.org and Microsoft Visual 2017. 
+The building of this package has been tested on Windows with the Python install from python.org and Microsoft Visual Studio 2022 and on Ubuntu 22.04.
 
 It has also been tested with `cygwin`. In that case, `python-devel` must be installed too. On Mac, it was tested with standard XCode installation.
 
@@ -42,8 +38,6 @@ It is advised to do it in a Python virtual environment. Then, in the virtual env
 You must have a recent `pip` (to automatically install the dependencies like `NumPy`) and you should have a compiler which can be found by Python when building the package.
 
 DSP examples are available in the [CMSIS-DSP PythonWrapper examples](https://github.com/ARM-software/CMSIS-DSP/tree/main/PythonWrapper/examples) folder.
-
-Synchronous Data Flow examples are available in the [ComputeGraph](https://github.com/ARM-software/CMSIS-DSP/tree/main/ComputeGraph) folder of [CMSIS-DSP](https://github.com/ARM-software/CMSIS-DSP) .
 
 You can also install and run it from [Google colab](https://colab.research.google.com/):
 
@@ -236,11 +230,14 @@ MEL filters are represented as 3 arrays to encode a sparse array.
 
 `datatype` is an API on top of `fixedpoint` to provide more reuse when converting between data formats.
 
-The wrapper is now containing the compute graph Python scripts and you should refer the the documentation in `DSP/ComputeGraph` folder to know how to use those tools.
-
 
 
 # Change history
+
+## Version 1.9.8:
+* Compute graph API has been removed
+* Dependency on numpy 1.22 has been lifted, tested through numpy 1.26
+* Inconsistencies in distance and window modules have been fixed.
 
 ## Version 1.9.7:
 
