@@ -573,14 +573,14 @@ HIDE_UNDOC_MEMBERS     = YES
 # if EXTRACT_ALL is enabled.
 # The default value is: NO.
 
-HIDE_UNDOC_CLASSES     = NO
+HIDE_UNDOC_CLASSES     = YES
 
 # If the HIDE_FRIEND_COMPOUNDS tag is set to YES, doxygen will hide all friend
 # declarations. If set to NO, these declarations will be included in the
 # documentation.
 # The default value is: NO.
 
-HIDE_FRIEND_COMPOUNDS  = NO
+HIDE_FRIEND_COMPOUNDS  = YES
 
 # If the HIDE_IN_BODY_DOCS tag is set to YES, doxygen will hide any
 # documentation blocks found inside the body of a function. If set to NO, these
@@ -919,11 +919,24 @@ WARN_LOGFILE           =
 # Note: If this tag is empty the current directory is searched.
 
 INPUT                  = ./src/mainpage.md   \
+                         ./src/dsppp_main.md   \
+                         ./src/introduction.md   \
+                         ./src/template.md   \
+                         ./src/guidelines.md \
+                         ./src/vectorop.md   \
+                         ./src/memory_allocator.md   \
+                         ./src/memory_static_dynamic.md   \
+                         ./src/code_size.md   \
+                         ./src/fusion.md   \
+                         ./src/vector.md   \
+                         ./src/matrix.md   \
+                         ./src/building.md   \
                          ./src/history.md    \
                          ./src/history.txt   \
                          ../../Examples/ARM  \
                          ../../Include/      \
-                         ../../Source/       \
+                         ../../Source/ \
+                         ../../dsppp/Include
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses

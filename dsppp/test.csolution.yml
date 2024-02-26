@@ -1,0 +1,108 @@
+solution:
+  compiler: AC6@6.22.0
+
+  language-C: c11
+  language-CPP: c++17
+  cdefault:
+
+  packs:
+    - pack: ARM::CMSIS@6.0.0
+    - pack: ARM::CMSIS-DSP@1.15.0
+    - pack: ARM::V2M_MPS3_SSE_300_BSP@1.4.0
+    - pack: ARM::CMSIS-Compiler@2.0.0
+    - pack: ARM::Cortex_DFP@1.0.0
+
+  target-types:
+    - type: MPS3-Corstone-300
+      device: ARM::SSE-300-MPS3
+      board: ARM::V2M-MPS3-SSE-300-FVP
+      define:
+        - CORTEXM
+        - SSE300MPS3
+        - MPS3
+        - ARMCM55
+      misc:
+        - for-compiler: GCC
+          C:
+            - -Wno-sign-compare
+            - -Wno-unused-parameter
+          CPP:
+            - -Wno-sign-compare
+            - -Wno-unused-parameter
+          Link:
+            - --specs=nosys.specs            
+        - for-compiler: CLANG
+          C:
+            - -Wno-sign-compare
+            - -Wno-unused-parameter
+          CPP:
+            - -Wno-sign-compare
+            - -Wno-unused-parameter
+          Link:
+            - -lcrt0
+
+    - type: VHT-Corstone-300
+      device: ARM::SSE-300-MPS3
+      board: ARM::V2M-MPS3-SSE-300-FVP
+      define:
+        - CORTEXM
+        - ARMCM55
+        - VHT
+      misc:
+        - for-compiler: GCC
+          Link:
+            - --specs=rdimon.specs
+          Library:
+            - -lrdimon
+        - for-compiler: CLANG
+          Link:
+            - -lcrt0-semihost
+            - -lsemihost
+
+    - type: VHT-M0P
+      device: ARMCM0P
+      #board: uVision Simulator
+      define:
+        - CORTEXM
+        - ARMCM0P
+        - DISABLEFLOAT16
+        - VHT
+      misc:
+        - for-compiler: GCC
+          Link:
+            - --specs=rdimon.specs
+          Library:
+            - -lrdimon
+        - for-compiler: CLANG
+          Link:
+            - -lcrt0-semihost
+            - -lsemihost
+
+    - type: VHT-M4
+      device: ARMCM4
+      #board: uVision Simulator
+      define:
+        - CORTEXM
+        - ARMCM4_FP
+        - DISABLEFLOAT16
+        - VHT
+      misc:
+        - for-compiler: GCC
+          Link:
+            - --specs=rdimon.specs
+          Library:
+            - -lrdimon
+        - for-compiler: CLANG
+          Link:
+            - -lcrt0-semihost
+            - -lsemihost
+
+  build-types:
+    - type: Release
+      debug: on
+
+
+  projects:
+    - project: ./test.cproject.yml
+    - project: ./example.cproject.yml
+    

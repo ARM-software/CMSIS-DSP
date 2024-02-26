@@ -1,0 +1,120 @@
+project:
+  groups:
+    - group: Examples
+      files:
+        #- file: Examples/dot_product.cpp
+        #- file: Examples/vector_op.cpp
+        - file: Examples/matrix_op.cpp
+        - file: clang_sse300.c
+          for-context: 
+             - +MPS3-Corstone-300
+          for-compiler:
+             - CLANG
+  add-path:
+      - Include
+      - Examples
+
+  components:
+    - component: ARM::CMSIS:CORE
+    - component: ARM::CMSIS:DSP@1.15.0
+    - component: ARM::Device:Startup&C Startup
+      for-context: 
+        - +VHT-Corstone-300
+        - +VHT-M0P
+        - +VHT-M4
+        - +MPS3-Corstone-300
+    - component: ARM::Device:Definition
+      for-context: 
+          - +VHT-Corstone-300
+          - +MPS3-Corstone-300
+    - component: CMSIS-Compiler:CORE
+      for-context: 
+          - +MPS3-Corstone-300
+    - component: CMSIS-Compiler:STDOUT:Custom@1.0.0
+      for-context: 
+          - +MPS3-Corstone-300
+    - component: ARM::Device:USART STDOUT
+      for-context: 
+          - +MPS3-Corstone-300
+    - component: ARM::CMSIS Driver:USART
+      for-context: 
+          - +MPS3-Corstone-300
+    - component: ARM::Device:Native Driver:SysCounter
+      for-context: 
+          - +VHT-Corstone-300
+          - +MPS3-Corstone-300
+    - component: ARM::Device:Native Driver:SysTimer
+      for-context: 
+          - +VHT-Corstone-300
+          - +MPS3-Corstone-300
+    - component: ARM::Device:Native Driver:Timeout
+      for-context: 
+          - +VHT-Corstone-300
+          - +MPS3-Corstone-300
+    - component: ARM::Device:Native Driver:UART
+      for-context: 
+          - +MPS3-Corstone-300
+  
+  linker:
+    - script: linker_scripts/gcc_sse300_mps3.ld
+      for-context:
+        - +MPS3-Corstone-300
+        - +VHT-Corstone-300
+      for-compiler: GCC
+
+    - script: linker_scripts/clang_sse300_mps3.sct
+      for-context:
+        - +MPS3-Corstone-300
+        - +VHT-Corstone-300
+      for-compiler: CLANG
+
+    - script: linker_scripts/ac6_sse300_mps3_s.sct
+      for-context:
+        - +MPS3-Corstone-300
+        - +VHT-Corstone-300
+      for-compiler: AC6
+
+    - regions: linker_scripts/SSE-300-MPS3/region_defs.h
+      for-context:
+        - +MPS3-Corstone-300
+        - +VHT-Corstone-300
+
+    - script: linker_scripts/gcc_m0p_mps3.ld
+      for-context:
+        - +VHT-M0P
+      for-compiler: GCC
+
+    - script: linker_scripts/clang_m0p_mps3.ld
+      for-context:
+        - +VHT-M0P
+      for-compiler: CLANG
+
+    - script: linker_scripts/ac6_m0p_mps3_s.sct
+      for-context:
+        - +VHT-M0P
+      for-compiler: AC6
+
+    - regions: linker_scripts/ARMCM0P/region_defs.h
+      for-context:
+        - +VHT-M0P
+
+    - script: linker_scripts/gcc_m4_mps3.ld
+      for-context:
+        - +VHT-M4
+      for-compiler: GCC
+
+    - script: linker_scripts/clang_m4_mps3.ld
+      for-context:
+        - +VHT-M4
+      for-compiler: CLANG
+
+    - script: linker_scripts/ac6_m4_mps3_s.sct
+      for-context:
+        - +VHT-M4
+      for-compiler: AC6
+
+    - regions: linker_scripts/ARMCM4/region_defs.h
+      for-context:
+        - +VHT-M4
+
+  

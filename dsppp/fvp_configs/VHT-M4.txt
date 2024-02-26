@@ -1,0 +1,3 @@
+fvp_mps2.mps2_visualisation.disable-visualisation=1
+armcortexm4ct.semihosting-enable=1
+armcortexm4ct.vfp-present=1
