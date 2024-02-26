@@ -40,6 +40,9 @@ extern "C"
 
 #if defined(ARM_FLOAT16_SUPPORTED)
 
+/**
+ * @brief Instance structure for the half floating-point Linear Interpolate function.
+ */
 typedef struct
 {
     uint32_t  nValues;        /**< nValues */

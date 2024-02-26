@@ -212,6 +212,7 @@ solutions={
     'test_ac6.csolution.yml':[
     #  ("VHT-Corstone-310","CS310"),
       ("VHT-Corstone-300","CS300"),
+      # ("VHT-Corstone-300-NOMVE","CS300"),
       ("VHT_M33","M33_DSP_FP"),
       ("VHT_M7","M7DP"),
       ("VHT_M7_UNROLLED","M7DP"),

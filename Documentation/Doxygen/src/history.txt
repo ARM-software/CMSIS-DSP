@@ -1,0 +1,86 @@
+/**
+\page rev_hist Revision History
+<table class="cmtable" summary="Revision History">
+<tr>
+  <th>Version</th>
+  <th>Description</th>
+</tr>
+<tr>
+  <td>v1.15.0</td>
+  <td>
+    v1.15.0
+    
+    * Switched to semantic versioning
+    * Corrections to MFCC
+    * Updated support for cmsis build tools 2.0
+    * Compute graph removed. It is now part of CMSIS-Stream
+    * Github issues:
+      * 95,96,105,106,108,111,112
+    * New FFT initializations to allow linker to do code size optimizations
+      * If you know the size of the transform at build time, prefer functions like
+        arm_cfft_init_64_q15 to functions like arm_cfft_init_q15.
+        It applies for CFFT, RFFT and MFCC and other datatypes.
+  </td>
+</tr>
+<tr>
+  <td>v1.14.4</td>
+  <td>
+    Version v1.14.4
+  </td>
+</tr>
+<tr>
+  <td>v1.14.3</td>
+  <td>
+    v1.14.3
+  </td>
+</tr>
+<tr>
+  <td>v1.14.2</td>
+  <td>
+    Bug fixes.
+    
+    Bug fixes and improvements to compute graph.
+  </td>
+</tr>
+<tr>
+  <td>v1.14.1</td>
+  <td>
+    Some Neon acceleration for aarch64 f64 kernels
+  </td>
+</tr>
+<tr>
+  <td>v1.14.0</td>
+  <td>
+    Added support for CMSIS Event Recorder to the compute graph.
+    Added more customization options to the compute graph.
+  </td>
+</tr>
+<tr>
+  <td>v1.13.0</td>
+  <td>
+    Added cyclo static scheduling to the CMSIS-DSP compute graph
+  </td>
+</tr>
+<tr>
+  <td>v1.12.0</td>
+  <td>
+    New version of SDF
+    (Renaming and new feature to make it more developer friendly).
+  </td>
+</tr>
+<tr>
+  <td>v1.11.0</td>
+  <td>
+    Improved documentation.
+    
+    QR decomposition with Householder transform (float only).
+  </td>
+</tr>
+<tr>
+  <td>v1.10.1</td>
+  <td>
+    First release with new repository
+  </td>
+</tr>
+</table>
+*/
