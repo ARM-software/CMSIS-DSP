@@ -317,6 +317,17 @@ using StaticType=typename std::conditional<IsDynamic<VA>::value,VB,VA>::type;
 
 
 
+/**
+ * @brief  Addition operator for expressions
+ *
+ * @tparam LHS Left hand side datatype
+ * @tparam RHS Right hand side datatype
+ * @param a Left hand side expression tree
+ * @param b Right hand side expression tree
+ * @return Expression representing the add
+ * 
+ * vector + vector (including matrix)
+ */
 template<typename LHS,typename RHS,
 typename std::enable_if<(!is_scalar<LHS>() || 
                         !is_scalar<RHS>()) && 
@@ -331,6 +342,16 @@ inline auto operator+(const LHS &a,const RHS &b)
     return(_Binary<typename VecLHS::type,typename VecRHS::type,_AddOp<Scalar>>(VecLHS::ref(a),VecRHS::ref(b),_AddOp<Scalar>()));
 };
 
+
+/**
+ * @brief  + operator for expressions
+ *
+ * @tparam LHS Left hand side datatype
+ * @param a Left hand side expression tree
+ * @return Expression representing + vector
+ * 
+ * +vector  (including matrix)
+ */
 template<typename LHS,
 typename std::enable_if<!is_scalar<LHS>(),bool>::type = true>
 inline auto operator+(const LHS &a)
@@ -352,6 +373,18 @@ VectorView = expr(VectorView) or copy
 we cannot rely on the copy or move constructors.
 
 */
+
+/**
+ * @brief  Identity operator for expression
+ *
+ * @tparam LHS Left hand side datatype
+ * @param a Left hand side expression tree
+ * @return Expression representing the identity
+ * 
+ * Used to consider a vector view as an expression and force the copy
+ * of this vector view when assigned to another vector entity.
+ * 
+ */
 template<typename LHS,
 typename std::enable_if<!is_scalar<LHS>(),bool>::type = true>
 inline auto expr(const LHS &a)
@@ -361,6 +394,17 @@ inline auto expr(const LHS &a)
     return(_Unary<typename VecLHS::type,_NoOp<Scalar>>(VecLHS::ref(a),_NoOp<Scalar>()));
 };
 
+/**
+ * @brief  Identity operator for expression
+ *
+ * @tparam LHS Left hand side datatype
+ * @param a Left hand side expression tree
+ * @return Expression representing the identity
+ * 
+ * Used to consider a vector view as an expression and force the copy
+ * of this vector view when assigned to another vector entity.
+ * 
+ */
 template<typename LHS,
 typename std::enable_if<!is_scalar<LHS>(),bool>::type = true>
 inline auto copy(const LHS &a)
@@ -370,6 +414,18 @@ inline auto copy(const LHS &a)
     return(_Unary<typename VecLHS::type,_NoOp<Scalar>>(VecLHS::ref(a),_NoOp<Scalar>()));
 };
 
+
+/**
+ * @brief  Subtraction operator for expressions
+ *
+ * @tparam LHS Left hand side datatype
+ * @tparam RHS Right hand side datatype
+ * @param a Left hand side expression tree
+ * @param b Right hand side expression tree
+ * @return Expression representing the add
+ * 
+ * vector - vector (including matrix)
+ */
 template<typename LHS,typename RHS,
 typename std::enable_if<(!is_scalar<LHS>() || 
                         !is_scalar<RHS>()) && 
@@ -385,6 +441,16 @@ inline auto operator-(const LHS &a,const RHS &b)
         VecLHS::ref(a),VecRHS::ref(b),_SubOp<Scalar>()));
 };
 
+
+/**
+ * @brief  - operator for expressions
+ *
+ * @tparam LHS Left hand side datatype
+ * @param a Left hand side expression tree
+ * @return Expression representing the - vector
+ * 
+ * -vector (including matrix)
+ */
 template<typename LHS,
 typename std::enable_if<!is_scalar<LHS>(),bool>::type = true>
 inline auto operator-(const LHS &a)
@@ -396,6 +462,17 @@ inline auto operator-(const LHS &a)
 };
 
 
+/**
+ * @brief  Element wise multiplication operator for expressions
+ *
+ * @tparam LHS Left hand side datatype
+ * @tparam RHS Right hand side datatype
+ * @param a Left hand side expression tree
+ * @param b Right hand side expression tree
+ * @return Expression representing the *
+ * 
+ * elementwise vector * vector (including matrix)
+ */
 template<typename LHS,typename RHS,
 typename std::enable_if<(!is_scalar<LHS>() || 
                         !is_scalar<RHS>())  && 

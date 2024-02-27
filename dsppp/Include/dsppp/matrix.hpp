@@ -463,20 +463,42 @@ struct VecRef<Matrix<P,R,C,A>,((R<0) || (C<0))>
  * 
  ****************/
 
+/**
+ * @brief  Outer product operator for expressions
+ *
+ * @tparam LHS Left hand side datatype
+ * @tparam RHS Right hand side datatype
+ * @tparam DerivedOp Operator for the Outer operation
+ * 
+ * vector `op` vector (including matrix)
+ */
 template<typename LHS,typename RHS,typename DerivedOp>
 struct _Outer: _Expr<_Outer<LHS,RHS,DerivedOp>>
 {
+    //! Type of vector elements
     using Scalar = typename traits<LHS>::Scalar;
 #if defined(HAS_VECTOR)
+    //! Type of vector in the architecture
     using Vector = typename traits<LHS>::Vector;
 #endif
+    /**
+    * @brief      Create an Outer operator
+    *
+    * @param lhs Left hand side expression
+    * @param rhs Right hand side expression
+    * @param op operator
+    */
     _Outer(const LHS &lhs,
             const RHS &rhs,
             const _BinaryOperator<Scalar,DerivedOp> &op):
             lhs_(lhs),rhs_(rhs),op_(op){
     }
 
-    
+    /**
+    * @brief      Create an Outer operator from another operator of same type
+    *
+    * @param other the other operator
+    */
     _Outer(const _Outer &other):
     lhs_(other.lhs_),rhs_(other.rhs_),op_(other.op_){
     }
@@ -484,6 +506,11 @@ struct _Outer: _Expr<_Outer<LHS,RHS,DerivedOp>>
     _Outer& operator=(const _Outer& other) = delete;
     _Outer& operator=(_Outer&& other) = delete;
 
+    /**
+    * @brief   Move semantic for _Outer operator
+    *
+    * @param other the other operator
+    */
     _Outer(_Outer &&other): 
     lhs_(std::move(other.lhs_)),rhs_(std::move(other.rhs_)),op_(std::move(other.op_))
     {
@@ -491,12 +518,26 @@ struct _Outer: _Expr<_Outer<LHS,RHS,DerivedOp>>
 
     
 
+    /**
+    * @brief   Length of the matrix (seen as vector) resulting from the outer operator
+    * @tparam R Right hand side datatype
+    * @tparam L Left hand side datatype
+    *
+    * @return  vector dimension
+    */
     template<typename R=RHS, typename L=LHS,
              typename std::enable_if<IsVector<L>::value && IsVector<R>::value,bool>::type = true>
     vector_length_t length() const {
         return(lhs_.length() * rhs_.length());
     }
 
+    /**
+    * @brief   Rows of the matrix
+    * @tparam R Right hand side datatype
+    * @tparam L Left hand side datatype
+    *
+    * @return  number of rows
+    */
     template<typename R=RHS, typename L=LHS,
              typename std::enable_if<IsVector<L>::value,bool>::type = true>
     vector_length_t rows() const {
@@ -504,7 +545,13 @@ struct _Outer: _Expr<_Outer<LHS,RHS,DerivedOp>>
     }
 
 
-
+    /**
+    * @brief   Columns of the matrix
+    * @tparam R Right hand side datatype
+    * @tparam L Left hand side datatype
+    *
+    * @return  number of columns
+    */
     template<typename R=RHS, typename L=LHS,
              typename std::enable_if<IsVector<R>::value,bool>::type = true>
     vector_length_t columns() const {
@@ -512,7 +559,15 @@ struct _Outer: _Expr<_Outer<LHS,RHS,DerivedOp>>
     }
 
 
-
+    /**
+    * @brief   Expression value at given position
+    * @tparam R Right hand side datatype
+    * @tparam L Left hand side datatype
+    * @param r row index
+    * @param c column index
+    *
+    * @return  expression value
+    */
     template<typename R=RHS, typename L=LHS,
              typename std::enable_if<IsVector<L>::value && 
                         IsVector<R>::value,bool>::type = true>
@@ -523,13 +578,25 @@ struct _Outer: _Expr<_Outer<LHS,RHS,DerivedOp>>
 
   
 #if defined(HAS_VECTOR)
-    /*************
+    /*
      * 
      * For matrix
      * 
      */
 
     /* V + V */
+
+    /**
+    * @brief   Expression vector value at given position
+    * @tparam R Right hand side datatype
+    * @tparam L Left hand side datatype
+    * @param r row index
+    * @param c column index
+    *
+    * @return  expression vector value
+    *
+    * Vector + Vector (matrix interpreted as a Vector)
+    */
     template<typename R=RHS, typename L=LHS,
              typename std::enable_if<IsVector<L>::value && 
                         IsVector<R>::value,bool>::type = true>
@@ -538,6 +605,18 @@ struct _Outer: _Expr<_Outer<LHS,RHS,DerivedOp>>
         return(op_(lhs_[r],rhs_.vector_op(c)));
     }
 
+    /**
+    * @brief   Expression vector value at given position with tail predication
+    * @tparam R Right hand side datatype
+    * @tparam L Left hand side datatype
+    * @param r row index
+    * @param c column index
+    * @param remaining remaining number of samples in loop
+    *
+    * @return  expression vector value
+    *
+    * Vector + Vector (matrix interpreted as a Vector)
+    */
     template<typename R=RHS, typename L=LHS,
              typename std::enable_if<IsVector<L>::value && 
                         IsVector<R>::value,bool>::type = true>
@@ -623,6 +702,16 @@ struct NbCols<_Outer<LHS,RHS,OP>>
 };
 
 
+/**
+* @brief   Outer product
+* @tparam VA Right hand side datatype
+* @tparam VB Left hand side datatype
+* @param a Vector a
+* @param b Vector b
+*
+* @return  Outer product of a and b
+*
+*/
 template<typename VA,typename VB,
 typename std::enable_if<vector_idx_pair<VA,VB>(),bool>::type = true>
 inline auto outer(const VA&a,const VB&b)

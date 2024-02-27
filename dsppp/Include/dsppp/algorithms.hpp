@@ -2,13 +2,11 @@
 /** @file */ 
 #pragma once 
 
-/** \addtogroup DSPPP C++ extension
+/** \defgroup DSPPP C++ extension
  *  C++ template extension to CMSIS-DSP. It is not yet part of
  *  the pack but the headers can be found on the 
  *  [CMSIS-DSP github](https://github.com/ARM-software/CMSIS-DSP/dsppp/Include)
  *  The principles are described in this @ref dsppp_main "page"
- *  @{
- *  @}
  */
 
 
@@ -22,7 +20,7 @@ namespace arm_cmsis_dsp {
 
 /** \addtogroup ALGO Architecture independent algorithms
  *  \ingroup DSPPP
- *  @{
+ *  Algorithms written in an architecture independent way
  */
 
 /*
@@ -32,13 +30,16 @@ Matrix transpose
 */
 
 
-/**
- * Transpose a matrix.
- *
- * @param dst Destination matrix.
- * @param src Source matrix.
- *
- */
+
+ /** @ingroup ALGO
+  *  @brief Transpose a matrix.
+  *
+  * @tparam MA Any matrix type
+  * @tparam MB Any matrix type
+  * @param dst Destination matrix.
+  * @param src Source matrix.
+  *
+  */
 template<typename MA,
          typename MB,
          typename std::enable_if<
@@ -50,6 +51,7 @@ inline void transposeTo(MA &dst,
 {
   _arm_mat_trans(src,dst,CURRENT_ARCH);
 }
+
 
 
 /*
@@ -110,7 +112,17 @@ inline void _identity(Matrix<P,R,R,A> &v,
 }
 
 
-
+/**
+ * @ingroup ALGO
+ * @brief Matrix x Vector product.
+ *
+ * @tparam M Any matrix type
+ * @tparam V Any vector type
+ * @param m matrix.
+ * @param v vector.
+ * @return The matrix x vector product
+ *
+ */
 template<typename M,
          typename V,
          typename std::enable_if<CompatibleStaticMatVecProduct<M,V>::value,bool>::type = true>
@@ -141,6 +153,17 @@ inline void dot(RES && res,const M&m,const V&v)
    _dot_m_v(res,m,v,CURRENT_ARCH);
 }
 
+
+ /** @ingroup ALGO
+  *  @brief Matrix x Matrix product.
+  *
+  * @tparam MA Any matrix type
+  * @tparam MB Any matrix type
+  * @param ma Matrix.
+  * @param mb Matrix.
+  * @return ma x mb matrix product
+  *
+  */
 template<typename MA,
          typename MB,
          typename std::enable_if<CompatibleStaticMatMatProduct<MA,MB>::value &&
@@ -197,13 +220,21 @@ inline typename OutputMatrix<MA,MB>::type dot(const MA&ma,const MB&mb)
    return(res);
 }
 
-/*
-
-
-Get res matrix as argument to avoid memory allocation when
-assigning the result to a different type of Matrix (like a Matrix view).
-
-*/
+ /** @ingroup ALGO
+  *  @brief Matrix x Matrix product
+  *
+  * @tparam MA Any matrix type
+  * @tparam MB Any matrix type
+  * @tparam RES Any matrix type
+  * @param res Output matrix. Result of ma x mb is written to this argument
+  * @param ma Matrix.
+  * @param mb Matrix.
+  * 
+  * Used in dynamic mode (dimension of matrix not know at build time)
+  * to avoid a memory allocation if the result matrix is already available
+  * (Enable to reuse the same matrix storage for the result in some algorithms)
+  *
+  */
 template<typename MA,
          typename MB,
          typename RES,
@@ -246,7 +277,14 @@ inline typename OutputMatrix<MA,MB>::type dot(const MA&ma,const MB&mb,const TMP 
 }
 
 
-
+ /** @ingroup ALGO
+  *  @brief Create identity matrix
+  *
+  * @tparam P Datatype of matrix elements
+  * @param l Dimension of matrix (l x l)
+  * @return Identity matrix. It is a dynamic matrix (size not know at build time)
+  * 
+  */
 template<typename P>
 Matrix<P,DYNAMIC,DYNAMIC,TMP_ALLOC> mk_identity(const vector_length_t l)
 {
@@ -256,6 +294,14 @@ Matrix<P,DYNAMIC,DYNAMIC,TMP_ALLOC> mk_identity(const vector_length_t l)
 };
 
 
+ /** @ingroup ALGO
+  *  @brief Create identity matrix
+  *
+  * @tparam P Datatype of matrix elements
+  * @tparam L Matrix dimension (L x L)
+  * @return Identity matrix. It is a static matrix : size known at build time.
+  * 
+  */
 template<typename P,int L>
 Matrix<P,L,L,TMP_ALLOC> mk_identity()
 {
@@ -263,7 +309,5 @@ Matrix<P,L,L,TMP_ALLOC> mk_identity()
        _identity(res,L);
        return(res);
 };
-
-/*! @} */
 
 }
