@@ -109,110 +109,286 @@ __STATIC_FORCEINLINE int32_t __QADD(
 
 #endif
 
-
+/**
+ * @brief  Function to identify the template for fixed number 
+ *         representable on 64 bits
+ *
+ * @param M number of mantissa bit (without sign bit)
+ * @param F number of fractional bits
+ * @param S sign or unsigned
+ * @return True if the template must be selected
+ */
 constexpr bool test64(const int M,const int F,const int S){return((M+F+S)>32 && (M+F+S)<=64);}
+
+/**
+ * @brief  Function to identify the template for fixed number 
+ *         representable on 32 bits
+ *
+ * @param M number of mantissa bit (without sign bit)
+ * @param F number of fractional bits
+ * @param S sign or unsigned
+ * @return True if the template must be selected
+ */
 constexpr bool test32(const int M,const int F,const int S){return((M+F+S)>16 && (M+F+S)<=32);}
+
+/**
+ * @brief  Function to identify the template for fixed number 
+ *         representable on 16 bits
+ *
+ * @param M number of mantissa bit (without sign bit)
+ * @param F number of fractional bits
+ * @param S sign or unsigned
+ * @return True if the template must be selected
+ */
 constexpr bool test16(const int M,const int F,const int S){return((M+F+S)>8  && (M+F+S)<=16);}
+
+/**
+ * @brief  Function to identify the template for fixed number 
+ *         representable on 8 bits
+ *
+ * @param M number of mantissa bit (without sign bit)
+ * @param F number of fractional bits
+ * @param S sign or unsigned
+ * @return True if the template must be selected
+ */
 constexpr bool test8 (const int M,const int F,const int S){return((M+F+S)<=8);}
 
+/**
+ * @brief  Storage type for a fixed point number
+ *
+ * @tparam M Number of bits for mantissa (without sign bit)
+ * @tparam F Number of bits for fractional part
+ * @tparam s signed or unsigned
+ * 
+ */
 template<int M,int F,bool s = true,bool = true>
 struct fixed_storage_type
 {
 };
 
+
+/**
+ * @brief  Storage type for a fixed point number representable on int64
+ *
+ * @tparam M Number of bits for mantissa (without sign bit)
+ * @tparam F Number of bits for fractional part
+ * 
+ */
 template<int M,int F>
 struct fixed_storage_type<M,F,true,test64(M,F,1)>
 {
+    //! Storage for the fixed point number
     typedef int64_t value_type;
+    //! Storage for the widening of this fixed point number datatype
     typedef int64_t wider_type;
+    //! Storage for the narrowing of this fixed point number datatype
     typedef int32_t narrow_type;
 };
 
+/**
+ * @brief  Storage type for a fixed point number representable on uint64
+ *
+ * @tparam M Number of bits for mantissa (without sign bit)
+ * @tparam F Number of bits for fractional part
+ * 
+ */
 template<int M,int F>
 struct fixed_storage_type<M,F,false,test64(M,F,0)>
 {
+    //! Storage for the fixed point number
     typedef uint64_t value_type;
+    //! Storage for the widening of this fixed point number datatype
     typedef uint64_t wider_type;
+    //! Storage for the narrowing of this fixed point number datatype
     typedef uint32_t narrow_type;
 };
 
 
+/**
+ * @brief  Storage type for a fixed point number representable on int32
+ *
+ * @tparam M Number of bits for mantissa (without sign bit)
+ * @tparam F Number of bits for fractional part
+ * 
+ */
 template<int M,int F>
 struct fixed_storage_type<M,F,true,test32(M,F,1)>
 {
+    //! Storage for the fixed point number
     typedef int32_t value_type;
+    //! Storage for the widening of this fixed point number datatype
     typedef int64_t wider_type;
+    //! Storage for the narrowing of this fixed point number datatype
     typedef int16_t narrow_type;
 };
 
+/**
+ * @brief  Storage type for a fixed point number representable on uint32
+ *
+ * @tparam M Number of bits for mantissa (without sign bit)
+ * @tparam F Number of bits for fractional part
+ * 
+ */
 template<int M,int F>
 struct fixed_storage_type<M,F,false,test32(M,F,0)>
 {
+    //! Storage for the fixed point number
     typedef uint32_t value_type;
+    //! Storage for the widening of this fixed point number datatype
     typedef uint64_t wider_type;
+    //! Storage for the narrowing of this fixed point number datatype
     typedef uint16_t narrow_type;
 };
 
 
-
+/**
+ * @brief  Storage type for a fixed point number representable on int16
+ *
+ * @tparam M Number of bits for mantissa (without sign bit)
+ * @tparam F Number of bits for fractional part
+ * 
+ */
 template<int M,int F>
 struct fixed_storage_type<M,F, true,test16(M,F,1)>
 {
+    //! Storage for the fixed point number
     typedef int16_t value_type;
+    //! Storage for the widening of this fixed point number datatype
     typedef int32_t wider_type;
+    //! Storage for the narrowing of this fixed point number datatype
     typedef int8_t narrow_type;
 };
 
+/**
+ * @brief  Storage type for a fixed point number representable on uint16
+ *
+ * @tparam M Number of bits for mantissa (without sign bit)
+ * @tparam F Number of bits for fractional part
+ * 
+ */
 template<int M,int F>
 struct fixed_storage_type<M,F, false,test16(M,F,0)>
 {
+    //! Storage for the fixed point number
     typedef uint16_t value_type;
+    //! Storage for the widening of this fixed point number datatype
     typedef uint32_t wider_type;
+    //! Storage for the narrowing of this fixed point number datatype
     typedef uint8_t narrow_type;
 };
 
-
+/**
+ * @brief  Storage type for a fixed point number representable on int8
+ *
+ * @tparam M Number of bits for mantissa (without sign bit)
+ * @tparam F Number of bits for fractional part
+ * 
+ */
 template<int M,int F>
 struct fixed_storage_type<M,F,true,test8(M,F,1)>
 {
+    //! Storage for the fixed point number
     typedef int8_t value_type;
+    //! Storage for the widening of this fixed point number datatype
     typedef int16_t wider_type;
+    //! Storage for the narrowing of this fixed point number datatype
     typedef int8_t narrow_type;
 };
 
+/**
+ * @brief  Storage type for a fixed point number representable on uint8
+ *
+ * @tparam M Number of bits for mantissa (without sign bit)
+ * @tparam F Number of bits for fractional part
+ * 
+ */
 template<int M,int F>
 struct fixed_storage_type<M,F,false,test8(M,F,0)>
 {
+    //! Storage for the fixed point number
     typedef uint8_t value_type;
+    //! Storage for the widening of this fixed point number datatype
     typedef uint16_t wider_type;
+    //! Storage for the narrowing of this fixed point number datatype
     typedef uint8_t narrow_type;
 };
 
 
+/**
+ * @brief  Fixed point template
+ *
+ * @tparam M Number of bits for mantissa (without sign bit)#
+ * @tparam F Number of bits for fractional part
+ * @tparam S Signed or unsigned
+ * @tparam T storage datatype
+ * 
+ */
 template<int M, int F, bool S = true,
          typename T=typename fixed_storage_type<M,F,S>::value_type>
 struct Q {};
 
+/**
+ * @brief  Signed fixed point datatypes on 64 bits
+ *
+ * @tparam M Number of bits for mantissa (without sign bit)
+ * @tparam F Number of bits for fractional part
+ * 
+ */
 template<int M,int F>
 struct Q<M,F,true,int64_t> {
+  //! Number of fractional bits
   constexpr static int fracBits = F;
+  //! Number of mantissa bits (without sign bit)
   constexpr static int mantissaBits = M;
+  //! Is this number representation signed
   constexpr static bool isSigned = true;
+  //! Storage type for the value
   using value_type = typename fixed_storage_type<M,F,true>::value_type;
+  //! Storage type for the widening of the value
   using wider_type = typename fixed_storage_type<M,F,true>::wider_type;
+
+  //! Maximum representable positive value
   constexpr static value_type maxVal = 0x7FFFFFFFFFFFFFFFLL;
+
+  //! Minimum representable negative value
   constexpr static value_type minVal = 0x8000000000000000LL;
 
-
+  /**
+   * @brief  Convert a float to fixed point
+   *
+   * @param f float value
+   * @return the fixed point value in the storage type
+   * 
+   */
   constexpr static value_type convert(const float f) {
     return(f >= 1.0f ? maxVal : (f <= -1.0f ? minVal : value_type(f * (float)((maxVal >> (63 - F)) ))));
   };
 
+  //! Storage value
   value_type v;
+
+  /**
+   * @brief  Create a new zero fixed point
+   */
   constexpr Q():v(0){};
+
+  /**
+   * @brief  Create a new fixed point from a raw integer
+   * @param x the raw integer
+   */
   constexpr explicit Q(const value_type x):v(x){};
+
+  /**
+   * @brief  Create a new fixed point from a float
+   * @param x the float
+   * @return The fixed point representing the float value with saturation
+   */
   constexpr static Q f(const float x){return Q(convert(x));}
 
+  /**
+   * @brief  Fixed point number representing 1
+   * @return Fixed point representing 1
+   */
   constexpr static Q one() {return f(1.0f);};
 
   Q(Q&& other)=default;
@@ -221,46 +397,94 @@ struct Q<M,F,true,int64_t> {
   Q& operator=(const Q& other)=default;
 
 
+  /**
+   * @brief  Convert an unsigned fixed point to this fixed point
+   * @param other The unsigned fixed point number
+   * 
+   * Some problem may occur since the unsigned may not be representable
+   * with the less bits required for the sign representation.
+   * This convertion is not saturating.
+   */
   constexpr explicit Q(const Q<M,F,false>&other) 
     :v{value_type(other.v)} {};
 
+   /**
+    * @brief  this == b
+    * @param b the other fixed point
+    * @return true if this == b
+    */
    bool operator==(const Q& b) const
    {
      return(v == b.v);
    }
 
+   /**
+    * @brief  this != b
+    * @param b the other fixed point
+    * @return true if this != b
+    */
    bool operator!=(const Q& b) const
    {
      return(v != b.v);
    }
 
+   /**
+    * @brief  this < b
+    * @param b the other fixed point
+    * @return true if this < b
+    */
    bool operator<(const Q& b) const
    {
      return(v < b.v);
    }
 
+   /**
+    * @brief  this > b
+    * @param b the other fixed point
+    * @return true if this > b
+    */
    bool operator>(const Q& b) const
    {
      return(v > b.v);
    }
 
+   /**
+    * @brief  this <= b
+    * @param b the other fixed point
+    * @return true if this <= b
+    */
    bool operator<=(const Q& b) const
    {
      return(v <= b.v);
    }
 
+   /**
+    * @brief  this >= b
+    * @param b the other fixed point
+    * @return true if this >= b
+    */
    bool operator>=(const Q& b) const
    {
      return(v >= b.v);
    }
 
 
+   /**
+   * @brief  this += other
+   * @param other the other fixed point
+   * @return true if this += other
+   */
    Q & operator+=(const Q other)
    {
        v += other.v;
        return(*this);
    }
 
+   /**
+   * @brief  this -= other
+   * @param other the other fixed point
+   * @return true if this += other
+   */
    Q & operator-=(const Q other)
    {
        v -= other.v;
@@ -268,6 +492,13 @@ struct Q<M,F,true,int64_t> {
    }
 
 
+   /**
+    * @brief  Display fixed point number for debug purpose
+    * @param stream Output stream
+    * @param other The fixed point to display
+    * @return the stream
+    * 
+    */
    friend std::ostream& operator<< (std::ostream& stream, const Q& other) {
         stream << double(1.0*other.v / (maxVal >> (63 - F))) << "_Q(" << M << "," << F << ")";;
         return(stream);
@@ -275,23 +506,64 @@ struct Q<M,F,true,int64_t> {
 
 };
 
+/**
+ * @brief  Unsigned fixed point datatypes on 64 bits
+ *
+ * @tparam M Number of bits for mantissa (without sign bit)
+ * @tparam F Number of bits for fractional part
+ * 
+ */
 template<int M,int F>
 struct Q<M,F,false,uint64_t> {
+  //! Number of fractional bits
   constexpr static int fracBits = F;
+  //! Number of mantissa bits (without sign bit)
   constexpr static int mantissaBits = M;
+  //! Is this number representation signed
   constexpr static bool isSigned = false;
+  //! Storage type for the value
   using value_type = typename fixed_storage_type<M,F,false>::value_type;
+  //! Storage type for the widening of the value
   using wider_type = typename fixed_storage_type<M,F,false>::wider_type;
+  //! Maximum representable positive value
   constexpr static value_type maxVal = 0xFFFFFFFFFFFFFFFFLL;
+
+  /**
+   * @brief  Convert a float to fixed point
+   *
+   * @param f float value
+   * @return the fixed point value in the storage type
+   * 
+   */
   constexpr static value_type convert(const float f) {
     return(f >= 1.0f ? maxVal : (f <= 0.0f ? 0LL : value_type(f * (float)((maxVal >> (64 - F))))));
   };
   
+  //! Storage value
   value_type v;
+
+  /**
+   * @brief  Create a new zero fixed point
+   */
   constexpr Q():v(0){};
+
+   /**
+   * @brief  Create a new fixed point from a raw integer
+   * @param x the raw integer
+   */
   constexpr explicit Q(const value_type x):v(x){};
+
+  /**
+   * @brief  Create a new fixed point from a float
+   * @param x the float
+   * @return The fixed point representing the float value with saturation
+   */
   constexpr static Q f(const float x){return Q(convert(x));}
 
+  /**
+   * @brief  Fixed point number representing 1
+   * @return Fixed point representing 1
+   */
   constexpr static Q one() {return f(1.0f);};
 
   Q(Q&& other)=default;
@@ -299,36 +571,73 @@ struct Q<M,F,false,uint64_t> {
   Q& operator=(Q&& other)=default;
   Q& operator=(const Q& other)=default;
 
+    /**
+    * @brief  Display fixed point number for debug purpose
+    * @param stream Output stream
+    * @param other The fixed point to display
+    * @return the stream
+    * 
+    */
    friend std::ostream& operator<< (std::ostream& stream, const Q& other) {
         stream << double(1.0*other.v / (maxVal >> (64 - F))) << "_UQ(" << M << "," << F << ")";;
         return(stream);
    }
 
+   /**
+    * @brief  this == b
+    * @param b the other fixed point
+    * @return true if this == b
+    */
    bool operator==(const Q& b) const
    {
      return(v == b.v);
    }
 
+   /**
+    * @brief  this != b
+    * @param b the other fixed point
+    * @return true if this != b
+    */
    bool operator!=(const Q& b) const
    {
      return(v != b.v);
    }
 
+    /**
+    * @brief  this < b
+    * @param b the other fixed point
+    * @return true if this < b
+    */
    bool operator<(const Q& b) const
    {
      return(v < b.v);
    }
 
+   /**
+    * @brief  this > b
+    * @param b the other fixed point
+    * @return true if this > b
+    */
    bool operator>(const Q& b) const
    {
      return(v > b.v);
    }
 
+   /**
+    * @brief  this <= b
+    * @param b the other fixed point
+    * @return true if this <= b
+    */
    bool operator<=(const Q& b) const
    {
      return(v <= b.v);
    }
 
+   /**
+    * @brief  this >= b
+    * @param b the other fixed point
+    * @return true if this >= b
+    */
    bool operator>=(const Q& b) const
    {
      return(v >= b.v);
@@ -336,29 +645,83 @@ struct Q<M,F,false,uint64_t> {
 
 };
 
-
+/**
+ * @brief  Signed fixed point datatypes on 32 bits
+ *
+ * @tparam M Number of bits for mantissa (without sign bit)
+ * @tparam F Number of bits for fractional part
+ * 
+ */
 template<int M,int F>
 struct Q<M,F,true,int32_t> {
+  //! Number of fractional bits
   constexpr static int fracBits = F;
+
+  //! Number of mantissa bits (without sign bit)
   constexpr static int mantissaBits = M;
+
+  //! Is this number representation signed
   constexpr static bool isSigned = true;
+
+  //! Storage type for the value
   using value_type = typename fixed_storage_type<M,F,true>::value_type;
+
+  //! Storage type for the widening of the value
   using wider_type = typename fixed_storage_type<M,F,true>::wider_type;
+
+  //! Maximum representable positive value
   constexpr static value_type maxVal = 0x7FFFFFFFL;
+
+  //! Minimum representable negative value
   constexpr static value_type minVal = 0x80000000L;
+
+  /**
+   * @brief  Saturate a wider type to the current type
+   *
+   * @param i the wider integer type
+   * @return the saturated value
+   * 
+   */
   constexpr static value_type sat(const wider_type i) {
     return (i > (value_type)maxVal ? maxVal : (i<(value_type)minVal ? minVal : i));
   };
 
+  /**
+   * @brief  Convert a float to fixed point with saturation
+   *
+   * @param f float value
+   * @return the fixed point value in the storage type
+   * 
+   */
   constexpr static value_type convert(const float f) {
     return(f >= 1.0f ? maxVal : (f <= -1.0f ? minVal : value_type(f * (float)((wider_type)1<<F))));
   };
   
+  //! Storage value
   value_type v;
+
+  /**
+   * @brief  Create a new zero fixed point
+   */
   constexpr Q():v(0){};
+
+  /**
+   * @brief  Create a new fixed point from a raw integer
+   * @param x the raw integer
+   */
   constexpr explicit Q(const value_type x):v(x){};
+
+   /**
+   * @brief  Create a new fixed point from a float
+   * @param x the float
+   * @return The fixed point representing the float value with saturation
+   */
   constexpr static Q f(const float x){return Q(convert(x));}
 
+  /**
+   * @brief  Fixed point number representing 1
+   * @return Fixed point representing 1
+   */
   constexpr static Q one() {return f(1.0f);};
 
   Q(Q&& other)=default;
@@ -366,51 +729,107 @@ struct Q<M,F,true,int32_t> {
   Q& operator=(Q&& other)=default;
   Q& operator=(const Q& other)=default;
 
+  /**
+   * @brief  Convert an unsigned fixed point to this fixed point
+   * @param other The unsigned fixed point number
+   * 
+   * Some problem may occur since the unsigned may not be representable
+   * with the less bits required for the sign representation.
+   * This convertion is not saturating.
+   */
   constexpr explicit Q(const Q<M,F,false>&other):
   v{value_type(other.v)} {};
 
+  /**
+    * @brief  this == b
+    * @param b the other fixed point
+    * @return true if this == b
+    */
   bool operator==(const Q& b) const
    {
      return(v == b.v);
    }
 
+   /**
+    * @brief  this != b
+    * @param b the other fixed point
+    * @return true if this != b
+    */
    bool operator!=(const Q& b) const
    {
      return(v != b.v);
    }
 
+   /**
+    * @brief  this < b
+    * @param b the other fixed point
+    * @return true if this < b
+    */
    bool operator<(const Q& b) const
    {
      return(v < b.v);
    }
 
+   /**
+    * @brief  this > b
+    * @param b the other fixed point
+    * @return true if this > b
+    */
    bool operator>(const Q& b) const
    {
      return(v > b.v);
    }
 
+   /**
+    * @brief  this <= b
+    * @param b the other fixed point
+    * @return true if this <= b
+    */
    bool operator<=(const Q& b) const
    {
      return(v <= b.v);
    }
 
+   /**
+    * @brief  this >= b
+    * @param b the other fixed point
+    * @return true if this >= b
+    */
    bool operator>=(const Q& b) const
    {
      return(v >= b.v);
    }
 
+   /**
+   * @brief  this += other
+   * @param other the other fixed point
+   * @return true if this += other
+   */
    Q & operator+=(const Q other)
    {
        v = __QADD(v,other.v);
        return(*this);
    }
 
+   
+   /**
+   * @brief  this -= other
+   * @param other the other fixed point
+   * @return true if this += other
+   */
    Q & operator-=(const Q other)
    {
        v = __QSUB(v,other.v);
        return(*this);
    }
 
+    /**
+    * @brief  Display fixed point number for debug purpose
+    * @param stream Output stream
+    * @param other The fixed point to display
+    * @return the stream
+    * 
+    */
    friend std::ostream& operator<< (std::ostream& stream, const Q& other) {
         stream << double(1.0*other.v / ((wider_type)1<<F)) << "_Q(" << M << "," << F << ")";;
         return(stream);
@@ -418,27 +837,76 @@ struct Q<M,F,true,int32_t> {
 
 };
 
-
+/**
+ * @brief  Unsigned fixed point datatypes on 32 bits
+ *
+ * @tparam M Number of bits for mantissa (without sign bit)
+ * @tparam F Number of bits for fractional part
+ * 
+ */
 template<int M,int F>
 struct Q<M,F,false,uint32_t> {
+  //! Number of fractional bits
   constexpr static int fracBits = F;
+  //! Number of mantissa bits (without sign bit)
   constexpr static int mantissaBits = M;
+  //! Is this number representation signed
   constexpr static bool isSigned = false;
+  //! Storage type for the value
   using value_type = typename fixed_storage_type<M,F,false>::value_type;
+  //! Storage type for the widening of the value
   using wider_type = typename fixed_storage_type<M,F,false>::wider_type;
+
+  //! Maximum representable positive value
   constexpr static value_type maxVal = 0xFFFFFFFFL;
+
+  /**
+   * @brief  Saturate a wider type to the current type
+   *
+   * @param i the wider integer type
+   * @return the saturated value
+   * 
+   */
   constexpr static value_type sat(const wider_type i) {
     return (i > (value_type)maxVal ? maxVal : i);
   };
+
+  /**
+   * @brief  Convert a float to fixed point with saturation
+   *
+   * @param f float value
+   * @return the fixed point value in the storage type
+   * 
+   */
   constexpr static value_type convert(const float f) {
     return(f >= 1.0f ? maxVal : (f <= 0.0f ? 0 : value_type(f * (float)((wider_type)1<<F))));
   };
   
+  //! Storage value
   value_type v;
+
+   /**
+   * @brief  Create a new zero fixed point
+   */
   constexpr Q():v(0){};
+
+  /**
+   * @brief  Create a new fixed point from a raw integer
+   * @param x the raw integer
+   */
   constexpr explicit Q(const value_type x):v(x){};
+
+  /**
+   * @brief  Create a new fixed point from a float
+   * @param x the float
+   * @return The fixed point representing the float value with saturation
+   */
   constexpr static Q f(const float x){return Q(convert(x));}
 
+  /**
+   * @brief  Fixed point number representing 1
+   * @return Fixed point representing 1
+   */
   constexpr static Q one() {return f(1.0f);};
 
   Q(Q&& other)=default;
@@ -446,63 +914,156 @@ struct Q<M,F,false,uint32_t> {
   Q& operator=(Q&& other)=default;
   Q& operator=(const Q& other)=default;
  
+   /**
+    * @brief  Display fixed point number for debug purpose
+    * @param stream Output stream
+    * @param other The fixed point to display
+    * @return the stream
+    * 
+    */
    friend std::ostream& operator<< (std::ostream& stream, const Q& other) {
         stream << double(1.0*other.v / ((wider_type)1<<F)) << "_UQ(" << M << "," << F << ")";;
         return(stream);
    }
 
+   /**
+    * @brief  this == b
+    * @param b the other fixed point
+    * @return true if this == b
+    */
    bool operator==(const Q& b) const
    {
      return(v == b.v);
    }
 
+   /**
+    * @brief  this != b
+    * @param b the other fixed point
+    * @return true if this != b
+    */
    bool operator!=(const Q& b) const
    {
      return(v != b.v);
    }
 
+   /**
+    * @brief  this < b
+    * @param b the other fixed point
+    * @return true if this < b
+    */
    bool operator<(const Q& b) const
    {
      return(v < b.v);
    }
 
+   /**
+    * @brief  this > b
+    * @param b the other fixed point
+    * @return true if this > b
+    */
    bool operator>(const Q& b) const
    {
      return(v > b.v);
    }
 
+   /**
+    * @brief  this <= b
+    * @param b the other fixed point
+    * @return true if this <= b
+    */
    bool operator<=(const Q& b) const
    {
      return(v <= b.v);
    }
 
+    /**
+    * @brief  this >= b
+    * @param b the other fixed point
+    * @return true if this >= b
+    */
    bool operator>=(const Q& b) const
    {
      return(v >= b.v);
    }
 };
 
+/**
+ * @brief  Signed fixed point datatypes on 16 bits
+ *
+ * @tparam M Number of bits for mantissa (without sign bit)
+ * @tparam F Number of bits for fractional part
+ * 
+ */
 template<int M,int F>
 struct Q<M,F,true,int16_t> {
+  //! Number of fractional bits
   constexpr static int fracBits = F;
+  
+  //! Number of mantissa bits (without sign bit)
   constexpr static int mantissaBits = M;
+
+  //! Is this number representation signed
   constexpr static bool isSigned = true;
+
+  //! Storage type for the value
   using value_type = typename fixed_storage_type<M,F,true>::value_type;
+
+  //! Storage type for the widening of the value
   using wider_type = typename fixed_storage_type<M,F,true>::wider_type;
+
+  //! Maximum representable positive value
   constexpr static value_type maxVal = 0x7FFF;
+
+  //! Minimum representable negative value
   constexpr static value_type minVal = 0x8000;
+
+   /**
+   * @brief  Saturate a wider type to the current type
+   *
+   * @param i the wider integer type
+   * @return the saturated value
+   * 
+   */
   constexpr static value_type sat(const wider_type i) {
     return (i > (value_type)maxVal ? maxVal : (i<(value_type)minVal ? minVal : i));
   };
+
+  /**
+   * @brief  Convert a float to fixed point with saturation
+   *
+   * @param f float value
+   * @return the fixed point value in the storage type
+   * 
+   */
   constexpr static value_type convert(const float f) {
     return(f >= 1.0f ? maxVal : (f <= -1.0f ? minVal : value_type(f * (float)((wider_type)1<<F))));
   };
   
+  //! Storage value
   value_type v;
+
+  /**
+   * @brief  Create a new zero fixed point
+   */
   constexpr Q():v(0){};
+
+  /**
+   * @brief  Create a new fixed point from a raw integer
+   * @param x the raw integer
+   */
   constexpr explicit Q(const value_type x):v(x){};
+
+   /**
+   * @brief  Create a new fixed point from a float
+   * @param x the float
+   * @return The fixed point representing the float value with saturation
+   */
   constexpr static Q f(const float x){return Q(convert(x));}
 
+  /**
+   * @brief  Fixed point number representing 1
+   * @return Fixed point representing 1
+   */
   constexpr static Q one() {return f(1.0f);};
 
   Q(Q&& other)=default;
@@ -510,38 +1071,81 @@ struct Q<M,F,true,int16_t> {
   Q& operator=(Q&& other)=default;
   Q& operator=(const Q& other)=default;
 
+  /**
+   * @brief  Convert an unsigned fixed point to this fixed point
+   * @param other The unsigned fixed point number
+   * 
+   * Some problem may occur since the unsigned may not be representable
+   * with the less bits required for the sign representation.
+   * This convertion is not saturating.
+   */
   constexpr explicit Q(const Q<M,F,false>&other):v{value_type(other.v)} {};
 
-  bool operator==(const Q& b) const
+   /**
+    * @brief  this == b
+    * @param b the other fixed point
+    * @return true if this == b
+    */
+   bool operator==(const Q& b) const
    {
      return(v == b.v);
    }
 
+  /**
+    * @brief  this != b
+    * @param b the other fixed point
+    * @return true if this != b
+    */
    bool operator!=(const Q& b) const
    {
      return(v != b.v);
    }
 
+   /**
+    * @brief  this < b
+    * @param b the other fixed point
+    * @return true if this < b
+    */
    bool operator<(const Q& b) const
    {
      return(v < b.v);
    }
 
+    /**
+    * @brief  this > b
+    * @param b the other fixed point
+    * @return true if this > b
+    */
    bool operator>(const Q& b) const
    {
      return(v > b.v);
    }
 
+    /**
+    * @brief  this <= b
+    * @param b the other fixed point
+    * @return true if this <= b
+    */
    bool operator<=(const Q& b) const
    {
      return(v <= b.v);
    }
 
+   /**
+    * @brief  this >= b
+    * @param b the other fixed point
+    * @return true if this >= b
+    */
    bool operator>=(const Q& b) const
    {
      return(v >= b.v);
    }
 
+    /**
+   * @brief  this += other
+   * @param other the other fixed point
+   * @return true if this += other
+   */
    Q & operator+=(const Q other)
    {
     #if !defined(ARM_MATH_DSP)
@@ -552,6 +1156,11 @@ struct Q<M,F,true,int16_t> {
     return(*this);
    }
 
+   /**
+   * @brief  this -= other
+   * @param other the other fixed point
+   * @return true if this += other
+   */
    Q & operator-=(const Q other)
    {
     #if !defined(ARM_MATH_DSP)
@@ -562,6 +1171,13 @@ struct Q<M,F,true,int16_t> {
     return(*this);
    }
 
+   /**
+    * @brief  Display fixed point number for debug purpose
+    * @param stream Output stream
+    * @param other The fixed point to display
+    * @return the stream
+    * 
+    */
    friend std::ostream& operator<< (std::ostream& stream, const Q& other) {
         stream << double(1.0*other.v / (((wider_type)1)<<F)) << "_Q(" << M << "," << F << ")";;
         return(stream);
@@ -569,27 +1185,75 @@ struct Q<M,F,true,int16_t> {
 
 };
 
-
+/**
+ * @brief  Unsigned fixed point datatypes on 16 bits
+ *
+ * @tparam M Number of bits for mantissa (without sign bit)
+ * @tparam F Number of bits for fractional part
+ * 
+ */
 template<int M,int F>
 struct Q<M,F,false,uint16_t> {
+  //! Number of fractional bits
   constexpr static int fracBits = F;
+  //! Number of mantissa bits (without sign bit)
   constexpr static int mantissaBits = M;
+  //! Is this number representation signed
   constexpr static bool isSigned = false;
+  //! Storage type for the value
   using value_type = typename fixed_storage_type<M,F,false>::value_type;
+  //! Storage type for the widening of the value
   using wider_type = typename fixed_storage_type<M,F,false>::wider_type;
+  //! Maximum representable positive value
   constexpr static value_type maxVal = 0xFFFF;
+
+  /**
+   * @brief  Saturate a wider type to the current type
+   *
+   * @param i the wider integer type
+   * @return the saturated value
+   * 
+   */
   constexpr static value_type sat(const wider_type i) {
     return (i > (value_type)maxVal ? maxVal : i);
   };
+
+  /**
+   * @brief  Convert a float to fixed point with saturation
+   *
+   * @param f float value
+   * @return the fixed point value in the storage type
+   * 
+   */
   constexpr static value_type convert(const float f) {
     return(f >= 1.0f ? maxVal : (f <= 0.0f ? 0 : value_type(f * (float)((wider_type)1<<F))));
   };
   
+  //! Storage value
   value_type v;
+
+  /**
+   * @brief  Create a new zero fixed point
+   */
   constexpr Q():v(0){};
+
+  /**
+   * @brief  Create a new fixed point from a raw integer
+   * @param x the raw integer
+   */
   constexpr explicit Q(const value_type x):v(x){};
+
+   /**
+   * @brief  Create a new fixed point from a float
+   * @param x the float
+   * @return The fixed point representing the float value with saturation
+   */
   constexpr static Q f(const float x){return Q(convert(x));}
 
+  /**
+   * @brief  Fixed point number representing 1
+   * @return Fixed point representing 1
+   */
   constexpr static Q one() {return f(1.0f);};
 
   Q(Q&& other)=default;
@@ -597,36 +1261,71 @@ struct Q<M,F,false,uint16_t> {
   Q& operator=(Q&& other)=default;
   Q& operator=(const Q& other)=default;
 
+  /**
+    * @brief  this == b
+    * @param b the other fixed point
+    * @return true if this == b
+    */
   bool operator==(const Q& b) const
    {
      return(v == b.v);
    }
 
+   /**
+    * @brief  this != b
+    * @param b the other fixed point
+    * @return true if this != b
+    */
    bool operator!=(const Q& b) const
    {
      return(v != b.v);
    }
 
+   /**
+    * @brief  this < b
+    * @param b the other fixed point
+    * @return true if this < b
+    */
    bool operator<(const Q& b) const
    {
      return(v < b.v);
    }
 
+    /**
+    * @brief  this > b
+    * @param b the other fixed point
+    * @return true if this > b
+    */
    bool operator>(const Q& b) const
    {
      return(v > b.v);
    }
 
+    /**
+    * @brief  this <= b
+    * @param b the other fixed point
+    * @return true if this <= b
+    */
    bool operator<=(const Q& b) const
    {
      return(v <= b.v);
    }
 
+   /**
+    * @brief  this >= b
+    * @param b the other fixed point
+    * @return true if this >= b
+    */
    bool operator>=(const Q& b) const
    {
      return(v >= b.v);
    }
 
+   /**
+   * @brief  this += other
+   * @param other the other fixed point
+   * @return true if this += other
+   */
    Q & operator+=(const Q other)
    {
     v = __USAT((value_type)v + other.v,16);
@@ -634,7 +1333,13 @@ struct Q<M,F,false,uint16_t> {
    }
 
 
-
+   /**
+    * @brief  Display fixed point number for debug purpose
+    * @param stream Output stream
+    * @param other The fixed point to display
+    * @return the stream
+    * 
+    */
    friend std::ostream& operator<< (std::ostream& stream, const Q& other) {
         stream << double(1.0*other.v / ((wider_type)1<<F)) << "_UQ(" << M << "," << F << ")";;
         return(stream);
@@ -642,27 +1347,78 @@ struct Q<M,F,false,uint16_t> {
 
 };
 
+/**
+ * @brief  Signed fixed point datatypes on 8 bits
+ *
+ * @tparam M Number of bits for mantissa (without sign bit)
+ * @tparam F Number of bits for fractional part
+ * 
+ */
 template<int M,int F>
 struct Q<M,F,true,int8_t> {
+  //! Number of fractional bits
   constexpr static int fracBits = F;
+  //! Number of mantissa bits (without sign bit)
   constexpr static int mantissaBits = M;
+  //! Is this number representation signed
   constexpr static bool isSigned = true;
+  //! Storage type for the value
   using value_type = typename fixed_storage_type<M,F,true>::value_type;
+  //! Storage type for the widening of the value
   using wider_type = typename fixed_storage_type<M,F,true>::wider_type;
+  //! Maximum representable positive value
   constexpr static value_type maxVal = 0x7F;
+  //! Minimum representable negative value
   constexpr static value_type minVal = 0x80;
+
+   /**
+   * @brief  Saturate a wider type to the current type
+   *
+   * @param i the wider integer type
+   * @return the saturated value
+   * 
+   */
   constexpr static value_type sat(const wider_type i) {
     return (i > (value_type)maxVal ? maxVal : (i<(value_type)minVal ? minVal : i));
   };
+
+  
+  /**
+   * @brief  Convert a float to fixed point with saturation
+   *
+   * @param f float value
+   * @return the fixed point value in the storage type
+   * 
+   */
   constexpr static value_type convert(const float f) {
     return(f >= 1.0f ? maxVal : (f <= -1.0f ? minVal : value_type(f * (float)((wider_type)1<<F))));
   };
   
+  //! Storage value
   value_type v;
+
+   /**
+   * @brief  Create a new zero fixed point
+   */
   constexpr Q():v(0){};
+
+   /**
+   * @brief  Create a new fixed point from a raw integer
+   * @param x the raw integer
+   */
   constexpr explicit Q(const value_type x):v(x){};
+
+   /**
+   * @brief  Create a new fixed point from a float
+   * @param x the float
+   * @return The fixed point representing the float value with saturation
+   */
   constexpr static Q f(const float x){return Q(convert(x));}
 
+  /**
+   * @brief  Fixed point number representing 1
+   * @return Fixed point representing 1
+   */
   constexpr static Q one() {return f(1.0f);};
 
   Q(Q&& other)=default;
@@ -670,38 +1426,81 @@ struct Q<M,F,true,int8_t> {
   Q& operator=(Q&& other)=default;
   Q& operator=(const Q& other)=default;
 
+  /**
+   * @brief  Convert an unsigned fixed point to this fixed point
+   * @param other The unsigned fixed point number
+   * 
+   * Some problem may occur since the unsigned may not be representable
+   * with the less bits required for the sign representation.
+   * This convertion is not saturating.
+   */
   constexpr explicit Q(const Q<M,F,false>&other):v{value_type(other.v)} {};
 
+  /**
+    * @brief  this == b
+    * @param b the other fixed point
+    * @return true if this == b
+    */
   bool operator==(const Q& b) const
    {
      return(v == b.v);
    }
 
+   /**
+    * @brief  this != b
+    * @param b the other fixed point
+    * @return true if this != b
+    */
    bool operator!=(const Q& b) const
    {
      return(v != b.v);
    }
 
+   /**
+    * @brief  this < b
+    * @param b the other fixed point
+    * @return true if this < b
+    */
    bool operator<(const Q& b) const
    {
      return(v < b.v);
    }
 
+   /**
+    * @brief  this > b
+    * @param b the other fixed point
+    * @return true if this > b
+    */
    bool operator>(const Q& b) const
    {
      return(v > b.v);
    }
 
+   /**
+    * @brief  this <= b
+    * @param b the other fixed point
+    * @return true if this <= b
+    */
    bool operator<=(const Q& b) const
    {
      return(v <= b.v);
    }
 
+    /**
+    * @brief  this >= b
+    * @param b the other fixed point
+    * @return true if this >= b
+    */
    bool operator>=(const Q& b) const
    {
      return(v >= b.v);
    }
 
+    /**
+   * @brief  this += other
+   * @param other the other fixed point
+   * @return true if this += other
+   */
    Q & operator+=(const Q other)
    {
      #if !defined(ARM_MATH_DSP)
@@ -712,6 +1511,11 @@ struct Q<M,F,true,int8_t> {
     return(*this);
    }
 
+  /**
+   * @brief  this -= other
+   * @param other the other fixed point
+   * @return true if this += other
+   */
    Q & operator-=(const Q other)
    {
      #if !defined(ARM_MATH_DSP)
@@ -722,6 +1526,13 @@ struct Q<M,F,true,int8_t> {
     return(*this);
    }
 
+    /**
+    * @brief  Display fixed point number for debug purpose
+    * @param stream Output stream
+    * @param other The fixed point to display
+    * @return the stream
+    * 
+    */
    friend std::ostream& operator<< (std::ostream& stream, const Q& other) {
         stream << double(1.0*other.v / ((wider_type)1<<F)) << "_Q(" << M << "," << F << ")";
         return(stream);
@@ -729,26 +1540,76 @@ struct Q<M,F,true,int8_t> {
 
 };
 
+/**
+ * @brief  Unsigned fixed point datatypes on 8 bits
+ *
+ * @tparam M Number of bits for mantissa (without sign bit)
+ * @tparam F Number of bits for fractional part
+ * 
+ */
 template<int M,int F>
 struct Q<M,F,false,uint8_t> {
+  //! Number of fractional bits
   constexpr static int fracBits = F;
+  //! Number of mantissa bits (without sign bit)
   constexpr static int mantissaBits = M;
+  //! Is this number representation signed
   constexpr static bool isSigned = false;
+  //! Storage type for the value
   using value_type = typename fixed_storage_type<M,F,false>::value_type;
+  //! Storage type for the widening of the value
   using wider_type = typename fixed_storage_type<M,F,false>::wider_type;
+
+  //! Maximum representable positive value
   constexpr static value_type maxVal = 0xFF;
+
+  /**
+   * @brief  Saturate a wider type to the current type
+   *
+   * @param i the wider integer type
+   * @return the saturated value
+   * 
+   */
   constexpr static value_type sat(const wider_type i) {
     return (i > (value_type)maxVal ? maxVal : i);
   };
+
+  /**
+   * @brief  Convert a float to fixed point with saturation
+   *
+   * @param f float value
+   * @return the fixed point value in the storage type
+   * 
+   */
   constexpr static value_type convert(const float f) {
     return(f >= 1.0f ? maxVal : (f <= 0.0f ? 0 : value_type(f * (float)((wider_type)1<<F))));
   };
   
+  //! Storage value
   value_type v;
+
+  /**
+   * @brief  Create a new zero fixed point
+   */
   constexpr Q():v(0){};
+
+  /**
+   * @brief  Create a new fixed point from a raw integer
+   * @param x the raw integer
+   */
   constexpr explicit Q(const value_type x):v(x){};
+
+   /**
+   * @brief  Create a new fixed point from a float
+   * @param x the float
+   * @return The fixed point representing the float value with saturation
+   */
   constexpr static Q f(const float x){return Q(convert(x));}
 
+  /**
+   * @brief  Fixed point number representing 1
+   * @return Fixed point representing 1
+   */
   constexpr static Q one() {return f(1.0f);};
 
   Q(Q&& other)=default;
@@ -756,61 +1617,179 @@ struct Q<M,F,false,uint8_t> {
   Q& operator=(Q&& other)=default;
   Q& operator=(const Q& other)=default;
 
+  /**
+    * @brief  this == b
+    * @param b the other fixed point
+    * @return true if this == b
+    */
   bool operator==(const Q& b) const
    {
      return(v == b.v);
    }
 
+   /**
+    * @brief  this != b
+    * @param b the other fixed point
+    * @return true if this != b
+    */
    bool operator!=(const Q& b) const
    {
      return(v != b.v);
    }
 
+   /**
+    * @brief  this < b
+    * @param b the other fixed point
+    * @return true if this < b
+    */
    bool operator<(const Q& b) const
    {
      return(v < b.v);
    }
 
+   /**
+    * @brief  this > b
+    * @param b the other fixed point
+    * @return true if this > b
+    */
    bool operator>(const Q& b) const
    {
      return(v > b.v);
    }
 
+   /**
+    * @brief  this <= b
+    * @param b the other fixed point
+    * @return true if this <= b
+    */
    bool operator<=(const Q& b) const
    {
      return(v <= b.v);
    }
 
+   /**
+    * @brief  this >= b
+    * @param b the other fixed point
+    * @return true if this >= b
+    */
    bool operator>=(const Q& b) const
    {
      return(v >= b.v);
    }
    
+   /**
+   * @brief  this += other
+   * @param other the other fixed point
+   * @return true if this += other
+   */
    Q & operator+=(const Q other)
    {
     v = __USAT((value_type)v + other.v,8);
     return(*this);
    }
 
+    /**
+    * @brief  Display fixed point number for debug purpose
+    * @param stream Output stream
+    * @param other The fixed point to display
+    * @return the stream
+    * 
+    */
    friend std::ostream& operator<< (std::ostream& stream, const Q& other) {
         stream << double(1.0*other.v / ((wider_type)1<<F)) << "_UQ(" << M << "," << F << ")";
         return(stream);
    }
 
 };
+    
 
+//! Q63 datatype
 using Q63 = Q<0,63>;
+
+//! Q31 datatype
 using Q31 = Q<0,31>;
+
+//! Q15 datatype
 using Q15 = Q<0,15>;
+
+//! Q7 datatype
 using Q7  = Q<0,7>;
 
+/**
+ * @brief q63 literal
+ * @param x long double value
+ * @return Q63 value
+ * 
+ * You can write 
+ * \code{.cpp}
+ * Q63 b = 0.4_q63;
+ * \endcode
+ * 
+ * The float is converted to Q63 at build time.
+ * 
+ */
 constexpr Q63 operator ""_q63(long double x){return Q63(Q63::convert((float)x));}
+
+/**
+ * @brief q31 literal
+ * @param x long double value
+ * @return Q31 value
+ * 
+ * You can write 
+ * \code{.cpp}
+ * Q31 b = 0.4_q31;
+ * \endcode
+ * 
+ * The float is converted to Q31 at build time.
+ * 
+ */
 constexpr Q31 operator ""_q31(long double x){return Q31(Q31::convert((float)x));}
+
+/**
+ * @brief q15 literal
+ * @param x long double value
+ * @return Q15 value
+ * 
+ * You can write 
+ * \code{.cpp}
+ * Q15 b = 0.4_q15;
+ * \endcode
+ * 
+ * The float is converted to Q15 at build time.
+ * 
+ */
 constexpr Q15 operator ""_q15(long double x){return Q15(Q15::convert((float)x));}
+
+/**
+ * @brief q7 literal
+ * @param x long double value
+ * @return Q7 value
+ * 
+ * You can write 
+ * \code{.cpp}
+ * Q7 b = 0.4_q7;
+ * \endcode
+ * 
+ * The float is converted to Q7 at build time.
+ * 
+ */
 constexpr Q7 operator ""_q7(long double x){return Q7(Q7::convert((float)x));}
 
 
-
+/**
+ * @brief Multiplication of two fixed point numbers A and B
+ * @tparam MA Number of mantissa bits for A
+ * @tparam FA Number of fractional bits for A
+ * @tparam MB Number of mantissa bits for B
+ * @tparam FB Number of fractional bits for B
+ * @tparam SA Is A using a signed representation
+ * @tparam SB Is B using a signed representation
+ * @param a First fixed point number
+ * @param b Second fixed point number
+ * @return return the product of the two fixed point (and use adapted type)
+ * 
+ * 
+ */
 template<int MA,int FA,int MB,int FB,bool SA,bool SB>
 inline Q< MA+MB+1 , FA+FB,SA || SB> mult(const Q<MA,FA,SA> &a,
                                          const Q<MB,FB,SB> &b)
@@ -840,6 +1819,17 @@ inline Q< MA+MB+1 , FA+FB,SA || SB> mult(const Q<MA,FA,SA> &a,
 }
 
 
+/**
+ * @brief Add two fixed point numbers with saturation
+ * @tparam M Number of mantissa bits for the fixed point number
+ * @tparam F Number of fractional bits for the fixed point number
+ * @tparam S Is the fixed point number using a signed representation
+ * @param a First fixed point number
+ * @param b Second fixed point number
+ * @return return the sum with saturation (if supported by the datatype)
+ * 
+ * 
+ */
 template<int M,int F,bool S>
 inline Q<M,F,S> operator+(const Q<M,F,S> &a,const Q<M,F,S> &b)
 {
@@ -848,6 +1838,17 @@ inline Q<M,F,S> operator+(const Q<M,F,S> &a,const Q<M,F,S> &b)
     return ret;
 }
 
+/**
+ * @brief Subtract two fixed point numbers with saturation
+ * @tparam M Number of mantissa bits for the fixed point number
+ * @tparam F Number of fractional bits for the fixed point number
+ * @tparam S Is the fixed point number using a signed representation
+ * @param a First fixed point number
+ * @param b Second fixed point number
+ * @return return the subtraction with saturation (if supported by the datatype)
+ * 
+ * 
+ */
 template<int M,int F,bool S>
 inline Q<M,F,S> operator-(const Q<M,F,S> &a,const Q<M,F,S> &b)
 {
@@ -856,6 +1857,16 @@ inline Q<M,F,S> operator-(const Q<M,F,S> &a,const Q<M,F,S> &b)
     return ret;
 }
 
+/**
+ * @brief Negate a fixed point number with saturation
+ * @tparam M Number of mantissa bits for the fixed point number
+ * @tparam F Number of fractional bits for the fixed point number
+ * @tparam S Is the fixed point number using a signed representation
+ * @param a First fixed point number
+ * @return return negation with saturation (if supported by the datatype)
+ * 
+ * 
+ */
 template<int M,int F,bool S>
 inline Q<M,F,S> operator-(const Q<M,F,S> &a)
 {
@@ -865,6 +1876,17 @@ inline Q<M,F,S> operator-(const Q<M,F,S> &a)
 }
 
 // Unsaturating add
+/**
+ * @brief Add two fixed point numbers without saturation
+ * @tparam M Number of mantissa bits for the fixed point number
+ * @tparam F Number of fractional bits for the fixed point number
+ * @tparam S Is the fixed point number using a signed representation
+ * @param a First fixed point number
+ * @param b Second fixed point number
+ * @return return the sum without saturation
+ * 
+ * 
+ */
 template<int M,int F,bool S>
 inline Q<M,F,S> add(const Q<M,F,S> &a,const Q<M,F,S> &b)
 {
@@ -872,6 +1894,17 @@ inline Q<M,F,S> add(const Q<M,F,S> &a,const Q<M,F,S> &b)
 }
 
 // Unsaturating sub
+/**
+ * @brief Subtract two fixed point numbers without saturation
+ * @tparam M Number of mantissa bits for the fixed point number
+ * @tparam F Number of fractional bits for the fixed point number
+ * @tparam S Is the fixed point number using a signed representation
+ * @param a First fixed point number
+ * @param b Second fixed point number
+ * @return return the subtraction  without saturation
+ * 
+ * 
+ */
 template<int M,int F,bool S>
 inline Q<M,F,S> sub(const Q<M,F,S> &a,const Q<M,F,S> &b)
 {
@@ -882,17 +1915,54 @@ inline Q<M,F,S> sub(const Q<M,F,S> &a,const Q<M,F,S> &b)
 template<int N>
 constexpr std::integral_constant<int, N> i_{};
 
+/**
+ * @brief Shift right a fixed point number with a shift known at build time
+ * @tparam M Number of mantissa bits for the fixed point number
+ * @tparam F Number of fractional bits for the fixed point number
+ * @tparam S Is the fixed point number using a signed representation
+ * @param a First fixed point number
+ * @return return the shifted fixed point number
+ * 
+ * 
+ */
 template<int M,int F, int N,bool S>
 inline Q<M,F,S> operator >>(const Q<M,F,S> &a, std::integral_constant<int, N>) noexcept {
     return Q<M,F,S>(a.v >> N);
 }
 
+
+/**
+ * @brief Shift left a fixed point number with a shift known at build time
+ * @tparam M Number of mantissa bits for the fixed point number
+ * @tparam F Number of fractional bits for the fixed point number
+ * @tparam S Is the fixed point number using a signed representation
+ * @param a First fixed point number
+ * @return return the shifted fixed point number
+ * 
+ * 
+ */
 template<int M,int F,int N,bool S>
 inline Q< M+N , F,S> operator <<(const Q<M,F,S> &a,  std::integral_constant<int, N>) noexcept {
     using ResType = typename Q<M+N,F,S>::value_type;
     return Q<M+N,F,S>(ResType(a.v) << N);
 }
 
+
+/**
+ * @brief Saturate a signed fixed point number
+ * @tparam MD Number of mantissa bits for the destination fixed point number
+ * @tparam MS Number of mantissa bits for the source fixed point number
+ * @tparam S Is the fixed point number using a signed representation
+ * @param src First fixed point number
+ * @return return the saturated fixed point number
+ * 
+ * Only applies if the number is signed, the representation requires less
+ * than 32 bits (since there is no saturating instruction for 64 bits) and
+ * if destination has less mantissa bits.
+ * 
+ * If destination has more or equal number of mantissa bits then it does
+ * not make sense to saturate.
+ */
 template<int MD=0,int MS,int F>
 inline Q<MD,F,true> saturate(const Q<MS,F,true> &src,
                              typename std::enable_if<(MD < MS) && ((MD+F)<31)>::type* = nullptr)
@@ -901,6 +1971,21 @@ inline Q<MD,F,true> saturate(const Q<MS,F,true> &src,
 }
 
 
+/**
+ * @brief Saturate an unsigned fixed point number
+ * @tparam MD Number of mantissa bits for the destination fixed point number
+ * @tparam MS Number of mantissa bits for the source fixed point number
+ * @tparam S Is the fixed point number using a signed representation
+ * @param src The fixed point number
+ * @return return the saturated fixed point number
+ * 
+ * Only applies if the number is unsigned, the representation requires less
+ * than 31 bits (since there is no saturating instruction for 64 bits) and
+ * if destination has less mantissa bits.
+ * 
+ * If destination has more or equal number of mantissa bits then it does
+ * not make sense to saturate.
+ */
 template<int MD=0,int MS,int F>
 inline Q<MD,F,false> saturate(const Q<MS,F,false> &src,typename std::enable_if<(MD < MS) && ((MD+F)<31)>::type* = nullptr)
 {
@@ -912,6 +1997,18 @@ template<int M,int FD,int FS,bool S,bool = true>
 struct FixedCastShift {};
 
 /* Positive shift */
+
+/**
+ * @brief Changed fractional representation of a fixed point number using a shift
+ * @tparam M Number of mantissa bits for the fixed point number
+ * @tparam FD Number of fractional bits for the destination fixed point number
+ * @tparam FS Number of fractional bits for the source fixed point number
+ * @tparam S Is the fixed point number using a signed representation
+ * @param src The fixed point number
+ * @return return the fixed point number with different fractional part format
+ *
+ * Only applies if FD > FS
+ */
 template<int M,int FD,int FS,bool S>
 struct FixedCastShift<M,FD,FS,S,(FD>FS)> {
     constexpr static Q<M,FD,S> shift(const Q<M,FS,S> &src)
@@ -921,6 +2018,17 @@ struct FixedCastShift<M,FD,FS,S,(FD>FS)> {
     }
 };
 
+/**
+ * @brief Changed fractional representation of a fixed point number using a shift
+ * @tparam M Number of mantissa bits for the fixed point number
+ * @tparam FD Number of fractional bits for the destination fixed point number
+ * @tparam FS Number of fractional bits for the source fixed point number
+ * @tparam S Is the fixed point number using a signed representation
+ * @param src The fixed point number
+ * @return return the fixed point number with different fractional part format
+ *
+ * Only applies if FD < FS
+ */
 template<int M,int FD,int FS,bool S>
 struct FixedCastShift<M,FD,FS,S,(FD<FS)> {
     constexpr static Q<M,FD,S> shift(const Q<M,FS,S> &src)
@@ -932,6 +2040,16 @@ struct FixedCastShift<M,FD,FS,S,(FD<FS)> {
     }
 };
 
+/**
+ * @brief Convert between different fractional part formats
+ * @tparam M Number of mantissa bits for the fixed point number
+ * @tparam FD Number of fractional bits for the destination fixed point number
+ * @tparam FS Number of fractional bits for the source fixed point number
+ * @tparam S Is the fixed point number using a signed representation
+ * @param src The fixed point number
+ * @return return the fixed point number with different fractional part format
+ *
+ */
 template<int FD,int M,int FS,bool S>
 inline Q<M,FD,S> toFrac(const Q<M,FS,S> &src)
 {
@@ -939,11 +2057,36 @@ inline Q<M,FD,S> toFrac(const Q<M,FS,S> &src)
 }
 
 
+/**
+ * @brief Accumulation without saturation
+ * @tparam MD Number of mantissa bits for the destination fixed point number
+ * @tparam MS Number of mantissa bits for the source fixed point number
+ * @tparam F Number of fractional bits for fixed point number
+ * @tparam S Is the fixed point number using a signed representation
+ *
+ */
 template<int MD,int MS,int F,bool S,bool = true>
 struct Accumulate;
 
+/**
+ * @brief Accumulation without saturation
+ * @tparam MD Number of mantissa bits for the destination fixed point number
+ * @tparam MS Number of mantissa bits for the source fixed point number
+ * @tparam F Number of fractional bits for fixed point number
+ * @tparam S Is the fixed point number using a signed representation
+ *
+ */
 template<int MD,int MS,int F,bool S>
 struct Accumulate<MD,MS,F,S,true> {
+  /**
+   * @brief      Accumulation without saturation
+   *
+   * @param[in]  a     first fixed point number
+   * @param[in]  b     second fixed point number
+   *
+   * @return     The sum of both fixed point number with more
+   *             matissa bits.
+   */
   static Q<MD,F,S> acc (const Q<MD,F,S> &a,const Q<MS,F,S> &b)
   {
      using DstType = typename Q<MD,F,S>::value_type;
@@ -951,6 +2094,20 @@ struct Accumulate<MD,MS,F,S,true> {
   }
 };
 
+/**
+ * @brief      Accumulate without saturation
+ *
+ * @param[in]  a     First fixed point number
+ * @param[in]  b     Second fixed point number
+ *
+ * @tparam     MD    Number of mantissa bits for destination
+ * @tparam     MS    Number of mantissa bits fro source
+ * @tparam     F     Number of fractional bits
+ * @tparam     S     Is the representation signed
+ *
+ * @return     Sum of two numbers without saturation and using the
+ *             destination number of mantissa bits
+ */
 template<int MD,int MS,int F,bool S>
 inline Q<MD,F,S> accumulate(const Q<MD,F,S> &a,const Q<MS,F,S> &b)
 {
@@ -965,66 +2122,176 @@ inline Q<M,F,true> _abs(const Q<M,F,true> a)
     return(Q<M,F>(DestType(abs(a.v))));
 }
 
+/**
+ * @brief      Multiplication operator.
+ *
+ * @param[in]  a     First value
+ * @param[in]  b     Second value
+ *
+ * @return     The result of the multiplication with saturation
+ */
 inline Q7 operator*(const Q7 &a,const Q7 &b)
 {
     return(saturate(toFrac<7>(mult(a,b))));
 }
 
+/**
+ * @brief      Multiplication operator.
+ *
+ * @param[in]  a     First value
+ * @param[in]  b     Second value
+ *
+ * @return     The result of the multiplication with saturation
+ */
 inline Q15 operator*(const Q15 &a,const Q15 &b)
 {
     return (saturate(toFrac<15>(mult(a,b))));
 }
 
+/**
+ * @brief      Multiplication operator.
+ *
+ * @param[in]  a     First value
+ * @param[in]  b     Second value
+ *
+ * @return     The result of the multiplication with saturation
+ */
 inline Q31 operator*(const Q31 &a,const Q31 &b)
 {
     return (toFrac<31>(saturate(toFrac<30>(mult(a,b)))));
 }
 
+/**
+ * @brief      Greater-than comparison operator.
+ *
+ * @param[in]  a     First value
+ * @param[in]  b     Second value
+ *
+ * @tparam     M     Number of mantissa bits
+ * @tparam     F     Number of fractional bits
+ *
+ * @return     The result of the greater-than comparison
+ */
 template<int M,int F>
 inline bool operator>(const Q<M,F> &a,const Q<M,F> &b)
 {
     return(a.v>b.v);
 }
 
+/**
+ * @brief      Less-than comparison operator.
+ *
+ * @param[in]  a     First value
+ * @param[in]  b     Second value
+ *
+ * @tparam     M     Number of mantissa bits
+ * @tparam     F     Number of fractional bits
+ *
+ * @return     The result of the less-than comparison
+ */
 template<int M,int F>
 inline bool operator<(const Q<M,F> &a,const Q<M,F> &b)
 {
     return(a.v<b.v);
 }
 
+/**
+ * @brief      Greater-than-or-equal comparison operator.
+ *
+ * @param[in]  a     First value
+ * @param[in]  b     Second value
+ *
+ * @tparam     M     Number of mantissa bits
+ * @tparam     F     Number of fractional bits
+ *
+ * @return     The result of the greater-than-or-equal comparison
+ */
 template<int M,int F>
 inline bool operator>=(const Q<M,F> &a,const Q<M,F> &b)
 {
     return(a.v>=b.v);
 }
 
-
+/**
+ * @brief      Less-than-or-equal comparison operator.
+ *
+ * @param[in]  a     First value
+ * @param[in]  b     Second value
+ *
+ * @tparam     M     Number of mantissa bits
+ * @tparam     F     Number of fractional bits
+ *
+ * @return     The result of the less-than-or-equal comparison
+ */
 template<int M,int F>
 inline bool operator<=(const Q<M,F> &a,const Q<M,F> &b)
 {
     return(a.v<=b.v);
 }
 
+/**
+ * @brief      Equality operator.
+ *
+ * @param[in]  a     First value
+ * @param[in]  b     Second value
+ *
+ * @tparam     M     Number of mantissa bits
+ * @tparam     F     Number of fractional bits
+ *
+ * @return     The result of the equality
+ */
 template<int M,int F>
 inline bool operator==(const Q<M,F> a,const Q<M,F> b)
 {
     return(a.v==b.v);
 }
 
+/**
+ * @brief      Inequality operator.
+ *
+ * @param[in]  a     First value
+ * @param[in]  b     Second value
+ *
+ * @tparam     M     Number of mantissa bits
+ * @tparam     F     Number of fractional bits
+ *
+ * @return     The result of the inequality
+ */
 template<int M,int F>
 inline bool operator!=(const Q<M,F> a,const Q<M,F> b)
 {
     return(a.v!=b.v);
 }
 
-
+/**
+ * @brief      Division operator.
+ *
+ * @param[in]  a     First fixed point value
+ * @param[in]  b     Integer
+ *
+ * @tparam     M     Number of mantissa bits
+ * @tparam     F     Number of fractional bits
+ * @tparam     S     Is representation signed
+ *
+ * @return     The result of the division
+ */
 template<int M,int F,bool S>
 inline Q<M,F,S> operator/(const Q<M,F,S> a,const int32_t b)
 {
     return(Q<M,F,S>(a.v / b));
 }
 
-
+/**
+ * @brief      No op operator.
+ *  
+ * @param[in]  a     Fixed point number
+ *
+ * @tparam     M     Number of mantissa bits
+ * @tparam     F     Number of fractional bits
+ * @tparam     S     Is the representation signed
+ *
+ * @return     The result of the addition
+ */
 template<int M,int F, bool S>
 inline Q<M,F,S> operator+(const Q<M,F,S> &a)
 {

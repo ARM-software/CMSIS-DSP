@@ -74,19 +74,57 @@ struct ElementType
 template<typename A,typename B>
 using SameElementType=std::is_same<typename ElementType<A>::type,typename ElementType<B>::type>;
 
+/**
+ * @brief      Determines if vector datatype supports vector instruction
+ *             on a current architecture
+ *
+ * @tparam     DA    Datatype
+ *
+ * @return     True if has vector instructions
+ */
 template<typename DA>
 constexpr bool has_vector_inst() {return (vector_traits<typename ElementType<DA>::type>::has_vector);}
 
+/**
+ * @brief      Determines if datatype has predicated loop for current architecture
+ *
+ * @tparam     DA    Datatype
+ *
+ * @return     True if has predicated loops
+ */
 template<typename DA>
 constexpr bool has_predicate_inst() {return (vector_traits<typename ElementType<DA>::type>::has_predicate);}
 
+/**
+ * @brief      Determines if scalar datatype (not vector, vectorview, matrix, matrixview)
+ *
+ * @tparam     DA    { description }
+ *
+ * @return     True if scalar, False otherwise.
+ */
 template<typename DA>
 constexpr bool is_scalar() {return (!IsVector<DA>::value && 
                                     !HasMatrixIndexing<DA>::value);}
 
+/**
+ * @brief      Check if datatype can only be used as a matrix (no vector addressing)
+ *
+ * @tparam     DA    Datatype
+ *
+ * @return     True if can only be used as a matrix (no vector indexing)
+ */
 template<typename DA>
 constexpr bool must_use_matrix_idx() {return (!IsVector<DA>::value && 
                                        HasMatrixIndexing<DA>::value);}
+/**
+ * @brief      Check if both datatype have vector indexing are
+ *             same scalar datatype
+ *
+ * @tparam     DA    First datatype
+ * @tparam     DB    Second datatype
+ *
+ * @return     True if both datatype have vectro indexing and same scalar type
+ */
 template<typename DA,typename DB>
 constexpr bool vector_idx_pair() {return (IsVector<DA>::value && 
                                           IsVector<DB>::value &&
@@ -108,10 +146,26 @@ struct IsDynamic
 Vector only not including matrixes (which are also vectors)
 
 */
+
+/**
+ * @brief      Check if has vector indexing
+ *
+ * @tparam     DA    Datatype
+ *
+ * @return     True if dtatype supports vector indexing
+ */
 template<typename DA>
 constexpr bool is_only_vector() {return (IsVector<DA>::value && 
                                     !HasMatrixIndexing<DA>::value);}
 
+/**
+ * @brief      Check if datatypes have same scalar datatype and no vector indexing
+ *
+ * @tparam     DA    First datatype
+ * @tparam     DB    Second datatype
+ *
+ * @return     True if datatypes have same scalar datatype and no vector indexing
+ */
 template<typename DA,typename DB>
 constexpr bool must_use_matrix_idx_pair() {return ((must_use_matrix_idx<DA>() || must_use_matrix_idx<DB>()) &&
                                                  SameElementType<DA,DB>::value);}
@@ -121,6 +175,16 @@ constexpr bool must_use_matrix_idx_pair() {return ((must_use_matrix_idx<DA>() ||
 
 Static length is 0 for scalar and Dynamic vectors
 */
+
+/**
+ * @brief      Static length
+ *
+ * @tparam     DA    First datatype
+ * @tparam     DB    Second datatype
+ *
+ * @return     Return the static length of the first datatype having
+ *             a static length in the pair.
+ */
 template<typename DA,typename DB>
 constexpr vector_length_t static_length() {
     return ((StaticLength<DA>::value==0) ? StaticLength<DB>::value : StaticLength<DA>::value);
@@ -133,6 +197,15 @@ Anyother case is ok.
 
 */
 
+/**
+ * @brief      Check compatibility of length
+ *
+ * @tparam     DA    First datatype
+ * @tparam     DB    Second datatype
+ *
+ * @return     False only when DA and DA have different static lengths.
+ *             All other cases are True.
+ */
 template<typename DA,typename DB>
 constexpr bool same_static_length()
 {
@@ -148,6 +221,12 @@ Vector operators at instruction level
 #include "fusion_ops.hpp"
 
 
+/**
+ * @brief  Expression template
+ *
+ * @tparam T Datatype representing the expression
+ * 
+ */
 template<typename T>
 struct _Expr {
 
@@ -156,26 +235,100 @@ struct _Expr {
     using Vector = typename traits<T>::Vector;
 #endif
 
+  /**
+   * @brief      Derived datatype
+   *
+   * @return     Return the derived datatype
+   */
   T& derived()  {return(static_cast<T&>(*this));}
 
+  /**
+   * @brief      Derived datatype
+   *
+   * @return     Return the derived datatype
+   */
   T const& derived() const {return(static_cast<T const&>(*this));}
 
+  /**
+   * @brief      Vector indexing in the expression
+   *
+   * @param[in]  i     Index
+   *
+   * @return     The result of the vector indexer
+   */
   Scalar const operator[](const index_t i) const {return(this->derived()[i]);}
   
+  /**
+   * @brief      Matrix indexing
+   *
+   * @param[in]  r     Row index
+   * @param[in]  c     Column index
+   *
+   * @return     Element at index
+   */
   Scalar const operator()(const index_t r,const index_t c) const {return(this->derived()(r,c));}
 
 #if defined(HAS_VECTOR)
+  /**
+   * @brief      Vector operation at given index
+   *
+   * @param[in]  i     Vector index
+   *
+   * @return     Evaluation of vector at the index
+   */
   Vector const vector_op(const index_t i) const {return(this->derived().vector_op(i));}
   
+  /**
+   * @brief      Vector operation at index with loop predicate
+   *
+   * @param[in]  i          Vector index
+   * @param[in]  remaining  Remaining elements in the loop
+   *
+   * @return     Evaluation of vector at index with tail predication
+   */
   Vector const vector_op_tail(const index_t i,const vector_length_t remaining) const {return(this->derived().vector_op_tail(i,remaining));}
 
+  /**
+   * @brief      Matrix operation at index
+   *
+   * @param[in]  r     row index
+   * @param[in]  c     column index
+   *
+   * @return     Evaluation of matrix expression at index
+   */
   Vector const matrix_op(const index_t r,const index_t c) const {return(this->derived().matrix_op(r,c));}
   
+  /**
+   * @brief      Matrix operation at index with tail predication
+   *
+   * @param[in]  r          row index
+   * @param[in]  c          column index
+   * @param[in]  remaining  Remaining elements in the loop
+   *
+   * @return     Evaluation of matrix operation at index
+   */
   Vector const matrix_op_tail(const index_t r,const index_t c,const vector_length_t remaining) const {return(this->derived().matrix_op_tail(r,c,remaining));}
 #endif 
 
+  /**
+   * @brief      Length of result
+   *
+   * @return     The vector length.
+   */
   vector_length_t length() const {return(this->derived().length());}
+
+  /**
+   * @brief      Number of rows for result
+   *
+   * @return     Number of rows
+   */
   vector_length_t rows() const {return(this->derived().rows());}
+
+  /**
+   * @brief      Number of columns for result
+   *
+   * @return     Number of columns
+   */
   vector_length_t columns() const {return(this->derived().columns());}
 
   virtual ~_Expr(){};
@@ -193,6 +346,14 @@ protected:
  * BINARY AST
  */
 
+/**
+ * @brief  Expression for binary operator
+ *
+ * @tparam LHS Left hand side datatype
+ * @tparam RHS Right hand side datatype
+ * @tparam DerivedOp Operator for the binary operation
+ * 
+ */
 template<typename LHS,typename RHS,typename DerivedOp>
 struct _Binary: _Expr<_Binary<LHS,RHS,DerivedOp>>
 {
@@ -542,6 +703,13 @@ struct traits<_Binary<LHS,RHS,DerivedOp>>
  * UNARY AST
  */
 
+/**
+ * @brief  Expression for unary operator
+ *
+ * @tparam LHS Left hand side datatype
+ * @tparam DerivedOp Operator for the binary operation
+ * 
+ */
 template<typename LHS,typename DerivedOp>
 struct _Unary: _Expr<_Unary<LHS,DerivedOp>>
 {
@@ -702,7 +870,18 @@ using DotResult = typename number_traits<typename traits<DA>::Scalar>::accumulat
 
 
 
-
+/**
+ * @brief  Dot product
+ *
+ * @tparam VA Left hand side vector datatype
+ * @tparam VB Right hand side vector datatype
+ * @param a left hand side vector
+ * @param b right hand side vector
+ * @return The dot product
+ * 
+ * The vector can be vector, vector views or expressions.
+ * 
+ */
 template<typename VA,typename VB,
          typename std::enable_if<vector_idx_pair<VA,VB>() &&
          is_only_vector<VA>() &&
@@ -714,6 +893,7 @@ inline DotResult<VA> dot(const VA& a,
    constexpr vector_length_t l = static_length<VA,VB>();
    return(_dot(a,b,l,CURRENT_ARCH));
 }
+
 
 template<typename VA,typename VB,
          typename std::enable_if<vector_idx_pair<VA,VB>() &&
@@ -731,7 +911,19 @@ inline DotResult<VA> dot(const VA& a,
 
 
 
-
+/**
+ * @brief  Swap vectors
+ *
+ * @tparam VA Left hand side vector datatype
+ * @tparam VB Right hand side vector datatype
+ * @param a left hand side vector
+ * @param b right hand side vector
+ * 
+ * The vector can be vector, vector views or expressions.
+ * 
+ * The content of vector is swapped.
+ * 
+ */
 template<typename VA,typename VB,
          typename std::enable_if<vector_idx_pair<VA,VB>() &&
          (!IsDynamic<VA>::value || !IsDynamic<VB>::value),bool>::type = true>
@@ -742,6 +934,7 @@ inline void swap(VA&& a,
    
    _swap(std::forward<VA>(a),std::forward<VB>(b),l,CURRENT_ARCH);
 }
+
 
 template<typename VA,typename VB,
          typename std::enable_if<vector_idx_pair<VA,VB>() &&

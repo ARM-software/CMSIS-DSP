@@ -45,15 +45,15 @@ namespace arm_cmsis_dsp {
  *  \ingroup DSPPP
  *  @{
  */
-    // Dynamic objects (dimensions only known at runtime)
+    //! Dynamic objects (dimensions only known at runtime)
     constexpr int DYNAMIC = -1;
 
-    // Dynamic objects (dimensions only known at runtime) but
-    // with some constraints (like stride == nb_cols)
+    //! Dynamic objects (dimensions only known at runtime) but with some constraints (like stride == nb_cols)
     constexpr int CONSTRAINED_DYNAMIC = -2;
 
-    // It must be a signed datatype
+    //! index datatype. It must be a signed datatype
     typedef int32_t index_t;
+    //! Vector length datatype. Iy must be a signed datatype.
     typedef int32_t vector_length_t;
 
 /*! @} */
@@ -61,6 +61,12 @@ namespace arm_cmsis_dsp {
 /** \addtogroup DEBUG Tools for debugging
  *  \ingroup DSPPP
  *  @{
+ */
+
+/**
+ * @brief      Prints a textual representation of a type.
+ *
+ * @tparam     T     The datatype to display
  */
 template <typename T>
 void PrintType(void)

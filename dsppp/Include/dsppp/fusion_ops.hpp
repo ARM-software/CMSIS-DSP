@@ -6,7 +6,13 @@
  *  @{
  */
 
-
+/**
+ * @brief  Unary operator
+ *
+ * @tparam Scalar Datatype for scalar
+ * @tparam Derived Datatype representing the operator expression
+ * 
+ */
 template<typename Scalar,typename Derived>
 struct _UnaryOperator{
     Derived& derived()  {return(static_cast<Derived&>(*this));}
@@ -48,6 +54,13 @@ struct _UnaryOperator{
 #endif
 };
 
+/**
+ * @brief  Unary operator
+ *
+ * @tparam Scalar Datatype for scalar
+ * @tparam Derived Datatype representing the operator expression
+ * 
+ */
 template<typename Scalar,typename Derived>
 struct _BinaryOperator{
     Derived& derived()  {return(static_cast<Derived&>(*this));}
@@ -112,9 +125,16 @@ struct _BinaryOperator{
 #endif
 };
 
-/*****************
+/*
  * 
  * BINARY
+ * 
+ */
+
+/**
+ * @brief  Add operator
+ *
+ * @tparam Scalar Datatype for scalar
  * 
  */
 template<typename Scalar>
@@ -176,6 +196,12 @@ struct _AddOp:_BinaryOperator<Scalar,_AddOp<Scalar>>
 #endif
 };
 
+/**
+ * @brief  Sub operator
+ *
+ * @tparam Scalar Datatype for scalar
+ * 
+ */
 template<typename Scalar>
 struct _SubOp:_BinaryOperator<Scalar,_SubOp<Scalar>>
 {
@@ -235,6 +261,13 @@ struct _SubOp:_BinaryOperator<Scalar,_SubOp<Scalar>>
 #endif
 };
 
+
+/**
+ * @brief  Mul operator
+ *
+ * @tparam Scalar Datatype for scalar
+ * 
+ */
 template<typename Scalar>
 struct _MulOp:_BinaryOperator<Scalar,_MulOp<Scalar>>
 {
@@ -294,9 +327,16 @@ struct _MulOp:_BinaryOperator<Scalar,_MulOp<Scalar>>
 #endif
 };
 
-/*****************
+/*
  * 
  * UNARY
+ * 
+ */
+
+/**
+ * @brief  Neg operator
+ *
+ * @tparam Scalar Datatype for scalar
  * 
  */
 template<typename Scalar>
@@ -327,6 +367,13 @@ struct _NegOp:_UnaryOperator<Scalar,_NegOp<Scalar>>
 #endif
 };
 
+
+/**
+ * @brief  No operator
+ *
+ * @tparam Scalar Datatype for scalar
+ * 
+ */
 template<typename Scalar>
 struct _NoOp:_UnaryOperator<Scalar,_NoOp<Scalar>>
 {

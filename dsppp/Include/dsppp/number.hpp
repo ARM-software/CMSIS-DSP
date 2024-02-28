@@ -39,12 +39,12 @@ constexpr uint32_t shiftFromValue(const uint32_t val)
      return (val == 1 ? 0 : 1 + shiftFromValue(val>>1));
 }
 
-/** Properties of a scalar datatype
+/** @brief Properties of a scalar datatype
+ * @tparam T datatype
  * 
  * Needs to contain two static bool : is_float and is_fixed
  * 
  * Needs to contain a static function `one` returning the value
- * 
  * 1 for this datatype (used to write some datatype generic
  * algorithms)
  */
