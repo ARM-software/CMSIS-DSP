@@ -74,11 +74,11 @@ arm_status arm_divide_q15(q15_t numerator,
   {
      if (sign)
      {
-        *quotient = 0x8000;
+        *quotient = -32768;
      }
      else
      {
-        *quotient = 0x7FFF;
+        *quotient = 32767;
      }
      return(ARM_MATH_NANINF);
   }
