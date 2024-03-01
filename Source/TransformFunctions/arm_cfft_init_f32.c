@@ -95,7 +95,7 @@ arm_status arm_cfft_init_##LEN##_f32(                                           
     status=arm_cfft_radix4by2_rearrange_twiddles_##LENTWIDDLE##_f32(S);         \
                                                                                 \
     return (status);                                                            \
-};
+}
 
 #else
 
@@ -119,7 +119,7 @@ arm_status arm_cfft_init_##LEN##_f32(arm_cfft_instance_f32 * S)\
         FFTINIT(f32,LEN);                                      \
                                                                \
         return (status);                                       \
-};
+}
 
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
@@ -134,7 +134,7 @@ arm_status arm_cfft_init_##LEN##_f32(arm_cfft_instance_f32 * S)\
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
-CFFTINIT_F32(4096,4096);
+CFFTINIT_F32(4096,4096)
 
 
 /**
@@ -148,7 +148,7 @@ CFFTINIT_F32(4096,4096);
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
-CFFTINIT_F32(2048,1024);
+CFFTINIT_F32(2048,1024)
 
 
 /**
@@ -162,7 +162,7 @@ CFFTINIT_F32(2048,1024);
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
-CFFTINIT_F32(1024,1024);
+CFFTINIT_F32(1024,1024)
 
 
 /**
@@ -176,7 +176,7 @@ CFFTINIT_F32(1024,1024);
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
-CFFTINIT_F32(512,256);
+CFFTINIT_F32(512,256)
 
 
 /**
@@ -190,7 +190,7 @@ CFFTINIT_F32(512,256);
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
-CFFTINIT_F32(256,256);
+CFFTINIT_F32(256,256)
 
 
 /**
@@ -204,7 +204,7 @@ CFFTINIT_F32(256,256);
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
-CFFTINIT_F32(128,64);
+CFFTINIT_F32(128,64)
 
 
 /**
@@ -218,7 +218,7 @@ CFFTINIT_F32(128,64);
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
-CFFTINIT_F32(64,64);
+CFFTINIT_F32(64,64)
  
 
 /**
@@ -232,7 +232,7 @@ CFFTINIT_F32(64,64);
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
-CFFTINIT_F32(32,16);
+CFFTINIT_F32(32,16)
 
 
 /**
@@ -246,7 +246,7 @@ CFFTINIT_F32(32,16);
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
-CFFTINIT_F32(16,16);
+CFFTINIT_F32(16,16)
 
 
 /**

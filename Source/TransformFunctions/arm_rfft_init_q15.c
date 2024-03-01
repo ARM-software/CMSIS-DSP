@@ -131,7 +131,7 @@ arm_status arm_rfft_init_##LEN##_q15( arm_rfft_instance_q15 * S,  \
 
  */
 
-RFFTINIT_Q15(8192,4096,1);
+RFFTINIT_Q15(8192,4096,1)
 
 /**
   @brief         Initialization function for the 4096 pt Q15 real FFT.
@@ -155,7 +155,7 @@ RFFTINIT_Q15(8192,4096,1);
   @par
                    This function also initializes Twiddle factor table.
  */
-RFFTINIT_Q15(4096,2048,2);
+RFFTINIT_Q15(4096,2048,2)
 
 /**
   @brief         Initialization function for the 2048 pt Q15 real FFT.
@@ -179,7 +179,7 @@ RFFTINIT_Q15(4096,2048,2);
   @par
                    This function also initializes Twiddle factor table.
  */
-RFFTINIT_Q15(2048,1024,4);
+RFFTINIT_Q15(2048,1024,4)
 
 /**
   @brief         Initialization function for the 1024 pt Q15 real FFT.
@@ -203,7 +203,7 @@ RFFTINIT_Q15(2048,1024,4);
   @par
                    This function also initializes Twiddle factor table.
  */
-RFFTINIT_Q15(1024,512,8);
+RFFTINIT_Q15(1024,512,8)
 
 /**
   @brief         Initialization function for the 512 pt Q15 real FFT.
@@ -227,7 +227,7 @@ RFFTINIT_Q15(1024,512,8);
   @par
                    This function also initializes Twiddle factor table.
  */
-RFFTINIT_Q15(512,256,16);
+RFFTINIT_Q15(512,256,16)
 
 /**
   @brief         Initialization function for the 256 pt Q15 real FFT.
@@ -251,7 +251,7 @@ RFFTINIT_Q15(512,256,16);
   @par
                    This function also initializes Twiddle factor table.
  */
-RFFTINIT_Q15(256,128,32);
+RFFTINIT_Q15(256,128,32)
 
 /**
   @brief         Initialization function for the 128 pt Q15 real FFT.
@@ -275,7 +275,7 @@ RFFTINIT_Q15(256,128,32);
   @par
                    This function also initializes Twiddle factor table.
  */
-RFFTINIT_Q15(128,64,64);
+RFFTINIT_Q15(128,64,64)
 
 /**
   @brief         Initialization function for the 64 pt Q15 real FFT.
@@ -299,7 +299,7 @@ RFFTINIT_Q15(128,64,64);
   @par
                    This function also initializes Twiddle factor table.
  */
-RFFTINIT_Q15(64,32,128);
+RFFTINIT_Q15(64,32,128)
 
 /**
   @brief         Initialization function for the 32 pt Q15 real FFT.
@@ -323,7 +323,7 @@ RFFTINIT_Q15(64,32,128);
   @par
                    This function also initializes Twiddle factor table.
  */
-RFFTINIT_Q15(32,16,256);
+RFFTINIT_Q15(32,16,256)
 
 /**
   @brief         Generic initialization function for the Q15 RFFT/RIFFT.

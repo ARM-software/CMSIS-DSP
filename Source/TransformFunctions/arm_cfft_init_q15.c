@@ -94,7 +94,7 @@ arm_status arm_cfft_init_##LEN##_q15(                                  \
     status=arm_cfft_radix4by2_rearrange_twiddles_##LENTWIDDLE##_q15(S);\
                                                                        \
     return (status);                                                   \
-};
+}
 
 
 #else
@@ -119,7 +119,7 @@ arm_status arm_cfft_init_##LEN##_q15(arm_cfft_instance_q15 * S)\
         FFTINIT(q15,LEN);                                      \
                                                                \
         return (status);                                       \
-};
+}
 
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
@@ -136,7 +136,7 @@ arm_status arm_cfft_init_##LEN##_q15(arm_cfft_instance_q15 * S)\
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
-CFFTINIT_Q15(4096,4096);
+CFFTINIT_Q15(4096,4096)
 
 /**
   @brief         Initialization function for the cfft q15 function for 2048 samples
@@ -149,7 +149,7 @@ CFFTINIT_Q15(4096,4096);
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
-CFFTINIT_Q15(2048,1024);
+CFFTINIT_Q15(2048,1024)
 
 /**
   @brief         Initialization function for the cfft q15 function for 1024 samples
@@ -162,7 +162,7 @@ CFFTINIT_Q15(2048,1024);
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
-CFFTINIT_Q15(1024,1024);
+CFFTINIT_Q15(1024,1024)
 
 /**
   @brief         Initialization function for the cfft q15 function for 512 samples
@@ -175,7 +175,7 @@ CFFTINIT_Q15(1024,1024);
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
-CFFTINIT_Q15(512,256);
+CFFTINIT_Q15(512,256)
 
 /**
   @brief         Initialization function for the cfft q15 function for 256 samples
@@ -188,7 +188,7 @@ CFFTINIT_Q15(512,256);
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
-CFFTINIT_Q15(256,256);
+CFFTINIT_Q15(256,256)
 
 /**
   @brief         Initialization function for the cfft q15 function for 128 samples
@@ -201,7 +201,7 @@ CFFTINIT_Q15(256,256);
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
-CFFTINIT_Q15(128,64);
+CFFTINIT_Q15(128,64)
 
 /**
   @brief         Initialization function for the cfft q15 function for 64 samples
@@ -214,7 +214,7 @@ CFFTINIT_Q15(128,64);
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
-CFFTINIT_Q15(64,64);
+CFFTINIT_Q15(64,64)
 
 /**
   @brief         Initialization function for the cfft q15 function for 32 samples
@@ -227,7 +227,7 @@ CFFTINIT_Q15(64,64);
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
-CFFTINIT_Q15(32,16);
+CFFTINIT_Q15(32,16)
 
 /**
   @brief         Initialization function for the cfft q15 function for 16 samples
@@ -240,7 +240,7 @@ CFFTINIT_Q15(32,16);
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
-CFFTINIT_Q15(16,16);
+CFFTINIT_Q15(16,16)
 
 /**
   @brief         Generic initialization function for the cfft q15 function
