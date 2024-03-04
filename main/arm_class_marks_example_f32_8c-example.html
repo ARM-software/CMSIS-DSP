@@ -172,7 +172,7 @@ $(document).ready(function(){initNavTree('arm_class_marks_example_f32_8c-example
 <div class="line"><span class="comment">* POSSIBILITY OF SUCH DAMAGE.</span></div>
 <div class="line"><span class="comment">* -------------------------------------------------------------------- */</span></div>
 <div class="line"> </div>
-<div class="line"><span class="preprocessor">#include &quot;<a class="code" href="arm__math_8h.html">arm_math.h</a>&quot;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;arm_math.h&quot;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#if defined(SEMIHOSTING)</span></div>
 <div class="line"><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
@@ -189,7 +189,7 @@ $(document).ready(function(){initNavTree('arm_class_marks_example_f32_8c-example
 <div class="line"><span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">** List of Marks scored by 20 students for 4 subjects</span></div>
 <div class="line"><span class="comment">** ------------------------------------------------------------------- */</span></div>
-<div class="line"><span class="keyword">const</span> <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> <a id="a0" name="a0"></a><a class="code hl_variable" href="arm__class__marks__example__f32_8c.html#a1337a54871ecd2bfcfe1681dace177ad">testMarks_f32</a>[<a id="a1" name="a1"></a><a class="code hl_define" href="arm__class__marks__example__f32_8c.html#abc004a7fade488e72310fd96c0a101dc">TEST_LENGTH_SAMPLES</a>] =</div>
+<div class="line"><span class="keyword">const</span> <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> testMarks_f32[TEST_LENGTH_SAMPLES] =</div>
 <div class="line">{</div>
 <div class="line">  42.000000,  37.000000,  81.000000,  28.000000,</div>
 <div class="line">  83.000000,  72.000000,  36.000000,  38.000000,</div>
@@ -217,7 +217,7 @@ $(document).ready(function(){initNavTree('arm_class_marks_example_f32_8c-example
 <div class="line"><span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">* Number of subjects X 1</span></div>
 <div class="line"><span class="comment">* ------------------------------------------------------------------- */</span></div>
-<div class="line"><span class="keyword">const</span> <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> <a id="a2" name="a2"></a><a class="code hl_variable" href="arm__class__marks__example__f32_8c.html#a993b9b2a1faf43b319c1c6d58b26e7a1">testUnity_f32</a>[4] =</div>
+<div class="line"><span class="keyword">const</span> <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> testUnity_f32[4] =</div>
 <div class="line">{</div>
 <div class="line">  1.000,  1.000,   1.000,  1.000</div>
 <div class="line">};</div>
@@ -226,7 +226,7 @@ $(document).ready(function(){initNavTree('arm_class_marks_example_f32_8c-example
 <div class="line"><span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">** f32 Output buffer</span></div>
 <div class="line"><span class="comment">** ------------------------------------------------------------------- */</span></div>
-<div class="line"><span class="keyword">static</span> <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> <a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#a324833b61eae796082e07d078a67c34f">testOutput</a>[<a class="code hl_define" href="arm__class__marks__example__f32_8c.html#abc004a7fade488e72310fd96c0a101dc">TEST_LENGTH_SAMPLES</a>];</div>
+<div class="line"><span class="keyword">static</span> <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> testOutput[TEST_LENGTH_SAMPLES];</div>
 <div class="line"> </div>
 <div class="line"> </div>
 <div class="line"><span class="comment">/* ------------------------------------------------------------------</span></div>
@@ -239,35 +239,35 @@ $(document).ready(function(){initNavTree('arm_class_marks_example_f32_8c-example
 <div class="line"><span class="comment">* Global variables</span></div>
 <div class="line"><span class="comment">*------------------------------------------------------------------- */</span></div>
 <div class="line"> </div>
-<div class="line"> uint32_t    <a id="a3" name="a3"></a><a class="code hl_variable" href="arm__class__marks__example__f32_8c.html#ab3b66d06b4af1af4ea2740d0ccf4e7bd">numStudents</a> = 20;</div>
-<div class="line"> uint32_t    <a id="a4" name="a4"></a><a class="code hl_variable" href="arm__class__marks__example__f32_8c.html#a3d01884f63bcb694226ca7c24980757a">numSubjects</a> = 4;</div>
-<div class="line"><a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a>    <a id="a5" name="a5"></a><a class="code hl_variable" href="arm__class__marks__example__f32_8c.html#aad32888fa966b3d9db9c31bcbba9d9ef">max_marks</a>, <a id="a6" name="a6"></a><a class="code hl_variable" href="arm__class__marks__example__f32_8c.html#abb7687fa07ec54d8e792cfcbfe2ca809">min_marks</a>, <a id="a7" name="a7"></a><a class="code hl_variable" href="arm__class__marks__example__f32_8c.html#acc9290716b3c97381ce52d14b4b01681">mean</a>, <a id="a8" name="a8"></a><a class="code hl_variable" href="arm__class__marks__example__f32_8c.html#a150b0cf729b51893379f5b5548d4f989">std</a>, <a id="a9" name="a9"></a><a class="code hl_variable" href="arm__class__marks__example__f32_8c.html#a3bd39c4335d84be071cc1eaa9b0a8642">var</a>;</div>
-<div class="line"> uint32_t    <a id="a10" name="a10"></a><a class="code hl_variable" href="arm__class__marks__example__f32_8c.html#a798cf43a3725d7df2fcaf3f328969f53">student_num</a>;</div>
+<div class="line"> uint32_t    numStudents = 20;</div>
+<div class="line"> uint32_t    numSubjects = 4;</div>
+<div class="line"><a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a>    max_marks, min_marks, mean, std, var;</div>
+<div class="line"> uint32_t    student_num;</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">/* ----------------------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">* Main f32 test function.  It returns maximum marks secured and student number</span></div>
 <div class="line"><span class="comment">* ------------------------------------------------------------------------------- */</span></div>
 <div class="line"> </div>
-<div class="line">int32_t <a id="a11" name="a11"></a><a class="code hl_function" href="arm__bayes__example__f32_8c.html#a52d2cba30e6946c95578be946ac12a65">main</a>()</div>
+<div class="line">int32_t main()</div>
 <div class="line">{</div>
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#ifndef  USE_STATIC_INIT</span></div>
 <div class="line"> </div>
-<div class="line">  <a id="_a12" name="_a12"></a><a class="code hl_struct" href="structarm__matrix__instance__f32.html" title="Instance structure for the floating-point matrix structure.">arm_matrix_instance_f32</a> srcA;</div>
+<div class="line">  <a id="_a0" name="_a0"></a><a class="code hl_struct" href="structarm__matrix__instance__f32.html" title="Instance structure for the floating-point matrix structure.">arm_matrix_instance_f32</a> srcA;</div>
 <div class="line">  <a class="code hl_struct" href="structarm__matrix__instance__f32.html" title="Instance structure for the floating-point matrix structure.">arm_matrix_instance_f32</a> srcB;</div>
 <div class="line">  <a class="code hl_struct" href="structarm__matrix__instance__f32.html" title="Instance structure for the floating-point matrix structure.">arm_matrix_instance_f32</a> dstC;</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Input and output matrices initializations */</span></div>
-<div class="line">  <a id="a13" name="a13"></a><a class="code hl_function" href="group__MatrixInit.html#ga11e3dc41592a6401c13182fef9416a27" title="Floating-point matrix initialization.">arm_mat_init_f32</a>(&amp;srcA, <a class="code hl_variable" href="arm__class__marks__example__f32_8c.html#ab3b66d06b4af1af4ea2740d0ccf4e7bd">numStudents</a>, <a class="code hl_variable" href="arm__class__marks__example__f32_8c.html#a3d01884f63bcb694226ca7c24980757a">numSubjects</a>, (<a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> *)<a class="code hl_variable" href="arm__class__marks__example__f32_8c.html#a1337a54871ecd2bfcfe1681dace177ad">testMarks_f32</a>);</div>
-<div class="line">  <a class="code hl_function" href="group__MatrixInit.html#ga11e3dc41592a6401c13182fef9416a27" title="Floating-point matrix initialization.">arm_mat_init_f32</a>(&amp;srcB, <a class="code hl_variable" href="arm__class__marks__example__f32_8c.html#a3d01884f63bcb694226ca7c24980757a">numSubjects</a>, 1, (<a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> *)<a class="code hl_variable" href="arm__class__marks__example__f32_8c.html#a993b9b2a1faf43b319c1c6d58b26e7a1">testUnity_f32</a>);</div>
-<div class="line">  <a class="code hl_function" href="group__MatrixInit.html#ga11e3dc41592a6401c13182fef9416a27" title="Floating-point matrix initialization.">arm_mat_init_f32</a>(&amp;dstC, <a class="code hl_variable" href="arm__class__marks__example__f32_8c.html#ab3b66d06b4af1af4ea2740d0ccf4e7bd">numStudents</a>, 1, testOutput);</div>
+<div class="line">  <a id="a1" name="a1"></a><a class="code hl_function" href="group__MatrixInit.html#ga11e3dc41592a6401c13182fef9416a27" title="Floating-point matrix initialization.">arm_mat_init_f32</a>(&amp;srcA, numStudents, numSubjects, (<a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> *)testMarks_f32);</div>
+<div class="line">  <a class="code hl_function" href="group__MatrixInit.html#ga11e3dc41592a6401c13182fef9416a27" title="Floating-point matrix initialization.">arm_mat_init_f32</a>(&amp;srcB, numSubjects, 1, (<a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> *)testUnity_f32);</div>
+<div class="line">  <a class="code hl_function" href="group__MatrixInit.html#ga11e3dc41592a6401c13182fef9416a27" title="Floating-point matrix initialization.">arm_mat_init_f32</a>(&amp;dstC, numStudents, 1, testOutput);</div>
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#else</span></div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Static Initializations of Input and output matrix sizes and array */</span></div>
-<div class="line">  <a class="code hl_struct" href="structarm__matrix__instance__f32.html" title="Instance structure for the floating-point matrix structure.">arm_matrix_instance_f32</a> srcA = {<a id="a14" name="a14"></a><a class="code hl_define" href="arm__class__marks__example__f32_8c.html#a9d89ac0707e7c9363544986d47a70bd3">NUMSTUDENTS</a>, <a id="a15" name="a15"></a><a class="code hl_define" href="arm__class__marks__example__f32_8c.html#a7b02f9b34bf2cd4d12633f5bf30771ec">NUMSUBJECTS</a>, (<a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> *)<a class="code hl_variable" href="arm__class__marks__example__f32_8c.html#a1337a54871ecd2bfcfe1681dace177ad">testMarks_f32</a>};</div>
-<div class="line">  <a class="code hl_struct" href="structarm__matrix__instance__f32.html" title="Instance structure for the floating-point matrix structure.">arm_matrix_instance_f32</a> srcB = {<a class="code hl_define" href="arm__class__marks__example__f32_8c.html#a7b02f9b34bf2cd4d12633f5bf30771ec">NUMSUBJECTS</a>, 1, (<a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> *)<a class="code hl_variable" href="arm__class__marks__example__f32_8c.html#a993b9b2a1faf43b319c1c6d58b26e7a1">testUnity_f32</a>};</div>
-<div class="line">  <a class="code hl_struct" href="structarm__matrix__instance__f32.html" title="Instance structure for the floating-point matrix structure.">arm_matrix_instance_f32</a> dstC = {<a class="code hl_define" href="arm__class__marks__example__f32_8c.html#a9d89ac0707e7c9363544986d47a70bd3">NUMSTUDENTS</a>, 1, <a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#a324833b61eae796082e07d078a67c34f">testOutput</a>};</div>
+<div class="line">  <a class="code hl_struct" href="structarm__matrix__instance__f32.html" title="Instance structure for the floating-point matrix structure.">arm_matrix_instance_f32</a> srcA = {NUMSTUDENTS, NUMSUBJECTS, (<a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> *)testMarks_f32};</div>
+<div class="line">  <a class="code hl_struct" href="structarm__matrix__instance__f32.html" title="Instance structure for the floating-point matrix structure.">arm_matrix_instance_f32</a> srcB = {NUMSUBJECTS, 1, (<a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> *)testUnity_f32};</div>
+<div class="line">  <a class="code hl_struct" href="structarm__matrix__instance__f32.html" title="Instance structure for the floating-point matrix structure.">arm_matrix_instance_f32</a> dstC = {NUMSTUDENTS, 1, testOutput};</div>
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"> </div>
@@ -275,35 +275,35 @@ $(document).ready(function(){initNavTree('arm_class_marks_example_f32_8c-example
 <div class="line">  <span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">  *Call the Matrix multiplication process function</span></div>
 <div class="line"><span class="comment">  * ------------------------------------------------------------------- */</span></div>
-<div class="line">  <a id="a16" name="a16"></a><a class="code hl_function" href="group__MatrixMult.html#ga917bf0270310c1d3f0eda1fc7c0026a0" title="Floating-point matrix multiplication.">arm_mat_mult_f32</a>(&amp;srcA, &amp;srcB, &amp;dstC);</div>
+<div class="line">  <a id="a2" name="a2"></a><a class="code hl_function" href="group__MatrixMult.html#ga917bf0270310c1d3f0eda1fc7c0026a0" title="Floating-point matrix multiplication.">arm_mat_mult_f32</a>(&amp;srcA, &amp;srcB, &amp;dstC);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">  ** Call the Max function to calculate max marks among numStudents</span></div>
 <div class="line"><span class="comment">  ** ------------------------------------------------------------------- */</span></div>
-<div class="line">  <a id="a17" name="a17"></a><a class="code hl_function" href="group__Max.html#gad1eabd31544fe59c414d9ce5bd0cc151" title="Maximum value of a floating-point vector.">arm_max_f32</a>(testOutput, <a class="code hl_variable" href="arm__class__marks__example__f32_8c.html#ab3b66d06b4af1af4ea2740d0ccf4e7bd">numStudents</a>, &amp;<a class="code hl_variable" href="arm__class__marks__example__f32_8c.html#aad32888fa966b3d9db9c31bcbba9d9ef">max_marks</a>, &amp;<a class="code hl_variable" href="arm__class__marks__example__f32_8c.html#a798cf43a3725d7df2fcaf3f328969f53">student_num</a>);</div>
+<div class="line">  <a id="a3" name="a3"></a><a class="code hl_function" href="group__Max.html#gad1eabd31544fe59c414d9ce5bd0cc151" title="Maximum value of a floating-point vector.">arm_max_f32</a>(testOutput, numStudents, &amp;max_marks, &amp;student_num);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">  ** Call the Min function to calculate min marks among numStudents</span></div>
 <div class="line"><span class="comment">  ** ------------------------------------------------------------------- */</span></div>
-<div class="line">  <a id="a18" name="a18"></a><a class="code hl_function" href="group__Min.html#ga514e2c920c432e1a3df2cb03f01d2797" title="Minimum value of a floating-point vector.">arm_min_f32</a>(testOutput, <a class="code hl_variable" href="arm__class__marks__example__f32_8c.html#ab3b66d06b4af1af4ea2740d0ccf4e7bd">numStudents</a>, &amp;<a class="code hl_variable" href="arm__class__marks__example__f32_8c.html#abb7687fa07ec54d8e792cfcbfe2ca809">min_marks</a>, &amp;<a class="code hl_variable" href="arm__class__marks__example__f32_8c.html#a798cf43a3725d7df2fcaf3f328969f53">student_num</a>);</div>
+<div class="line">  <a id="a4" name="a4"></a><a class="code hl_function" href="group__Min.html#ga514e2c920c432e1a3df2cb03f01d2797" title="Minimum value of a floating-point vector.">arm_min_f32</a>(testOutput, numStudents, &amp;min_marks, &amp;student_num);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">  ** Call the Mean function to calculate mean</span></div>
 <div class="line"><span class="comment">  ** ------------------------------------------------------------------- */</span></div>
-<div class="line">  <a id="a19" name="a19"></a><a class="code hl_function" href="group__mean.html#gae4fb7698771d7c24f536ed24347c1488" title="Mean value of a floating-point vector.">arm_mean_f32</a>(testOutput, <a class="code hl_variable" href="arm__class__marks__example__f32_8c.html#ab3b66d06b4af1af4ea2740d0ccf4e7bd">numStudents</a>, &amp;<a class="code hl_variable" href="arm__class__marks__example__f32_8c.html#acc9290716b3c97381ce52d14b4b01681">mean</a>);</div>
+<div class="line">  <a id="a5" name="a5"></a><a class="code hl_function" href="group__mean.html#gae4fb7698771d7c24f536ed24347c1488" title="Mean value of a floating-point vector.">arm_mean_f32</a>(testOutput, numStudents, &amp;mean);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">  ** Call the std function to calculate standard deviation</span></div>
 <div class="line"><span class="comment">  ** ------------------------------------------------------------------- */</span></div>
-<div class="line">  <a id="a20" name="a20"></a><a class="code hl_function" href="group__STD.html#ga287b6ce703636c7e8cb9833b290ae4ce" title="Standard deviation of the elements of a floating-point vector.">arm_std_f32</a>(testOutput, <a class="code hl_variable" href="arm__class__marks__example__f32_8c.html#ab3b66d06b4af1af4ea2740d0ccf4e7bd">numStudents</a>, &amp;<a class="code hl_variable" href="arm__class__marks__example__f32_8c.html#a150b0cf729b51893379f5b5548d4f989">std</a>);</div>
+<div class="line">  <a id="a6" name="a6"></a><a class="code hl_function" href="group__STD.html#ga287b6ce703636c7e8cb9833b290ae4ce" title="Standard deviation of the elements of a floating-point vector.">arm_std_f32</a>(testOutput, numStudents, &amp;std);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">  ** Call the var function to calculate variance</span></div>
 <div class="line"><span class="comment">  ** ------------------------------------------------------------------- */</span></div>
-<div class="line">  <a id="a21" name="a21"></a><a class="code hl_function" href="group__variance.html#gaae455544f0c8ac92469a1e25d3906515" title="Variance of the elements of a floating-point vector.">arm_var_f32</a>(testOutput, <a class="code hl_variable" href="arm__class__marks__example__f32_8c.html#ab3b66d06b4af1af4ea2740d0ccf4e7bd">numStudents</a>, &amp;<a class="code hl_variable" href="arm__class__marks__example__f32_8c.html#a3bd39c4335d84be071cc1eaa9b0a8642">var</a>);</div>
+<div class="line">  <a id="a7" name="a7"></a><a class="code hl_function" href="group__variance.html#gaae455544f0c8ac92469a1e25d3906515" title="Variance of the elements of a floating-point vector.">arm_var_f32</a>(testOutput, numStudents, &amp;var);</div>
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#if defined(SEMIHOSTING)</span></div>
-<div class="line">  printf(<span class="stringliteral">&quot;mean = %f, std = %f\n&quot;</span>,(<span class="keywordtype">double</span>)<a class="code hl_variable" href="arm__class__marks__example__f32_8c.html#acc9290716b3c97381ce52d14b4b01681">mean</a>,(<span class="keywordtype">double</span>)<a class="code hl_variable" href="arm__class__marks__example__f32_8c.html#a150b0cf729b51893379f5b5548d4f989">std</a>);</div>
+<div class="line">  printf(<span class="stringliteral">&quot;mean = %f, std = %f\n&quot;</span>,(<span class="keywordtype">double</span>)mean,(<span class="keywordtype">double</span>)std);</div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#if !defined(SEMIHOSTING)</span></div>

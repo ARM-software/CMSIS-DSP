@@ -7,6 +7,5 @@ var structarm__mfcc__instance__q31 =
     [ "filterPos", "structarm__mfcc__instance__q31.html#a4bf2fc236988cf1e39f7b3efbd0a1797", null ],
     [ "nbDctOutputs", "structarm__mfcc__instance__q31.html#acfacbcf8d50f063823b8097880bc9485", null ],
     [ "nbMelFilters", "structarm__mfcc__instance__q31.html#a8ac2a63296ee4e08bb019bf75f66f7d0", null ],
-    [ "rfft", "structarm__mfcc__instance__q31.html#a206846138151d79997417b826993f638", null ],
     [ "windowCoefs", "structarm__mfcc__instance__q31.html#a1fc91e7ce8c2582d9e142ff25ca3c8ca", null ]
 ];

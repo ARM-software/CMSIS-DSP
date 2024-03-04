@@ -172,8 +172,8 @@ $(document).ready(function(){initNavTree('arm_fft_bin_example_f32_8c-example.htm
 <div class="line"><span class="comment">* POSSIBILITY OF SUCH DAMAGE.</span></div>
 <div class="line"><span class="comment"> * -------------------------------------------------------------------- */</span></div>
 <div class="line"> </div>
-<div class="line"><span class="preprocessor">#include &quot;<a class="code" href="arm__math_8h.html">arm_math.h</a>&quot;</span></div>
-<div class="line"><span class="preprocessor">#include &quot;<a class="code" href="arm__const__structs_8h.html">arm_const_structs.h</a>&quot;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;arm_math.h&quot;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;arm_const_structs.h&quot;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#if defined(SEMIHOSTING)</span></div>
 <div class="line"><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
@@ -184,45 +184,45 @@ $(document).ready(function(){initNavTree('arm_fft_bin_example_f32_8c-example.htm
 <div class="line"><span class="comment">/* -------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">* External Input and Output buffer Declarations for FFT Bin Example</span></div>
 <div class="line"><span class="comment">* ------------------------------------------------------------------- */</span></div>
-<div class="line"><span class="keyword">extern</span> <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> <a id="a0" name="a0"></a><a class="code hl_variable" href="arm__fft__bin__data_8c.html#a8a12a8ec4b866be84f4b7d3daf6a1242">testInput_f32_10khz</a>[<a id="a1" name="a1"></a><a class="code hl_define" href="arm__class__marks__example__f32_8c.html#abc004a7fade488e72310fd96c0a101dc">TEST_LENGTH_SAMPLES</a>];</div>
-<div class="line"><span class="keyword">static</span> <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> <a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#a324833b61eae796082e07d078a67c34f">testOutput</a>[<a class="code hl_define" href="arm__class__marks__example__f32_8c.html#abc004a7fade488e72310fd96c0a101dc">TEST_LENGTH_SAMPLES</a>/2];</div>
+<div class="line"><span class="keyword">extern</span> <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> testInput_f32_10khz[TEST_LENGTH_SAMPLES];</div>
+<div class="line"><span class="keyword">static</span> <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> testOutput[TEST_LENGTH_SAMPLES/2];</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">/* ------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">* Global variables for FFT Bin Example</span></div>
 <div class="line"><span class="comment">* ------------------------------------------------------------------- */</span></div>
-<div class="line">uint32_t <a id="a2" name="a2"></a><a class="code hl_variable" href="arm__fft__bin__example__f32_8c.html#a9b500899c581f6df3ffc0a9f3a9ef6aa">fftSize</a> = 1024;</div>
-<div class="line">uint32_t <a id="a3" name="a3"></a><a class="code hl_variable" href="arm__fft__bin__example__f32_8c.html#a379ccb99013d369a41b49619083c16ef">ifftFlag</a> = 0;</div>
-<div class="line">uint32_t <a id="a4" name="a4"></a><a class="code hl_variable" href="arm__fft__bin__example__f32_8c.html#a4d2e31c38e8172505e0a369a6898657d">doBitReverse</a> = 1;</div>
-<div class="line"><a id="_a5" name="_a5"></a><a class="code hl_struct" href="structarm__cfft__instance__f32.html" title="Instance structure for the floating-point CFFT/CIFFT function.">arm_cfft_instance_f32</a> <a id="a6" name="a6"></a><a class="code hl_variable" href="arm__fft__bin__example__f32_8c.html#a267b387963f2783aa103715c89a4341e">varInstCfftF32</a>;</div>
+<div class="line">uint32_t fftSize = 1024;</div>
+<div class="line">uint32_t ifftFlag = 0;</div>
+<div class="line">uint32_t doBitReverse = 1;</div>
+<div class="line"><a id="_a0" name="_a0"></a><a class="code hl_struct" href="structarm__cfft__instance__f32.html" title="Instance structure for the floating-point CFFT/CIFFT function.">arm_cfft_instance_f32</a> varInstCfftF32;</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">/* Reference index at which max energy of bin ocuurs */</span></div>
-<div class="line">uint32_t <a id="a7" name="a7"></a><a class="code hl_variable" href="arm__fft__bin__example__f32_8c.html#aec50b0f697fd9e7e7e244487a4bd57e4">refIndex</a> = 213, <a id="a8" name="a8"></a><a class="code hl_variable" href="arm__fft__bin__example__f32_8c.html#a4a391651dbb95db35ccba70fc4f9e049">testIndex</a> = 0;</div>
+<div class="line">uint32_t refIndex = 213, testIndex = 0;</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">* Max magnitude FFT Bin test</span></div>
 <div class="line"><span class="comment">* ------------------------------------------------------------------- */</span></div>
 <div class="line"> </div>
-<div class="line">int32_t <a id="a9" name="a9"></a><a class="code hl_function" href="arm__bayes__example__f32_8c.html#a52d2cba30e6946c95578be946ac12a65">main</a>(<span class="keywordtype">void</span>)</div>
+<div class="line">int32_t main(<span class="keywordtype">void</span>)</div>
 <div class="line">{</div>
 <div class="line"> </div>
 <div class="line">  <a class="code hl_enumeration" href="group__genericTypes.html#ga5e459c6409dfcd2927bb8a57491d7cf6" title="Error status returned by some functions in the library.">arm_status</a> status;</div>
 <div class="line">  <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> maxValue;</div>
 <div class="line"> </div>
-<div class="line">  status = <a id="a10" name="a10"></a><a class="code hl_enumvalue" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>;</div>
+<div class="line">  status = <a id="a1" name="a1"></a><a class="code hl_enumvalue" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>;</div>
 <div class="line"> </div>
-<div class="line">  status=<a id="a11" name="a11"></a><a class="code hl_function" href="group__ComplexFFTF32.html#ga251035459b597a287d0e3b34d7a4fac4" title="Initialization function for the cfft f32 function with 1024 samples.">arm_cfft_init_1024_f32</a>(&amp;<a class="code hl_variable" href="arm__fft__bin__example__f32_8c.html#a267b387963f2783aa103715c89a4341e">varInstCfftF32</a>);</div>
+<div class="line">  status=<a id="a2" name="a2"></a><a class="code hl_function" href="group__ComplexFFTF32.html#ga251035459b597a287d0e3b34d7a4fac4" title="Initialization function for the cfft f32 function with 1024 samples.">arm_cfft_init_1024_f32</a>(&amp;varInstCfftF32);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Process the data through the CFFT/CIFFT module */</span></div>
-<div class="line">  <a id="a12" name="a12"></a><a class="code hl_function" href="group__ComplexFFTF32.html#gade0f9c4ff157b6b9c72a1eafd86ebf80" title="Processing function for the floating-point complex FFT.">arm_cfft_f32</a>(&amp;<a class="code hl_variable" href="arm__fft__bin__example__f32_8c.html#a267b387963f2783aa103715c89a4341e">varInstCfftF32</a>, <a class="code hl_variable" href="arm__fft__bin__data_8c.html#a8a12a8ec4b866be84f4b7d3daf6a1242">testInput_f32_10khz</a>, <a class="code hl_variable" href="arm__fft__bin__example__f32_8c.html#a379ccb99013d369a41b49619083c16ef">ifftFlag</a>, <a class="code hl_variable" href="arm__fft__bin__example__f32_8c.html#a4d2e31c38e8172505e0a369a6898657d">doBitReverse</a>);</div>
+<div class="line">  <a id="a3" name="a3"></a><a class="code hl_function" href="group__ComplexFFTF32.html#gade0f9c4ff157b6b9c72a1eafd86ebf80" title="Processing function for the floating-point complex FFT.">arm_cfft_f32</a>(&amp;varInstCfftF32, testInput_f32_10khz, ifftFlag, doBitReverse);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Process the data through the Complex Magnitude Module for</span></div>
 <div class="line"><span class="comment">  calculating the magnitude at each bin */</span></div>
-<div class="line">  <a id="a13" name="a13"></a><a class="code hl_function" href="group__cmplx__mag.html#gaba4e0eff7816fe80d01121fb4cf6c6bc" title="Floating-point complex magnitude.">arm_cmplx_mag_f32</a>(<a class="code hl_variable" href="arm__fft__bin__data_8c.html#a8a12a8ec4b866be84f4b7d3daf6a1242">testInput_f32_10khz</a>, <a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#a324833b61eae796082e07d078a67c34f">testOutput</a>, <a class="code hl_variable" href="arm__fft__bin__example__f32_8c.html#a9b500899c581f6df3ffc0a9f3a9ef6aa">fftSize</a>);</div>
+<div class="line">  <a id="a4" name="a4"></a><a class="code hl_function" href="group__cmplx__mag.html#gaba4e0eff7816fe80d01121fb4cf6c6bc" title="Floating-point complex magnitude.">arm_cmplx_mag_f32</a>(testInput_f32_10khz, testOutput, fftSize);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Calculates maxValue and returns corresponding BIN value */</span></div>
-<div class="line">  <a id="a14" name="a14"></a><a class="code hl_function" href="group__Max.html#gad1eabd31544fe59c414d9ce5bd0cc151" title="Maximum value of a floating-point vector.">arm_max_f32</a>(<a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#a324833b61eae796082e07d078a67c34f">testOutput</a>, <a class="code hl_variable" href="arm__fft__bin__example__f32_8c.html#a9b500899c581f6df3ffc0a9f3a9ef6aa">fftSize</a>, &amp;maxValue, &amp;<a class="code hl_variable" href="arm__fft__bin__example__f32_8c.html#a4a391651dbb95db35ccba70fc4f9e049">testIndex</a>);</div>
+<div class="line">  <a id="a5" name="a5"></a><a class="code hl_function" href="group__Max.html#gad1eabd31544fe59c414d9ce5bd0cc151" title="Maximum value of a floating-point vector.">arm_max_f32</a>(testOutput, fftSize, &amp;maxValue, &amp;testIndex);</div>
 <div class="line"> </div>
-<div class="line">  status = (<a class="code hl_variable" href="arm__fft__bin__example__f32_8c.html#a4a391651dbb95db35ccba70fc4f9e049">testIndex</a> != <a class="code hl_variable" href="arm__fft__bin__example__f32_8c.html#aec50b0f697fd9e7e7e244487a4bd57e4">refIndex</a>) ? <a id="a15" name="a15"></a><a class="code hl_enumvalue" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a09457f2be656b35015fd6d36202fa376">ARM_MATH_TEST_FAILURE</a> : <a class="code hl_enumvalue" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>;</div>
+<div class="line">  status = (testIndex != refIndex) ? <a id="a6" name="a6"></a><a class="code hl_enumvalue" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a09457f2be656b35015fd6d36202fa376">ARM_MATH_TEST_FAILURE</a> : <a class="code hl_enumvalue" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>;</div>
 <div class="line">  </div>
 <div class="line">  <span class="keywordflow">if</span> (status != <a class="code hl_enumvalue" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>)</div>
 <div class="line">  {</div>

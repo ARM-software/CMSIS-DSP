@@ -969,10 +969,11 @@ Functions</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">S</td><td>points to the mfcc instance structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">pSrc</td><td>points to the input samples in Q15 </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">pDst</td><td>points to the output MFCC values in q8.7 format </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">pTmp</td><td>points to a temporary buffer of complex</td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">pTmp</td><td>points to a temporary buffer of complex </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>error status</dd></dl>
 <dl class="section user"><dt>Description</dt><dd>The number of input samples is the FFT length used when initializing the instance data structure.</dd></dl>
 <p>The temporary buffer has a 2*fft length.</p>
 <p>The source buffer is modified by this function.</p>

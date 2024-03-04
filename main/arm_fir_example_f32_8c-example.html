@@ -176,7 +176,7 @@ $(document).ready(function(){initNavTree('arm_fir_example_f32_8c-example.html','
 <div class="line"><span class="comment">** Include Files</span></div>
 <div class="line"><span class="comment">** ------------------------------------------------------------------- */</span></div>
 <div class="line"> </div>
-<div class="line"><span class="preprocessor">#include &quot;<a class="code" href="arm__math_8h.html">arm_math.h</a>&quot;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;arm_math.h&quot;</span></div>
 <div class="line"><span class="preprocessor">#include &quot;math_helper.h&quot;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#if defined(SEMIHOSTING)</span></div>
@@ -212,22 +212,22 @@ $(document).ready(function(){initNavTree('arm_fir_example_f32_8c-example.html','
 <div class="line"><span class="comment"> * are defined externally in arm_fir_lpf_data.c.</span></div>
 <div class="line"><span class="comment"> * ------------------------------------------------------------------- */</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">extern</span> <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> <a id="a0" name="a0"></a><a class="code hl_variable" href="arm__fir__data_8c.html#a143154a165358f0016714cb7f1c83970">testInput_f32_1kHz_15kHz</a>[<a id="a1" name="a1"></a><a class="code hl_define" href="arm__class__marks__example__f32_8c.html#abc004a7fade488e72310fd96c0a101dc">TEST_LENGTH_SAMPLES</a>];</div>
-<div class="line"><span class="keyword">extern</span> <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> <a id="a2" name="a2"></a><a class="code hl_variable" href="arm__fir__data_8c.html#aa7570f8c2e7a3c929d9d32a14a51389f">refOutput</a>[<a class="code hl_define" href="arm__class__marks__example__f32_8c.html#abc004a7fade488e72310fd96c0a101dc">TEST_LENGTH_SAMPLES</a>];</div>
+<div class="line"><span class="keyword">extern</span> <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> testInput_f32_1kHz_15kHz[TEST_LENGTH_SAMPLES];</div>
+<div class="line"><span class="keyword">extern</span> <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> refOutput[TEST_LENGTH_SAMPLES];</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">/* -------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment"> * Declare Test output buffer</span></div>
 <div class="line"><span class="comment"> * ------------------------------------------------------------------- */</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">static</span> <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> <a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#a324833b61eae796082e07d078a67c34f">testOutput</a>[<a class="code hl_define" href="arm__class__marks__example__f32_8c.html#abc004a7fade488e72310fd96c0a101dc">TEST_LENGTH_SAMPLES</a>];</div>
+<div class="line"><span class="keyword">static</span> <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> testOutput[TEST_LENGTH_SAMPLES];</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">/* -------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment"> * Declare State buffer of size (numTaps + blockSize - 1)</span></div>
 <div class="line"><span class="comment"> * ------------------------------------------------------------------- */</span></div>
 <div class="line"><span class="preprocessor">#if defined(ARM_MATH_MVEF) &amp;&amp; !defined(ARM_MATH_AUTOVECTORIZE)</span></div>
-<div class="line"><span class="keyword">static</span> <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> <a class="code hl_variable" href="arm__signal__converge__example__f32_8c.html#a7d9829fb8d2b8bc25b743bbc3604c074">firStateF32</a>[2 * <a id="a3" name="a3"></a><a class="code hl_define" href="arm__fir__example__f32_8c.html#ad51ded0bbd705f02f73fc60c0b721ced">BLOCK_SIZE</a> + <a id="a4" name="a4"></a><a class="code hl_define" href="arm__fir__example__f32_8c.html#a7579d94e0a80fb9d376ea6c7897f73b0">NUM_TAPS</a> - 1];</div>
+<div class="line"><span class="keyword">static</span> <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> firStateF32[2 * BLOCK_SIZE + NUM_TAPS - 1];</div>
 <div class="line"><span class="preprocessor">#else</span></div>
-<div class="line"><span class="keyword">static</span> <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> <a class="code hl_variable" href="arm__signal__converge__example__f32_8c.html#a7d9829fb8d2b8bc25b743bbc3604c074">firStateF32</a>[<a class="code hl_define" href="arm__fir__example__f32_8c.html#ad51ded0bbd705f02f73fc60c0b721ced">BLOCK_SIZE</a> + <a class="code hl_define" href="arm__fir__example__f32_8c.html#a7579d94e0a80fb9d376ea6c7897f73b0">NUM_TAPS</a> - 1];</div>
+<div class="line"><span class="keyword">static</span> <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> firStateF32[BLOCK_SIZE + NUM_TAPS - 1];</div>
 <div class="line"><span class="preprocessor">#endif </span></div>
 <div class="line"> </div>
 <div class="line"><span class="comment">/* ----------------------------------------------------------------------</span></div>
@@ -235,14 +235,14 @@ $(document).ready(function(){initNavTree('arm_fir_example_f32_8c-example.html','
 <div class="line"><span class="comment">** fir1(28, 6/24)</span></div>
 <div class="line"><span class="comment">** ------------------------------------------------------------------- */</span></div>
 <div class="line"><span class="preprocessor">#if defined(ARM_MATH_MVEF) &amp;&amp; !defined(ARM_MATH_AUTOVECTORIZE)</span></div>
-<div class="line"><span class="keyword">const</span> <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> <a id="a5" name="a5"></a><a class="code hl_variable" href="arm__fir__example__f32_8c.html#a51bd6e9a6b2f1946b05ad7db85ad5eb9">firCoeffs32</a>[<a id="a6" name="a6"></a><a class="code hl_define" href="arm__fir__example__f32_8c.html#ab5fb93e3377d7fac818babaa4885ed9c">NUM_TAPS_ARRAY_SIZE</a>] = {</div>
+<div class="line"><span class="keyword">const</span> <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> firCoeffs32[NUM_TAPS_ARRAY_SIZE] = {</div>
 <div class="line">  -0.0018225230f, -0.0015879294f, +0.0000000000f, +0.0036977508f, +0.0080754303f, +0.0085302217f, -0.0000000000f, -0.0173976984f,</div>
 <div class="line">  -0.0341458607f, -0.0333591565f, +0.0000000000f, +0.0676308395f, +0.1522061835f, +0.2229246956f, +0.2504960933f, +0.2229246956f,</div>
 <div class="line">  +0.1522061835f, +0.0676308395f, +0.0000000000f, -0.0333591565f, -0.0341458607f, -0.0173976984f, -0.0000000000f, +0.0085302217f,</div>
 <div class="line">  +0.0080754303f, +0.0036977508f, +0.0000000000f, -0.0015879294f, -0.0018225230f, 0.0f,0.0f,0.0f</div>
 <div class="line">};</div>
 <div class="line"><span class="preprocessor">#else</span></div>
-<div class="line"><span class="keyword">const</span> <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> <a class="code hl_variable" href="arm__fir__example__f32_8c.html#a51bd6e9a6b2f1946b05ad7db85ad5eb9">firCoeffs32</a>[<a class="code hl_define" href="arm__fir__example__f32_8c.html#ab5fb93e3377d7fac818babaa4885ed9c">NUM_TAPS_ARRAY_SIZE</a>] = {</div>
+<div class="line"><span class="keyword">const</span> <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> firCoeffs32[NUM_TAPS_ARRAY_SIZE] = {</div>
 <div class="line">  -0.0018225230f, -0.0015879294f, +0.0000000000f, +0.0036977508f, +0.0080754303f, +0.0085302217f, -0.0000000000f, -0.0173976984f,</div>
 <div class="line">  -0.0341458607f, -0.0333591565f, +0.0000000000f, +0.0676308395f, +0.1522061835f, +0.2229246956f, +0.2504960933f, +0.2229246956f,</div>
 <div class="line">  +0.1522061835f, +0.0676308395f, +0.0000000000f, -0.0333591565f, -0.0341458607f, -0.0173976984f, -0.0000000000f, +0.0085302217f,</div>
@@ -254,36 +254,36 @@ $(document).ready(function(){initNavTree('arm_fir_example_f32_8c-example.html','
 <div class="line"><span class="comment"> * Global variables for FIR LPF Example</span></div>
 <div class="line"><span class="comment"> * ------------------------------------------------------------------- */</span></div>
 <div class="line"> </div>
-<div class="line">uint32_t blockSize = <a class="code hl_define" href="arm__fir__example__f32_8c.html#ad51ded0bbd705f02f73fc60c0b721ced">BLOCK_SIZE</a>;</div>
-<div class="line">uint32_t <a id="a7" name="a7"></a><a class="code hl_variable" href="arm__fir__example__f32_8c.html#af7d5613bda9a19b2ccae5d6cb79a22bc">numBlocks</a> = <a class="code hl_define" href="arm__class__marks__example__f32_8c.html#abc004a7fade488e72310fd96c0a101dc">TEST_LENGTH_SAMPLES</a>/<a class="code hl_define" href="arm__fir__example__f32_8c.html#ad51ded0bbd705f02f73fc60c0b721ced">BLOCK_SIZE</a>;</div>
+<div class="line">uint32_t blockSize = BLOCK_SIZE;</div>
+<div class="line">uint32_t numBlocks = TEST_LENGTH_SAMPLES/BLOCK_SIZE;</div>
 <div class="line"> </div>
-<div class="line"><a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a>  <a id="a8" name="a8"></a><a class="code hl_variable" href="arm__convolution__example__f32_8c.html#af06013f588a7003278de222913c9d819">snr</a>;</div>
+<div class="line"><a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a>  snr;</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment"> * FIR LPF Example</span></div>
 <div class="line"><span class="comment"> * ------------------------------------------------------------------- */</span></div>
 <div class="line"> </div>
-<div class="line">int32_t <a id="a9" name="a9"></a><a class="code hl_function" href="arm__bayes__example__f32_8c.html#a52d2cba30e6946c95578be946ac12a65">main</a>(<span class="keywordtype">void</span>)</div>
+<div class="line">int32_t main(<span class="keywordtype">void</span>)</div>
 <div class="line">{</div>
 <div class="line">  uint32_t i;</div>
-<div class="line">  <a id="_a10" name="_a10"></a><a class="code hl_struct" href="structarm__fir__instance__f32.html" title="Instance structure for the floating-point FIR filter.">arm_fir_instance_f32</a> S;</div>
+<div class="line">  <a id="_a0" name="_a0"></a><a class="code hl_struct" href="structarm__fir__instance__f32.html" title="Instance structure for the floating-point FIR filter.">arm_fir_instance_f32</a> S;</div>
 <div class="line">  <a class="code hl_enumeration" href="group__genericTypes.html#ga5e459c6409dfcd2927bb8a57491d7cf6" title="Error status returned by some functions in the library.">arm_status</a> status;</div>
 <div class="line">  <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a>  *inputF32, *outputF32;</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Initialize input and output buffer pointers */</span></div>
-<div class="line">  inputF32 = &amp;<a class="code hl_variable" href="arm__fir__data_8c.html#a143154a165358f0016714cb7f1c83970">testInput_f32_1kHz_15kHz</a>[0];</div>
-<div class="line">  outputF32 = &amp;<a class="code hl_variable" href="arm__dotproduct__example__f32_8c.html#a324833b61eae796082e07d078a67c34f">testOutput</a>[0];</div>
+<div class="line">  inputF32 = &amp;testInput_f32_1kHz_15kHz[0];</div>
+<div class="line">  outputF32 = &amp;testOutput[0];</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Call FIR init function to initialize the instance structure. */</span></div>
-<div class="line">  <a id="a11" name="a11"></a><a class="code hl_function" href="group__FIR.html#ga5afaa7b8e6735bbc19e582aa9755b0e1" title="Initialization function for the floating-point FIR filter.">arm_fir_init_f32</a>(&amp;S, <a class="code hl_define" href="arm__fir__example__f32_8c.html#a7579d94e0a80fb9d376ea6c7897f73b0">NUM_TAPS</a>, (<a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> *)&amp;<a class="code hl_variable" href="arm__fir__example__f32_8c.html#a51bd6e9a6b2f1946b05ad7db85ad5eb9">firCoeffs32</a>[0], &amp;firStateF32[0], blockSize);</div>
+<div class="line">  <a id="a1" name="a1"></a><a class="code hl_function" href="group__FIR.html#ga5afaa7b8e6735bbc19e582aa9755b0e1" title="Initialization function for the floating-point FIR filter.">arm_fir_init_f32</a>(&amp;S, NUM_TAPS, (<a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> *)&amp;firCoeffs32[0], &amp;firStateF32[0], blockSize);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">  ** Call the FIR process function for every blockSize samples</span></div>
 <div class="line"><span class="comment">  ** ------------------------------------------------------------------- */</span></div>
 <div class="line"> </div>
-<div class="line">  <span class="keywordflow">for</span>(i=0; i &lt; <a class="code hl_variable" href="arm__fir__example__f32_8c.html#af7d5613bda9a19b2ccae5d6cb79a22bc">numBlocks</a>; i++)</div>
+<div class="line">  <span class="keywordflow">for</span>(i=0; i &lt; numBlocks; i++)</div>
 <div class="line">  {</div>
-<div class="line">    <a id="a12" name="a12"></a><a class="code hl_function" href="group__FIR.html#ga0cf008f650a75f5e2cf82d10691b64d9" title="Processing function for the floating-point FIR filter.">arm_fir_f32</a>(&amp;S, inputF32 + (i * blockSize), outputF32 + (i * blockSize), blockSize);</div>
+<div class="line">    <a id="a2" name="a2"></a><a class="code hl_function" href="group__FIR.html#ga0cf008f650a75f5e2cf82d10691b64d9" title="Processing function for the floating-point FIR filter.">arm_fir_f32</a>(&amp;S, inputF32 + (i * blockSize), outputF32 + (i * blockSize), blockSize);</div>
 <div class="line">  }</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* ----------------------------------------------------------------------</span></div>
@@ -291,9 +291,9 @@ $(document).ready(function(){initNavTree('arm_fir_example_f32_8c-example.html','
 <div class="line"><span class="comment">  ** in MATLAB.</span></div>
 <div class="line"><span class="comment">  ** ------------------------------------------------------------------- */</span></div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_variable" href="arm__convolution__example__f32_8c.html#af06013f588a7003278de222913c9d819">snr</a> = arm_snr_f32(&amp;<a class="code hl_variable" href="arm__fir__data_8c.html#aa7570f8c2e7a3c929d9d32a14a51389f">refOutput</a>[0], &amp;testOutput[0], <a class="code hl_define" href="arm__class__marks__example__f32_8c.html#abc004a7fade488e72310fd96c0a101dc">TEST_LENGTH_SAMPLES</a>);</div>
+<div class="line">  snr = arm_snr_f32(&amp;refOutput[0], &amp;testOutput[0], TEST_LENGTH_SAMPLES);</div>
 <div class="line"> </div>
-<div class="line">  status = (<a class="code hl_variable" href="arm__convolution__example__f32_8c.html#af06013f588a7003278de222913c9d819">snr</a> &lt; <a id="a13" name="a13"></a><a class="code hl_define" href="arm__fir__example__f32_8c.html#af7d1dd4deffa8e7ed6429e5dd0fe1812">SNR_THRESHOLD_F32</a>) ? <a id="a14" name="a14"></a><a class="code hl_enumvalue" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a09457f2be656b35015fd6d36202fa376">ARM_MATH_TEST_FAILURE</a> : <a id="a15" name="a15"></a><a class="code hl_enumvalue" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>;</div>
+<div class="line">  status = (snr &lt; SNR_THRESHOLD_F32) ? <a id="a3" name="a3"></a><a class="code hl_enumvalue" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a09457f2be656b35015fd6d36202fa376">ARM_MATH_TEST_FAILURE</a> : <a id="a4" name="a4"></a><a class="code hl_enumvalue" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>;</div>
 <div class="line">  </div>
 <div class="line">  <span class="keywordflow">if</span> (status != <a class="code hl_enumvalue" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>)</div>
 <div class="line">  {</div>
