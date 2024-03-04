@@ -867,6 +867,9 @@ arm_status arm_mfcc_init_f32(
   float32_t *pTmp
   );
 
+ /**
+   * @brief Instance structure for the Q31 MFCC function.
+   */
 typedef struct
   {
      const q31_t *dctCoefs; /**< Internal DCT coefficients */
@@ -993,7 +996,7 @@ arm_status arm_mfcc_init_q31(
   @param[in]     pSrc points to the input samples
   @param[out]     pDst  points to the output MFCC values
   @param[inout]     pTmp  points to a temporary buffer of complex
-  @return        none
+  @return        error status
  */
   arm_status arm_mfcc_q31(
   const arm_mfcc_instance_q31 * S,
@@ -1002,6 +1005,9 @@ arm_status arm_mfcc_init_q31(
   q31_t *pTmp
   );
 
+ /**
+   * @brief Instance structure for the Q15 MFCC function.
+   */
 typedef struct
   {
      const q15_t *dctCoefs; /**< Internal DCT coefficients */
