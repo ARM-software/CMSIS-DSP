@@ -99,7 +99,7 @@ arm_status arm_cfft_init_##LEN##_f16(                                  \
     status=arm_cfft_radix4by2_rearrange_twiddles_##LENTWIDDLE##_f16(S);\
                                                                        \
     return (status);                                                   \
-};
+}
 
 #else
 
@@ -126,7 +126,7 @@ arm_status arm_cfft_init_##LEN##_f16(arm_cfft_instance_f16 * S)                 
         FFTINIT(f16,LEN);                                                       \
                                                                                 \
         return (status);                                                        \
-};
+}
 
 
 #endif /* #if defined(ARM_FLOAT16_SUPPORTED) */

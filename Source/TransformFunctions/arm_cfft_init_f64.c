@@ -70,7 +70,7 @@ arm_status arm_cfft_init_##LEN##_f64(arm_cfft_instance_f64 * S)\
         FFTINIT(f64,LEN);                                   \
                                                                \
         return (status);                                       \
-};
+}
 
 /**
   @brief         Initialization function for the cfft f64 function with 4096 samples

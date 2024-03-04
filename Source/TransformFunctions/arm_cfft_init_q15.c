@@ -94,7 +94,7 @@ arm_status arm_cfft_init_##LEN##_q15(                                  \
     status=arm_cfft_radix4by2_rearrange_twiddles_##LENTWIDDLE##_q15(S);\
                                                                        \
     return (status);                                                   \
-};
+}
 
 
 #else
@@ -119,7 +119,7 @@ arm_status arm_cfft_init_##LEN##_q15(arm_cfft_instance_q15 * S)\
         FFTINIT(q15,LEN);                                      \
                                                                \
         return (status);                                       \
-};
+}
 
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
