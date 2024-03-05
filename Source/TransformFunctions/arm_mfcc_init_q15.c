@@ -203,7 +203,7 @@ arm_status arm_mfcc_init_##LEN##_q15(             \
                    The folder Scripts is containing a Python script which can be used
                    to generate the filter, dct and window arrays.
  */
-MFCC_INIT_Q15(32);
+MFCC_INIT_Q15(32)
 
 /**
   @brief         Initialization of the MFCC Q15 instance structure for 64 samples MFCC
@@ -232,7 +232,7 @@ MFCC_INIT_Q15(32);
                    The folder Scripts is containing a Python script which can be used
                    to generate the filter, dct and window arrays.
  */
-MFCC_INIT_Q15(64);
+MFCC_INIT_Q15(64)
 
 /**
   @brief         Initialization of the MFCC Q15 instance structure for 128 samples MFCC
@@ -261,7 +261,7 @@ MFCC_INIT_Q15(64);
                    The folder Scripts is containing a Python script which can be used
                    to generate the filter, dct and window arrays.
  */
-MFCC_INIT_Q15(128);
+MFCC_INIT_Q15(128)
 
 /**
   @brief         Initialization of the MFCC Q15 instance structure for 256 samples MFCC
@@ -290,7 +290,7 @@ MFCC_INIT_Q15(128);
                    The folder Scripts is containing a Python script which can be used
                    to generate the filter, dct and window arrays.
  */
-MFCC_INIT_Q15(256);
+MFCC_INIT_Q15(256)
 
 /**
   @brief         Initialization of the MFCC Q15 instance structure for 512 samples MFCC
@@ -319,7 +319,7 @@ MFCC_INIT_Q15(256);
                    The folder Scripts is containing a Python script which can be used
                    to generate the filter, dct and window arrays.
  */
-MFCC_INIT_Q15(512);
+MFCC_INIT_Q15(512)
 
 /**
   @brief         Initialization of the MFCC Q15 instance structure for 1024 samples MFCC
@@ -348,7 +348,7 @@ MFCC_INIT_Q15(512);
                    The folder Scripts is containing a Python script which can be used
                    to generate the filter, dct and window arrays.
  */
-MFCC_INIT_Q15(1024);
+MFCC_INIT_Q15(1024)
 
 /**
   @brief         Initialization of the MFCC Q15 instance structure for 2048 samples MFCC
@@ -377,7 +377,7 @@ MFCC_INIT_Q15(1024);
                    The folder Scripts is containing a Python script which can be used
                    to generate the filter, dct and window arrays.
  */
-MFCC_INIT_Q15(2048);
+MFCC_INIT_Q15(2048)
 
 /**
   @brief         Initialization of the MFCC Q15 instance structure for 4096 samples MFCC
@@ -406,7 +406,7 @@ MFCC_INIT_Q15(2048);
                    The folder Scripts is containing a Python script which can be used
                    to generate the filter, dct and window arrays.
  */
-MFCC_INIT_Q15(4096);
+MFCC_INIT_Q15(4096)
 
 /**
   @} end of MFCCQ15 group

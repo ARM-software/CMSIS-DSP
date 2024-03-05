@@ -83,7 +83,7 @@ arm_status arm_cfft_init_##LEN##_f64(arm_cfft_instance_f64 * S)\
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
-CFFTINIT_F64(4096);
+CFFTINIT_F64(4096)
 
 /**
   @brief         Initialization function for the cfft f64 function with 2048 samples
@@ -96,7 +96,7 @@ CFFTINIT_F64(4096);
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
-CFFTINIT_F64(2048);
+CFFTINIT_F64(2048)
  
 
 /**
@@ -110,7 +110,7 @@ CFFTINIT_F64(2048);
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
-CFFTINIT_F64(1024);
+CFFTINIT_F64(1024)
 
 /**
   @brief         Initialization function for the cfft f64 function with 512 samples
@@ -123,7 +123,7 @@ CFFTINIT_F64(1024);
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
-CFFTINIT_F64(512);
+CFFTINIT_F64(512)
 
 /**
   @brief         Initialization function for the cfft f64 function with 256 samples
@@ -136,7 +136,7 @@ CFFTINIT_F64(512);
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
-CFFTINIT_F64(256);
+CFFTINIT_F64(256)
 
 /**
   @brief         Initialization function for the cfft f64 function with 128 samples
@@ -149,7 +149,7 @@ CFFTINIT_F64(256);
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
-CFFTINIT_F64(128);
+CFFTINIT_F64(128)
 
 /**
   @brief         Initialization function for the cfft f64 function with 64 samples
@@ -162,7 +162,7 @@ CFFTINIT_F64(128);
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
-CFFTINIT_F64(64);
+CFFTINIT_F64(64)
 
 /**
   @brief         Initialization function for the cfft f64 function with 32 samples
@@ -175,7 +175,7 @@ CFFTINIT_F64(64);
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
-CFFTINIT_F64(32);
+CFFTINIT_F64(32)
 
 /**
   @brief         Initialization function for the cfft f64 function with 16 samples
@@ -188,7 +188,7 @@ CFFTINIT_F64(32);
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
-CFFTINIT_F64(16);
+CFFTINIT_F64(16)
 
 /**
   @brief         Generic initialization function for the cfft f64 function
