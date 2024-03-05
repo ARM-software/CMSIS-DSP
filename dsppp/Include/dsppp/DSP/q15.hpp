@@ -20,21 +20,46 @@
 #if defined(ARM_MATH_DSP)
 #if !defined(ARM_MATH_MVEI) && !defined(ARM_MATH_MVEF) && !defined(ARM_MATH_NEON)
 
-
+/**
+ * @brief      Representation of a vector when DSP extension supported
+ */
 struct Q15DSPVector {
+    /**
+     * @brief      Create new 0 initialized vector
+     */
     Q15DSPVector():v(0){};
+
+    /**
+     * @brief      Create vector initialized from value
+     *
+     * @param[in]  val   The value
+     */
     explicit Q15DSPVector(int32_t val):v(val){};
+
+    /**
+     * @brief      Return value in vector
+     */
     operator int32_t(){return v;};
 
 int32_t v;
 };
 
+/**
+ * @brief      Vector description for Q15 with DSP extensions
+ */
 template<>
 struct vector_traits<Q15,DSP,typename std::enable_if<true>::type> 
 {
+  //! Scalar datatype
   typedef Q15 type;
+
+  //! Storage datatype
   typedef type::value_type storage_type;
+
+  //! Vector datatype
   typedef Q15DSPVector vector;
+
+  //! Accumulator datatype
   typedef Q<33,30> temp_accumulator;
 
   /*
@@ -48,30 +73,61 @@ struct vector_traits<Q15,DSP,typename std::enable_if<true>::type>
   predicate but they are not called in this context.
 
   */
+
+  /**
+   * Dummy type since there is no predicated loop for
+   * DSP extensions
+   */
   typedef uint32_t predicate_t;
 
-
+  //! Has some vector instructions
   static constexpr bool has_vector = true;
+
+  //! Is not float
   static constexpr bool is_float = false;
+
+  //! Is fixed point
   static constexpr bool is_fixed = true;
+
+  //! No predicated loops
   static constexpr bool has_predicate = false;
 
+  //! Number of lanes
   static constexpr int nb_lanes = 2;
 
+  /**
+   * @brief      Zero accumulator
+   *
+   * @return     Zero accumulator
+   */
   static Q<33,30> temp_acc_zero()
   {
        return(Q<33,30>());
   }
 
+  /**
+   * @brief      Value to write in a lane to write 0
+   *
+   * @return     Zero value for a lane
+   */
   static constexpr int16_t zero_lane() {return 0;};
 
+  /**
+   * @brief      Convert to lane value
+   *
+   * @param[in]  x     Value
+   *
+   * @return     Lane value
+   */
   static constexpr int16_t lane_value(const Q15 x) {return x.v;};
 
 
 };
 
 
-
+/**
+ * \ingroup DSPNumber
+ */
 namespace inner {
 
     /* Needed to build but not used */
@@ -83,6 +139,13 @@ namespace inner {
        };
     };
 
+   /**
+    * @brief      Vector const
+    *
+    * @param[in]  val   The value
+    *
+    * @return     The static forceinline.
+    */
     __STATIC_FORCEINLINE Q15DSPVector vconst(Q15 val)
     {
        return(Q15DSPVector(__PKHBT(val.v, val.v, 16)));

@@ -6,6 +6,20 @@
  *  @{
  */
 
+/**
+ * @brief      Matrix times matrix for scalar architecture and fixed point
+ *
+ * @param[in]  pSrcA      The source a
+ * @param[in]  pSrcB      The source b
+ * @param      pDst       The destination
+ * @param[in]  BT         Temporary matrix for transposition
+ *
+ * @tparam     MA         Left hand side datatype
+ * @tparam     MB         Right hand side datatype
+ * @tparam     RES        Destination datatype
+ * @tparam     TMP        Temporary matrix datatype
+ * @tparam     <unnamed>  Check fixed point arithmetic used
+ */
 template<typename MA,
          typename MB,
          typename RES,

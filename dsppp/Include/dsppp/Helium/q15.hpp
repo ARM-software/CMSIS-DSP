@@ -24,36 +24,77 @@
  */
 #if defined(ARM_MATH_MVEI)
 
-
+/**
+ * @brief      Vector features for Q15 on Helium
+ *
+ * @tparam     arch  Current architecture
+ */
 template<typename arch>
 struct vector_traits<Q15,arch,
 typename std::enable_if<std::is_base_of<Helium,arch>::value>::type > 
 {
+  //! Scalar datatype
   typedef Q15 type;
+
+  //! Storage datatype (int16_t)
   typedef type::value_type storage_type;
+
+  //! Vector datatype
   typedef int16x8_t vector;
+
+  //! Temp accumulator datatype
   typedef Q<33,30> temp_accumulator;
+
+  //! Predicate for loop
   typedef mve_pred16_t predicate_t;
 
+  //! Has vector instructions
   static constexpr bool has_vector = true;
+
+  //! Is not float
   static constexpr bool is_float = false;
+
+  //! Is fixed point
   static constexpr bool is_fixed = true;
+
+  //! Has predicated loop
   static constexpr bool has_predicate = true;
 
+  //! Number of lanes
   static constexpr int nb_lanes = 8;
 
 
+  /**
+   * @brief      Zero
+   *
+   * @return     Zero with accumulator datatype
+   */
   static Q<33,30> temp_acc_zero()
   {
        return(Q<33,30>());
   }
 
+  /**
+   * @brief      Value to write in a lane to write 0
+   *
+   * @return     Zero value
+   */
   static constexpr int16_t zero_lane() {return 0;};
 
+  /**
+   * @brief      Convert to lane value
+   *
+   * @param[in]  x     Lane value
+   *
+   * @return     Lane value 
+   */
   static constexpr int16_t lane_value(const Q15 x) {return x.v;};
 
 };
 
+/**
+ * \ingroup HeliumNumber
+ */
 namespace inner {
 
 
@@ -203,6 +244,26 @@ namespace inner {
     S <= 9362
 
     */
+
+    /**
+     * @brief      Vector load with stride
+     *
+     * @param[in]  p          Load address
+     *
+     * @tparam     S          Stride
+     * @tparam     <unnamed>  Stride check
+     *
+     * @return     Gather load
+     * 
+     * In q15, a lane is on 16 bits. So the offset that can be encoded
+     * for gather load cannot be bigger than 65535.
+     * With a stride of S, the bigger offset is S*7.
+     * So S must be <= 65535/7 
+     * S <= 9362
+     * 
+     * For higher stride, the Helium instruction cannot be used and instead
+     * a dynamic stride is used.
+     */
     template<int S,
     typename std::enable_if<(S>1) && (S<=9362),bool>::type = true>
     inline int16x8_t vload1(const Q15 *p)
@@ -421,6 +482,15 @@ namespace inner {
        }
     };
    
+    /**
+     * @brief      Vector accumulate into scalar
+     *
+     * @param[in]  sum   The sum
+     * @param[in]  vala  The vala
+     * @param[in]  valb  The valb
+     *
+     * @return     vala * valb and accumulated into sum
+     */
     __STATIC_FORCEINLINE Q<33,30> vmacc(const Q<33,30> sum,
                                         const int16x8_t vala,
                                         const int16x8_t valb)
@@ -449,6 +519,17 @@ namespace inner {
        return(Q<33,30>(vmlaldavq_p(vala,valb,p0)));
     };
 
+    /**
+     * @brief      Reduce accumulation value
+     *
+     * @param[in]  sum   The sum
+     *
+     * @return     Reduced value
+     * 
+     * Since the Helium instructions can accumulate vector product into a scalar
+     * there is no need to reduce the accumulator value. It is already in scalar
+     * form.
+     */
     __STATIC_FORCEINLINE Q<33,30> vreduce(const Q<33,30> sum)
     {
        return(sum);

@@ -18,6 +18,17 @@
  */
 
 #if defined(ARM_MATH_MVEI) || defined(ARM_MATH_MVEF)
+/**
+ * @brief      Fill evaluator for Helium
+ *
+ * @param      v          Destination value
+ * @param[in]  val        Initialization value
+ * @param[in]  l          Vector length
+ *
+ * @tparam     T          Scalar datatype
+ * @tparam     DST        Destination datatype
+ * @tparam     <unnamed>  Check if has vector indexing
+ */
 template<typename T,typename DST,
 typename std::enable_if<has_vector_inst<DST>() &&
           IsVector<DST>::value &&
@@ -36,6 +47,18 @@ inline void _Fill(DST &v,
       }
 }
 
+/**
+ * @brief      Fill2D evaluator for Helium
+ *
+ * @param      v          Destination value
+ * @param[in]  val        Initialization value
+ * @param[in]  rows       Number of rows
+ * @param[in]  cols       Number of columns
+ *
+ * @tparam     T          Scalar datatype
+ * @tparam     DST        Destination datatype
+ * @tparam     <unnamed>  Check only matrix indexing supported
+ */
 template<typename T,typename DST,
 typename std::enable_if<has_vector_inst<DST>() &&
          must_use_matrix_idx<DST>() &&
@@ -80,6 +103,17 @@ inline void _Fill2D(DST &v,
       }
 }
 
+/**
+ * @brief      Eval function for Helium
+ *
+ * @param      v          Destination
+ * @param[in]  other      Expression to evaluate
+ * @param[in]  l          Vector length
+ *
+ * @tparam     DA         Destination datatype
+ * @tparam     DB         Expression datatype
+ * @tparam     <unnamed>  Check vector indexing and compatible vectors
+ */
 template<typename DA,typename DB,
 typename std::enable_if<has_vector_inst<DA>() && 
                         vector_idx_pair<DA,DB>(),bool>::type = true>
@@ -100,7 +134,18 @@ inline void eval(DA &v,
       }
 }
 
-
+/**
+ * @brief      Eval2D function for Helium
+ *
+ * @param      v          Destination vector
+ * @param[in]  other      Expression to evaluate
+ * @param[in]  rows       Number of rows
+ * @param[in]  cols       Number of columns
+ *
+ * @tparam     DA         Destination datatype
+ * @tparam     DB         Source datatype
+ * @tparam     <unnamed>  Check has only matrix indexing
+ */
 template<typename DA,typename DB,
 typename std::enable_if<has_vector_inst<DA>() &&
                         must_use_matrix_idx_pair<DA,DB>(),bool>::type = true>
@@ -146,12 +191,27 @@ inline void eval2D(DA &v,
 }
 
 
+/**
+    * @brief  Display the matrix content for debug purpose
+    * @param stream Output stream
+    * @param other The matrix to display
+    * @return the stream
+    * 
+    */
 static std::ostream& operator<< (std::ostream& stream, const float32x4_t& other) 
 {
    stream << "(" << other[0] << "," <<other[1] << "," <<other[2] << "," <<other[3] << ")";
    return(stream);
 }
 
+/**
+ * @brief      Print tuple for debug
+ *
+ * @param[in]  _tup       Tuple
+ *
+ * @tparam     TupType    Tuple datatype
+ * @tparam     I          List of tuple indexes
+ */
 template<class TupType, size_t... I>
 void printt(const TupType& _tup, std::index_sequence<I...>)
 {
@@ -160,12 +220,32 @@ void printt(const TupType& _tup, std::index_sequence<I...>)
     std::cout << ")\n";
 }
 
+/**
+ * @brief      Print tuple
+ *
+ * @param[in]  _tup  Tuple
+ *
+ * @tparam     T     Datatype for tuple elements
+ */
 template<class... T>
 void printt (const std::tuple<T...>& _tup)
 {
     printt(_tup, std::make_index_sequence<sizeof...(T)>());
 }
 
+/**
+ * @brief      Dor product for Helium
+ *
+ * @param[in]  a          First expression
+ * @param[in]  b          Second expression
+ * @param[in]  l          Vector length
+ *
+ * @tparam     DA         First operand datatype
+ * @tparam     DB         Second operand datatype
+ * @tparam     <unnamed>  Check vector indexing and compatible vectors
+ *
+ * @return     Dot product of vector expressions
+ */
 template<typename DA,typename DB,
          typename std::enable_if<has_vector_inst<DA>() &&
          vector_idx_pair<DA,DB>(),bool>::type = true>
@@ -193,6 +273,17 @@ inline DotResult<DA> _dot(const DA& a,
      return(inner::vreduce(acc));
 }
 
+/**
+ * @brief      Swap operator for Helium
+ *
+ * @param      a          First opetand
+ * @param      b          Second operand
+ * @param[in]  l          Vector length
+ *
+ * @tparam     DA         First operand datatype
+ * @tparam     DB         Second operand datatype
+ * @tparam     <unnamed>  Check vector indexing and compatible vectors
+ */
 template<typename DA,typename DB,
          typename std::enable_if<has_vector_inst<DA>() &&
                                  vector_idx_pair<DA,DB>(),bool>::type = true>

@@ -23,17 +23,6 @@ project:
       files:
         - file: main.c
         - file: allocator.cpp
-    - group: IPSS
-      for-context: 
-        - +IPSS-M0P
-        - +IPSS-M4
-      files:
-        - file: IPSS/retarget_m0.c
-          for-context: 
-             - +IPSS-M0P
-        - file: IPSS/retarget_m4.c
-          for-context: 
-             - +IPSS-M4
   add-path:
       - Include
       - ../../../boost_1_84_0

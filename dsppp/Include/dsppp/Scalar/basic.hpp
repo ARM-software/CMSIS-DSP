@@ -12,6 +12,19 @@
 
 #define SCALAR_UNROLL 2
 
+/**
+ * @brief      Fill evaluator for scalar architecture
+ *
+ * @param      v          Destination vector 
+ * @param[in]  val        Initialization value
+ * @param[in]  l          Length of vector
+ *
+ * @tparam     T          Scalar datatype
+ * @tparam     DST        VEctor / Matrix datatype
+ * @tparam     <unnamed>  Test to restrict to vector addressing 
+ *                        and compatible datatype
+ * 
+ */
 template<typename T,typename DST,
 typename std::enable_if<IsVector<DST>::value &&
          SameElementType<DST,T>::value,bool>::type = true>
@@ -38,7 +51,18 @@ inline void _Fill(DST &v,
     }
 }
 
-
+/**
+ * @brief      Fill2D evaluator for scalar architecture
+ *
+ * @param      v          Matrix value
+ * @param[in]  val        Initialization value
+ * @param[in]  rows       Number of rows
+ * @param[in]  cols       Number of columns
+ *
+ * @tparam     T          Scalar datatype
+ * @tparam     DST        Matrix datatype
+ * @tparam     <unnamed>  Check DST has matrix indexing only
+ */
 template<typename T,typename DST,
 typename std::enable_if<must_use_matrix_idx<DST>() &&
          SameElementType<DST,T>::value,bool>::type = true>
@@ -75,11 +99,17 @@ inline void _Fill2D(DST &v,
 }
 
 
-/*
-
-Evaluation : used when result is a vector
-
-*/
+/**
+ * @brief      Expression evaluator for vector in scalar mode
+ *
+ * @param      v          Vector
+ * @param[in]  other      Expression
+ * @param[in]  l          Length of expression (number of samples)
+ *
+ * @tparam     DA         Destination datatype
+ * @tparam     DB         Source datatype
+ * @tparam     <unnamed>  Check vectors are compatible
+ */
 template<typename DA,typename DB,
 typename std::enable_if<vector_idx_pair<DA,DB>(),bool>::type = true>
 inline void eval(DA &v,
@@ -104,6 +134,18 @@ inline void eval(DA &v,
     }
 }
 
+/**
+ * @brief      2D expression evaluator for scalar archiecture
+ *
+ * @param      v          Destination value
+ * @param[in]  other      The expression
+ * @param[in]  rows       Number of rows
+ * @param[in]  cols       Number of columns
+ *
+ * @tparam     DA         Destination datatype
+ * @tparam     DB         Source datatype
+ * @tparam     <unnamed>  Check only support matrix indexing
+ */
 template<typename DA,typename DB,
 typename std::enable_if<must_use_matrix_idx_pair<DA,DB>(),bool>::type = true>
 inline void eval2D(DA &v,
@@ -139,6 +181,19 @@ inline void eval2D(DA &v,
       }
 }
 
+/**
+ * @brief      Dot product evaluator for scalar architectuire
+ *
+ * @param[in]  a          Left hand side
+ * @param[in]  b          Right hand side
+ * @param[in]  l          Vector lenght
+ *
+ * @tparam     DA         Left hand side datatype (may be expression)
+ * @tparam     DB         Right hand side datatype (may be expression)
+ * @tparam     <unnamed>  Check vector expressions are compatible
+ *
+ * @return     Dot product result
+ */
 template<typename DA,typename DB,
          typename std::enable_if<vector_idx_pair<DA,DB>(),bool>::type = true>
 inline DotResult<DA> _dot(const DA& a,
@@ -168,6 +223,17 @@ inline DotResult<DA> _dot(const DA& a,
     return(acc);
 }
 
+/**
+ * @brief      Swap evaluator for scalar architecture
+ *
+ * @param      a          Left hand side
+ * @param      b          Right hand side
+ * @param[in]  l          Vector length
+ *
+ * @tparam     DA         Left hand side datatype
+ * @tparam     DB         Right hand side datatype
+ * @tparam     <unnamed>  Check vectors are compatible
+ */
 template<typename DA,typename DB,
          typename std::enable_if<vector_idx_pair<DA,DB>(),bool>::type = true>
 inline void _swap(DA&& a,

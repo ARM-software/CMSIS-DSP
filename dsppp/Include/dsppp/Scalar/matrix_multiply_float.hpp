@@ -6,6 +6,18 @@
  *  @{
  */
 
+/**
+ * @brief      Matrix times matrix for scalar architecture and float
+ *
+ * @param[in]  pSrcA      The source a
+ * @param[in]  pSrcB      The source b
+ * @param      pDst       The destination
+ *
+ * @tparam     MA         Left hand side datatype
+ * @tparam     MB         Right hand side datatype
+ * @tparam     RES        Result datatype
+ * @tparam     <unnamed>  Check if float
+ */
 template<typename MA,
          typename MB,
          typename RES,

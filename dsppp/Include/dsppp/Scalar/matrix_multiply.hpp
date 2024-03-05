@@ -7,7 +7,15 @@
  *  @{
  */
 
-
+/**
+ * @brief      Transposition for scalar architecture
+ *
+ * @param[in]  src        The source
+ * @param      dst        The destination
+ *
+ * @tparam     MA         Source datatype
+ * @tparam     MB         Destination datatype
+ */
 template<typename MA,
          typename MB>
 __STATIC_INLINE void _arm_mat_trans(
@@ -22,6 +30,17 @@ __STATIC_INLINE void _arm_mat_trans(
   }
 }
 
+/**
+ * @brief      Matrix times vector for scalar architecture
+ *
+ * @param      res        Destination
+ * @param[in]  m          Matrix
+ * @param[in]  v          Vector (my be expression)
+ *
+ * @tparam     M          Matrix datatype
+ * @tparam     V          Vector datatype
+ * @tparam     RES        Result datatype
+ */
 template<typename M,
          typename V,
          typename RES>
