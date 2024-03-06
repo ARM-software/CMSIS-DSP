@@ -41,13 +41,13 @@ var NAVTREEINDEX =
 "annotated.html",
 "group__Canberra.html",
 "group__FIXED.html#a2d6406bd24ea114ba6b092bd28c915cf",
-"group__GenericQ15Number.html#ae8605595911fd5f57d114161a4bee00c",
-"group__Matrix.html#a3c86ab9f0d0aa720752d96b66b6ec23f",
-"group__Max.html#gacca0874363ebd7917b7597b4c6c9647e",
-"group__VECTOR.html#a6984fed3efef899b24a2e8d3b9b2f85e",
-"group__genericTypes.html#gaa15e56f60abf07562e7c24786aad8485",
-"structarm__cfft__radix2__instance__f16.html#a3105983ff5c852a5c17028dee33f24c6",
-"structarm__lms__norm__instance__q15.html#a751941891e47f522a7f5375fe8990aac"
+"group__GenericQ15Number.html#a5d7353ee1e142d2d816dd479c088bedf",
+"group__Matrix.html#a39ac7c6f90f1e1add6e5b4a2fc20f222",
+"group__Max.html#ga96f240086b586a9c724fb5285fd15570",
+"group__VECTOR.html#a69556ec665477f5fec2c155b58af059f",
+"group__genericTypes.html#ga956128b7a0d71442fb29cbcbecd71d71",
+"structarm__cfft__radix2__instance__f16.html",
+"structarm__lms__norm__instance__f32.html#a751941891e47f522a7f5375fe8990aac"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -1,5 +1,7 @@
 var NAVTREEINDEX3 =
 {
+"group__GenericQ15Number.html#a5d7353ee1e142d2d816dd479c088bedf":[4,17,8,2,4,2,4],
+"group__GenericQ15Number.html#ab37bf31182f95866b4675c3be4b7d136":[4,17,8,2,4,2,1],
 "group__GenericQ15Number.html#ae8605595911fd5f57d114161a4bee00c":[4,17,8,2,4,1,1],
 "group__GenericQ15Number.html#structnumber__traits_3_01Q15_01_4":[4,17,8,2,4,1],
 "group__GenericQ15Number.html#structvector__traits_3_01Q15_00_01arch_00_01typename_01std_1_1enable__if_3_9std_1_1is__base__of_736401966ad6c7e96bbc91e818be4c30":[4,17,8,2,4,2],
@@ -61,10 +63,10 @@ var NAVTREEINDEX3 =
 "group__HeliumFloatNumber.html#structinner_1_1vstore1__gen__stride":[4,17,8,1,0,7],
 "group__HeliumFloatNumber.html#structinner_1_1vstore1__gen__stride_3_010_00_011_00_012_00_013_01_4":[4,17,8,1,12],
 "group__HeliumFloatNumber.html#structinner_1_1vstore1__gen__stride_3_010_00_011_00_012_00_013_01_4":[4,17,8,1,0,8],
-"group__HeliumFloatNumber.html#structinner_1_1vstore1__gen__stride__z":[4,17,8,1,13],
 "group__HeliumFloatNumber.html#structinner_1_1vstore1__gen__stride__z":[4,17,8,1,0,9],
-"group__HeliumFloatNumber.html#structinner_1_1vstore1__gen__stride__z_3_010_00_011_00_012_00_013_01_4":[4,17,8,1,14],
+"group__HeliumFloatNumber.html#structinner_1_1vstore1__gen__stride__z":[4,17,8,1,13],
 "group__HeliumFloatNumber.html#structinner_1_1vstore1__gen__stride__z_3_010_00_011_00_012_00_013_01_4":[4,17,8,1,0,10],
+"group__HeliumFloatNumber.html#structinner_1_1vstore1__gen__stride__z_3_010_00_011_00_012_00_013_01_4":[4,17,8,1,14],
 "group__HeliumFloatNumber.html#structvector__traits_3_01float_00_01arch_00_01typename_01std_1_1enable__if_3_01std_1_1is__base__ba5ab38020bf229f10c8cb296601cd2a":[4,17,8,1,0,1],
 "group__HeliumHalfNumber.html":[4,17,8,1,1],
 "group__HeliumHalfNumber.html#a00ca51725dbadd4d88b7a5f9b77fd36e":[4,17,8,1,1,1,3],
@@ -72,8 +74,8 @@ var NAVTREEINDEX3 =
 "group__HeliumHalfNumber.html#ac5706fee56c61076b3f152059180e4ad":[4,17,8,1,1,1,1],
 "group__HeliumHalfNumber.html#adbc8cfdcdb696f357a77cabc445f11cb":[4,17,8,1,1,1,4],
 "group__HeliumHalfNumber.html#af3b22a8914fdb0ccb348b19421f45bdc":[4,17,8,1,1,1,0],
-"group__HeliumHalfNumber.html#structinner_1_1vctpq_3_01float16__t_01_4":[4,17,8,1,15],
 "group__HeliumHalfNumber.html#structinner_1_1vctpq_3_01float16__t_01_4":[4,17,8,1,1,2],
+"group__HeliumHalfNumber.html#structinner_1_1vctpq_3_01float16__t_01_4":[4,17,8,1,15],
 "group__HeliumHalfNumber.html#structvector__traits_3_01float16__t_00_01arch_00_01typename_01std_1_1enable__if_3_01std_1_1is__bbf0c88ec3dcce04bc63f988798dbaaac":[4,17,8,1,1,1],
 "group__HeliumNumber.html":[4,17,8,1],
 "group__HeliumQ15Number.html":[4,17,8,1,2],
@@ -247,7 +249,5 @@ var NAVTREEINDEX3 =
 "group__Matrix.html#a2c89cfc9d462a12dfd6da8b6b73f2188":[4,17,6,5,4],
 "group__Matrix.html#a2dbffa29bb3a793b745857fa484d3ef9":[4,17,6,2,32],
 "group__Matrix.html#a32a8671aeb0d3c70fcf73e13ab4f498f":[4,17,6,4,5],
-"group__Matrix.html#a34b2c13038acf1bc2d20d8c89bf9efef":[4,17,6,3,9],
-"group__Matrix.html#a39ac7c6f90f1e1add6e5b4a2fc20f222":[4,17,6,0,2],
-"group__Matrix.html#a3aede62f513da27e6f61ae7a972b4f96":[4,17,6,2,1]
+"group__Matrix.html#a34b2c13038acf1bc2d20d8c89bf9efef":[4,17,6,3,9]
 };

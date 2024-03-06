@@ -1,5 +1,7 @@
 var NAVTREEINDEX7 =
 {
+"group__genericTypes.html#ga956128b7a0d71442fb29cbcbecd71d71":[4,1,36],
+"group__genericTypes.html#ga9e7c6646a4aaba462ceeb94533de4d47":[4,1,44],
 "group__genericTypes.html#gaa15e56f60abf07562e7c24786aad8485":[4,1,34],
 "group__genericTypes.html#gaa72ea28cbde94b8b5992a6fe3e1dbd6c":[4,1,4],
 "group__genericTypes.html#gaaa2f4c37777c944e348dd28b92c64c26":[4,1,18],
@@ -247,7 +249,5 @@ var NAVTREEINDEX7 =
 "structarm__cfft__instance__q31.html#a3b229432d381b0a511a9cdbe3aa74e78":[5,0,28,2],
 "structarm__cfft__instance__q31.html#a65e1b3e327b8fab9404287ed8f347cc8":[5,0,28,0],
 "structarm__cfft__instance__q31.html#a9760c603af5d85652496dbffd63a8a2e":[5,0,28,3],
-"structarm__cfft__instance__q31.html#ab8db3bbe7c61e6bb8ca2a55e3446e11a":[5,0,28,1],
-"structarm__cfft__radix2__instance__f16.html":[5,0,29],
-"structarm__cfft__radix2__instance__f16.html#a09a221a818c6d0e064557a99e2fe9a8b":[5,0,29,0]
+"structarm__cfft__instance__q31.html#ab8db3bbe7c61e6bb8ca2a55e3446e11a":[5,0,28,1]
 };
