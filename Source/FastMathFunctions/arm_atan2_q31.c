@@ -1,7 +1,7 @@
 /* ----------------------------------------------------------------------
  * Project:      CMSIS DSP Library
  * Title:        arm_atan2_q31.c
- * Description:  float32 Arc tangent of y/x
+ * Description:  q31 Arc tangent of y/x
  *
  * $Date:        22 April 2022
  * $Revision:    V1.10.0
@@ -201,14 +201,7 @@ arm_status arm_atan2_q31(q31_t y,q31_t x,q31_t *result)
         }
         else
         {
-            if (y<0)
-            {
-               *result= -PIQ29;
-            }
-            else
-            {
-               *result= PIQ29;
-            }
+           *result= PIQ29;
         }
         return(ARM_MATH_SUCCESS);
     }
