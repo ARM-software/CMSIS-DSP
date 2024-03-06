@@ -148,11 +148,11 @@ $(document).ready(function(){initNavTree('dsppp_vector_example.html',''); initRe
 <h1><a class="anchor" id="autotoc_md11"></a>
 Include the headers</h1>
 <p>The headers are not yet part of the CMSIS-DSP packs since they are experimental. You can get them from the <a href="https://github.com/ARM-software/CMSIS-DSP/tree/main/dsppp/Include/dsppp">CMSIS-DSP github</a></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;memory_pool&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;matrix&gt;</span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;dsppp/memory_pool&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;dsppp/matrix&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">using namespace </span><a class="code hl_namespace" href="namespacearm__cmsis__dsp.html">arm_cmsis_dsp</a>;</div>
-</div><!-- fragment --><p>If fixed point datatypes are required, <code>#include &lt;fixed_point&gt;</code> should be used before <code>&lt;matrix&gt;</code></p>
+</div><!-- fragment --><p>If fixed point datatypes are required, <code>#include &lt;dsppp/fixed_point&gt;</code> should be used before <code>&lt;dsppp/matrix&gt;</code></p>
 <p>Fixed point requires the use of CMSIS-DSP.</p>
 <h1><a class="anchor" id="autotoc_md12"></a>
 Creation of the vectors</h1>

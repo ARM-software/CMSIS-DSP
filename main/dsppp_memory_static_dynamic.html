@@ -133,19 +133,19 @@ $(document).ready(function(){initNavTree('dsppp_memory_static_dynamic.html','');
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_src_memory_static_dynamic"></a> As we have seen in the previous sections, there are two kind of vectors:</p>
 <ul>
-<li><code>Vector&lt;T&gt;</code> with a dimension know at runtime</li>
+<li><code>Vector&lt;T&gt;</code> with a dimension known at runtime</li>
 <li><code>Vector&lt;T,NB&gt;</code> with a dimension known at build time</li>
 </ul>
-<p>The former vectors are called "dynamic" ins this library. The later are called "static".</p>
+<p>The former vectors are called "dynamic" in this library. The later are called "static".</p>
 <p>This naming "static" / "dynamic" is referring to the dimension. With "dynamic" vectors the same code can, at runtime, create vectors of different length based on a runtime length.</p>
 <p>With "static" vectors : the length is fixed at build time and will never change at runtime.</p>
-<p>Note that the library also have "static" / "dynamic" matrixes. So, we are going to use "objects" to cover both cases</p>
+<p>Note that the library also have "static" / "dynamic" matrixes. So, we are going to use the name "object" to cover both cases in the below explanations.</p>
 <h1><a class="anchor" id="autotoc_md16"></a>
 Static objects</h1>
 <p>The advantage of static objects is that the dimension is known at build time. The compiler can thus generate an algorithm that is specialized for those dimensions and thus more efficient.</p>
 <p>With static objects it is also possible to use different memory allocator with better performances and determinism.</p>
-<p>But, with static objects, objects of different dimension are considered as different types. The compiler will generate different implementation so it will have an impact on the code dimension.</p>
-<p>If you need lots of objects of different dimensions, or if the dimensions are nort known at build time, then you need to use dynamic object</p>
+<p>But, with static objects, objects of different dimension are considered as different types. The compiler will generate different implementation so it will have an impact on the code size.</p>
+<p>If you need lots of objects of different dimensions, or if the dimensions are not known at build time, then you need to use dynamic object</p>
 <h1><a class="anchor" id="autotoc_md17"></a>
 Dynamic objects</h1>
 <p>With dynamic objects, the dimension is know at runtime. So object of different dimensions have the same datatype and the compiler is generating only one implementation for all those objects. It cannot generate specialized implementations based on the dimension. It is better for code size, but the implementations will be less efficient.</p>

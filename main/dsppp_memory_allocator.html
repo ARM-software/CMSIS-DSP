@@ -140,7 +140,7 @@ $(document).ready(function(){initNavTree('dsppp_memory_allocator.html',''); init
 <div class="line">         <span class="keyword">template</span>&lt;<span class="keywordtype">int</span>&gt; <span class="keyword">typename</span> Allocator = TMP_ALLOC&gt;</div>
 <div class="line"><span class="keyword">struct </span>Vector:Vector_Base&lt;P&gt;</div>
 </div><!-- fragment --><p>It means that by default the memory allocator is <code>TMP_ALLOC</code>.</p>
-<p>This <code>TMP_ALLOC</code> <code>#define</code> can be changed if you define it before including any header from the library.</p>
+<p>This <code>TMP_ALLOC</code> is a <code>#define</code> and can be changed if you define it before including any header from the library.</p>
 <p>An allocator should implement a template like:</p>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keywordtype">int</span> L&gt;</div>
 <div class="line"><span class="keyword">struct </span>malloc_allocator {</div>

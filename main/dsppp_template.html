@@ -147,6 +147,7 @@ What is a template useful for ?</h1>
 <p>And if the function is used with a <code>float64_t *</code>, the compiler would generate code for a function using <code>float64_t</code>.</p>
 <p>The generic <code>arm_add</code> source code is a template used to generate different implementations. It is like a code generator.</p>
 <p>And if the compiler is unable to generate an implementation because the type variable <code>T</code> is replaced by a type with no addition operator, then it would be detected by the compiler.</p>
+<p>Note that in C++, you can also use overloading of functions. They'll use the same name (but different arguments) but they won't share the same source code.</p>
 <h1><a class="anchor" id="autotoc_md7"></a>
 Templates for datatypes</h1>
 <p>C++ templates also apply to structs and classes.</p>
