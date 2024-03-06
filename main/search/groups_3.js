@@ -9,5 +9,8 @@ var searchData=
   ['deprecated_20real_20fft_20functions_6',['Deprecated Real FFT Functions',['../group__DeprecatedRealFFT.html',1,'']]],
   ['distance_20functions_7',['Distance Functions',['../group__groupDistance.html',1,'']]],
   ['dot_20product_20example_8',['Dot Product Example',['../group__DotproductExample.html',1,'']]],
-  ['dynamic_20time_20warping_20distance_9',['Dynamic Time Warping Distance',['../group__DTW.html',1,'']]]
+  ['double_9',['Double',['../group__GenericDoubleNumber.html',1,'']]],
+  ['dsp_20extension_20specific_20algorithm_10',['DSP Extension specific algorithm',['../group__DSPALG.html',1,'']]],
+  ['dsp_20extension_20specific_20number_20definitions_11',['DSP extension specific number definitions',['../group__DSPNumber.html',1,'']]],
+  ['dynamic_20time_20warping_20distance_12',['Dynamic Time Warping Distance',['../group__DTW.html',1,'']]]
 ];

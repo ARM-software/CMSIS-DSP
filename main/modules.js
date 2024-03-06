@@ -16,5 +16,6 @@ var modules =
     [ "Support Functions", "group__groupSupport.html", "group__groupSupport" ],
     [ "SVM Functions", "group__groupSVM.html", "group__groupSVM" ],
     [ "Transform Functions", "group__groupTransforms.html", "group__groupTransforms" ],
-    [ "Window Functions", "group__groupWindow.html", "group__groupWindow" ]
+    [ "Window Functions", "group__groupWindow.html", "group__groupWindow" ],
+    [ "C++ extension", "group__DSPPP.html", "group__DSPPP" ]
 ];

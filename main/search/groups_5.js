@@ -8,8 +8,10 @@ var searchData=
   ['finite_20impulse_20response_20_28fir_29_20lattice_20filters_5',['Finite Impulse Response (FIR) Lattice Filters',['../group__FIR__Lattice.html',1,'']]],
   ['finite_20impulse_20response_20_28fir_29_20sparse_20filters_6',['Finite Impulse Response (FIR) Sparse Filters',['../group__FIR__Sparse.html',1,'']]],
   ['fir_20lowpass_20filter_20example_7',['FIR Lowpass Filter Example',['../group__FIRLPF.html',1,'']]],
-  ['fixed_20point_20division_8',['Fixed point division',['../group__divide.html',1,'']]],
-  ['flat_2dtop_20window_20functions_9',['Flat-top window functions',['../group__WindowFlat.html',1,'']]],
-  ['float_20distances_10',['Float Distances',['../group__FloatDist.html',1,'']]],
-  ['frequency_20bin_20example_11',['Frequency Bin Example',['../group__FrequencyBin.html',1,'']]]
+  ['fixed_20point_20datatypes_8',['Fixed point datatypes',['../group__FIXED.html',1,'']]],
+  ['fixed_20point_20division_9',['Fixed point division',['../group__divide.html',1,'']]],
+  ['flat_2dtop_20window_20functions_10',['Flat-top window functions',['../group__WindowFlat.html',1,'']]],
+  ['float_11',['Float',['../group__GenericFloatNumber.html',1,'(Global Namespace)'],['../group__HeliumFloatNumber.html',1,'(Global Namespace)']]],
+  ['float_20distances_12',['Float Distances',['../group__FloatDist.html',1,'']]],
+  ['frequency_20bin_20example_13',['Frequency Bin Example',['../group__FrequencyBin.html',1,'']]]
 ];
