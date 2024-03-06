@@ -38,7 +38,7 @@ A Python wrapper is also available with a Python API as close as possible to the
 
 This extension is a set of C++ headers. They just need to included to start using the features.
 
-Those headers are not yet part of the pack and you need to get them from the [github repository](https://github.com/ARM-software/CMSIS-DSP/tree/main/Include)
+Those headers are not yet part of the pack and you need to get them from the [github repository](https://github.com/ARM-software/CMSIS-DSP/tree/main/dsppp/Include)
 
 More documentation about the @ref dsppp_main "DSP++" extension.
 

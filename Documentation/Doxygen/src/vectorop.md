@@ -16,7 +16,7 @@ we need to:
 
 # Include the headers
 
-The headers are not yet part of the CMSIS-DSP packs since they are experimental. You can get them from the [CMSIS-DSP github](https://github.com/ARM-software/CMSIS-DSP/CPP)
+The headers are not yet part of the CMSIS-DSP packs since they are experimental. You can get them from the [CMSIS-DSP github](https://github.com/ARM-software/CMSIS-DSP/tree/main/dsppp/Include/dsppp)
 
 ```cpp
 #include <memory_pool>

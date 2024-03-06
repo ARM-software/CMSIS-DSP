@@ -5,7 +5,7 @@
 /** \defgroup DSPPP C++ extension
  *  C++ template extension to CMSIS-DSP. It is not yet part of
  *  the pack but the headers can be found on the 
- *  [CMSIS-DSP github](https://github.com/ARM-software/CMSIS-DSP/dsppp/Include)
+ *  [CMSIS-DSP github](https://github.com/ARM-software/CMSIS-DSP/tree/main/dsppp/Include)
  *  The principles are described in this @ref dsppp_main "page"
  */
 
