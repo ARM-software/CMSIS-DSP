@@ -46,6 +46,11 @@ def generateBenchmarkPatterns():
     configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
     
+    configf32.setOverwrite(False)
+    configf16.setOverwrite(False)
+    configq31.setOverwrite(False)
+    configq15.setOverwrite(False)
+
     
     
     writeBenchmarks(configf32)
@@ -144,7 +149,6 @@ def writeDecimateTests(config,startNb,format):
         
         ref += [q,len(b),len(samples),len(output)]
 
-
     config.writeInput(startNb, allsamples)
     config.writeInput(startNb, allcoefs,"Coefs")
     config.writeReference(startNb, alloutput)
@@ -224,15 +228,23 @@ def generateTestPatterns():
     PATTERNDIR = os.path.join("Patterns","DSP","Filtering","DECIM","DECIM")
     PARAMDIR = os.path.join("Parameters","DSP","Filtering","DECIM","DECIM")
     
+    configf64=Tools.Config(PATTERNDIR,PARAMDIR,"f64")
     configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
     configf16=Tools.Config(PATTERNDIR,PARAMDIR,"f16")
     configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
 
-    writeTests(configf32,0)
-    writeTests(configf16,16)
-    writeTests(configq31,31)
-    writeTests(configq15,15)
+    configf64.setOverwrite(False)
+    configf32.setOverwrite(False)
+    configf16.setOverwrite(False)
+    configq31.setOverwrite(False)
+    configq15.setOverwrite(False)
+
+    writeTests(configf64,Tools.F64)
+    #writeTests(configf32,0)
+    #writeTests(configf16,16)
+    #writeTests(configq31,31)
+    #writeTests(configq15,15)
 
 if __name__ == '__main__':
   generateBenchmarkPatterns()

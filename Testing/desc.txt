@@ -2172,6 +2172,29 @@ group Root {
              class = DECIM 
              folder = DECIM
 
+             suite DECIM F64 {
+                class = DECIMF64 
+                folder = DECIMF64
+
+                Pattern INPUT1_F64_ID : Input2_f64.txt 
+                Pattern INPUT2_F64_ID : Input3_f64.txt 
+                Pattern COEFS1_F64_ID : Coefs2_f64.txt 
+                Pattern COEFS2_F64_ID : Coefs3_f64.txt 
+
+                Pattern CONFIGSDECIMF64_ID : Configs2_u32.txt 
+                Pattern CONFIGSINTERPF64_ID : Configs3_u32.txt 
+   
+                Pattern REF1_DECIM_F64_ID : Reference2_f64.txt
+                Pattern REF2_INTERP_F64_ID : Reference3_f64.txt
+
+                Output  OUT_F64_ID : Output
+                Output  STATE_F64_ID : State
+
+                Functions {
+                 test_fir_decimate_f64:test_fir_decimate_f64
+                }
+             }
+
              suite DECIM F32 {
                 class = DECIMF32 
                 folder = DECIMF32

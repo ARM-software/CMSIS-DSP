@@ -33,85 +33,6 @@
  */
 
 /**
-  @defgroup FIR_decimate Finite Impulse Response (FIR) Decimator
-
-  These functions combine an FIR filter together with a decimator.
-  They are used in multirate systems for reducing the sample rate of a signal without introducing aliasing distortion.
-  Conceptually, the functions are equivalent to the block diagram below:
-  \image html FIRDecimator.gif "Components included in the FIR Decimator functions"
-  When decimating by a factor of <code>M</code>, the signal should be prefiltered by a lowpass filter with a normalized
-  cutoff frequency of <code>1/M</code> in order to prevent aliasing distortion.
-  The user of the function is responsible for providing the filter coefficients.
-
-  The FIR decimator functions provided in the CMSIS DSP Library combine the FIR filter and the decimator in an efficient manner.
-  Instead of calculating all of the FIR filter outputs and discarding <code>M-1</code> out of every <code>M</code>, only the
-  samples output by the decimator are computed.
-  The functions operate on blocks of input and output data.
-  <code>pSrc</code> points to an array of <code>blockSize</code> input values and
-  <code>pDst</code> points to an array of <code>blockSize/M</code> output values.
-  In order to have an integer number of output samples <code>blockSize</code>
-  must always be a multiple of the decimation factor <code>M</code>.
-
-  The library provides separate functions for Q15, Q31 and floating-point data types.
-
-  @par           Algorithm:
-                   The FIR portion of the algorithm uses the standard form filter:
-  <pre>
-      y[n] = b[0] * x[n] + b[1] * x[n-1] + b[2] * x[n-2] + ...+ b[numTaps-1] * x[n-numTaps+1]
-  </pre>
-                   where, <code>b[n]</code> are the filter coefficients.
-  @par
-                   The <code>pCoeffs</code> points to a coefficient array of size <code>numTaps</code>.
-                   Coefficients are stored in time reversed order.
-  @par
-  <pre>
-      {b[numTaps-1], b[numTaps-2], b[N-2], ..., b[1], b[0]}
-  </pre>
-  @par
-                   <code>pState</code> points to a state array of size <code>numTaps + blockSize - 1</code>.
-                   Samples in the state buffer are stored in the order:
-  @par
-  <pre>
-      {x[n-numTaps+1], x[n-numTaps], x[n-numTaps-1], x[n-numTaps-2]....x[0], x[1], ..., x[blockSize-1]}
-  </pre>
-                   The state variables are updated after each block of data is processed, the coefficients are untouched.
-
-  @par           Instance Structure
-                   The coefficients and state variables for a filter are stored together in an instance data structure.
-                   A separate instance structure must be defined for each filter.
-                   Coefficient arrays may be shared among several instances while state variable array should be allocated separately.
-                   There are separate instance structure declarations for each of the 3 supported data types.
-
- @par            Initialization Functions
-                   There is also an associated initialization function for each data type.
-                   The initialization function performs the following operations:
-                   - Sets the values of the internal structure fields.
-                   - Zeros out the values in the state buffer.
-                   - Checks to make sure that the size of the input is a multiple of the decimation factor.
-                   To do this manually without calling the init function, assign the follow subfields of the instance structure:
-                   numTaps, pCoeffs, M (decimation factor), pState. Also set all of the values in pState to zero.
-  @par
-                   Use of the initialization function is optional.
-                   However, if the initialization function is used, then the instance structure cannot be placed into a const data section.
-                   To place an instance structure into a const data section, the instance structure must be manually initialized.
-                   The code below statically initializes each of the 3 different data type filter instance structures
-  <pre>
-      arm_fir_decimate_instance_f64 S = {M, numTaps, pCoeffs, pState};
-      arm_fir_decimate_instance_q31 S = {M, numTaps, pCoeffs, pState};
-      arm_fir_decimate_instance_q15 S = {M, numTaps, pCoeffs, pState};
-  </pre>
-                   where <code>M</code> is the decimation factor; <code>numTaps</code> is the number of filter coefficients in the filter;
-                   <code>pCoeffs</code> is the address of the coefficient buffer;
-                   <code>pState</code> is the address of the state buffer.
-                   Be sure to set the values in the state buffer to zeros when doing static initialization.
-
-  @par           Fixed-Point Behavior
-                   Care must be taken when using the fixed-point versions of the FIR decimate filter functions.
-                   In particular, the overflow and saturation behavior of the accumulator used in each function must be considered.
-                   Refer to the function specific documentation below for usage guidelines.
- */
-
-/**
   @addtogroup FIR_decimate
   @{
  */
@@ -168,10 +89,10 @@ void arm_fir_decimate_f64(
     } while (--i);
 
     /* Set accumulators to zero */
-    acc0 = 0.0f;
-    acc1 = 0.0f;
-    acc2 = 0.0f;
-    acc3 = 0.0f;
+    acc0 = 0.0;
+    acc1 = 0.0;
+    acc2 = 0.0;
+    acc3 = 0.0;
 
     /* Initialize state pointer for all the samples */
     px0 = pState;
@@ -314,7 +235,7 @@ void arm_fir_decimate_f64(
     } while (--i);
 
     /* Set accumulator to zero */
-    acc0 = 0.0f;
+    acc0 = 0.0;
 
     /* Initialize state pointer */
     px0 = pState;
