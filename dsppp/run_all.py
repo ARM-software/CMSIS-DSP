@@ -183,9 +183,10 @@ MODE = ["STATIC_TEST",
         "DYNAMIC_TEST"
         ]
 
-TESTS=["DOT_TEST","VECTOR_TEST"]
-DATATYPES=["F32_DT"]
-MODE = ["STATIC_TEST"]
+# Restricted tests for debugging
+#TESTS=["DOT_TEST","VECTOR_TEST"]
+#DATATYPES=["F32_DT"]
+#MODE = ["STATIC_TEST"]
 
 all_tests = list(itertools.product(TESTS,DATATYPES,MODE))
 
