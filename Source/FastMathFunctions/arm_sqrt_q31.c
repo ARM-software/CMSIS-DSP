@@ -118,7 +118,14 @@ arm_status arm_sqrt_q31(
   {
     *pOut = 0;
 
-    return (ARM_MATH_ARGUMENT_ERROR);
+    if (number==0)
+    {
+       return (ARM_MATH_SUCCESS);
+    }
+    else
+    {
+       return (ARM_MATH_ARGUMENT_ERROR);
+    }
   }
 }
 
