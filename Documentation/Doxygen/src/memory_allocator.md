@@ -19,7 +19,7 @@ struct Vector:Vector_Base<P>
 
 It means that by default the memory allocator is `TMP_ALLOC`.
 
-This `TMP_ALLOC` `#define` can be changed if you define it before including any header from the library.
+This `TMP_ALLOC` is a `#define` and can be changed if you define it before including any header from the library.
 
 An allocator should implement a template like:
 

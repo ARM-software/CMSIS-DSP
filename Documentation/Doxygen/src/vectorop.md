@@ -19,13 +19,13 @@ we need to:
 The headers are not yet part of the CMSIS-DSP packs since they are experimental. You can get them from the [CMSIS-DSP github](https://github.com/ARM-software/CMSIS-DSP/tree/main/dsppp/Include/dsppp)
 
 ```cpp
-#include <memory_pool>
-#include <matrix>
+#include <dsppp/memory_pool>
+#include <dsppp/matrix>
 
 using namespace arm_cmsis_dsp;
 ```
 
-If fixed point datatypes are required, `#include <fixed_point>` should be used before `<matrix>`
+If fixed point datatypes are required, `#include <dsppp/fixed_point>` should be used before `<dsppp/matrix>`
 
 Fixed point requires the use of CMSIS-DSP.
 

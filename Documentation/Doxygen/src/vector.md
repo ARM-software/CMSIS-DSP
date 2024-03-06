@@ -93,7 +93,7 @@ Virtual vectors can have a stride:
 d.sub<2>(1) = 0.0f;
 ```
 
-This line sets the odd elements of the vector to `0.0f`. It is creating a vvirtual vector with stride `2` and starting at index `1` of first vector.
+This line sets the odd elements of the vector to `0.0f`. It is creating a virtual vector with stride `2` and starting at index `1` of first vector.
 
 Then, all elements of this virtual vector are set to `0.0f`.
 

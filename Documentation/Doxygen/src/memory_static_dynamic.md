@@ -2,16 +2,16 @@
 
 As we have seen in the previous sections, there are two kind of vectors:
 
-* `Vector<T>` with a dimension know at runtime
+* `Vector<T>` with a dimension known at runtime
 * `Vector<T,NB>` with a dimension known at build time
 
-The former vectors are called "dynamic" ins this library. The later are called "static". 
+The former vectors are called "dynamic" in this library. The later are called "static". 
 
 This naming "static" / "dynamic" is referring to the dimension. With "dynamic" vectors the same code can, at runtime, create vectors of different length based on a runtime length. 
 
 With "static" vectors : the length is fixed at build time and will never change at runtime.
 
-Note that the library also have "static" / "dynamic" matrixes. So, we are going to use "objects" to cover both cases
+Note that the library also have "static" / "dynamic" matrixes. So, we are going to use the name "object" to cover both cases in the below explanations.
 
 # Static objects
 
@@ -19,9 +19,9 @@ The advantage of static objects is that the dimension is known at build time. Th
 
 With static objects it is also possible to use different memory allocator with better performances and determinism.
 
-But, with static objects, objects of different dimension are considered as different types. The compiler will generate different implementation so it will have an impact on the code dimension.
+But, with static objects, objects of different dimension are considered as different types. The compiler will generate different implementation so it will have an impact on the code size.
 
-If you need lots of objects of different dimensions, or if the dimensions are nort known at build time, then you need to use dynamic object
+If you need lots of objects of different dimensions, or if the dimensions are not known at build time, then you need to use dynamic object
 
 # Dynamic objects
 

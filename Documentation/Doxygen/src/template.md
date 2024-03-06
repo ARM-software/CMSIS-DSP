@@ -23,6 +23,8 @@ The generic `arm_add` source code is a template used to generate different imple
 
 And if the compiler is unable to generate an implementation because the type variable `T` is replaced by a type with no addition operator, then it would be detected by the compiler.
 
+Note that in C++, you can also use overloading of functions. They'll use the same name (but different arguments) but they won't share the same source code.
+
 ## Templates for datatypes
 
 C++ templates also apply to structs and classes.
@@ -56,5 +58,4 @@ A template is just a C++ header. You only need to include this header to start u
 ## Example
 
 Now you can look at an @ref dsppp_vector_example "example with vector operations" showing how to use the library
-
 
