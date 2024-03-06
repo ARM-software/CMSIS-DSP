@@ -178,7 +178,7 @@ __STATIC_FORCEINLINE q15_t arm_atan_q15(q15_t y,q15_t x)
  
   @par         Compute the Arc tangent of y/x:
                    The sign of y and x are used to determine the right quadrant
-                   and compute the right angle.
+                   and compute the right angle. Returned value is between -Pi and Pi.
 */
 
 
