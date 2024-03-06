@@ -1,5 +1,7 @@
 # Overview {#mainpage}
 
+## Introduction
+
 This user manual describes the CMSIS DSP software library, a suite of common compute processing functions for use on Cortex-M and Cortex-A processor based devices.
 
 The library is divided into a number of functions each covering a specific category:
@@ -26,9 +28,21 @@ The library is providing vectorized versions of most algorithms for Helium and o
 
 When using a vectorized version, provide a little bit of padding after the end of a buffer (3 words) because the vectorized code may read a little bit after the end of a buffer. You don't have to modify your buffers but just ensure that the end of buffer + padding is not outside of a memory region.
 
+## Related projects
+
+### Python wrapper
+
 A Python wrapper is also available with a Python API as close as possible to the C one. It can be used to start developing and testing an algorithm with NumPy and SciPy before writing the C version. Is is available on [PyPI.org](https://pypi.org/project/cmsisdsp/). It can be installed with: `pip install cmsisdsp`.
 
-## Using the Library {#using}
+### Experimental C++ template extension
+
+This extension is a set of C++ headers. They just need to included to start using the features.
+
+Those headers are not yet part of the pack and you need to get them from the [github repository](https://github.com/ARM-software/CMSIS-DSP/tree/main/Include)
+
+More documentation about the @ref dsppp_main "DSP++" extension.
+
+## Using the CMSIS-DSP Library {#using}
 
 The library is released in source form. It is strongly advised to compile the library using `-Ofast` optimization to have the best performances.
 
@@ -56,6 +70,7 @@ The table below explains the content of **ARM::CMSIS-DSP** pack.
  📂 Include                            | Include files for using and building the lib
  📂 PrivateInclude                     | Private include files for building the lib
  📂 Source                             | Source files
+ 📂 dsppp                              | Experimental C++ teamplate extension
  📄 ARM.CMSIS-DSP.pdsc                 | CMSIS-Pack description file
  📄 LICENSE                            | License Agreement (Apache 2.0)
 

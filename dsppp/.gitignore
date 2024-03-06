@@ -1,0 +1,13 @@
+build_*
+allocation/*
+out/
+tmp/
+__pycache__/
+**.DS_Store
+*.cprj
+cprj/*.cbuild*.yml
+dump_*
+run_*.bat
+ac6_results/
+gcc_results/
+clang_results/

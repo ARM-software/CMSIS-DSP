@@ -1,0 +1,9 @@
+core_clk.mul=100000000
+cpu0.semihosting-enable=1
+cpu0.semihosting-heap_base=0x0
+cpu0.semihosting-heap_limit=0x0
+cpu0.semihosting-stack_base=0x0
+cpu0.semihosting-stack_limit=0x0
+cpu0.FPU=1
+cpu0.MVE=2
+mps3_board.visualisation.disable-visualisation=1

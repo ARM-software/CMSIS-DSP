@@ -1,0 +1,142 @@
+default:
+
+  compiler: AC6
+  
+  misc:
+    - for-compiler: AC6
+      C:
+        - -Wsign-compare 
+        - -Wdouble-promotion 
+        - -DNDEBUG 
+        - -Wall 
+        - -Wextra  
+        - -Werror
+        - -std=c11 
+        - -Ofast 
+        - -ffast-math
+        - -Wno-packed 
+        - -Wno-missing-variable-declarations 
+        - -Wno-missing-prototypes 
+        - -Wno-missing-noreturn 
+        - -Wno-sign-conversion 
+        - -Wno-nonportable-include-path 
+        - -Wno-reserved-id-macro 
+        - -Wno-unused-macros 
+        - -Wno-documentation-unknown-command 
+        - -Wno-documentation 
+        - -Wno-license-management 
+        - -Wno-parentheses-equality 
+        - -Wno-reserved-identifier
+        - -ffunction-sections
+        - -Wno-nan-infinity-disabled
+        - -DARM_MATH_LOOPUNROLL
+      CPP:
+        - -fno-rtti 
+        - -fno-exceptions
+        - -DNDEBUG 
+        - -Wall 
+        - -Wextra  
+        - -std=c++17
+        - -Ofast 
+        - -ffast-math
+        - -Wno-unused-function
+        - -ffunction-sections
+        - -mllvm -disable-vector-combine
+      ASM:
+        - -masm=auto
+      Link:
+        - --entry=Reset_Handler
+        - --info=summarysizes
+        - --info=sizes
+        - --info=totals
+        - --info=unused
+        - --info=veneers
+
+    - for-compiler: GCC
+      C:
+        - -Wsign-compare 
+        - -Wdouble-promotion 
+        - -DNDEBUG 
+        - -Wall 
+        - -Wextra  
+        - -Werror
+        - -std=c11 
+        - -Ofast 
+        - -ffast-math
+        - -Wno-packed 
+        - -Wno-missing-prototypes 
+        - -Wno-missing-noreturn 
+        - -Wno-sign-conversion 
+        - -Wno-unused-macros 
+        - -ffunction-sections
+        - -DARM_MATH_LOOPUNROLL
+        - -flax-vector-conversions
+        - -Wno-maybe-uninitialized
+        - -fdata-sections
+        - -fno-unroll-loops
+      CPP:
+        - -fno-rtti 
+        - -fno-exceptions
+        - -DNDEBUG 
+        - -Wall 
+        - -Wextra  
+        - -std=c++17
+        - -Ofast 
+        - -ffast-math
+        - -Wno-unused-function
+        - -ffunction-sections
+        - -fdata-sections
+        - -Wno-psabi
+        - -fno-unroll-loops
+      ASM:
+        - -masm=auto
+      Link:
+        - --specs=nano.specs
+        - -Wl,-Map=$elf()$.map
+        - -lm
+        - -Wl,--wrap=SysTick_Handler
+        - -Wl,--gc-sections
+      Library:
+        - -lm
+
+    - for-compiler: CLANG
+      C:
+         - -Wsign-compare 
+         - -Wdouble-promotion 
+         - -DNDEBUG 
+         - -Wall 
+         - -Wextra  
+         - -Werror
+         - -std=c11 
+         - -Ofast 
+         - -ffast-math
+         - -Wno-packed 
+         - -Wno-missing-variable-declarations 
+         - -Wno-missing-prototypes 
+         - -Wno-missing-noreturn 
+         - -Wno-sign-conversion 
+         - -Wno-nonportable-include-path 
+         - -Wno-reserved-id-macro 
+         - -Wno-unused-macros 
+         - -Wno-documentation-unknown-command 
+         - -Wno-documentation 
+         - -Wno-parentheses-equality 
+         - -Wno-reserved-identifier
+         - -ffunction-sections
+         - -DARM_MATH_LOOPUNROLL
+      CPP:
+        - -fno-rtti 
+        - -fno-exceptions
+        - -DNDEBUG 
+        - -Wall 
+        - -Wextra  
+        - -std=c++17
+        - -Ofast 
+        - -ffast-math
+        - -Wno-unused-function
+        - -ffunction-sections
+      ASM:
+        - -masm=auto
+      Link:
+        - -Wl,-Map=$elf()$.map
+        - -Wl,--gc-sections

@@ -1,0 +1,17 @@
+cbuild-pack:
+  resolved-packs:
+    - resolved-pack: ARM::CMSIS@6.0.0
+      selected-by:
+        - ARM::CMSIS@6.0.0
+    - resolved-pack: ARM::CMSIS-Compiler@2.0.0
+      selected-by:
+        - ARM::CMSIS-Compiler@2.0.0
+    - resolved-pack: ARM::CMSIS-DSP@1.15.0
+      selected-by:
+        - ARM::CMSIS-DSP@1.15.0
+    - resolved-pack: ARM::Cortex_DFP@1.0.0
+      selected-by:
+        - ARM::Cortex_DFP@1.0.0
+    - resolved-pack: ARM::V2M_MPS3_SSE_300_BSP@1.4.0
+      selected-by:
+        - ARM::V2M_MPS3_SSE_300_BSP@1.4.0
