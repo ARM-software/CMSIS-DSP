@@ -68,7 +68,7 @@ arm_status arm_divide_q15(q15_t numerator,
 
   *shift = 0;
 
-  sign = (numerator>>15) ^ (denominator>>15);
+  sign = (numerator<0) ^ (denominator<0);
 
   if (denominator == 0)
   {
