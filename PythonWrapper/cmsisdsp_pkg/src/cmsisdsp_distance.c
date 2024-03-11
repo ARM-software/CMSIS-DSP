@@ -227,7 +227,7 @@ cmsis_arm_dtw_init_window_q7(PyObject *obj,
   arm_matrix_instance_q7 pSrc_converted; // input
    
 
-  if (PyArg_ParseTuple(args,"iiO",&winType,&winSize,&pSrc));
+  if (PyArg_ParseTuple(args,"iiO",&winType,&winSize,&pSrc))
   {
 
     q7MatrixFromNumpy(&pSrc_converted,pSrc);
@@ -267,7 +267,7 @@ cmsis_arm_dtw_distance_f32(PyObject *obj,
   arm_matrix_instance_f32 dtw_converted;
 
 
-  if (PyArg_ParseTuple(args,"OO",&pDist,&pWin));
+  if (PyArg_ParseTuple(args,"OO",&pDist,&pWin))
   {
 
     f32MatrixFromNumpy(&pDist_converted,pDist);
@@ -348,7 +348,7 @@ cmsis_arm_dtw_path_f32(PyObject *obj,
      Py_DECREF(pDstOBJ);
      return(pythonResult);
   }
-
+  Py_RETURN_NONE;
 }
 
 static PyMethodDef CMSISDSPMethods[] = {

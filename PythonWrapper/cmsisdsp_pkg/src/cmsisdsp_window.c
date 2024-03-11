@@ -72,7 +72,7 @@ cmsis_arm_welch_f64(PyObject *obj, PyObject *args)
 {
 
   
-  float32_t *pDst=NULL; // output
+  float64_t *pDst=NULL; // output
   int nb; // input
 
   if (PyArg_ParseTuple(args,"i",&nb))
@@ -125,7 +125,7 @@ cmsis_arm_bartlett_f64(PyObject *obj, PyObject *args)
 {
 
   
-  float32_t *pDst=NULL; // output
+  float64_t *pDst=NULL; // output
   int nb; // input
 
   if (PyArg_ParseTuple(args,"i",&nb))
@@ -178,7 +178,7 @@ cmsis_arm_hamming_f64(PyObject *obj, PyObject *args)
 {
 
   
-  float32_t *pDst=NULL; // output
+  float64_t *pDst=NULL; // output
   int nb; // input
 
   if (PyArg_ParseTuple(args,"i",&nb))
@@ -231,7 +231,7 @@ cmsis_arm_hanning_f64(PyObject *obj, PyObject *args)
 {
 
   
-  float32_t *pDst=NULL; // output
+  float64_t *pDst=NULL; // output
   int nb; // input
 
   if (PyArg_ParseTuple(args,"i",&nb))
@@ -284,7 +284,7 @@ cmsis_arm_nuttall3_f64(PyObject *obj, PyObject *args)
 {
 
   
-  float32_t *pDst=NULL; // output
+  float64_t *pDst=NULL; // output
   int nb; // input
 
   if (PyArg_ParseTuple(args,"i",&nb))
@@ -337,7 +337,7 @@ cmsis_arm_nuttall4_f64(PyObject *obj, PyObject *args)
 {
 
   
-  float32_t *pDst=NULL; // output
+  float64_t *pDst=NULL; // output
   int nb; // input
 
   if (PyArg_ParseTuple(args,"i",&nb))
@@ -390,7 +390,7 @@ cmsis_arm_nuttall3a_f64(PyObject *obj, PyObject *args)
 {
 
   
-  float32_t *pDst=NULL; // output
+  float64_t *pDst=NULL; // output
   int nb; // input
 
   if (PyArg_ParseTuple(args,"i",&nb))
@@ -443,7 +443,7 @@ cmsis_arm_nuttall3b_f64(PyObject *obj, PyObject *args)
 {
 
   
-  float32_t *pDst=NULL; // output
+  float64_t *pDst=NULL; // output
   int nb; // input
 
   if (PyArg_ParseTuple(args,"i",&nb))
@@ -496,7 +496,7 @@ cmsis_arm_nuttall4a_f64(PyObject *obj, PyObject *args)
 {
 
   
-  float32_t *pDst=NULL; // output
+  float64_t *pDst=NULL; // output
   int nb; // input
 
   if (PyArg_ParseTuple(args,"i",&nb))
@@ -549,7 +549,7 @@ cmsis_arm_blackman_harris_92db_f64(PyObject *obj, PyObject *args)
 {
 
   
-  float32_t *pDst=NULL; // output
+  float64_t *pDst=NULL; // output
   int nb; // input
 
   if (PyArg_ParseTuple(args,"i",&nb))
@@ -602,7 +602,7 @@ cmsis_arm_nuttall4b_f64(PyObject *obj, PyObject *args)
 {
 
   
-  float32_t *pDst=NULL; // output
+  float64_t *pDst=NULL; // output
   int nb; // input
 
   if (PyArg_ParseTuple(args,"i",&nb))
@@ -655,7 +655,7 @@ cmsis_arm_nuttall4c_f64(PyObject *obj, PyObject *args)
 {
 
   
-  float32_t *pDst=NULL; // output
+  float64_t *pDst=NULL; // output
   int nb; // input
 
   if (PyArg_ParseTuple(args,"i",&nb))
@@ -708,7 +708,7 @@ cmsis_arm_hft90d_f64(PyObject *obj, PyObject *args)
 {
 
   
-  float32_t *pDst=NULL; // output
+  float64_t *pDst=NULL; // output
   int nb; // input
 
   if (PyArg_ParseTuple(args,"i",&nb))
@@ -761,7 +761,7 @@ cmsis_arm_hft95_f64(PyObject *obj, PyObject *args)
 {
 
   
-  float32_t *pDst=NULL; // output
+  float64_t *pDst=NULL; // output
   int nb; // input
 
   if (PyArg_ParseTuple(args,"i",&nb))
@@ -814,7 +814,7 @@ cmsis_arm_hft116d_f64(PyObject *obj, PyObject *args)
 {
 
   
-  float32_t *pDst=NULL; // output
+  float64_t *pDst=NULL; // output
   int nb; // input
 
   if (PyArg_ParseTuple(args,"i",&nb))
@@ -867,7 +867,7 @@ cmsis_arm_hft144d_f64(PyObject *obj, PyObject *args)
 {
 
   
-  float32_t *pDst=NULL; // output
+  float64_t *pDst=NULL; // output
   int nb; // input
 
   if (PyArg_ParseTuple(args,"i",&nb))
@@ -920,7 +920,7 @@ cmsis_arm_hft169d_f64(PyObject *obj, PyObject *args)
 {
 
   
-  float32_t *pDst=NULL; // output
+  float64_t *pDst=NULL; // output
   int nb; // input
 
   if (PyArg_ParseTuple(args,"i",&nb))
@@ -973,7 +973,7 @@ cmsis_arm_hft196d_f64(PyObject *obj, PyObject *args)
 {
 
   
-  float32_t *pDst=NULL; // output
+  float64_t *pDst=NULL; // output
   int nb; // input
 
   if (PyArg_ParseTuple(args,"i",&nb))
@@ -1026,7 +1026,7 @@ cmsis_arm_hft223d_f64(PyObject *obj, PyObject *args)
 {
 
   
-  float32_t *pDst=NULL; // output
+  float64_t *pDst=NULL; // output
   int nb; // input
 
   if (PyArg_ParseTuple(args,"i",&nb))
@@ -1079,7 +1079,7 @@ cmsis_arm_hft248d_f64(PyObject *obj, PyObject *args)
 {
 
   
-  float32_t *pDst=NULL; // output
+  float64_t *pDst=NULL; // output
   int nb; // input
 
   if (PyArg_ParseTuple(args,"i",&nb))
