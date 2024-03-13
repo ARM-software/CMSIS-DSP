@@ -37,8 +37,9 @@ extern "C"
 {
 #endif
 
-  /* Double Precision Float CFFT twiddles */
     extern const uint16_t armBitRevTable[1024];
+
+  /* Double Precision Float CFFT twiddles */
 
     extern const uint64_t twiddleCoefF64_16[32];
 
@@ -75,6 +76,12 @@ extern "C"
     extern const float32_t twiddleCoef_2048[4096];
 
     extern const float32_t twiddleCoef_4096[8192];
+
+    extern const float32_t twiddleCoef_8192[16384];
+
+    extern const float32_t twiddleCoef_16384[32768];
+
+
     #define twiddleCoef twiddleCoef_4096
 
   /* Q31 */
@@ -151,89 +158,101 @@ extern "C"
   /* Double precision floating-point bit reversal tables */
 
     #define ARMBITREVINDEXTABLEF64_16_TABLE_LENGTH ((uint16_t)12)
-    extern const uint16_t armBitRevIndexTableF64_16[ARMBITREVINDEXTABLEF64_16_TABLE_LENGTH];
+    extern const uint32_t armBitRevIndexTableF64_16[ARMBITREVINDEXTABLEF64_16_TABLE_LENGTH];
 
     #define ARMBITREVINDEXTABLEF64_32_TABLE_LENGTH ((uint16_t)24)
-    extern const uint16_t armBitRevIndexTableF64_32[ARMBITREVINDEXTABLEF64_32_TABLE_LENGTH];
+    extern const uint32_t armBitRevIndexTableF64_32[ARMBITREVINDEXTABLEF64_32_TABLE_LENGTH];
 
     #define ARMBITREVINDEXTABLEF64_64_TABLE_LENGTH ((uint16_t)56)
-    extern const uint16_t armBitRevIndexTableF64_64[ARMBITREVINDEXTABLEF64_64_TABLE_LENGTH];
+    extern const uint32_t armBitRevIndexTableF64_64[ARMBITREVINDEXTABLEF64_64_TABLE_LENGTH];
 
     #define ARMBITREVINDEXTABLEF64_128_TABLE_LENGTH ((uint16_t)112)
-    extern const uint16_t armBitRevIndexTableF64_128[ARMBITREVINDEXTABLEF64_128_TABLE_LENGTH];
+    extern const uint32_t armBitRevIndexTableF64_128[ARMBITREVINDEXTABLEF64_128_TABLE_LENGTH];
 
     #define ARMBITREVINDEXTABLEF64_256_TABLE_LENGTH ((uint16_t)240)
-    extern const uint16_t armBitRevIndexTableF64_256[ARMBITREVINDEXTABLEF64_256_TABLE_LENGTH];
+    extern const uint32_t armBitRevIndexTableF64_256[ARMBITREVINDEXTABLEF64_256_TABLE_LENGTH];
 
     #define ARMBITREVINDEXTABLEF64_512_TABLE_LENGTH ((uint16_t)480)
-    extern const uint16_t armBitRevIndexTableF64_512[ARMBITREVINDEXTABLEF64_512_TABLE_LENGTH];
+    extern const uint32_t armBitRevIndexTableF64_512[ARMBITREVINDEXTABLEF64_512_TABLE_LENGTH];
 
     #define ARMBITREVINDEXTABLEF64_1024_TABLE_LENGTH ((uint16_t)992)
-    extern const uint16_t armBitRevIndexTableF64_1024[ARMBITREVINDEXTABLEF64_1024_TABLE_LENGTH];
+    extern const uint32_t armBitRevIndexTableF64_1024[ARMBITREVINDEXTABLEF64_1024_TABLE_LENGTH];
 
     #define ARMBITREVINDEXTABLEF64_2048_TABLE_LENGTH ((uint16_t)1984)
-    extern const uint16_t armBitRevIndexTableF64_2048[ARMBITREVINDEXTABLEF64_2048_TABLE_LENGTH];
+    extern const uint32_t armBitRevIndexTableF64_2048[ARMBITREVINDEXTABLEF64_2048_TABLE_LENGTH];
 
     #define ARMBITREVINDEXTABLEF64_4096_TABLE_LENGTH ((uint16_t)4032)
-    extern const uint16_t armBitRevIndexTableF64_4096[ARMBITREVINDEXTABLEF64_4096_TABLE_LENGTH];
+    extern const uint32_t armBitRevIndexTableF64_4096[ARMBITREVINDEXTABLEF64_4096_TABLE_LENGTH];
   /* floating-point bit reversal tables */
 
     #define ARMBITREVINDEXTABLE_16_TABLE_LENGTH ((uint16_t)20)
-    extern const uint16_t armBitRevIndexTable16[ARMBITREVINDEXTABLE_16_TABLE_LENGTH];
+    extern const uint32_t armBitRevIndexTable16[ARMBITREVINDEXTABLE_16_TABLE_LENGTH];
 
     #define ARMBITREVINDEXTABLE_32_TABLE_LENGTH ((uint16_t)48)
-    extern const uint16_t armBitRevIndexTable32[ARMBITREVINDEXTABLE_32_TABLE_LENGTH];
+    extern const uint32_t armBitRevIndexTable32[ARMBITREVINDEXTABLE_32_TABLE_LENGTH];
 
     #define ARMBITREVINDEXTABLE_64_TABLE_LENGTH ((uint16_t)56)
-    extern const uint16_t armBitRevIndexTable64[ARMBITREVINDEXTABLE_64_TABLE_LENGTH];
+    extern const uint32_t armBitRevIndexTable64[ARMBITREVINDEXTABLE_64_TABLE_LENGTH];
 
     #define ARMBITREVINDEXTABLE_128_TABLE_LENGTH ((uint16_t)208)
-    extern const uint16_t armBitRevIndexTable128[ARMBITREVINDEXTABLE_128_TABLE_LENGTH];
+    extern const uint32_t armBitRevIndexTable128[ARMBITREVINDEXTABLE_128_TABLE_LENGTH];
 
     #define ARMBITREVINDEXTABLE_256_TABLE_LENGTH ((uint16_t)440)
-    extern const uint16_t armBitRevIndexTable256[ARMBITREVINDEXTABLE_256_TABLE_LENGTH];
+    extern const uint32_t armBitRevIndexTable256[ARMBITREVINDEXTABLE_256_TABLE_LENGTH];
 
     #define ARMBITREVINDEXTABLE_512_TABLE_LENGTH ((uint16_t)448)
-    extern const uint16_t armBitRevIndexTable512[ARMBITREVINDEXTABLE_512_TABLE_LENGTH];
+    extern const uint32_t armBitRevIndexTable512[ARMBITREVINDEXTABLE_512_TABLE_LENGTH];
 
     #define ARMBITREVINDEXTABLE_1024_TABLE_LENGTH ((uint16_t)1800)
-    extern const uint16_t armBitRevIndexTable1024[ARMBITREVINDEXTABLE_1024_TABLE_LENGTH];
+    extern const uint32_t armBitRevIndexTable1024[ARMBITREVINDEXTABLE_1024_TABLE_LENGTH];
 
     #define ARMBITREVINDEXTABLE_2048_TABLE_LENGTH ((uint16_t)3808)
-    extern const uint16_t armBitRevIndexTable2048[ARMBITREVINDEXTABLE_2048_TABLE_LENGTH];
+    extern const uint32_t armBitRevIndexTable2048[ARMBITREVINDEXTABLE_2048_TABLE_LENGTH];
 
     #define ARMBITREVINDEXTABLE_4096_TABLE_LENGTH ((uint16_t)4032)
-    extern const uint16_t armBitRevIndexTable4096[ARMBITREVINDEXTABLE_4096_TABLE_LENGTH];
+    extern const uint32_t armBitRevIndexTable4096[ARMBITREVINDEXTABLE_4096_TABLE_LENGTH];
 
+    #define ARMBITREVINDEXTABLE_8192_TABLE_LENGTH ((uint16_t)14576)
+    extern const uint32_t armBitRevIndexTable8192[ARMBITREVINDEXTABLE_8192_TABLE_LENGTH];
+  
+    #define ARMBITREVINDEXTABLE_16384_TABLE_LENGTH ((uint16_t)31080)
+    extern const uint32_t armBitRevIndexTable16384[ARMBITREVINDEXTABLE_16384_TABLE_LENGTH];
+  
 
   /* fixed-point bit reversal tables */
 
     #define ARMBITREVINDEXTABLE_FIXED_16_TABLE_LENGTH ((uint16_t)12)
-    extern const uint16_t armBitRevIndexTable_fixed_16[ARMBITREVINDEXTABLE_FIXED_16_TABLE_LENGTH];
+    extern const uint32_t armBitRevIndexTable_fixed_16[ARMBITREVINDEXTABLE_FIXED_16_TABLE_LENGTH];
 
     #define ARMBITREVINDEXTABLE_FIXED_32_TABLE_LENGTH ((uint16_t)24)
-    extern const uint16_t armBitRevIndexTable_fixed_32[ARMBITREVINDEXTABLE_FIXED_32_TABLE_LENGTH];
+    extern const uint32_t armBitRevIndexTable_fixed_32[ARMBITREVINDEXTABLE_FIXED_32_TABLE_LENGTH];
 
     #define ARMBITREVINDEXTABLE_FIXED_64_TABLE_LENGTH ((uint16_t)56)
-    extern const uint16_t armBitRevIndexTable_fixed_64[ARMBITREVINDEXTABLE_FIXED_64_TABLE_LENGTH];
+    extern const uint32_t armBitRevIndexTable_fixed_64[ARMBITREVINDEXTABLE_FIXED_64_TABLE_LENGTH];
 
     #define ARMBITREVINDEXTABLE_FIXED_128_TABLE_LENGTH ((uint16_t)112)
-    extern const uint16_t armBitRevIndexTable_fixed_128[ARMBITREVINDEXTABLE_FIXED_128_TABLE_LENGTH];
+    extern const uint32_t armBitRevIndexTable_fixed_128[ARMBITREVINDEXTABLE_FIXED_128_TABLE_LENGTH];
 
     #define ARMBITREVINDEXTABLE_FIXED_256_TABLE_LENGTH ((uint16_t)240)
-    extern const uint16_t armBitRevIndexTable_fixed_256[ARMBITREVINDEXTABLE_FIXED_256_TABLE_LENGTH];
+    extern const uint32_t armBitRevIndexTable_fixed_256[ARMBITREVINDEXTABLE_FIXED_256_TABLE_LENGTH];
 
     #define ARMBITREVINDEXTABLE_FIXED_512_TABLE_LENGTH ((uint16_t)480)
-    extern const uint16_t armBitRevIndexTable_fixed_512[ARMBITREVINDEXTABLE_FIXED_512_TABLE_LENGTH];
+    extern const uint32_t armBitRevIndexTable_fixed_512[ARMBITREVINDEXTABLE_FIXED_512_TABLE_LENGTH];
 
     #define ARMBITREVINDEXTABLE_FIXED_1024_TABLE_LENGTH ((uint16_t)992)
-    extern const uint16_t armBitRevIndexTable_fixed_1024[ARMBITREVINDEXTABLE_FIXED_1024_TABLE_LENGTH];
+    extern const uint32_t armBitRevIndexTable_fixed_1024[ARMBITREVINDEXTABLE_FIXED_1024_TABLE_LENGTH];
 
     #define ARMBITREVINDEXTABLE_FIXED_2048_TABLE_LENGTH ((uint16_t)1984)
-    extern const uint16_t armBitRevIndexTable_fixed_2048[ARMBITREVINDEXTABLE_FIXED_2048_TABLE_LENGTH];
+    extern const uint32_t armBitRevIndexTable_fixed_2048[ARMBITREVINDEXTABLE_FIXED_2048_TABLE_LENGTH];
 
     #define ARMBITREVINDEXTABLE_FIXED_4096_TABLE_LENGTH ((uint16_t)4032)
-    extern const uint16_t armBitRevIndexTable_fixed_4096[ARMBITREVINDEXTABLE_FIXED_4096_TABLE_LENGTH];
+    extern const uint32_t armBitRevIndexTable_fixed_4096[ARMBITREVINDEXTABLE_FIXED_4096_TABLE_LENGTH];
+
+    #define ARMBITREVINDEXTABLE_FIXED_8192_TABLE_LENGTH ((uint16_t)8064)
+    extern const uint32_t armBitRevIndexTable_fixed_8192[ARMBITREVINDEXTABLE_FIXED_8192_TABLE_LENGTH];
+
+    #define ARMBITREVINDEXTABLE_FIXED_16384_TABLE_LENGTH 16256
+    extern const uint32_t armBitRevIndexTable_fixed_16384[ARMBITREVINDEXTABLE_FIXED_16384_TABLE_LENGTH];
 
     extern const float32_t realCoefA[8192];
     extern const float32_t realCoefB[8192];

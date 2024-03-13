@@ -43,45 +43,42 @@ extern "C"
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 
-
 extern const uint32_t rearranged_twiddle_tab_stride1_arr_16_f32[2];
 extern const uint32_t rearranged_twiddle_tab_stride2_arr_16_f32[2];
 extern const uint32_t rearranged_twiddle_tab_stride3_arr_16_f32[2];
 extern const float32_t rearranged_twiddle_stride1_16_f32[8];
 extern const float32_t rearranged_twiddle_stride2_16_f32[8];
 extern const float32_t rearranged_twiddle_stride3_16_f32[8];
-
-
 extern const uint32_t rearranged_twiddle_tab_stride1_arr_64_f32[3];
 extern const uint32_t rearranged_twiddle_tab_stride2_arr_64_f32[3];
 extern const uint32_t rearranged_twiddle_tab_stride3_arr_64_f32[3];
 extern const float32_t rearranged_twiddle_stride1_64_f32[40];
 extern const float32_t rearranged_twiddle_stride2_64_f32[40];
 extern const float32_t rearranged_twiddle_stride3_64_f32[40];
-
-
 extern const uint32_t rearranged_twiddle_tab_stride1_arr_256_f32[4];
 extern const uint32_t rearranged_twiddle_tab_stride2_arr_256_f32[4];
 extern const uint32_t rearranged_twiddle_tab_stride3_arr_256_f32[4];
 extern const float32_t rearranged_twiddle_stride1_256_f32[168];
 extern const float32_t rearranged_twiddle_stride2_256_f32[168];
 extern const float32_t rearranged_twiddle_stride3_256_f32[168];
-
-
 extern const uint32_t rearranged_twiddle_tab_stride1_arr_1024_f32[5];
 extern const uint32_t rearranged_twiddle_tab_stride2_arr_1024_f32[5];
 extern const uint32_t rearranged_twiddle_tab_stride3_arr_1024_f32[5];
 extern const float32_t rearranged_twiddle_stride1_1024_f32[680];
 extern const float32_t rearranged_twiddle_stride2_1024_f32[680];
 extern const float32_t rearranged_twiddle_stride3_1024_f32[680];
-
-
 extern const uint32_t rearranged_twiddle_tab_stride1_arr_4096_f32[6];
 extern const uint32_t rearranged_twiddle_tab_stride2_arr_4096_f32[6];
 extern const uint32_t rearranged_twiddle_tab_stride3_arr_4096_f32[6];
 extern const float32_t rearranged_twiddle_stride1_4096_f32[2728];
 extern const float32_t rearranged_twiddle_stride2_4096_f32[2728];
 extern const float32_t rearranged_twiddle_stride3_4096_f32[2728];
+extern const uint32_t rearranged_twiddle_tab_stride1_arr_16384_f32[7];
+extern const uint32_t rearranged_twiddle_tab_stride2_arr_16384_f32[7];
+extern const uint32_t rearranged_twiddle_tab_stride3_arr_16384_f32[7];
+extern const float32_t rearranged_twiddle_stride1_16384_f32[10920];
+extern const float32_t rearranged_twiddle_stride2_16384_f32[10920];
+extern const float32_t rearranged_twiddle_stride3_16384_f32[10920];
 
 
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
@@ -91,46 +88,42 @@ extern const float32_t rearranged_twiddle_stride3_4096_f32[2728];
 #if defined(ARM_MATH_MVEI)  && !defined(ARM_MATH_AUTOVECTORIZE)
 
 
-
 extern const uint32_t rearranged_twiddle_tab_stride1_arr_16_q31[2];
 extern const uint32_t rearranged_twiddle_tab_stride2_arr_16_q31[2];
 extern const uint32_t rearranged_twiddle_tab_stride3_arr_16_q31[2];
 extern const q31_t rearranged_twiddle_stride1_16_q31[8];
 extern const q31_t rearranged_twiddle_stride2_16_q31[8];
 extern const q31_t rearranged_twiddle_stride3_16_q31[8];
-
-
 extern const uint32_t rearranged_twiddle_tab_stride1_arr_64_q31[3];
 extern const uint32_t rearranged_twiddle_tab_stride2_arr_64_q31[3];
 extern const uint32_t rearranged_twiddle_tab_stride3_arr_64_q31[3];
 extern const q31_t rearranged_twiddle_stride1_64_q31[40];
 extern const q31_t rearranged_twiddle_stride2_64_q31[40];
 extern const q31_t rearranged_twiddle_stride3_64_q31[40];
-
-
 extern const uint32_t rearranged_twiddle_tab_stride1_arr_256_q31[4];
 extern const uint32_t rearranged_twiddle_tab_stride2_arr_256_q31[4];
 extern const uint32_t rearranged_twiddle_tab_stride3_arr_256_q31[4];
 extern const q31_t rearranged_twiddle_stride1_256_q31[168];
 extern const q31_t rearranged_twiddle_stride2_256_q31[168];
 extern const q31_t rearranged_twiddle_stride3_256_q31[168];
-
-
 extern const uint32_t rearranged_twiddle_tab_stride1_arr_1024_q31[5];
 extern const uint32_t rearranged_twiddle_tab_stride2_arr_1024_q31[5];
 extern const uint32_t rearranged_twiddle_tab_stride3_arr_1024_q31[5];
 extern const q31_t rearranged_twiddle_stride1_1024_q31[680];
 extern const q31_t rearranged_twiddle_stride2_1024_q31[680];
 extern const q31_t rearranged_twiddle_stride3_1024_q31[680];
-
-
 extern const uint32_t rearranged_twiddle_tab_stride1_arr_4096_q31[6];
 extern const uint32_t rearranged_twiddle_tab_stride2_arr_4096_q31[6];
 extern const uint32_t rearranged_twiddle_tab_stride3_arr_4096_q31[6];
 extern const q31_t rearranged_twiddle_stride1_4096_q31[2728];
 extern const q31_t rearranged_twiddle_stride2_4096_q31[2728];
 extern const q31_t rearranged_twiddle_stride3_4096_q31[2728];
-
+extern const uint32_t rearranged_twiddle_tab_stride1_arr_16384_q31[7];
+extern const uint32_t rearranged_twiddle_tab_stride2_arr_16384_q31[7];
+extern const uint32_t rearranged_twiddle_tab_stride3_arr_16384_q31[7];
+extern const q31_t rearranged_twiddle_stride1_16384_q31[10920];
+extern const q31_t rearranged_twiddle_stride2_16384_q31[10920];
+extern const q31_t rearranged_twiddle_stride3_16384_q31[10920];
 
 
 #endif /* defined(ARM_MATH_MVEI) */
@@ -140,45 +133,42 @@ extern const q31_t rearranged_twiddle_stride3_4096_q31[2728];
 #if defined(ARM_MATH_MVEI)  && !defined(ARM_MATH_AUTOVECTORIZE)
 
 
-
 extern const uint32_t rearranged_twiddle_tab_stride1_arr_16_q15[2];
 extern const uint32_t rearranged_twiddle_tab_stride2_arr_16_q15[2];
 extern const uint32_t rearranged_twiddle_tab_stride3_arr_16_q15[2];
 extern const q15_t rearranged_twiddle_stride1_16_q15[8];
 extern const q15_t rearranged_twiddle_stride2_16_q15[8];
 extern const q15_t rearranged_twiddle_stride3_16_q15[8];
-
-
 extern const uint32_t rearranged_twiddle_tab_stride1_arr_64_q15[3];
 extern const uint32_t rearranged_twiddle_tab_stride2_arr_64_q15[3];
 extern const uint32_t rearranged_twiddle_tab_stride3_arr_64_q15[3];
 extern const q15_t rearranged_twiddle_stride1_64_q15[40];
 extern const q15_t rearranged_twiddle_stride2_64_q15[40];
 extern const q15_t rearranged_twiddle_stride3_64_q15[40];
-
-
 extern const uint32_t rearranged_twiddle_tab_stride1_arr_256_q15[4];
 extern const uint32_t rearranged_twiddle_tab_stride2_arr_256_q15[4];
 extern const uint32_t rearranged_twiddle_tab_stride3_arr_256_q15[4];
 extern const q15_t rearranged_twiddle_stride1_256_q15[168];
 extern const q15_t rearranged_twiddle_stride2_256_q15[168];
 extern const q15_t rearranged_twiddle_stride3_256_q15[168];
-
-
 extern const uint32_t rearranged_twiddle_tab_stride1_arr_1024_q15[5];
 extern const uint32_t rearranged_twiddle_tab_stride2_arr_1024_q15[5];
 extern const uint32_t rearranged_twiddle_tab_stride3_arr_1024_q15[5];
 extern const q15_t rearranged_twiddle_stride1_1024_q15[680];
 extern const q15_t rearranged_twiddle_stride2_1024_q15[680];
 extern const q15_t rearranged_twiddle_stride3_1024_q15[680];
-
-
 extern const uint32_t rearranged_twiddle_tab_stride1_arr_4096_q15[6];
 extern const uint32_t rearranged_twiddle_tab_stride2_arr_4096_q15[6];
 extern const uint32_t rearranged_twiddle_tab_stride3_arr_4096_q15[6];
 extern const q15_t rearranged_twiddle_stride1_4096_q15[2728];
 extern const q15_t rearranged_twiddle_stride2_4096_q15[2728];
 extern const q15_t rearranged_twiddle_stride3_4096_q15[2728];
+extern const uint32_t rearranged_twiddle_tab_stride1_arr_16384_q15[7];
+extern const uint32_t rearranged_twiddle_tab_stride2_arr_16384_q15[7];
+extern const uint32_t rearranged_twiddle_tab_stride3_arr_16384_q15[7];
+extern const q15_t rearranged_twiddle_stride1_16384_q15[10920];
+extern const q15_t rearranged_twiddle_stride2_16384_q15[10920];
+extern const q15_t rearranged_twiddle_stride3_16384_q15[10920];
 
 
 #endif /* defined(ARM_MATH_MVEI) */

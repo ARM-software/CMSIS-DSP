@@ -40,7 +40,7 @@
 void arm_bitreversal_64(
         uint64_t *pSrc,
   const uint16_t bitRevLen,
-  const uint16_t *pBitRevTab)
+  const uint32_t *pBitRevTab)
 {
   uint64_t a, b, tmp;
   uint32_t i;
@@ -74,7 +74,7 @@ void arm_bitreversal_64(
 void arm_bitreversal_32(
         uint32_t *pSrc,
   const uint16_t bitRevLen,
-  const uint16_t *pBitRevTab)
+  const uint32_t *pBitRevTab)
 {
   uint32_t a, b, i, tmp;
 
@@ -108,9 +108,9 @@ void arm_bitreversal_32(
 void arm_bitreversal_16(
         uint16_t *pSrc,
   const uint16_t bitRevLen,
-  const uint16_t *pBitRevTab)
+  const uint32_t *pBitRevTab)
 {
-  uint16_t a, b, tmp;
+  uint32_t a, b, tmp;
   uint32_t i;
 
   for (i = 0; i < bitRevLen; )

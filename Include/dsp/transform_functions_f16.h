@@ -80,7 +80,7 @@ extern "C"
   {
           uint16_t fftLen;                   /**< length of the FFT. */
     const float16_t *pTwiddle;         /**< points to the Twiddle factor table. */
-    const uint16_t *pBitRevTable;      /**< points to the bit reversal table. */
+    const uint32_t *pBitRevTable;      /**< points to the bit reversal table. */
           uint16_t bitRevLength;             /**< bit reversal table length. */
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
    const uint32_t *rearranged_twiddle_tab_stride1_arr;        /**< Per stage reordered twiddle pointer (offset 1) */                                                       \

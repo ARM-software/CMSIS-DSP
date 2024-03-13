@@ -36,6 +36,10 @@
 #include "arm_vec_fft.h"
 #include "arm_mve_tables_f16.h"
 
+extern void arm_bitreversal_16(
+        uint16_t * pSrc,
+  const uint16_t bitRevLen,
+  const uint32_t * pBitRevTable);
 
 static float16_t arm_inverse_fft_length_f16(uint16_t fftLen)
 {
@@ -572,8 +576,9 @@ void arm_cfft_f16(
 
         if (bitReverseFlag)
         {
-
-            arm_bitreversal_16_inpl_mve((uint16_t*)pSrc, S->bitRevLength, S->pBitRevTable);
+            // Helium int16 bit reversal not yet supporting int32 offsets
+            //arm_bitreversal_16_inpl_mve((uint16_t*)pSrc, S->bitRevLength, S->pBitRevTable);
+            arm_bitreversal_16((uint16_t*)pSrc, S->bitRevLength,(uint32_t*)S->pBitRevTable);
 
         }
 }
@@ -585,7 +590,7 @@ void arm_cfft_f16(
 extern void arm_bitreversal_16(
         uint16_t * pSrc,
   const uint16_t bitRevLen,
-  const uint16_t * pBitRevTable);
+  const uint32_t * pBitRevTable);
 
 
 extern void arm_cfft_radix4by2_f16(
@@ -657,7 +662,7 @@ void arm_cfft_f16(
     }
 
     if ( bitReverseFlag )
-        arm_bitreversal_16((uint16_t*)p1, S->bitRevLength,(uint16_t*)S->pBitRevTable);
+        arm_bitreversal_16((uint16_t*)p1, S->bitRevLength,(uint32_t*)S->pBitRevTable);
 
     if (ifftFlag == 1U)
     {

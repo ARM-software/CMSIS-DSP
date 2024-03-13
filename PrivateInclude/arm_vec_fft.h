@@ -58,7 +58,7 @@ extern "C"
 __STATIC_INLINE void arm_bitreversal_32_inpl_mve(
         uint32_t *pSrc,
   const uint16_t  bitRevLen,
-  const uint16_t *pBitRevTab)
+  const uint32_t *pBitRevTab)
 
 {
     uint64_t       *src = (uint64_t *) pSrc;
@@ -70,7 +70,7 @@ __STATIC_INLINE void arm_bitreversal_32_inpl_mve(
     uint64x2_t      bitRevOff1High, bitRevOff0High;
 
     /* load scheduling to increase gather load idx update / gather load distance */
-    bitRevTabOff = vldrhq_u32(pBitRevTab);
+    bitRevTabOff = vldrwq_u32(pBitRevTab);
     pBitRevTab += 4;
 
     bitRevOff0Low = vmullbq_int_u32(bitRevTabOff, one);
@@ -79,7 +79,7 @@ __STATIC_INLINE void arm_bitreversal_32_inpl_mve(
 
     blkCnt = bitRevLen / 8;
     while (blkCnt > 0) {
-        bitRevTabOff = vldrhq_u32(pBitRevTab);
+        bitRevTabOff = vldrwq_u32(pBitRevTab);
         pBitRevTab += 4;
 
         /* 64-bit index expansion */
@@ -94,7 +94,7 @@ __STATIC_INLINE void arm_bitreversal_32_inpl_mve(
 
 
         /* unrolled */
-        bitRevTabOff = vldrhq_u32(pBitRevTab);
+        bitRevTabOff = vldrwq_u32(pBitRevTab);
         pBitRevTab += 4;
 
         bitRevOff0Low = vmullbq_int_u32(bitRevTabOff, one);

@@ -39,7 +39,7 @@ extern void arm_radix4_butterfly_f64(
 extern void arm_bitreversal_64(
         uint64_t * pSrc,
   const uint16_t   bitRevLen,
-  const uint16_t * pBitRevTable);
+  const uint32_t * pBitRevTable);
 
 /* ----------------------------------------------------------------------
  * Internal helper function used by the FFTs

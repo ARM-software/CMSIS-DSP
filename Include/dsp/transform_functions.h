@@ -216,7 +216,7 @@ extern "C"
   {
           uint16_t fftLen;                   /**< length of the FFT. */
     const q15_t *pTwiddle;             /**< points to the Twiddle factor table. */
-    const uint16_t *pBitRevTable;      /**< points to the bit reversal table. */
+    const uint32_t *pBitRevTable;      /**< points to the bit reversal table. */
           uint16_t bitRevLength;             /**< bit reversal table length. */
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
    const uint32_t *rearranged_twiddle_tab_stride1_arr;        /**< Per stage reordered twiddle pointer (offset 1) */                                                       \
@@ -255,7 +255,7 @@ void arm_cfft_q15(
   {
           uint16_t fftLen;                   /**< length of the FFT. */
     const q31_t *pTwiddle;             /**< points to the Twiddle factor table. */
-    const uint16_t *pBitRevTable;      /**< points to the bit reversal table. */
+    const uint32_t *pBitRevTable;      /**< points to the bit reversal table. */
           uint16_t bitRevLength;             /**< bit reversal table length. */
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
    const uint32_t *rearranged_twiddle_tab_stride1_arr;        /**< Per stage reordered twiddle pointer (offset 1) */                                                       \
@@ -294,7 +294,7 @@ void arm_cfft_q31(
   {
           uint16_t fftLen;                   /**< length of the FFT. */
     const float32_t *pTwiddle;         /**< points to the Twiddle factor table. */
-    const uint16_t *pBitRevTable;      /**< points to the bit reversal table. */
+    const uint32_t *pBitRevTable;      /**< points to the bit reversal table. */
           uint16_t bitRevLength;             /**< bit reversal table length. */
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
    const uint32_t *rearranged_twiddle_tab_stride1_arr;        /**< Per stage reordered twiddle pointer (offset 1) */                                                       \
@@ -307,6 +307,8 @@ void arm_cfft_q31(
   } arm_cfft_instance_f32;
 
 
+arm_status arm_cfft_init_16384_f32(arm_cfft_instance_f32 * S);
+arm_status arm_cfft_init_8192_f32(arm_cfft_instance_f32 * S);
 arm_status arm_cfft_init_4096_f32(arm_cfft_instance_f32 * S);
 arm_status arm_cfft_init_2048_f32(arm_cfft_instance_f32 * S);
 arm_status arm_cfft_init_1024_f32(arm_cfft_instance_f32 * S);
@@ -335,7 +337,7 @@ arm_status arm_cfft_init_16_f32(arm_cfft_instance_f32 * S);
   {
           uint16_t fftLen;                   /**< length of the FFT. */
     const float64_t *pTwiddle;         /**< points to the Twiddle factor table. */
-    const uint16_t *pBitRevTable;      /**< points to the bit reversal table. */
+    const uint32_t *pBitRevTable;      /**< points to the bit reversal table. */
           uint16_t bitRevLength;             /**< bit reversal table length. */
   } arm_cfft_instance_f64;
 

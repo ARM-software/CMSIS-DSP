@@ -68,6 +68,7 @@ static arm_status arm_cfft_radix4by2_rearrange_twiddles_##LEN##_f32(arm_cfft_ins
    return(ARM_MATH_SUCCESS);                                                                 \
 }
 
+CFFT_RADIX4BY2_REARRANGE_TWIDDLES_F32(16384);
 CFFT_RADIX4BY2_REARRANGE_TWIDDLES_F32(4096);
 CFFT_RADIX4BY2_REARRANGE_TWIDDLES_F32(1024);
 CFFT_RADIX4BY2_REARRANGE_TWIDDLES_F32(256);
@@ -90,7 +91,7 @@ arm_status arm_cfft_init_##LEN##_f32(                                           
                                                                                 \
     /*  Initialise the bit reversal table modifier */                           \
     S->bitRevLength = ARMBITREVINDEXTABLE_FIXED_##LEN##_TABLE_LENGTH;           \
-    S->pBitRevTable = (uint16_t *)armBitRevIndexTable_fixed_##LEN;              \
+    S->pBitRevTable = (uint32_t *)armBitRevIndexTable_fixed_##LEN;              \
     S->pTwiddle = (float32_t *)twiddleCoef_##LEN;                               \
     status=arm_cfft_radix4by2_rearrange_twiddles_##LENTWIDDLE##_f32(S);         \
                                                                                 \
@@ -122,6 +123,10 @@ arm_status arm_cfft_init_##LEN##_f32(arm_cfft_instance_f32 * S)\
 }
 
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
+
+
+CFFTINIT_F32(16384,16384)
+CFFTINIT_F32(8192,4096)
 
 /**
   @brief         Initialization function for the cfft f32 function with 4096 samples
@@ -284,6 +289,17 @@ arm_status arm_cfft_init_f32(
         /*  Initializations of Instance structure depending on the FFT length */
         switch (fftLen) {                                                    
             /*  Initializations of structure parameters for 4096 point FFT */   
+        
+        case 16384U:  
+            /*  Initialise the bit reversal table modifier */                   
+            status=arm_cfft_init_16384_f32(S);
+            break; 
+
+        case 8192U:  
+            /*  Initialise the bit reversal table modifier */                   
+            status=arm_cfft_init_8192_f32(S);
+            break; 
+
         case 4096U:  
             /*  Initialise the bit reversal table modifier */                   
             status=arm_cfft_init_4096_f32(S);

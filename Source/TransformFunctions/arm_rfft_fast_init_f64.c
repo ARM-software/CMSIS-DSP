@@ -58,7 +58,7 @@ arm_status arm_rfft_fast_init_32_f64( arm_rfft_fast_instance_f64 * S ) {
   S->fftLenRFFT = 32U;
 
   Sint->bitRevLength = ARMBITREVINDEXTABLEF64_16_TABLE_LENGTH;
-  Sint->pBitRevTable = (uint16_t *)armBitRevIndexTableF64_16;
+  Sint->pBitRevTable = (uint32_t *)armBitRevIndexTableF64_16;
   Sint->pTwiddle     = (float64_t *) twiddleCoefF64_16;
   S->pTwiddleRFFT    = (float64_t *) twiddleCoefF64_rfft_32;
 
@@ -85,7 +85,7 @@ arm_status arm_rfft_fast_init_64_f64( arm_rfft_fast_instance_f64 * S ) {
   S->fftLenRFFT = 64U;
 
   Sint->bitRevLength = ARMBITREVINDEXTABLEF64_32_TABLE_LENGTH;
-  Sint->pBitRevTable = (uint16_t *)armBitRevIndexTableF64_32;
+  Sint->pBitRevTable = (uint32_t *)armBitRevIndexTableF64_32;
   Sint->pTwiddle     = (float64_t *) twiddleCoefF64_32;
   S->pTwiddleRFFT    = (float64_t *) twiddleCoefF64_rfft_64;
 
@@ -112,7 +112,7 @@ arm_status arm_rfft_fast_init_128_f64( arm_rfft_fast_instance_f64 * S ) {
   S->fftLenRFFT = 128U;
 
   Sint->bitRevLength = ARMBITREVINDEXTABLEF64_64_TABLE_LENGTH;
-  Sint->pBitRevTable = (uint16_t *)armBitRevIndexTableF64_64;
+  Sint->pBitRevTable = (uint32_t *)armBitRevIndexTableF64_64;
   Sint->pTwiddle     = (float64_t *) twiddleCoefF64_64;
   S->pTwiddleRFFT    = (float64_t *) twiddleCoefF64_rfft_128;
 
@@ -139,7 +139,7 @@ arm_status arm_rfft_fast_init_256_f64( arm_rfft_fast_instance_f64 * S ) {
   S->fftLenRFFT = 256U;
 
   Sint->bitRevLength = ARMBITREVINDEXTABLEF64_128_TABLE_LENGTH;
-  Sint->pBitRevTable = (uint16_t *)armBitRevIndexTableF64_128;
+  Sint->pBitRevTable = (uint32_t *)armBitRevIndexTableF64_128;
   Sint->pTwiddle     = (float64_t *) twiddleCoefF64_128;
   S->pTwiddleRFFT    = (float64_t *) twiddleCoefF64_rfft_256;
 
@@ -166,7 +166,7 @@ arm_status arm_rfft_fast_init_512_f64( arm_rfft_fast_instance_f64 * S ) {
   S->fftLenRFFT = 512U;
 
   Sint->bitRevLength = ARMBITREVINDEXTABLEF64_256_TABLE_LENGTH;
-  Sint->pBitRevTable = (uint16_t *)armBitRevIndexTableF64_256;
+  Sint->pBitRevTable = (uint32_t *)armBitRevIndexTableF64_256;
   Sint->pTwiddle     = (float64_t *) twiddleCoefF64_256;
   S->pTwiddleRFFT    = (float64_t *) twiddleCoefF64_rfft_512;
 
@@ -192,7 +192,7 @@ arm_status arm_rfft_fast_init_1024_f64( arm_rfft_fast_instance_f64 * S ) {
   S->fftLenRFFT = 1024U;
 
   Sint->bitRevLength = ARMBITREVINDEXTABLEF64_512_TABLE_LENGTH;
-  Sint->pBitRevTable = (uint16_t *)armBitRevIndexTableF64_512;
+  Sint->pBitRevTable = (uint32_t *)armBitRevIndexTableF64_512;
   Sint->pTwiddle     = (float64_t *) twiddleCoefF64_512;
   S->pTwiddleRFFT    = (float64_t *) twiddleCoefF64_rfft_1024;
 
@@ -217,7 +217,7 @@ arm_status arm_rfft_fast_init_2048_f64( arm_rfft_fast_instance_f64 * S ) {
   S->fftLenRFFT = 2048U;
 
   Sint->bitRevLength = ARMBITREVINDEXTABLEF64_1024_TABLE_LENGTH;
-  Sint->pBitRevTable = (uint16_t *)armBitRevIndexTableF64_1024;
+  Sint->pBitRevTable = (uint32_t *)armBitRevIndexTableF64_1024;
   Sint->pTwiddle     = (float64_t *) twiddleCoefF64_1024;
   S->pTwiddleRFFT    = (float64_t *) twiddleCoefF64_rfft_2048;
 
@@ -243,7 +243,7 @@ arm_status arm_rfft_fast_init_4096_f64( arm_rfft_fast_instance_f64 * S ) {
   S->fftLenRFFT = 4096U;
 
   Sint->bitRevLength = ARMBITREVINDEXTABLEF64_2048_TABLE_LENGTH;
-  Sint->pBitRevTable = (uint16_t *)armBitRevIndexTableF64_2048;
+  Sint->pBitRevTable = (uint32_t *)armBitRevIndexTableF64_2048;
   Sint->pTwiddle     = (float64_t *) twiddleCoefF64_2048;
   S->pTwiddleRFFT    = (float64_t *) twiddleCoefF64_rfft_4096;
 

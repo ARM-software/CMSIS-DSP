@@ -57,6 +57,9 @@ extern "C"
    extern const arm_cfft_instance_f32 arm_cfft_sR_f32_len1024;
    extern const arm_cfft_instance_f32 arm_cfft_sR_f32_len2048;
    extern const arm_cfft_instance_f32 arm_cfft_sR_f32_len4096;
+   extern const arm_cfft_instance_f32 arm_cfft_sR_f32_len8192;
+   extern const arm_cfft_instance_f32 arm_cfft_sR_f32_len16384;
+
 
    extern const arm_cfft_instance_q31 arm_cfft_sR_q31_len16;
    extern const arm_cfft_instance_q31 arm_cfft_sR_q31_len32;

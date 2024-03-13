@@ -43,6 +43,14 @@ static float32_t arm_inverse_fft_length_f32(uint16_t fftLen)
   switch (fftLen)
   {
 
+  case 16384U:
+    retValue = 6.103515625e-05;
+    break;
+
+  case 8192U:
+    retValue = 0.0001220703125;
+    break;
+
   case 4096U:
     retValue = 0.000244140625;
     break;
@@ -543,6 +551,7 @@ void arm_cfft_f32(
             case 256:
             case 1024:
             case 4096:
+            case 16384:
                 _arm_radix4_butterfly_inverse_f32_mve(S, pSrc, fftLen, arm_inverse_fft_length_f32(S->fftLen));
                 break;
 
@@ -550,6 +559,7 @@ void arm_cfft_f32(
             case 128:
             case 512:
             case 2048:
+            case 8192:
                 arm_cfft_radix4by2_inverse_f32_mve(S, pSrc, fftLen);
                 break;
             }
@@ -560,6 +570,7 @@ void arm_cfft_f32(
             case 256:
             case 1024:
             case 4096:
+            case 16384:
                 _arm_radix4_butterfly_f32_mve(S, pSrc, fftLen);
                 break;
 
@@ -567,6 +578,7 @@ void arm_cfft_f32(
             case 128:
             case 512:
             case 2048:
+            case 8192:
                 arm_cfft_radix4by2_f32_mve(S, pSrc, fftLen);
                 break;
             }
@@ -592,7 +604,7 @@ extern void arm_radix8_butterfly_f32(
 extern void arm_bitreversal_32(
         uint32_t * pSrc,
   const uint16_t bitRevLen,
-  const uint16_t * pBitRevTable);
+  const uint32_t * pBitRevTable);
 
 /**
   @ingroup groupTransforms
@@ -1153,11 +1165,13 @@ void arm_cfft_f32(
   case 16:
   case 128:
   case 1024:
+  case 8192:
     arm_cfft_radix8by2_f32 ( (arm_cfft_instance_f32 *) S, p1);
     break;
   case 32:
   case 256:
   case 2048:
+  case 16384:
     arm_cfft_radix8by4_f32 ( (arm_cfft_instance_f32 *) S, p1);
     break;
   case 64:

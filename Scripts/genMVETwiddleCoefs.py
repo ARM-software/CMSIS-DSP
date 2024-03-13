@@ -26,8 +26,7 @@ args = parser.parse_args()
 
 COLLIM = 80 
 
-condition="""#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_TWIDDLECOEF_%s_%d) || defined(ARM_TABLE_TWIDDLECOEF_%s_%d)
-"""
+condition=""
 
 F32 = 1
 F16 = 2
@@ -151,7 +150,10 @@ def reorderTwiddle(theType,conjugate,f,h,n):
     numStages = 6
     coefs= twiddle(n)
 
-    
+    if n == 16384:
+        numStages = 7
+        arraySize = 5460 
+
     if n == 4096:                                                                                
        numStages = 6  
        arraySize = 1364                                                
@@ -232,8 +234,6 @@ def reorderTwiddle(theType,conjugate,f,h,n):
 
     # F32 SECTION FOR THIS FFT LENGTH
     if theType == F32:
-       print(condition % ("F32",n, "F32",n << 1),file=f)
-       print(condition % ("F32",n, "F32",n << 1),file=h)
        printCUInt32Array(f,"rearranged_twiddle_tab_stride1_arr_%d_f32" % n,list(tab1Offset))
        printHUInt32Array(h,"rearranged_twiddle_tab_stride1_arr_%d_f32" % n,list(tab1Offset)) 
    
@@ -251,13 +251,9 @@ def reorderTwiddle(theType,conjugate,f,h,n):
    
        printCFloat32Array(f,"rearranged_twiddle_stride3_%d_f32" % n,list(tab3))
        printHFloat32Array(h,"rearranged_twiddle_stride3_%d_f32" % n,list(tab3))
-       print("#endif\n",file=f)
-       print("#endif\n",file=h)
 
     # F16 SECTION FOR THIS FFT LENGTH
     if theType == F16:
-       print(condition % ("F16",n, "F16",n << 1),file=f)
-       print(condition % ("F16",n, "F16",n << 1),file=h)
        printCUInt32Array(f,"rearranged_twiddle_tab_stride1_arr_%d_f16" % n,list(tab1Offset))
        printHUInt32Array(h,"rearranged_twiddle_tab_stride1_arr_%d_f16" % n,list(tab1Offset)) 
    
@@ -275,13 +271,9 @@ def reorderTwiddle(theType,conjugate,f,h,n):
    
        printCFloat16Array(f,"rearranged_twiddle_stride3_%d_f16" % n,list(tab3))
        printHFloat16Array(h,"rearranged_twiddle_stride3_%d_f16" % n,list(tab3))
-       print("#endif\n",file=f)
-       print("#endif\n",file=h)
 
     # Q31 SECTION FOR THIS FFT LENGTH
     if theType == Q31:
-       print(condition % ("Q31",n, "Q31",n << 1),file=f)
-       print(condition % ("Q31",n, "Q31",n << 1),file=h)
        printCUInt32Array(f,"rearranged_twiddle_tab_stride1_arr_%d_q31" % n,list(tab1Offset))
        printHUInt32Array(h,"rearranged_twiddle_tab_stride1_arr_%d_q31" % n,list(tab1Offset)) 
    
@@ -299,13 +291,9 @@ def reorderTwiddle(theType,conjugate,f,h,n):
    
        printCQ31Array(f,"rearranged_twiddle_stride3_%d_q31" % n,list(tab3))
        printHQ31Array(h,"rearranged_twiddle_stride3_%d_q31" % n,list(tab3))
-       print("#endif\n",file=f)
-       print("#endif\n",file=h)
 
     # Q15 SECTION FOR THIS FFT LENGTH
     if theType == Q15:
-       print(condition % ("Q15",n, "Q15",n << 1),file=f)
-       print(condition % ("Q15",n, "Q15",n << 1),file=h)
        printCUInt32Array(f,"rearranged_twiddle_tab_stride1_arr_%d_q15" % n,list(tab1Offset))
        printHUInt32Array(h,"rearranged_twiddle_tab_stride1_arr_%d_q15" % n,list(tab1Offset)) 
    
@@ -323,8 +311,6 @@ def reorderTwiddle(theType,conjugate,f,h,n):
    
        printCQ15Array(f,"rearranged_twiddle_stride3_%d_q15" % n,list(tab3))
        printHQ15Array(h,"rearranged_twiddle_stride3_%d_q15" % n,list(tab3))
-       print("#endif\n",file=f)
-       print("#endif\n",file=h)
 
 
 
@@ -369,12 +355,10 @@ cifdeMVEF="""
 
 #if defined(%s) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FFT_ALLOW_TABLES)
 """
 
 cfooterMVEF="""
 
-#endif /* !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FFT_ALLOW_TABLES) */
 #endif /* defined(%s) && !defined(ARM_MATH_AUTOVECTORIZE) */
 """
 
@@ -382,12 +366,10 @@ cifdeMVEI="""
 
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FFT_ALLOW_TABLES)
 """
 
 cfooterMVEI="""
 
-#endif /* !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FFT_ALLOW_TABLES) */
 #endif /* defined(ARM_MATH_MVEI)  */
 """
 
@@ -436,11 +418,9 @@ extern "C"
 hifdefMVEF="""
 #if defined(%s) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FFT_ALLOW_TABLES)
 """
 
 hfooterMVEF="""
-#endif /* !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FFT_ALLOW_TABLES) */
 
 #endif /* defined(%s) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
@@ -449,11 +429,9 @@ hfooterMVEF="""
 hifdefMVEI="""
 #if defined(ARM_MATH_MVEI)  && !defined(ARM_MATH_AUTOVECTORIZE)
 
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FFT_ALLOW_TABLES)
 """
 
 hfooterMVEI="""
-#endif /* !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FFT_ALLOW_TABLES) */
 
 #endif /* defined(ARM_MATH_MVEI) */
 
@@ -481,6 +459,7 @@ with open(args.f16,'w') as f:
      reorderTwiddle(F16,False,f,h,256)
      reorderTwiddle(F16,False,f,h,1024)
      reorderTwiddle(F16,False,f,h,4096)
+     reorderTwiddle(F16,False,f,h,16384)
      print(cfooterMVEF % ("ARM_MATH_MVE_FLOAT16"),file=f)
      print(hfooterMVEF % "ARM_MATH_MVE_FLOAT16",file=h)
 
@@ -501,6 +480,7 @@ with open(args.f,'w') as f:
      reorderTwiddle(F32,False,f,h,256)
      reorderTwiddle(F32,False,f,h,1024)
      reorderTwiddle(F32,False,f,h,4096)
+     reorderTwiddle(F32,False,f,h,16384)
      print(cfooterMVEF % ("ARM_MATH_MVEF"),file=f)
      print(hfooterMVEF % "ARM_MATH_MVEF",file=h)
 
@@ -511,6 +491,7 @@ with open(args.f,'w') as f:
      reorderTwiddle(Q31,True,f,h,256)
      reorderTwiddle(Q31,True,f,h,1024)
      reorderTwiddle(Q31,True,f,h,4096)
+     reorderTwiddle(Q31,True,f,h,16384)
      print(cfooterMVEI,file=f)
      print(hfooterMVEI,file=h)
 
@@ -521,6 +502,7 @@ with open(args.f,'w') as f:
      reorderTwiddle(Q15,True,f,h,256)
      reorderTwiddle(Q15,True,f,h,1024)
      reorderTwiddle(Q15,True,f,h,4096)
+     reorderTwiddle(Q15,True,f,h,16384)
      print(cfooterMVEI,file=f)
      print(hfooterMVEI,file=h)
 

@@ -113,6 +113,14 @@ const arm_cfft_instance_f32 arm_cfft_sR_f32_len4096 = {
   4096, twiddleCoef_4096, armBitRevIndexTable4096, ARMBITREVINDEXTABLE_4096_TABLE_LENGTH
 };
 
+const arm_cfft_instance_f32 arm_cfft_sR_f32_len8192 = {
+  8192, twiddleCoef_8192, armBitRevIndexTable8192, ARMBITREVINDEXTABLE_8192_TABLE_LENGTH
+};
+
+const arm_cfft_instance_f32 arm_cfft_sR_f32_len16384 = {
+  16384, twiddleCoef_16384, armBitRevIndexTable16384, ARMBITREVINDEXTABLE_16384_TABLE_LENGTH
+};
+
 #endif /* !defined(ARM_MATH_MVEF) || defined(ARM_MATH_AUTOVECTORIZE) */
 
 /* Fixed-point structs */

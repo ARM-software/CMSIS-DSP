@@ -89,7 +89,7 @@ arm_status arm_cfft_init_##LEN##_q15(                                  \
                                                                        \
     /*  Initialise the bit reversal table modifier */                  \
     S->bitRevLength = ARMBITREVINDEXTABLE_FIXED_##LEN##_TABLE_LENGTH;  \
-    S->pBitRevTable = (uint16_t *)armBitRevIndexTable_fixed_##LEN;     \
+    S->pBitRevTable = (uint32_t *)armBitRevIndexTable_fixed_##LEN;     \
     S->pTwiddle = (q15_t *)twiddleCoef_##LEN##_q15;                    \
     status=arm_cfft_radix4by2_rearrange_twiddles_##LENTWIDDLE##_q15(S);\
                                                                        \

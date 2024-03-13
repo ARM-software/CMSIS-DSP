@@ -575,7 +575,8 @@ void arm_cfft_q15(
         if (bitReverseFlag)
         {
 
-            arm_bitreversal_16_inpl_mve((uint16_t*)pSrc, S->bitRevLength, S->pBitRevTable);
+            //arm_bitreversal_16_inpl_mve((uint16_t*)pSrc, S->bitRevLength, S->pBitRevTable);
+            arm_bitreversal_16((uint16_t*)pSrc, S->bitRevLength,(uint32_t*)S->pBitRevTable);
 
         }
 }
@@ -597,7 +598,7 @@ extern void arm_radix4_butterfly_inverse_q15(
 extern void arm_bitreversal_16(
         uint16_t * pSrc,
   const uint16_t bitRevLen,
-  const uint16_t * pBitRevTable);
+  const uint32_t * pBitRevTable);
 
 void arm_cfft_radix4by2_q15(
         q15_t * pSrc,
