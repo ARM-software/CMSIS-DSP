@@ -155,6 +155,10 @@ extern "C"
 
     extern const float32_t twiddleCoef_rfft_4096[4096];
 
+    extern const float32_t twiddleCoef_rfft_8192[8192];
+
+    extern const float32_t twiddleCoef_rfft_16384[16384];
+
   /* Double precision floating-point bit reversal tables */
 
     #define ARMBITREVINDEXTABLEF64_16_TABLE_LENGTH ((uint16_t)12)

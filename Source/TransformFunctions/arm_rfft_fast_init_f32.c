@@ -246,6 +246,42 @@ arm_status arm_rfft_fast_init_4096_f32( arm_rfft_fast_instance_f32 * S ) {
   return ARM_MATH_SUCCESS;
 }
 
+arm_status arm_rfft_fast_init_8192_f32( arm_rfft_fast_instance_f32 * S ) {
+
+  arm_status status;
+
+  if( !S ) return ARM_MATH_ARGUMENT_ERROR;
+
+  status=arm_cfft_init_4096_f32(&(S->Sint));
+  if (status != ARM_MATH_SUCCESS)
+  {
+    return(status);
+  }
+  S->fftLenRFFT = 8192U;
+
+  S->pTwiddleRFFT    = (float32_t *) twiddleCoef_rfft_8192;
+
+  return ARM_MATH_SUCCESS;
+}
+
+arm_status arm_rfft_fast_init_16384_f32( arm_rfft_fast_instance_f32 * S ) {
+
+  arm_status status;
+
+  if( !S ) return ARM_MATH_ARGUMENT_ERROR;
+
+  status=arm_cfft_init_8192_f32(&(S->Sint));
+  if (status != ARM_MATH_SUCCESS)
+  {
+    return(status);
+  }
+  S->fftLenRFFT = 16384U;
+
+  S->pTwiddleRFFT    = (float32_t *) twiddleCoef_rfft_16384;
+
+  return ARM_MATH_SUCCESS;
+}
+
 /**
   @brief         Generic initialization function for the floating-point real FFT.
   @param[in,out] S       points to an arm_rfft_fast_instance_f32 structure
@@ -283,6 +319,12 @@ arm_status arm_rfft_fast_init_f32(
 
   switch (fftLen)
   {
+  case 16384U:
+    status = arm_rfft_fast_init_16384_f32(S);
+    break;
+  case 8192U:
+    status = arm_rfft_fast_init_8192_f32(S);
+    break;
   case 4096U:
     status = arm_rfft_fast_init_4096_f32(S);
     break;

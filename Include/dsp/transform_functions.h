@@ -584,6 +584,8 @@ arm_status arm_rfft_fast_init_512_f32( arm_rfft_fast_instance_f32 * S );
 arm_status arm_rfft_fast_init_1024_f32( arm_rfft_fast_instance_f32 * S );
 arm_status arm_rfft_fast_init_2048_f32( arm_rfft_fast_instance_f32 * S );
 arm_status arm_rfft_fast_init_4096_f32( arm_rfft_fast_instance_f32 * S );
+arm_status arm_rfft_fast_init_8192_f32( arm_rfft_fast_instance_f32 * S );
+arm_status arm_rfft_fast_init_16384_f32( arm_rfft_fast_instance_f32 * S );
 
 arm_status arm_rfft_fast_init_f32 (
          arm_rfft_fast_instance_f32 * S,
