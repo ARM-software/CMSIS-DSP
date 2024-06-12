@@ -196,8 +196,9 @@ for t in tests:
 #allSuites=[("StatsTestsQ7","../Output.pickle")]
 
 allSuites=[
-("InterpolationTestsF32","../Output.pickle"),
-("InterpolationTestsF16","../Output_f16.pickle"),
+("UnaryTestsF64","../Output.pickle"),
+("UnaryTestsF32","../Output.pickle"),
+("UnaryTestsF16","../Output_f16.pickle"),
 #("MISCQ15","../Output.pickle"),
 #("MISCQ7","../Output.pickle"),
 #("FIRF16","../Output_f16.pickle")
@@ -235,11 +236,12 @@ solutions={
 }
 
 # Override previous solutions for more restricted testing.
-solutions={
-    'test_ac6.csolution.yml':[
-      ("VHT-Corstone-300","CS300"),
-    ]
-}
+#solutions={
+#    'test_ac6.csolution.yml':[
+#      #("VHT-Corstone-300","CS300"),
+#      ("VHT_M7_UNROLLED","M7DP"),
+#    ]
+#}
 
 HTMLHEADER="""<html>
 <header>

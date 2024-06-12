@@ -374,7 +374,9 @@ void UnaryTestsF64::test_mat_inverse_f64()
       int i;
       arm_status status;
       
-      for(i=0;i < nbMatrixes ; i ++)
+      // Non singular matrixes
+      // Last matrix is singular
+      for(i=0;i < nbMatrixes - 1 ; i ++)
       {
           rows = *dimsp++;
           columns = rows;
@@ -392,6 +394,22 @@ void UnaryTestsF64::test_mat_inverse_f64()
           checkInnerTail(outp);
 
       }
+      /*** Singular matrix **/
+      rows = *dimsp++;
+      columns = rows;
+
+      PREPAREDATA1(false);
+
+      refInnerTail(outp+(rows * columns));
+
+      status=arm_mat_inverse_f64(&this->in1,&this->out);
+      ASSERT_TRUE(status==ARM_MATH_SINGULAR);
+
+      outp += (rows * columns);
+      inp1 += (rows * columns);
+
+      checkInnerTail(outp);
+      /**********************/
 
 
       ASSERT_SNR(output,ref,(float64_t)SNR_THRESHOLD);

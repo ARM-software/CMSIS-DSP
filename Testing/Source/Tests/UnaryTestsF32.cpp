@@ -501,6 +501,7 @@ static void checkInnerTail(float32_t *b)
 
 
 
+
 void UnaryTestsF32::test_mat_inverse_f32()
     {     
       const float32_t *inp1=input1.ptr();    
@@ -514,7 +515,9 @@ void UnaryTestsF32::test_mat_inverse_f32()
       int i;
       arm_status status;
 
-      for(i=0;i < nbMatrixes ; i ++)
+      // Non singular matrixes
+      // Last matrix is singular
+      for(i=0;i < nbMatrixes-1 ; i ++)
       {
           rows = *dimsp++;
           columns = rows;
@@ -533,10 +536,28 @@ void UnaryTestsF32::test_mat_inverse_f32()
 
       }
 
+      /*** Singular matrix **/
+      rows = *dimsp++;
+      columns = rows;
+
+      PREPAREDATA1(false);
+
+      refInnerTail(outp+(rows * columns));
+
+      status=arm_mat_inverse_f32(&this->in1,&this->out);
+      ASSERT_TRUE(status==ARM_MATH_SINGULAR);
+
+      outp += (rows * columns);
+      inp1 += (rows * columns);
+
+      checkInnerTail(outp);
+
+      /*********************/
+
+      ASSERT_CLOSE_ERROR(output,ref,ABS_ERROR_INV,REL_ERROR_INV);
 
       ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD_INV);
 
-      ASSERT_CLOSE_ERROR(output,ref,ABS_ERROR_INV,REL_ERROR_INV);
 
     }
 

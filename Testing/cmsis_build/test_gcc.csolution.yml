@@ -1,5 +1,5 @@
 solution:
-  compiler: GCC@12.2.0
+  compiler: GCC@13.2.1
   misc:
     - C:
       - -ffunction-sections 

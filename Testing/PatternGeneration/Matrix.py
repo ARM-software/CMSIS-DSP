@@ -806,6 +806,15 @@ def writeUnaryTests(config,format):
     r = np.linalg.inv(ma)
     vals = vals + list(r.reshape(4))
     dims.append(2)
+
+    # Add matrix for testing singular matrix
+
+    ma = np.array([[1., 2.], [2., 4.]])
+    inp = inp + list(ma.reshape(4))
+
+    r = np.array([0.,0.5,1.0,-0.5])
+    vals = vals + list(r)
+    dims.append(2)
     #
     config.writeInputS16(1, dims,"DimsInvert")
     config.writeInput(1, inp,"InputInvert")
@@ -1197,9 +1206,9 @@ def generatePatterns():
     configUnaryq15.setOverwrite(False)
     configUnaryq7.setOverwrite(False)
     
-    #writeUnaryTests(configUnaryf64,Tools.F64)
-    #writeUnaryTests(configUnaryf32,Tools.F32)
-    #writeUnaryTests(configUnaryf16,Tools.F16)
+    writeUnaryTests(configUnaryf64,Tools.F64)
+    writeUnaryTests(configUnaryf32,Tools.F32)
+    writeUnaryTests(configUnaryf16,Tools.F16)
     #writeUnaryTests(configUnaryq31,Tools.Q31)
     #writeUnaryTests(configUnaryq31,Tools.Q31)
     #writeUnaryTests(configUnaryq15,Tools.Q15)
