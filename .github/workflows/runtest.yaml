@@ -67,3 +67,10 @@ jobs:
           echo "Running tests"
 
           python runall.py 
+
+      - name: Get test report
+        run: |
+          cd Testing/cmsis_build
+          echo "Get test report"
+
+          cat summary.html
