@@ -68,7 +68,16 @@ jobs:
 
           python runall.py 
 
-          cat summary.html
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: Testing/cmsis_build/summary.html
 
+      
+      - name: Check error
+        run: |
+          cd Testing/cmsis_build
+          
           echo "Checking output..."
           test "$(grep "Error" summary.html | wc -l)" -eq 0

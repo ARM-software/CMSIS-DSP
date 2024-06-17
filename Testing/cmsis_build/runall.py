@@ -12,6 +12,7 @@ parser.add_argument('-d', action='store_true', help="Debug log")
 parser.add_argument('-n', action='store_true', help="No force rebuild")
 parser.add_argument('-r', action='store_true', help="Raw results only")
 parser.add_argument('-c', action='store_true', help="Display cycles (so passing test are displayed)")
+parser.add_argument('-l', action='store_true', help="Local run (not github action)")
 
 args = parser.parse_args()
 
@@ -299,7 +300,8 @@ with open("summary.html","w") as f:
                            print(res.msg,file=f)
     print(HTMLFOOTER,file=f)
 
-if ERROR_OCCURED:
-    sys.exit("Error occurred")
-else:
-    sys.exit(0)
+if args.l:
+   if ERROR_OCCURED:
+       sys.exit("Error occurred")
+   else:
+       sys.exit(0)
