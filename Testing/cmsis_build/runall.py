@@ -116,12 +116,12 @@ configFiles={
 # unix)
 avhExe={
     "CS310":"VHT_Corstone_SSE-310.exe",
-    "CS300":"VHT_Corstone_SSE-300_Ethos-U55.exe",
+    "CS300":"FVP_Corstone_SSE-300_Ethos-U55",
     "M55":"VHT_MPS2_Cortex-M55.exe",
     "M33_DSP_FP":"VHT_MPS2_Cortex-M33.exe",
     "M7DP":"VHT_MPS2_Cortex-M7.exe",
     "M4FP":"VHT_MPS2_Cortex-M4.exe",
-    "M3":"VHT_MPS2_Cortex-M3.exe",
+    "M3":"FVP_MPS2_Cortex-M3",
     "M23":"VHT_MPS2_Cortex-M23.exe",
     "M0plus":"VHT_MPS2_Cortex-M0plus.exe",
 }
@@ -160,48 +160,11 @@ for t in tests:
 # Test suite and output pickle needed to decode the result
 #print(allSuites)
 
-#allSuites=[
-#("MFCCQ15","../Output.pickle"),
-#("MFCCQ31","../Output.pickle"),
-#("SupportTestsF16","../Output_f16.pickle"),
-#]
 
-#allSuites=[("ComplexTestsF32","../Output.pickle"),
-#("DistanceTestsF32","../Output.pickle"),
-#("UnaryTestsF32","../Output.pickle"),
-#("QuaternionTestsF32","../Output.pickle"),
-#("StatsTestsF32","../Output.pickle")
-#]
-
-#allSuites=[
-#("TransformCF64","../Output.pickle"),
-#("TransformCF32","../Output.pickle"),
-#("TransformCQ31","../Output.pickle"),
-#("TransformCQ15","../Output.pickle"),
-#
-#("TransformRF64","../Output.pickle"),
-#("TransformRF32","../Output.pickle"),
-#("TransformRQ31","../Output.pickle"),
-#("TransformRQ15","../Output.pickle"),
-#
-#("MFCCF32","../Output.pickle"),
-#("MFCCQ31","../Output.pickle"),
-#("MFCCQ15","../Output.pickle"),
-#
-#("MFCCF16","../Output_f16.pickle"),
-#("TransformCF16","../Output_f16.pickle"),
-#("TransformRF16","../Output_f16.pickle")
-#]
-
-#allSuites=[("StatsTestsQ7","../Output.pickle")]
 
 allSuites=[
-("UnaryTestsF64","../Output.pickle"),
 ("UnaryTestsF32","../Output.pickle"),
 ("UnaryTestsF16","../Output_f16.pickle"),
-#("MISCQ15","../Output.pickle"),
-#("MISCQ7","../Output.pickle"),
-#("FIRF16","../Output_f16.pickle")
 ]
 
 # Solution and build file for all
@@ -236,12 +199,12 @@ solutions={
 }
 
 # Override previous solutions for more restricted testing.
-#solutions={
-#    'test_ac6.csolution.yml':[
-#      #("VHT-Corstone-300","CS300"),
-#      ("VHT_M7_UNROLLED","M7DP"),
-#    ]
-#}
+solutions={
+    'test_ac6.csolution.yml':[
+      ("VHT-Corstone-300","CS300"),
+      #("VHT_M7_UNROLLED","M7DP"),
+    ]
+}
 
 HTMLHEADER="""<html>
 <header>

@@ -1,0 +1,8 @@
+python-matrix-runner~=1.1.0
+arm-avhclient~=0.1.10
+PyYAML~=6.0
+pyparsing~=3.0.9 
+colorama~=0.4.6
+statsmodels~=0.13.5 
+numpy~=1.24.3 
+panda~=0.3.1
