@@ -63,6 +63,7 @@ jobs:
 
       - name: Execute
         run: |
+          cd Testing/cmsis_build
           echo "Running tests"
 
           python runall.py 
