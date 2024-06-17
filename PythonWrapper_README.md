@@ -234,6 +234,9 @@ MEL filters are represented as 3 arrays to encode a sparse array.
 
 # Change history
 
+## Version 1.9.9:
+* Supports Python 3.12
+
 ## Version 1.9.8:
 * Compute graph API has been removed
 * Dependency on numpy 1.22 has been lifted, tested through numpy 1.26

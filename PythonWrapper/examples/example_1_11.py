@@ -122,26 +122,28 @@ plt.show()
 
 printSubTitle("With a window")
 
+nan = np.nan 
+
 referenceDistance = 0.617099940776825
-referenceCost=np.array([[9.1612804e-01, 9.9920368e-01, np.NAN, np.NAN,
-        np.NAN],
-       [1.2353053e+00, 1.6792301e+00, np.NAN, np.NAN,
-        np.NAN],
-       [1.3028694e+00, 2.3696373e+00, 4.4372001e+00, np.NAN,
-        np.NAN],
-       [np.NAN, 3.0795674e+00, 4.9687119e+00, np.NAN,
-        np.NAN],
-       [np.NAN, 3.5039051e+00, 4.9290380e+00, 5.3565612e+00,
-        np.NAN],
-       [np.NAN, np.NAN, 4.8520918e+00, 5.1756082e+00,
-        np.NAN],
-       [np.NAN, np.NAN, 5.0427418e+00, 5.8497019e+00,
+referenceCost=np.array([[9.1612804e-01, 9.9920368e-01, nan, nan,
+        nan],
+       [1.2353053e+00, 1.6792301e+00, nan, nan,
+        nan],
+       [1.3028694e+00, 2.3696373e+00, 4.4372001e+00, nan,
+        nan],
+       [nan, 3.0795674e+00, 4.9687119e+00, nan,
+        nan],
+       [nan, 3.5039051e+00, 4.9290380e+00, 5.3565612e+00,
+        nan],
+       [nan, nan, 4.8520918e+00, 5.1756082e+00,
+        nan],
+       [nan, nan, 5.0427418e+00, 5.8497019e+00,
         7.6590457e+00],
-       [np.NAN, np.NAN, np.NAN, 6.7571073e+00,
+       [nan, nan, nan, 6.7571073e+00,
         8.6668968e+00],
-       [np.NAN, np.NAN, np.NAN, 7.3949833e+00,
+       [nan, nan, nan, 7.3949833e+00,
         9.0352430e+00],
-       [np.NAN, np.NAN, np.NAN, np.NAN,
+       [nan, nan, nan, nan,
         9.2564993e+00]], dtype=np.float32)
 
 
