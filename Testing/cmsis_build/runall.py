@@ -113,16 +113,26 @@ configFiles={
 }
 
 # Windows executable
-# (At some point this script will also support
-# unix)
-avhExe={
-    "CS310":"VHT_Corstone_SSE-310.exe",
+avhUnixExe={
+    "CS310":"FVP_Corstone_SSE-310",
     "CS300":"FVP_Corstone_SSE-300_Ethos-U55",
+    "M55":"FVP_MPS2_Cortex-M55",
+    "M33_DSP_FP":"FVP_MPS2_Cortex-M33",
+    "M7DP":"FVP_MPS2_Cortex-M7",
+    "M4FP":"FVP_MPS2_Cortex-M4",
+    "M3":"FVP_MPS2_Cortex-M3",
+    "M23":"FVP_MPS2_Cortex-M23",
+    "M0plus":"FVP_MPS2_Cortex-M0plus",
+}
+
+avhWindowsExe={
+    "CS310":"VHT_Corstone_SSE-310.exe",
+    "CS300":"VHT_Corstone_SSE-300_Ethos-U55.exe",
     "M55":"VHT_MPS2_Cortex-M55.exe",
     "M33_DSP_FP":"VHT_MPS2_Cortex-M33.exe",
     "M7DP":"VHT_MPS2_Cortex-M7.exe",
     "M4FP":"VHT_MPS2_Cortex-M4.exe",
-    "M3":"FVP_MPS2_Cortex-M3",
+    "M3":"VHT_MPS2_Cortex-M3.exe",
     "M23":"VHT_MPS2_Cortex-M23.exe",
     "M0plus":"VHT_MPS2_Cortex-M0plus.exe",
 }
@@ -139,7 +149,15 @@ def runAVH(build,core):
     if os.path.exists(elf):
         app = elf
     config = os.path.join("configs",configFiles[core])
-    avh = os.path.join(AVHROOT,avhExe[core])
+    
+    avhAttempt = os.path.join(AVHROOT,avhWindowsExe[core])
+    if os.path.exists(avhAttempt):
+       avh = avhAttempt
+
+    avhAttempt = os.path.join(AVHROOT,avhUnixExe[core])
+    if os.path.exists(avhAttempt):
+       avh = avhAttempt
+    
     res=run(avh,"-f",config,app)
     return(res)
    

@@ -64,13 +64,15 @@ jobs:
           cat required_packs.txt
           cpackget add -f required_packs.txt
 
+          ls /opt/VHT
+
 
       - name: Execute
         run: |
           cd Testing/cmsis_build
           echo "Running tests"
 
-          python runall.py 
+          python runall.py -avh /opt/VHT/
 
       - name: Upload test report
         uses: actions/upload-artifact@v4
