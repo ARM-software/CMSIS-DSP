@@ -16,6 +16,8 @@ parser.add_argument('-l', action='store_true', help="Local run (not github actio
 
 args = parser.parse_args()
 
+
+
 DEBUG=False 
 if args.d:
     DEBUG=True
@@ -114,7 +116,7 @@ configFiles={
 
 # Windows executable
 avhUnixExe={
-    "CS310":"FVP_Corstone_SSE-310",
+    "CS310":"FVP_Corstone_SSE-310_Ethos-U65",
     "CS300":"FVP_Corstone_SSE-300_Ethos-U55",
     "M55":"FVP_MPS2_Cortex-M55",
     "M33_DSP_FP":"FVP_MPS2_Cortex-M33",
@@ -150,13 +152,18 @@ def runAVH(build,core):
         app = elf
     config = os.path.join("configs",configFiles[core])
     
-    avhAttempt = os.path.join(AVHROOT,avhWindowsExe[core])
-    if os.path.exists(avhAttempt):
-       avh = avhAttempt
+    if AVHROOT:
+       avhAttempt = os.path.join(AVHROOT,avhWindowsExe[core])
+       if os.path.exists(avhAttempt):
+          avh = avhAttempt
+   
+       avhAttempt = os.path.join(AVHROOT,avhUnixExe[core])
+       if os.path.exists(avhAttempt):
+          avh = avhAttempt
+    else:
+       avh = avhUnixExe[core]
 
-    avhAttempt = os.path.join(AVHROOT,avhUnixExe[core])
-    if os.path.exists(avhAttempt):
-       avh = avhAttempt
+
     
     res=run(avh,"-f",config,app)
     return(res)
