@@ -64,8 +64,8 @@ jobs:
           cat required_packs.txt
           cpackget add -f required_packs.txt
 
-          ls /opt/VHT
-
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
 
       - name: Execute
         run: |
