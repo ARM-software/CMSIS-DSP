@@ -52,6 +52,10 @@ jobs:
           python preprocess.py -f desc.txt -o Output.pickle
           python preprocess.py  -f desc_f16.txt -o Output_f16.pickle
 
+          echo "Generate missing CPP headers"
+          python processTests.py -gen . -p Patterns -d Parameters -f Output.pickle -e
+          python processTests.py -gen . -p Patterns -d Parameters -f Output_f16.pickle -e
+
           cd cmsis_build
 
           echo "Load missing pack"
