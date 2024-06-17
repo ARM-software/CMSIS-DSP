@@ -188,10 +188,10 @@ for t in tests:
 
 
 
-allSuites=[
-("UnaryTestsF32","../Output.pickle"),
-("UnaryTestsF16","../Output_f16.pickle"),
-]
+#allSuites=[
+#("UnaryTestsF32","../Output.pickle"),
+#("UnaryTestsF16","../Output_f16.pickle"),
+#]
 
 # Solution and build file for all
 # the tests
@@ -225,12 +225,12 @@ solutions={
 }
 
 # Override previous solutions for more restricted testing.
-solutions={
-    'test_ac6.csolution.yml':[
-      ("VHT-Corstone-300","CS300"),
-      #("VHT_M7_UNROLLED","M7DP"),
-    ]
-}
+#solutions={
+#    'test_ac6.csolution.yml':[
+#      ("VHT-Corstone-300","CS300"),
+#      #("VHT_M7_UNROLLED","M7DP"),
+#    ]
+#}
 
 HTMLHEADER="""<html>
 <header>
