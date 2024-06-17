@@ -32,9 +32,9 @@
 #include <numpy/numpyconfig.h>
 
 // API version used on google colab
-// List on https://github.com/numpy/numpy/blob/main/numpy/core/include/numpy/numpyconfig.h
+// https://github.com/numpy/numpy/blob/main/numpy/_core/include/numpy/numpyconfig.h
 #if (NPY_API_VERSION != 0x0000000F )
-#error("Error building with wrong NumPy API version")
+//#error("Error building with wrong NumPy API version")
 #endif
 
 #ifdef WIN

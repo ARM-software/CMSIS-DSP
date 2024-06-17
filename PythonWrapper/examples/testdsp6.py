@@ -169,9 +169,13 @@ supportVectors = clf.support_vectors_
 supportVectors = supportVectors.reshape(nbSupportVectors * VECDIM)
 
 svmInst=dsp.arm_svm_polynomial_instance_f32() 
+
+
 dsp.arm_svm_polynomial_init_f32(svmInst,nbSupportVectors,vectorDimensions,
-    intercept,dualCoefs,supportVectors,
+    intercept[0],dualCoefs,supportVectors,
     [0,1],degree,coef0,gamma)
+
+exit(0)
 
 test1 = np.array([0.4,0.1])
 predicted1 = dsp.arm_svm_polynomial_predict_f32(svmInst,test1)

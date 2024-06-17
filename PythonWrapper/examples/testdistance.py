@@ -6,6 +6,14 @@ from numpy.testing import assert_allclose
 a=[1,2,3]
 b=[1,5,2]
 
+def kulsinski(va,vb):
+    n = len(va)
+    ctt=1.0*np.count_nonzero((va==1) & (vb==1))
+    ctf=1.0*np.count_nonzero((va==1) & (vb==0))
+    cft=1.0*np.count_nonzero((va==0) & (vb==1))
+    return(1.0*(ctf + cft - ctt+n)/(cft + ctf + n))
+
+
 print("\nBray-Curtis")
 ref=d.braycurtis(a,b)
 res=dsp.arm_braycurtis_distance_f32(a,b)
@@ -96,7 +104,7 @@ assert_allclose(ref,res,1e-6)
 def packset(a):
     b = np.packbits(a)
     newSize = int(np.ceil(b.shape[0] / 4.0)) * 4
-    c = np.copy(b)
+    c = np.copy(b).astype(np.uint32)
     c.resize(newSize)
     #print(c)
     vecSize = round(newSize/4)
@@ -105,7 +113,7 @@ def packset(a):
     r = np.zeros(vecSize)
     result = []
     for i in range(0,vecSize):
-        #print(c[i,:])
+        print(c[i,:])
         #print("%X %X %X %X" % (c[i,0],c[i,1],c[i,2],c[i,3]))
         d = (c[i,0] << 24) | (c[i,1] << 16) | (c[i,2] << 8) | c[i,3] 
         result.append(np.uint32(d))
@@ -143,7 +151,7 @@ print(res)
 assert_allclose(ref,res,1e-6)
 
 print("\nKulsinski")
-ref=d.kulsinski(va,vb)
+ref=kulsinski(va,vb)
 res=dsp.arm_kulsinski_distance(pva,pvb,nb)
 print(ref)
 print(res)

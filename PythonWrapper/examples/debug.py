@@ -9,6 +9,7 @@ import scipy.fft
 import colorama
 from colorama import init,Fore, Back, Style
 from numpy.testing import assert_allclose
+import scipy.spatial.distance as d 
 
 init()
 
@@ -19,63 +20,61 @@ def printSubTitle(s):
     print("\n" + Style.BRIGHT + s + Style.RESET_ALL)
 
 
-def chop(A, eps = 1e-6):
-    B = np.copy(A)
-    B[np.abs(A) < eps] = 0
-    return B
+def packset(a):
+    b = np.packbits(a)
+    newSize = int(np.ceil(b.shape[0] / 4.0)) * 4
+    c = np.copy(b).astype(np.uint32)
+    c.resize(newSize)
+    #print(c)
+    vecSize = round(newSize/4)
+    c=c.reshape(vecSize,4)
+    #print(c)
+    r = np.zeros(vecSize)
+    result = []
+    for i in range(0,vecSize):
+        print(c[i,:])
+        #print("%X %X %X %X" % (c[i,0],c[i,1],c[i,2],c[i,3]))
+        d = (c[i,0] << 24) | (c[i,1] << 16) | (c[i,2] << 8) | c[i,3] 
+        result.append(np.uint32(d))
+    return(result) 
 
-nb = 32
-signal = np.cos(2 * np.pi * np.arange(nb) / nb)*np.cos(0.2*2 * np.pi * np.arange(nb) / nb)
+nb = 34
+#va = np.random.choice([0,1],nb)
+# Array of word32 containing all of our bits
+#pva = packset(va)
 
-ref=scipy.fft.rfft(signal)
-invref = scipy.fft.irfft(ref)
 
-print(f"ref length = {len(ref)}")
-print(ref)
+#vb = np.random.choice([0,1],nb)
+# Array of word32 containing all of our bits
+#pvb = packset(vb)
+#
+va=[1, 0, 1, 0, 1, 1, 1, 0 ,0, 1, 1, 0, 1, 0, 0, 0, 0, 1,0,0,0,1,1,0,1,0,1,0,0,1,1,1,1,1]
+vb=[0,1,0,0,1,0,0,0,1,0,0,0,0,1,1,0,0,1,0,0,0,1,0,1,1,0,0,1,1,0,0,0,1,0]
 
-# Convert ref to CMSIS-DSP format 
-referenceFloat=np.zeros(2*len(ref))
-print(f"referenceFloat length = {len(referenceFloat)}")
-# Replace complex datatype by real datatype
-referenceFloat[0::2] = np.real(ref)
-referenceFloat[1::2] = np.imag(ref)
-# Copy Nyquist frequency value into first 
-# sample.This is just a storage trick so that the
-# output of the RFFT has same length as input
-# It is legacy behavior that we need to keep
-# for backward compatibility but it is not
-# very pretty
-#referenceFloat[1] = np.real(ref[-1])
+va = np.array(va)
+vb = np.array(vb)
 
-rifftQ31=dsp.arm_rfft_instance_q31()
-status=dsp.arm_rfft_init_q31(rifftQ31,nb,1,1)
-# Apply CMSIS-DSP scaling
-referenceQ31 = f.toQ31(referenceFloat / nb) 
+pva=packset(va)
+pvb=packset(vb)
 
-resultQ31 = dsp.arm_rfft_q31(rifftQ31,referenceQ31)
-resultF = f.Q31toF32(resultQ31)
+#pva = [np.uint32(167), np.uint32(0)]
+#pvb = [np.uint32(152), np.uint32(0)]
 
-print(f"resultF length = {len(resultF)}")
-assert_allclose(invref/nb,resultF,atol=1e-6)
+#print(va,pva)
+#print(vb,pvb)
 
-signalQ31 = f.toQ31(signal)
-rfftQ31=dsp.arm_rfft_instance_q31()
-status=dsp.arm_rfft_init_q31(rfftQ31,nb,0,1)
-resultQ31 = dsp.arm_rfft_q31(rfftQ31,signalQ31)
-print(len(resultQ31))
-print(2*nb)
-resultF = f.Q31toF32(resultQ31) * nb
+ctt=1.0*np.count_nonzero((va==1) & (vb==1))
+ctf=1.0*np.count_nonzero((va==1) & (vb==0))
+cft=1.0*np.count_nonzero((va==0) & (vb==1))
 
-def compareWithConjugatePart(r):
-    res = r[0::2] + 1j * r[1::2]
-    conjPart = res[nb:nb//2:-1].conj()
-    refPart = res[1:nb//2]
-    assert(np.equal(refPart , conjPart).all())
+res=(cft+ctf)/(2*ctt+cft+ctf)
 
-compareWithConjugatePart(resultF)
-
-res = resultF[0::2] + 1j * resultF[1::2]
 print(res)
 
-print(res[0:nb//2+1])
-print(res[0:nb//2+1].shape)
+
+print("\nDice")
+ref=d.dice(va,vb)
+res=dsp.arm_dice_distance(pva,pvb,nb)
+print(ref)
+print(res)
+assert_allclose(ref,res,1e-6)

@@ -17,7 +17,7 @@ freq_min = 64
 freq_high = sample_rate / 2
 numOfMelFilters = 20
 
-window = sig.hamming(FFTSize, sym=False)
+window = sig.windows.hamming(FFTSize, sym=False)
       
 filtLen,filtPos,packedFilters = mfcc.melFilterMatrix(F32,freq_min, freq_high, numOfMelFilters,sample_rate,FFTSize)
 

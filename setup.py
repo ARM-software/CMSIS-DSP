@@ -1,6 +1,6 @@
 #from distutils.core import setup, Extension
 from setuptools import setup, Extension,find_packages
-from distutils.util import convert_path
+import io
 import glob
 import numpy
 import sys
@@ -13,6 +13,15 @@ import pathlib
 here = pathlib.Path(__file__).parent.resolve()
 ROOT = here
 ROOT=""
+
+PYTHON_MOD = os.path.join(ROOT,"cmsisdsp")
+version_path = os.path.join(PYTHON_MOD,"version.py")
+
+__version__ = re.search(
+    r'__version__\s*=\s*[\'"]([^\'"]*)[\'"]',  # It excludes inline comment too
+    io.open(version_path, encoding='utf_8_sig').read()
+    ).group(1)
+
 
 includes = [os.path.join(ROOT,"Include"),os.path.join(ROOT,"PrivateInclude"),os.path.join("PythonWrapper","cmsisdsp_pkg","src")]
 
@@ -153,19 +162,9 @@ def build():
       print('setup.py: Error: This package only supports Python 3.', file=sys.stderr)
       sys.exit(1)
   
-  main_ns = {}
-  ver_path = convert_path(os.path.join("cmsisdsp","version.py"))
-  with open(ver_path) as ver_file:
-      exec(ver_file.read(), main_ns)
-
   setup (name = 'cmsisdsp',
-         version = main_ns['__version__'],
-         packages=["cmsisdsp",
-                   "cmsisdsp.cg",
-                   "cmsisdsp.cg.nodes",
-                   "cmsisdsp.cg.nodes.host",
-                   "cmsisdsp.cg.scheduler",
-                   "cmsisdsp.cg.scheduler.templates"],
+         version = __version__,
+         packages=["cmsisdsp"],
          description = 'CMSIS-DSP Python API',
          long_description=open("PythonWrapper_README.md").read(),
          long_description_content_type='text/markdown',
@@ -186,7 +185,7 @@ def build():
                         moduleWindow
                         ],
          include_package_data=True,
-         author = 'Copyright (C) 2010-2023 ARM Limited or its affiliates. All rights reserved.',
+         author = 'Copyright (C) 2010-2024 ARM Limited or its affiliates. All rights reserved.',
          author_email = 'christophe.favergeon@arm.com',
          url="https://github.com/ARM-software/CMSIS-DSP",
          python_requires='>=3.7',
@@ -205,11 +204,8 @@ def build():
                 "Intended Audience :: Developers",
           ],
           keywords=['development','dsp','cmsis','cmsis-dsp','Arm','signal processing','maths','ml','cortex-m','cortex-a'],
-          install_requires=['numpy>=1.22, < 1.23 ',
-          'networkx>=3.0',
-          'jinja2>= 3.1.2, <4.0',
-          'sympy>=1.7.1',
-          'MarkupSafe>=2.1.2, <3.0'
+          install_requires=[
+          'numpy>=1.22',
           ],
           project_urls={  # Optional
              'Bug Reports': 'https://github.com/ARM-software/CMSIS-DSP/issues',
