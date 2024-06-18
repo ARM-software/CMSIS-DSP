@@ -17,7 +17,6 @@ parser.add_argument('-l', action='store_true', help="Local run (not github actio
 args = parser.parse_args()
 
 
-
 DEBUG=False 
 if args.d:
     DEBUG=True
@@ -188,11 +187,11 @@ for t in tests:
 
 
 
-allSuites=[
+#allSuites=[
 #("DECIMF64","../Output.pickle"),
-("UnaryTestsF32","../Output.pickle"),
+#("UnaryTestsF32","../Output.pickle"),
 #("UnaryTestsF16","../Output_f16.pickle"),
-]
+#]
 
 # Solution and build file for all
 # the tests
@@ -212,26 +211,26 @@ solutions={
     #  #("VHT_M23","M23"),
       ("VHT_M0P","M0plus")
     ],
-    'test_gcc.csolution.yml':[
-      ("VHT-Corstone-300","CS300"),
+    #'test_gcc.csolution.yml':[
+    #  ("VHT-Corstone-300","CS300"),
       #("VHT_M55","M55"),
       ##("VHT_M33","M33_DSP_FP"),
-      ("VHT_M7","M7DP"),
-      ("VHT_M7_UNROLLED","M7DP"),
-      ("VHT_M4","M4FP"),
+    #  ("VHT_M7","M7DP"),
+    #  ("VHT_M7_UNROLLED","M7DP"),
+    #  ("VHT_M4","M4FP"),
       ##("VHT_M3","M3"),
       ##("VHT_M23","M23"),
-      ("VHT_M0P","M0plus")
-    ]
+    #  ("VHT_M0P","M0plus")
+    #]
 }
 
 # Override previous solutions for more restricted testing.
-solutions={
-    'test_ac6.csolution.yml':[
-      ("VHT-Corstone-300","CS300"),
-      #("VHT_M7_UNROLLED","M7DP"),
-    ]
-}
+#solutions={
+#    'test_ac6.csolution.yml':[
+#      ("VHT-Corstone-300","CS300"),
+#      #("VHT_M7_UNROLLED","M7DP"),
+#    ]
+#}
 #
 #solutions={
 #    'test_gcc.csolution.yml':[
