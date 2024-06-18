@@ -64,6 +64,9 @@ jobs:
           cat required_packs.txt
           cpackget add -f required_packs.txt
 
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+
       - name: Execute
         run: |
           cd Testing/cmsis_build

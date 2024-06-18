@@ -188,10 +188,11 @@ for t in tests:
 
 
 
-#allSuites=[
-#("UnaryTestsF32","../Output.pickle"),
+allSuites=[
+#("DECIMF64","../Output.pickle"),
+("UnaryTestsF32","../Output.pickle"),
 #("UnaryTestsF16","../Output_f16.pickle"),
-#]
+]
 
 # Solution and build file for all
 # the tests
@@ -202,7 +203,7 @@ solutions={
     'test_ac6.csolution.yml':[
     #  ("VHT-Corstone-310","CS310"),
       ("VHT-Corstone-300","CS300"),
-      # ("VHT-Corstone-300-NOMVE","CS300"),
+      ("VHT-Corstone-300-NOMVE","CS300"),
       ("VHT_M33","M33_DSP_FP"),
       ("VHT_M7","M7DP"),
       ("VHT_M7_UNROLLED","M7DP"),
@@ -212,7 +213,7 @@ solutions={
       ("VHT_M0P","M0plus")
     ],
     'test_gcc.csolution.yml':[
-      #("VHT-Corstone-310","CS310"),
+      ("VHT-Corstone-300","CS300"),
       #("VHT_M55","M55"),
       ##("VHT_M33","M33_DSP_FP"),
       ("VHT_M7","M7DP"),
@@ -225,8 +226,15 @@ solutions={
 }
 
 # Override previous solutions for more restricted testing.
+solutions={
+    'test_ac6.csolution.yml':[
+      ("VHT-Corstone-300","CS300"),
+      #("VHT_M7_UNROLLED","M7DP"),
+    ]
+}
+#
 #solutions={
-#    'test_ac6.csolution.yml':[
+#    'test_gcc.csolution.yml':[
 #      ("VHT-Corstone-300","CS300"),
 #      #("VHT_M7_UNROLLED","M7DP"),
 #    ]

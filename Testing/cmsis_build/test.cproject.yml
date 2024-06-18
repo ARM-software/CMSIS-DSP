@@ -68,6 +68,7 @@ project:
         - file: ../Source/Tests/ComplexTestsF64.cpp
         - file: ../Source/Tests/ComplexTestsQ15.cpp
         - file: ../Source/Tests/ComplexTestsQ31.cpp
+        - file: ../Source/Tests/DECIMF64.cpp
         - file: ../Source/Tests/DECIMF32.cpp
         - file: ../Source/Tests/DECIMQ15.cpp
         - file: ../Source/Tests/DECIMQ31.cpp
