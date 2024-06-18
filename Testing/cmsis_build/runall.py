@@ -12,8 +12,10 @@ parser.add_argument('-d', action='store_true', help="Debug log")
 parser.add_argument('-n', action='store_true', help="No force rebuild")
 parser.add_argument('-r', action='store_true', help="Raw results only")
 parser.add_argument('-c', action='store_true', help="Display cycles (so passing test are displayed)")
+parser.add_argument('-l', action='store_true', help="Local run (not github action)")
 
 args = parser.parse_args()
+
 
 DEBUG=False 
 if args.d:
@@ -112,9 +114,19 @@ configFiles={
 }
 
 # Windows executable
-# (At some point this script will also support
-# unix)
-avhExe={
+avhUnixExe={
+    "CS310":"FVP_Corstone_SSE-310_Ethos-U65",
+    "CS300":"FVP_Corstone_SSE-300_Ethos-U55",
+    "M55":"FVP_MPS2_Cortex-M55",
+    "M33_DSP_FP":"FVP_MPS2_Cortex-M33",
+    "M7DP":"FVP_MPS2_Cortex-M7",
+    "M4FP":"FVP_MPS2_Cortex-M4",
+    "M3":"FVP_MPS2_Cortex-M3",
+    "M23":"FVP_MPS2_Cortex-M23",
+    "M0plus":"FVP_MPS2_Cortex-M0plus",
+}
+
+avhWindowsExe={
     "CS310":"VHT_Corstone_SSE-310.exe",
     "CS300":"VHT_Corstone_SSE-300_Ethos-U55.exe",
     "M55":"VHT_MPS2_Cortex-M55.exe",
@@ -138,7 +150,20 @@ def runAVH(build,core):
     if os.path.exists(elf):
         app = elf
     config = os.path.join("configs",configFiles[core])
-    avh = os.path.join(AVHROOT,avhExe[core])
+    
+    if AVHROOT:
+       avhAttempt = os.path.join(AVHROOT,avhWindowsExe[core])
+       if os.path.exists(avhAttempt):
+          avh = avhAttempt
+   
+       avhAttempt = os.path.join(AVHROOT,avhUnixExe[core])
+       if os.path.exists(avhAttempt):
+          avh = avhAttempt
+    else:
+       avh = avhUnixExe[core]
+
+
+    
     res=run(avh,"-f",config,app)
     return(res)
    
@@ -160,49 +185,13 @@ for t in tests:
 # Test suite and output pickle needed to decode the result
 #print(allSuites)
 
-#allSuites=[
-#("MFCCQ15","../Output.pickle"),
-#("MFCCQ31","../Output.pickle"),
-#("SupportTestsF16","../Output_f16.pickle"),
-#]
 
-#allSuites=[("ComplexTestsF32","../Output.pickle"),
-#("DistanceTestsF32","../Output.pickle"),
+
+#allSuites=[
+#("DECIMF64","../Output.pickle"),
 #("UnaryTestsF32","../Output.pickle"),
-#("QuaternionTestsF32","../Output.pickle"),
-#("StatsTestsF32","../Output.pickle")
+#("UnaryTestsF16","../Output_f16.pickle"),
 #]
-
-#allSuites=[
-#("TransformCF64","../Output.pickle"),
-#("TransformCF32","../Output.pickle"),
-#("TransformCQ31","../Output.pickle"),
-#("TransformCQ15","../Output.pickle"),
-#
-#("TransformRF64","../Output.pickle"),
-#("TransformRF32","../Output.pickle"),
-#("TransformRQ31","../Output.pickle"),
-#("TransformRQ15","../Output.pickle"),
-#
-#("MFCCF32","../Output.pickle"),
-#("MFCCQ31","../Output.pickle"),
-#("MFCCQ15","../Output.pickle"),
-#
-#("MFCCF16","../Output_f16.pickle"),
-#("TransformCF16","../Output_f16.pickle"),
-#("TransformRF16","../Output_f16.pickle")
-#]
-
-#allSuites=[("StatsTestsQ7","../Output.pickle")]
-
-allSuites=[
-("UnaryTestsF64","../Output.pickle"),
-("UnaryTestsF32","../Output.pickle"),
-("UnaryTestsF16","../Output_f16.pickle"),
-#("MISCQ15","../Output.pickle"),
-#("MISCQ7","../Output.pickle"),
-#("FIRF16","../Output_f16.pickle")
-]
 
 # Solution and build file for all
 # the tests
@@ -213,7 +202,7 @@ solutions={
     'test_ac6.csolution.yml':[
     #  ("VHT-Corstone-310","CS310"),
       ("VHT-Corstone-300","CS300"),
-      # ("VHT-Corstone-300-NOMVE","CS300"),
+      ("VHT-Corstone-300-NOMVE","CS300"),
       ("VHT_M33","M33_DSP_FP"),
       ("VHT_M7","M7DP"),
       ("VHT_M7_UNROLLED","M7DP"),
@@ -222,24 +211,31 @@ solutions={
     #  #("VHT_M23","M23"),
       ("VHT_M0P","M0plus")
     ],
-    'test_gcc.csolution.yml':[
-      #("VHT-Corstone-310","CS310"),
+    #'test_gcc.csolution.yml':[
+    #  ("VHT-Corstone-300","CS300"),
       #("VHT_M55","M55"),
       ##("VHT_M33","M33_DSP_FP"),
-      ("VHT_M7","M7DP"),
-      ("VHT_M7_UNROLLED","M7DP"),
-      ("VHT_M4","M4FP"),
+    #  ("VHT_M7","M7DP"),
+    #  ("VHT_M7_UNROLLED","M7DP"),
+    #  ("VHT_M4","M4FP"),
       ##("VHT_M3","M3"),
       ##("VHT_M23","M23"),
-      ("VHT_M0P","M0plus")
-    ]
+    #  ("VHT_M0P","M0plus")
+    #]
 }
 
 # Override previous solutions for more restricted testing.
 #solutions={
 #    'test_ac6.csolution.yml':[
-#      #("VHT-Corstone-300","CS300"),
-#      ("VHT_M7_UNROLLED","M7DP"),
+#      ("VHT-Corstone-300","CS300"),
+#      #("VHT_M7_UNROLLED","M7DP"),
+#    ]
+#}
+#
+#solutions={
+#    'test_gcc.csolution.yml':[
+#      ("VHT-Corstone-300","CS300"),
+#      #("VHT_M7_UNROLLED","M7DP"),
 #    ]
 #}
 
@@ -336,7 +332,8 @@ with open("summary.html","w") as f:
                            print(res.msg,file=f)
     print(HTMLFOOTER,file=f)
 
-if ERROR_OCCURED:
-    sys.exit("Error occurred")
-else:
-    sys.exit(0)
+if args.l:
+   if ERROR_OCCURED:
+       sys.exit("Error occurred")
+   else:
+       sys.exit(0)
