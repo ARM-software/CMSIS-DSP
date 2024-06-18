@@ -5,6 +5,7 @@ import subprocess
 import os 
 import colorama
 from colorama import init,Fore, Back, Style
+from os import environ
 
 parser = argparse.ArgumentParser(description='Parse test description')
 parser.add_argument('-avh', nargs='?',type = str, default="C:/Keil_v5/ARM/VHT", help="AVH folder")
@@ -12,10 +13,14 @@ parser.add_argument('-d', action='store_true', help="Debug log")
 parser.add_argument('-n', action='store_true', help="No force rebuild")
 parser.add_argument('-r', action='store_true', help="Raw results only")
 parser.add_argument('-c', action='store_true', help="Display cycles (so passing test are displayed)")
-parser.add_argument('-l', action='store_true', help="Local run (not github action)")
 
 args = parser.parse_args()
 
+
+GHACTION = False 
+
+if "AVH_FVP_PLUGINS" in os.environ:
+    GHACTION = True
 
 DEBUG=False 
 if args.d:
@@ -332,7 +337,7 @@ with open("summary.html","w") as f:
                            print(res.msg,file=f)
     print(HTMLFOOTER,file=f)
 
-if args.l:
+if not GHACTION:
    if ERROR_OCCURED:
        sys.exit("Error occurred")
    else:
