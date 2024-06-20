@@ -1,26 +1,4 @@
 project:
-  setups:
-    - setup: Cortex-A9
-      define:
-        - ARM_MATH_AUTOVECTORIZE
-        - DISABLEFLOAT16
-      for-context: 
-        - +FVP_A9Neon
-
-    - setup: Cortex-A5 or A7
-      define:
-        - ARM_MATH_NEON
-        - DISABLEFLOAT16
-      for-context: 
-        - +FVP_A5Neon
-        - +FVP_A7Neon
-
-    - setup: Any Cortex-M
-      not-for-context: 
-        - +FVP_A5Neon
-        - +FVP_A7Neon
-        - +FVP_A9Neon
-
   groups:
     - group: App
       files:
@@ -144,15 +122,191 @@ project:
         - file: ../Source/Tests/UnaryTestsQ31.cpp
         - file: ../Source/Tests/WindowTestsF32.cpp
         - file: ../Source/Tests/WindowTestsF64.cpp
+  define:
+      - EMBEDDED
+  add-path:
+      - ../FrameworkInclude
+      - ../GeneratedInclude
+      - ../Include/Tests
 
   # A CMSIS-DSP Layer is used to be able to build
   # and test with the current source version
   # without requring to install a CMSIS Pack
   layers:
-    - layer: boot.clayer.yml 
     - layer: dsp.clayer.yml 
     
-
   components:
     - component: ARM::CMSIS:CORE
-    
+    - component: ARM::Device:Startup&C Startup
+    - component: ARM::Device:Definition
+      for-context: 
+          - +VHT-Corstone-300
+          - +MPS3-Corstone-300
+          - +VHT-Corstone-300-NOMVE
+    - component: CMSIS-Compiler:CORE
+      for-context: 
+          - +MPS3-Corstone-300
+    - component: CMSIS-Compiler:STDOUT:Custom@1.0.0
+      for-context: 
+          - +MPS3-Corstone-300
+    - component: ARM::Device:USART STDOUT
+      for-context: 
+          - +MPS3-Corstone-300
+    - component: ARM::CMSIS Driver:USART
+      for-context: 
+          - +MPS3-Corstone-300
+    - component: ARM::Device:Native Driver:SysCounter
+      for-context: 
+          - +VHT-Corstone-300
+          - +MPS3-Corstone-300
+          - +VHT-Corstone-300-NOMVE
+    - component: ARM::Device:Native Driver:SysTimer
+      for-context: 
+          - +VHT-Corstone-300
+          - +MPS3-Corstone-300
+          - +VHT-Corstone-300-NOMVE
+    - component: ARM::Device:Native Driver:Timeout
+      for-context: 
+          - +VHT-Corstone-300
+          - +MPS3-Corstone-300
+          - +VHT-Corstone-300-NOMVE
+    - component: ARM::Device:Native Driver:UART
+      for-context: 
+          - +MPS3-Corstone-300
+  
+  linker:
+  ######################## SSE300
+    - script: linker_scripts/gcc_sse300_mps3.ld
+      for-context:
+        - +MPS3-Corstone-300
+        - +VHT-Corstone-300
+        - +VHT-Corstone-300-NOMVE
+      for-compiler: GCC
+
+    - script: linker_scripts/clang_sse300_mps3.sct
+      for-context:
+        - +MPS3-Corstone-300
+        - +VHT-Corstone-300
+        - +VHT-Corstone-300-NOMVE
+      for-compiler: CLANG
+
+    - script: linker_scripts/ac6_sse300_mps3_s.sct
+      for-context:
+        - +MPS3-Corstone-300
+        - +VHT-Corstone-300
+        - +VHT-Corstone-300-NOMVE
+      for-compiler: AC6
+
+    - regions: linker_scripts/SSE-300-MPS3/region_defs.h
+      for-context:
+        - +MPS3-Corstone-300
+        - +VHT-Corstone-300
+        - +VHT-Corstone-300-NOMVE
+
+  ######################## M33
+    - script: linker_scripts/gcc_m33_mps3.ld
+      for-context:
+        - +VHT_M33
+      for-compiler: GCC
+
+    - script: linker_scripts/clang_m33_mps3.ld
+      for-context:
+        - +VHT_M33
+      for-compiler: CLANG
+
+    - script: linker_scripts/ac6_m33_mps3_s.sct
+      for-context:
+        - +VHT_M33
+      for-compiler: AC6
+
+    - regions: linker_scripts/ARMCM33_DSP_FP/region_defs.h
+      for-context:
+        - +VHT_M33
+
+  ######################## M7
+    - script: linker_scripts/gcc_m7_mps3.ld
+      for-context:
+        - +VHT_M7_UNROLLED
+        - +VHT_M7
+      for-compiler: GCC
+
+    - script: linker_scripts/clang_m7_mps3.ld
+      for-context:
+        - +VHT_M7_UNROLLED
+        - +VHT_M7
+      for-compiler: CLANG
+
+    - script: linker_scripts/ac6_m7_mps3_s.sct
+      for-context:
+        - +VHT_M7_UNROLLED
+        - +VHT_M7
+      for-compiler: AC6
+
+    - regions: linker_scripts/ARMCM7_DP/region_defs.h
+      for-context:
+        - +VHT_M7_UNROLLED
+        - +VHT_M7
+
+  ######################## M4
+    - script: linker_scripts/gcc_m4_mps3.ld
+      for-context:
+        - +VHT_M4
+      for-compiler: GCC
+
+    - script: linker_scripts/clang_m4_mps3.ld
+      for-context:
+        - +VHT_M4
+      for-compiler: CLANG
+
+    - script: linker_scripts/ac6_m4_mps3_s.sct
+      for-context:
+        - +VHT_M4
+      for-compiler: AC6
+
+    - regions: linker_scripts/ARMCM4/region_defs.h
+      for-context:
+        - +VHT_M4
+
+
+
+  ######################## M3
+    - script: linker_scripts/gcc_m3_mps3.ld
+      for-context:
+        - +VHT_M3
+      for-compiler: GCC
+
+    - script: linker_scripts/clang_m3_mps3.ld
+      for-context:
+        - +VHT_M3
+      for-compiler: CLANG
+
+    - script: linker_scripts/ac6_m3_mps3_s.sct
+      for-context:
+        - +VHT_M3
+      for-compiler: AC6
+
+    - regions: linker_scripts/ARMCM3/region_defs.h
+      for-context:
+        - +VHT_M3
+
+
+  ######################## M0P
+    - script: linker_scripts/gcc_m0p_mps3.ld
+      for-context:
+        - +VHT_M0P
+      for-compiler: GCC
+
+    - script: linker_scripts/clang_m0p_mps3.ld
+      for-context:
+        - +VHT_M0P
+      for-compiler: CLANG
+
+    - script: linker_scripts/ac6_m0p_mps3_s.sct
+      for-context:
+        - +VHT_M0P
+      for-compiler: AC6
+
+    - regions: linker_scripts/ARMCM0P/region_defs.h
+      for-context:
+        - +VHT_M0P
+

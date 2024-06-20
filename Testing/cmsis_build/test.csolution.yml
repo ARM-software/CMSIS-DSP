@@ -1,0 +1,202 @@
+solution:
+  compiler: AC6
+
+  language-C: c11
+  language-CPP: c++17
+  cdefault:
+
+  packs:
+    - pack: ARM::CMSIS@6.0.0
+    - pack: ARM::V2M_MPS3_SSE_300_BSP@1.4.0
+    - pack: ARM::CMSIS-Compiler@2.0.0
+    - pack: ARM::Cortex_DFP@1.0.0
+
+  target-types:
+    - type: MPS3-Corstone-300
+      device: ARM::SSE-300-MPS3
+      board: ARM::V2M-MPS3-SSE-300-FVP
+      define:
+        - CORTEXM
+        - SSE300MPS3
+        - MPS3
+        - ARMCM55
+      misc:
+        - for-compiler: GCC
+          C:
+            - -Wno-sign-compare
+            - -Wno-unused-parameter
+          CPP:
+            - -Wno-sign-compare
+            - -Wno-unused-parameter
+          Link:
+            - --specs=nosys.specs            
+        - for-compiler: CLANG
+          C:
+            - -Wno-sign-compare
+            - -Wno-unused-parameter
+          CPP:
+            - -Wno-sign-compare
+            - -Wno-unused-parameter
+          Link:
+            - -lcrt0
+
+    - type: VHT-Corstone-300
+      device: ARM::SSE-300-MPS3
+      board: ARM::V2M-MPS3-SSE-300-FVP
+      define:
+        - CORTEXM
+        - ARMCM55
+        - SSE300MPS3
+        - VHT
+      misc:
+        - for-compiler: GCC
+          Link:
+            - --specs=rdimon.specs
+          Library:
+            - -lrdimon
+        - for-compiler: CLANG
+          Link:
+            - -lcrt0-semihost
+            - -lsemihost
+
+    - type: VHT-Corstone-300-NOMVE
+      device: ARM::SSE-300-MPS3
+      board: ARM::V2M-MPS3-SSE-300-FVP
+      define:
+        - CORTEXM
+        - ARMCM55
+        - SSE300MPS3
+        - VHT
+        - ARM_MATH_AUTOVECTORIZE # The pack force MVE so 
+        # we have to disable but autovectorization still generating MVE
+      misc:
+        - for-compiler: AC6
+          C: 
+            - -mcpu=cortex-m55+nomve
+        - for-compiler: GCC
+          C: 
+            - -mcpu=cortex-m55+nomve
+          Link:
+            - --specs=rdimon.specs
+          Library:
+            - -lrdimon
+        - for-compiler: CLANG
+          C: 
+            - -mcpu=cortex-m55+nomve
+          Link:
+            - -lcrt0-semihost
+            - -lsemihost
+
+    - type: VHT_M33
+      device: ARMCM33
+      define:
+        - CORTEXM
+        - ARMCM33
+        - VHT
+      misc:
+        - for-compiler: GCC
+          Link:
+            - --specs=rdimon.specs
+          Library:
+            - -lrdimon
+        - for-compiler: CLANG
+          Link:
+            - -lcrt0-semihost
+            - -lsemihost
+
+    - type: VHT_M7
+      device: ARMCM7
+      define:
+        - CORTEXM
+        - ARMCM7
+        - VHT
+      misc:
+        - for-compiler: GCC
+          Link:
+            - --specs=rdimon.specs
+          Library:
+            - -lrdimon
+        - for-compiler: CLANG
+          Link:
+            - -lcrt0-semihost
+            - -lsemihost
+
+    - type: VHT_M7_UNROLLED
+      device: ARMCM7
+      define:
+        - CORTEXM
+        - ARM_MATH_LOOPUNROLL
+        - ARMCM7_DP
+        - VHT
+      misc:
+        - for-compiler: GCC
+          Link:
+            - --specs=rdimon.specs
+          Library:
+            - -lrdimon
+        - for-compiler: CLANG
+          Link:
+            - -lcrt0-semihost
+            - -lsemihost
+
+    - type: VHT_M4
+      device: ARMCM4
+      define:
+        - CORTEXM
+        - ARMCM4
+        - VHT 
+      misc:
+        - for-compiler: GCC
+          Link:
+            - --specs=rdimon.specs
+          Library:
+            - -lrdimon
+        - for-compiler: CLANG
+          Link:
+            - -lcrt0-semihost
+            - -lsemihost
+
+    - type: VHT_M3
+      device: ARMCM3
+      define:
+        - CORTEXM
+        - ARMCM3
+        - VHT 
+      misc:
+        - for-compiler: GCC
+          Link:
+            - --specs=rdimon.specs
+          Library:
+            - -lrdimon
+        - for-compiler: CLANG
+          Link:
+            - -lcrt0-semihost
+            - -lsemihost
+
+    - type: VHT_M0P
+      device: ARMCM0P
+      define:
+        - CORTEXM
+        - ARMCM0P
+        - VHT
+      misc:
+        - for-compiler: GCC
+          Link:
+            - --specs=rdimon.specs
+          Library:
+            - -lrdimon
+        - for-compiler: CLANG
+          Link:
+            - -lcrt0-semihost
+            - -lsemihost
+
+
+
+  build-types:
+    - type: Release
+      debug: on
+
+
+  projects:
+    - project: ./test.cproject.yml
+    
