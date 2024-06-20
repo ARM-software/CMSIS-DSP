@@ -59,7 +59,7 @@ jobs:
           cd cmsis_build
 
           echo "Load missing pack"
-          csolution list packs -s  test_ac6.csolution.yml -m > required_packs.txt
+          csolution list packs -s  test.csolution.yml -m > required_packs.txt
           
           cat required_packs.txt
           cpackget add -a -f required_packs.txt
