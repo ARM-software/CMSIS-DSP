@@ -58,9 +58,9 @@ MEMORY
   ROM3  (rx!w)  : ORIGIN = __ROM3_BASE, LENGTH = __ROM3_SIZE
 #endif
 
-  RAM0  (w!rx) : ORIGIN = S_DATA_START, LENGTH = S_DATA_SIZE + 0x000000
-#if S_DDR4_SIZE > 0
-  RAM1  (rw) : ORIGIN = S_DDR4_START, LENGTH = S_DDR4_SIZE + 0x000000
+  RAM0  (w!rx) : ORIGIN = S_DDR4_START, LENGTH = S_DDR4_SIZE + 0x000000
+#if __RAM1_SIZE > 0
+  RAM1  (rw) : ORIGIN = __RAM1_BASE, LENGTH = __RAM1_SIZE + 0x000000
 #endif
 #if __RAM2_SIZE > 0
   RAM2  (w!rx) : ORIGIN = __RAM2_BASE, LENGTH = __RAM2_SIZE
@@ -87,7 +87,7 @@ SECTIONS
 		KEEP (*(.text.init.enter))
 		KEEP (*(.data.init.enter))
 		KEEP (*(SORT_BY_NAME(.init) SORT_BY_NAME(.init.*)))
-	} >ROM0 AT>ROM0 :text
+	} >RAM0 AT>RAM0 :text
 
 	.text : {
 
@@ -133,19 +133,19 @@ SECTIONS
 		KEEP (*(.fini_array .dtors))
 		PROVIDE_HIDDEN ( __fini_array_end = . );
 
-	} >ROM0 AT>ROM0 :text
+	} >RAM0 AT>RAM0 :text
 
 #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 	.veneers :
 	{
 		. = ALIGN(32);
 		KEEP(*(.gnu.sgstubs))
-	} > ROM0 AT>ROM0 :text
+	} > RAM0 AT>RAM0 :text
 #endif
 
 	.toc : {
 		*(.toc .toc.*)
-	} >ROM0 AT>ROM0 :text
+	} >RAM0 AT>RAM0 :text
 
 	/* additional sections when compiling with C++ exception support */
 
@@ -153,7 +153,7 @@ SECTIONS
 		*(.gcc_except_table *.gcc_except_table.*)
 		KEEP (*(.eh_frame .eh_frame.*))
 		*(.ARM.extab* .gnu.linkonce.armextab.*)
-	} >ROM0 AT>ROM0 :text
+	} >RAM0 AT>RAM0 :text
 
 	.except_unordered : {
 		. = ALIGN(8);
@@ -161,7 +161,7 @@ SECTIONS
 		PROVIDE(__exidx_start = .);
 		*(.ARM.exidx*)
 		PROVIDE(__exidx_end = .);
-	} >ROM0 AT>ROM0 :text
+	} >RAM0 AT>RAM0 :text
 
 
 	/*
@@ -188,7 +188,7 @@ SECTIONS
 		PROVIDE( __global_pointer$ = . + 0x800 );
 		*(.sdata .sdata.* .sdata2.*)
 		*(.gnu.linkonce.s.*)
-	} >RAM1 AT>ROM0 :ram_init
+	} >RAM0 AT>RAM0 :ram_init
 	PROVIDE(__data_start = ADDR(.data));
 	PROVIDE(__data_source = LOADADDR(.data));
 
@@ -204,7 +204,7 @@ SECTIONS
 		*(.tdata .tdata.* .gnu.linkonce.td.*)
 		PROVIDE(__data_end = .);
 		PROVIDE(__tdata_end = .);
-	} >RAM1 AT>ROM0 :tls :ram_init
+	} >RAM0 AT>RAM0 :tls :ram_init
 	PROVIDE( __tls_base = ADDR(.tdata));
 	PROVIDE( __tdata_start = ADDR(.tdata));
 	PROVIDE( __tdata_source = LOADADDR(.tdata) );
@@ -224,7 +224,7 @@ SECTIONS
 		*(.tcommon)
 		PROVIDE( __tls_end = . );
 		PROVIDE( __tbss_end = . );
-	} >RAM1 AT>RAM1 :tls :ram
+	} >RAM0 AT>RAM0 :tls :ram
 	PROVIDE( __bss_start = ADDR(.tbss));
 	PROVIDE( __tbss_start = ADDR(.tbss));
 	PROVIDE( __tbss_offset = ADDR(.tbss) - ADDR(.tdata) );
@@ -260,7 +260,7 @@ SECTIONS
 		/* Align the heap */
 		. = ALIGN(8);
 		__bss_end = .;
-	} >RAM1 AT>RAM1 :ram
+	} >RAM0 AT>RAM0 :ram
 	PROVIDE( __non_tls_bss_start = ADDR(.bss) );
 	PROVIDE( __end = __bss_end );
 	PROVIDE( _end = __bss_end );
@@ -278,21 +278,21 @@ SECTIONS
 #endif
 	.heap (NOLOAD) : {
 		. += __heap_size;
-	} >RAM1 :ram
+	} >RAM0 :ram
 
 	/* Define a stack region to make sure it fits in memory */
-	PROVIDE(__stack = ORIGIN(RAM1) + LENGTH(RAM1) - __STACKSEAL_SIZE);
+	PROVIDE(__stack = ORIGIN(RAM0) + LENGTH(RAM0) - __STACKSEAL_SIZE);
 	PROVIDE(__stack_limit = __stack - STACK_SIZE);
 	.stack (__stack_limit) (NOLOAD) : {
 		. += STACK_SIZE;
-	} >RAM1 :ram
+	} >RAM0 :ram
 
 #if __STACKSEAL_SIZE > 0
 	PROVIDE(__stack_seal = __stack);
   	.stackseal (__stack) (NOLOAD) :
   	{
     	. += __STACKSEAL_SIZE;
-  	} >RAM1 :ram
+  	} >RAM0 :ram
 #endif
 
 	/* Throw away C++ exception handling information */

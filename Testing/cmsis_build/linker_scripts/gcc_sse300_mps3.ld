@@ -41,9 +41,9 @@ MEMORY
   ROM3  (rx)  : ORIGIN = __ROM3_BASE, LENGTH = __ROM3_SIZE
 #endif
 
-  RAM0  (rw) : ORIGIN = S_DATA_START, LENGTH = S_DATA_SIZE
-#if S_DDR4_SIZE > 0
-  RAM1  (rw) : ORIGIN = S_DDR4_START, LENGTH = S_DDR4_SIZE
+  RAM0  (rw) : ORIGIN = S_DDR4_START, LENGTH = S_DDR4_SIZE
+#if __RAM1_SIZE > 0
+  RAM1  (rw) : ORIGIN = __RAM1_BASE, LENGTH = __RAM1_SIZE
 #endif
 #if __RAM2_SIZE > 0
   RAM2  (rw) : ORIGIN = __RAM2_BASE, LENGTH = __RAM2_SIZE
@@ -112,25 +112,25 @@ SECTIONS
     /* *(.rodata*) */
 
     KEEP(*(.eh_frame*))
-  } > ROM0
+  } > RAM0
 
 #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
   .gnu.sgstubs :
   {
     . = ALIGN(32);
-  } > ROM0
+  } > RAM0
 #endif
 
   .ARM.extab :
   {
     *(.ARM.extab* .gnu.linkonce.armextab.*)
-  } > ROM0
+  } > RAM0
 
   __exidx_start = .;
   .ARM.exidx :
   {
     *(.ARM.exidx* .gnu.linkonce.armexidx.*)
-  } > ROM0
+  } > RAM0
   __exidx_end = .;
 
   .copy.table :
@@ -149,7 +149,7 @@ SECTIONS
     LONG (SIZEOF(.data2) / 4)
 */
     __copy_table_end__ = .;
-  } > ROM0
+  } > RAM0
 
   .zero.table :
   {
@@ -167,7 +167,7 @@ SECTIONS
     LONG (SIZEOF(.bss2) / 4)
 */
     __zero_table_end__ = .;
-  } > ROM0
+  } > RAM0
 
   /*
    * This __etext variable is kept for backward compatibility with older,
@@ -208,7 +208,7 @@ SECTIONS
     /* All data end */
     __data_end__ = .;
 
-  } > RAM0 AT > ROM0
+  } > RAM0
 
   /*
    * Secondary data section, optional
@@ -239,7 +239,7 @@ SECTIONS
     *(COMMON)
     . = ALIGN(4);
     __bss_end__ = .;
-  } > RAM0 AT > RAM0
+  } > RAM0
 
   /*
    * Secondary bss section, optional
@@ -268,26 +268,26 @@ SECTIONS
     . = . + HEAP_SIZE;
     . = ALIGN(8);
     __HeapLimit = .;
-  } > RAM1
+  } > RAM0
 
-  .stack (ORIGIN(RAM1) + LENGTH(RAM1) - STACK_SIZE - __STACKSEAL_SIZE) (NOLOAD) :
+  .stack (ORIGIN(RAM0) + LENGTH(RAM0) - STACK_SIZE - __STACKSEAL_SIZE) (NOLOAD) :
   {
     . = ALIGN(8);
     __StackLimit = .;
     . = . + STACK_SIZE;
     . = ALIGN(8);
     __StackTop = .;
-  } > RAM1
+  } > RAM0
   PROVIDE(__stack = __StackTop);
 
 #if __STACKSEAL_SIZE > 0
-  .stackseal (ORIGIN(RAM1) + LENGTH(RAM1) - __STACKSEAL_SIZE) (NOLOAD) :
+  .stackseal (ORIGIN(RAM0) + LENGTH(RAM0) - __STACKSEAL_SIZE) (NOLOAD) :
   {
     . = ALIGN(8);
     __StackSeal = .;
     . = . + 8;
     . = ALIGN(8);
-  } > RAM1
+  } > RAM0
 #endif
 
   /* Check if data + heap + stack exceeds RAM limit */

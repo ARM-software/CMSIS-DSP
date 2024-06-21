@@ -110,9 +110,9 @@ def run(*args,mustPrint=False,dumpStdErr=True):
 configFiles={
     "CS310":"ARM_VHT_Corstone_310_config.txt",
     "CS300":{
-       "AC6":"ARM_VHT_Corstone_300_config_AC6.txt",
-       "GCC":"ARM_VHT_Corstone_300_config.txt",
-       "CLANG":"ARM_VHT_Corstone_300_config.txt"
+       "AC6":"ARM_VHT_Corstone_300_config_ext.txt",
+       "GCC":"ARM_VHT_Corstone_300_config_ext.txt",
+       "CLANG":"ARM_VHT_Corstone_300_config_ext.txt"
     },
     "M55":"ARM_VHT_MPS2_M55_config.txt",
     "M33_DSP_FP":"ARM_VHT_MPS2_M33_DSP_FP_config.txt",
@@ -201,10 +201,10 @@ for t in tests:
 
 
 #allSuites=[
-#("DECIMF64","../Output.pickle"),
-#("BasicTestsF32","../Output.pickle"),
+#("TransformCF64","../Output.pickle"),
+##("BasicTestsF32","../Output.pickle"),
 #("BasicTestsF16","../Output_f16.pickle"),
-#("UnaryTestsF16","../Output_f16.pickle"),
+##("UnaryTestsF16","../Output_f16.pickle"),
 #]
 
 # Solution and build file for all
@@ -246,15 +246,15 @@ compil_config={
 #compil_config={
 #    'AC6':[
 #      #("VHT-Corstone-300-NOMVE","CS300"),
-#      ("VHT-Corstone-300","CS300"),
+#      ("VHT_M33","M33_DSP_FP"),
 #    ],
 #    'GCC':[
-#      ("VHT-Corstone-300","CS300"),
+#      ("VHT_M33","M33_DSP_FP"),
 #     # ("VHT-Corstone-300-NOMVE","CS300"),
 #    ],
 #    'CLANG':[
 #      #("VHT-Corstone-300-NOMVE","CS300"),
-#      ("VHT-Corstone-300","CS300"),
+#      ("VHT_M33","M33_DSP_FP"),
 #    ]
 #}
 
