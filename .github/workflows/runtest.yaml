@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        compiler: [AC6, CLANG] # GCC issues so disabled in the tests for now
+        compiler: [AC6, CLANG, GCC]
     runs-on: ubuntu-latest    
 
     steps:

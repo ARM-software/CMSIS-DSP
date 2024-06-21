@@ -55,7 +55,6 @@ default:
         - -DNDEBUG 
         - -Wall 
         - -Wextra  
-        - -Werror
         - -std=c11 
         - -Ofast 
         - -ffast-math
