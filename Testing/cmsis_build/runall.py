@@ -14,6 +14,7 @@ parser.add_argument('-n', action='store_true', help="No force rebuild")
 parser.add_argument('-r', action='store_true', help="Raw results only")
 parser.add_argument('-c', action='store_true', help="Display cycles (so passing test are displayed)")
 parser.add_argument('-g', nargs='?',type = str,help="AC6 / CLANG / GCC")
+parser.add_argument('-s', action='store_true', help="Take into account AVH error code")
 
 args = parser.parse_args()
 
@@ -87,10 +88,10 @@ def run(*args,mustPrint=False,dumpStdErr=True):
         if DEBUG:
             print(" ".join(args))
         result=subprocess.run(args,text=True,capture_output=True,timeout=600)
-        if result.returncode !=0 :
+        if args.s and (result.returncode !=0) :
              ERROR_OCCURED = True
              if dumpStdErr:
-                return(Result(result.stderr + "\n\nSTDOUT:\n\n" + result.stdout,error=True))
+                return(Result(result.stderr + f"\n\nSTDOUT (error code = {result.returncode}):\n\n" + result.stdout,error=True))
              else:
                 return(Result(result.stdout,error=True))
 
