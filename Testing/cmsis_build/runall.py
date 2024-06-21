@@ -201,13 +201,13 @@ for t in tests:
 
 
 
-allSuites=[
-("MISCF32","../Output.pickle"),
-("MISCQ31","../Output.pickle"),
-("SupportTestsF16","../Output_f16.pickle"),
-##("BasicTestsF32","../Output.pickle"),
-#("BasicTestsF16","../Output_f16.pickle"),
-]
+#allSuites=[
+#("MISCF32","../Output.pickle"),
+#("MISCQ31","../Output.pickle"),
+#("SupportTestsF16","../Output_f16.pickle"),
+###("BasicTestsF32","../Output.pickle"),
+##("BasicTestsF16","../Output_f16.pickle"),
+#]
 
 # Solution and build file for all
 # the tests
@@ -245,20 +245,20 @@ compil_config={
 }
 
 #Override previous solutions for more restricted testing.
-compil_config={
-    'AC6':[
-      ("VHT-Corstone-300","CS300"),
-      ("VHT_M33","M33_DSP_FP"),
-    ],
-    'GCC':[
-      ("VHT-Corstone-300","CS300"),
-      ("VHT_M33","M33_DSP_FP"),
-    ],
-    'CLANG':[
-      ("VHT-Corstone-300","CS300"),
-      ("VHT_M33","M33_DSP_FP"),
-    ]
-}
+#compil_config={
+#    'AC6':[
+#      ("VHT-Corstone-300","CS300"),
+#      ("VHT_M33","M33_DSP_FP"),
+#    ],
+#    'GCC':[
+#      ("VHT-Corstone-300","CS300"),
+#      ("VHT_M33","M33_DSP_FP"),
+#    ],
+#    'CLANG':[
+#      ("VHT-Corstone-300","CS300"),
+#      ("VHT_M33","M33_DSP_FP"),
+#    ]
+#}
 
 
 
