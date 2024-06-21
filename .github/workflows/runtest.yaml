@@ -75,7 +75,7 @@ jobs:
           cd Testing/cmsis_build
           echo "Running tests"
 
-          python runall.py -g ${{ matrix.compiler }} -avh $AVH_FVP_PLUGINS/../bin
+          python runall.py -s -g ${{ matrix.compiler }} -avh $AVH_FVP_PLUGINS/../bin
 
       - name: Upload test report
         uses: actions/upload-artifact@v4
