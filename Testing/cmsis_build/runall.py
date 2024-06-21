@@ -81,14 +81,14 @@ class Result:
 # in case of error since the test report is giving
 # all the details. So, there is an option to
 # disable the dump of stderr
-def run(*args,mustPrint=False,dumpStdErr=True):
+def run(*args,mustPrint=False,dumpStdErr=True,withExitCodeCheck=True):
     global ERROR_OCCURED
     global DEBUG
     try:
         if DEBUG:
             print(" ".join(args))
         result=subprocess.run(args,text=True,capture_output=True,timeout=600)
-        if args.s and (result.returncode !=0) :
+        if withExitCodeCheck and (result.returncode !=0) :
              ERROR_OCCURED = True
              if dumpStdErr:
                 return(Result(result.stderr + f"\n\nSTDOUT (error code = {result.returncode}):\n\n" + result.stdout,error=True))
@@ -178,7 +178,7 @@ def runAVH(build,core,compiler):
 
 
     
-    res=run(avh,"-f",config,app)
+    res=run(avh,"-f",config,app,withExitCodeCheck=args.s)
     return(res)
    
 ####################
@@ -248,15 +248,15 @@ compil_config={
 compil_config={
     'AC6':[
       ("VHT-Corstone-300","CS300"),
-      #("VHT_M33","M33_DSP_FP"),
+      ("VHT_M33","M33_DSP_FP"),
     ],
     'GCC':[
-      #("VHT_M33","M33_DSP_FP"),
       ("VHT-Corstone-300","CS300"),
+      ("VHT_M33","M33_DSP_FP"),
     ],
     'CLANG':[
       ("VHT-Corstone-300","CS300"),
-      #("VHT_M33","M33_DSP_FP"),
+      ("VHT_M33","M33_DSP_FP"),
     ]
 }
 
