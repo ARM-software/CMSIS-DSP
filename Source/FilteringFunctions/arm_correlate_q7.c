@@ -921,7 +921,7 @@ void arm_correlate_q7(
   const q7_t *pIn2 = pSrcB + (srcBLen - 1U);           /* InputB pointer */
         q31_t sum;                                     /* Accumulator */
         uint32_t i = 0U, j;                            /* Loop counters */
-        uint32_t inv = 0U;                             /* Reverse order flag */
+        int32_t inc = 1;                               /* Destination address modifier */
         uint32_t tot = 0U;                             /* Length */
 
   /* The algorithm implementation is based on the lengths of the inputs. */
@@ -929,7 +929,7 @@ void arm_correlate_q7(
   /* So srcBLen is always considered as shorter or equal to srcALen */
   /* But CORR(x, y) is reverse of CORR(y, x) */
   /* So, when srcBLen > srcALen, output pointer is made to point to the end of the output buffer */
-  /* and a varaible, inv is set to 1 */
+  /* and a varaible, inc is set to -1 */
   /* If lengths are not equal then zero pad has to be done to  make the two
    * inputs of same length. But to improve the performance, we include zeroes
    * in the output instead of zero padding either of the the inputs*/
@@ -968,8 +968,8 @@ void arm_correlate_q7(
     srcALen = srcBLen;
     srcBLen = j;
 
-    /* Setting the reverse flag */
-    inv = 1;
+    /* Filling destination in reverse order */
+    inc = -1;
   }
 
   /* Loop to calculate convolution for output length number of times */
@@ -990,10 +990,8 @@ void arm_correlate_q7(
     }
 
     /* Store the output in the destination buffer */
-    if (inv == 1)
-      *pDst-- = (q7_t) __SSAT((sum >> 7U), 8U);
-    else
-      *pDst++ = (q7_t) __SSAT((sum >> 7U), 8U);
+    *pDst = (q7_t) __SSAT((sum >> 7U), 8U);
+    pDst += inc;
   }
 
 #endif /* #if !defined(ARM_MATH_CM0_FAMILY) */
