@@ -4,3 +4,4 @@ results*.txt
 *.cbuild.yml
 *.cbuild-idx.yml
 disasm.s
+cprj/

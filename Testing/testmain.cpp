@@ -5,6 +5,7 @@
 #if defined(EMBEDDED)
 #include "FPGA.h"
 #else
+#error("Only EMBEDDED mode is supported. Other modes are deprecated")
 #include "Semihosting.h"
 #endif
 #include "IORunner.h"

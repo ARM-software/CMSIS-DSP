@@ -12,6 +12,10 @@ permissions:
 
 jobs:
    CI_test_run: 
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [AC6, CLANG, GCC]
     runs-on: ubuntu-latest    
 
     steps:
@@ -30,6 +34,8 @@ jobs:
 
       - name: Activate vcpkg
         uses: ARM-software/cmsis-actions/vcpkg@v1
+        with:
+          cache: "-${{ matrix.compiler }}"
 
       - name: Activate Arm tool license
         uses: ARM-software/cmsis-actions/armlm@v1
@@ -59,7 +65,7 @@ jobs:
           cd cmsis_build
 
           echo "Load missing pack"
-          csolution list packs -s  test_ac6.csolution.yml -m > required_packs.txt
+          csolution list packs -s  test.csolution.yml -m > required_packs.txt
           
           cat required_packs.txt
           cpackget add -a -f required_packs.txt
@@ -69,13 +75,13 @@ jobs:
           cd Testing/cmsis_build
           echo "Running tests"
 
-          python runall.py -avh $AVH_FVP_PLUGINS/../bin
+          python runall.py -s -g ${{ matrix.compiler }} -avh $AVH_FVP_PLUGINS/../bin
 
       - name: Upload test report
         uses: actions/upload-artifact@v4
         with:
-          name: test-report
-          path: Testing/cmsis_build/summary.html
+          name: test-report_${{ matrix.compiler }}
+          path: Testing/cmsis_build/summary_${{ matrix.compiler }}.html
 
       
       - name: Check error
@@ -83,4 +89,4 @@ jobs:
           cd Testing/cmsis_build
           
           echo "Checking output..."
-          test "$(grep "Error" summary.html | wc -l)" -eq 0
+          test "$(grep "Error" summary_${{ matrix.compiler }}.html | wc -l)" -eq 0
