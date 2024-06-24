@@ -33,9 +33,6 @@ jobs:
         uses: ARM-software/cmsis-actions/vcpkg@v1
         with:
           config: "./vcpkg-neon-configuration.json"
-
-      - name: Activate Arm tool license
-        uses: ARM-software/cmsis-actions/armlm@v1
   
       - name: Prepare framework
         run: |
