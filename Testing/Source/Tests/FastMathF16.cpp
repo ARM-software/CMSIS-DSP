@@ -74,7 +74,7 @@ a double precision computation.
         }
         //printf("%f %f %f\n",inp[2*i],inp[2*i+1],outp[i]);
 
-        ASSERT_SNR(ref,output,(float16_t)SNR_ATAN2_THRESHOLD);
+        ASSERT_SNR(ref,output,SNR_ATAN2_THRESHOLD);
         ASSERT_CLOSE_ERROR(ref,output,ABS_ERROR_ATAN,REL_ERROR_ATAN);
 
     }
@@ -90,11 +90,11 @@ a double precision computation.
         for(i=0; i < ref.nbSamples(); i++)
         {
            status=arm_sqrt_f16(inp[i],&outp[i]);
-           ASSERT_TRUE((status == ARM_MATH_SUCCESS) || ((inp[i] < 0.0f) && (status == ARM_MATH_ARGUMENT_ERROR)));
+           ASSERT_TRUE((status == ARM_MATH_SUCCESS) || (((float)inp[i] < 0.0f) && (status == ARM_MATH_ARGUMENT_ERROR)));
         }
 
 
-        ASSERT_SNR(ref,output,(float16_t)SNR_THRESHOLD);
+        ASSERT_SNR(ref,output,SNR_THRESHOLD);
         ASSERT_CLOSE_ERROR(ref,output,ABS_ERROR,REL_ERROR);
 
 
@@ -108,7 +108,7 @@ a double precision computation.
 
         arm_vlog_f16(inp,outp,ref.nbSamples());
 
-        //ASSERT_SNR(ref,output,(float16_t)SNR_THRESHOLD);
+        ASSERT_SNR(ref,output,SNR_THRESHOLD);
         ASSERT_CLOSE_ERROR(ref,output,ABS_ERROR,REL_ERROR);
         ASSERT_EMPTY_TAIL(output);
 
@@ -122,7 +122,7 @@ a double precision computation.
         arm_vexp_f16(inp,outp,ref.nbSamples());
     
         ASSERT_CLOSE_ERROR(ref,output,ABS_ERROR,REL_ERROR);
-        ASSERT_SNR(ref,output,(float16_t)SNR_THRESHOLD);
+        ASSERT_SNR(ref,output,SNR_THRESHOLD);
         ASSERT_EMPTY_TAIL(output);
 
     }
@@ -136,7 +136,7 @@ a double precision computation.
         arm_vinverse_f16(inp,outp,ref.nbSamples());
 
         ASSERT_CLOSE_ERROR(ref,output,ABS_ERROR,REL_ERROR);
-        ASSERT_SNR(ref,output,(float16_t)SNR_THRESHOLD);
+        ASSERT_SNR(ref,output,SNR_THRESHOLD);
         ASSERT_EMPTY_TAIL(output);
 
     }

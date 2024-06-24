@@ -18,10 +18,10 @@ static __ALIGNED(8) float16_t coeffArray[32];
 
 static void checkInnerTail(float16_t *b)
 {
-    ASSERT_TRUE(b[0] == 0.0f);
-    ASSERT_TRUE(b[1] == 0.0f);
-    ASSERT_TRUE(b[2] == 0.0f);
-    ASSERT_TRUE(b[3] == 0.0f);
+    ASSERT_TRUE((float)b[0] == 0.0f);
+    ASSERT_TRUE((float)b[1] == 0.0f);
+    ASSERT_TRUE((float)b[2] == 0.0f);
+    ASSERT_TRUE((float)b[3] == 0.0f);
 }
 
 // Coef must be padded to a multiple of 4
@@ -127,7 +127,7 @@ static void checkInnerTail(float16_t *b)
 
         ASSERT_EMPTY_TAIL(output);
 
-        ASSERT_SNR(output,ref,(float16_t)SNR_THRESHOLD);
+        ASSERT_SNR(output,ref,SNR_THRESHOLD);
 
         ASSERT_REL_ERROR(output,ref,REL_ERROR);
 

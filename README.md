@@ -15,7 +15,6 @@ This repository contains the CMSIS-DSP library and several other projects:
 
 * Test framework for bare metal Cortex-M or Cortex-A
 * Examples for bare metal Cortex-M
-* ComputeGraph
 * PythonWrapper
 
 You don't need any of the other projects to build and use CMSIS-DSP library. Building the other projects may require installation of other libraries (CMSIS), other tools (Arm Virtual Hardware) or CMSIS build tools.
@@ -45,20 +44,6 @@ A [PythonWrapper](https://pypi.org/project/cmsisdsp/) is also available and can 
 With this wrapper you can design your algorithm in Python using an API as close as possible to the C API. The wrapper is compatible with NumPy. The wrapper is supporting fixed point arithmetic. This wrapper works in google colab.
 
 The goal is to make it easier to move from a design to a final implementation in C.
-
-### Compute Graph
-
-CMSIS-DSP is also providing an experimental [static scheduler for compute graph](ComputeGraph/README.md) to describe streaming solutions:
-
-* You define your compute graph in Python
-* A static and deterministic schedule (computed by the Python script) is generated
-* The static schedule can be run on the device with low overhead
-
-The Python scripts for the static scheduler generator are part of the CMSIS-DSP Python wrapper. 
-
-The header files are part of the CMSIS-DSP pack (version 1.10.2 and above).
-
-The Compute Graph makes it easier to implement a streaming solution : connecting different compute kernels each consuming and producing different amount of data.
 
 ## Support / Contact
 

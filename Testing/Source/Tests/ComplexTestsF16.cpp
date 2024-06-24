@@ -16,7 +16,7 @@
 
         ASSERT_EMPTY_TAIL(output);
 
-        ASSERT_SNR(output,ref,(float16_t)SNR_THRESHOLD);
+        ASSERT_SNR(output,ref,SNR_THRESHOLD);
 
         ASSERT_REL_ERROR(output,ref,REL_ERROR);
 
@@ -37,7 +37,7 @@
         outp[0] = re;
         outp[1] = im;
 
-        ASSERT_SNR(output,ref,(float16_t)SNR_THRESHOLD);
+        ASSERT_SNR(output,ref,SNR_THRESHOLD);
 
         ASSERT_REL_ERROR(output,ref,REL_ERROR);
 
@@ -53,7 +53,7 @@
         
         ASSERT_EMPTY_TAIL(output);
 
-        ASSERT_SNR(output,ref,(float16_t)SNR_THRESHOLD);
+        ASSERT_SNR(output,ref,SNR_THRESHOLD);
 
         ASSERT_REL_ERROR(output,ref,REL_ERROR);
     } 
@@ -68,7 +68,7 @@
         ASSERT_EMPTY_TAIL(output);
         
 
-        ASSERT_SNR(output,ref,(float16_t)SNR_THRESHOLD);
+        ASSERT_SNR(output,ref,SNR_THRESHOLD);
 
         ASSERT_REL_ERROR(output,ref,REL_ERROR);
     } 
@@ -84,7 +84,7 @@
         ASSERT_EMPTY_TAIL(output);
         
 
-        ASSERT_SNR(output,ref,(float16_t)SNR_THRESHOLD);
+        ASSERT_SNR(output,ref,SNR_THRESHOLD);
 
         ASSERT_REL_ERROR(output,ref,REL_ERROR);
     } 
@@ -100,7 +100,7 @@
         ASSERT_EMPTY_TAIL(output);
         
 
-        ASSERT_SNR(output,ref,(float16_t)SNR_THRESHOLD);
+        ASSERT_SNR(output,ref,SNR_THRESHOLD);
 
         ASSERT_REL_ERROR(output,ref,REL_ERROR);
     } 

@@ -38,7 +38,12 @@ PythonWrapper/build_linux/bin_dsp/
 PythonWrapper/build_linux/build.sh
 PythonWrapper/build_linux/cmake_install.cmake
 
-
+PythonWrapper/build_darwin/CMakeCache.txt
+PythonWrapper/build_darwin/CMakeFiles/
+PythonWrapper/build_darwin/Makefile
+PythonWrapper/build_darwin/bin_dsp/
+PythonWrapper/build_darwin/build.sh
+PythonWrapper/build_darwin/cmake_install.cmake
 
 # Output of the linkchecker tool
 linkchecker-out.csv

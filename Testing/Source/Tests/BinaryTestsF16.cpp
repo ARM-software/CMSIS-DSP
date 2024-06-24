@@ -74,7 +74,7 @@ a double precision computation.
 
       ASSERT_EMPTY_TAIL(output);
 
-      ASSERT_SNR(output,ref,(float16_t)SNR_THRESHOLD);
+      ASSERT_SNR(output,ref,SNR_THRESHOLD);
 
       ASSERT_CLOSE_ERROR(output,ref,ABS_ERROR,REL_ERROR);
 
@@ -102,7 +102,7 @@ a double precision computation.
 
       ASSERT_EMPTY_TAIL(output);
 
-      ASSERT_SNR(output,ref,(float16_t)SNR_THRESHOLD);
+      ASSERT_SNR(output,ref,SNR_THRESHOLD);
 
       ASSERT_CLOSE_ERROR(output,ref,ABS_ERROR,REL_ERROR);
 

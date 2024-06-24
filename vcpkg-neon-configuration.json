@@ -1,0 +1,14 @@
+{
+ "registries": [
+  {
+   "name": "arm",
+   "kind": "artifact",
+   "location": "https://artifacts.tools.arm.com/vcpkg-registry"
+  }
+ ],
+ "requires": {
+  "arm:tools/kitware/cmake": "3.28.4",
+  "arm:tools/ninja-build/ninja": "1.12.0",
+ }
+}
+

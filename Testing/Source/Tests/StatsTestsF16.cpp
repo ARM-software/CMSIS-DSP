@@ -39,7 +39,7 @@ a double precision computation.
         outp[0] = result;
         ind[0] = indexval;
 
-        ASSERT_EQ(result,refp[this->refOffset]);
+        ASSERT_EQ((float)result,(float)refp[this->refOffset]);
         ASSERT_EQ((int16_t)indexval,refind[this->refOffset]);
 
     }
@@ -65,7 +65,7 @@ a double precision computation.
         outp[0] = result;
         ind[0] = indexval;
 
-        ASSERT_EQ(result,refp[this->refOffset]);
+        ASSERT_EQ((float)result,(float)refp[this->refOffset]);
         ASSERT_EQ((int16_t)indexval,refind[this->refOffset]);
 
     }
@@ -87,7 +87,7 @@ a double precision computation.
 
         outp[0] = result;
 
-        ASSERT_EQ(result,refp[this->refOffset]);
+        ASSERT_EQ((float)result,(float)refp[this->refOffset]);
 
     }
 
@@ -107,7 +107,7 @@ a double precision computation.
 
         outp[0] = result;
 
-        ASSERT_EQ(result,refp[this->refOffset]);
+        ASSERT_EQ((float)result,(float)refp[this->refOffset]);
 
     }
 
@@ -127,7 +127,7 @@ a double precision computation.
 
         outp[0] = result;
 
-        ASSERT_EQ(result,refp[this->refOffset]);
+        ASSERT_EQ((float)result,(float)refp[this->refOffset]);
 
     }
 
@@ -147,7 +147,7 @@ a double precision computation.
 
         outp[0] = result;
 
-        ASSERT_EQ(result,refp[this->refOffset]);
+        ASSERT_EQ((float)result,(float)refp[this->refOffset]);
 
     }
 
@@ -173,7 +173,7 @@ a double precision computation.
         outp[0] = result;
         ind[0] = indexval;
 
-        ASSERT_EQ(result,refp[this->refOffset]);
+        ASSERT_EQ((float)result,(float)refp[this->refOffset]);
         ASSERT_EQ((int16_t)indexval,refind[this->refOffset]);
 
     }
@@ -199,7 +199,7 @@ a double precision computation.
         outp[0] = result;
         ind[0] = indexval;
 
-        ASSERT_EQ(result,refp[this->refOffset]);
+        ASSERT_EQ((float)result,(float)refp[this->refOffset]);
         ASSERT_EQ((int16_t)indexval,refind[this->refOffset]);
 
     }
@@ -220,7 +220,7 @@ a double precision computation.
 
         outp[0] = result;
 
-        ASSERT_SNR(result,refp[this->refOffset],(float16_t)SNR_THRESHOLD);
+        ASSERT_SNR(result,refp[this->refOffset],SNR_THRESHOLD);
 
         ASSERT_REL_ERROR(result,refp[this->refOffset],REL_ERROR);
 
@@ -242,7 +242,7 @@ a double precision computation.
 
         outp[0] = result;
 
-        ASSERT_SNR(result,refp[this->refOffset],(float16_t)SNR_THRESHOLD);
+        ASSERT_SNR(result,refp[this->refOffset],SNR_THRESHOLD);
 
         ASSERT_REL_ERROR(result,refp[this->refOffset],REL_ERROR);
 
@@ -264,7 +264,7 @@ a double precision computation.
 
         outp[0] = result;
 
-        ASSERT_SNR(result,refp[this->refOffset],(float16_t)SNR_THRESHOLD);
+        ASSERT_SNR(result,refp[this->refOffset],SNR_THRESHOLD);
 
         ASSERT_REL_ERROR(result,refp[this->refOffset],REL_ERROR);
 
@@ -286,7 +286,7 @@ a double precision computation.
 
         outp[0] = result;
 
-        ASSERT_SNR(result,refp[this->refOffset],(float16_t)SNR_THRESHOLD);
+        ASSERT_SNR(result,refp[this->refOffset],SNR_THRESHOLD);
 
         ASSERT_REL_ERROR(result,refp[this->refOffset],REL_ERROR);
 
@@ -308,7 +308,7 @@ a double precision computation.
 
         outp[0] = result;
 
-        ASSERT_SNR(result,refp[this->refOffset],(float16_t)SNR_THRESHOLD);
+        ASSERT_SNR(result,refp[this->refOffset],SNR_THRESHOLD);
 
         ASSERT_REL_ERROR(result,refp[this->refOffset],REL_ERROR);
 
@@ -354,7 +354,7 @@ a double precision computation.
 
 
       */
-      ASSERT_TRUE(fabs(5.47723f - result) < 0.32f);
+      ASSERT_TRUE(fabs(5.47723f - (float)result) < 0.32f);
 
     }
 
@@ -373,7 +373,7 @@ a double precision computation.
          inp += dimsp[i+1];
       }
 
-      ASSERT_SNR(ref,output,(float16_t)SNR_THRESHOLD);
+      ASSERT_SNR(ref,output,SNR_THRESHOLD);
 
       ASSERT_REL_ERROR(ref,output,REL_ERROR);
 
@@ -393,7 +393,7 @@ a double precision computation.
          inp += dimsp[i+1];
       }
 
-      ASSERT_SNR(ref,output,(float16_t)SNR_THRESHOLD);
+      ASSERT_SNR(ref,output,SNR_THRESHOLD);
 
       ASSERT_REL_ERROR(ref,output,REL_ERROR);
     } 
@@ -415,7 +415,7 @@ a double precision computation.
          inpB += dimsp[i+1];
       }
 
-      ASSERT_SNR(ref,output,(float16_t)SNR_KULLBACK_THRESHOLD);
+      ASSERT_SNR(ref,output,SNR_KULLBACK_THRESHOLD);
 
       ASSERT_CLOSE_ERROR(ref,output,ABS_KULLBACK_ERROR,REL_KULLBACK_ERROR);
     } 
@@ -437,7 +437,7 @@ a double precision computation.
          inpB += dimsp[i+1];
       }
 
-      ASSERT_SNR(ref,output,(float16_t)SNR_THRESHOLD);
+      ASSERT_SNR(ref,output,SNR_THRESHOLD);
 
       ASSERT_REL_ERROR(ref,output,REL_ERROR);
     } 
@@ -459,9 +459,9 @@ a double precision computation.
 
         outp[0] = result;
 
-        ASSERT_SNR(result,refp[this->refOffset],(float16_t)SNR_THRESHOLD);
+        ASSERT_SNR(result,refp[this->refOffset],SNR_THRESHOLD);
 
-        ASSERT_REL_ERROR(result,refp[this->refOffset],(float16_t)REL_ERROR);
+        ASSERT_REL_ERROR(result,refp[this->refOffset],REL_ERROR);
 
     }
 
@@ -478,7 +478,7 @@ a double precision computation.
          outp++;
       }
 
-      ASSERT_SNR(ref,output,(float16_t)SNR_THRESHOLD);
+      ASSERT_SNR(ref,output,SNR_THRESHOLD);
 
       ASSERT_REL_ERROR(ref,output,REL_ERROR_ACCUMULATE);
 

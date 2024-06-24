@@ -169,6 +169,8 @@ namespace Client {
 
 using namespace std;
 
+
+
 template <typename T> 
 void assert_equal(unsigned long nb,T pa, T pb)
 {
@@ -178,6 +180,13 @@ void assert_equal(unsigned long nb,T pa, T pb)
     }
    
 };
+
+#if defined(ARM_FLOAT16_SUPPORTED)
+
+template<>
+void assert_equal(unsigned long nb,float16_t pa, float16_t pb);
+
+#endif 
 
 template <typename T> 
 void assert_equal_partial(unsigned long nb,unsigned long nbSamples,AnyPattern<T> &pa, AnyPattern<T> &pb)
@@ -209,7 +218,7 @@ void assert_equal_partial(unsigned long nb,unsigned long nbSamples,AnyPattern<T>
        }
        catch(Error &err)
        {          
-          sprintf(id," (nb=%lu)",i);
+          snprintf(id,40," (nb=%lu)",i);
           strcat(err.details,id);
           throw(err);
        }
@@ -241,7 +250,7 @@ void assert_equal(unsigned long nb,AnyPattern<T> &pa, AnyPattern<T> &pb)
        }
        catch(Error &err)
        {          
-          sprintf(id," (nb=%lu)",i);
+          snprintf(id,40," (nb=%lu)",i);
           strcat(err.details,id);
           throw(err);
        }
@@ -256,6 +265,12 @@ void assert_near_equal(unsigned long nb,T pa, T pb, T threshold)
          throw (Error(NEAR_EQUAL_ERROR,nb));
     }
 };
+
+#if defined(ARM_FLOAT16_SUPPORTED)
+template <> 
+void assert_near_equal(unsigned long nb,float16_t pa, float16_t pb, float16_t threshold);
+
+#endif
 
 template <> 
 void assert_near_equal(unsigned long nb,double pa, double pb, double threshold);
@@ -297,7 +312,7 @@ void assert_near_equal(unsigned long nb,AnyPattern<T> &pa, AnyPattern<T> &pb, T 
        }
        catch(Error &err)
        {          
-          sprintf(id," (nb=%lu)",i);
+          snprintf(id,40," (nb=%lu)",i);
           strcat(err.details,id);
           throw(err);
        }

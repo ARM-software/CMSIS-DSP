@@ -3,7 +3,7 @@
 #include "Error.h"
 #include "Test.h"
 
-#define REL_ERROR ((float16_t)3e-3)
+#define REL_ERROR (3e-3)
 
     void BayesF16::test_gaussian_naive_bayes_predict_f16()
     {
