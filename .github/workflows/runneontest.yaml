@@ -29,11 +29,10 @@ jobs:
           sudo apt-get install libpython3.9 libtinfo5
           sudo apt install build-essential
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-
       - name: Activate vcpkg
         uses: ARM-software/cmsis-actions/vcpkg@v1
+        with:
+          config: "./vcpkg-neon-configuration.json"
 
       - name: Activate Arm tool license
         uses: ARM-software/cmsis-actions/armlm@v1
@@ -61,6 +60,9 @@ jobs:
           python processTests.py -gen . -p Patterns -d Parameters -f Output.pickle -e
           python processTests.py -gen . -p Patterns -d Parameters -f Output_f16.pickle -e
 
+
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
 
       - name: Execute
         run: |
