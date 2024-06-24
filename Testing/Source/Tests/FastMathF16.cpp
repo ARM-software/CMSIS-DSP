@@ -108,7 +108,7 @@ a double precision computation.
 
         arm_vlog_f16(inp,outp,ref.nbSamples());
 
-        //ASSERT_SNR(ref,output,(float16_t)SNR_THRESHOLD);
+        ASSERT_SNR(ref,output,SNR_THRESHOLD);
         ASSERT_CLOSE_ERROR(ref,output,ABS_ERROR,REL_ERROR);
         ASSERT_EMPTY_TAIL(output);
 

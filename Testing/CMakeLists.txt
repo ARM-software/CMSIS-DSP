@@ -14,9 +14,9 @@ option(NOAUTOVEC "Disable auto-vectorization" OFF)
 
 
 option(HOST "" ON)
-option(NEON "" OFF)
+option(NEON "" ON)
 option(NEONEXPERIMENTAL "" OFF)
-option(DISABLEFLOAT16 "" ON)
+option(DISABLEFLOAT16 "" OFF)
 add_subdirectory(../Source bin_dsp)
 
 
@@ -175,6 +175,7 @@ target_compile_options(test PUBLIC -Wsign-compare
         -Wno-parentheses-equality 
         -Wno-reserved-identifier
         -ffunction-sections
+        -fdata-sections
         -march=armv8.2-a+fp16fml
         )
 
@@ -197,6 +198,7 @@ target_compile_options(CMSISDSP PRIVATE -Wsign-compare
         -Wno-parentheses-equality 
         -Wno-reserved-identifier
         -ffunction-sections
+        -fdata-sections
         -march=armv8.2-a+fp16fml)
 
 target_link_libraries(test PUBLIC CMSISDSP)

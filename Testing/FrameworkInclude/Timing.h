@@ -16,6 +16,7 @@ void cycleMeasurementStop();
 
 Testing::cycles_t getCycles();
 
+
 #if defined(EXTBENCH)  || defined(CACHEANALYSIS)
 extern unsigned long sectionCounter;
 

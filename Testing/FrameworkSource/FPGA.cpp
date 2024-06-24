@@ -54,7 +54,7 @@ namespace Client
         int dimensions;
     };
 
-    FPGA::FPGA(const char *testDesc,const char *patterns)
+    FPGA::FPGA(const unsigned char *testDesc,const char *patterns)
     {
       this->m_testDesc=testDesc;
       this->m_patterns=patterns;

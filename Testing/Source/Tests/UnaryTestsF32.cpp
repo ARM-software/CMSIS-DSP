@@ -850,7 +850,7 @@ void UnaryTestsF32::test_mat_inverse_f32()
       ASSERT_EMPTY_TAIL(outputb);
 
 
-      ASSERT_CLOSE_ERROR(outputa,outputb,snrAbs,snrRel);
+      ASSERT_CLOSE_ERROR(outputa,outputb,(double)snrAbs,(double)snrRel);
 
 
   
