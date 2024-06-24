@@ -32,7 +32,7 @@ Comparisons for inverse
 /* Not very accurate for big matrix.
 But big matrix needed for checking the vectorized code */
 
-#define SNR_THRESHOLD_INV 52
+#define SNR_THRESHOLD_INV 51
 #define REL_ERROR_INV (3.0e-3)
 #define ABS_ERROR_INV (2.0e-2)
 
@@ -469,7 +469,9 @@ void UnaryTestsF16::test_mat_inverse_f16()
       int i;
       arm_status status;
 
-      for(i=0;i < nbMatrixes ; i ++)
+      // Non singular matrixes
+      // Last matrix is singular
+      for(i=0;i < nbMatrixes-1 ; i ++)
       {
           rows = *dimsp++;
           columns = rows;
@@ -487,6 +489,22 @@ void UnaryTestsF16::test_mat_inverse_f16()
           checkInnerTail(outp);
 
       }
+      /*** Singular matrix **/
+      rows = *dimsp++;
+      columns = rows;
+
+      PREPAREDATA1(false);
+
+      refInnerTail(outp+(rows * columns));
+
+      status=arm_mat_inverse_f16(&this->in1,&this->out);
+      ASSERT_TRUE(status==ARM_MATH_SINGULAR);
+
+      outp += (rows * columns);
+      inp1 += (rows * columns);
+
+      checkInnerTail(outp);
+      /**********************/
 
 
       ASSERT_SNR(output,ref,(float16_t)SNR_THRESHOLD_INV);

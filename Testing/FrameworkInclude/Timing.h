@@ -1,6 +1,9 @@
 #ifndef _TIMING_H_
 #define _TIMING_H_
 
+#include "RTE_Components.h"
+#include  CMSIS_device_header
+
 #include "Test.h"
 #include "arm_math_types.h"
 #include "arm_math_types_f16.h"

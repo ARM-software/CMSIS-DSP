@@ -17,7 +17,7 @@ freq_min = 64
 freq_high = sample_rate / 2
 numOfMelFilters = 20
 
-windowQ15 = dt.convert(sig.hamming(FFTSize, sym=False),Q15)
+windowQ15 = dt.convert(sig.windows.hamming(FFTSize, sym=False),Q15)
 filtLen,filtPos,packedFiltersQ15 = mfcc.melFilterMatrix(Q15,freq_min, freq_high, numOfMelFilters,sample_rate,FFTSize)
 dctMatrixFiltersQ15 = mfcc.dctMatrix(Q15,numOfDctOutputs, numOfMelFilters)
 

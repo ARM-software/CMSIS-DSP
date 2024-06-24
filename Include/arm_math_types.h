@@ -40,11 +40,19 @@ extern "C"
 #elif defined ( __APPLE_CC__ )
   #pragma GCC diagnostic ignored "-Wold-style-cast"
 
+#elif defined(__clang__)
+  #pragma GCC diagnostic push
+  #pragma GCC diagnostic ignored "-Wsign-conversion"
+  #pragma GCC diagnostic ignored "-Wconversion"
+  #pragma GCC diagnostic ignored "-Wunused-parameter"
+
 #elif defined ( __GNUC__ )
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wsign-conversion"
   #pragma GCC diagnostic ignored "-Wconversion"
   #pragma GCC diagnostic ignored "-Wunused-parameter"
+  // Disable some code having issue with GCC
+  #define __CMSIS_GCC_H 
 
 #elif defined ( __ICCARM__ )
 
