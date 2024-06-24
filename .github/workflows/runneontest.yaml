@@ -29,6 +29,9 @@ jobs:
           sudo apt-get install libpython3.9 libtinfo5
           sudo apt install build-essential
 
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+
       - name: Activate vcpkg
         uses: ARM-software/cmsis-actions/vcpkg@v1
 
