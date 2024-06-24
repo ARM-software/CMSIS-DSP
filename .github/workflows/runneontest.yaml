@@ -27,6 +27,7 @@ jobs:
         run: |
           sudo add-apt-repository ppa:deadsnakes/ppa
           sudo apt-get install libpython3.9 libtinfo5
+          sudo apt install build-essential
 
       - name: Activate vcpkg
         uses: ARM-software/cmsis-actions/vcpkg@v1
