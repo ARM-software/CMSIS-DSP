@@ -28,6 +28,7 @@ jobs:
           sudo add-apt-repository ppa:deadsnakes/ppa
           sudo apt-get install libpython3.9 libtinfo5
           sudo apt install build-essential
+          sudo apt install gcc-11-aarch64-linux-gnu
 
       - name: Activate vcpkg
         uses: ARM-software/cmsis-actions/vcpkg@v1
@@ -57,9 +58,6 @@ jobs:
           python processTests.py -gen . -p Patterns -d Parameters -f Output.pickle -e
           python processTests.py -gen . -p Patterns -d Parameters -f Output_f16.pickle -e
 
-
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
 
       - name: Execute
         run: |
