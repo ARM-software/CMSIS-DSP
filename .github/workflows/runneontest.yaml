@@ -1,0 +1,95 @@
+name: Neon Compile and Run
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions: 
+  actions: read
+  security-events: write
+
+jobs:
+   CI_test_run: 
+    runs-on: ubuntu-latest    
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'    
+
+      - name: Install system packages
+        run: |
+          sudo add-apt-repository ppa:deadsnakes/ppa
+          sudo apt-get install libpython3.9 libtinfo5
+
+      - name: Activate vcpkg
+        uses: ARM-software/cmsis-actions/vcpkg@v1
+
+      - name: Activate Arm tool license
+        uses: ARM-software/cmsis-actions/armlm@v1
+  
+      - name: Prepare framework
+        run: |
+          cd Testing
+          echo "Create missing folders"
+          mkdir FullBenchmark
+          mkdir Output
+          mkdir GeneratedInclude
+          mkdir GeneratedSource
+          mkdir GeneratedIncludeBench
+          mkdir GeneratedSourceBench
+          mkdir build
+
+          echo "Install missing python packages"
+          pip install -r requirements.txt
+
+          echo "Preprocess test description"
+          python preprocess.py -f desc.txt -o Output.pickle
+          python preprocess.py  -f desc_f16.txt -o Output_f16.pickle
+
+          echo "Generate missing CPP headers"
+          python processTests.py -gen . -p Patterns -d Parameters -f Output.pickle -e
+          python processTests.py -gen . -p Patterns -d Parameters -f Output_f16.pickle -e
+
+
+      - name: Execute
+        run: |
+          cd Testing/build
+          echo "Running tests"
+
+          cmake .. 
+
+          python ../processTests.py -p ../Patterns -d ../Parameters -gen .. -e -f ../Output.pickle
+          make 
+          ./test > result.txt
+          python ../processResult.py -e -f ../Output.pickle -r result.txt -html > result.html 
+
+          python ../processTests.py -p ../Patterns -d ../Parameters -gen .. -e -f ../Output_f16.pickle
+          make 
+          ./test > result_f16.txt
+          python ../processResult.py -e -f ../Output_f16.pickle -r result_f16.txt -html > result_f16.html 
+
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
+        with:
+          name: neon-test-report
+          path: |
+             Testing/build/result.html
+             Testing/build/result_f16.html
+
+      
+      - name: Check error
+        run: |
+          cd Testing/build
+          
+          echo "Checking output..."
+          test "$(grep "FAILED" result.html | wc -l)" -eq 0
+          test "$(grep "FAILED" result_f16.html | wc -l)" -eq 0
+
