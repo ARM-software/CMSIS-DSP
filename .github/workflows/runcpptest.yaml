@@ -71,7 +71,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: test-report_${{ matrix.compiler }}_${{ matrix.core }}
-          path: ${{ matrix.compiler }}_results/errors_${{ matrix.compiler }}.txt
+          path: ${{ matrix.compiler }}_results/errors_${{ matrix.core }}.txt
 
       
       - name: Check error
@@ -79,4 +79,4 @@ jobs:
           cd dsppp
           
           echo "Checking output..."
-          test "$(cat ${{ matrix.compiler }}_results/errors_${{ matrix.compiler }}.txt | wc -l)" -eq 0
+          test "$(cat ${{ matrix.compiler }}_results/errors_${{ matrix.core }}.txt | wc -l)" -eq 0
