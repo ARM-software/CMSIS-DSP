@@ -9,17 +9,17 @@ from os import environ
 from colorama import init,Fore, Back, Style
 
 try:
-   os.mkdir("ac6_results")
+   os.mkdir("AC6_results")
 except:
     pass 
 
 try:
-   os.mkdir("gcc_results")
+   os.mkdir("GCC_results")
 except:
     pass 
 
 try:
-   os.mkdir("clang_results")
+   os.mkdir("CLANG_results")
 except:
     pass 
 

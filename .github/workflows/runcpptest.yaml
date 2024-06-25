@@ -13,7 +13,7 @@ permissions:
 jobs:
    CI_cpp_test_run: 
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         compiler: [AC6, CLANG, GCC]
         core: [M0, M4, M55]
@@ -71,7 +71,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: test-report_${{ matrix.compiler }}_${{ matrix.core }}
-          path: ${{ matrix.compiler }}_results/errors_${{ matrix.core }}.txt
+          path: dsppp/${{ matrix.compiler }}_results/errors_${{ matrix.core }}.txt
 
       
       - name: Check error
@@ -79,4 +79,4 @@ jobs:
           cd dsppp
           
           echo "Checking output..."
-          test "$(cat ${{ matrix.compiler }}_results/errors_${{ matrix.core }}.txt | wc -l)" -eq 0
+          test "$(cat dsppp/${{ matrix.compiler }}_results/errors_${{ matrix.core }}.txt | wc -l)" -eq 0
