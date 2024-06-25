@@ -11,7 +11,7 @@ permissions:
   security-events: write
 
 jobs:
-   CI_test_run: 
+   CI_c_test_run: 
     strategy:
       fail-fast: false
       matrix:

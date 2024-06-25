@@ -4,7 +4,6 @@ import os.path
 import itertools
 import subprocess 
 import sys 
-import mps3run
 from os import environ
 
 from colorama import init,Fore, Back, Style
@@ -101,6 +100,9 @@ GHACTION = False
 
 if "AVH_FVP_PLUGINS" in os.environ:
     GHACTION = True
+
+if not GHACTION:
+   import mps3run
 
 init()
 

@@ -5,7 +5,7 @@
 #define POOL_ALLOCATOR
 //#define ONLY_BENCHMARKS
 
-#define VECTOR_TEST
+#define DOT_TEST
 #define F32_DT
 #define STATIC_TEST
 
