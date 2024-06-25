@@ -11,7 +11,7 @@ permissions:
   security-events: write
 
 jobs:
-   CI_test_run: 
+   CI_cpp_test_run: 
     strategy:
       fail-fast: false
       matrix:
@@ -65,7 +65,7 @@ jobs:
           cd dsppp
           echo "Running tests"
 
-          python runall.py -t -g ${{ matrix.compiler }} -c ${{ matrix.core }} -avh $AVH_FVP_PLUGINS/../bin
+          python run_all.py -t -g ${{ matrix.compiler }} -c ${{ matrix.core }} -avh $AVH_FVP_PLUGINS/../bin
 
       - name: Upload test report
         uses: actions/upload-artifact@v4
