@@ -37,7 +37,7 @@ PythonWrapper/build_linux/Makefile
 PythonWrapper/build_linux/bin_dsp/
 PythonWrapper/build_linux/build.sh
 PythonWrapper/build_linux/cmake_install.cmake
-
+boost_1_84_0/
 
 
 # Output of the linkchecker tool

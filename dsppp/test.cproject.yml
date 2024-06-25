@@ -25,7 +25,7 @@ project:
         - file: allocator.cpp
   add-path:
       - Include
-      - ../../../boost_1_84_0
+      - ../boost_1_84_0
       - .
       - tests
 

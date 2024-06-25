@@ -43,6 +43,9 @@ jobs:
   
       - name: Prepare framework
         run: |
+          echo "Install boost"
+          curl -o boost.tar.gz https://archives.boost.io/release/1.84.0/source/boost_1_84_0.tar.gz
+          tar -xf boost.tar.gz
           cd dsppp
           echo "Create missing folders"
           mkdir AC6_results
@@ -70,7 +73,7 @@ jobs:
       - name: Upload test report
         uses: actions/upload-artifact@v4
         with:
-          name: test-report_${{ matrix.compiler }}_${{ matrix.core }}
+          name: test-cpp-report_${{ matrix.compiler }}_${{ matrix.core }}
           path: dsppp/${{ matrix.compiler }}_results/errors_${{ matrix.core }}.txt
 
       
@@ -79,4 +82,4 @@ jobs:
           cd dsppp
           
           echo "Checking output..."
-          test "$(cat dsppp/${{ matrix.compiler }}_results/errors_${{ matrix.core }}.txt | wc -l)" -eq 0
+          test "$(cat ${{ matrix.compiler }}_results/errors_${{ matrix.core }}.txt | wc -l)" -eq 0
