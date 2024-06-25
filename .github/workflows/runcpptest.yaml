@@ -43,9 +43,6 @@ jobs:
   
       - name: Prepare framework
         run: |
-          echo "Install boost"
-          curl -o boost.tar.gz https://archives.boost.io/release/1.84.0/source/boost_1_84_0.tar.gz
-          tar -xf boost.tar.gz
           cd dsppp
           echo "Create missing folders"
           mkdir AC6_results
@@ -62,6 +59,12 @@ jobs:
           
           cat required_packs.txt
           cpackget add -a -f required_packs.txt
+
+      - name: Install boost
+        run: |
+          echo "Install boost"
+          curl -o boost.tar.gz https://archives.boost.io/release/1.84.0/source/boost_1_84_0.tar.gz
+          tar -xf boost.tar.gz
 
       - name: Execute
         run: |
