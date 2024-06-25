@@ -1,6 +1,7 @@
 #ifndef TEST_CONFIG_H
 #define TEST_CONFIG_H
 
+
 #define POOL_ALLOCATOR
 //#define ONLY_BENCHMARKS
 

@@ -11,3 +11,6 @@ run_*.bat
 ac6_results/
 gcc_results/
 clang_results/
+AC6_results/
+GCC_results/
+CLANG_results/
