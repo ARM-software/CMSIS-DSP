@@ -28,17 +28,27 @@ jobs:
       - name: Setup Python 3.10
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'    
-
+          python-version: '3.10'
+          cache: 'pip'
+          cache-dependency-path: Testing/requirements.txt
+      
       - name: Install system packages
         run: |
           sudo add-apt-repository ppa:deadsnakes/ppa
           sudo apt-get install libpython3.9 libtinfo5
 
+      - name: Cache packs
+        uses: actions/cache@v4
+        with:
+          key: packs-cmsis-dsp
+          restore-keys: |
+              packs-
+          path: /home/runner/.cache/arm/packs
+
       - name: Activate vcpkg
         uses: ARM-software/cmsis-actions/vcpkg@v1
         with:
-          cache: "-${{ matrix.compiler }}-${{ matrix.core }}"
+          cache: "-cmsis_dsp_vcpkg"
 
       - name: Activate Arm tool license
         uses: ARM-software/cmsis-actions/armlm@v1
@@ -54,13 +64,21 @@ jobs:
           echo "Install missing python packages"
           pip install -r ../Testing/requirements.txt
 
-         
+          cat ${{ github.workspace }} 
 
           echo "Load missing pack"
           csolution list packs -s  test.csolution.yml -m > required_packs.txt
           
           cat required_packs.txt
           cpackget add -a -f required_packs.txt
+
+      - name: Cache boost
+        uses: actions/cache@v4
+        with:
+          key: boost-cmsis-dsp
+          restore-keys: |
+              boost-cmsis-dsp
+          path: boost_1_84_0
 
       - name: Install boost
         run: |
