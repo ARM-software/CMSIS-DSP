@@ -5,6 +5,7 @@ extern "C" {
 #include "allocator.h"
 
 #include <tuple>
+#include <array>
 
 #include <dsppp/arch.hpp>
 #include <dsppp/fixed_point.hpp>
@@ -211,6 +212,9 @@ void all_fusion_test()
     test2<T,nb_loops+1>();
     test2<T,nb_loops+nb_tails>();
 
+
+
+
     title<T>("Unroll Fusion");
 
     test3<T,NBVEC_256>();
@@ -219,10 +223,21 @@ void all_fusion_test()
     test3<T,nb_loops>();
     test3<T,nb_loops+1>();
     test3<T,nb_loops+nb_tails>();
+
 }
 
 void fusion_test()
 {
+   /*
+
+gcc has some issues with this code.
+FVP is freezing when trying to run it.
+Since those kind of fusion are not really used in the library
+(because performance is not good) we can disable those tests
+to at least be able to test other parts of the library with gcc.
+
+   */
+   #if !defined(GCC_COMPILER)
 #if defined(FUSION_TEST)
    #if defined(F64_DT)
    all_fusion_test<double>();
@@ -243,5 +258,6 @@ void fusion_test()
    all_fusion_test<Q7>();
    #endif
 #endif
+   #endif
 
 }

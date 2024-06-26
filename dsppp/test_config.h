@@ -1,13 +1,13 @@
 #ifndef TEST_CONFIG_H
 #define TEST_CONFIG_H
 
-#define TESTMODE
+
 #define POOL_ALLOCATOR
 //#define ONLY_BENCHMARKS
 
-#define VECTOR_TEST
+#define DOT_TEST
 #define F32_DT
-#define STATIC_TEST
+#define DYNAMIC_TEST
 
 
 #endif

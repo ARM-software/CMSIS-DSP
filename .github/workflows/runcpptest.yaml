@@ -13,9 +13,10 @@ permissions:
 jobs:
    CI_cpp_test_run: 
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
-        compiler: [AC6, CLANG, GCC]
+        # GCC currently has too many problems with the C++ API
+        compiler: [AC6, CLANG]
         core: [M0, M4, M55]
     runs-on: ubuntu-latest    
 

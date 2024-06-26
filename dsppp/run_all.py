@@ -200,8 +200,8 @@ MODE = ["STATIC_TEST",
         ]
 
 # Restricted tests for debugging
-#TESTS=["DOT_TEST","VECTOR_TEST"]
-#DATATYPES=["F32_DT"]
+#TESTS=["FUSION_TEST"]
+#DATATYPES=["Q15_DT"]
 #MODE = ["STATIC_TEST"]
 
 all_tests = list(itertools.product(TESTS,DATATYPES,MODE))
@@ -328,7 +328,7 @@ def runVHT(test_name,test,err,subtest):
     else:
        avh = avhUnixExe[core]
 
-    res=run([avh,"-f",config,"-a",exe])
+    res=run([avh,"-f",config,"-a",exe],printCmd=True)
     if not is_error(res,test_name,err):
        process_result(test_name,test,res.msg,subtest)
 
