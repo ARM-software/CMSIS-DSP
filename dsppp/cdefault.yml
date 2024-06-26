@@ -10,7 +10,6 @@ default:
         - -DNDEBUG 
         - -Wall 
         - -Wextra  
-        - -Werror
         - -std=c11 
         - -Ofast 
         - -ffast-math
@@ -28,8 +27,6 @@ default:
         - -Wno-parentheses-equality 
         - -Wno-reserved-identifier
         - -ffunction-sections
-        - -Wno-nan-infinity-disabled
-        - -DARM_MATH_LOOPUNROLL
       CPP:
         - -fno-rtti 
         - -fno-exceptions
@@ -58,8 +55,7 @@ default:
         - -Wdouble-promotion 
         - -DNDEBUG 
         - -Wall 
-        - -Wextra  
-        - -Werror
+        - -Wextra 
         - -std=c11 
         - -Ofast 
         - -ffast-math
@@ -69,11 +65,11 @@ default:
         - -Wno-sign-conversion 
         - -Wno-unused-macros 
         - -ffunction-sections
-        - -DARM_MATH_LOOPUNROLL
         - -flax-vector-conversions
         - -Wno-maybe-uninitialized
         - -fdata-sections
         - -fno-unroll-loops
+        - -mfp16-format=ieee
       CPP:
         - -fno-rtti 
         - -fno-exceptions
@@ -88,6 +84,7 @@ default:
         - -fdata-sections
         - -Wno-psabi
         - -fno-unroll-loops
+        - -mfp16-format=ieee
       ASM:
         - -masm=auto
       Link:
@@ -106,7 +103,6 @@ default:
          - -DNDEBUG 
          - -Wall 
          - -Wextra  
-         - -Werror
          - -std=c11 
          - -Ofast 
          - -ffast-math
@@ -123,7 +119,6 @@ default:
          - -Wno-parentheses-equality 
          - -Wno-reserved-identifier
          - -ffunction-sections
-         - -DARM_MATH_LOOPUNROLL
       CPP:
         - -fno-rtti 
         - -fno-exceptions

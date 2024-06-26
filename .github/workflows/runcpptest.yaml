@@ -11,11 +11,13 @@ permissions:
   security-events: write
 
 jobs:
-   CI_c_test_run: 
+   CI_cpp_test_run: 
     strategy:
       fail-fast: false
       matrix:
-        compiler: [AC6, CLANG, GCC]
+        # GCC currently has too many problems with the C++ API
+        compiler: [AC6, CLANG]
+        core: [M0, M4, M55]
     runs-on: ubuntu-latest    
 
     steps:
@@ -28,7 +30,7 @@ jobs:
           python-version: '3.10'
           cache: 'pip'
           cache-dependency-path: Testing/requirements.txt
-
+      
       - name: Install system packages
         run: |
           sudo add-apt-repository ppa:deadsnakes/ppa
@@ -50,29 +52,32 @@ jobs:
       - name: Activate Arm tool license
         uses: ARM-software/cmsis-actions/armlm@v1
   
+      - name: Cache boost
+        id: cache-boost
+        uses: actions/cache@v4
+        with:
+          key: boost-cmsis-dsp
+          restore-keys: |
+              boost-cmsis-dsp
+          path: ${{ github.workspace }}/boost_1_84_0
+
+      - name: Install boost
+        if: steps.cache-boost.outputs.cache-hit != 'true'
+        run: |
+          echo "Install boost"
+          curl -o boost.tar.gz https://archives.boost.io/release/1.84.0/source/boost_1_84_0.tar.gz
+          tar -xf boost.tar.gz
+          
       - name: Prepare framework
         run: |
-          cd Testing
+          cd dsppp
           echo "Create missing folders"
-          mkdir FullBenchmark
-          mkdir Output
-          mkdir GeneratedInclude
-          mkdir GeneratedSource
-          mkdir GeneratedIncludeBench
-          mkdir GeneratedSourceBench
+          mkdir AC6_results
+          mkdir CLANG_results
+          mkdir GCC_results
 
           echo "Install missing python packages"
-          pip install -r requirements.txt
-
-          echo "Preprocess test description"
-          python preprocess.py -f desc.txt -o Output.pickle
-          python preprocess.py  -f desc_f16.txt -o Output_f16.pickle
-
-          echo "Generate missing CPP headers"
-          python processTests.py -gen . -p Patterns -d Parameters -f Output.pickle -e
-          python processTests.py -gen . -p Patterns -d Parameters -f Output_f16.pickle -e
-
-          cd cmsis_build
+          pip install -r ../Testing/requirements.txt
 
           echo "Load missing pack"
           csolution list packs -s  test.csolution.yml -m > required_packs.txt
@@ -80,23 +85,24 @@ jobs:
           cat required_packs.txt
           cpackget add -a -f required_packs.txt
 
+
       - name: Execute
         run: |
-          cd Testing/cmsis_build
+          cd dsppp
           echo "Running tests"
 
-          python runall.py -s -g ${{ matrix.compiler }} -avh $AVH_FVP_PLUGINS/../bin
+          python run_all.py -t -g ${{ matrix.compiler }} -c ${{ matrix.core }} -avh $AVH_FVP_PLUGINS/../bin
 
       - name: Upload test report
         uses: actions/upload-artifact@v4
         with:
-          name: test-report_${{ matrix.compiler }}
-          path: Testing/cmsis_build/summary_${{ matrix.compiler }}.html
+          name: test-cpp-report_${{ matrix.compiler }}_${{ matrix.core }}
+          path: dsppp/${{ matrix.compiler }}_results/errors_${{ matrix.core }}.txt
 
       
       - name: Check error
         run: |
-          cd Testing/cmsis_build
+          cd dsppp
           
           echo "Checking output..."
-          test "$(grep "Error" summary_${{ matrix.compiler }}.html | wc -l)" -eq 0
+          test "$(cat ${{ matrix.compiler }}_results/errors_${{ matrix.core }}.txt | wc -l)" -eq 0

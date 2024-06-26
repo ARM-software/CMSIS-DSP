@@ -25,13 +25,15 @@ project:
         - file: allocator.cpp
   add-path:
       - Include
-      - ../../../boost_1_84_0
+      - ../boost_1_84_0
       - .
       - tests
 
+  layers:
+    - layer: ../Testing/cmsis_build/dsp.clayer.yml 
+
   components:
     - component: ARM::CMSIS:CORE
-    - component: ARM::CMSIS:DSP@1.15.0
     - component: ARM::Device:Startup&C Startup
       for-context: 
         - +VHT-Corstone-300

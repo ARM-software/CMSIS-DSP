@@ -8,10 +8,13 @@
 
 
 // Allocator for temporaries
+// But when in test mode (like in github action), malloc allocator is used instead
+#if !defined(TESTMODE)
 #if defined(POOL_ALLOCATOR)
 #define TMP_ALLOC pool_allocator
 #else 
 #define TMP_ALLOC stat_allocator
+#endif
 #endif
 
 #include <dsppp/memory_pool.hpp>
@@ -57,6 +60,7 @@ struct pool_allocator<BYTES> {                                                  
 };
 
 
+#if !defined(TESTMODE)
 #if defined(POOL_ALLOCATOR)
 #include "allocation/all.h"
 #endif 
@@ -119,6 +123,10 @@ struct stat_allocator {
    
 };
 
-extern void print_map(std::string comment);
 extern void check_current_stats();
 extern void reset_current_stats();
+
+#endif
+
+extern void print_map(std::string comment);
+

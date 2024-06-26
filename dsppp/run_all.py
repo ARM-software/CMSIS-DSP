@@ -4,22 +4,22 @@ import os.path
 import itertools
 import subprocess 
 import sys 
-import mps3run
+from os import environ
 
 from colorama import init,Fore, Back, Style
 
 try:
-   os.mkdir("ac6_results")
+   os.mkdir("AC6_results")
 except:
     pass 
 
 try:
-   os.mkdir("gcc_results")
+   os.mkdir("GCC_results")
 except:
     pass 
 
 try:
-   os.mkdir("clang_results")
+   os.mkdir("CLANG_results")
 except:
     pass 
 
@@ -91,8 +91,18 @@ parser.add_argument('-b', action='store_true', help="Only benchmarks")
 parser.add_argument('-d', action='store_true', help="Dry run")
 parser.add_argument('-g', nargs='?',type = str, default="AC6",help="AC6 / CLANG / GCC")
 parser.add_argument('-u', nargs='?',type = str, default="L85986697A",help="Debug UUID")
+parser.add_argument('-t', action='store_true', help="Enable test mode")
+parser.add_argument('-avh', nargs='?',type = str, default="C:/Keil_v5/ARM/avh-fvp/bin/models", help="AVH folder")
 
 args = parser.parse_args()
+
+GHACTION = False 
+
+if "AVH_FVP_PLUGINS" in os.environ:
+    GHACTION = True
+
+if not GHACTION:
+   import mps3run
 
 init()
 
@@ -111,13 +121,13 @@ NAME_TO_BOARD = {
 
 def results():
     if args.g == "AC6":
-        return("ac6_results")
+        return("AC6_results")
 
     if args.g == "GCC":
-        return("gcc_results")
+        return("GCC_results")
 
     if args.g == "CLANG":
-        return("clang_results")
+        return("CLANG_results")
 
     print(f"Compiler {args.g} not known")
     exit(1)
@@ -144,9 +154,15 @@ if args.g == "AC6":
 else:
     ext = ".elf"
 
-fvp = {"M55":"C:\\Keil_v5\\ARM\\VHT\\VHT_Corstone_SSE-300_Ethos-U55.exe",
-        "M4":"C:\\Keil_v5\\ARM\\VHT\\VHT_MPS2_Cortex-M4.exe",
-        "M0":"C:\\Keil_v5\\ARM\\VHT\\VHT_MPS2_Cortex-M0plus.exe"}
+fvpWin = {"M55":"FVP_Corstone_SSE-300_Ethos-U55.exe",
+          "M4":"FVP_MPS2_Cortex-M4.exe",
+          "M0":"FVP_MPS2_Cortex-M0plus.exe"}
+
+fvpUnix = {"M55":"FVP_Corstone_SSE-300_Ethos-U55",
+          "M4":"FVP_MPS2_Cortex-M4",
+          "M0":"FVP_MPS2_Cortex-M0plus"}
+
+AVHROOT = args.avh
 
 TESTS=["DOT_TEST",
        "VECTOR_TEST",
@@ -184,8 +200,8 @@ MODE = ["STATIC_TEST",
         ]
 
 # Restricted tests for debugging
-#TESTS=["DOT_TEST","VECTOR_TEST"]
-#DATATYPES=["F32_DT"]
+#TESTS=["FUSION_TEST"]
+#DATATYPES=["Q15_DT"]
 #MODE = ["STATIC_TEST"]
 
 all_tests = list(itertools.product(TESTS,DATATYPES,MODE))
@@ -193,6 +209,10 @@ all_tests = list(itertools.product(TESTS,DATATYPES,MODE))
 
 
 ALLOC = "#define POOL_ALLOCATOR"
+TESTMODE = ""
+if args.t:
+    TESTMODE = "#define TESTMODE"
+
 if args.a:
     # Stat allocator enabled and we do stats on VHT CS300 only
     ALLOC = "//#define POOL_ALLOCATOR"
@@ -206,6 +226,7 @@ if args.b:
 HEADER = f"""#ifndef TEST_CONFIG_H
 #define TEST_CONFIG_H
 
+{TESTMODE}
 {ALLOC}
 {BENCH}
 
@@ -295,7 +316,19 @@ def runVHT(test_name,test,err,subtest):
         exe = "cpu0=" + out_path()
     else:
         exe = out_path()
-    res=run([fvp[core],"-f",config,"-a",exe])
+
+    if AVHROOT:
+       avhAttempt = os.path.join(AVHROOT,fvpWin[core])
+       if os.path.exists(avhAttempt):
+          avh = avhAttempt
+   
+       avhAttempt = os.path.join(AVHROOT,fvpUnix[core])
+       if os.path.exists(avhAttempt):
+          avh = avhAttempt
+    else:
+       avh = avhUnixExe[core]
+
+    res=run([avh,"-f",config,"-a",exe],printCmd=True)
     if not is_error(res,test_name,err):
        process_result(test_name,test,res.msg,subtest)
 
@@ -340,7 +373,7 @@ for test in all_tests:
             nb_axf = nb_axf + 1
 print(f"Number of axf to test = {nb_axf}")
 
-with open(os.path.join(results(),"errors.txt"),"w") as err:
+with open(os.path.join(results(),f"errors_{args.c}.txt"),"w") as err:
     # Generate include for allocations
     if args.a or args.i:
         with open(os.path.join("allocation","all.h"),"w") as fh:
@@ -382,10 +415,11 @@ with open(os.path.join(results(),"errors.txt"),"w") as err:
             nb = nb + 1
 
 
-if ERROR_OCCURED:
-    printError("Error in tests:")
-    for n in all_errors:
-        printError(n)
-    sys.exit("Error occurred")
-else:
-    sys.exit(0)
+if not GHACTION:
+   if ERROR_OCCURED:
+       printError("Error in tests:")
+       for n in all_errors:
+           printError(n)
+       sys.exit("Error occurred")
+   else:
+       sys.exit(0)

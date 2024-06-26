@@ -1,5 +1,7 @@
 #include "allocator.h"
 
+#if !defined(TESTMODE)
+
 #define ALLOC_POOL(BYTES,NB) \
 MemoryPool<POOL_BLOCK_##BYTES,user_allocator_aligned_malloc>  vecPool_##BYTES(NB);
 
@@ -11,11 +13,13 @@ std::map<int, int> current_stats;
 std::map<int, int> max_stats;
 std::map<void*, std::size_t> current_dyn_stats;
 
+#endif
+
 void print_map(std::string comment)
 {
 
     std::cout << comment << "\r\n";
-#if !defined(POOL_ALLOCATOR)
+#if !defined(POOL_ALLOCATOR) && !defined(TESTMODE)
     std::size_t total_static=0;
     std::size_t total_dynamic=0;
 
@@ -64,6 +68,8 @@ void print_map(std::string comment)
 #endif
 }
 
+#if !defined(TESTMODE)
+
 void reset_current_stats()
 {
 #if !defined(POOL_ALLOCATOR)
@@ -96,3 +102,4 @@ void check_current_stats()
 #endif
 }
 
+#endif
