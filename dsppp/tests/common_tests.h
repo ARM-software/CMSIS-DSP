@@ -25,7 +25,14 @@ using namespace arm_cmsis_dsp;
  * 
  */
 
+#if defined(TESTMODE)
+  template<typename P,int L=arm_cmsis_dsp::DYNAMIC>
+  using PVector = Vector<P,L,malloc_allocator>;
 
+  template<typename P,int R=arm_cmsis_dsp::DYNAMIC,int C=arm_cmsis_dsp::DYNAMIC>
+  using PMat = Matrix<P,R,C,malloc_allocator>;
+
+#else
 #if defined(POOL_ALLOCATOR)
 
   template<typename P,int L=arm_cmsis_dsp::DYNAMIC>
@@ -42,6 +49,7 @@ using namespace arm_cmsis_dsp;
   template<typename P,int R=arm_cmsis_dsp::DYNAMIC,int C=arm_cmsis_dsp::DYNAMIC>
   using PMat = Matrix<P,R,C,stat_allocator>;
 
+#endif
 #endif
 
 template<typename P,int stride=1>
