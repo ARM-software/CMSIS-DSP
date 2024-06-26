@@ -29,9 +29,11 @@ project:
       - .
       - tests
 
+  layers:
+    - layer: ../Testing/cmsis_build/dsp.clayer.yml 
+
   components:
     - component: ARM::CMSIS:CORE
-    - component: ARM::CMSIS:DSP@1.15.0
     - component: ARM::Device:Startup&C Startup
       for-context: 
         - +VHT-Corstone-300
