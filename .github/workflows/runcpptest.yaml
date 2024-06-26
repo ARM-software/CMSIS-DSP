@@ -15,10 +15,8 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        compiler: [AC6]
-        core: [M55]
-        #compiler: [AC6, CLANG, GCC]
-        #core: [M0, M4, M55]
+        compiler: [AC6, CLANG, GCC]
+        core: [M0, M4, M55]
     runs-on: ubuntu-latest    
 
     steps:
