@@ -51,6 +51,22 @@ jobs:
       - name: Activate Arm tool license
         uses: ARM-software/cmsis-actions/armlm@v1
   
+      - name: Cache boost
+        id: cache-boost
+        uses: actions/cache@v4
+        with:
+          key: boost-cmsis-dsp
+          restore-keys: |
+              boost-cmsis-dsp
+          path: ${{ github.workspace }}/boost_1_84_0
+
+      - name: Install boost
+        if: steps.cache-boost.outputs.cache-hit != 'true'
+        run: |
+          echo "Install boost"
+          curl -o boost.tar.gz https://archives.boost.io/release/1.84.0/source/boost_1_84_0.tar.gz
+          tar -xf boost.tar.gz
+          
       - name: Prepare framework
         run: |
           cd dsppp
@@ -68,21 +84,6 @@ jobs:
           cat required_packs.txt
           cpackget add -a -f required_packs.txt
 
-      - name: Cache boost
-        id: cache-boost
-        uses: actions/cache@v4
-        with:
-          key: boost-cmsis-dsp
-          restore-keys: |
-              boost-cmsis-dsp
-          path: ${{ github.workspace }}/boost_1_84_0
-
-      - name: Install boost
-        if: steps.cache-boost.outputs.cache-hit != 'true'
-        run: |
-          echo "Install boost"
-          curl -o boost.tar.gz https://archives.boost.io/release/1.84.0/source/boost_1_84_0.tar.gz
-          tar -xf boost.tar.gz
 
       - name: Execute
         run: |
