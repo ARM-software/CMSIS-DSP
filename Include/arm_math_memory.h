@@ -23,9 +23,9 @@
  * limitations under the License.
  */
 
-#ifndef _ARM_MATH_MEMORY_H_
+#ifndef ARM_MATH_MEMORY_H_
 
-#define _ARM_MATH_MEMORY_H_
+#define ARM_MATH_MEMORY_H_
 
 #include "arm_math_types.h"
 

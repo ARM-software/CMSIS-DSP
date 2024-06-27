@@ -24,8 +24,8 @@
  */
 
  
-#ifndef _STATISTICS_FUNCTIONS_H_
-#define _STATISTICS_FUNCTIONS_H_
+#ifndef STATISTICS_FUNCTIONS_H_
+#define STATISTICS_FUNCTIONS_H_
 
 #include "arm_math_types.h"
 #include "arm_math_memory.h"
@@ -71,7 +71,7 @@ extern "C"
  */
 
 
-float32_t arm_logsumexp_f32(const float32_t *in, uint32_t blockSize);
+ARM_DSP_ATTRIBUTE float32_t arm_logsumexp_f32(const float32_t *in, uint32_t blockSize);
 
 /**
  * @brief Dot product with log arithmetic
@@ -87,7 +87,7 @@ float32_t arm_logsumexp_f32(const float32_t *in, uint32_t blockSize);
  */
 
 
-float32_t arm_logsumexp_dot_prod_f32(const float32_t * pSrcA,
+ARM_DSP_ATTRIBUTE float32_t arm_logsumexp_dot_prod_f32(const float32_t * pSrcA,
   const float32_t * pSrcB,
   uint32_t blockSize,
   float32_t *pTmpBuffer);
@@ -102,7 +102,7 @@ float32_t arm_logsumexp_dot_prod_f32(const float32_t * pSrcA,
  */
 
 
-float32_t arm_entropy_f32(const float32_t * pSrcA,uint32_t blockSize);
+ARM_DSP_ATTRIBUTE float32_t arm_entropy_f32(const float32_t * pSrcA,uint32_t blockSize);
 
 
 /**
@@ -115,7 +115,7 @@ float32_t arm_entropy_f32(const float32_t * pSrcA,uint32_t blockSize);
  */
 
 
-float64_t arm_entropy_f64(const float64_t * pSrcA, uint32_t blockSize);
+ARM_DSP_ATTRIBUTE float64_t arm_entropy_f64(const float64_t * pSrcA, uint32_t blockSize);
 
 
 /**
@@ -127,7 +127,7 @@ float64_t arm_entropy_f64(const float64_t * pSrcA, uint32_t blockSize);
  * @return Kullback-Leibler  Divergence D(A || B)
  *
  */
-float32_t arm_kullback_leibler_f32(const float32_t * pSrcA
+ARM_DSP_ATTRIBUTE float32_t arm_kullback_leibler_f32(const float32_t * pSrcA
   ,const float32_t * pSrcB
   ,uint32_t blockSize);
 
@@ -141,7 +141,7 @@ float32_t arm_kullback_leibler_f32(const float32_t * pSrcA
  * @return Kullback-Leibler  Divergence D(A || B)
  *
  */
-float64_t arm_kullback_leibler_f64(const float64_t * pSrcA, 
+ARM_DSP_ATTRIBUTE float64_t arm_kullback_leibler_f64(const float64_t * pSrcA, 
                 const float64_t * pSrcB, 
                 uint32_t blockSize);
 
@@ -152,7 +152,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[in]  blockSize  is the number of samples to process
    * @param[out] pResult    is output value.
    */
-  void arm_power_q31(
+  ARM_DSP_ATTRIBUTE void arm_power_q31(
   const q31_t * pSrc,
         uint32_t blockSize,
         q63_t * pResult);
@@ -164,7 +164,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[in]  blockSize  is the number of samples to process
    * @param[out] pResult    is output value.
    */
-  void arm_power_f32(
+  ARM_DSP_ATTRIBUTE void arm_power_f32(
   const float32_t * pSrc,
         uint32_t blockSize,
         float32_t * pResult);
@@ -176,7 +176,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[in]  blockSize  is the number of samples to process
    * @param[out] pResult    is output value.
    */
-  void arm_power_f64(
+  ARM_DSP_ATTRIBUTE void arm_power_f64(
   const float64_t * pSrc,
         uint32_t blockSize,
         float64_t * pResult);
@@ -188,7 +188,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[in]  blockSize  is the number of samples to process
    * @param[out] pResult    is output value.
    */
-  void arm_power_q15(
+  ARM_DSP_ATTRIBUTE void arm_power_q15(
   const q15_t * pSrc,
         uint32_t blockSize,
         q63_t * pResult);
@@ -200,7 +200,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[in]  blockSize  is the number of samples to process
    * @param[out] pResult    is output value.
    */
-  void arm_power_q7(
+  ARM_DSP_ATTRIBUTE void arm_power_q7(
   const q7_t * pSrc,
         uint32_t blockSize,
         q31_t * pResult);
@@ -212,7 +212,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[in]  blockSize  is the number of samples to process
    * @param[out] pResult    is output value.
    */
-  void arm_mean_q7(
+  ARM_DSP_ATTRIBUTE void arm_mean_q7(
   const q7_t * pSrc,
         uint32_t blockSize,
         q7_t * pResult);
@@ -224,7 +224,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[in]  blockSize  is the number of samples to process
    * @param[out] pResult    is output value.
    */
-  void arm_mean_q15(
+  ARM_DSP_ATTRIBUTE void arm_mean_q15(
   const q15_t * pSrc,
         uint32_t blockSize,
         q15_t * pResult);
@@ -236,7 +236,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[in]  blockSize  is the number of samples to process
    * @param[out] pResult    is output value.
    */
-  void arm_mean_q31(
+  ARM_DSP_ATTRIBUTE void arm_mean_q31(
   const q31_t * pSrc,
         uint32_t blockSize,
         q31_t * pResult);
@@ -248,7 +248,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[in]  blockSize  is the number of samples to process
    * @param[out] pResult    is output value.
    */
-  void arm_mean_f32(
+  ARM_DSP_ATTRIBUTE void arm_mean_f32(
   const float32_t * pSrc,
         uint32_t blockSize,
         float32_t * pResult);
@@ -260,7 +260,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[in]  blockSize  is the number of samples to process
    * @param[out] pResult    is output value.
    */
-  void arm_mean_f64(
+  ARM_DSP_ATTRIBUTE void arm_mean_f64(
   const float64_t * pSrc,
         uint32_t blockSize,
         float64_t * pResult);
@@ -272,7 +272,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[in]  blockSize  is the number of samples to process
    * @param[out] pResult    is output value.
    */
-  void arm_var_f32(
+  ARM_DSP_ATTRIBUTE void arm_var_f32(
   const float32_t * pSrc,
         uint32_t blockSize,
         float32_t * pResult);
@@ -284,7 +284,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[in]  blockSize  is the number of samples to process
    * @param[out] pResult    is output value.
    */
-  void arm_var_f64(
+  ARM_DSP_ATTRIBUTE void arm_var_f64(
   const float64_t * pSrc,
         uint32_t blockSize,
         float64_t * pResult);
@@ -296,7 +296,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[in]  blockSize  is the number of samples to process
    * @param[out] pResult    is output value.
    */
-  void arm_var_q31(
+  ARM_DSP_ATTRIBUTE void arm_var_q31(
   const q31_t * pSrc,
         uint32_t blockSize,
         q31_t * pResult);
@@ -308,7 +308,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[in]  blockSize  is the number of samples to process
    * @param[out] pResult    is output value.
    */
-  void arm_var_q15(
+  ARM_DSP_ATTRIBUTE void arm_var_q15(
   const q15_t * pSrc,
         uint32_t blockSize,
         q15_t * pResult);
@@ -320,7 +320,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[in]  blockSize  is the number of samples to process
    * @param[out] pResult    is output value.
    */
-  void arm_rms_f32(
+  ARM_DSP_ATTRIBUTE void arm_rms_f32(
   const float32_t * pSrc,
         uint32_t blockSize,
         float32_t * pResult);
@@ -332,7 +332,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[in]  blockSize  is the number of samples to process
    * @param[out] pResult    is output value.
    */
-  void arm_rms_q31(
+  ARM_DSP_ATTRIBUTE void arm_rms_q31(
   const q31_t * pSrc,
         uint32_t blockSize,
         q31_t * pResult);
@@ -344,7 +344,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[in]  blockSize  is the number of samples to process
    * @param[out] pResult    is output value.
    */
-  void arm_rms_q15(
+  ARM_DSP_ATTRIBUTE void arm_rms_q15(
   const q15_t * pSrc,
         uint32_t blockSize,
         q15_t * pResult);
@@ -356,7 +356,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[in]  blockSize  is the number of samples to process
    * @param[out] pResult    is output value.
    */
-  void arm_std_f32(
+  ARM_DSP_ATTRIBUTE void arm_std_f32(
   const float32_t * pSrc,
         uint32_t blockSize,
         float32_t * pResult);
@@ -368,7 +368,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[in]  blockSize  is the number of samples to process
    * @param[out] pResult    is output value.
    */
-  void arm_std_f64(
+  ARM_DSP_ATTRIBUTE void arm_std_f64(
   const float64_t * pSrc,
         uint32_t blockSize,
         float64_t * pResult);
@@ -380,7 +380,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[in]  blockSize  is the number of samples to process
    * @param[out] pResult    is output value.
    */
-  void arm_std_q31(
+  ARM_DSP_ATTRIBUTE void arm_std_q31(
   const q31_t * pSrc,
         uint32_t blockSize,
         q31_t * pResult);
@@ -392,7 +392,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[in]  blockSize  is the number of samples to process
    * @param[out] pResult    is output value.
    */
-  void arm_std_q15(
+  ARM_DSP_ATTRIBUTE void arm_std_q15(
   const q15_t * pSrc,
         uint32_t blockSize,
         q15_t * pResult);
@@ -406,7 +406,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[out] pResult     is output pointer
    * @param[in]  pIndex      is the array index of the minimum value in the input buffer.
    */
-  void arm_min_q7(
+  ARM_DSP_ATTRIBUTE void arm_min_q7(
   const q7_t * pSrc,
         uint32_t blockSize,
         q7_t * pResult,
@@ -419,7 +419,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[out] pResult    is output pointer
    * @param[in]  pIndex     is the array index of the minimum value in the input buffer.
    */
-  void arm_absmin_q7(
+  ARM_DSP_ATTRIBUTE void arm_absmin_q7(
   const q7_t * pSrc,
         uint32_t blockSize,
         q7_t * pResult,
@@ -431,7 +431,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[in]  blockSize  is the number of samples to process
    * @param[out] pResult    is output pointer
    */
-  void arm_absmin_no_idx_q7(
+  ARM_DSP_ATTRIBUTE void arm_absmin_no_idx_q7(
   const q7_t * pSrc,
         uint32_t blockSize,
         q7_t * pResult);
@@ -444,7 +444,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[out] pResult    is output pointer
    * @param[in]  pIndex     is the array index of the minimum value in the input buffer.
    */
-  void arm_min_q15(
+  ARM_DSP_ATTRIBUTE void arm_min_q15(
   const q15_t * pSrc,
         uint32_t blockSize,
         q15_t * pResult,
@@ -457,7 +457,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[out] pResult    is output pointer
    * @param[in]  pIndex     is the array index of the minimum value in the input buffer.
    */
-  void arm_absmin_q15(
+  ARM_DSP_ATTRIBUTE void arm_absmin_q15(
   const q15_t * pSrc,
         uint32_t blockSize,
         q15_t * pResult,
@@ -469,7 +469,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[in]  blockSize  is the number of samples to process
    * @param[out] pResult    is output pointer
    */
-  void arm_absmin_no_idx_q15(
+  ARM_DSP_ATTRIBUTE void arm_absmin_no_idx_q15(
   const q15_t * pSrc,
         uint32_t blockSize,
         q15_t * pResult);
@@ -482,7 +482,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[out] pResult    is output pointer
    * @param[out] pIndex     is the array index of the minimum value in the input buffer.
    */
-  void arm_min_q31(
+  ARM_DSP_ATTRIBUTE void arm_min_q31(
   const q31_t * pSrc,
         uint32_t blockSize,
         q31_t * pResult,
@@ -495,7 +495,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[out] pResult    is output pointer
    * @param[out] pIndex     is the array index of the minimum value in the input buffer.
    */
-  void arm_absmin_q31(
+  ARM_DSP_ATTRIBUTE void arm_absmin_q31(
   const q31_t * pSrc,
         uint32_t blockSize,
         q31_t * pResult,
@@ -507,7 +507,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[in]  blockSize  is the number of samples to process
    * @param[out] pResult    is output pointer
    */
-  void arm_absmin_no_idx_q31(
+  ARM_DSP_ATTRIBUTE void arm_absmin_no_idx_q31(
   const q31_t * pSrc,
         uint32_t blockSize,
         q31_t * pResult);
@@ -520,7 +520,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[out] pResult    is output pointer
    * @param[out] pIndex     is the array index of the minimum value in the input buffer.
    */
-  void arm_min_f32(
+  ARM_DSP_ATTRIBUTE void arm_min_f32(
   const float32_t * pSrc,
         uint32_t blockSize,
         float32_t * pResult,
@@ -533,7 +533,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[out] pResult    is output pointer
    * @param[out] pIndex     is the array index of the minimum value in the input buffer.
    */
-  void arm_absmin_f32(
+  ARM_DSP_ATTRIBUTE void arm_absmin_f32(
   const float32_t * pSrc,
         uint32_t blockSize,
         float32_t * pResult,
@@ -545,7 +545,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[in]  blockSize  is the number of samples to process
    * @param[out] pResult    is output pointer
    */
-  void arm_absmin_no_idx_f32(
+  ARM_DSP_ATTRIBUTE void arm_absmin_no_idx_f32(
   const float32_t * pSrc,
         uint32_t blockSize,
         float32_t * pResult);
@@ -558,7 +558,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[out] pResult    is output pointer
    * @param[out] pIndex     is the array index of the minimum value in the input buffer.
    */
-  void arm_min_f64(
+  ARM_DSP_ATTRIBUTE void arm_min_f64(
   const float64_t * pSrc,
         uint32_t blockSize,
         float64_t * pResult,
@@ -571,7 +571,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[out] pResult    is output pointer
    * @param[out] pIndex     is the array index of the minimum value in the input buffer.
    */
-  void arm_absmin_f64(
+  ARM_DSP_ATTRIBUTE void arm_absmin_f64(
   const float64_t * pSrc,
         uint32_t blockSize,
         float64_t * pResult,
@@ -583,7 +583,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
    * @param[in]  blockSize  is the number of samples to process
    * @param[out] pResult    is output pointer
    */
-  void arm_absmin_no_idx_f64(
+  ARM_DSP_ATTRIBUTE void arm_absmin_no_idx_f64(
   const float64_t * pSrc,
         uint32_t blockSize,
         float64_t * pResult);
@@ -596,7 +596,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
  * @param[out] pResult    maximum value returned here
  * @param[out] pIndex     index of maximum value returned here
  */
-  void arm_max_q7(
+  ARM_DSP_ATTRIBUTE void arm_max_q7(
   const q7_t * pSrc,
         uint32_t blockSize,
         q7_t * pResult,
@@ -609,7 +609,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
  * @param[out] pResult    maximum value returned here
  * @param[out] pIndex     index of maximum value returned here
  */
-  void arm_absmax_q7(
+  ARM_DSP_ATTRIBUTE void arm_absmax_q7(
   const q7_t * pSrc,
         uint32_t blockSize,
         q7_t * pResult,
@@ -621,7 +621,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
  * @param[in]  blockSize  length of the input vector
  * @param[out] pResult    maximum value returned here
  */
-  void arm_absmax_no_idx_q7(
+  ARM_DSP_ATTRIBUTE void arm_absmax_no_idx_q7(
   const q7_t * pSrc,
         uint32_t blockSize,
         q7_t * pResult);
@@ -634,7 +634,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
  * @param[out] pResult    maximum value returned here
  * @param[out] pIndex     index of maximum value returned here
  */
-  void arm_max_q15(
+  ARM_DSP_ATTRIBUTE void arm_max_q15(
   const q15_t * pSrc,
         uint32_t blockSize,
         q15_t * pResult,
@@ -647,7 +647,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
  * @param[out] pResult    maximum value returned here
  * @param[out] pIndex     index of maximum value returned here
  */
-  void arm_absmax_q15(
+  ARM_DSP_ATTRIBUTE void arm_absmax_q15(
   const q15_t * pSrc,
         uint32_t blockSize,
         q15_t * pResult,
@@ -659,7 +659,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
  * @param[in]  blockSize  length of the input vector
  * @param[out] pResult    maximum value returned here
  */
-  void arm_absmax_no_idx_q15(
+  ARM_DSP_ATTRIBUTE void arm_absmax_no_idx_q15(
   const q15_t * pSrc,
         uint32_t blockSize,
         q15_t * pResult);
@@ -671,7 +671,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
  * @param[out] pResult    maximum value returned here
  * @param[out] pIndex     index of maximum value returned here
  */
-  void arm_max_q31(
+  ARM_DSP_ATTRIBUTE void arm_max_q31(
   const q31_t * pSrc,
         uint32_t blockSize,
         q31_t * pResult,
@@ -684,7 +684,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
  * @param[out] pResult    maximum value returned here
  * @param[out] pIndex     index of maximum value returned here
  */
-  void arm_absmax_q31(
+  ARM_DSP_ATTRIBUTE void arm_absmax_q31(
   const q31_t * pSrc,
         uint32_t blockSize,
         q31_t * pResult,
@@ -696,7 +696,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
  * @param[in]  blockSize  length of the input vector
  * @param[out] pResult    maximum value returned here
  */
-  void arm_absmax_no_idx_q31(
+  ARM_DSP_ATTRIBUTE void arm_absmax_no_idx_q31(
   const q31_t * pSrc,
         uint32_t blockSize,
         q31_t * pResult);
@@ -708,7 +708,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
  * @param[out] pResult    maximum value returned here
  * @param[out] pIndex     index of maximum value returned here
  */
-  void arm_max_f32(
+  ARM_DSP_ATTRIBUTE void arm_max_f32(
   const float32_t * pSrc,
         uint32_t blockSize,
         float32_t * pResult,
@@ -721,7 +721,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
  * @param[out] pResult    maximum value returned here
  * @param[out] pIndex     index of maximum value returned here
  */
-  void arm_absmax_f32(
+  ARM_DSP_ATTRIBUTE void arm_absmax_f32(
   const float32_t * pSrc,
         uint32_t blockSize,
         float32_t * pResult,
@@ -733,7 +733,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
  * @param[in]  blockSize  length of the input vector
  * @param[out] pResult    maximum value returned here
  */
-  void arm_absmax_no_idx_f32(
+  ARM_DSP_ATTRIBUTE void arm_absmax_no_idx_f32(
   const float32_t * pSrc,
         uint32_t blockSize,
         float32_t * pResult);
@@ -745,7 +745,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
  * @param[out] pResult    maximum value returned here
  * @param[out] pIndex     index of maximum value returned here
  */
-  void arm_max_f64(
+  ARM_DSP_ATTRIBUTE void arm_max_f64(
   const float64_t * pSrc,
         uint32_t blockSize,
         float64_t * pResult,
@@ -758,7 +758,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
  * @param[out] pResult    maximum value returned here
  * @param[out] pIndex     index of maximum value returned here
  */
-  void arm_absmax_f64(
+  ARM_DSP_ATTRIBUTE void arm_absmax_f64(
   const float64_t * pSrc,
         uint32_t blockSize,
         float64_t * pResult,
@@ -770,7 +770,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
  * @param[in]  blockSize  length of the input vector
  * @param[out] pResult    maximum value returned here
  */
-  void arm_absmax_no_idx_f64(
+  ARM_DSP_ATTRIBUTE void arm_absmax_no_idx_f64(
   const float64_t * pSrc,
         uint32_t blockSize,
         float64_t * pResult);
@@ -781,7 +781,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
     @param[in]     blockSize  number of samples in input vector
     @param[out]    pResult    maximum value returned here
    */
-  void arm_max_no_idx_f32(
+  ARM_DSP_ATTRIBUTE void arm_max_no_idx_f32(
       const float32_t *pSrc,
       uint32_t   blockSize,
       float32_t *pResult);
@@ -792,7 +792,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
     @param[in]     blockSize  number of samples in input vector
     @param[out]    pResult    minimum value returned here
    */
-  void arm_min_no_idx_f32(
+  ARM_DSP_ATTRIBUTE void arm_min_no_idx_f32(
       const float32_t *pSrc,
       uint32_t   blockSize,
       float32_t *pResult);
@@ -803,7 +803,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
     @param[in]     blockSize  number of samples in input vector
     @param[out]    pResult    maximum value returned here
    */
-  void arm_max_no_idx_f64(
+  ARM_DSP_ATTRIBUTE void arm_max_no_idx_f64(
       const float64_t *pSrc,
       uint32_t   blockSize,
       float64_t *pResult);
@@ -814,7 +814,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
     @param[in]     blockSize  number of samples in input vector
     @param[out]    pResult    maximum value returned here
    */
-  void arm_max_no_idx_q31(
+  ARM_DSP_ATTRIBUTE void arm_max_no_idx_q31(
       const q31_t *pSrc,
       uint32_t   blockSize,
       q31_t *pResult);
@@ -825,7 +825,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
     @param[in]     blockSize  number of samples in input vector
     @param[out]    pResult    maximum value returned here
    */
-  void arm_max_no_idx_q15(
+  ARM_DSP_ATTRIBUTE void arm_max_no_idx_q15(
       const q15_t *pSrc,
       uint32_t   blockSize,
       q15_t *pResult);
@@ -836,7 +836,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
     @param[in]     blockSize  number of samples in input vector
     @param[out]    pResult    maximum value returned here
    */
-  void arm_max_no_idx_q7(
+  ARM_DSP_ATTRIBUTE void arm_max_no_idx_q7(
       const q7_t *pSrc,
       uint32_t   blockSize,
       q7_t *pResult);
@@ -847,7 +847,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
     @param[in]     blockSize  number of samples in input vector
     @param[out]    pResult    minimum value returned here
    */
-  void arm_min_no_idx_f64(
+  ARM_DSP_ATTRIBUTE void arm_min_no_idx_f64(
       const float64_t *pSrc,
       uint32_t   blockSize,
       float64_t *pResult);
@@ -858,7 +858,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
     @param[in]     blockSize  number of samples in input vector
     @param[out]    pResult    minimum value returned here
    */
-  void arm_min_no_idx_q31(
+  ARM_DSP_ATTRIBUTE void arm_min_no_idx_q31(
       const q31_t *pSrc,
       uint32_t   blockSize,
       q31_t *pResult);
@@ -869,7 +869,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
     @param[in]     blockSize  number of samples in input vector
     @param[out]    pResult    minimum value returned here
    */
-  void arm_min_no_idx_q15(
+  ARM_DSP_ATTRIBUTE void arm_min_no_idx_q15(
       const q15_t *pSrc,
       uint32_t   blockSize,
       q15_t *pResult);
@@ -880,7 +880,7 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
     @param[in]     blockSize  number of samples in input vector
     @param[out]    pResult    minimum value returned here
    */
-void arm_min_no_idx_q7(
+ARM_DSP_ATTRIBUTE void arm_min_no_idx_q7(
      const q7_t *pSrc,
       uint32_t   blockSize,
       q7_t *pResult);
@@ -893,7 +893,7 @@ void arm_min_no_idx_q7(
   @param[out]    pResult    mean square error
 */
   
-void arm_mse_q7(
+ARM_DSP_ATTRIBUTE void arm_mse_q7(
   const q7_t * pSrcA,
   const q7_t * pSrcB,
         uint32_t blockSize,
@@ -907,7 +907,7 @@ void arm_mse_q7(
   @param[out]    pResult    mean square error
 */
   
-void arm_mse_q15(
+ARM_DSP_ATTRIBUTE void arm_mse_q15(
   const q15_t * pSrcA,
   const q15_t * pSrcB,
         uint32_t blockSize,
@@ -921,7 +921,7 @@ void arm_mse_q15(
   @param[out]    pResult    mean square error
 */
   
-void arm_mse_q31(
+ARM_DSP_ATTRIBUTE void arm_mse_q31(
   const q31_t * pSrcA,
   const q31_t * pSrcB,
         uint32_t blockSize,
@@ -935,7 +935,7 @@ void arm_mse_q31(
   @param[out]    pResult    mean square error
 */
   
-void arm_mse_f32(
+ARM_DSP_ATTRIBUTE void arm_mse_f32(
   const float32_t * pSrcA,
   const float32_t * pSrcB,
         uint32_t blockSize,
@@ -949,7 +949,7 @@ void arm_mse_f32(
   @param[out]    pResult    mean square error
 */
   
-void arm_mse_f64(
+ARM_DSP_ATTRIBUTE void arm_mse_f64(
   const float64_t * pSrcA,
   const float64_t * pSrcB,
         uint32_t blockSize,
@@ -963,7 +963,7 @@ void arm_mse_f64(
  * @param[out] pResult    is output value.
  */
 
-void arm_accumulate_f32(
+ARM_DSP_ATTRIBUTE void arm_accumulate_f32(
 const float32_t * pSrc,
       uint32_t blockSize,
       float32_t * pResult);
@@ -975,7 +975,7 @@ const float32_t * pSrc,
  * @param[out] pResult    is output value.
  */
 
-void arm_accumulate_f64(
+ARM_DSP_ATTRIBUTE void arm_accumulate_f64(
 const float64_t * pSrc,
       uint32_t blockSize,
       float64_t * pResult);

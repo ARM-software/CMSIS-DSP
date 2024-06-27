@@ -22,8 +22,8 @@
  * limitations under the License.
  */
 
-#ifndef _ARM_SORTING_H_
-#define _ARM_SORTING_H_
+#ifndef ARM_SORTING_H_
+#define ARM_SORTING_H_
 
 #include "arm_math.h"
 

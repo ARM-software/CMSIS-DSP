@@ -24,8 +24,8 @@
  */
 
  
-#ifndef _COMPLEX_MATH_FUNCTIONS_F16_H_
-#define _COMPLEX_MATH_FUNCTIONS_F16_H_
+#ifndef COMPLEX_MATH_FUNCTIONS_F16_H_
+#define COMPLEX_MATH_FUNCTIONS_F16_H_
 
 #include "arm_math_types_f16.h"
 #include "arm_math_memory.h"
@@ -47,7 +47,7 @@ extern "C"
    * @param[out] pDst        points to the output vector
    * @param[in]  numSamples  number of complex samples in each vector
    */
-  void arm_cmplx_conj_f16(
+  ARM_DSP_ATTRIBUTE void arm_cmplx_conj_f16(
   const float16_t * pSrc,
         float16_t * pDst,
         uint32_t numSamples);
@@ -58,7 +58,7 @@ extern "C"
    * @param[out] pDst        points to the real output vector
    * @param[in]  numSamples  number of complex samples in the input vector
    */
-  void arm_cmplx_mag_squared_f16(
+  ARM_DSP_ATTRIBUTE void arm_cmplx_mag_squared_f16(
   const float16_t * pSrc,
         float16_t * pDst,
         uint32_t numSamples);
@@ -69,7 +69,7 @@ extern "C"
    * @param[out] pDst        points to the real output vector
    * @param[in]  numSamples  number of complex samples in the input vector
    */
-  void arm_cmplx_mag_f16(
+  ARM_DSP_ATTRIBUTE void arm_cmplx_mag_f16(
   const float16_t * pSrc,
         float16_t * pDst,
         uint32_t numSamples);
@@ -82,7 +82,7 @@ extern "C"
    * @param[out] realResult  real part of the result returned here
    * @param[out] imagResult  imaginary part of the result returned here
    */
-  void arm_cmplx_dot_prod_f16(
+  ARM_DSP_ATTRIBUTE void arm_cmplx_dot_prod_f16(
   const float16_t * pSrcA,
   const float16_t * pSrcB,
         uint32_t numSamples,
@@ -96,7 +96,7 @@ extern "C"
    * @param[out] pCmplxDst   points to the complex output vector
    * @param[in]  numSamples  number of samples in each vector
    */
-  void arm_cmplx_mult_real_f16(
+  ARM_DSP_ATTRIBUTE void arm_cmplx_mult_real_f16(
   const float16_t * pSrcCmplx,
   const float16_t * pSrcReal,
         float16_t * pCmplxDst,
@@ -109,7 +109,7 @@ extern "C"
    * @param[out] pDst        points to the output vector
    * @param[in]  numSamples  number of complex samples in each vector
    */
-  void arm_cmplx_mult_cmplx_f16(
+  ARM_DSP_ATTRIBUTE void arm_cmplx_mult_cmplx_f16(
   const float16_t * pSrcA,
   const float16_t * pSrcB,
         float16_t * pDst,

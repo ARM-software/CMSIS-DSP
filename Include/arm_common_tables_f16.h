@@ -26,8 +26,8 @@
  * limitations under the License.
  */
 
-#ifndef _ARM_COMMON_TABLES_F16_H
-#define _ARM_COMMON_TABLES_F16_H
+#ifndef ARM_COMMON_TABLES_F16_H
+#define ARM_COMMON_TABLES_F16_H
 
 #include "arm_math_types_f16.h"
 

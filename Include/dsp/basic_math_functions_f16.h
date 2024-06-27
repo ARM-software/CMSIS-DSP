@@ -24,8 +24,8 @@
  */
 
  
-#ifndef _BASIC_MATH_FUNCTIONS_F16_H_
-#define _BASIC_MATH_FUNCTIONS_F16_H_
+#ifndef BASIC_MATH_FUNCTIONS_F16_H_
+#define BASIC_MATH_FUNCTIONS_F16_H_
 
 #include "arm_math_types_f16.h"
 #include "arm_math_memory.h"
@@ -48,7 +48,7 @@ extern "C"
    * @param[out] pDst       points to the output vector
    * @param[in]  blockSize  number of samples in each vector
    */
-  void arm_add_f16(
+  ARM_DSP_ATTRIBUTE void arm_add_f16(
   const float16_t * pSrcA,
   const float16_t * pSrcB,
         float16_t * pDst,
@@ -61,7 +61,7 @@ extern "C"
    * @param[out] pDst       points to the output vector
    * @param[in]  blockSize  number of samples in each vector
    */
-  void arm_sub_f16(
+  ARM_DSP_ATTRIBUTE void arm_sub_f16(
   const float16_t * pSrcA,
   const float16_t * pSrcB,
         float16_t * pDst,
@@ -74,7 +74,7 @@ extern "C"
    * @param[out] pDst       points to the output vector
    * @param[in]  blockSize  number of samples in the vector
    */
-  void arm_scale_f16(
+  ARM_DSP_ATTRIBUTE void arm_scale_f16(
   const float16_t * pSrc,
         float16_t scale,
         float16_t * pDst,
@@ -86,7 +86,7 @@ extern "C"
    * @param[out] pDst       points to the output buffer
    * @param[in]  blockSize  number of samples in each vector
    */
-  void arm_abs_f16(
+  ARM_DSP_ATTRIBUTE void arm_abs_f16(
   const float16_t * pSrc,
         float16_t * pDst,
         uint32_t blockSize);
@@ -99,7 +99,7 @@ extern "C"
    * @param[out] pDst       points to the output vector
    * @param[in]  blockSize  number of samples in the vector
    */
-  void arm_offset_f16(
+  ARM_DSP_ATTRIBUTE void arm_offset_f16(
   const float16_t * pSrc,
         float16_t offset,
         float16_t * pDst,
@@ -112,7 +112,7 @@ extern "C"
    * @param[in]  blockSize  number of samples in each vector
    * @param[out] result     output result returned here
    */
-  void arm_dot_prod_f16(
+  ARM_DSP_ATTRIBUTE void arm_dot_prod_f16(
   const float16_t * pSrcA,
   const float16_t * pSrcB,
         uint32_t blockSize,
@@ -125,7 +125,7 @@ extern "C"
    * @param[out] pDst       points to the output vector
    * @param[in]  blockSize  number of samples in each vector
    */
-  void arm_mult_f16(
+  ARM_DSP_ATTRIBUTE void arm_mult_f16(
   const float16_t * pSrcA,
   const float16_t * pSrcB,
         float16_t * pDst,
@@ -137,7 +137,7 @@ extern "C"
    * @param[out] pDst       points to the output vector
    * @param[in]  blockSize  number of samples in the vector
    */
-  void arm_negate_f16(
+  ARM_DSP_ATTRIBUTE void arm_negate_f16(
   const float16_t * pSrc,
         float16_t * pDst,
         uint32_t blockSize);
@@ -150,7 +150,7 @@ extern "C"
   @param[in]     high          higher bound
   @param[in]     numSamples    number of samples to clip
  */
-void arm_clip_f16(const float16_t * pSrc, 
+ARM_DSP_ATTRIBUTE void arm_clip_f16(const float16_t * pSrc, 
   float16_t * pDst, 
   float16_t low, 
   float16_t high, 

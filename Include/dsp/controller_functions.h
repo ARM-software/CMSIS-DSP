@@ -24,8 +24,8 @@
  */
 
  
-#ifndef _CONTROLLER_FUNCTIONS_H_
-#define _CONTROLLER_FUNCTIONS_H_
+#ifndef CONTROLLER_FUNCTIONS_H_
+#define CONTROLLER_FUNCTIONS_H_
 
 #include "arm_math_types.h"
 #include "arm_math_memory.h"
@@ -87,7 +87,7 @@ extern "C"
    * @param[out] pSinVal  points to the processed sine output.
    * @param[out] pCosVal  points to the processed cos output.
    */
-  void arm_sin_cos_f32(
+  ARM_DSP_ATTRIBUTE void arm_sin_cos_f32(
         float32_t theta,
         float32_t * pSinVal,
         float32_t * pCosVal);
@@ -99,7 +99,7 @@ extern "C"
    * @param[out] pSinVal  points to the processed sine output.
    * @param[out] pCosVal  points to the processed cosine output.
    */
-  void arm_sin_cos_q31(
+  ARM_DSP_ATTRIBUTE void arm_sin_cos_q31(
         q31_t theta,
         q31_t * pSinVal,
         q31_t * pCosVal);
@@ -224,7 +224,7 @@ extern "C"
    * @param[in,out] S               points to an instance of the PID structure.
    * @param[in]     resetStateFlag  flag to reset the state. 0 = no change in state 1 = reset the state.
    */
-  void arm_pid_init_f32(
+  ARM_DSP_ATTRIBUTE void arm_pid_init_f32(
         arm_pid_instance_f32 * S,
         int32_t resetStateFlag);
 
@@ -233,7 +233,7 @@ extern "C"
    * @brief  Reset function for the floating-point PID Control.
    * @param[in,out] S  is an instance of the floating-point PID Control structure
    */
-  void arm_pid_reset_f32(
+  ARM_DSP_ATTRIBUTE void arm_pid_reset_f32(
         arm_pid_instance_f32 * S);
 
 
@@ -242,7 +242,7 @@ extern "C"
    * @param[in,out] S               points to an instance of the Q15 PID structure.
    * @param[in]     resetStateFlag  flag to reset the state. 0 = no change in state 1 = reset the state.
    */
-  void arm_pid_init_q31(
+  ARM_DSP_ATTRIBUTE void arm_pid_init_q31(
         arm_pid_instance_q31 * S,
         int32_t resetStateFlag);
 
@@ -252,7 +252,7 @@ extern "C"
    * @param[in,out] S   points to an instance of the Q31 PID Control structure
    */
 
-  void arm_pid_reset_q31(
+  ARM_DSP_ATTRIBUTE void arm_pid_reset_q31(
         arm_pid_instance_q31 * S);
 
 
@@ -261,7 +261,7 @@ extern "C"
    * @param[in,out] S               points to an instance of the Q15 PID structure.
    * @param[in]     resetStateFlag  flag to reset the state. 0 = no change in state 1 = reset the state.
    */
-  void arm_pid_init_q15(
+  ARM_DSP_ATTRIBUTE void arm_pid_init_q15(
         arm_pid_instance_q15 * S,
         int32_t resetStateFlag);
 
@@ -270,7 +270,7 @@ extern "C"
    * @brief  Reset function for the Q15 PID Control.
    * @param[in,out] S  points to an instance of the q15 PID Control structure
    */
-  void arm_pid_reset_q15(
+  ARM_DSP_ATTRIBUTE void arm_pid_reset_q15(
         arm_pid_instance_q15 * S);
 
 
@@ -315,7 +315,7 @@ extern "C"
          The function is implemented using an internal 64-bit accumulator.
          The accumulator has a 2.62 format and maintains full precision of the intermediate multiplication results but provides only a single guard bit.
          Thus, if the accumulator result overflows it wraps around rather than clip.
-         In order to avoid overflows completely the input signal must be scaled down by 2 bits as there are four additions.
+         In order to aARM_DSP_ATTRIBUTE void overflows completely the input signal must be scaled down by 2 bits as there are four additions.
          After all multiply-accumulates are performed, the 2.62 accumulator is truncated to 1.32 format and then saturated to 1.31 format.
  */
 __STATIC_FORCEINLINE q31_t arm_pid_q31(

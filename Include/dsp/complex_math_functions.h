@@ -24,8 +24,8 @@
  */
 
  
-#ifndef _COMPLEX_MATH_FUNCTIONS_H_
-#define _COMPLEX_MATH_FUNCTIONS_H_
+#ifndef COMPLEX_MATH_FUNCTIONS_H_
+#define COMPLEX_MATH_FUNCTIONS_H_
 
 #include "arm_math_types.h"
 #include "arm_math_memory.h"
@@ -55,7 +55,7 @@ extern "C"
    * @param[out] pDst        points to the output vector
    * @param[in]  numSamples  number of complex samples in each vector
    */
-  void arm_cmplx_conj_f32(
+  ARM_DSP_ATTRIBUTE void arm_cmplx_conj_f32(
   const float32_t * pSrc,
         float32_t * pDst,
         uint32_t numSamples);
@@ -66,7 +66,7 @@ extern "C"
    * @param[out] pDst        points to the output vector
    * @param[in]  numSamples  number of complex samples in each vector
    */
-  void arm_cmplx_conj_q31(
+  ARM_DSP_ATTRIBUTE void arm_cmplx_conj_q31(
   const q31_t * pSrc,
         q31_t * pDst,
         uint32_t numSamples);
@@ -78,7 +78,7 @@ extern "C"
    * @param[out] pDst        points to the output vector
    * @param[in]  numSamples  number of complex samples in each vector
    */
-  void arm_cmplx_conj_q15(
+  ARM_DSP_ATTRIBUTE void arm_cmplx_conj_q15(
   const q15_t * pSrc,
         q15_t * pDst,
         uint32_t numSamples);
@@ -90,7 +90,7 @@ extern "C"
    * @param[out] pDst        points to the real output vector
    * @param[in]  numSamples  number of complex samples in the input vector
    */
-  void arm_cmplx_mag_squared_f32(
+  ARM_DSP_ATTRIBUTE void arm_cmplx_mag_squared_f32(
   const float32_t * pSrc,
         float32_t * pDst,
         uint32_t numSamples);
@@ -102,7 +102,7 @@ extern "C"
    * @param[out] pDst        points to the real output vector
    * @param[in]  numSamples  number of complex samples in the input vector
    */
-  void arm_cmplx_mag_squared_f64(
+  ARM_DSP_ATTRIBUTE void arm_cmplx_mag_squared_f64(
   const float64_t * pSrc,
         float64_t * pDst,
         uint32_t numSamples);
@@ -114,7 +114,7 @@ extern "C"
    * @param[out] pDst        points to the real output vector
    * @param[in]  numSamples  number of complex samples in the input vector
    */
-  void arm_cmplx_mag_squared_q31(
+  ARM_DSP_ATTRIBUTE void arm_cmplx_mag_squared_q31(
   const q31_t * pSrc,
         q31_t * pDst,
         uint32_t numSamples);
@@ -126,7 +126,7 @@ extern "C"
    * @param[out] pDst        points to the real output vector
    * @param[in]  numSamples  number of complex samples in the input vector
    */
-  void arm_cmplx_mag_squared_q15(
+  ARM_DSP_ATTRIBUTE void arm_cmplx_mag_squared_q15(
   const q15_t * pSrc,
         q15_t * pDst,
         uint32_t numSamples);
@@ -138,7 +138,7 @@ extern "C"
    * @param[out] pDst        points to the real output vector
    * @param[in]  numSamples  number of complex samples in the input vector
    */
-  void arm_cmplx_mag_f32(
+  ARM_DSP_ATTRIBUTE void arm_cmplx_mag_f32(
   const float32_t * pSrc,
         float32_t * pDst,
         uint32_t numSamples);
@@ -150,7 +150,7 @@ extern "C"
    * @param[out] pDst        points to the real output vector
    * @param[in]  numSamples  number of complex samples in the input vector
    */
-  void arm_cmplx_mag_f64(
+  ARM_DSP_ATTRIBUTE void arm_cmplx_mag_f64(
   const float64_t * pSrc,
         float64_t * pDst,
         uint32_t numSamples);
@@ -162,7 +162,7 @@ extern "C"
    * @param[out] pDst        points to the real output vector
    * @param[in]  numSamples  number of complex samples in the input vector
    */
-  void arm_cmplx_mag_q31(
+  ARM_DSP_ATTRIBUTE void arm_cmplx_mag_q31(
   const q31_t * pSrc,
         q31_t * pDst,
         uint32_t numSamples);
@@ -174,7 +174,7 @@ extern "C"
    * @param[out] pDst        points to the real output vector
    * @param[in]  numSamples  number of complex samples in the input vector
    */
-  void arm_cmplx_mag_q15(
+  ARM_DSP_ATTRIBUTE void arm_cmplx_mag_q15(
   const q15_t * pSrc,
         q15_t * pDst,
         uint32_t numSamples);
@@ -185,7 +185,7 @@ extern "C"
    * @param[out] pDst        points to the real output vector
    * @param[in]  numSamples  number of complex samples in the input vector
    */
-  void arm_cmplx_mag_fast_q15(
+  ARM_DSP_ATTRIBUTE void arm_cmplx_mag_fast_q15(
   const q15_t * pSrc,
         q15_t * pDst,
         uint32_t numSamples);
@@ -199,7 +199,7 @@ extern "C"
    * @param[out] realResult  real part of the result returned here
    * @param[out] imagResult  imaginary part of the result returned here
    */
-  void arm_cmplx_dot_prod_q15(
+  ARM_DSP_ATTRIBUTE void arm_cmplx_dot_prod_q15(
   const q15_t * pSrcA,
   const q15_t * pSrcB,
         uint32_t numSamples,
@@ -215,7 +215,7 @@ extern "C"
    * @param[out] realResult  real part of the result returned here
    * @param[out] imagResult  imaginary part of the result returned here
    */
-  void arm_cmplx_dot_prod_q31(
+  ARM_DSP_ATTRIBUTE void arm_cmplx_dot_prod_q31(
   const q31_t * pSrcA,
   const q31_t * pSrcB,
         uint32_t numSamples,
@@ -231,7 +231,7 @@ extern "C"
    * @param[out] realResult  real part of the result returned here
    * @param[out] imagResult  imaginary part of the result returned here
    */
-  void arm_cmplx_dot_prod_f32(
+  ARM_DSP_ATTRIBUTE void arm_cmplx_dot_prod_f32(
   const float32_t * pSrcA,
   const float32_t * pSrcB,
         uint32_t numSamples,
@@ -246,7 +246,7 @@ extern "C"
    * @param[out] pCmplxDst   points to the complex output vector
    * @param[in]  numSamples  number of samples in each vector
    */
-  void arm_cmplx_mult_real_q15(
+  ARM_DSP_ATTRIBUTE void arm_cmplx_mult_real_q15(
   const q15_t * pSrcCmplx,
   const q15_t * pSrcReal,
         q15_t * pCmplxDst,
@@ -260,7 +260,7 @@ extern "C"
    * @param[out] pCmplxDst   points to the complex output vector
    * @param[in]  numSamples  number of samples in each vector
    */
-  void arm_cmplx_mult_real_q31(
+  ARM_DSP_ATTRIBUTE void arm_cmplx_mult_real_q31(
   const q31_t * pSrcCmplx,
   const q31_t * pSrcReal,
         q31_t * pCmplxDst,
@@ -274,7 +274,7 @@ extern "C"
    * @param[out] pCmplxDst   points to the complex output vector
    * @param[in]  numSamples  number of samples in each vector
    */
-  void arm_cmplx_mult_real_f32(
+  ARM_DSP_ATTRIBUTE void arm_cmplx_mult_real_f32(
   const float32_t * pSrcCmplx,
   const float32_t * pSrcReal,
         float32_t * pCmplxDst,
@@ -287,7 +287,7 @@ extern "C"
    * @param[out] pDst        points to the output vector
    * @param[in]  numSamples  number of complex samples in each vector
    */
-  void arm_cmplx_mult_cmplx_q15(
+  ARM_DSP_ATTRIBUTE void arm_cmplx_mult_cmplx_q15(
   const q15_t * pSrcA,
   const q15_t * pSrcB,
         q15_t * pDst,
@@ -301,7 +301,7 @@ extern "C"
    * @param[out] pDst        points to the output vector
    * @param[in]  numSamples  number of complex samples in each vector
    */
-  void arm_cmplx_mult_cmplx_q31(
+  ARM_DSP_ATTRIBUTE void arm_cmplx_mult_cmplx_q31(
   const q31_t * pSrcA,
   const q31_t * pSrcB,
         q31_t * pDst,
@@ -315,7 +315,7 @@ extern "C"
    * @param[out] pDst        points to the output vector
    * @param[in]  numSamples  number of complex samples in each vector
    */
-  void arm_cmplx_mult_cmplx_f32(
+  ARM_DSP_ATTRIBUTE void arm_cmplx_mult_cmplx_f32(
   const float32_t * pSrcA,
   const float32_t * pSrcB,
         float32_t * pDst,
@@ -330,7 +330,7 @@ extern "C"
  * @param[out] pDst        points to the output vector
  * @param[in]  numSamples  number of complex samples in each vector
  */
-void arm_cmplx_mult_cmplx_f64(
+ARM_DSP_ATTRIBUTE void arm_cmplx_mult_cmplx_f64(
 const float64_t * pSrcA,
 const float64_t * pSrcB,
 	  float64_t * pDst,

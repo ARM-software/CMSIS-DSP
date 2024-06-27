@@ -28,6 +28,7 @@ default:
         - -Wno-parentheses-equality 
         - -Wno-reserved-identifier
         - -ffunction-sections
+        - -DARM_DSP_ATTRIBUTE=__attribute__((weak))
       CPP:
         - -fno-rtti 
         - -DNDEBUG 
@@ -68,6 +69,7 @@ default:
         - -Wno-maybe-uninitialized
         - -fdata-sections
         - -mfp16-format=ieee
+        - -DARM_DSP_ATTRIBUTE=__attribute__((weak))
       CPP:
         - -fno-rtti 
         - -DNDEBUG 
@@ -116,6 +118,7 @@ default:
          - -Wno-parentheses-equality 
          - -Wno-reserved-identifier
          - -ffunction-sections
+         - -DARM_DSP_ATTRIBUTE=__attribute__((weak))
       CPP:
         - -fno-rtti 
         - -DNDEBUG 

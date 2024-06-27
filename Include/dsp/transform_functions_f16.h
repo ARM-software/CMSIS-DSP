@@ -24,8 +24,8 @@
  */
 
  
-#ifndef _TRANSFORM_FUNCTIONS_F16_H_
-#define _TRANSFORM_FUNCTIONS_F16_H_
+#ifndef TRANSFORM_FUNCTIONS_F16_H_
+#define TRANSFORM_FUNCTIONS_F16_H_
 
 #include "arm_math_types_f16.h"
 #include "arm_math_memory.h"
@@ -93,18 +93,18 @@ extern "C"
   } arm_cfft_instance_f16;
 
 
-arm_status arm_cfft_init_4096_f16(arm_cfft_instance_f16 * S);
-arm_status arm_cfft_init_2048_f16(arm_cfft_instance_f16 * S);
-arm_status arm_cfft_init_1024_f16(arm_cfft_instance_f16 * S);
-arm_status arm_cfft_init_512_f16(arm_cfft_instance_f16 * S);
-arm_status arm_cfft_init_256_f16(arm_cfft_instance_f16 * S);
-arm_status arm_cfft_init_128_f16(arm_cfft_instance_f16 * S);
-arm_status arm_cfft_init_64_f16(arm_cfft_instance_f16 * S);
-arm_status arm_cfft_init_32_f16(arm_cfft_instance_f16 * S);
-arm_status arm_cfft_init_16_f16(arm_cfft_instance_f16 * S);
+ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_4096_f16(arm_cfft_instance_f16 * S);
+ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_2048_f16(arm_cfft_instance_f16 * S);
+ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_1024_f16(arm_cfft_instance_f16 * S);
+ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_512_f16(arm_cfft_instance_f16 * S);
+ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_256_f16(arm_cfft_instance_f16 * S);
+ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_128_f16(arm_cfft_instance_f16 * S);
+ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_64_f16(arm_cfft_instance_f16 * S);
+ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_32_f16(arm_cfft_instance_f16 * S);
+ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_16_f16(arm_cfft_instance_f16 * S);
 
 
-  arm_status arm_cfft_init_f16(
+  ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_f16(
   arm_cfft_instance_f16 * S,
   uint16_t fftLen);
 
@@ -124,16 +124,16 @@ typedef struct
     const float16_t * pTwiddleRFFT;        /**< Twiddle factors real stage  */
   } arm_rfft_fast_instance_f16 ;
 
-arm_status arm_rfft_fast_init_32_f16( arm_rfft_fast_instance_f16 * S );
-arm_status arm_rfft_fast_init_64_f16( arm_rfft_fast_instance_f16 * S );
-arm_status arm_rfft_fast_init_128_f16( arm_rfft_fast_instance_f16 * S );
-arm_status arm_rfft_fast_init_256_f16( arm_rfft_fast_instance_f16 * S );
-arm_status arm_rfft_fast_init_512_f16( arm_rfft_fast_instance_f16 * S );
-arm_status arm_rfft_fast_init_1024_f16( arm_rfft_fast_instance_f16 * S );
-arm_status arm_rfft_fast_init_2048_f16( arm_rfft_fast_instance_f16 * S );
-arm_status arm_rfft_fast_init_4096_f16( arm_rfft_fast_instance_f16 * S );
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_32_f16( arm_rfft_fast_instance_f16 * S );
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_64_f16( arm_rfft_fast_instance_f16 * S );
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_128_f16( arm_rfft_fast_instance_f16 * S );
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_256_f16( arm_rfft_fast_instance_f16 * S );
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_512_f16( arm_rfft_fast_instance_f16 * S );
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_1024_f16( arm_rfft_fast_instance_f16 * S );
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_2048_f16( arm_rfft_fast_instance_f16 * S );
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_4096_f16( arm_rfft_fast_instance_f16 * S );
 
-arm_status arm_rfft_fast_init_f16 (
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_f16 (
          arm_rfft_fast_instance_f16 * S,
          uint16_t fftLen);
 
@@ -144,7 +144,7 @@ arm_status arm_rfft_fast_init_f16 (
         uint8_t ifftFlag);
 
 /* Deprecated */
-  arm_status arm_cfft_radix4_init_f16(
+  ARM_DSP_ATTRIBUTE arm_status arm_cfft_radix4_init_f16(
         arm_cfft_radix4_instance_f16 * S,
         uint16_t fftLen,
         uint8_t ifftFlag,
@@ -157,7 +157,7 @@ arm_status arm_rfft_fast_init_f16 (
 
 
 /* Deprecated */
-  arm_status arm_cfft_radix2_init_f16(
+  ARM_DSP_ATTRIBUTE arm_status arm_cfft_radix2_init_f16(
         arm_cfft_radix2_instance_f16 * S,
         uint16_t fftLen,
         uint8_t ifftFlag,
@@ -190,7 +190,7 @@ typedef struct
 #endif
   } arm_mfcc_instance_f16 ;
 
-arm_status arm_mfcc_init_32_f16(
+ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_32_f16(
   arm_mfcc_instance_f16 * S,
   uint32_t nbMelFilters,
   uint32_t nbDctOutputs,
@@ -201,7 +201,7 @@ arm_status arm_mfcc_init_32_f16(
   const float16_t *windowCoefs
   );
 
-arm_status arm_mfcc_init_64_f16(
+ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_64_f16(
   arm_mfcc_instance_f16 * S,
   uint32_t nbMelFilters,
   uint32_t nbDctOutputs,
@@ -212,7 +212,7 @@ arm_status arm_mfcc_init_64_f16(
   const float16_t *windowCoefs
   );
 
-arm_status arm_mfcc_init_128_f16(
+ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_128_f16(
   arm_mfcc_instance_f16 * S,
   uint32_t nbMelFilters,
   uint32_t nbDctOutputs,
@@ -223,7 +223,7 @@ arm_status arm_mfcc_init_128_f16(
   const float16_t *windowCoefs
   );
 
-arm_status arm_mfcc_init_256_f16(
+ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_256_f16(
   arm_mfcc_instance_f16 * S,
   uint32_t nbMelFilters,
   uint32_t nbDctOutputs,
@@ -234,7 +234,7 @@ arm_status arm_mfcc_init_256_f16(
   const float16_t *windowCoefs
   );
 
-arm_status arm_mfcc_init_512_f16(
+ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_512_f16(
   arm_mfcc_instance_f16 * S,
   uint32_t nbMelFilters,
   uint32_t nbDctOutputs,
@@ -245,7 +245,7 @@ arm_status arm_mfcc_init_512_f16(
   const float16_t *windowCoefs
   );
 
-arm_status arm_mfcc_init_1024_f16(
+ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_1024_f16(
   arm_mfcc_instance_f16 * S,
   uint32_t nbMelFilters,
   uint32_t nbDctOutputs,
@@ -256,7 +256,7 @@ arm_status arm_mfcc_init_1024_f16(
   const float16_t *windowCoefs
   );
 
-arm_status arm_mfcc_init_2048_f16(
+ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_2048_f16(
   arm_mfcc_instance_f16 * S,
   uint32_t nbMelFilters,
   uint32_t nbDctOutputs,
@@ -267,7 +267,7 @@ arm_status arm_mfcc_init_2048_f16(
   const float16_t *windowCoefs
   );
 
-arm_status arm_mfcc_init_4096_f16(
+ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_4096_f16(
   arm_mfcc_instance_f16 * S,
   uint32_t nbMelFilters,
   uint32_t nbDctOutputs,
@@ -278,7 +278,7 @@ arm_status arm_mfcc_init_4096_f16(
   const float16_t *windowCoefs
   );
 
-arm_status arm_mfcc_init_f16(
+ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_f16(
   arm_mfcc_instance_f16 * S,
   uint32_t fftLen,
   uint32_t nbMelFilters,

@@ -24,8 +24,8 @@
  */
 
  
-#ifndef _FAST_MATH_FUNCTIONS_F16_H_
-#define _FAST_MATH_FUNCTIONS_F16_H_
+#ifndef FAST_MATH_FUNCTIONS_F16_H_
+#define FAST_MATH_FUNCTIONS_F16_H_
 
 #include "arm_math_types_f16.h"
 #include "arm_math_memory.h"
@@ -78,7 +78,7 @@ __STATIC_FORCEINLINE arm_status arm_sqrt_f16(
   @param[out]    pDst       points to the output vector
   @param[in]     blockSize  number of samples in each vector
  */
-  void arm_vlog_f16(
+  ARM_DSP_ATTRIBUTE void arm_vlog_f16(
   const float16_t * pSrc,
         float16_t * pDst,
         uint32_t blockSize);
@@ -89,7 +89,7 @@ __STATIC_FORCEINLINE arm_status arm_sqrt_f16(
   @param[out]    pDst       points to the output vector
   @param[in]     blockSize  number of samples in each vector
  */
-  void arm_vexp_f16(
+  ARM_DSP_ATTRIBUTE void arm_vexp_f16(
   const float16_t * pSrc,
         float16_t * pDst,
         uint32_t blockSize);
@@ -100,7 +100,7 @@ __STATIC_FORCEINLINE arm_status arm_sqrt_f16(
   @param[out]    pDst       points to the output vector
   @param[in]     blockSize  number of samples in each vector
  */
-  void arm_vinverse_f16(
+  ARM_DSP_ATTRIBUTE void arm_vinverse_f16(
   const float16_t * pSrc,
         float16_t * pDst,
         uint32_t blockSize);
@@ -112,7 +112,7 @@ __STATIC_FORCEINLINE arm_status arm_sqrt_f16(
      @param[out]  result  Result
      @return  error status.
    */
-  arm_status arm_atan2_f16(float16_t y,float16_t x,float16_t *result);
+  ARM_DSP_ATTRIBUTE arm_status arm_atan2_f16(float16_t y,float16_t x,float16_t *result);
 
 #endif /*defined(ARM_FLOAT16_SUPPORTED)*/
 #ifdef   __cplusplus

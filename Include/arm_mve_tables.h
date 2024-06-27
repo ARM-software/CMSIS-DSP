@@ -27,8 +27,8 @@
  * limitations under the License.
  */
 
- #ifndef _ARM_MVE_TABLES_H
- #define _ARM_MVE_TABLES_H
+ #ifndef ARM_MVE_TABLES_H
+ #define ARM_MVE_TABLES_H
 
 #include "arm_math_types.h"
 

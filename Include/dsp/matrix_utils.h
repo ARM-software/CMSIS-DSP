@@ -24,8 +24,8 @@
  */
 
  
-#ifndef _MATRIX_UTILS_H_
-#define _MATRIX_UTILS_H_
+#ifndef MATRIX_UTILS_H_
+#define MATRIX_UTILS_H_
 
 #include "arm_math_types.h"
 #include "arm_math_memory.h"

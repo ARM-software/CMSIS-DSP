@@ -24,8 +24,8 @@
  */
 
  
-#ifndef _DEBUG_FUNCTIONS_H_
-#define _DEBUG_FUNCTIONS_H_
+#ifndef DEBUG_FUNCTIONS_H_
+#define DEBUG_FUNCTIONS_H_
 
 #include "arm_math_types.h"
 #include "arm_math_memory.h"
