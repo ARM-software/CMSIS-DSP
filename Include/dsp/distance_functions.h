@@ -24,8 +24,8 @@
  */
 
  
-#ifndef _DISTANCE_FUNCTIONS_H_
-#define _DISTANCE_FUNCTIONS_H_
+#ifndef DISTANCE_FUNCTIONS_H_
+#define DISTANCE_FUNCTIONS_H_
 
 #include "arm_math_types.h"
 #include "arm_math_memory.h"

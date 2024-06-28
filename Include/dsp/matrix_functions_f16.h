@@ -24,8 +24,8 @@
  */
 
  
-#ifndef _MATRIX_FUNCTIONS_F16_H_
-#define _MATRIX_FUNCTIONS_F16_H_
+#ifndef MATRIX_FUNCTIONS_F16_H_
+#define MATRIX_FUNCTIONS_F16_H_
 
 #ifdef   __cplusplus
 extern "C"

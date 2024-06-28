@@ -24,8 +24,8 @@
  */
 
  
-#ifndef _INTERPOLATION_FUNCTIONS_H_
-#define _INTERPOLATION_FUNCTIONS_H_
+#ifndef INTERPOLATION_FUNCTIONS_H_
+#define INTERPOLATION_FUNCTIONS_H_
 
 #include "arm_math_types.h"
 #include "arm_math_memory.h"

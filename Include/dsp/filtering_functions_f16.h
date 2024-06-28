@@ -24,8 +24,8 @@
  */
 
  
-#ifndef _FILTERING_FUNCTIONS_F16_H_
-#define _FILTERING_FUNCTIONS_F16_H_
+#ifndef FILTERING_FUNCTIONS_F16_H_
+#define FILTERING_FUNCTIONS_F16_H_
 
 #include "arm_math_types_f16.h"
 #include "arm_math_memory.h"

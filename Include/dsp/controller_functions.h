@@ -24,8 +24,8 @@
  */
 
  
-#ifndef _CONTROLLER_FUNCTIONS_H_
-#define _CONTROLLER_FUNCTIONS_H_
+#ifndef CONTROLLER_FUNCTIONS_H_
+#define CONTROLLER_FUNCTIONS_H_
 
 #include "arm_math_types.h"
 #include "arm_math_memory.h"

@@ -24,8 +24,8 @@
  */
 
  
-#ifndef _FAST_MATH_FUNCTIONS_H_
-#define _FAST_MATH_FUNCTIONS_H_
+#ifndef FAST_MATH_FUNCTIONS_H_
+#define FAST_MATH_FUNCTIONS_H_
 
 #include "arm_math_types.h"
 #include "arm_math_memory.h"

@@ -23,8 +23,8 @@
  * limitations under the License.
  */
 
-#ifndef _ARM_MATH_F16_H
-#define _ARM_MATH_F16_H
+#ifndef ARM_MATH_F16_H
+#define ARM_MATH_F16_H
 
 #include "arm_math.h"
 

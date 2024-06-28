@@ -24,8 +24,8 @@
  */
 
  
-#ifndef _BAYES_FUNCTIONS_F16_H_
-#define _BAYES_FUNCTIONS_F16_H_
+#ifndef BAYES_FUNCTIONS_F16_H_
+#define BAYES_FUNCTIONS_F16_H_
 
 #include "arm_math_types_f16.h"
 #include "arm_math_memory.h"

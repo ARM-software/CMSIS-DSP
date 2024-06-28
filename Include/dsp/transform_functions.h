@@ -24,8 +24,8 @@
  */
 
  
-#ifndef _TRANSFORM_FUNCTIONS_H_
-#define _TRANSFORM_FUNCTIONS_H_
+#ifndef TRANSFORM_FUNCTIONS_H_
+#define TRANSFORM_FUNCTIONS_H_
 
 #include "arm_math_types.h"
 #include "arm_math_memory.h"

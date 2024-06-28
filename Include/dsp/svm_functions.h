@@ -24,8 +24,8 @@
  */
 
  
-#ifndef _SVM_FUNCTIONS_H_
-#define _SVM_FUNCTIONS_H_
+#ifndef SVM_FUNCTIONS_H_
+#define SVM_FUNCTIONS_H_
 
 #include "arm_math_types.h"
 #include "arm_math_memory.h"

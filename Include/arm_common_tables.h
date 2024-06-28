@@ -26,8 +26,8 @@
  * limitations under the License.
  */
 
-#ifndef _ARM_COMMON_TABLES_H
-#define _ARM_COMMON_TABLES_H
+#ifndef ARM_COMMON_TABLES_H
+#define ARM_COMMON_TABLES_H
 
 #include "arm_math_types.h"
 #include "dsp/fast_math_functions.h"

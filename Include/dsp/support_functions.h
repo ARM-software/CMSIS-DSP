@@ -24,8 +24,8 @@
  */
 
  
-#ifndef _SUPPORT_FUNCTIONS_H_
-#define _SUPPORT_FUNCTIONS_H_
+#ifndef SUPPORT_FUNCTIONS_H_
+#define SUPPORT_FUNCTIONS_H_
 
 #include "arm_math_types.h"
 #include "arm_math_memory.h"
