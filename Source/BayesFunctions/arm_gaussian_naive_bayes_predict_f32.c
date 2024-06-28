@@ -55,7 +55,7 @@
 #include "arm_helium_utils.h"
 #include "arm_vec_math.h"
 
-uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_instance_f32 *S, 
+ARM_DSP_ATTRIBUTE uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_instance_f32 *S, 
    const float32_t * in, 
    float32_t *pOutputProbabilities,
    float32_t *pBufferB
@@ -147,7 +147,7 @@ uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_ins
 
 
 
-uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_instance_f32 *S, 
+ARM_DSP_ATTRIBUTE uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_instance_f32 *S, 
    const float32_t * in, 
    float32_t *pOutputProbabilities,
    float32_t *pBufferB)
@@ -332,7 +332,7 @@ uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_ins
 
 #else
 
-uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_instance_f32 *S, 
+ARM_DSP_ATTRIBUTE uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_instance_f32 *S, 
    const float32_t * in, 
    float32_t *pOutputProbabilities,
    float32_t *pBufferB)

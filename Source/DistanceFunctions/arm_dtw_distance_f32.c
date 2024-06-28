@@ -83,7 +83,7 @@
  * Thus, use of a window also decreases the number
  * of distances which must be computed.
  */
-arm_status arm_dtw_distance_f32(const arm_matrix_instance_f32 *pDistance,
+ARM_DSP_ATTRIBUTE arm_status arm_dtw_distance_f32(const arm_matrix_instance_f32 *pDistance,
                                 const arm_matrix_instance_q7 *pWindow,
                                 arm_matrix_instance_f32 *pDTW,
                                 float32_t *distance)

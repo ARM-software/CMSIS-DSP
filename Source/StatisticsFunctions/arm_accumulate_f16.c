@@ -60,7 +60,7 @@
  @param[out]    pResult    sum of values in input vector.
  */
 
-void arm_accumulate_f16(
+ARM_DSP_ATTRIBUTE void arm_accumulate_f16(
                         const float16_t * pSrc,
                         uint32_t blockSize,
                         float16_t * pResult)

@@ -49,7 +49,7 @@
                    - \ref ARM_MATH_ARGUMENT_ERROR : input value is negative; *pOut is set to 0
  */
 
-arm_status arm_sqrt_q15(
+ARM_DSP_ATTRIBUTE arm_status arm_sqrt_q15(
   q15_t in,
   q15_t * pOut)
 {

@@ -55,7 +55,7 @@
                    <code>blockSize</code> is the number of words processed by <code>arm_fir_sparse_q31()</code> function.
  */
 
-void arm_fir_sparse_init_q31(
+ARM_DSP_ATTRIBUTE void arm_fir_sparse_init_q31(
         arm_fir_sparse_instance_q31 * S,
         uint16_t numTaps,
   const q31_t * pCoeffs,

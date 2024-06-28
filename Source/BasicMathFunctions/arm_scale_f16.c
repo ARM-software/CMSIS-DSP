@@ -51,7 +51,7 @@
 
 #include "arm_helium_utils.h"
 
-void arm_scale_f16(
+ARM_DSP_ATTRIBUTE void arm_scale_f16(
   const float16_t * pSrc,
         float16_t scale,
         float16_t * pDst,
@@ -97,7 +97,7 @@ void arm_scale_f16(
 
 #else
 #if defined(ARM_FLOAT16_SUPPORTED)
-void arm_scale_f16(
+ARM_DSP_ATTRIBUTE void arm_scale_f16(
   const float16_t *pSrc,
         float16_t scale,
         float16_t *pDst,

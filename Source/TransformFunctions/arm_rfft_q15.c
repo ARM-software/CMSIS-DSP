@@ -32,7 +32,7 @@
  * Internal functions prototypes
  * -------------------------------------------------------------------- */
 
-void arm_split_rfft_q15(
+ARM_DSP_ATTRIBUTE void arm_split_rfft_q15(
         q15_t * pSrc,
         uint32_t fftLen,
   const q15_t * pATable,
@@ -40,7 +40,7 @@ void arm_split_rfft_q15(
         q15_t * pDst,
         uint32_t modifier);
 
-void arm_split_rifft_q15(
+ARM_DSP_ATTRIBUTE void arm_split_rifft_q15(
         q15_t * pSrc,
         uint32_t fftLen,
   const q15_t * pATable,
@@ -101,7 +101,7 @@ void arm_split_rifft_q15(
                    It is not using the packing trick of the float version.
  */
 
-void arm_rfft_q15(
+ARM_DSP_ATTRIBUTE void arm_rfft_q15(
   const arm_rfft_instance_q15 * S,
         q15_t * pSrc,
         q15_t * pDst)
@@ -165,7 +165,7 @@ void arm_rfft_q15(
 
 #endif 
 
-void arm_split_rfft_q15(
+ARM_DSP_ATTRIBUTE void arm_split_rfft_q15(
         q15_t * pSrc,
         uint32_t fftLen,
   const q15_t * pATable,
@@ -228,7 +228,7 @@ void arm_split_rfft_q15(
     pDst[1] = 0;
 }
 #else
-void arm_split_rfft_q15(
+ARM_DSP_ATTRIBUTE void arm_split_rfft_q15(
         q15_t * pSrc,
         uint32_t fftLen,
   const q15_t * pATable,
@@ -390,7 +390,7 @@ void arm_split_rfft_q15(
 #include "arm_helium_utils.h"
 #include "arm_vec_fft.h"
 
-void arm_split_rifft_q15(
+ARM_DSP_ATTRIBUTE void arm_split_rifft_q15(
         q15_t * pSrc,
         uint32_t fftLen,
   const q15_t * pATable,
@@ -447,7 +447,7 @@ void arm_split_rifft_q15(
     }
 }
 #else
-void arm_split_rifft_q15(
+ARM_DSP_ATTRIBUTE void arm_split_rifft_q15(
         q15_t * pSrc,
         uint32_t fftLen,
   const q15_t * pATable,

@@ -53,7 +53,7 @@
   @param[in]     blockSize  number of samples in each vector
  */
 
-void arm_and_u16(
+ARM_DSP_ATTRIBUTE void arm_and_u16(
     const uint16_t * pSrcA,
     const uint16_t * pSrcB,
           uint16_t * pDst,

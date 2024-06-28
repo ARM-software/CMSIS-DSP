@@ -47,7 +47,7 @@
  * @param[out]      *pDst points to the output vector
  */
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
-void arm_mat_vec_mult_q31(
+ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_q31(
     const arm_matrix_instance_q31 * pSrcMat,
     const q31_t     *pSrcVec,
     q31_t           *pDstVec)
@@ -263,7 +263,7 @@ void arm_mat_vec_mult_q31(
     }
 }
 #else
-void arm_mat_vec_mult_q31(const arm_matrix_instance_q31 *pSrcMat, const q31_t *pVec, q31_t *pDst)
+ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_q31(const arm_matrix_instance_q31 *pSrcMat, const q31_t *pVec, q31_t *pDst)
 {
     uint32_t numRows = pSrcMat->numRows;
     uint32_t numCols = pSrcMat->numCols;

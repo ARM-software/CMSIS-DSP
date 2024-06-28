@@ -84,7 +84,7 @@
                    - \ref ARM_MATH_SIZE_MISMATCH : Matrix size check failed
                    - \ref ARM_MATH_SINGULAR      : Input matrix is found to be singular (non-invertible)
  */
-arm_status arm_mat_inverse_f32(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_inverse_f32(
   const arm_matrix_instance_f32 * pSrc,
         arm_matrix_instance_f32 * pDst)
 {

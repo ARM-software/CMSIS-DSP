@@ -46,7 +46,7 @@
   @param[out]    pDst       points to the location where the output result is written.  Length 2 * max(srcALen, srcBLen) - 1.
  */
 
-void arm_correlate_f64(
+ARM_DSP_ATTRIBUTE void arm_correlate_f64(
     const float64_t * pSrcA,
     uint32_t srcALen,
     const float64_t * pSrcB,

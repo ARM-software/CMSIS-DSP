@@ -24,8 +24,8 @@
  */
 
  
-#ifndef INTERPOLATION_FUNCTIONS_H_
-#define INTERPOLATION_FUNCTIONS_H_
+#ifndef _INTERPOLATION_FUNCTIONS_H_
+#define _INTERPOLATION_FUNCTIONS_H_
 
 #include "arm_math_types.h"
 #include "arm_math_memory.h"
@@ -128,7 +128,7 @@ extern "C"
    * @param[out] pDst       points to the block of output data.
    * @param[in]  blockSize  number of samples of output data.
    */
-  ARM_DSP_ATTRIBUTE void arm_spline_f32(
+  void arm_spline_f32(
         arm_spline_instance_f32 * S, 
   const float32_t * xq,
         float32_t * pDst,
@@ -144,7 +144,7 @@ extern "C"
    * @param[in]     coeffs   coefficients array for b, c, and d
    * @param[in]     tempBuffer   buffer array for internal computations
    */
-  ARM_DSP_ATTRIBUTE void arm_spline_init_f32(
+  void arm_spline_init_f32(
           arm_spline_instance_f32 * S,
           arm_spline_type type,
     const float32_t * x,
@@ -161,7 +161,7 @@ extern "C"
    * @return y processed output sample.
    *
    */
-  ARM_DSP_ATTRIBUTE float32_t arm_linear_interp_f32(
+  float32_t arm_linear_interp_f32(
   const arm_linear_interp_instance_f32 * S,
   float32_t x);
 
@@ -178,7 +178,7 @@ extern "C"
    * This function can support maximum of table size 2^12.
    *
    */
-  ARM_DSP_ATTRIBUTE q31_t arm_linear_interp_q31(
+  q31_t arm_linear_interp_q31(
   const q31_t * pYData,
   q31_t x,
   uint32_t nValues);
@@ -196,7 +196,7 @@ extern "C"
    * This function can support maximum of table size 2^12.
    *
    */
-  ARM_DSP_ATTRIBUTE q15_t arm_linear_interp_q15(
+  q15_t arm_linear_interp_q15(
   const q15_t * pYData,
   q31_t x,
   uint32_t nValues);
@@ -213,7 +213,7 @@ extern "C"
    * Input sample <code>x</code> is in 12.20 format which contains 12 bits for table index and 20 bits for fractional part.
    * This function can support maximum of table size 2^12.
    */
-ARM_DSP_ATTRIBUTE q7_t arm_linear_interp_q7(
+q7_t arm_linear_interp_q7(
   const q7_t * pYData,
   q31_t x,
   uint32_t nValues);
@@ -225,7 +225,7 @@ ARM_DSP_ATTRIBUTE q7_t arm_linear_interp_q7(
   * @param[in]     Y  interpolation coordinate.
   * @return out interpolated value.
   */
-  ARM_DSP_ATTRIBUTE float32_t arm_bilinear_interp_f32(
+  float32_t arm_bilinear_interp_f32(
   const arm_bilinear_interp_instance_f32 * S,
   float32_t X,
   float32_t Y);
@@ -237,7 +237,7 @@ ARM_DSP_ATTRIBUTE q7_t arm_linear_interp_q7(
   * @param[in]     Y  interpolation coordinate in 12.20 format.
   * @return out interpolated value.
   */
-  ARM_DSP_ATTRIBUTE q31_t arm_bilinear_interp_q31(
+  q31_t arm_bilinear_interp_q31(
   arm_bilinear_interp_instance_q31 * S,
   q31_t X,
   q31_t Y);
@@ -250,7 +250,7 @@ ARM_DSP_ATTRIBUTE q7_t arm_linear_interp_q7(
   * @param[in]     Y  interpolation coordinate in 12.20 format.
   * @return out interpolated value.
   */
-  ARM_DSP_ATTRIBUTE q15_t arm_bilinear_interp_q15(
+  q15_t arm_bilinear_interp_q15(
   arm_bilinear_interp_instance_q15 * S,
   q31_t X,
   q31_t Y);
@@ -262,7 +262,7 @@ ARM_DSP_ATTRIBUTE q7_t arm_linear_interp_q7(
   * @param[in]     Y  interpolation coordinate in 12.20 format.
   * @return out interpolated value.
   */
-  ARM_DSP_ATTRIBUTE q7_t arm_bilinear_interp_q7(
+  q7_t arm_bilinear_interp_q7(
   arm_bilinear_interp_instance_q7 * S,
   q31_t X,
   q31_t Y);

@@ -57,7 +57,7 @@
  */
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-void arm_rms_q31(
+ARM_DSP_ATTRIBUTE void arm_rms_q31(
   const q31_t * pSrc,
         uint32_t blockSize,
         q31_t * pResult)
@@ -72,7 +72,7 @@ void arm_rms_q31(
 }
 
 #else
-void arm_rms_q31(
+ARM_DSP_ATTRIBUTE void arm_rms_q31(
   const q31_t * pSrc,
         uint32_t blockSize,
         q31_t * pResult)

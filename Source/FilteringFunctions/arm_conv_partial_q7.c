@@ -54,7 +54,7 @@
                    Refer to \ref arm_conv_partial_opt_q7() for a faster implementation of this function.
  */
 
-arm_status arm_conv_partial_q7(
+ARM_DSP_ATTRIBUTE arm_status arm_conv_partial_q7(
   const q7_t * pSrcA,
         uint32_t srcALen,
   const q7_t * pSrcB,

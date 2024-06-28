@@ -57,7 +57,7 @@
 #include "arm_helium_utils.h"
 #include "arm_vec_math.h"
 
-float32_t arm_canberra_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize)
+ARM_DSP_ATTRIBUTE float32_t arm_canberra_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize)
 {
     float32_t       accum = 0.0f;
     uint32_t         blkCnt;
@@ -131,7 +131,7 @@ float32_t arm_canberra_distance_f32(const float32_t *pA,const float32_t *pB, uin
 
 #include "NEMath.h"
 
-float32_t arm_canberra_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize)
+ARM_DSP_ATTRIBUTE float32_t arm_canberra_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize)
 {
    float32_t accum=0.0f, tmpA, tmpB,diff,sum;
    uint32_t blkCnt;
@@ -194,7 +194,7 @@ float32_t arm_canberra_distance_f32(const float32_t *pA,const float32_t *pB, uin
 }
 
 #else
-float32_t arm_canberra_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize)
+ARM_DSP_ATTRIBUTE float32_t arm_canberra_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize)
 {
    float32_t accum=0.0f, tmpA, tmpB,diff,sum;
 

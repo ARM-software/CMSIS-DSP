@@ -70,7 +70,7 @@
   
  */
 
-void arm_fir_init_q31(
+ARM_DSP_ATTRIBUTE void arm_fir_init_q31(
         arm_fir_instance_q31 * S,
         uint16_t numTaps,
   const q31_t * pCoeffs,

@@ -43,7 +43,7 @@
    * @param[in]      dir          Sorting order.
    * @param[in]      buffer       Working buffer.
    */
-void arm_merge_sort_init_f32(arm_merge_sort_instance_f32 * S, arm_sort_dir dir, float32_t * buffer)
+ARM_DSP_ATTRIBUTE void arm_merge_sort_init_f32(arm_merge_sort_instance_f32 * S, arm_sort_dir dir, float32_t * buffer)
 {
     S->dir    = dir;
     S->buffer = buffer;

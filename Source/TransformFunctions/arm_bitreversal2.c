@@ -37,7 +37,7 @@
   @param[in]     pBitRevTab  points to bit reversal table
 */
 
-void arm_bitreversal_64(
+ARM_DSP_ATTRIBUTE void arm_bitreversal_64(
         uint64_t *pSrc,
   const uint16_t bitRevLen,
   const uint16_t *pBitRevTab)
@@ -71,7 +71,7 @@ void arm_bitreversal_64(
   @param[in]     pBitRevTab  points to bit reversal table
 */
 
-void arm_bitreversal_32(
+ARM_DSP_ATTRIBUTE void arm_bitreversal_32(
         uint32_t *pSrc,
   const uint16_t bitRevLen,
   const uint16_t *pBitRevTab)
@@ -105,7 +105,7 @@ void arm_bitreversal_32(
   @param[in]     pBitRevTab  points to bit reversal table
 */
 
-void arm_bitreversal_16(
+ARM_DSP_ATTRIBUTE void arm_bitreversal_16(
         uint16_t *pSrc,
   const uint16_t bitRevLen,
   const uint16_t *pBitRevTab)

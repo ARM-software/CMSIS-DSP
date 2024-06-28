@@ -514,7 +514,7 @@ __STATIC_INLINE arm_status arm_mat_cmplx_mult_q31_4x4_mve(
 }
 
 
-arm_status arm_mat_cmplx_mult_q31(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_q31(
   const arm_matrix_instance_q31 * pSrcA,
   const arm_matrix_instance_q31 * pSrcB,
         arm_matrix_instance_q31 * pDst)
@@ -834,7 +834,7 @@ arm_status arm_mat_cmplx_mult_q31(
 }
 
 #else
-arm_status arm_mat_cmplx_mult_q31(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_q31(
   const arm_matrix_instance_q31 * pSrcA,
   const arm_matrix_instance_q31 * pSrcB,
         arm_matrix_instance_q31 * pDst)

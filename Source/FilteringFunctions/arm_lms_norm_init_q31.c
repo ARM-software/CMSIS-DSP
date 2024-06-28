@@ -54,7 +54,7 @@
                    where <code>blockSize</code> is the number of input samples processed by each call to <code>arm_lms_norm_q31()</code>.
  */
 
-void arm_lms_norm_init_q31(
+ARM_DSP_ATTRIBUTE void arm_lms_norm_init_q31(
         arm_lms_norm_instance_q31 * S,
         uint16_t numTaps,
         q31_t * pCoeffs,

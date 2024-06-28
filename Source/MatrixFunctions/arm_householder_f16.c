@@ -61,7 +61,7 @@
 
 
 
-float16_t arm_householder_f16(
+ARM_DSP_ATTRIBUTE float16_t arm_householder_f16(
     const float16_t * pSrc,
     const float16_t threshold,
     uint32_t    blockSize,

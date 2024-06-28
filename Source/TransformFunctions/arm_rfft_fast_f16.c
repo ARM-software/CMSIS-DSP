@@ -486,7 +486,7 @@ void merge_rfft_f16(
                    - value = 1: RIFFT
 */
 
-void arm_rfft_fast_f16(
+ARM_DSP_ATTRIBUTE void arm_rfft_fast_f16(
   const arm_rfft_fast_instance_f16 * S,
   float16_t * p,
   float16_t * pOut,

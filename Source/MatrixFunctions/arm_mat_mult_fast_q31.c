@@ -63,7 +63,7 @@
                    which uses 64-bit accumulation to provide higher precision.
  */
 
-arm_status arm_mat_mult_fast_q31(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_fast_q31(
   const arm_matrix_instance_q31 * pSrcA,
   const arm_matrix_instance_q31 * pSrcB,
         arm_matrix_instance_q31 * pDst)

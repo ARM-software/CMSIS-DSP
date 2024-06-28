@@ -52,7 +52,7 @@
 
 #include "arm_helium_utils.h"
 
-void arm_mat_vec_mult_f16(
+ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_f16(
     const arm_matrix_instance_f16   *pSrcMat,
     const float16_t                 *pSrcVec,
     float16_t                       *pDstVec)
@@ -282,7 +282,7 @@ void arm_mat_vec_mult_f16(
     }
 }
 #else
-void arm_mat_vec_mult_f16(const arm_matrix_instance_f16 *pSrcMat, const float16_t *pVec, float16_t *pDst)
+ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_f16(const arm_matrix_instance_f16 *pSrcMat, const float16_t *pVec, float16_t *pDst)
 {
     uint32_t numRows = pSrcMat->numRows;
     uint32_t numCols = pSrcMat->numCols;

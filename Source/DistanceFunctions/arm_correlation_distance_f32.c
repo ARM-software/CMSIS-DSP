@@ -51,7 +51,7 @@
  *
  */
 
-float32_t arm_correlation_distance_f32(float32_t *pA,float32_t *pB, uint32_t blockSize)
+ARM_DSP_ATTRIBUTE float32_t arm_correlation_distance_f32(float32_t *pA,float32_t *pB, uint32_t blockSize)
 {
     float32_t ma,mb,pwra,pwrb,dot,tmp;
 

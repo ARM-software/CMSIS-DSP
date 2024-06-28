@@ -87,7 +87,7 @@
 
  */
 
-arm_status arm_mfcc_init_f32(
+ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_f32(
   arm_mfcc_instance_f32 * S,
   uint32_t fftLen,
   uint32_t nbMelFilters,
@@ -121,7 +121,7 @@ arm_status arm_mfcc_init_f32(
 
 #if defined(ARM_MFCC_CFFT_BASED)
 #define MFCC_INIT_F32(LEN)                    \
-arm_status arm_mfcc_init_##LEN##_f32(         \
+ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_##LEN##_f32(         \
   arm_mfcc_instance_f32 * S,                  \
   uint32_t nbMelFilters,                      \
   uint32_t nbDctOutputs,                      \
@@ -149,7 +149,7 @@ arm_status arm_mfcc_init_##LEN##_f32(         \
 }
 #else
 #define MFCC_INIT_F32(LEN)                         \
-arm_status arm_mfcc_init_##LEN##_f32(              \
+ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_##LEN##_f32(              \
   arm_mfcc_instance_f32 * S,                       \
   uint32_t nbMelFilters,                           \
   uint32_t nbDctOutputs,                           \

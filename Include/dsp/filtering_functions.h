@@ -24,8 +24,8 @@
  */
 
  
-#ifndef FILTERING_FUNCTIONS_H_
-#define FILTERING_FUNCTIONS_H_
+#ifndef _FILTERING_FUNCTIONS_H_
+#define _FILTERING_FUNCTIONS_H_
 
 #include "arm_math_types.h"
 #include "arm_math_memory.h"
@@ -107,7 +107,7 @@ extern "C"
    * @param[out] pDst       points to the block of output data.
    * @param[in]  blockSize  number of samples to process.
    */
-  ARM_DSP_ATTRIBUTE void arm_fir_q7(
+  void arm_fir_q7(
   const arm_fir_instance_q7 * S,
   const q7_t * pSrc,
         q7_t * pDst,
@@ -124,7 +124,7 @@ extern "C"
    * For the MVE version, the coefficient length must be a multiple of 16.
    * You can pad with zeros if you have less coefficients.
    */
-  ARM_DSP_ATTRIBUTE void arm_fir_init_q7(
+  void arm_fir_init_q7(
         arm_fir_instance_q7 * S,
         uint16_t numTaps,
   const q7_t * pCoeffs,
@@ -138,7 +138,7 @@ extern "C"
    * @param[out] pDst       points to the block of output data.
    * @param[in]  blockSize  number of samples to process.
    */
-  ARM_DSP_ATTRIBUTE void arm_fir_q15(
+  void arm_fir_q15(
   const arm_fir_instance_q15 * S,
   const q15_t * pSrc,
         q15_t * pDst,
@@ -151,7 +151,7 @@ extern "C"
    * @param[out] pDst       points to the block of output data.
    * @param[in]  blockSize  number of samples to process.
    */
-  ARM_DSP_ATTRIBUTE void arm_fir_fast_q15(
+  void arm_fir_fast_q15(
   const arm_fir_instance_q15 * S,
   const q15_t * pSrc,
         q15_t * pDst,
@@ -172,7 +172,7 @@ extern "C"
    * You can pad with zeros if you have less coefficients.
    *
    */
-  ARM_DSP_ATTRIBUTE arm_status arm_fir_init_q15(
+  arm_status arm_fir_init_q15(
         arm_fir_instance_q15 * S,
         uint16_t numTaps,
   const q15_t * pCoeffs,
@@ -186,7 +186,7 @@ extern "C"
    * @param[out] pDst       points to the block of output data.
    * @param[in]  blockSize  number of samples to process.
    */
-  ARM_DSP_ATTRIBUTE void arm_fir_q31(
+  void arm_fir_q31(
   const arm_fir_instance_q31 * S,
   const q31_t * pSrc,
         q31_t * pDst,
@@ -199,7 +199,7 @@ extern "C"
    * @param[out] pDst       points to the block of output data.
    * @param[in]  blockSize  number of samples to process.
    */
-  ARM_DSP_ATTRIBUTE void arm_fir_fast_q31(
+  void arm_fir_fast_q31(
   const arm_fir_instance_q31 * S,
   const q31_t * pSrc,
         q31_t * pDst,
@@ -216,7 +216,7 @@ extern "C"
    * For the MVE version, the coefficient length must be a multiple of 4.
    * You can pad with zeros if you have less coefficients.
    */
-  ARM_DSP_ATTRIBUTE void arm_fir_init_q31(
+  void arm_fir_init_q31(
         arm_fir_instance_q31 * S,
         uint16_t numTaps,
   const q31_t * pCoeffs,
@@ -230,7 +230,7 @@ extern "C"
    * @param[out] pDst       points to the block of output data.
    * @param[in]  blockSize  number of samples to process.
    */
-  ARM_DSP_ATTRIBUTE void arm_fir_f32(
+  void arm_fir_f32(
   const arm_fir_instance_f32 * S,
   const float32_t * pSrc,
         float32_t * pDst,
@@ -243,7 +243,7 @@ extern "C"
    * @param[out] pDst       points to the block of output data.
    * @param[in]  blockSize  number of samples to process.
    */
-  ARM_DSP_ATTRIBUTE void arm_fir_f64(
+  void arm_fir_f64(
   const arm_fir_instance_f64 * S,
   const float64_t * pSrc,
         float64_t * pDst,
@@ -257,7 +257,7 @@ extern "C"
    * @param[in]     pState     points to the state buffer.
    * @param[in]     blockSize  number of samples that are processed at a time.
    */
-  ARM_DSP_ATTRIBUTE void arm_fir_init_f32(
+  void arm_fir_init_f32(
         arm_fir_instance_f32 * S,
         uint16_t numTaps,
   const float32_t * pCoeffs,
@@ -272,7 +272,7 @@ extern "C"
    * @param[in]     pState     points to the state buffer.
    * @param[in]     blockSize  number of samples that are processed at a time.
    */
-  ARM_DSP_ATTRIBUTE void arm_fir_init_f64(
+  void arm_fir_init_f64(
         arm_fir_instance_f64 * S,
         uint16_t numTaps,
   const float64_t * pCoeffs,
@@ -328,7 +328,7 @@ extern "C"
    * @param[out] pDst       points to the block of output data.
    * @param[in]  blockSize  number of samples to process.
    */
-  ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df1_q15(
+  void arm_biquad_cascade_df1_q15(
   const arm_biquad_casd_df1_inst_q15 * S,
   const q15_t * pSrc,
         q15_t * pDst,
@@ -342,7 +342,7 @@ extern "C"
    * @param[in]     pState     points to the state buffer.
    * @param[in]     postShift  Shift to be applied to the output. Varies according to the coefficients format
    */
-  ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df1_init_q15(
+  void arm_biquad_cascade_df1_init_q15(
         arm_biquad_casd_df1_inst_q15 * S,
         uint8_t numStages,
   const q15_t * pCoeffs,
@@ -356,7 +356,7 @@ extern "C"
    * @param[out] pDst       points to the block of output data.
    * @param[in]  blockSize  number of samples to process.
    */
-  ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df1_fast_q15(
+  void arm_biquad_cascade_df1_fast_q15(
   const arm_biquad_casd_df1_inst_q15 * S,
   const q15_t * pSrc,
         q15_t * pDst,
@@ -369,7 +369,7 @@ extern "C"
    * @param[out] pDst       points to the block of output data.
    * @param[in]  blockSize  number of samples to process.
    */
-  ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df1_q31(
+  void arm_biquad_cascade_df1_q31(
   const arm_biquad_casd_df1_inst_q31 * S,
   const q31_t * pSrc,
         q31_t * pDst,
@@ -382,7 +382,7 @@ extern "C"
    * @param[out] pDst       points to the block of output data.
    * @param[in]  blockSize  number of samples to process.
    */
-  ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df1_fast_q31(
+  void arm_biquad_cascade_df1_fast_q31(
   const arm_biquad_casd_df1_inst_q31 * S,
   const q31_t * pSrc,
         q31_t * pDst,
@@ -396,7 +396,7 @@ extern "C"
    * @param[in]     pState     points to the state buffer.
    * @param[in]     postShift  Shift to be applied to the output. Varies according to the coefficients format
    */
-  ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df1_init_q31(
+  void arm_biquad_cascade_df1_init_q31(
         arm_biquad_casd_df1_inst_q31 * S,
         uint8_t numStages,
   const q31_t * pCoeffs,
@@ -410,7 +410,7 @@ extern "C"
    * @param[out] pDst       points to the block of output data.
    * @param[in]  blockSize  number of samples to process.
    */
-  ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df1_f32(
+  void arm_biquad_cascade_df1_f32(
   const arm_biquad_casd_df1_inst_f32 * S,
   const float32_t * pSrc,
         float32_t * pDst,
@@ -425,7 +425,7 @@ extern "C"
    * @param[in]     pState     points to the state buffer.
    */
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
-  ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df1_mve_init_f32(
+  void arm_biquad_cascade_df1_mve_init_f32(
       arm_biquad_casd_df1_inst_f32 * S,
       uint8_t numStages,
       const float32_t * pCoeffs, 
@@ -433,7 +433,7 @@ extern "C"
       float32_t * pState);
 #endif
   
-  ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df1_init_f32(
+  void arm_biquad_cascade_df1_init_f32(
         arm_biquad_casd_df1_inst_f32 * S,
         uint8_t numStages,
   const float32_t * pCoeffs,
@@ -448,7 +448,7 @@ extern "C"
  * @param[in]  srcBLen  length of the second input sequence.
  * @param[out] pDst     points to the location where the output result is written.  Length srcALen+srcBLen-1.
  */
-  ARM_DSP_ATTRIBUTE void arm_conv_f32(
+  void arm_conv_f32(
   const float32_t * pSrcA,
         uint32_t srcALen,
   const float32_t * pSrcB,
@@ -466,7 +466,7 @@ extern "C"
    * @param[in]  pScratch1  points to scratch buffer of size max(srcALen, srcBLen) + 2*min(srcALen, srcBLen) - 2.
    * @param[in]  pScratch2  points to scratch buffer of size min(srcALen, srcBLen).
    */
-  ARM_DSP_ATTRIBUTE void arm_conv_opt_q15(
+  void arm_conv_opt_q15(
   const q15_t * pSrcA,
         uint32_t srcALen,
   const q15_t * pSrcB,
@@ -484,7 +484,7 @@ extern "C"
  * @param[in]  srcBLen  length of the second input sequence.
  * @param[out] pDst     points to the location where the output result is written.  Length srcALen+srcBLen-1.
  */
-  ARM_DSP_ATTRIBUTE void arm_conv_q15(
+  void arm_conv_q15(
   const q15_t * pSrcA,
         uint32_t srcALen,
   const q15_t * pSrcB,
@@ -500,7 +500,7 @@ extern "C"
    * @param[in]  srcBLen  length of the second input sequence.
    * @param[out] pDst     points to the block of output data  Length srcALen+srcBLen-1.
    */
-  ARM_DSP_ATTRIBUTE void arm_conv_fast_q15(
+  void arm_conv_fast_q15(
   const q15_t * pSrcA,
         uint32_t srcALen,
   const q15_t * pSrcB,
@@ -518,7 +518,7 @@ extern "C"
    * @param[in]  pScratch1  points to scratch buffer of size max(srcALen, srcBLen) + 2*min(srcALen, srcBLen) - 2.
    * @param[in]  pScratch2  points to scratch buffer of size min(srcALen, srcBLen).
    */
-  ARM_DSP_ATTRIBUTE void arm_conv_fast_opt_q15(
+  void arm_conv_fast_opt_q15(
   const q15_t * pSrcA,
         uint32_t srcALen,
   const q15_t * pSrcB,
@@ -536,7 +536,7 @@ extern "C"
    * @param[in]  srcBLen  length of the second input sequence.
    * @param[out] pDst     points to the block of output data  Length srcALen+srcBLen-1.
    */
-  ARM_DSP_ATTRIBUTE void arm_conv_q31(
+  void arm_conv_q31(
   const q31_t * pSrcA,
         uint32_t srcALen,
   const q31_t * pSrcB,
@@ -552,7 +552,7 @@ extern "C"
    * @param[in]  srcBLen  length of the second input sequence.
    * @param[out] pDst     points to the block of output data  Length srcALen+srcBLen-1.
    */
-  ARM_DSP_ATTRIBUTE void arm_conv_fast_q31(
+  void arm_conv_fast_q31(
   const q31_t * pSrcA,
         uint32_t srcALen,
   const q31_t * pSrcB,
@@ -570,7 +570,7 @@ extern "C"
    * @param[in]  pScratch1  points to scratch buffer(of type q15_t) of size max(srcALen, srcBLen) + 2*min(srcALen, srcBLen) - 2.
    * @param[in]  pScratch2  points to scratch buffer (of type q15_t) of size min(srcALen, srcBLen).
    */
-  ARM_DSP_ATTRIBUTE void arm_conv_opt_q7(
+  void arm_conv_opt_q7(
   const q7_t * pSrcA,
         uint32_t srcALen,
   const q7_t * pSrcB,
@@ -588,7 +588,7 @@ extern "C"
    * @param[in]  srcBLen  length of the second input sequence.
    * @param[out] pDst     points to the block of output data  Length srcALen+srcBLen-1.
    */
-  ARM_DSP_ATTRIBUTE void arm_conv_q7(
+  void arm_conv_q7(
   const q7_t * pSrcA,
         uint32_t srcALen,
   const q7_t * pSrcB,
@@ -607,7 +607,7 @@ extern "C"
    * @param[in]  numPoints   is the number of output points to be computed.
    * @return  Returns either ARM_MATH_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
    */
-  ARM_DSP_ATTRIBUTE arm_status arm_conv_partial_f32(
+  arm_status arm_conv_partial_f32(
   const float32_t * pSrcA,
         uint32_t srcALen,
   const float32_t * pSrcB,
@@ -630,7 +630,7 @@ extern "C"
    * @param[in]  pScratch2   points to scratch buffer of size min(srcALen, srcBLen).
    * @return  Returns either ARM_MATH_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
    */
-  ARM_DSP_ATTRIBUTE arm_status arm_conv_partial_opt_q15(
+  arm_status arm_conv_partial_opt_q15(
   const q15_t * pSrcA,
         uint32_t srcALen,
   const q15_t * pSrcB,
@@ -653,7 +653,7 @@ extern "C"
    * @param[in]  numPoints   is the number of output points to be computed.
    * @return  Returns either ARM_MATH_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
    */
-  ARM_DSP_ATTRIBUTE arm_status arm_conv_partial_q15(
+  arm_status arm_conv_partial_q15(
   const q15_t * pSrcA,
         uint32_t srcALen,
   const q15_t * pSrcB,
@@ -674,7 +674,7 @@ extern "C"
    * @param[in]  numPoints   is the number of output points to be computed.
    * @return  Returns either ARM_MATH_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
    */
-  ARM_DSP_ATTRIBUTE arm_status arm_conv_partial_fast_q15(
+  arm_status arm_conv_partial_fast_q15(
   const q15_t * pSrcA,
         uint32_t srcALen,
   const q15_t * pSrcB,
@@ -697,7 +697,7 @@ extern "C"
    * @param[in]  pScratch2   points to scratch buffer of size min(srcALen, srcBLen).
    * @return  Returns either ARM_MATH_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
    */
-  ARM_DSP_ATTRIBUTE arm_status arm_conv_partial_fast_opt_q15(
+  arm_status arm_conv_partial_fast_opt_q15(
   const q15_t * pSrcA,
         uint32_t srcALen,
   const q15_t * pSrcB,
@@ -720,7 +720,7 @@ extern "C"
    * @param[in]  numPoints   is the number of output points to be computed.
    * @return  Returns either ARM_MATH_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
    */
-  ARM_DSP_ATTRIBUTE arm_status arm_conv_partial_q31(
+  arm_status arm_conv_partial_q31(
   const q31_t * pSrcA,
         uint32_t srcALen,
   const q31_t * pSrcB,
@@ -741,7 +741,7 @@ extern "C"
    * @param[in]  numPoints   is the number of output points to be computed.
    * @return  Returns either ARM_MATH_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
    */
-  ARM_DSP_ATTRIBUTE arm_status arm_conv_partial_fast_q31(
+  arm_status arm_conv_partial_fast_q31(
   const q31_t * pSrcA,
         uint32_t srcALen,
   const q31_t * pSrcB,
@@ -764,7 +764,7 @@ extern "C"
    * @param[in]  pScratch2   points to scratch buffer (of type q15_t) of size min(srcALen, srcBLen).
    * @return  Returns either ARM_MATH_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
    */
-  ARM_DSP_ATTRIBUTE arm_status arm_conv_partial_opt_q7(
+  arm_status arm_conv_partial_opt_q7(
   const q7_t * pSrcA,
         uint32_t srcALen,
   const q7_t * pSrcB,
@@ -787,7 +787,7 @@ extern "C"
    * @param[in]  numPoints   is the number of output points to be computed.
    * @return  Returns either ARM_MATH_SUCCESS if the function completed correctly or ARM_MATH_ARGUMENT_ERROR if the requested subset is not in the range [0 srcALen+srcBLen-2].
    */
-  ARM_DSP_ATTRIBUTE arm_status arm_conv_partial_q7(
+  arm_status arm_conv_partial_q7(
   const q7_t * pSrcA,
         uint32_t srcALen,
   const q7_t * pSrcB,
@@ -848,7 +848,7 @@ typedef struct
   @param[out]    pDst      points to the block of output data
   @param[in]     blockSize number of samples to process
  */
-  ARM_DSP_ATTRIBUTE void arm_fir_decimate_f64(
+  void arm_fir_decimate_f64(
       const arm_fir_decimate_instance_f64 * S,
       const float64_t * pSrc,
       float64_t * pDst,
@@ -867,7 +867,7 @@ typedef struct
                      - \ref ARM_MATH_SUCCESS      : Operation successful
                      - \ref ARM_MATH_LENGTH_ERROR : <code>blockSize</code> is not a multiple of <code>M</code>
    */
-  ARM_DSP_ATTRIBUTE arm_status arm_fir_decimate_init_f64(
+  arm_status arm_fir_decimate_init_f64(
       arm_fir_decimate_instance_f64 * S,
       uint16_t numTaps,
       uint8_t M,
@@ -883,7 +883,7 @@ typedef struct
   @param[out]    pDst      points to the block of output data
   @param[in]     blockSize number of samples to process
  */
-ARM_DSP_ATTRIBUTE void arm_fir_decimate_f32(
+void arm_fir_decimate_f32(
   const arm_fir_decimate_instance_f32 * S,
   const float32_t * pSrc,
         float32_t * pDst,
@@ -902,7 +902,7 @@ ARM_DSP_ATTRIBUTE void arm_fir_decimate_f32(
                    - \ref ARM_MATH_SUCCESS      : Operation successful
                    - \ref ARM_MATH_LENGTH_ERROR : <code>blockSize</code> is not a multiple of <code>M</code>
  */
-ARM_DSP_ATTRIBUTE arm_status arm_fir_decimate_init_f32(
+arm_status arm_fir_decimate_init_f32(
         arm_fir_decimate_instance_f32 * S,
         uint16_t numTaps,
         uint8_t M,
@@ -918,7 +918,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_fir_decimate_init_f32(
    * @param[out] pDst       points to the block of output data
    * @param[in]  blockSize  number of input samples to process per call.
    */
-  ARM_DSP_ATTRIBUTE void arm_fir_decimate_q15(
+  void arm_fir_decimate_q15(
   const arm_fir_decimate_instance_q15 * S,
   const q15_t * pSrc,
         q15_t * pDst,
@@ -932,7 +932,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_fir_decimate_init_f32(
    * @param[out] pDst       points to the block of output data
    * @param[in]  blockSize  number of input samples to process per call.
    */
-  ARM_DSP_ATTRIBUTE void arm_fir_decimate_fast_q15(
+  void arm_fir_decimate_fast_q15(
   const arm_fir_decimate_instance_q15 * S,
   const q15_t * pSrc,
         q15_t * pDst,
@@ -950,7 +950,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_fir_decimate_init_f32(
    * @return    The function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_LENGTH_ERROR if
    * <code>blockSize</code> is not a multiple of <code>M</code>.
    */
-  ARM_DSP_ATTRIBUTE arm_status arm_fir_decimate_init_q15(
+  arm_status arm_fir_decimate_init_q15(
         arm_fir_decimate_instance_q15 * S,
         uint16_t numTaps,
         uint8_t M,
@@ -966,7 +966,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_fir_decimate_init_f32(
    * @param[out] pDst  points to the block of output data
    * @param[in] blockSize number of input samples to process per call.
    */
-  ARM_DSP_ATTRIBUTE void arm_fir_decimate_q31(
+  void arm_fir_decimate_q31(
   const arm_fir_decimate_instance_q31 * S,
   const q31_t * pSrc,
         q31_t * pDst,
@@ -979,7 +979,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_fir_decimate_init_f32(
    * @param[out] pDst       points to the block of output data
    * @param[in]  blockSize  number of input samples to process per call.
    */
-  ARM_DSP_ATTRIBUTE void arm_fir_decimate_fast_q31(
+  void arm_fir_decimate_fast_q31(
   const arm_fir_decimate_instance_q31 * S,
   const q31_t * pSrc,
         q31_t * pDst,
@@ -997,7 +997,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_fir_decimate_init_f32(
    * @return    The function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_LENGTH_ERROR if
    * <code>blockSize</code> is not a multiple of <code>M</code>.
    */
-  ARM_DSP_ATTRIBUTE arm_status arm_fir_decimate_init_q31(
+  arm_status arm_fir_decimate_init_q31(
         arm_fir_decimate_instance_q31 * S,
         uint16_t numTaps,
         uint8_t M,
@@ -1047,7 +1047,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_fir_decimate_init_f32(
    * @param[out] pDst       points to the block of output data.
    * @param[in]  blockSize  number of input samples to process per call.
    */
-  ARM_DSP_ATTRIBUTE void arm_fir_interpolate_q15(
+  void arm_fir_interpolate_q15(
   const arm_fir_interpolate_instance_q15 * S,
   const q15_t * pSrc,
         q15_t * pDst,
@@ -1065,7 +1065,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_fir_decimate_init_f32(
    * @return        The function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_LENGTH_ERROR if
    * the filter length <code>numTaps</code> is not a multiple of the interpolation factor <code>L</code>.
    */
-  ARM_DSP_ATTRIBUTE arm_status arm_fir_interpolate_init_q15(
+  arm_status arm_fir_interpolate_init_q15(
         arm_fir_interpolate_instance_q15 * S,
         uint8_t L,
         uint16_t numTaps,
@@ -1081,7 +1081,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_fir_decimate_init_f32(
    * @param[out] pDst       points to the block of output data.
    * @param[in]  blockSize  number of input samples to process per call.
    */
-  ARM_DSP_ATTRIBUTE void arm_fir_interpolate_q31(
+  void arm_fir_interpolate_q31(
   const arm_fir_interpolate_instance_q31 * S,
   const q31_t * pSrc,
         q31_t * pDst,
@@ -1099,7 +1099,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_fir_decimate_init_f32(
    * @return        The function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_LENGTH_ERROR if
    * the filter length <code>numTaps</code> is not a multiple of the interpolation factor <code>L</code>.
    */
-  ARM_DSP_ATTRIBUTE arm_status arm_fir_interpolate_init_q31(
+  arm_status arm_fir_interpolate_init_q31(
         arm_fir_interpolate_instance_q31 * S,
         uint8_t L,
         uint16_t numTaps,
@@ -1115,7 +1115,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_fir_decimate_init_f32(
    * @param[out] pDst       points to the block of output data.
    * @param[in]  blockSize  number of input samples to process per call.
    */
-  ARM_DSP_ATTRIBUTE void arm_fir_interpolate_f32(
+  void arm_fir_interpolate_f32(
   const arm_fir_interpolate_instance_f32 * S,
   const float32_t * pSrc,
         float32_t * pDst,
@@ -1133,7 +1133,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_fir_decimate_init_f32(
    * @return        The function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_LENGTH_ERROR if
    * the filter length <code>numTaps</code> is not a multiple of the interpolation factor <code>L</code>.
    */
-  ARM_DSP_ATTRIBUTE arm_status arm_fir_interpolate_init_f32(
+  arm_status arm_fir_interpolate_init_f32(
         arm_fir_interpolate_instance_f32 * S,
         uint8_t L,
         uint16_t numTaps,
@@ -1160,7 +1160,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_fir_decimate_init_f32(
    * @param[out] pDst       points to the block of output data
    * @param[in]  blockSize  number of samples to process.
    */
-  ARM_DSP_ATTRIBUTE void arm_biquad_cas_df1_32x64_q31(
+  void arm_biquad_cas_df1_32x64_q31(
   const arm_biquad_cas_df1_32x64_ins_q31 * S,
   const q31_t * pSrc,
         q31_t * pDst,
@@ -1174,7 +1174,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_fir_decimate_init_f32(
    * @param[in]     pState     points to the state buffer.
    * @param[in]     postShift  shift to be applied to the output. Varies according to the coefficients format
    */
-  ARM_DSP_ATTRIBUTE void arm_biquad_cas_df1_32x64_init_q31(
+  void arm_biquad_cas_df1_32x64_init_q31(
         arm_biquad_cas_df1_32x64_ins_q31 * S,
         uint8_t numStages,
   const q31_t * pCoeffs,
@@ -1220,7 +1220,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_fir_decimate_init_f32(
    * @param[out] pDst       points to the block of output data
    * @param[in]  blockSize  number of samples to process.
    */
-  ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_f32(
+  void arm_biquad_cascade_df2T_f32(
   const arm_biquad_cascade_df2T_instance_f32 * S,
   const float32_t * pSrc,
         float32_t * pDst,
@@ -1234,7 +1234,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_fir_decimate_init_f32(
    * @param[out] pDst       points to the block of output data
    * @param[in]  blockSize  number of samples to process.
    */
-  ARM_DSP_ATTRIBUTE void arm_biquad_cascade_stereo_df2T_f32(
+  void arm_biquad_cascade_stereo_df2T_f32(
   const arm_biquad_cascade_stereo_df2T_instance_f32 * S,
   const float32_t * pSrc,
         float32_t * pDst,
@@ -1248,7 +1248,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_fir_decimate_init_f32(
    * @param[out] pDst       points to the block of output data
    * @param[in]  blockSize  number of samples to process.
    */
-  ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_f64(
+  void arm_biquad_cascade_df2T_f64(
   const arm_biquad_cascade_df2T_instance_f64 * S,
   const float64_t * pSrc,
         float64_t * pDst,
@@ -1262,7 +1262,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_fir_decimate_init_f32(
   @param[in]     pCoeffs           points to the original filter coefficients.
   @param[in]     pComputedCoeffs   points to the new computed coefficients for the vectorized version.
 */
-ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_compute_coefs_f32(
+void arm_biquad_cascade_df2T_compute_coefs_f32(
   uint8_t numStages,
   const float32_t * pCoeffs,
   float32_t * pComputedCoeffs);
@@ -1274,7 +1274,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_compute_coefs_f32(
    * @param[in]     pCoeffs    points to the filter coefficients.
    * @param[in]     pState     points to the state buffer.
    */
-  ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_init_f32(
+  void arm_biquad_cascade_df2T_init_f32(
         arm_biquad_cascade_df2T_instance_f32 * S,
         uint8_t numStages,
   const float32_t * pCoeffs,
@@ -1288,7 +1288,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_compute_coefs_f32(
    * @param[in]     pCoeffs    points to the filter coefficients.
    * @param[in]     pState     points to the state buffer.
    */
-  ARM_DSP_ATTRIBUTE void arm_biquad_cascade_stereo_df2T_init_f32(
+  void arm_biquad_cascade_stereo_df2T_init_f32(
         arm_biquad_cascade_stereo_df2T_instance_f32 * S,
         uint8_t numStages,
   const float32_t * pCoeffs,
@@ -1302,7 +1302,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_compute_coefs_f32(
    * @param[in]     pCoeffs    points to the filter coefficients.
    * @param[in]     pState     points to the state buffer.
    */
-  ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_init_f64(
+  void arm_biquad_cascade_df2T_init_f64(
         arm_biquad_cascade_df2T_instance_f64 * S,
         uint8_t numStages,
         const float64_t * pCoeffs,
@@ -1347,7 +1347,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_compute_coefs_f32(
    * @param[in] pCoeffs    points to the coefficient buffer.  The array is of length numStages.
    * @param[in] pState     points to the state buffer.  The array is of length numStages.
    */
-  ARM_DSP_ATTRIBUTE void arm_fir_lattice_init_q15(
+  void arm_fir_lattice_init_q15(
         arm_fir_lattice_instance_q15 * S,
         uint16_t numStages,
   const q15_t * pCoeffs,
@@ -1361,7 +1361,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_compute_coefs_f32(
    * @param[out] pDst       points to the block of output data.
    * @param[in]  blockSize  number of samples to process.
    */
-  ARM_DSP_ATTRIBUTE void arm_fir_lattice_q15(
+  void arm_fir_lattice_q15(
   const arm_fir_lattice_instance_q15 * S,
   const q15_t * pSrc,
         q15_t * pDst,
@@ -1375,7 +1375,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_compute_coefs_f32(
    * @param[in] pCoeffs    points to the coefficient buffer.  The array is of length numStages.
    * @param[in] pState     points to the state buffer.   The array is of length numStages.
    */
-  ARM_DSP_ATTRIBUTE void arm_fir_lattice_init_q31(
+  void arm_fir_lattice_init_q31(
         arm_fir_lattice_instance_q31 * S,
         uint16_t numStages,
   const q31_t * pCoeffs,
@@ -1389,7 +1389,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_compute_coefs_f32(
    * @param[out] pDst       points to the block of output data
    * @param[in]  blockSize  number of samples to process.
    */
-  ARM_DSP_ATTRIBUTE void arm_fir_lattice_q31(
+  void arm_fir_lattice_q31(
   const arm_fir_lattice_instance_q31 * S,
   const q31_t * pSrc,
         q31_t * pDst,
@@ -1403,7 +1403,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_compute_coefs_f32(
  * @param[in] pCoeffs    points to the coefficient buffer.  The array is of length numStages.
  * @param[in] pState     points to the state buffer.  The array is of length numStages.
  */
-  ARM_DSP_ATTRIBUTE void arm_fir_lattice_init_f32(
+  void arm_fir_lattice_init_f32(
         arm_fir_lattice_instance_f32 * S,
         uint16_t numStages,
   const float32_t * pCoeffs,
@@ -1417,7 +1417,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_compute_coefs_f32(
    * @param[out] pDst       points to the block of output data
    * @param[in]  blockSize  number of samples to process.
    */
-  ARM_DSP_ATTRIBUTE void arm_fir_lattice_f32(
+  void arm_fir_lattice_f32(
   const arm_fir_lattice_instance_f32 * S,
   const float32_t * pSrc,
         float32_t * pDst,
@@ -1465,7 +1465,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_compute_coefs_f32(
    * @param[out] pDst       points to the block of output data.
    * @param[in]  blockSize  number of samples to process.
    */
-  ARM_DSP_ATTRIBUTE void arm_iir_lattice_f32(
+  void arm_iir_lattice_f32(
   const arm_iir_lattice_instance_f32 * S,
   const float32_t * pSrc,
         float32_t * pDst,
@@ -1481,7 +1481,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_compute_coefs_f32(
    * @param[in] pState     points to the state buffer.  The array is of length numStages+blockSize-1.
    * @param[in] blockSize  number of samples to process.
    */
-  ARM_DSP_ATTRIBUTE void arm_iir_lattice_init_f32(
+  void arm_iir_lattice_init_f32(
         arm_iir_lattice_instance_f32 * S,
         uint16_t numStages,
         float32_t * pkCoeffs,
@@ -1497,7 +1497,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_compute_coefs_f32(
    * @param[out] pDst       points to the block of output data.
    * @param[in]  blockSize  number of samples to process.
    */
-  ARM_DSP_ATTRIBUTE void arm_iir_lattice_q31(
+  void arm_iir_lattice_q31(
   const arm_iir_lattice_instance_q31 * S,
   const q31_t * pSrc,
         q31_t * pDst,
@@ -1513,7 +1513,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_compute_coefs_f32(
    * @param[in] pState     points to the state buffer.  The array is of length numStages+blockSize.
    * @param[in] blockSize  number of samples to process.
    */
-  ARM_DSP_ATTRIBUTE void arm_iir_lattice_init_q31(
+  void arm_iir_lattice_init_q31(
         arm_iir_lattice_instance_q31 * S,
         uint16_t numStages,
         q31_t * pkCoeffs,
@@ -1529,7 +1529,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_compute_coefs_f32(
    * @param[out] pDst       points to the block of output data.
    * @param[in]  blockSize  number of samples to process.
    */
-  ARM_DSP_ATTRIBUTE void arm_iir_lattice_q15(
+  void arm_iir_lattice_q15(
   const arm_iir_lattice_instance_q15 * S,
   const q15_t * pSrc,
         q15_t * pDst,
@@ -1545,7 +1545,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_compute_coefs_f32(
  * @param[in] pState     points to state buffer.  The array is of length numStages+blockSize.
  * @param[in] blockSize  number of samples to process per call.
  */
-  ARM_DSP_ATTRIBUTE void arm_iir_lattice_init_q15(
+  void arm_iir_lattice_init_q15(
         arm_iir_lattice_instance_q15 * S,
         uint16_t numStages,
         q15_t * pkCoeffs,
@@ -1575,7 +1575,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_compute_coefs_f32(
    * @param[out] pErr       points to the block of error data.
    * @param[in]  blockSize  number of samples to process.
    */
-  ARM_DSP_ATTRIBUTE void arm_lms_f32(
+  void arm_lms_f32(
   const arm_lms_instance_f32 * S,
   const float32_t * pSrc,
         float32_t * pRef,
@@ -1593,7 +1593,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_compute_coefs_f32(
    * @param[in] mu         step size that controls filter coefficient updates.
    * @param[in] blockSize  number of samples to process.
    */
-  ARM_DSP_ATTRIBUTE void arm_lms_init_f32(
+  void arm_lms_init_f32(
         arm_lms_instance_f32 * S,
         uint16_t numTaps,
         float32_t * pCoeffs,
@@ -1625,7 +1625,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_compute_coefs_f32(
    * @param[in] blockSize  number of samples to process.
    * @param[in] postShift  bit shift applied to coefficients.
    */
-  ARM_DSP_ATTRIBUTE void arm_lms_init_q15(
+  void arm_lms_init_q15(
         arm_lms_instance_q15 * S,
         uint16_t numTaps,
         q15_t * pCoeffs,
@@ -1644,7 +1644,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_compute_coefs_f32(
    * @param[out] pErr       points to the block of error data.
    * @param[in]  blockSize  number of samples to process.
    */
-  ARM_DSP_ATTRIBUTE void arm_lms_q15(
+  void arm_lms_q15(
   const arm_lms_instance_q15 * S,
   const q15_t * pSrc,
         q15_t * pRef,
@@ -1675,7 +1675,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_compute_coefs_f32(
    * @param[out] pErr       points to the block of error data.
    * @param[in]  blockSize  number of samples to process.
    */
-  ARM_DSP_ATTRIBUTE void arm_lms_q31(
+  void arm_lms_q31(
   const arm_lms_instance_q31 * S,
   const q31_t * pSrc,
         q31_t * pRef,
@@ -1694,7 +1694,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_compute_coefs_f32(
    * @param[in] blockSize  number of samples to process.
    * @param[in] postShift  bit shift applied to coefficients.
    */
-  ARM_DSP_ATTRIBUTE void arm_lms_init_q31(
+  void arm_lms_init_q31(
         arm_lms_instance_q31 * S,
         uint16_t numTaps,
         q31_t * pCoeffs,
@@ -1727,7 +1727,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_compute_coefs_f32(
    * @param[out] pErr       points to the block of error data.
    * @param[in]  blockSize  number of samples to process.
    */
-  ARM_DSP_ATTRIBUTE void arm_lms_norm_f32(
+  void arm_lms_norm_f32(
         arm_lms_norm_instance_f32 * S,
   const float32_t * pSrc,
         float32_t * pRef,
@@ -1745,7 +1745,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_compute_coefs_f32(
    * @param[in] mu         step size that controls filter coefficient updates.
    * @param[in] blockSize  number of samples to process.
    */
-  ARM_DSP_ATTRIBUTE void arm_lms_norm_init_f32(
+  void arm_lms_norm_init_f32(
         arm_lms_norm_instance_f32 * S,
         uint16_t numTaps,
         float32_t * pCoeffs,
@@ -1779,7 +1779,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_compute_coefs_f32(
    * @param[out] pErr       points to the block of error data.
    * @param[in]  blockSize  number of samples to process.
    */
-  ARM_DSP_ATTRIBUTE void arm_lms_norm_q31(
+  void arm_lms_norm_q31(
         arm_lms_norm_instance_q31 * S,
   const q31_t * pSrc,
         q31_t * pRef,
@@ -1798,7 +1798,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_compute_coefs_f32(
    * @param[in] blockSize  number of samples to process.
    * @param[in] postShift  bit shift applied to coefficients.
    */
-  ARM_DSP_ATTRIBUTE void arm_lms_norm_init_q31(
+  void arm_lms_norm_init_q31(
         arm_lms_norm_instance_q31 * S,
         uint16_t numTaps,
         q31_t * pCoeffs,
@@ -1833,7 +1833,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_compute_coefs_f32(
    * @param[out] pErr       points to the block of error data.
    * @param[in]  blockSize  number of samples to process.
    */
-  ARM_DSP_ATTRIBUTE void arm_lms_norm_q15(
+  void arm_lms_norm_q15(
         arm_lms_norm_instance_q15 * S,
   const q15_t * pSrc,
         q15_t * pRef,
@@ -1852,7 +1852,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_compute_coefs_f32(
    * @param[in] blockSize  number of samples to process.
    * @param[in] postShift  bit shift applied to coefficients.
    */
-  ARM_DSP_ATTRIBUTE void arm_lms_norm_init_q15(
+  void arm_lms_norm_init_q15(
         arm_lms_norm_instance_q15 * S,
         uint16_t numTaps,
         q15_t * pCoeffs,
@@ -1870,7 +1870,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_compute_coefs_f32(
    * @param[in]  srcBLen  length of the second input sequence.
    * @param[out] pDst     points to the block of output data  Length 2 * max(srcALen, srcBLen) - 1.
    */
-  ARM_DSP_ATTRIBUTE void arm_correlate_f32(
+  void arm_correlate_f32(
   const float32_t * pSrcA,
         uint32_t srcALen,
   const float32_t * pSrcB,
@@ -1886,7 +1886,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_compute_coefs_f32(
    * @param[in]  srcBLen  length of the second input sequence.
    * @param[out] pDst     points to the block of output data  Length 2 * max(srcALen, srcBLen) - 1.
    */
-  ARM_DSP_ATTRIBUTE void arm_correlate_f64(
+  void arm_correlate_f64(
   const float64_t * pSrcA,
         uint32_t srcALen,
   const float64_t * pSrcB,
@@ -1903,7 +1903,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_compute_coefs_f32(
  @param[out] pDst      points to the block of output data  Length 2 * max(srcALen, srcBLen) - 1.
  @param[in]  pScratch  points to scratch buffer of size max(srcALen, srcBLen) + 2*min(srcALen, srcBLen) - 2.
 */
-ARM_DSP_ATTRIBUTE void arm_correlate_opt_q15(
+void arm_correlate_opt_q15(
   const q15_t * pSrcA,
         uint32_t srcALen,
   const q15_t * pSrcB,
@@ -1920,7 +1920,7 @@ ARM_DSP_ATTRIBUTE void arm_correlate_opt_q15(
   @param[in]  srcBLen  length of the second input sequence
   @param[out] pDst     points to the block of output data  Length 2 * max(srcALen, srcBLen) - 1.
  */
-  ARM_DSP_ATTRIBUTE void arm_correlate_q15(
+  void arm_correlate_q15(
   const q15_t * pSrcA,
         uint32_t srcALen,
   const q15_t * pSrcB,
@@ -1936,7 +1936,7 @@ ARM_DSP_ATTRIBUTE void arm_correlate_opt_q15(
   @param[in]     srcBLen    length of the second input sequence
   @param[out]    pDst       points to the location where the output result is written.  Length 2 * max(srcALen, srcBLen) - 1.
  */
-ARM_DSP_ATTRIBUTE void arm_correlate_fast_q15(
+void arm_correlate_fast_q15(
   const q15_t * pSrcA,
         uint32_t srcALen,
   const q15_t * pSrcB,
@@ -1953,7 +1953,7 @@ ARM_DSP_ATTRIBUTE void arm_correlate_fast_q15(
   @param[out] pDst      points to the block of output data  Length 2 * max(srcALen, srcBLen) - 1.
   @param[in]  pScratch  points to scratch buffer of size max(srcALen, srcBLen) + 2*min(srcALen, srcBLen) - 2.
  */
-ARM_DSP_ATTRIBUTE void arm_correlate_fast_opt_q15(
+void arm_correlate_fast_opt_q15(
   const q15_t * pSrcA,
         uint32_t srcALen,
   const q15_t * pSrcB,
@@ -1970,7 +1970,7 @@ ARM_DSP_ATTRIBUTE void arm_correlate_fast_opt_q15(
    * @param[in]  srcBLen  length of the second input sequence.
    * @param[out] pDst     points to the block of output data  Length 2 * max(srcALen, srcBLen) - 1.
    */
-  ARM_DSP_ATTRIBUTE void arm_correlate_q31(
+  void arm_correlate_q31(
   const q31_t * pSrcA,
         uint32_t srcALen,
   const q31_t * pSrcB,
@@ -1986,7 +1986,7 @@ ARM_DSP_ATTRIBUTE void arm_correlate_fast_opt_q15(
   @param[in]  srcBLen  length of the second input sequence
   @param[out] pDst     points to the block of output data  Length 2 * max(srcALen, srcBLen) - 1.
  */
-ARM_DSP_ATTRIBUTE void arm_correlate_fast_q31(
+void arm_correlate_fast_q31(
   const q31_t * pSrcA,
         uint32_t srcALen,
   const q31_t * pSrcB,
@@ -2004,7 +2004,7 @@ ARM_DSP_ATTRIBUTE void arm_correlate_fast_q31(
    * @param[in]  pScratch1  points to scratch buffer(of type q15_t) of size max(srcALen, srcBLen) + 2*min(srcALen, srcBLen) - 2.
    * @param[in]  pScratch2  points to scratch buffer (of type q15_t) of size min(srcALen, srcBLen).
    */
-  ARM_DSP_ATTRIBUTE void arm_correlate_opt_q7(
+  void arm_correlate_opt_q7(
   const q7_t * pSrcA,
         uint32_t srcALen,
   const q7_t * pSrcB,
@@ -2022,7 +2022,7 @@ ARM_DSP_ATTRIBUTE void arm_correlate_fast_q31(
    * @param[in]  srcBLen  length of the second input sequence.
    * @param[out] pDst     points to the block of output data  Length 2 * max(srcALen, srcBLen) - 1.
    */
-  ARM_DSP_ATTRIBUTE void arm_correlate_q7(
+  void arm_correlate_q7(
   const q7_t * pSrcA,
         uint32_t srcALen,
   const q7_t * pSrcB,
@@ -2091,7 +2091,7 @@ ARM_DSP_ATTRIBUTE void arm_correlate_fast_q31(
    * @param[in]  pScratchIn  points to a temporary buffer of size blockSize.
    * @param[in]  blockSize   number of input samples to process per call.
    */
-  ARM_DSP_ATTRIBUTE void arm_fir_sparse_f32(
+  void arm_fir_sparse_f32(
         arm_fir_sparse_instance_f32 * S,
   const float32_t * pSrc,
         float32_t * pDst,
@@ -2109,7 +2109,7 @@ ARM_DSP_ATTRIBUTE void arm_correlate_fast_q31(
    * @param[in]     maxDelay   maximum offset time supported.
    * @param[in]     blockSize  number of samples that will be processed per block.
    */
-  ARM_DSP_ATTRIBUTE void arm_fir_sparse_init_f32(
+  void arm_fir_sparse_init_f32(
         arm_fir_sparse_instance_f32 * S,
         uint16_t numTaps,
   const float32_t * pCoeffs,
@@ -2127,7 +2127,7 @@ ARM_DSP_ATTRIBUTE void arm_correlate_fast_q31(
    * @param[in]  pScratchIn  points to a temporary buffer of size blockSize.
    * @param[in]  blockSize   number of input samples to process per call.
    */
-  ARM_DSP_ATTRIBUTE void arm_fir_sparse_q31(
+  void arm_fir_sparse_q31(
         arm_fir_sparse_instance_q31 * S,
   const q31_t * pSrc,
         q31_t * pDst,
@@ -2145,7 +2145,7 @@ ARM_DSP_ATTRIBUTE void arm_correlate_fast_q31(
    * @param[in]     maxDelay   maximum offset time supported.
    * @param[in]     blockSize  number of samples that will be processed per block.
    */
-  ARM_DSP_ATTRIBUTE void arm_fir_sparse_init_q31(
+  void arm_fir_sparse_init_q31(
         arm_fir_sparse_instance_q31 * S,
         uint16_t numTaps,
   const q31_t * pCoeffs,
@@ -2164,7 +2164,7 @@ ARM_DSP_ATTRIBUTE void arm_correlate_fast_q31(
    * @param[in]  pScratchOut  points to a temporary buffer of size blockSize.
    * @param[in]  blockSize    number of input samples to process per call.
    */
-  ARM_DSP_ATTRIBUTE void arm_fir_sparse_q15(
+  void arm_fir_sparse_q15(
         arm_fir_sparse_instance_q15 * S,
   const q15_t * pSrc,
         q15_t * pDst,
@@ -2183,7 +2183,7 @@ ARM_DSP_ATTRIBUTE void arm_correlate_fast_q31(
    * @param[in]     maxDelay   maximum offset time supported.
    * @param[in]     blockSize  number of samples that will be processed per block.
    */
-  ARM_DSP_ATTRIBUTE void arm_fir_sparse_init_q15(
+  void arm_fir_sparse_init_q15(
         arm_fir_sparse_instance_q15 * S,
         uint16_t numTaps,
   const q15_t * pCoeffs,
@@ -2202,7 +2202,7 @@ ARM_DSP_ATTRIBUTE void arm_correlate_fast_q31(
    * @param[in]  pScratchOut  points to a temporary buffer of size blockSize.
    * @param[in]  blockSize    number of input samples to process per call.
    */
-  ARM_DSP_ATTRIBUTE void arm_fir_sparse_q7(
+  void arm_fir_sparse_q7(
         arm_fir_sparse_instance_q7 * S,
   const q7_t * pSrc,
         q7_t * pDst,
@@ -2221,7 +2221,7 @@ ARM_DSP_ATTRIBUTE void arm_correlate_fast_q31(
    * @param[in]     maxDelay   maximum offset time supported.
    * @param[in]     blockSize  number of samples that will be processed per block.
    */
-  ARM_DSP_ATTRIBUTE void arm_fir_sparse_init_q7(
+  void arm_fir_sparse_init_q7(
         arm_fir_sparse_instance_q7 * S,
         uint16_t numTaps,
   const q7_t * pCoeffs,
@@ -2545,7 +2545,7 @@ ARM_DSP_ATTRIBUTE void arm_correlate_fast_q31(
   @param[out]    err      prediction error (variance)
   @param[in]     nbCoefs  number of autoregressive coefficients
  */
-ARM_DSP_ATTRIBUTE void arm_levinson_durbin_f32(const float32_t *phi,
+void arm_levinson_durbin_f32(const float32_t *phi,
   float32_t *a, 
   float32_t *err,
   int nbCoefs);
@@ -2558,7 +2558,7 @@ ARM_DSP_ATTRIBUTE void arm_levinson_durbin_f32(const float32_t *phi,
   @param[out]    err      prediction error (variance)
   @param[in]     nbCoefs  number of autoregressive coefficients
  */
-ARM_DSP_ATTRIBUTE void arm_levinson_durbin_q31(const q31_t *phi,
+void arm_levinson_durbin_q31(const q31_t *phi,
   q31_t *a, 
   q31_t *err,
   int nbCoefs);

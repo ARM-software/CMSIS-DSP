@@ -75,7 +75,7 @@
 
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-void arm_cmplx_dot_prod_f32(
+ARM_DSP_ATTRIBUTE void arm_cmplx_dot_prod_f32(
     const float32_t * pSrcA,
     const float32_t * pSrcB,
     uint32_t numSamples,
@@ -179,7 +179,7 @@ void arm_cmplx_dot_prod_f32(
 }
 
 #else
-void arm_cmplx_dot_prod_f32(
+ARM_DSP_ATTRIBUTE void arm_cmplx_dot_prod_f32(
   const float32_t * pSrcA,
   const float32_t * pSrcB,
         uint32_t numSamples,

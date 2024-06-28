@@ -76,7 +76,7 @@
 #if !defined(ARM_MATH_AUTOVECTORIZE)
 #if defined(ARM_MATH_MVE_FLOAT16)
 
-arm_status arm_mat_qr_f16(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_qr_f16(
     const arm_matrix_instance_f16 * pSrc,
     const float16_t threshold,
     arm_matrix_instance_f16 * pOutR,
@@ -540,7 +540,7 @@ arm_status arm_mat_qr_f16(
 #if (!defined(ARM_MATH_MVE_FLOAT16)) || defined(ARM_MATH_AUTOVECTORIZE)
 
 
-arm_status arm_mat_qr_f16(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_qr_f16(
     const arm_matrix_instance_f16 * pSrc,
     const float16_t threshold,
     arm_matrix_instance_f16 * pOutR,

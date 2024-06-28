@@ -46,7 +46,7 @@
                    - \ref ARM_MATH_SIZE_MISMATCH : Matrix size check failed
  */
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
-arm_status arm_mat_trans_q7(const arm_matrix_instance_q7 *pSrc, arm_matrix_instance_q7 *pDst)
+ARM_DSP_ATTRIBUTE arm_status arm_mat_trans_q7(const arm_matrix_instance_q7 *pSrc, arm_matrix_instance_q7 *pDst)
 {
 
     uint16x8_t    vecOffs;
@@ -110,7 +110,7 @@ arm_status arm_mat_trans_q7(const arm_matrix_instance_q7 *pSrc, arm_matrix_insta
     return (ARM_MATH_SUCCESS);
 }
 #else
-arm_status arm_mat_trans_q7(const arm_matrix_instance_q7 *pSrc, arm_matrix_instance_q7 *pDst)
+ARM_DSP_ATTRIBUTE arm_status arm_mat_trans_q7(const arm_matrix_instance_q7 *pSrc, arm_matrix_instance_q7 *pDst)
 {
     q7_t *pSrcA = pSrc->pData;         /* input data matrix pointer */
     q7_t *pOut = pDst->pData;          /* output data matrix pointer */

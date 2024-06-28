@@ -49,7 +49,7 @@
 
 #include "arm_helium_utils.h"
 
-arm_status arm_mat_trans_q31(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_trans_q31(
   const arm_matrix_instance_q31 * pSrc,
         arm_matrix_instance_q31 * pDst)
 {
@@ -90,7 +90,7 @@ arm_status arm_mat_trans_q31(
   return (status);
 }
 #else
-arm_status arm_mat_trans_q31(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_trans_q31(
   const arm_matrix_instance_q31 * pSrc,
         arm_matrix_instance_q31 * pDst)
 {

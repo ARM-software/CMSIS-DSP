@@ -54,7 +54,7 @@
 
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-void arm_mean_q7(
+ARM_DSP_ATTRIBUTE void arm_mean_q7(
   const q7_t * pSrc,
         uint32_t blockSize,
         q7_t * pResult)
@@ -92,7 +92,7 @@ void arm_mean_q7(
     *pResult = (q7_t) (sum / (int32_t) blockSize);
 }
 #else
-void arm_mean_q7(
+ARM_DSP_ATTRIBUTE void arm_mean_q7(
   const q7_t * pSrc,
         uint32_t blockSize,
         q7_t * pResult)

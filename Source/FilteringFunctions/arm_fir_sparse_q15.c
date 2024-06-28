@@ -55,7 +55,7 @@
                    In order to avoid overflows the input signal or coefficients must be scaled down by log2(numTaps) bits.
  */
 
-void arm_fir_sparse_q15(
+ARM_DSP_ATTRIBUTE void arm_fir_sparse_q15(
         arm_fir_sparse_instance_q15 * S,
   const q15_t * pSrc,
         q15_t * pDst,

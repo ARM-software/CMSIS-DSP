@@ -24,8 +24,8 @@
  */
 
  
-#ifndef MATRIX_FUNCTIONS_H_
-#define MATRIX_FUNCTIONS_H_
+#ifndef _MATRIX_FUNCTIONS_H_
+#define _MATRIX_FUNCTIONS_H_
 
 #include "arm_math_types.h"
 #include "arm_math_memory.h"
@@ -170,7 +170,7 @@ extern "C"
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
    */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_add_f32(
+arm_status arm_mat_add_f32(
   const arm_matrix_instance_f32 * pSrcA,
   const arm_matrix_instance_f32 * pSrcB,
         arm_matrix_instance_f32 * pDst);
@@ -183,7 +183,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_add_f32(
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
    */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_add_q15(
+arm_status arm_mat_add_q15(
   const arm_matrix_instance_q15 * pSrcA,
   const arm_matrix_instance_q15 * pSrcB,
         arm_matrix_instance_q15 * pDst);
@@ -196,7 +196,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_add_q15(
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
    */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_add_q31(
+arm_status arm_mat_add_q31(
   const arm_matrix_instance_q31 * pSrcA,
   const arm_matrix_instance_q31 * pSrcB,
         arm_matrix_instance_q31 * pDst);
@@ -209,7 +209,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_add_q31(
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
    */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_f32(
+arm_status arm_mat_cmplx_mult_f32(
   const arm_matrix_instance_f32 * pSrcA,
   const arm_matrix_instance_f32 * pSrcB,
         arm_matrix_instance_f32 * pDst);
@@ -222,7 +222,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_f32(
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
    */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_q15(
+arm_status arm_mat_cmplx_mult_q15(
   const arm_matrix_instance_q15 * pSrcA,
   const arm_matrix_instance_q15 * pSrcB,
         arm_matrix_instance_q15 * pDst,
@@ -236,7 +236,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_q15(
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
    */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_q31(
+arm_status arm_mat_cmplx_mult_q31(
   const arm_matrix_instance_q31 * pSrcA,
   const arm_matrix_instance_q31 * pSrcB,
         arm_matrix_instance_q31 * pDst);
@@ -248,7 +248,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_q31(
    * @return    The function returns either  <code>ARM_MATH_SIZE_MISMATCH</code>
    * or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
    */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_trans_f32(
+arm_status arm_mat_trans_f32(
   const arm_matrix_instance_f32 * pSrc,
         arm_matrix_instance_f32 * pDst);
 
@@ -259,7 +259,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_trans_f32(
    * @return    The function returns either  <code>ARM_MATH_SIZE_MISMATCH</code>
    * or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
    */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_trans_f64(
+arm_status arm_mat_trans_f64(
   const arm_matrix_instance_f64 * pSrc,
         arm_matrix_instance_f64 * pDst);
 
@@ -270,7 +270,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_trans_f64(
    * @return    The function returns either  <code>ARM_MATH_SIZE_MISMATCH</code>
    * or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
    */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_trans_f32(
+arm_status arm_mat_cmplx_trans_f32(
   const arm_matrix_instance_f32 * pSrc,
   arm_matrix_instance_f32 * pDst);
 
@@ -282,7 +282,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_trans_f32(
    * @return    The function returns either  <code>ARM_MATH_SIZE_MISMATCH</code>
    * or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
    */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_trans_q15(
+arm_status arm_mat_trans_q15(
   const arm_matrix_instance_q15 * pSrc,
         arm_matrix_instance_q15 * pDst);
 
@@ -293,7 +293,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_trans_q15(
    * @return    The function returns either  <code>ARM_MATH_SIZE_MISMATCH</code>
    * or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
    */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_trans_q15(
+arm_status arm_mat_cmplx_trans_q15(
   const arm_matrix_instance_q15 * pSrc,
   arm_matrix_instance_q15 * pDst);
 
@@ -304,7 +304,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_trans_q15(
    * @return    The function returns either  <code>ARM_MATH_SIZE_MISMATCH</code>
    * or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
    */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_trans_q7(
+arm_status arm_mat_trans_q7(
   const arm_matrix_instance_q7 * pSrc,
         arm_matrix_instance_q7 * pDst);
 
@@ -315,7 +315,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_trans_q7(
    * @return    The function returns either  <code>ARM_MATH_SIZE_MISMATCH</code>
    * or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
    */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_trans_q31(
+arm_status arm_mat_trans_q31(
   const arm_matrix_instance_q31 * pSrc,
         arm_matrix_instance_q31 * pDst);
 
@@ -326,7 +326,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_trans_q31(
    * @return    The function returns either  <code>ARM_MATH_SIZE_MISMATCH</code>
    * or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
    */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_trans_q31(
+arm_status arm_mat_cmplx_trans_q31(
   const arm_matrix_instance_q31 * pSrc,
   arm_matrix_instance_q31 * pDst);
 
@@ -338,7 +338,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_trans_q31(
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
    */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_f32(
+arm_status arm_mat_mult_f32(
   const arm_matrix_instance_f32 * pSrcA,
   const arm_matrix_instance_f32 * pSrcB,
         arm_matrix_instance_f32 * pDst);
@@ -351,7 +351,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_f32(
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
    */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_f64(
+arm_status arm_mat_mult_f64(
   const arm_matrix_instance_f64 * pSrcA,
   const arm_matrix_instance_f64 * pSrcB,
         arm_matrix_instance_f64 * pDst);
@@ -362,7 +362,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_f64(
    * @param[in]  pVec     points to vector
    * @param[out] pDst     points to output vector
    */
-ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_f32(
+void arm_mat_vec_mult_f32(
   const arm_matrix_instance_f32 *pSrcMat, 
   const float32_t *pVec, 
   float32_t *pDst);
@@ -376,7 +376,7 @@ ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_f32(
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
    */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q7(
+arm_status arm_mat_mult_q7(
   const arm_matrix_instance_q7 * pSrcA,
   const arm_matrix_instance_q7 * pSrcB,
         arm_matrix_instance_q7 * pDst,
@@ -388,7 +388,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q7(
    * @param[in]  pVec     points to vector
    * @param[out] pDst     points to output vector
    */
-ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_q7(
+void arm_mat_vec_mult_q7(
   const arm_matrix_instance_q7 *pSrcMat, 
   const q7_t *pVec, 
   q7_t *pDst);
@@ -402,7 +402,7 @@ ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_q7(
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
    */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q15(
+arm_status arm_mat_mult_q15(
   const arm_matrix_instance_q15 * pSrcA,
   const arm_matrix_instance_q15 * pSrcB,
         arm_matrix_instance_q15 * pDst,
@@ -414,7 +414,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q15(
    * @param[in]  pVec     points to vector
    * @param[out] pDst     points to output vector
    */
-ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_q15(
+void arm_mat_vec_mult_q15(
   const arm_matrix_instance_q15 *pSrcMat, 
   const q15_t *pVec, 
   q15_t *pDst);
@@ -428,7 +428,7 @@ ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_q15(
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
    */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_fast_q15(
+arm_status arm_mat_mult_fast_q15(
   const arm_matrix_instance_q15 * pSrcA,
   const arm_matrix_instance_q15 * pSrcB,
         arm_matrix_instance_q15 * pDst,
@@ -442,7 +442,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_fast_q15(
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
    */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q31(
+arm_status arm_mat_mult_q31(
   const arm_matrix_instance_q31 * pSrcA,
   const arm_matrix_instance_q31 * pSrcB,
         arm_matrix_instance_q31 * pDst);
@@ -456,7 +456,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q31(
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
    */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_opt_q31(
+arm_status arm_mat_mult_opt_q31(
   const arm_matrix_instance_q31 * pSrcA,
   const arm_matrix_instance_q31 * pSrcB,
         arm_matrix_instance_q31 * pDst,
@@ -468,7 +468,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_opt_q31(
    * @param[in]  pVec     points to vector
    * @param[out] pDst     points to output vector
    */
-ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_q31(
+void arm_mat_vec_mult_q31(
   const arm_matrix_instance_q31 *pSrcMat, 
   const q31_t *pVec, 
   q31_t *pDst);
@@ -481,7 +481,7 @@ ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_q31(
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
    */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_fast_q31(
+arm_status arm_mat_mult_fast_q31(
   const arm_matrix_instance_q31 * pSrcA,
   const arm_matrix_instance_q31 * pSrcB,
         arm_matrix_instance_q31 * pDst);
@@ -494,7 +494,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_fast_q31(
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
    */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_sub_f32(
+arm_status arm_mat_sub_f32(
   const arm_matrix_instance_f32 * pSrcA,
   const arm_matrix_instance_f32 * pSrcB,
         arm_matrix_instance_f32 * pDst);
@@ -507,7 +507,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_sub_f32(
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
    */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_sub_f64(
+arm_status arm_mat_sub_f64(
   const arm_matrix_instance_f64 * pSrcA,
   const arm_matrix_instance_f64 * pSrcB,
         arm_matrix_instance_f64 * pDst);
@@ -520,7 +520,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_sub_f64(
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
    */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_sub_q15(
+arm_status arm_mat_sub_q15(
   const arm_matrix_instance_q15 * pSrcA,
   const arm_matrix_instance_q15 * pSrcB,
         arm_matrix_instance_q15 * pDst);
@@ -533,7 +533,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_sub_q15(
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
    */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_sub_q31(
+arm_status arm_mat_sub_q31(
   const arm_matrix_instance_q31 * pSrcA,
   const arm_matrix_instance_q31 * pSrcB,
         arm_matrix_instance_q31 * pDst);
@@ -546,7 +546,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_sub_q31(
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
    */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_scale_f32(
+arm_status arm_mat_scale_f32(
   const arm_matrix_instance_f32 * pSrc,
         float32_t scale,
         arm_matrix_instance_f32 * pDst);
@@ -560,7 +560,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_scale_f32(
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
    */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_scale_q15(
+arm_status arm_mat_scale_q15(
   const arm_matrix_instance_q15 * pSrc,
         q15_t scaleFract,
         int32_t shift,
@@ -575,7 +575,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_scale_q15(
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
    */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_scale_q31(
+arm_status arm_mat_scale_q31(
   const arm_matrix_instance_q31 * pSrc,
         q31_t scaleFract,
         int32_t shift,
@@ -588,7 +588,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_scale_q31(
    * @param[in]     nColumns  number of columns in the matrix.
    * @param[in]     pData     points to the matrix data array.
    */
-ARM_DSP_ATTRIBUTE void arm_mat_init_q31(
+void arm_mat_init_q31(
         arm_matrix_instance_q31 * S,
         uint16_t nRows,
         uint16_t nColumns,
@@ -601,7 +601,7 @@ ARM_DSP_ATTRIBUTE void arm_mat_init_q31(
    * @param[in]     nColumns  number of columns in the matrix.
    * @param[in]     pData     points to the matrix data array.
    */
-ARM_DSP_ATTRIBUTE void arm_mat_init_q15(
+void arm_mat_init_q15(
         arm_matrix_instance_q15 * S,
         uint16_t nRows,
         uint16_t nColumns,
@@ -614,7 +614,7 @@ ARM_DSP_ATTRIBUTE void arm_mat_init_q15(
    * @param[in]     nColumns  number of columns in the matrix.
    * @param[in]     pData     points to the matrix data array.
    */
-ARM_DSP_ATTRIBUTE void arm_mat_init_f32(
+void arm_mat_init_f32(
         arm_matrix_instance_f32 * S,
         uint16_t nRows,
         uint16_t nColumns,
@@ -627,7 +627,7 @@ ARM_DSP_ATTRIBUTE void arm_mat_init_f32(
  * @param[in]     nColumns  number of columns in the matrix.
  * @param[in]     pData     points to the matrix data array.
  */
-ARM_DSP_ATTRIBUTE void arm_mat_init_f64(
+void arm_mat_init_f64(
       arm_matrix_instance_f64 * S,
       uint16_t nRows,
       uint16_t nColumns,
@@ -643,7 +643,7 @@ ARM_DSP_ATTRIBUTE void arm_mat_init_f64(
    * @return The function returns ARM_MATH_SIZE_MISMATCH, if the dimensions do not match.
    * If the input matrix is singular (does not have an inverse), then the algorithm terminates and returns error status ARM_MATH_SINGULAR.
    */
-  ARM_DSP_ATTRIBUTE arm_status arm_mat_inverse_f32(
+  arm_status arm_mat_inverse_f32(
   const arm_matrix_instance_f32 * src,
   arm_matrix_instance_f32 * dst);
 
@@ -655,7 +655,7 @@ ARM_DSP_ATTRIBUTE void arm_mat_init_f64(
    * @return The function returns ARM_MATH_SIZE_MISMATCH, if the dimensions do not match.
    * If the input matrix is singular (does not have an inverse), then the algorithm terminates and returns error status ARM_MATH_SINGULAR.
    */
-  ARM_DSP_ATTRIBUTE arm_status arm_mat_inverse_f64(
+  arm_status arm_mat_inverse_f64(
   const arm_matrix_instance_f64 * src,
   arm_matrix_instance_f64 * dst);
 
@@ -668,7 +668,7 @@ ARM_DSP_ATTRIBUTE void arm_mat_init_f64(
    * If the matrix is ill conditioned or only semi-definite, then it is better using the LDL^t decomposition.
    * The decomposition is returning a lower triangular matrix.
    */
-  ARM_DSP_ATTRIBUTE arm_status arm_mat_cholesky_f64(
+  arm_status arm_mat_cholesky_f64(
   const arm_matrix_instance_f64 * src,
   arm_matrix_instance_f64 * dst);
 
@@ -681,7 +681,7 @@ ARM_DSP_ATTRIBUTE void arm_mat_init_f64(
    * If the matrix is ill conditioned or only semi-definite, then it is better using the LDL^t decomposition.
    * The decomposition is returning a lower triangular matrix.
    */
-  ARM_DSP_ATTRIBUTE arm_status arm_mat_cholesky_f32(
+  arm_status arm_mat_cholesky_f32(
   const arm_matrix_instance_f32 * src,
   arm_matrix_instance_f32 * dst);
 
@@ -692,7 +692,7 @@ ARM_DSP_ATTRIBUTE void arm_mat_init_f64(
    * @param[out] dst The solution X of UT . X = A
    * @return The function returns ARM_MATH_SINGULAR, if the system can't be solved.
   */
-  ARM_DSP_ATTRIBUTE arm_status arm_mat_solve_upper_triangular_f32(
+  arm_status arm_mat_solve_upper_triangular_f32(
   const arm_matrix_instance_f32 * ut,
   const arm_matrix_instance_f32 * a,
   arm_matrix_instance_f32 * dst);
@@ -704,7 +704,7 @@ ARM_DSP_ATTRIBUTE void arm_mat_init_f64(
    * @param[out] dst The solution X of LT . X = A
    * @return The function returns ARM_MATH_SINGULAR, if the system can't be solved.
    */
-  ARM_DSP_ATTRIBUTE arm_status arm_mat_solve_lower_triangular_f32(
+  arm_status arm_mat_solve_lower_triangular_f32(
   const arm_matrix_instance_f32 * lt,
   const arm_matrix_instance_f32 * a,
   arm_matrix_instance_f32 * dst);
@@ -717,7 +717,7 @@ ARM_DSP_ATTRIBUTE void arm_mat_init_f64(
    * @param[out] dst The solution X of UT . X = A
    * @return The function returns ARM_MATH_SINGULAR, if the system can't be solved.
   */
-  ARM_DSP_ATTRIBUTE arm_status arm_mat_solve_upper_triangular_f64(
+  arm_status arm_mat_solve_upper_triangular_f64(
   const arm_matrix_instance_f64 * ut,
   const arm_matrix_instance_f64 * a,
   arm_matrix_instance_f64 * dst);
@@ -729,7 +729,7 @@ ARM_DSP_ATTRIBUTE void arm_mat_init_f64(
    * @param[out] dst The solution X of LT . X = A
    * @return The function returns ARM_MATH_SINGULAR, if the system can't be solved.
    */
-  ARM_DSP_ATTRIBUTE arm_status arm_mat_solve_lower_triangular_f64(
+  arm_status arm_mat_solve_lower_triangular_f64(
   const arm_matrix_instance_f64 * lt,
   const arm_matrix_instance_f64 * a,
   arm_matrix_instance_f64 * dst);
@@ -745,7 +745,7 @@ ARM_DSP_ATTRIBUTE void arm_mat_init_f64(
    * If the input matrix does not have a decomposition, then the algorithm terminates and returns error status ARM_MATH_DECOMPOSITION_FAILURE.
    * The decomposition is returning a lower triangular matrix.
    */
-  ARM_DSP_ATTRIBUTE arm_status arm_mat_ldlt_f32(
+  arm_status arm_mat_ldlt_f32(
   const arm_matrix_instance_f32 * src,
   arm_matrix_instance_f32 * l,
   arm_matrix_instance_f32 * d,
@@ -761,7 +761,7 @@ ARM_DSP_ATTRIBUTE void arm_mat_init_f64(
    * If the input matrix does not have a decomposition, then the algorithm terminates and returns error status ARM_MATH_DECOMPOSITION_FAILURE.
    * The decomposition is returning a lower triangular matrix.
    */
-  ARM_DSP_ATTRIBUTE arm_status arm_mat_ldlt_f64(
+  arm_status arm_mat_ldlt_f64(
   const arm_matrix_instance_f64 * src,
   arm_matrix_instance_f64 * l,
   arm_matrix_instance_f64 * d,
@@ -782,7 +782,7 @@ ARM_DSP_ATTRIBUTE void arm_mat_init_f64(
                    - \ref ARM_MATH_SINGULAR      : Input matrix is found to be singular (non-invertible)
  */
 
-ARM_DSP_ATTRIBUTE arm_status arm_mat_qr_f32(
+arm_status arm_mat_qr_f32(
     const arm_matrix_instance_f32 * pSrc,
     const float32_t threshold,
     arm_matrix_instance_f32 * pOutR,
@@ -807,7 +807,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_qr_f32(
                    - \ref ARM_MATH_SINGULAR      : Input matrix is found to be singular (non-invertible)
  */
 
-ARM_DSP_ATTRIBUTE arm_status arm_mat_qr_f64(
+arm_status arm_mat_qr_f64(
     const arm_matrix_instance_f64 * pSrc,
     const float64_t threshold,
     arm_matrix_instance_f64 * pOutR,
@@ -826,7 +826,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_qr_f64(
   @return        beta        return the scaling factor beta
  */
 
-ARM_DSP_ATTRIBUTE float32_t arm_householder_f32(
+float32_t arm_householder_f32(
     const float32_t * pSrc,
     const float32_t threshold,
     uint32_t    blockSize,
@@ -842,7 +842,7 @@ ARM_DSP_ATTRIBUTE float32_t arm_householder_f32(
   @return        beta        return the scaling factor beta
  */
 
-ARM_DSP_ATTRIBUTE float64_t arm_householder_f64(
+float64_t arm_householder_f64(
     const float64_t * pSrc,
     const float64_t threshold,
     uint32_t    blockSize,

@@ -143,7 +143,7 @@
  * @param[in]  blockSize  number of samples of output data.
  */
 
-void arm_spline_f32(
+ARM_DSP_ATTRIBUTE void arm_spline_f32(
         arm_spline_instance_f32 * S, 
   const float32_t * xq,
         float32_t * pDst,

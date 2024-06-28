@@ -109,7 +109,7 @@
   @param[in]     blockSize   number of input samples to process
  */
 
-void arm_fir_sparse_f32(
+ARM_DSP_ATTRIBUTE void arm_fir_sparse_f32(
         arm_fir_sparse_instance_f32 * S,
   const float32_t * pSrc,
         float32_t * pDst,

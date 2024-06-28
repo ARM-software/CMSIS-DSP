@@ -58,7 +58,7 @@
  * defined in the preprocessor section of project options.
  */
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
-void arm_float_to_q7(
+ARM_DSP_ATTRIBUTE void arm_float_to_q7(
   const float32_t * pSrc,
   q7_t * pDst,
   uint32_t blockSize)
@@ -136,7 +136,7 @@ void arm_float_to_q7(
 }
 #else
 #if defined(ARM_MATH_NEON)
-void arm_float_to_q7(
+ARM_DSP_ATTRIBUTE void arm_float_to_q7(
   const float32_t * pSrc,
   q7_t * pDst,
   uint32_t blockSize)
@@ -236,7 +236,7 @@ void arm_float_to_q7(
 
 }
 #else
-void arm_float_to_q7(
+ARM_DSP_ATTRIBUTE void arm_float_to_q7(
   const float32_t * pSrc,
         q7_t * pDst,
         uint32_t blockSize)

@@ -52,7 +52,7 @@
 
 #include "arm_helium_utils.h"
 
-void arm_mult_q7(
+ARM_DSP_ATTRIBUTE void arm_mult_q7(
     const q7_t * pSrcA,
     const q7_t * pSrcB,
     q7_t * pDst,
@@ -97,7 +97,7 @@ void arm_mult_q7(
 }
 
 #else
-void arm_mult_q7(
+ARM_DSP_ATTRIBUTE void arm_mult_q7(
   const q7_t * pSrcA,
   const q7_t * pSrcB,
         q7_t * pDst,

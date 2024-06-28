@@ -58,7 +58,7 @@
                    <code>arm_lms_q31()</code>.
  */
 
-void arm_lms_init_q31(
+ARM_DSP_ATTRIBUTE void arm_lms_init_q31(
   arm_lms_instance_q31 * S,
   uint16_t numTaps,
   q31_t * pCoeffs,

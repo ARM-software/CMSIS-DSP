@@ -56,7 +56,7 @@
                    where <code>blockSize</code> is the number of input samples processed by each call to <code>arm_lms_norm_f32()</code>.
  */
 
-void arm_lms_norm_init_f32(
+ARM_DSP_ATTRIBUTE void arm_lms_norm_init_f32(
         arm_lms_norm_instance_f32 * S,
         uint16_t numTaps,
         float32_t * pCoeffs,

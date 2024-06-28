@@ -50,7 +50,7 @@
 
 #include "arm_helium_utils.h"
 
-void arm_absmin_q31(
+ARM_DSP_ATTRIBUTE void arm_absmin_q31(
   const q31_t * pSrc,
         uint32_t blockSize,
         q31_t * pResult,
@@ -134,7 +134,7 @@ void arm_absmin_q31(
 
 #else
 #if defined(ARM_MATH_DSP)
-void arm_absmin_q31(
+ARM_DSP_ATTRIBUTE void arm_absmin_q31(
   const q31_t * pSrc,
         uint32_t blockSize,
         q31_t * pResult,
@@ -221,7 +221,7 @@ void arm_absmin_q31(
   *pIndex = outIndex;  
 }
 #else
-void arm_absmin_q31(
+ARM_DSP_ATTRIBUTE void arm_absmin_q31(
   const q31_t * pSrc,
         uint32_t blockSize,
         q31_t * pResult,

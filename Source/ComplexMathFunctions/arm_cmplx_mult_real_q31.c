@@ -50,7 +50,7 @@
  */
 
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
-void arm_cmplx_mult_real_q31(
+ARM_DSP_ATTRIBUTE void arm_cmplx_mult_real_q31(
   const q31_t * pSrcCmplx,
   const q31_t * pSrcReal,
         q31_t * pCmplxDst,
@@ -104,7 +104,7 @@ void arm_cmplx_mult_real_q31(
     }
 }
 #else
-void arm_cmplx_mult_real_q31(
+ARM_DSP_ATTRIBUTE void arm_cmplx_mult_real_q31(
   const q31_t * pSrcCmplx,
   const q31_t * pSrcReal,
         q31_t * pCmplxDst,

@@ -74,14 +74,14 @@
 
 #include "arm_helium_utils.h"
 
-arm_status arm_mat_cmplx_trans_f32(const arm_matrix_instance_f32 * pSrc, arm_matrix_instance_f32 * pDst)
+ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_trans_f32(const arm_matrix_instance_f32 * pSrc, arm_matrix_instance_f32 * pDst)
 {
     return arm_mat_cmplx_trans_32bit(pSrc->numRows, pSrc->numCols, (uint32_t *) pSrc->pData,
                                    pDst->numRows, pDst->numCols, (uint32_t *) pDst->pData);
 }
 
 #else
-arm_status arm_mat_cmplx_trans_f32(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_trans_f32(
   const arm_matrix_instance_f32 * pSrc,
   arm_matrix_instance_f32 * pDst)
 {

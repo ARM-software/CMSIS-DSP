@@ -55,7 +55,7 @@
                    The 18.14 result is then truncated to 18.7 format by discarding the low 7 bits and then saturated to 1.7 format.
  */
 
-void arm_correlate_opt_q7(
+ARM_DSP_ATTRIBUTE void arm_correlate_opt_q7(
   const q7_t * pSrcA,
         uint32_t srcALen,
   const q7_t * pSrcB,

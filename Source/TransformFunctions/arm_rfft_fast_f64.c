@@ -197,7 +197,7 @@ void merge_rfft_f64(
                    - value = 1: RIFFT
 */
 
-void arm_rfft_fast_f64(
+ARM_DSP_ATTRIBUTE void arm_rfft_fast_f64(
   arm_rfft_fast_instance_f64 * S,
   float64_t * p,
   float64_t * pOut,

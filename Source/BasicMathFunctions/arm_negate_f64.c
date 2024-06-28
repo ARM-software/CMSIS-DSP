@@ -44,7 +44,7 @@
   @param[in]     blockSize  number of samples in each vector.
  */
 
-void arm_negate_f64(
+ARM_DSP_ATTRIBUTE void arm_negate_f64(
   const float64_t * pSrc,
         float64_t * pDst,
         uint32_t blockSize)

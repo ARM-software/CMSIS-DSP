@@ -61,7 +61,7 @@
                    Refer to \ref arm_correlate_q31() for a slower implementation of this function which uses 64-bit accumulation to provide higher precision.
  */
 
-void arm_correlate_fast_q31(
+ARM_DSP_ATTRIBUTE void arm_correlate_fast_q31(
   const q31_t * pSrcA,
         uint32_t srcALen,
   const q31_t * pSrcB,

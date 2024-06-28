@@ -34,7 +34,7 @@
 
 #include "arm_vec_math_f16.h"
 
-void arm_vinverse_f16(
+ARM_DSP_ATTRIBUTE void arm_vinverse_f16(
   const float16_t * pSrc,
         float16_t * pDst,
         uint32_t blockSize)

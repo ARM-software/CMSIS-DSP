@@ -53,7 +53,7 @@
                    Finally, the return result is in 18.14 format.
  */
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
-void arm_power_q7(
+ARM_DSP_ATTRIBUTE void arm_power_q7(
   const q7_t * pSrc,
         uint32_t blockSize,
         q31_t * pResult)
@@ -96,7 +96,7 @@ void arm_power_q7(
     *pResult = sum;
 }
 #else
-void arm_power_q7(
+ARM_DSP_ATTRIBUTE void arm_power_q7(
   const q7_t * pSrc,
         uint32_t blockSize,
         q31_t * pResult)

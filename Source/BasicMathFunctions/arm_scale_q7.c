@@ -54,7 +54,7 @@
 
 #include "arm_helium_utils.h"
 
-void arm_scale_q7(
+ARM_DSP_ATTRIBUTE void arm_scale_q7(
     const q7_t * pSrc,
     q7_t   scaleFract,
     int8_t  shift,
@@ -119,7 +119,7 @@ void arm_scale_q7(
 }
 
 #else
-void arm_scale_q7(
+ARM_DSP_ATTRIBUTE void arm_scale_q7(
   const q7_t * pSrc,
         q7_t scaleFract,
         int8_t shift,

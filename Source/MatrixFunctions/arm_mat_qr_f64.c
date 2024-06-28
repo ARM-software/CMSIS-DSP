@@ -69,7 +69,7 @@
 
 
 
-arm_status arm_mat_qr_f64(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_qr_f64(
     const arm_matrix_instance_f64 * pSrc,
     const float64_t threshold,
     arm_matrix_instance_f64 * pOutR,

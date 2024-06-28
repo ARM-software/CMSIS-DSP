@@ -47,7 +47,7 @@
   @param[in]     blockSize  number of samples to process
  */
 
-void arm_iir_lattice_init_f32(
+ARM_DSP_ATTRIBUTE void arm_iir_lattice_init_f32(
   arm_iir_lattice_instance_f32 * S,
   uint16_t numStages,
   float32_t * pkCoeffs,

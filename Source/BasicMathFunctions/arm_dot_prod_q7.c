@@ -56,7 +56,7 @@
 
 #include "arm_helium_utils.h"
 
-void arm_dot_prod_q7(
+ARM_DSP_ATTRIBUTE void arm_dot_prod_q7(
     const q7_t * pSrcA,
     const q7_t * pSrcB,
     uint32_t blockSize,
@@ -103,7 +103,7 @@ void arm_dot_prod_q7(
     *result = sum;
 }
 #else
-void arm_dot_prod_q7(
+ARM_DSP_ATTRIBUTE void arm_dot_prod_q7(
   const q7_t * pSrcA,
   const q7_t * pSrcB,
         uint32_t blockSize,

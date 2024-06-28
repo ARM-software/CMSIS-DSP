@@ -76,7 +76,7 @@ CFFT_RADIX4BY2_REARRANGE_TWIDDLES_Q31(16);
 
 
 #define CFFTINIT_Q31(LEN,LENTWIDDLE)                                    \
-arm_status arm_cfft_init_##LEN##_q31(                                \
+ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_##LEN##_q31(                                \
   arm_cfft_instance_q31 * S)                                         \
 {                                                                    \
     /*  Initialise the default arm status */                         \
@@ -107,7 +107,7 @@ arm_status arm_cfft_init_##LEN##_q31(                                \
   S->pTwiddle = arm_cfft_sR_##EXT##_len##SIZE.pTwiddle;
 
 #define CFFTINIT_Q31(LEN,LENTWIDDLE)                                      \
-arm_status arm_cfft_init_##LEN##_q31(arm_cfft_instance_q31 * S)\
+ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_##LEN##_q31(arm_cfft_instance_q31 * S)\
 {                                                              \
     /*  Initialise the default arm status */                   \
         arm_status status = ARM_MATH_SUCCESS;                  \
@@ -266,7 +266,7 @@ CFFTINIT_Q31(16,16)
                 that you need at build time, then it is better to use the initialization
                 functions defined for each FFT size.
  */
-arm_status arm_cfft_init_q31(
+ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_q31(
   arm_cfft_instance_q31 * S,
   uint16_t fftLen)
 {

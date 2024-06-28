@@ -149,7 +149,7 @@
 #if !defined(ARM_MATH_AUTOVECTORIZE)
 #if defined(ARM_MATH_MVEF)
 
-arm_status arm_mat_qr_f32(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_qr_f32(
     const arm_matrix_instance_f32 * pSrc,
     const float32_t threshold,
     arm_matrix_instance_f32 * pOutR,
@@ -611,7 +611,7 @@ arm_status arm_mat_qr_f32(
 
 #if (!defined(ARM_MATH_MVEF)) || defined(ARM_MATH_AUTOVECTORIZE)
 
-arm_status arm_mat_qr_f32(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_qr_f32(
     const arm_matrix_instance_f32 * pSrc,
     const float32_t threshold,
     arm_matrix_instance_f32 * pOutR,

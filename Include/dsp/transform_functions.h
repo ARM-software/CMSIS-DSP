@@ -24,8 +24,8 @@
  */
 
  
-#ifndef TRANSFORM_FUNCTIONS_H_
-#define TRANSFORM_FUNCTIONS_H_
+#ifndef _TRANSFORM_FUNCTIONS_H_
+#define _TRANSFORM_FUNCTIONS_H_
 
 #include "arm_math_types.h"
 #include "arm_math_memory.h"
@@ -62,14 +62,14 @@ extern "C"
   } arm_cfft_radix2_instance_q15;
 
 /* Deprecated */
-  ARM_DSP_ATTRIBUTE arm_status arm_cfft_radix2_init_q15(
+  arm_status arm_cfft_radix2_init_q15(
         arm_cfft_radix2_instance_q15 * S,
         uint16_t fftLen,
         uint8_t ifftFlag,
         uint8_t bitReverseFlag);
 
 /* Deprecated */
-  ARM_DSP_ATTRIBUTE void arm_cfft_radix2_q15(
+  void arm_cfft_radix2_q15(
   const arm_cfft_radix2_instance_q15 * S,
         q15_t * pSrc);
 
@@ -89,14 +89,14 @@ extern "C"
   } arm_cfft_radix4_instance_q15;
 
 /* Deprecated */
-  ARM_DSP_ATTRIBUTE arm_status arm_cfft_radix4_init_q15(
+  arm_status arm_cfft_radix4_init_q15(
         arm_cfft_radix4_instance_q15 * S,
         uint16_t fftLen,
         uint8_t ifftFlag,
         uint8_t bitReverseFlag);
 
 /* Deprecated */
-  ARM_DSP_ATTRIBUTE void arm_cfft_radix4_q15(
+  void arm_cfft_radix4_q15(
   const arm_cfft_radix4_instance_q15 * S,
         q15_t * pSrc);
 
@@ -115,14 +115,14 @@ extern "C"
   } arm_cfft_radix2_instance_q31;
 
 /* Deprecated */
-  ARM_DSP_ATTRIBUTE arm_status arm_cfft_radix2_init_q31(
+  arm_status arm_cfft_radix2_init_q31(
         arm_cfft_radix2_instance_q31 * S,
         uint16_t fftLen,
         uint8_t ifftFlag,
         uint8_t bitReverseFlag);
 
 /* Deprecated */
-  ARM_DSP_ATTRIBUTE void arm_cfft_radix2_q31(
+  void arm_cfft_radix2_q31(
   const arm_cfft_radix2_instance_q31 * S,
         q31_t * pSrc);
 
@@ -141,12 +141,12 @@ extern "C"
   } arm_cfft_radix4_instance_q31;
 
 /* Deprecated */
-  ARM_DSP_ATTRIBUTE void arm_cfft_radix4_q31(
+  void arm_cfft_radix4_q31(
   const arm_cfft_radix4_instance_q31 * S,
         q31_t * pSrc);
 
 /* Deprecated */
-  ARM_DSP_ATTRIBUTE arm_status arm_cfft_radix4_init_q31(
+  arm_status arm_cfft_radix4_init_q31(
         arm_cfft_radix4_instance_q31 * S,
         uint16_t fftLen,
         uint8_t ifftFlag,
@@ -169,14 +169,14 @@ extern "C"
 
 
 /* Deprecated */
-  ARM_DSP_ATTRIBUTE arm_status arm_cfft_radix2_init_f32(
+  arm_status arm_cfft_radix2_init_f32(
         arm_cfft_radix2_instance_f32 * S,
         uint16_t fftLen,
         uint8_t ifftFlag,
         uint8_t bitReverseFlag);
 
 /* Deprecated */
-  ARM_DSP_ATTRIBUTE void arm_cfft_radix2_f32(
+  void arm_cfft_radix2_f32(
   const arm_cfft_radix2_instance_f32 * S,
         float32_t * pSrc);
 
@@ -198,14 +198,14 @@ extern "C"
 
 
 /* Deprecated */
-  ARM_DSP_ATTRIBUTE arm_status arm_cfft_radix4_init_f32(
+  arm_status arm_cfft_radix4_init_f32(
         arm_cfft_radix4_instance_f32 * S,
         uint16_t fftLen,
         uint8_t ifftFlag,
         uint8_t bitReverseFlag);
 
 /* Deprecated */
-  ARM_DSP_ATTRIBUTE void arm_cfft_radix4_f32(
+  void arm_cfft_radix4_f32(
   const arm_cfft_radix4_instance_f32 * S,
         float32_t * pSrc);
 
@@ -228,21 +228,21 @@ extern "C"
 #endif
   } arm_cfft_instance_q15;
 
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_4096_q15(arm_cfft_instance_q15 * S);
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_2048_q15(arm_cfft_instance_q15 * S);
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_1024_q15(arm_cfft_instance_q15 * S);
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_512_q15(arm_cfft_instance_q15 * S);
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_256_q15(arm_cfft_instance_q15 * S);
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_128_q15(arm_cfft_instance_q15 * S);
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_64_q15(arm_cfft_instance_q15 * S);
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_32_q15(arm_cfft_instance_q15 * S);
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_16_q15(arm_cfft_instance_q15 * S);
+arm_status arm_cfft_init_4096_q15(arm_cfft_instance_q15 * S);
+arm_status arm_cfft_init_2048_q15(arm_cfft_instance_q15 * S);
+arm_status arm_cfft_init_1024_q15(arm_cfft_instance_q15 * S);
+arm_status arm_cfft_init_512_q15(arm_cfft_instance_q15 * S);
+arm_status arm_cfft_init_256_q15(arm_cfft_instance_q15 * S);
+arm_status arm_cfft_init_128_q15(arm_cfft_instance_q15 * S);
+arm_status arm_cfft_init_64_q15(arm_cfft_instance_q15 * S);
+arm_status arm_cfft_init_32_q15(arm_cfft_instance_q15 * S);
+arm_status arm_cfft_init_16_q15(arm_cfft_instance_q15 * S);
 
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_q15(
+arm_status arm_cfft_init_q15(
   arm_cfft_instance_q15 * S,
   uint16_t fftLen);
 
-ARM_DSP_ATTRIBUTE void arm_cfft_q15(
+void arm_cfft_q15(
     const arm_cfft_instance_q15 * S,
           q15_t * p1,
           uint8_t ifftFlag,
@@ -267,21 +267,21 @@ ARM_DSP_ATTRIBUTE void arm_cfft_q15(
 #endif
   } arm_cfft_instance_q31;
 
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_4096_q31(arm_cfft_instance_q31 * S);
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_2048_q31(arm_cfft_instance_q31 * S);
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_1024_q31(arm_cfft_instance_q31 * S);
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_512_q31(arm_cfft_instance_q31 * S);
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_256_q31(arm_cfft_instance_q31 * S);
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_128_q31(arm_cfft_instance_q31 * S);
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_64_q31(arm_cfft_instance_q31 * S);
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_32_q31(arm_cfft_instance_q31 * S);
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_16_q31(arm_cfft_instance_q31 * S);
+arm_status arm_cfft_init_4096_q31(arm_cfft_instance_q31 * S);
+arm_status arm_cfft_init_2048_q31(arm_cfft_instance_q31 * S);
+arm_status arm_cfft_init_1024_q31(arm_cfft_instance_q31 * S);
+arm_status arm_cfft_init_512_q31(arm_cfft_instance_q31 * S);
+arm_status arm_cfft_init_256_q31(arm_cfft_instance_q31 * S);
+arm_status arm_cfft_init_128_q31(arm_cfft_instance_q31 * S);
+arm_status arm_cfft_init_64_q31(arm_cfft_instance_q31 * S);
+arm_status arm_cfft_init_32_q31(arm_cfft_instance_q31 * S);
+arm_status arm_cfft_init_16_q31(arm_cfft_instance_q31 * S);
 
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_q31(
+arm_status arm_cfft_init_q31(
   arm_cfft_instance_q31 * S,
   uint16_t fftLen);
 
-ARM_DSP_ATTRIBUTE void arm_cfft_q31(
+void arm_cfft_q31(
     const arm_cfft_instance_q31 * S,
           q31_t * p1,
           uint8_t ifftFlag,
@@ -307,21 +307,21 @@ ARM_DSP_ATTRIBUTE void arm_cfft_q31(
   } arm_cfft_instance_f32;
 
 
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_4096_f32(arm_cfft_instance_f32 * S);
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_2048_f32(arm_cfft_instance_f32 * S);
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_1024_f32(arm_cfft_instance_f32 * S);
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_512_f32(arm_cfft_instance_f32 * S);
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_256_f32(arm_cfft_instance_f32 * S);
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_128_f32(arm_cfft_instance_f32 * S);
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_64_f32(arm_cfft_instance_f32 * S);
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_32_f32(arm_cfft_instance_f32 * S);
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_16_f32(arm_cfft_instance_f32 * S);
+arm_status arm_cfft_init_4096_f32(arm_cfft_instance_f32 * S);
+arm_status arm_cfft_init_2048_f32(arm_cfft_instance_f32 * S);
+arm_status arm_cfft_init_1024_f32(arm_cfft_instance_f32 * S);
+arm_status arm_cfft_init_512_f32(arm_cfft_instance_f32 * S);
+arm_status arm_cfft_init_256_f32(arm_cfft_instance_f32 * S);
+arm_status arm_cfft_init_128_f32(arm_cfft_instance_f32 * S);
+arm_status arm_cfft_init_64_f32(arm_cfft_instance_f32 * S);
+arm_status arm_cfft_init_32_f32(arm_cfft_instance_f32 * S);
+arm_status arm_cfft_init_16_f32(arm_cfft_instance_f32 * S);
 
-  ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_f32(
+  arm_status arm_cfft_init_f32(
   arm_cfft_instance_f32 * S,
   uint16_t fftLen);
 
-  ARM_DSP_ATTRIBUTE void arm_cfft_f32(
+  void arm_cfft_f32(
   const arm_cfft_instance_f32 * S,
         float32_t * p1,
         uint8_t ifftFlag,
@@ -339,21 +339,21 @@ ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_16_f32(arm_cfft_instance_f32 * S);
           uint16_t bitRevLength;             /**< bit reversal table length. */
   } arm_cfft_instance_f64;
 
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_4096_f64(arm_cfft_instance_f64 * S);
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_2048_f64(arm_cfft_instance_f64 * S);
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_1024_f64(arm_cfft_instance_f64 * S);
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_512_f64(arm_cfft_instance_f64 * S);
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_256_f64(arm_cfft_instance_f64 * S);
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_128_f64(arm_cfft_instance_f64 * S);
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_64_f64(arm_cfft_instance_f64 * S);
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_32_f64(arm_cfft_instance_f64 * S);
-ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_16_f64(arm_cfft_instance_f64 * S);
+arm_status arm_cfft_init_4096_f64(arm_cfft_instance_f64 * S);
+arm_status arm_cfft_init_2048_f64(arm_cfft_instance_f64 * S);
+arm_status arm_cfft_init_1024_f64(arm_cfft_instance_f64 * S);
+arm_status arm_cfft_init_512_f64(arm_cfft_instance_f64 * S);
+arm_status arm_cfft_init_256_f64(arm_cfft_instance_f64 * S);
+arm_status arm_cfft_init_128_f64(arm_cfft_instance_f64 * S);
+arm_status arm_cfft_init_64_f64(arm_cfft_instance_f64 * S);
+arm_status arm_cfft_init_32_f64(arm_cfft_instance_f64 * S);
+arm_status arm_cfft_init_16_f64(arm_cfft_instance_f64 * S);
 
-  ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_f64(
+  arm_status arm_cfft_init_f64(
   arm_cfft_instance_f64 * S,
   uint16_t fftLen);
   
-  ARM_DSP_ATTRIBUTE void arm_cfft_f64(
+  void arm_cfft_f64(
   const arm_cfft_instance_f64 * S,
         float64_t * p1,
         uint8_t ifftFlag,
@@ -377,58 +377,58 @@ ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_16_f64(arm_cfft_instance_f64 * S);
 #endif
   } arm_rfft_instance_q15;
 
-ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_32_q15(
+arm_status arm_rfft_init_32_q15(
         arm_rfft_instance_q15 * S,
         uint32_t ifftFlagR,
         uint32_t bitReverseFlag);
 
-ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_64_q15(
+arm_status arm_rfft_init_64_q15(
         arm_rfft_instance_q15 * S,
         uint32_t ifftFlagR,
         uint32_t bitReverseFlag);
 
-ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_128_q15(
+arm_status arm_rfft_init_128_q15(
         arm_rfft_instance_q15 * S,
         uint32_t ifftFlagR,
         uint32_t bitReverseFlag);
 
-ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_256_q15(
+arm_status arm_rfft_init_256_q15(
         arm_rfft_instance_q15 * S,
         uint32_t ifftFlagR,
         uint32_t bitReverseFlag);
 
-ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_512_q15(
+arm_status arm_rfft_init_512_q15(
         arm_rfft_instance_q15 * S,
         uint32_t ifftFlagR,
         uint32_t bitReverseFlag);
 
-ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_1024_q15(
+arm_status arm_rfft_init_1024_q15(
         arm_rfft_instance_q15 * S,
         uint32_t ifftFlagR,
         uint32_t bitReverseFlag);
 
-ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_2048_q15(
+arm_status arm_rfft_init_2048_q15(
         arm_rfft_instance_q15 * S,
         uint32_t ifftFlagR,
         uint32_t bitReverseFlag);
 
-ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_4096_q15(
+arm_status arm_rfft_init_4096_q15(
         arm_rfft_instance_q15 * S,
         uint32_t ifftFlagR,
         uint32_t bitReverseFlag);
 
-ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_8192_q15(
+arm_status arm_rfft_init_8192_q15(
         arm_rfft_instance_q15 * S,
         uint32_t ifftFlagR,
         uint32_t bitReverseFlag);
 
-  ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_q15(
+  arm_status arm_rfft_init_q15(
         arm_rfft_instance_q15 * S,
         uint32_t fftLenReal,
         uint32_t ifftFlagR,
         uint32_t bitReverseFlag);
 
-  ARM_DSP_ATTRIBUTE void arm_rfft_q15(
+  void arm_rfft_q15(
   const arm_rfft_instance_q15 * S,
         q15_t * pSrc,
         q15_t * pDst);
@@ -451,58 +451,58 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_8192_q15(
 #endif
   } arm_rfft_instance_q31;
 
-  ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_32_q31(
+  arm_status arm_rfft_init_32_q31(
         arm_rfft_instance_q31 * S,
         uint32_t ifftFlagR,
         uint32_t bitReverseFlag);
 
-  ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_64_q31(
+  arm_status arm_rfft_init_64_q31(
         arm_rfft_instance_q31 * S,
         uint32_t ifftFlagR,
         uint32_t bitReverseFlag);
 
-  ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_128_q31(
+  arm_status arm_rfft_init_128_q31(
         arm_rfft_instance_q31 * S,
         uint32_t ifftFlagR,
         uint32_t bitReverseFlag);
 
-  ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_256_q31(
+  arm_status arm_rfft_init_256_q31(
         arm_rfft_instance_q31 * S,
         uint32_t ifftFlagR,
         uint32_t bitReverseFlag);
 
-  ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_512_q31(
+  arm_status arm_rfft_init_512_q31(
         arm_rfft_instance_q31 * S,
         uint32_t ifftFlagR,
         uint32_t bitReverseFlag);
 
-  ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_1024_q31(
+  arm_status arm_rfft_init_1024_q31(
         arm_rfft_instance_q31 * S,
         uint32_t ifftFlagR,
         uint32_t bitReverseFlag);
 
-  ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_2048_q31(
+  arm_status arm_rfft_init_2048_q31(
         arm_rfft_instance_q31 * S,
         uint32_t ifftFlagR,
         uint32_t bitReverseFlag);
 
-  ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_4096_q31(
+  arm_status arm_rfft_init_4096_q31(
         arm_rfft_instance_q31 * S,
         uint32_t ifftFlagR,
         uint32_t bitReverseFlag);
 
-  ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_8192_q31(
+  arm_status arm_rfft_init_8192_q31(
         arm_rfft_instance_q31 * S,
         uint32_t ifftFlagR,
         uint32_t bitReverseFlag);
 
-  ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_q31(
+  arm_status arm_rfft_init_q31(
         arm_rfft_instance_q31 * S,
         uint32_t fftLenReal,
         uint32_t ifftFlagR,
         uint32_t bitReverseFlag);
 
-  ARM_DSP_ATTRIBUTE void arm_rfft_q31(
+  void arm_rfft_q31(
   const arm_rfft_instance_q31 * S,
         q31_t * pSrc,
         q31_t * pDst);
@@ -522,14 +522,14 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_8192_q15(
           arm_cfft_radix4_instance_f32 *pCfft;        /**< points to the complex FFT instance. */
   } arm_rfft_instance_f32;
 
-  ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_f32(
+  arm_status arm_rfft_init_f32(
         arm_rfft_instance_f32 * S,
         arm_cfft_radix4_instance_f32 * S_CFFT,
         uint32_t fftLenReal,
         uint32_t ifftFlagR,
         uint32_t bitReverseFlag);
 
-  ARM_DSP_ATTRIBUTE void arm_rfft_f32(
+  void arm_rfft_f32(
   const arm_rfft_instance_f32 * S,
         float32_t * pSrc,
         float32_t * pDst);
@@ -544,21 +544,21 @@ typedef struct
     const float64_t * pTwiddleRFFT;        /**< Twiddle factors real stage  */
   } arm_rfft_fast_instance_f64 ;
 
-ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_32_f64( arm_rfft_fast_instance_f64 * S );
-ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_64_f64( arm_rfft_fast_instance_f64 * S );
-ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_128_f64( arm_rfft_fast_instance_f64 * S );
-ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_256_f64( arm_rfft_fast_instance_f64 * S );
-ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_512_f64( arm_rfft_fast_instance_f64 * S );
-ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_1024_f64( arm_rfft_fast_instance_f64 * S );
-ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_2048_f64( arm_rfft_fast_instance_f64 * S );
-ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_4096_f64( arm_rfft_fast_instance_f64 * S );
+arm_status arm_rfft_fast_init_32_f64( arm_rfft_fast_instance_f64 * S );
+arm_status arm_rfft_fast_init_64_f64( arm_rfft_fast_instance_f64 * S );
+arm_status arm_rfft_fast_init_128_f64( arm_rfft_fast_instance_f64 * S );
+arm_status arm_rfft_fast_init_256_f64( arm_rfft_fast_instance_f64 * S );
+arm_status arm_rfft_fast_init_512_f64( arm_rfft_fast_instance_f64 * S );
+arm_status arm_rfft_fast_init_1024_f64( arm_rfft_fast_instance_f64 * S );
+arm_status arm_rfft_fast_init_2048_f64( arm_rfft_fast_instance_f64 * S );
+arm_status arm_rfft_fast_init_4096_f64( arm_rfft_fast_instance_f64 * S );
 
-ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_f64 (
+arm_status arm_rfft_fast_init_f64 (
          arm_rfft_fast_instance_f64 * S,
          uint16_t fftLen);
 
 
-ARM_DSP_ATTRIBUTE void arm_rfft_fast_f64(
+void arm_rfft_fast_f64(
     arm_rfft_fast_instance_f64 * S,
     float64_t * p, float64_t * pOut,
     uint8_t ifftFlag);
@@ -574,21 +574,21 @@ typedef struct
     const float32_t * pTwiddleRFFT;        /**< Twiddle factors real stage  */
   } arm_rfft_fast_instance_f32 ;
 
-ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_32_f32( arm_rfft_fast_instance_f32 * S );
-ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_64_f32( arm_rfft_fast_instance_f32 * S );
-ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_128_f32( arm_rfft_fast_instance_f32 * S );
-ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_256_f32( arm_rfft_fast_instance_f32 * S );
-ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_512_f32( arm_rfft_fast_instance_f32 * S );
-ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_1024_f32( arm_rfft_fast_instance_f32 * S );
-ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_2048_f32( arm_rfft_fast_instance_f32 * S );
-ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_4096_f32( arm_rfft_fast_instance_f32 * S );
+arm_status arm_rfft_fast_init_32_f32( arm_rfft_fast_instance_f32 * S );
+arm_status arm_rfft_fast_init_64_f32( arm_rfft_fast_instance_f32 * S );
+arm_status arm_rfft_fast_init_128_f32( arm_rfft_fast_instance_f32 * S );
+arm_status arm_rfft_fast_init_256_f32( arm_rfft_fast_instance_f32 * S );
+arm_status arm_rfft_fast_init_512_f32( arm_rfft_fast_instance_f32 * S );
+arm_status arm_rfft_fast_init_1024_f32( arm_rfft_fast_instance_f32 * S );
+arm_status arm_rfft_fast_init_2048_f32( arm_rfft_fast_instance_f32 * S );
+arm_status arm_rfft_fast_init_4096_f32( arm_rfft_fast_instance_f32 * S );
 
-ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_f32 (
+arm_status arm_rfft_fast_init_f32 (
          arm_rfft_fast_instance_f32 * S,
          uint16_t fftLen);
 
 
-  ARM_DSP_ATTRIBUTE void arm_rfft_fast_f32(
+  void arm_rfft_fast_f32(
         const arm_rfft_fast_instance_f32 * S,
         float32_t * p, float32_t * pOut,
         uint8_t ifftFlag);
@@ -618,7 +618,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_f32 (
    * @param[in]     normalize  normalizing factor.
    * @return      arm_status function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_ARGUMENT_ERROR if <code>fftLenReal</code> is not a supported transform length.
    */
-  ARM_DSP_ATTRIBUTE arm_status arm_dct4_init_f32(
+  arm_status arm_dct4_init_f32(
         arm_dct4_instance_f32 * S,
         arm_rfft_instance_f32 * S_RFFT,
         arm_cfft_radix4_instance_f32 * S_CFFT,
@@ -633,7 +633,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_f32 (
    * @param[in]     pState         points to state buffer.
    * @param[in,out] pInlineBuffer  points to the in-place input and output buffer.
    */
-  ARM_DSP_ATTRIBUTE void arm_dct4_f32(
+  void arm_dct4_f32(
   const arm_dct4_instance_f32 * S,
         float32_t * pState,
         float32_t * pInlineBuffer);
@@ -664,7 +664,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_f32 (
    * @param[in]     normalize  normalizing factor.
    * @return      arm_status function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_ARGUMENT_ERROR if <code>N</code> is not a supported transform length.
    */
-  ARM_DSP_ATTRIBUTE arm_status arm_dct4_init_q31(
+  arm_status arm_dct4_init_q31(
         arm_dct4_instance_q31 * S,
         arm_rfft_instance_q31 * S_RFFT,
         arm_cfft_radix4_instance_q31 * S_CFFT,
@@ -679,7 +679,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_f32 (
    * @param[in]     pState         points to state buffer.
    * @param[in,out] pInlineBuffer  points to the in-place input and output buffer.
    */
-  ARM_DSP_ATTRIBUTE void arm_dct4_q31(
+  void arm_dct4_q31(
   const arm_dct4_instance_q31 * S,
         q31_t * pState,
         q31_t * pInlineBuffer);
@@ -710,7 +710,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_f32 (
    * @param[in]     normalize  normalizing factor.
    * @return      arm_status function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_ARGUMENT_ERROR if <code>N</code> is not a supported transform length.
    */
-  ARM_DSP_ATTRIBUTE arm_status arm_dct4_init_q15(
+  arm_status arm_dct4_init_q15(
         arm_dct4_instance_q15 * S,
         arm_rfft_instance_q15 * S_RFFT,
         arm_cfft_radix4_instance_q15 * S_CFFT,
@@ -725,7 +725,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_f32 (
    * @param[in]     pState         points to state buffer.
    * @param[in,out] pInlineBuffer  points to the in-place input and output buffer.
    */
-  ARM_DSP_ATTRIBUTE void arm_dct4_q15(
+  void arm_dct4_q15(
   const arm_dct4_instance_q15 * S,
         q15_t * pState,
         q15_t * pInlineBuffer);
@@ -752,7 +752,7 @@ typedef struct
 #endif
   } arm_mfcc_instance_f32 ;
 
-ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_32_f32(
+arm_status arm_mfcc_init_32_f32(
   arm_mfcc_instance_f32 * S,
   uint32_t nbMelFilters,
   uint32_t nbDctOutputs,
@@ -763,7 +763,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_32_f32(
   const float32_t *windowCoefs
   );
 
-ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_64_f32(
+arm_status arm_mfcc_init_64_f32(
   arm_mfcc_instance_f32 * S,
   uint32_t nbMelFilters,
   uint32_t nbDctOutputs,
@@ -774,7 +774,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_64_f32(
   const float32_t *windowCoefs
   );
 
-ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_128_f32(
+arm_status arm_mfcc_init_128_f32(
   arm_mfcc_instance_f32 * S,
   uint32_t nbMelFilters,
   uint32_t nbDctOutputs,
@@ -785,7 +785,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_128_f32(
   const float32_t *windowCoefs
   );
 
-ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_256_f32(
+arm_status arm_mfcc_init_256_f32(
   arm_mfcc_instance_f32 * S,
   uint32_t nbMelFilters,
   uint32_t nbDctOutputs,
@@ -796,7 +796,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_256_f32(
   const float32_t *windowCoefs
   );
 
-ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_512_f32(
+arm_status arm_mfcc_init_512_f32(
   arm_mfcc_instance_f32 * S,
   uint32_t nbMelFilters,
   uint32_t nbDctOutputs,
@@ -807,7 +807,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_512_f32(
   const float32_t *windowCoefs
   );
 
-ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_1024_f32(
+arm_status arm_mfcc_init_1024_f32(
   arm_mfcc_instance_f32 * S,
   uint32_t nbMelFilters,
   uint32_t nbDctOutputs,
@@ -818,7 +818,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_1024_f32(
   const float32_t *windowCoefs
   );
 
-ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_2048_f32(
+arm_status arm_mfcc_init_2048_f32(
   arm_mfcc_instance_f32 * S,
   uint32_t nbMelFilters,
   uint32_t nbDctOutputs,
@@ -829,7 +829,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_2048_f32(
   const float32_t *windowCoefs
   );
 
-ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_4096_f32(
+arm_status arm_mfcc_init_4096_f32(
   arm_mfcc_instance_f32 * S,
   uint32_t nbMelFilters,
   uint32_t nbDctOutputs,
@@ -840,7 +840,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_4096_f32(
   const float32_t *windowCoefs
   );
 
-ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_f32(
+arm_status arm_mfcc_init_f32(
   arm_mfcc_instance_f32 * S,
   uint32_t fftLen,
   uint32_t nbMelFilters,
@@ -860,7 +860,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_f32(
   @param[out]     pDst  points to the output MFCC values
   @param[inout]     pTmp  points to a temporary buffer of complex
  */
-  ARM_DSP_ATTRIBUTE void arm_mfcc_f32(
+  void arm_mfcc_f32(
   const arm_mfcc_instance_f32 * S,
   float32_t *pSrc,
   float32_t *pDst,
@@ -889,7 +889,7 @@ typedef struct
 #endif
   } arm_mfcc_instance_q31 ;
 
-ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_32_q31(
+arm_status arm_mfcc_init_32_q31(
   arm_mfcc_instance_q31 * S,
   uint32_t nbMelFilters,
   uint32_t nbDctOutputs,
@@ -900,7 +900,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_32_q31(
   const q31_t *windowCoefs
   );
 
-ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_64_q31(
+arm_status arm_mfcc_init_64_q31(
   arm_mfcc_instance_q31 * S,
   uint32_t nbMelFilters,
   uint32_t nbDctOutputs,
@@ -911,7 +911,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_64_q31(
   const q31_t *windowCoefs
   );
 
-ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_128_q31(
+arm_status arm_mfcc_init_128_q31(
   arm_mfcc_instance_q31 * S,
   uint32_t nbMelFilters,
   uint32_t nbDctOutputs,
@@ -922,7 +922,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_128_q31(
   const q31_t *windowCoefs
   );
 
-ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_256_q31(
+arm_status arm_mfcc_init_256_q31(
   arm_mfcc_instance_q31 * S,
   uint32_t nbMelFilters,
   uint32_t nbDctOutputs,
@@ -933,7 +933,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_256_q31(
   const q31_t *windowCoefs
   );
 
-ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_512_q31(
+arm_status arm_mfcc_init_512_q31(
   arm_mfcc_instance_q31 * S,
   uint32_t nbMelFilters,
   uint32_t nbDctOutputs,
@@ -944,7 +944,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_512_q31(
   const q31_t *windowCoefs
   );
 
-ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_1024_q31(
+arm_status arm_mfcc_init_1024_q31(
   arm_mfcc_instance_q31 * S,
   uint32_t nbMelFilters,
   uint32_t nbDctOutputs,
@@ -955,7 +955,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_1024_q31(
   const q31_t *windowCoefs
   );
 
-ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_2048_q31(
+arm_status arm_mfcc_init_2048_q31(
   arm_mfcc_instance_q31 * S,
   uint32_t nbMelFilters,
   uint32_t nbDctOutputs,
@@ -966,7 +966,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_2048_q31(
   const q31_t *windowCoefs
   );
 
-ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_4096_q31(
+arm_status arm_mfcc_init_4096_q31(
   arm_mfcc_instance_q31 * S,
   uint32_t nbMelFilters,
   uint32_t nbDctOutputs,
@@ -977,7 +977,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_4096_q31(
   const q31_t *windowCoefs
   );
 
-ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_q31(
+arm_status arm_mfcc_init_q31(
   arm_mfcc_instance_q31 * S,
   uint32_t fftLen,
   uint32_t nbMelFilters,
@@ -998,7 +998,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_q31(
   @param[inout]     pTmp  points to a temporary buffer of complex
   @return        error status
  */
-  ARM_DSP_ATTRIBUTE arm_status arm_mfcc_q31(
+  arm_status arm_mfcc_q31(
   const arm_mfcc_instance_q31 * S,
   q31_t *pSrc,
   q31_t *pDst,
@@ -1027,7 +1027,7 @@ typedef struct
 #endif
   } arm_mfcc_instance_q15 ;
 
-ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_32_q15(
+arm_status arm_mfcc_init_32_q15(
   arm_mfcc_instance_q15 * S,
   uint32_t nbMelFilters,
   uint32_t nbDctOutputs,
@@ -1038,7 +1038,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_32_q15(
   const q15_t *windowCoefs
   );
 
-ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_64_q15(
+arm_status arm_mfcc_init_64_q15(
   arm_mfcc_instance_q15 * S,
   uint32_t nbMelFilters,
   uint32_t nbDctOutputs,
@@ -1049,7 +1049,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_64_q15(
   const q15_t *windowCoefs
   );
 
-ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_128_q15(
+arm_status arm_mfcc_init_128_q15(
   arm_mfcc_instance_q15 * S,
   uint32_t nbMelFilters,
   uint32_t nbDctOutputs,
@@ -1060,7 +1060,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_128_q15(
   const q15_t *windowCoefs
   );
 
-ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_256_q15(
+arm_status arm_mfcc_init_256_q15(
   arm_mfcc_instance_q15 * S,
   uint32_t nbMelFilters,
   uint32_t nbDctOutputs,
@@ -1071,7 +1071,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_256_q15(
   const q15_t *windowCoefs
   );
 
-ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_512_q15(
+arm_status arm_mfcc_init_512_q15(
   arm_mfcc_instance_q15 * S,
   uint32_t nbMelFilters,
   uint32_t nbDctOutputs,
@@ -1082,7 +1082,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_512_q15(
   const q15_t *windowCoefs
   );
 
-ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_1024_q15(
+arm_status arm_mfcc_init_1024_q15(
   arm_mfcc_instance_q15 * S,
   uint32_t nbMelFilters,
   uint32_t nbDctOutputs,
@@ -1093,7 +1093,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_1024_q15(
   const q15_t *windowCoefs
   );
 
-ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_2048_q15(
+arm_status arm_mfcc_init_2048_q15(
   arm_mfcc_instance_q15 * S,
   uint32_t nbMelFilters,
   uint32_t nbDctOutputs,
@@ -1104,7 +1104,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_2048_q15(
   const q15_t *windowCoefs
   );
 
-ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_4096_q15(
+arm_status arm_mfcc_init_4096_q15(
   arm_mfcc_instance_q15 * S,
   uint32_t nbMelFilters,
   uint32_t nbDctOutputs,
@@ -1115,7 +1115,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_4096_q15(
   const q15_t *windowCoefs
   );
 
-ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_q15(
+arm_status arm_mfcc_init_q15(
   arm_mfcc_instance_q15 * S,
   uint32_t fftLen,
   uint32_t nbMelFilters,
@@ -1136,7 +1136,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_q15(
   @param[inout]     pTmp  points to a temporary buffer of complex
   @return        error status
  */
-  ARM_DSP_ATTRIBUTE arm_status arm_mfcc_q15(
+  arm_status arm_mfcc_q15(
   const arm_mfcc_instance_q15 * S,
   q15_t *pSrc,
   q15_t *pDst,

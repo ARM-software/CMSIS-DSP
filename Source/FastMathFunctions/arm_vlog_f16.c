@@ -169,7 +169,7 @@ float16x8_t vlogq_lut_f16(float16x8_t vecIn)
  */
 
 
-void arm_vlog_f16(
+ARM_DSP_ATTRIBUTE void arm_vlog_f16(
   const float16_t * pSrc,
         float16_t * pDst,
         uint32_t blockSize)

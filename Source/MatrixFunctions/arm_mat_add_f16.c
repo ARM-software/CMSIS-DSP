@@ -54,7 +54,7 @@
 
 #if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-arm_status arm_mat_add_f16(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_add_f16(
   const arm_matrix_instance_f16 * pSrcA,
   const arm_matrix_instance_f16 * pSrcB,
   arm_matrix_instance_f16 * pDst)
@@ -125,7 +125,7 @@ arm_status arm_mat_add_f16(
 }
 #else
 
-arm_status arm_mat_add_f16(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_add_f16(
   const arm_matrix_instance_f16 * pSrcA,
   const arm_matrix_instance_f16 * pSrcB,
         arm_matrix_instance_f16 * pDst)

@@ -53,7 +53,7 @@
                    Lastly, the accumulator is saturated to yield a result in 1.15 format.
  */
 
-void arm_iir_lattice_q15(
+ARM_DSP_ATTRIBUTE void arm_iir_lattice_q15(
   const arm_iir_lattice_instance_q15 * S,
   const q15_t * pSrc,
         q15_t * pDst,

@@ -97,7 +97,7 @@ static void arm_small_blk_max_q7(
     *pResult = maxValue;
 }
 
-void arm_max_q7(
+ARM_DSP_ATTRIBUTE void arm_max_q7(
   const q7_t * pSrc,
         uint32_t blockSize,
         q7_t * pResult,
@@ -152,7 +152,7 @@ void arm_max_q7(
     }
 }
 #else
-void arm_max_q7(
+ARM_DSP_ATTRIBUTE void arm_max_q7(
   const q7_t * pSrc,
         uint32_t blockSize,
         q7_t * pResult,

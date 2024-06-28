@@ -51,7 +51,7 @@
 #include "arm_vec_math.h"
 #endif
 
-void arm_vlog_f32(
+ARM_DSP_ATTRIBUTE void arm_vlog_f32(
   const float32_t * pSrc,
         float32_t * pDst,
         uint32_t blockSize)

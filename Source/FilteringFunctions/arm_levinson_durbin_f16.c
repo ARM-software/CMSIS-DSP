@@ -57,7 +57,7 @@
 
 #define LANE4567_MASK 0xFF00
 
-void arm_levinson_durbin_f16(const float16_t *phi,
+ARM_DSP_ATTRIBUTE void arm_levinson_durbin_f16(const float16_t *phi,
   float16_t *a, 
   float16_t *err,
   int nbCoefs)
@@ -211,7 +211,7 @@ void arm_levinson_durbin_f16(const float16_t *phi,
 
 #if defined(ARM_FLOAT16_SUPPORTED)
 
-void arm_levinson_durbin_f16(const float16_t *phi,
+ARM_DSP_ATTRIBUTE void arm_levinson_durbin_f16(const float16_t *phi,
   float16_t *a, 
   float16_t *err,
   int nbCoefs)

@@ -55,7 +55,7 @@
 
 #include "arm_helium_utils.h"
 
-void arm_cmplx_mag_q15(
+ARM_DSP_ATTRIBUTE void arm_cmplx_mag_q15(
   const q15_t * pSrc,
         q15_t * pDst,
         uint32_t numSamples)
@@ -140,7 +140,7 @@ void arm_cmplx_mag_q15(
 }
 
 #else
-void arm_cmplx_mag_q15(
+ARM_DSP_ATTRIBUTE void arm_cmplx_mag_q15(
   const q15_t * pSrc,
         q15_t * pDst,
         uint32_t numSamples)

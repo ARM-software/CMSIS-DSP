@@ -65,7 +65,7 @@
                    The source buffer is modified by this function.
 
  */
-void arm_mfcc_f32(
+ARM_DSP_ATTRIBUTE void arm_mfcc_f32(
   const arm_mfcc_instance_f32 * S,
   float32_t *pSrc,
   float32_t *pDst,

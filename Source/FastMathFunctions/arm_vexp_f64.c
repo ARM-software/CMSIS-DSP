@@ -30,7 +30,7 @@
 #include "arm_common_tables.h"
 
 
-void arm_vexp_f64(
+ARM_DSP_ATTRIBUTE void arm_vexp_f64(
     const float64_t * pSrc,
     float64_t * pDst,
     uint32_t blockSize)

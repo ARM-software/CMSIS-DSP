@@ -42,7 +42,7 @@
   return        none
 */
 
-void arm_radix8_butterfly_f32(
+ARM_DSP_ATTRIBUTE void arm_radix8_butterfly_f32(
   float32_t * pSrc,
   uint16_t fftLen,
   const float32_t * pCoef,

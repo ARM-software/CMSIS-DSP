@@ -65,7 +65,7 @@
 
 
 
-void arm_hamming_f64(
+ARM_DSP_ATTRIBUTE void arm_hamming_f64(
         float64_t * pDst,
         uint32_t blockSize)
 {

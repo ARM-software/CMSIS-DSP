@@ -24,8 +24,8 @@
  */
 
  
-#ifndef FILTERING_FUNCTIONS_F16_H_
-#define FILTERING_FUNCTIONS_F16_H_
+#ifndef _FILTERING_FUNCTIONS_F16_H_
+#define _FILTERING_FUNCTIONS_F16_H_
 
 #include "arm_math_types_f16.h"
 #include "arm_math_memory.h"
@@ -59,7 +59,7 @@ extern "C"
    * @param[in]     pState     points to the state buffer.
    * @param[in]     blockSize  number of samples that are processed at a time.
    */
-  ARM_DSP_ATTRIBUTE void arm_fir_init_f16(
+  void arm_fir_init_f16(
         arm_fir_instance_f16 * S,
         uint16_t numTaps,
   const float16_t * pCoeffs,
@@ -73,7 +73,7 @@ extern "C"
    * @param[out] pDst       points to the block of output data.
    * @param[in]  blockSize  number of samples to process.
    */
-  ARM_DSP_ATTRIBUTE void arm_fir_f16(
+  void arm_fir_f16(
   const arm_fir_instance_f16 * S,
   const float16_t * pSrc,
         float16_t * pDst,
@@ -107,14 +107,14 @@ extern "C"
    * @param[out] pDst       points to the block of output data.
    * @param[in]  blockSize  number of samples to process.
    */
-  ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df1_f16(
+  void arm_biquad_cascade_df1_f16(
   const arm_biquad_casd_df1_inst_f16 * S,
   const float16_t * pSrc,
         float16_t * pDst,
         uint32_t blockSize);
 
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
-  ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df1_mve_init_f16(
+  void arm_biquad_cascade_df1_mve_init_f16(
       arm_biquad_casd_df1_inst_f16 * S,
       uint8_t numStages,
       const float16_t * pCoeffs, 
@@ -122,7 +122,7 @@ extern "C"
       float16_t * pState);
 #endif
 
-  ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df1_init_f16(
+  void arm_biquad_cascade_df1_init_f16(
         arm_biquad_casd_df1_inst_f16 * S,
         uint8_t numStages,
   const float16_t * pCoeffs,
@@ -155,7 +155,7 @@ extern "C"
    * @param[out] pDst       points to the block of output data
    * @param[in]  blockSize  number of samples to process.
    */
-  ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_f16(
+  void arm_biquad_cascade_df2T_f16(
   const arm_biquad_cascade_df2T_instance_f16 * S,
   const float16_t * pSrc,
         float16_t * pDst,
@@ -168,7 +168,7 @@ extern "C"
    * @param[out] pDst       points to the block of output data
    * @param[in]  blockSize  number of samples to process.
    */
-  ARM_DSP_ATTRIBUTE void arm_biquad_cascade_stereo_df2T_f16(
+  void arm_biquad_cascade_stereo_df2T_f16(
   const arm_biquad_cascade_stereo_df2T_instance_f16 * S,
   const float16_t * pSrc,
         float16_t * pDst,
@@ -181,7 +181,7 @@ extern "C"
    * @param[in]     pCoeffs    points to the filter coefficients.
    * @param[in]     pState     points to the state buffer.
    */
-  ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_init_f16(
+  void arm_biquad_cascade_df2T_init_f16(
         arm_biquad_cascade_df2T_instance_f16 * S,
         uint8_t numStages,
   const float16_t * pCoeffs,
@@ -194,7 +194,7 @@ extern "C"
    * @param[in]     pCoeffs    points to the filter coefficients.
    * @param[in]     pState     points to the state buffer.
    */
-  ARM_DSP_ATTRIBUTE void arm_biquad_cascade_stereo_df2T_init_f16(
+  void arm_biquad_cascade_stereo_df2T_init_f16(
         arm_biquad_cascade_stereo_df2T_instance_f16 * S,
         uint8_t numStages,
   const float16_t * pCoeffs,
@@ -208,7 +208,7 @@ extern "C"
    * @param[in]  srcBLen  length of the second input sequence.
    * @param[out] pDst     points to the block of output data  Length 2 * max(srcALen, srcBLen) - 1.
    */
-  ARM_DSP_ATTRIBUTE void arm_correlate_f16(
+  void arm_correlate_f16(
   const float16_t * pSrcA,
         uint32_t srcALen,
   const float16_t * pSrcB,
@@ -223,7 +223,7 @@ extern "C"
   @param[out]    err      prediction error (variance)
   @param[in]     nbCoefs  number of autoregressive coefficients
  */
-ARM_DSP_ATTRIBUTE void arm_levinson_durbin_f16(const float16_t *phi,
+void arm_levinson_durbin_f16(const float16_t *phi,
   float16_t *a, 
   float16_t *err,
   int nbCoefs);

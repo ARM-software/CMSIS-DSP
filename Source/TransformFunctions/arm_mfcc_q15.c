@@ -71,7 +71,7 @@
                    point computations may saturate.
 
  */
-arm_status arm_mfcc_q15(
+ARM_DSP_ATTRIBUTE arm_status arm_mfcc_q15(
   const arm_mfcc_instance_q15 * S,
   q15_t *pSrc,
   q15_t *pDst,

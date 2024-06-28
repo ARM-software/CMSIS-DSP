@@ -23,8 +23,8 @@
  * limitations under the License.
  */
 
-#ifndef ARM_VEC_MATH_H
-#define ARM_VEC_MATH_H
+#ifndef _ARM_VEC_MATH_H
+#define _ARM_VEC_MATH_H
 
 #include "arm_math_types.h"
 #include "arm_common_tables.h"

@@ -44,7 +44,7 @@
   @param[in]     blockSize  number of samples in each vector
  */
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
-void arm_fill_q7(
+ARM_DSP_ATTRIBUTE void arm_fill_q7(
   q7_t value,
   q7_t * pDst,
   uint32_t blockSize)
@@ -77,7 +77,7 @@ void arm_fill_q7(
   }
 }
 #else
-void arm_fill_q7(
+ARM_DSP_ATTRIBUTE void arm_fill_q7(
   q7_t value,
   q7_t * pDst,
   uint32_t blockSize)

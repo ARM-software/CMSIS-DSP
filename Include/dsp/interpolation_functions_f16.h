@@ -24,8 +24,8 @@
  */
 
  
-#ifndef INTERPOLATION_FUNCTIONS_F16_H_
-#define INTERPOLATION_FUNCTIONS_F16_H_
+#ifndef _INTERPOLATION_FUNCTIONS_F16_H_
+#define _INTERPOLATION_FUNCTIONS_F16_H_
 
 #include "arm_math_types_f16.h"
 #include "arm_math_memory.h"
@@ -72,7 +72,7 @@ typedef struct
    * @param[in]     x  input sample to process
    * @return y processed output sample.
    */
-  ARM_DSP_ATTRIBUTE float16_t arm_linear_interp_f16(
+  float16_t arm_linear_interp_f16(
   const arm_linear_interp_instance_f16 * S,
   float16_t x);
 
@@ -92,7 +92,7 @@ typedef struct
   * @param[in]     Y  interpolation coordinate.
   * @return out interpolated value.
   */
-  ARM_DSP_ATTRIBUTE float16_t arm_bilinear_interp_f16(
+  float16_t arm_bilinear_interp_f16(
   const arm_bilinear_interp_instance_f16 * S,
   float16_t X,
   float16_t Y);

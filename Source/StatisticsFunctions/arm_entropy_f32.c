@@ -51,7 +51,7 @@
 #include "arm_helium_utils.h"
 #include "arm_vec_math.h"
 
-float32_t arm_entropy_f32(const float32_t * pSrcA,uint32_t blockSize)
+ARM_DSP_ATTRIBUTE float32_t arm_entropy_f32(const float32_t * pSrcA,uint32_t blockSize)
 {
     uint32_t        blkCnt;
     float32_t       accum=0.0f,p;
@@ -98,7 +98,7 @@ float32_t arm_entropy_f32(const float32_t * pSrcA,uint32_t blockSize)
 
 #include "NEMath.h"
 
-float32_t arm_entropy_f32(const float32_t * pSrcA,uint32_t blockSize)
+ARM_DSP_ATTRIBUTE float32_t arm_entropy_f32(const float32_t * pSrcA,uint32_t blockSize)
 {
     const float32_t *pIn;
     uint32_t blkCnt;
@@ -144,7 +144,7 @@ float32_t arm_entropy_f32(const float32_t * pSrcA,uint32_t blockSize)
 }
 
 #else
-float32_t arm_entropy_f32(const float32_t * pSrcA,uint32_t blockSize)
+ARM_DSP_ATTRIBUTE float32_t arm_entropy_f32(const float32_t * pSrcA,uint32_t blockSize)
 {
     const float32_t *pIn;
     uint32_t blkCnt;

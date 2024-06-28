@@ -156,7 +156,7 @@
  */
 
 #if defined(ARM_MATH_NEON)
-void arm_lms_norm_f32(
+ARM_DSP_ATTRIBUTE void arm_lms_norm_f32(
   arm_lms_norm_instance_f32 * S,
   const float32_t * pSrc,
   float32_t * pRef,
@@ -345,7 +345,7 @@ void arm_lms_norm_f32(
 
 }
 #else
-void arm_lms_norm_f32(
+ARM_DSP_ATTRIBUTE void arm_lms_norm_f32(
         arm_lms_norm_instance_f32 * S,
   const float32_t * pSrc,
         float32_t * pRef,

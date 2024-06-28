@@ -24,8 +24,8 @@
  */
 
  
-#ifndef SVM_FUNCTIONS_F16_H_
-#define SVM_FUNCTIONS_F16_H_
+#ifndef _SVM_FUNCTIONS_F16_H_
+#define _SVM_FUNCTIONS_F16_H_
 
 #include "arm_math_types_f16.h"
 #include "arm_math_memory.h"
@@ -132,7 +132,7 @@ typedef struct
  * @param[in]    supportVectors         Array of support vectors
  * @param[in]    classes                Array of 2 classes ID
  */
-ARM_DSP_ATTRIBUTE void arm_svm_linear_init_f16(arm_svm_linear_instance_f16 *S, 
+void arm_svm_linear_init_f16(arm_svm_linear_instance_f16 *S, 
   uint32_t nbOfSupportVectors,
   uint32_t vectorDimension,
   float16_t intercept,
@@ -146,7 +146,7 @@ ARM_DSP_ATTRIBUTE void arm_svm_linear_init_f16(arm_svm_linear_instance_f16 *S,
  * @param[in]    in         Pointer to input vector
  * @param[out]   pResult    Decision value
  */
-ARM_DSP_ATTRIBUTE void arm_svm_linear_predict_f16(const arm_svm_linear_instance_f16 *S, 
+void arm_svm_linear_predict_f16(const arm_svm_linear_instance_f16 *S, 
    const float16_t * in, 
    int32_t * pResult);
 
@@ -164,7 +164,7 @@ ARM_DSP_ATTRIBUTE void arm_svm_linear_predict_f16(const arm_svm_linear_instance_
  * @param[in]    coef0                  coeff0 (scikit-learn terminology)
  * @param[in]    gamma                  gamma (scikit-learn terminology)
  */
-ARM_DSP_ATTRIBUTE void arm_svm_polynomial_init_f16(arm_svm_polynomial_instance_f16 *S, 
+void arm_svm_polynomial_init_f16(arm_svm_polynomial_instance_f16 *S, 
   uint32_t nbOfSupportVectors,
   uint32_t vectorDimension,
   float16_t intercept,
@@ -183,7 +183,7 @@ ARM_DSP_ATTRIBUTE void arm_svm_polynomial_init_f16(arm_svm_polynomial_instance_f
  * @param[in]    in         Pointer to input vector
  * @param[out]   pResult    Decision value
  */
-ARM_DSP_ATTRIBUTE void arm_svm_polynomial_predict_f16(const arm_svm_polynomial_instance_f16 *S, 
+void arm_svm_polynomial_predict_f16(const arm_svm_polynomial_instance_f16 *S, 
    const float16_t * in, 
    int32_t * pResult);
 
@@ -199,7 +199,7 @@ ARM_DSP_ATTRIBUTE void arm_svm_polynomial_predict_f16(const arm_svm_polynomial_i
  * @param[in]    classes                Array of 2 classes ID
  * @param[in]    gamma                  gamma (scikit-learn terminology)
  */
-ARM_DSP_ATTRIBUTE void arm_svm_rbf_init_f16(arm_svm_rbf_instance_f16 *S, 
+void arm_svm_rbf_init_f16(arm_svm_rbf_instance_f16 *S, 
   uint32_t nbOfSupportVectors,
   uint32_t vectorDimension,
   float16_t intercept,
@@ -216,7 +216,7 @@ ARM_DSP_ATTRIBUTE void arm_svm_rbf_init_f16(arm_svm_rbf_instance_f16 *S,
  * @param[in]    in        Pointer to input vector
  * @param[out]   pResult   decision value
  */
-ARM_DSP_ATTRIBUTE void arm_svm_rbf_predict_f16(const arm_svm_rbf_instance_f16 *S, 
+void arm_svm_rbf_predict_f16(const arm_svm_rbf_instance_f16 *S, 
    const float16_t * in, 
    int32_t * pResult);
 
@@ -233,7 +233,7 @@ ARM_DSP_ATTRIBUTE void arm_svm_rbf_predict_f16(const arm_svm_rbf_instance_f16 *S
  * @param[in]    coef0                  coeff0 (scikit-learn terminology)
  * @param[in]    gamma                  gamma (scikit-learn terminology)
  */
-ARM_DSP_ATTRIBUTE void arm_svm_sigmoid_init_f16(arm_svm_sigmoid_instance_f16 *S, 
+void arm_svm_sigmoid_init_f16(arm_svm_sigmoid_instance_f16 *S, 
   uint32_t nbOfSupportVectors,
   uint32_t vectorDimension,
   float16_t intercept,
@@ -251,7 +251,7 @@ ARM_DSP_ATTRIBUTE void arm_svm_sigmoid_init_f16(arm_svm_sigmoid_instance_f16 *S,
  * @param[in]    in       Pointer to input vector
  * @param[out]   pResult  Decision value
  */
-ARM_DSP_ATTRIBUTE void arm_svm_sigmoid_predict_f16(const arm_svm_sigmoid_instance_f16 *S, 
+void arm_svm_sigmoid_predict_f16(const arm_svm_sigmoid_instance_f16 *S, 
    const float16_t * in, 
    int32_t * pResult);
 

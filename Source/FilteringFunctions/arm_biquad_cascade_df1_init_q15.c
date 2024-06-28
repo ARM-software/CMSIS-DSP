@@ -67,7 +67,7 @@
                    The state variables are updated after each block of data is processed; the coefficients are untouched.
  */
 
-void arm_biquad_cascade_df1_init_q15(
+ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df1_init_q15(
         arm_biquad_casd_df1_inst_q15 * S,
         uint8_t numStages,
   const q15_t * pCoeffs,

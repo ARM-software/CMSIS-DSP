@@ -48,7 +48,7 @@
   */
 
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE) && defined(__aarch64__)
-arm_status arm_mat_solve_upper_triangular_f64(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_solve_upper_triangular_f64(
     const arm_matrix_instance_f64 * ut,
     const arm_matrix_instance_f64 * a,
     arm_matrix_instance_f64 * dst)
@@ -144,7 +144,7 @@ arm_status arm_mat_solve_upper_triangular_f64(
 }
 
 #else
-arm_status arm_mat_solve_upper_triangular_f64(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_solve_upper_triangular_f64(
     const arm_matrix_instance_f64 * ut,
     const arm_matrix_instance_f64 * a,
     arm_matrix_instance_f64 * dst)

@@ -45,7 +45,7 @@
   @param[in]     pState     points to the state buffer.  The array is of length numStages
  */
 
-void arm_fir_lattice_init_q15(
+ARM_DSP_ATTRIBUTE void arm_fir_lattice_init_q15(
         arm_fir_lattice_instance_q15 * S,
         uint16_t numStages,
   const q15_t * pCoeffs,

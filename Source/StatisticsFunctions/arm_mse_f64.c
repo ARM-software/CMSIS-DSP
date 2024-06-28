@@ -45,7 +45,7 @@
   @param[out]    pResult      mean square error
  */
 
-void arm_mse_f64(
+ARM_DSP_ATTRIBUTE void arm_mse_f64(
     const float64_t * pSrcA,
     const float64_t * pSrcB,
     uint32_t blockSize,

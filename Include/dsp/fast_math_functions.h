@@ -24,8 +24,8 @@
  */
 
  
-#ifndef FAST_MATH_FUNCTIONS_H_
-#define FAST_MATH_FUNCTIONS_H_
+#ifndef _FAST_MATH_FUNCTIONS_H_
+#define _FAST_MATH_FUNCTIONS_H_
 
 #include "arm_math_types.h"
 #include "arm_math_memory.h"
@@ -75,7 +75,7 @@ extern "C"
    * @param[in] x  input value in radians.
    * @return  sin(x).
    */
-  ARM_DSP_ATTRIBUTE float32_t arm_sin_f32(
+  float32_t arm_sin_f32(
   float32_t x);
 
 
@@ -84,7 +84,7 @@ extern "C"
    * @param[in] x  Scaled input value in radians.
    * @return  sin(x).
    */
-  ARM_DSP_ATTRIBUTE q31_t arm_sin_q31(
+  q31_t arm_sin_q31(
   q31_t x);
 
   /**
@@ -92,7 +92,7 @@ extern "C"
    * @param[in] x  Scaled input value in radians.
    * @return  sin(x).
    */
-  ARM_DSP_ATTRIBUTE q15_t arm_sin_q15(
+  q15_t arm_sin_q15(
   q15_t x);
 
 
@@ -101,7 +101,7 @@ extern "C"
    * @param[in] x  input value in radians.
    * @return  cos(x).
    */
-  ARM_DSP_ATTRIBUTE float32_t arm_cos_f32(
+  float32_t arm_cos_f32(
   float32_t x);
 
 
@@ -110,7 +110,7 @@ extern "C"
    * @param[in] x  Scaled input value in radians.
    * @return  cos(x).
    */
-  ARM_DSP_ATTRIBUTE q31_t arm_cos_q31(
+  q31_t arm_cos_q31(
   q31_t x);
 
 
@@ -119,7 +119,7 @@ extern "C"
    * @param[in] x  Scaled input value in radians.
    * @return  cos(x).
    */
-  ARM_DSP_ATTRIBUTE q15_t arm_cos_q15(
+  q15_t arm_cos_q15(
   q15_t x);
 
 
@@ -129,7 +129,7 @@ extern "C"
   @param[out]    pDst       points to the output vector
   @param[in]     blockSize  number of samples in each vector
  */
-  ARM_DSP_ATTRIBUTE void arm_vlog_f32(
+  void arm_vlog_f32(
   const float32_t * pSrc,
         float32_t * pDst,
         uint32_t blockSize);
@@ -142,7 +142,7 @@ extern "C"
   @param[out]    pDst       points to the output vector
   @param[in]     blockSize  number of samples in each vector
  */
-  ARM_DSP_ATTRIBUTE void arm_vlog_f64(
+  void arm_vlog_f64(
   const float64_t * pSrc,
         float64_t * pDst,
         uint32_t blockSize);
@@ -155,7 +155,7 @@ extern "C"
    * @param[out]    pDst       points to the output vector in q5.26
    * @param[in]     blockSize  number of samples in each vector
    */
-  ARM_DSP_ATTRIBUTE void arm_vlog_q31(const q31_t * pSrc,
+  void arm_vlog_q31(const q31_t * pSrc,
         q31_t * pDst,
         uint32_t blockSize);
 
@@ -165,7 +165,7 @@ extern "C"
    * @param[out]    pDst       points to the output vector in q4.11
    * @param[in]     blockSize  number of samples in each vector
    */
-  ARM_DSP_ATTRIBUTE void arm_vlog_q15(const q15_t * pSrc,
+  void arm_vlog_q15(const q15_t * pSrc,
         q15_t * pDst,
         uint32_t blockSize);
 
@@ -177,7 +177,7 @@ extern "C"
   @param[out]    pDst       points to the output vector
   @param[in]     blockSize  number of samples in each vector
  */
-  ARM_DSP_ATTRIBUTE void arm_vexp_f32(
+  void arm_vexp_f32(
   const float32_t * pSrc,
         float32_t * pDst,
         uint32_t blockSize);
@@ -190,7 +190,7 @@ extern "C"
   @param[out]    pDst       points to the output vector
   @param[in]     blockSize  number of samples in each vector
  */
-  ARM_DSP_ATTRIBUTE void arm_vexp_f64(
+  void arm_vexp_f64(
   const float64_t * pSrc,
 		float64_t * pDst,
 		uint32_t blockSize);
@@ -283,7 +283,7 @@ __STATIC_FORCEINLINE arm_status arm_sqrt_f32(
                    - \ref ARM_MATH_SUCCESS        : input value is positive
                    - \ref ARM_MATH_ARGUMENT_ERROR : input value is negative; *pOut is set to 0
  */
-ARM_DSP_ATTRIBUTE arm_status arm_sqrt_q31(
+arm_status arm_sqrt_q31(
   q31_t in,
   q31_t * pOut);
 
@@ -296,7 +296,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_sqrt_q31(
                    - \ref ARM_MATH_SUCCESS        : input value is positive
                    - \ref ARM_MATH_ARGUMENT_ERROR : input value is negative; *pOut is set to 0
  */
-ARM_DSP_ATTRIBUTE arm_status arm_sqrt_q15(
+arm_status arm_sqrt_q15(
   q15_t in,
   q15_t * pOut);
 
@@ -318,7 +318,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_sqrt_q15(
   to the saturated negative or positive value.
  */
 
-ARM_DSP_ATTRIBUTE arm_status arm_divide_q15(q15_t numerator,
+arm_status arm_divide_q15(q15_t numerator,
   q15_t denominator,
   q15_t *quotient,
   int16_t *shift);
@@ -335,7 +335,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_divide_q15(q15_t numerator,
   to the saturated negative or positive value.
  */
 
-ARM_DSP_ATTRIBUTE arm_status arm_divide_q31(q31_t numerator,
+arm_status arm_divide_q31(q31_t numerator,
   q31_t denominator,
   q31_t *quotient,
   int16_t *shift);
@@ -349,7 +349,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_divide_q31(q31_t numerator,
      @param[out]  result  Result
      @return  error status.
    */
-  ARM_DSP_ATTRIBUTE arm_status arm_atan2_f32(float32_t y,float32_t x,float32_t *result);
+  arm_status arm_atan2_f32(float32_t y,float32_t x,float32_t *result);
 
 
   /**
@@ -359,7 +359,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_divide_q31(q31_t numerator,
      @param[out]  result  Result in Q2.29
      @return  error status.
    */
-  ARM_DSP_ATTRIBUTE arm_status arm_atan2_q31(q31_t y,q31_t x,q31_t *result);
+  arm_status arm_atan2_q31(q31_t y,q31_t x,q31_t *result);
 
   /**
      @brief  Arc tangent in radian of y/x using sign of x and y to determine right quadrant.
@@ -368,7 +368,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_divide_q31(q31_t numerator,
      @param[out]  result  Result in Q2.13
      @return  error status.
    */
-  ARM_DSP_ATTRIBUTE arm_status arm_atan2_q15(q15_t y,q15_t x,q15_t *result);
+  arm_status arm_atan2_q15(q15_t y,q15_t x,q15_t *result);
 
 #ifdef   __cplusplus
 }

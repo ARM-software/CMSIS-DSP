@@ -53,7 +53,7 @@
 
 #include "arm_helium_utils.h"
 
-void arm_shift_q15(
+ARM_DSP_ATTRIBUTE void arm_shift_q15(
     const q15_t * pSrc,
     int8_t shiftBits,
     q15_t * pDst,
@@ -98,7 +98,7 @@ void arm_shift_q15(
 }
 
 #else
-void arm_shift_q15(
+ARM_DSP_ATTRIBUTE void arm_shift_q15(
   const q15_t * pSrc,
         int8_t shiftBits,
         q15_t * pDst,

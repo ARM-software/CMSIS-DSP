@@ -41,7 +41,7 @@
                    The function resets the state buffer to zeros.
  */
 
-void arm_pid_reset_f32(
+ARM_DSP_ATTRIBUTE void arm_pid_reset_f32(
   arm_pid_instance_f32 * S)
 {
   /* Reset state to zero, The size will be always 3 samples */

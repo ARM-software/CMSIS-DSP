@@ -267,7 +267,7 @@ __STATIC_FORCEINLINE arm_status arm_mat_mult_q7_4x4_mve(
     return (ARM_MATH_SUCCESS);
 }
 
-arm_status arm_mat_mult_q7(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q7(
     const arm_matrix_instance_q7 * pSrcA,
     const arm_matrix_instance_q7 * pSrcB,
     arm_matrix_instance_q7 * pDst,
@@ -576,7 +576,7 @@ arm_status arm_mat_mult_q7(
     return(status);
 }
 #else
-arm_status arm_mat_mult_q7(const arm_matrix_instance_q7 *pSrcA, const arm_matrix_instance_q7 *pSrcB, arm_matrix_instance_q7 *pDst, q7_t *pState)
+ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q7(const arm_matrix_instance_q7 *pSrcA, const arm_matrix_instance_q7 *pSrcB, arm_matrix_instance_q7 *pDst, q7_t *pState)
 {
     q31_t sum; /* accumulator */
     q7_t *pIn1 = pSrcA->pData;                    /* input data matrix pointer A */

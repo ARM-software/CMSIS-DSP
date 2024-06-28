@@ -52,7 +52,7 @@
  */
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-arm_status arm_mat_add_q15(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_add_q15(
   const arm_matrix_instance_q15 * pSrcA,
   const arm_matrix_instance_q15 * pSrcB,
         arm_matrix_instance_q15 * pDst)
@@ -128,7 +128,7 @@ arm_status arm_mat_add_q15(
 }
 
 #else
-arm_status arm_mat_add_q15(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_add_q15(
   const arm_matrix_instance_q15 * pSrcA,
   const arm_matrix_instance_q15 * pSrcB,
         arm_matrix_instance_q15 * pDst)

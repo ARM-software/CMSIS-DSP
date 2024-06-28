@@ -56,7 +56,7 @@
                    Refer to \ref arm_conv_partial_opt_q15() for a faster implementation of this function using scratch buffers.
  */
 
-arm_status arm_conv_partial_q15(
+ARM_DSP_ATTRIBUTE arm_status arm_conv_partial_q15(
   const q15_t * pSrcA,
         uint32_t srcALen,
   const q15_t * pSrcB,

@@ -58,7 +58,7 @@
                    the updation of filter cofficients are saturted.
  */
 
-void arm_lms_q15(
+ARM_DSP_ATTRIBUTE void arm_lms_q15(
   const arm_lms_instance_q15 * S,
   const q15_t * pSrc,
         q15_t * pRef,

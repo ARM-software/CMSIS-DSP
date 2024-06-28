@@ -64,7 +64,7 @@
 #include "arm_vec_filtering.h"
 
 
-void arm_conv_q15(
+ARM_DSP_ATTRIBUTE void arm_conv_q15(
   const q15_t * pSrcA,
         uint32_t srcALen,
   const q15_t * pSrcB,
@@ -226,7 +226,7 @@ void arm_conv_q15(
 
 }
 #else
-void arm_conv_q15(
+ARM_DSP_ATTRIBUTE void arm_conv_q15(
   const q15_t * pSrcA,
         uint32_t srcALen,
   const q15_t * pSrcB,

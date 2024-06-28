@@ -45,7 +45,7 @@
   @param[in]     pData     points to the matrix data array
  */
 
-void arm_mat_init_q15(
+ARM_DSP_ATTRIBUTE void arm_mat_init_q15(
   arm_matrix_instance_q15 * S,
   uint16_t nRows,
   uint16_t nColumns,

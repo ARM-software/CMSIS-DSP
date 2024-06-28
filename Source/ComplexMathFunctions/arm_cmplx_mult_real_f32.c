@@ -70,7 +70,7 @@
 
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-void arm_cmplx_mult_real_f32(
+ARM_DSP_ATTRIBUTE void arm_cmplx_mult_real_f32(
   const float32_t * pSrcCmplx,
   const float32_t * pSrcReal,
         float32_t * pCmplxDst,
@@ -122,7 +122,7 @@ void arm_cmplx_mult_real_f32(
 }
 
 #else
-void arm_cmplx_mult_real_f32(
+ARM_DSP_ATTRIBUTE void arm_cmplx_mult_real_f32(
   const float32_t * pSrcCmplx,
   const float32_t * pSrcReal,
         float32_t * pCmplxDst,

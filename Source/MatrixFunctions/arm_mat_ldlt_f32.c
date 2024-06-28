@@ -56,7 +56,7 @@
    * @par
    *  Computes the LDL^t decomposition of a matrix A such that P A P^t = L D L^t.
    */
-arm_status arm_mat_ldlt_f32(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_ldlt_f32(
   const arm_matrix_instance_f32 * pSrc,
   arm_matrix_instance_f32 * pl,
   arm_matrix_instance_f32 * pd,
@@ -315,7 +315,7 @@ arm_status arm_mat_ldlt_f32(
    * @par
    *  Computes the LDL^t decomposition of a matrix A such that P A P^t = L D L^t.
    */
-arm_status arm_mat_ldlt_f32(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_ldlt_f32(
   const arm_matrix_instance_f32 * pSrc,
   arm_matrix_instance_f32 * pl,
   arm_matrix_instance_f32 * pd,

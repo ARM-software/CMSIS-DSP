@@ -61,7 +61,7 @@
                    <code>M</code> is the decimation factor.
  */
 
-arm_status arm_fir_decimate_init_q15(
+ARM_DSP_ATTRIBUTE arm_status arm_fir_decimate_init_q15(
         arm_fir_decimate_instance_q15 * S,
         uint16_t numTaps,
         uint8_t M,

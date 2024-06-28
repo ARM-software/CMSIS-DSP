@@ -61,7 +61,7 @@
 
 #define MVE_ASRL_SAT16(acc, shift)          ((sqrshrl_sat48(acc, -(32-shift)) >> 32) & 0xffffffff)
 
-arm_status arm_mat_cmplx_mult_q15(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_q15(
   const arm_matrix_instance_q15 * pSrcA,
   const arm_matrix_instance_q15 * pSrcB,
         arm_matrix_instance_q15 * pDst,
@@ -312,7 +312,7 @@ arm_status arm_mat_cmplx_mult_q15(
   return (status);
 }
 #else
-arm_status arm_mat_cmplx_mult_q15(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_q15(
   const arm_matrix_instance_q15 * pSrcA,
   const arm_matrix_instance_q15 * pSrcB,
         arm_matrix_instance_q15 * pDst,

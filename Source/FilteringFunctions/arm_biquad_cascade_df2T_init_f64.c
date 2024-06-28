@@ -61,7 +61,7 @@
                    The state variables are updated after each block of data is processed; the coefficients are untouched.
  */
 
-void arm_biquad_cascade_df2T_init_f64(
+ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_init_f64(
     arm_biquad_cascade_df2T_instance_f64 * S,
     uint8_t numStages,
     const float64_t * pCoeffs,

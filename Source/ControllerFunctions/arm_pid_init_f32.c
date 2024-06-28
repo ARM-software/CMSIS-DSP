@@ -47,7 +47,7 @@
                    also sets the state variables to all zeros.
  */
 
-void arm_pid_init_f32(
+ARM_DSP_ATTRIBUTE void arm_pid_init_f32(
   arm_pid_instance_f32 * S,
   int32_t resetStateFlag)
 {

@@ -56,7 +56,7 @@
                    Use the function \ref arm_biquad_cascade_df1_init_q15() to initialize the filter structure.
  */
 
-void arm_biquad_cascade_df1_fast_q15(
+ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df1_fast_q15(
   const arm_biquad_casd_df1_inst_q15 * S,
   const q15_t * pSrc,
         q15_t * pDst,

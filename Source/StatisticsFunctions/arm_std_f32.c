@@ -67,7 +67,7 @@
   @param[in]     blockSize  number of samples in input vector
   @param[out]    pResult    standard deviation value returned here
  */
-void arm_std_f32(
+ARM_DSP_ATTRIBUTE void arm_std_f32(
   const float32_t * pSrc,
         uint32_t blockSize,
         float32_t * pResult)

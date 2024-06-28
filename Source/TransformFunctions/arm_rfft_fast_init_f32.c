@@ -47,7 +47,7 @@
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
-arm_status arm_rfft_fast_init_32_f32( arm_rfft_fast_instance_f32 * S ) {
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_32_f32( arm_rfft_fast_instance_f32 * S ) {
 
   arm_status status;
 
@@ -73,7 +73,7 @@ arm_status arm_rfft_fast_init_32_f32( arm_rfft_fast_instance_f32 * S ) {
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
-arm_status arm_rfft_fast_init_64_f32( arm_rfft_fast_instance_f32 * S ) {
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_64_f32( arm_rfft_fast_instance_f32 * S ) {
 
   arm_status status;
 
@@ -99,7 +99,7 @@ arm_status arm_rfft_fast_init_64_f32( arm_rfft_fast_instance_f32 * S ) {
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
-arm_status arm_rfft_fast_init_128_f32( arm_rfft_fast_instance_f32 * S ) {
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_128_f32( arm_rfft_fast_instance_f32 * S ) {
 
   arm_status status;
 
@@ -125,7 +125,7 @@ arm_status arm_rfft_fast_init_128_f32( arm_rfft_fast_instance_f32 * S ) {
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
 */
 
-arm_status arm_rfft_fast_init_256_f32( arm_rfft_fast_instance_f32 * S ) {
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_256_f32( arm_rfft_fast_instance_f32 * S ) {
 
   arm_status status;
 
@@ -151,7 +151,7 @@ arm_status arm_rfft_fast_init_256_f32( arm_rfft_fast_instance_f32 * S ) {
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
-arm_status arm_rfft_fast_init_512_f32( arm_rfft_fast_instance_f32 * S ) {
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_512_f32( arm_rfft_fast_instance_f32 * S ) {
 
   arm_status status;
 
@@ -177,7 +177,7 @@ arm_status arm_rfft_fast_init_512_f32( arm_rfft_fast_instance_f32 * S ) {
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
-arm_status arm_rfft_fast_init_1024_f32( arm_rfft_fast_instance_f32 * S ) {
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_1024_f32( arm_rfft_fast_instance_f32 * S ) {
 
   arm_status status;
 
@@ -202,7 +202,7 @@ arm_status arm_rfft_fast_init_1024_f32( arm_rfft_fast_instance_f32 * S ) {
                    - \ref ARM_MATH_SUCCESS        : Operation successful
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
-arm_status arm_rfft_fast_init_2048_f32( arm_rfft_fast_instance_f32 * S ) {
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_2048_f32( arm_rfft_fast_instance_f32 * S ) {
 
   arm_status status;
 
@@ -228,7 +228,7 @@ arm_status arm_rfft_fast_init_2048_f32( arm_rfft_fast_instance_f32 * S ) {
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
-arm_status arm_rfft_fast_init_4096_f32( arm_rfft_fast_instance_f32 * S ) {
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_4096_f32( arm_rfft_fast_instance_f32 * S ) {
 
   arm_status status;
 
@@ -274,7 +274,7 @@ arm_status arm_rfft_fast_init_4096_f32( arm_rfft_fast_instance_f32 * S ) {
 
  */
 
-arm_status arm_rfft_fast_init_f32(
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_f32(
   arm_rfft_fast_instance_f32 * S,
   uint16_t fftLen)
 {

@@ -44,7 +44,7 @@
   @param[out]    pResult    minimum value returned here
   @param[out]    pIndex     index of minimum value returned here
  */
-void arm_min_f64(
+ARM_DSP_ATTRIBUTE void arm_min_f64(
   const float64_t * pSrc,
         uint32_t blockSize,
         float64_t * pResult,

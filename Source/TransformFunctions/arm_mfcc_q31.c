@@ -72,7 +72,7 @@
 
  */
 
-arm_status arm_mfcc_q31(
+ARM_DSP_ATTRIBUTE arm_status arm_mfcc_q31(
   const arm_mfcc_instance_q31 * S,
   q31_t *pSrc,
   q31_t *pDst,

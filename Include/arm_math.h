@@ -24,8 +24,8 @@
  */
 
 
-#ifndef ARM_MATH_H
-#define ARM_MATH_H
+#ifndef _ARM_MATH_H
+#define _ARM_MATH_H
 
 
 #include "arm_math_types.h"

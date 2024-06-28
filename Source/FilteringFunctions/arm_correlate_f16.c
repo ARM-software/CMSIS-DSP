@@ -255,7 +255,7 @@
 
 
 
-void arm_correlate_f16(
+ARM_DSP_ATTRIBUTE void arm_correlate_f16(
   const float16_t * pSrcA,
         uint32_t srcALen,
   const float16_t * pSrcB,
@@ -456,7 +456,7 @@ void arm_correlate_f16(
 }
 
 #else
-void arm_correlate_f16(
+ARM_DSP_ATTRIBUTE void arm_correlate_f16(
   const float16_t * pSrcA,
         uint32_t srcALen,
   const float16_t * pSrcB,

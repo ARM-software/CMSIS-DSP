@@ -100,7 +100,7 @@ static void arm_merge_sort_core_f32(float32_t * pB, uint32_t begin, uint32_t end
    */
 
 
-void arm_merge_sort_f32(
+ARM_DSP_ATTRIBUTE void arm_merge_sort_f32(
   const arm_merge_sort_instance_f32 * S, 
         float32_t *pSrc, 
         float32_t *pDst, 

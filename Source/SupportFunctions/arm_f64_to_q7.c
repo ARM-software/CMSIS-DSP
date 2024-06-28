@@ -58,7 +58,7 @@
  * defined in the preprocessor section of project options.
  */
 
-void arm_f64_to_q7(
+ARM_DSP_ATTRIBUTE void arm_f64_to_q7(
   const float64_t * pSrc,
         q7_t * pDst,
         uint32_t blockSize)

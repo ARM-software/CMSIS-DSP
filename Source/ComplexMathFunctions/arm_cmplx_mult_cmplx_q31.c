@@ -50,7 +50,7 @@
  */
 
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
-void arm_cmplx_mult_cmplx_q31(
+ARM_DSP_ATTRIBUTE void arm_cmplx_mult_cmplx_q31(
   const q31_t * pSrcA,
   const q31_t * pSrcB,
         q31_t * pDst,
@@ -164,7 +164,7 @@ void arm_cmplx_mult_cmplx_q31(
     }
 }
 #else
-void arm_cmplx_mult_cmplx_q31(
+ARM_DSP_ATTRIBUTE void arm_cmplx_mult_cmplx_q31(
   const q31_t * pSrcA,
   const q31_t * pSrcB,
         q31_t * pDst,

@@ -54,7 +54,7 @@
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_helium_utils.h"
-void arm_quaternion_conjugate_f32(const float32_t *pInputQuaternions, 
+ARM_DSP_ATTRIBUTE void arm_quaternion_conjugate_f32(const float32_t *pInputQuaternions, 
     float32_t *pConjugateQuaternions, 
     uint32_t nbQuaternions)
 {
@@ -76,7 +76,7 @@ void arm_quaternion_conjugate_f32(const float32_t *pInputQuaternions,
    }
 }
 #else
-void arm_quaternion_conjugate_f32(const float32_t *pInputQuaternions, 
+ARM_DSP_ATTRIBUTE void arm_quaternion_conjugate_f32(const float32_t *pInputQuaternions, 
     float32_t *pConjugateQuaternions, 
     uint32_t nbQuaternions)
 {

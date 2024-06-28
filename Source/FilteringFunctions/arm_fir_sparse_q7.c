@@ -55,7 +55,7 @@
                    Finally, the result is truncated to 1.7 format.
  */
 
-void arm_fir_sparse_q7(
+ARM_DSP_ATTRIBUTE void arm_fir_sparse_q7(
         arm_fir_sparse_instance_q7 * S,
   const q7_t * pSrc,
         q7_t * pDst,

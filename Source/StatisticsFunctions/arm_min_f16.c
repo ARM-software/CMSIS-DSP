@@ -55,7 +55,7 @@
 
 #if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-void arm_min_f16(
+ARM_DSP_ATTRIBUTE void arm_min_f16(
   const float16_t * pSrc,
   uint32_t blockSize,
   float16_t * pResult,
@@ -132,7 +132,7 @@ void arm_min_f16(
 
 #else
 
-void arm_min_f16(
+ARM_DSP_ATTRIBUTE void arm_min_f16(
   const float16_t * pSrc,
         uint32_t blockSize,
         float16_t * pResult,

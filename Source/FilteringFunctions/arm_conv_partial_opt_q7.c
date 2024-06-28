@@ -53,7 +53,7 @@
                    - \ref ARM_MATH_ARGUMENT_ERROR : requested subset is not in the range [0 srcALen+srcBLen-2]
  */
 
-arm_status arm_conv_partial_opt_q7(
+ARM_DSP_ATTRIBUTE arm_status arm_conv_partial_opt_q7(
   const q7_t * pSrcA,
         uint32_t srcALen,
   const q7_t * pSrcB,

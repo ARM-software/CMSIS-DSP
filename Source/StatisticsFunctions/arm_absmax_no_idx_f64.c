@@ -47,7 +47,7 @@
  */
 
 #if defined(ARM_MATH_NEON) && defined(__aarch64__)
-void arm_absmax_no_idx_f64(
+ARM_DSP_ATTRIBUTE void arm_absmax_no_idx_f64(
     const float64_t * pSrc,
     uint32_t blockSize,
     float64_t * pResult)
@@ -110,7 +110,7 @@ void arm_absmax_no_idx_f64(
 
 }
 #else
-void arm_absmax_no_idx_f64(
+ARM_DSP_ATTRIBUTE void arm_absmax_no_idx_f64(
     const float64_t * pSrc,
     uint32_t blockSize,
     float64_t * pResult)

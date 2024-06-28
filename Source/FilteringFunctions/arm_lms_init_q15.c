@@ -58,7 +58,7 @@
                    input samples processed by each call to <code>arm_lms_q15()</code>.
  */
 
-void arm_lms_init_q15(
+ARM_DSP_ATTRIBUTE void arm_lms_init_q15(
   arm_lms_instance_q15 * S,
   uint16_t numTaps,
   q15_t * pCoeffs,

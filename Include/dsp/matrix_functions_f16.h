@@ -24,8 +24,8 @@
  */
 
  
-#ifndef MATRIX_FUNCTIONS_F16_H_
-#define MATRIX_FUNCTIONS_F16_H_
+#ifndef _MATRIX_FUNCTIONS_F16_H_
+#define _MATRIX_FUNCTIONS_F16_H_
 
 #ifdef   __cplusplus
 extern "C"
@@ -61,7 +61,7 @@ extern "C"
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
    */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_add_f16(
+arm_status arm_mat_add_f16(
   const arm_matrix_instance_f16 * pSrcA,
   const arm_matrix_instance_f16 * pSrcB,
         arm_matrix_instance_f16 * pDst);
@@ -74,7 +74,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_add_f16(
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
    */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_f16(
+arm_status arm_mat_cmplx_mult_f16(
   const arm_matrix_instance_f16 * pSrcA,
   const arm_matrix_instance_f16 * pSrcB,
         arm_matrix_instance_f16 * pDst);
@@ -86,7 +86,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_f16(
    * @return    The function returns either  <code>ARM_MATH_SIZE_MISMATCH</code>
    * or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
    */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_trans_f16(
+arm_status arm_mat_trans_f16(
   const arm_matrix_instance_f16 * pSrc,
         arm_matrix_instance_f16 * pDst);
 
@@ -97,7 +97,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_trans_f16(
    * @return    The function returns either  <code>ARM_MATH_SIZE_MISMATCH</code>
    * or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
    */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_trans_f16(
+arm_status arm_mat_cmplx_trans_f16(
   const arm_matrix_instance_f16 * pSrc,
   arm_matrix_instance_f16 * pDst);
 
@@ -109,7 +109,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_trans_f16(
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
    */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_f16(
+arm_status arm_mat_mult_f16(
   const arm_matrix_instance_f16 * pSrcA,
   const arm_matrix_instance_f16 * pSrcB,
         arm_matrix_instance_f16 * pDst);
@@ -119,7 +119,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_f16(
    * @param[in]  pVec     points to vector
    * @param[out] pDst     points to output vector
    */
-ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_f16(
+void arm_mat_vec_mult_f16(
   const arm_matrix_instance_f16 *pSrcMat, 
   const float16_t *pVec, 
   float16_t *pDst);
@@ -132,7 +132,7 @@ ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_f16(
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
    */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_sub_f16(
+arm_status arm_mat_sub_f16(
   const arm_matrix_instance_f16 * pSrcA,
   const arm_matrix_instance_f16 * pSrcB,
         arm_matrix_instance_f16 * pDst);
@@ -145,7 +145,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_sub_f16(
    * @return     The function returns either
    * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
    */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_scale_f16(
+arm_status arm_mat_scale_f16(
   const arm_matrix_instance_f16 * pSrc,
         float16_t scale,
         arm_matrix_instance_f16 * pDst);
@@ -157,7 +157,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_scale_f16(
    * @param[in]     nColumns  number of columns in the matrix.
    * @param[in]     pData     points to the matrix data array.
    */
-ARM_DSP_ATTRIBUTE void arm_mat_init_f16(
+void arm_mat_init_f16(
         arm_matrix_instance_f16 * S,
         uint16_t nRows,
         uint16_t nColumns,
@@ -171,7 +171,7 @@ ARM_DSP_ATTRIBUTE void arm_mat_init_f16(
    * @return The function returns ARM_MATH_SIZE_MISMATCH, if the dimensions do not match.
    * If the input matrix is singular (does not have an inverse), then the algorithm terminates and returns error status ARM_MATH_SINGULAR.
    */
-  ARM_DSP_ATTRIBUTE arm_status arm_mat_inverse_f16(
+  arm_status arm_mat_inverse_f16(
   const arm_matrix_instance_f16 * src,
   arm_matrix_instance_f16 * dst);
 
@@ -185,7 +185,7 @@ ARM_DSP_ATTRIBUTE void arm_mat_init_f16(
    * If the matrix is ill conditioned or only semi-definite, then it is better using the LDL^t decomposition.
    * The decomposition is returning a lower triangular matrix.
    */
-  ARM_DSP_ATTRIBUTE arm_status arm_mat_cholesky_f16(
+  arm_status arm_mat_cholesky_f16(
   const arm_matrix_instance_f16 * src,
   arm_matrix_instance_f16 * dst);
 
@@ -196,7 +196,7 @@ ARM_DSP_ATTRIBUTE void arm_mat_init_f16(
    * @param[out] dst The solution X of UT . X = A
    * @return The function returns ARM_MATH_SINGULAR, if the system can't be solved.
   */
-  ARM_DSP_ATTRIBUTE arm_status arm_mat_solve_upper_triangular_f16(
+  arm_status arm_mat_solve_upper_triangular_f16(
   const arm_matrix_instance_f16 * ut,
   const arm_matrix_instance_f16 * a,
   arm_matrix_instance_f16 * dst);
@@ -208,7 +208,7 @@ ARM_DSP_ATTRIBUTE void arm_mat_init_f16(
    * @param[out] dst The solution X of LT . X = A
    * @return The function returns ARM_MATH_SINGULAR, if the system can't be solved.
    */
-  ARM_DSP_ATTRIBUTE arm_status arm_mat_solve_lower_triangular_f16(
+  arm_status arm_mat_solve_lower_triangular_f16(
   const arm_matrix_instance_f16 * lt,
   const arm_matrix_instance_f16 * a,
   arm_matrix_instance_f16 * dst);
@@ -228,7 +228,7 @@ ARM_DSP_ATTRIBUTE void arm_mat_init_f16(
                    - \ref ARM_MATH_SIZE_MISMATCH : Matrix size check failed
                    - \ref ARM_MATH_SINGULAR      : Input matrix is found to be singular (non-invertible)
  */
-ARM_DSP_ATTRIBUTE arm_status arm_mat_qr_f16(
+arm_status arm_mat_qr_f16(
     const arm_matrix_instance_f16 * pSrc,
     const float16_t threshold,
     arm_matrix_instance_f16 * pOutR,
@@ -246,7 +246,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_qr_f16(
   @param[outQ]   pOut        points to the output vector.
   @return        beta        return the scaling factor beta
  */
-ARM_DSP_ATTRIBUTE float16_t arm_householder_f16(
+float16_t arm_householder_f16(
     const float16_t * pSrc,
     const float16_t threshold,
     uint32_t    blockSize,

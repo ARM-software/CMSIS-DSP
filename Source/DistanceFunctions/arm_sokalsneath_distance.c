@@ -56,7 +56,7 @@ extern void arm_boolean_distance_TT_TF_FT(const uint32_t *pA
  *
  */
 
-float32_t arm_sokalsneath_distance(const uint32_t *pA, const uint32_t *pB, uint32_t numberOfBools)
+ARM_DSP_ATTRIBUTE float32_t arm_sokalsneath_distance(const uint32_t *pA, const uint32_t *pB, uint32_t numberOfBools)
 {
     uint32_t ctt=0,cft=0,ctf=0;
     float32_t r;

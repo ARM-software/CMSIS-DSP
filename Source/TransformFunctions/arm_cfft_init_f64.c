@@ -212,7 +212,7 @@ CFFTINIT_F64(16)
                 functions defined for each FFT size.
   
  */
-arm_status arm_cfft_init_f64(
+ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_f64(
   arm_cfft_instance_f64 * S,
   uint16_t fftLen)
 {

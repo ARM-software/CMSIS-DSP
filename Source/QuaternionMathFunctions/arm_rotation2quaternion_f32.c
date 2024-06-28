@@ -72,7 +72,7 @@
 #define R21  vgetq_lane(q2,3)
 #define R22  ro22
 
-void arm_rotation2quaternion_f32(const float32_t *pInputRotations, 
+ARM_DSP_ATTRIBUTE void arm_rotation2quaternion_f32(const float32_t *pInputRotations, 
     float32_t *pOutputQuaternions,  
     uint32_t nbQuaternions)
 {
@@ -161,7 +161,7 @@ void arm_rotation2quaternion_f32(const float32_t *pInputRotations,
 }
 
 #else
-void arm_rotation2quaternion_f32(const float32_t *pInputRotations, 
+ARM_DSP_ATTRIBUTE void arm_rotation2quaternion_f32(const float32_t *pInputRotations, 
     float32_t *pOutputQuaternions,  
     uint32_t nbQuaternions)
 {
