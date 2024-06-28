@@ -54,7 +54,7 @@
  */
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-void arm_power_q15(
+ARM_DSP_ATTRIBUTE void arm_power_q15(
   const q15_t * pSrc,
         uint32_t blockSize,
         q63_t * pResult)
@@ -97,7 +97,7 @@ void arm_power_q15(
     *pResult = sum;
 }
 #else
-void arm_power_q15(
+ARM_DSP_ATTRIBUTE void arm_power_q15(
   const q15_t * pSrc,
         uint32_t blockSize,
         q63_t * pResult)

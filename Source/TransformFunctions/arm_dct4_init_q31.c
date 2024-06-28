@@ -67,7 +67,7 @@
 
  */
 
-arm_status arm_dct4_init_q31(
+ARM_DSP_ATTRIBUTE arm_status arm_dct4_init_q31(
   arm_dct4_instance_q31 * S,
   arm_rfft_instance_q31 * S_RFFT,
   arm_cfft_radix4_instance_q31 * S_CFFT,

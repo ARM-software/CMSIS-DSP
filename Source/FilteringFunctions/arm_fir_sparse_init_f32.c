@@ -56,7 +56,7 @@
                    number of samples processed by the <code>arm_fir_sparse_f32()</code> function.
  */
 
-void arm_fir_sparse_init_f32(
+ARM_DSP_ATTRIBUTE void arm_fir_sparse_init_f32(
         arm_fir_sparse_instance_f32 * S,
         uint16_t numTaps,
   const float32_t * pCoeffs,

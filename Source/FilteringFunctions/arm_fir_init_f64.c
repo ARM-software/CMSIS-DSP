@@ -59,7 +59,7 @@
 
  */
 
-void arm_fir_init_f64(
+ARM_DSP_ATTRIBUTE void arm_fir_init_f64(
     arm_fir_instance_f64 * S,
     uint16_t numTaps,
     const float64_t * pCoeffs,

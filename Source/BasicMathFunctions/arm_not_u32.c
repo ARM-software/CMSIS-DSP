@@ -44,7 +44,7 @@
   @param[in]     blockSize  number of samples in each vector
  */
 
-void arm_not_u32(
+ARM_DSP_ATTRIBUTE void arm_not_u32(
     const uint32_t * pSrc,
           uint32_t * pDst,
           uint32_t blockSize)

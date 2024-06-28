@@ -44,7 +44,7 @@
   @param[in]     blockSize  number of samples in each vector
  */
 
-void arm_not_u8(
+ARM_DSP_ATTRIBUTE void arm_not_u8(
     const uint8_t * pSrc,
           uint8_t * pDst,
           uint32_t blockSize)

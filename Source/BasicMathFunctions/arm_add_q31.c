@@ -53,7 +53,7 @@
 
 #include "arm_helium_utils.h"
 
-void arm_add_q31(
+ARM_DSP_ATTRIBUTE void arm_add_q31(
   const q31_t * pSrcA,
   const q31_t * pSrcB,
         q31_t * pDst,
@@ -99,7 +99,7 @@ void arm_add_q31(
 }
 
 #else
-void arm_add_q31(
+ARM_DSP_ATTRIBUTE void arm_add_q31(
   const q31_t * pSrcA,
   const q31_t * pSrcB,
         q31_t * pDst,

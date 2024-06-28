@@ -120,7 +120,7 @@
   @param[in]     blockSize  number of samples to process
  */
 
-void arm_fir_lattice_f32(
+ARM_DSP_ATTRIBUTE void arm_fir_lattice_f32(
   const arm_fir_lattice_instance_f32 * S,
   const float32_t * pSrc,
         float32_t * pDst,

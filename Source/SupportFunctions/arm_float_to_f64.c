@@ -47,7 +47,7 @@
   @param[in]     blockSize  number of samples in each vector
  */
 
-void arm_float_to_f64(
+ARM_DSP_ATTRIBUTE void arm_float_to_f64(
   const float32_t * pSrc,
         float64_t * pDst,
         uint32_t blockSize)

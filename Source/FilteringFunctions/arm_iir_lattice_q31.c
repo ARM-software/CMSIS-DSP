@@ -52,7 +52,7 @@
                    After all multiply-accumulates are performed, the 2.62 accumulator is saturated to 1.32 format and then truncated to 1.31 format.
  */
 
-void arm_iir_lattice_q31(
+ARM_DSP_ATTRIBUTE void arm_iir_lattice_q31(
   const arm_iir_lattice_instance_q31 * S,
   const q31_t * pSrc,
         q31_t * pDst,

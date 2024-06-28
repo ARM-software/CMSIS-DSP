@@ -51,7 +51,7 @@
 
 #include "arm_helium_utils.h"
 
-float32_t arm_braycurtis_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize)
+ARM_DSP_ATTRIBUTE float32_t arm_braycurtis_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize)
 {
     float32_t       accumDiff = 0.0f, accumSum = 0.0f;
     uint32_t        blkCnt;
@@ -107,7 +107,7 @@ float32_t arm_braycurtis_distance_f32(const float32_t *pA,const float32_t *pB, u
 
 #include "NEMath.h"
 
-float32_t arm_braycurtis_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize)
+ARM_DSP_ATTRIBUTE float32_t arm_braycurtis_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize)
 {
    float32_t accumDiff=0.0f, accumSum=0.0f;
    uint32_t blkCnt;
@@ -157,7 +157,7 @@ float32_t arm_braycurtis_distance_f32(const float32_t *pA,const float32_t *pB, u
 }
 
 #else
-float32_t arm_braycurtis_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize)
+ARM_DSP_ATTRIBUTE float32_t arm_braycurtis_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize)
 {
    float32_t accumDiff=0.0f, accumSum=0.0f, tmpA, tmpB;
 

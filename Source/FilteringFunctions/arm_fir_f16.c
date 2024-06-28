@@ -1,3 +1,4 @@
+
 /* ----------------------------------------------------------------------
  * Project:      CMSIS DSP Library
  * Title:        arm_fir_f16.c
@@ -238,7 +239,7 @@ __STATIC_INLINE void arm_fir_f16_5_8_mve(const arm_fir_instance_f16 * S,
 }
 #undef NB_TAPS
 
-void arm_fir_f16(const arm_fir_instance_f16 * S, 
+ARM_DSP_ATTRIBUTE void arm_fir_f16(const arm_fir_instance_f16 * S, 
   const float16_t * pSrc, 
   float16_t * pDst, 
   uint32_t blockSize)
@@ -560,7 +561,7 @@ void arm_fir_f16(const arm_fir_instance_f16 * S,
 
 #else
 
-void arm_fir_f16(
+ARM_DSP_ATTRIBUTE void arm_fir_f16(
   const arm_fir_instance_f16 * S,
   const float16_t * pSrc,
         float16_t * pDst,

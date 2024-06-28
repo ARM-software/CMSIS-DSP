@@ -64,7 +64,7 @@
 #include "arm_helium_utils.h"
 #include "arm_vec_math_f16.h"
 
-float16_t arm_entropy_f16(const float16_t * pSrcA,uint32_t blockSize)
+ARM_DSP_ATTRIBUTE float16_t arm_entropy_f16(const float16_t * pSrcA,uint32_t blockSize)
 {
     uint32_t        blkCnt;
     _Float16       accum=0.0f16,p;
@@ -108,7 +108,7 @@ float16_t arm_entropy_f16(const float16_t * pSrcA,uint32_t blockSize)
 
 #else
 
-float16_t arm_entropy_f16(const float16_t * pSrcA,uint32_t blockSize)
+ARM_DSP_ATTRIBUTE float16_t arm_entropy_f16(const float16_t * pSrcA,uint32_t blockSize)
 {
     const float16_t *pIn;
     uint32_t blkCnt;

@@ -129,7 +129,7 @@ __STATIC_FORCEINLINE float32_t arm_atan_f32(float32_t x)
 */
 
 
-arm_status arm_atan2_f32(float32_t y,float32_t x,float32_t *result)
+ARM_DSP_ATTRIBUTE arm_status arm_atan2_f32(float32_t y,float32_t x,float32_t *result)
 {
     if (x > 0.0f)
     {

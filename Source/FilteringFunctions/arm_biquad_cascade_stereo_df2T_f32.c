@@ -47,7 +47,7 @@
 #if (defined(ARM_MATH_MVEF) && defined(ARM_MATH_HELIUM_EXPERIMENTAL)) && !defined(ARM_MATH_AUTOVECTORIZE)
 #include "arm_helium_utils.h"
 
-void arm_biquad_cascade_stereo_df2T_f32(
+ARM_DSP_ATTRIBUTE void arm_biquad_cascade_stereo_df2T_f32(
   const arm_biquad_cascade_stereo_df2T_instance_f32 * S,
   const float32_t * pSrc,
         float32_t * pDst,
@@ -179,7 +179,7 @@ void arm_biquad_cascade_stereo_df2T_f32(
 
 #else
 
-void arm_biquad_cascade_stereo_df2T_f32(
+ARM_DSP_ATTRIBUTE void arm_biquad_cascade_stereo_df2T_f32(
   const arm_biquad_cascade_stereo_df2T_instance_f32 * S,
   const float32_t * pSrc,
         float32_t * pDst,

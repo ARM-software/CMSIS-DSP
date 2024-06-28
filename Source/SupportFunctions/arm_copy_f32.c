@@ -57,7 +57,7 @@
  */
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-void arm_copy_f32(
+ARM_DSP_ATTRIBUTE void arm_copy_f32(
   const float32_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize)
@@ -95,7 +95,7 @@ void arm_copy_f32(
 
 #else
 #if defined(ARM_MATH_NEON_EXPERIMENTAL)
-void arm_copy_f32(
+ARM_DSP_ATTRIBUTE void arm_copy_f32(
   const float32_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize)
@@ -136,7 +136,7 @@ void arm_copy_f32(
   }
 }
 #else
-void arm_copy_f32(
+ARM_DSP_ATTRIBUTE void arm_copy_f32(
   const float32_t * pSrc,
         float32_t * pDst,
         uint32_t blockSize)

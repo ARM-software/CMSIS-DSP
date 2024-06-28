@@ -107,7 +107,7 @@
 #include "arm_vec_filtering.h"
 
 
-void arm_correlate_f32(
+ARM_DSP_ATTRIBUTE void arm_correlate_f32(
   const float32_t * pSrcA,
         uint32_t srcALen,
   const float32_t * pSrcB,
@@ -306,7 +306,7 @@ void arm_correlate_f32(
 }
 
 #else
-void arm_correlate_f32(
+ARM_DSP_ATTRIBUTE void arm_correlate_f32(
   const float32_t * pSrcA,
         uint32_t srcALen,
   const float32_t * pSrcB,

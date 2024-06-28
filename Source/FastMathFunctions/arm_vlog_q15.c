@@ -218,7 +218,7 @@ q15x8_t vlogq_q15(q15x8_t src)
   @param[in]     blockSize  number of samples in each vector
  */
 
-void arm_vlog_q15(
+ARM_DSP_ATTRIBUTE void arm_vlog_q15(
   const q15_t * pSrc,
         q15_t * pDst,
         uint32_t blockSize)

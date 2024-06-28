@@ -53,7 +53,7 @@
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_helium_utils.h"
-void arm_absmin_no_idx_f32(
+ARM_DSP_ATTRIBUTE void arm_absmin_no_idx_f32(
   const float32_t * pSrc,
         uint32_t blockSize,
         float32_t * pResult)
@@ -106,7 +106,7 @@ void arm_absmin_no_idx_f32(
 
 #else
 #if defined(ARM_MATH_LOOPUNROLL)
-void arm_absmin_no_idx_f32(
+ARM_DSP_ATTRIBUTE void arm_absmin_no_idx_f32(
   const float32_t * pSrc,
         uint32_t blockSize,
         float32_t * pResult)
@@ -182,7 +182,7 @@ void arm_absmin_no_idx_f32(
   *pResult = out;                                                                                           \
 }
 #else
-void arm_absmin_no_idx_f32(
+ARM_DSP_ATTRIBUTE void arm_absmin_no_idx_f32(
   const float32_t * pSrc,
         uint32_t blockSize,
         float32_t * pResult)

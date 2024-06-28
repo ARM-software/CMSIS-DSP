@@ -56,7 +56,7 @@
                    number of samples processed by the <code>arm_fir_sparse_q7()</code> function.
  */
 
-void arm_fir_sparse_init_q7(
+ARM_DSP_ATTRIBUTE void arm_fir_sparse_init_q7(
         arm_fir_sparse_instance_q7 * S,
         uint16_t numTaps,
   const q7_t * pCoeffs,

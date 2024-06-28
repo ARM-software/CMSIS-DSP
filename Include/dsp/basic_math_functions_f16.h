@@ -24,8 +24,8 @@
  */
 
  
-#ifndef _BASIC_MATH_FUNCTIONS_F16_H_
-#define _BASIC_MATH_FUNCTIONS_F16_H_
+#ifndef BASIC_MATH_FUNCTIONS_F16_H_
+#define BASIC_MATH_FUNCTIONS_F16_H_
 
 #include "arm_math_types_f16.h"
 #include "arm_math_memory.h"

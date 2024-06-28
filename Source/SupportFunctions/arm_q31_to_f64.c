@@ -54,7 +54,7 @@
   </pre>
  */
 
-void arm_q31_to_f64(
+ARM_DSP_ATTRIBUTE void arm_q31_to_f64(
   const q31_t * pSrc,
   float64_t * pDst,
   uint32_t blockSize)

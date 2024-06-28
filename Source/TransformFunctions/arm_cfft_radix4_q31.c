@@ -29,19 +29,19 @@
 
 #include "dsp/transform_functions.h"
 
-void arm_radix4_butterfly_inverse_q31(
+ARM_DSP_ATTRIBUTE void arm_radix4_butterfly_inverse_q31(
         q31_t * pSrc,
         uint32_t fftLen,
   const q31_t * pCoef,
         uint32_t twidCoefModifier);
 
-void arm_radix4_butterfly_q31(
+ARM_DSP_ATTRIBUTE void arm_radix4_butterfly_q31(
         q31_t * pSrc,
         uint32_t fftLen,
   const q31_t * pCoef,
         uint32_t twidCoefModifier);
 
-void arm_bitreversal_q31(
+ARM_DSP_ATTRIBUTE void arm_bitreversal_q31(
         q31_t * pSrc,
         uint32_t fftLen,
         uint16_t bitRevFactor,
@@ -81,7 +81,7 @@ void arm_bitreversal_q31(
 
  */
 
-void arm_cfft_radix4_q31(
+ARM_DSP_ATTRIBUTE void arm_cfft_radix4_q31(
   const arm_cfft_radix4_instance_q31 * S,
         q31_t * pSrc)
 {
@@ -150,7 +150,7 @@ void arm_cfft_radix4_q31(
   @param[in]     twidCoefModifier twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table.
  */
 
-void arm_radix4_butterfly_q31(
+ARM_DSP_ATTRIBUTE void arm_radix4_butterfly_q31(
         q31_t * pSrc,
         uint32_t fftLen,
   const q31_t * pCoef,
@@ -521,7 +521,7 @@ void arm_radix4_butterfly_q31(
  *
  */
 
-void arm_radix4_butterfly_inverse_q31(
+ARM_DSP_ATTRIBUTE void arm_radix4_butterfly_inverse_q31(
         q31_t * pSrc,
         uint32_t fftLen,
   const q31_t * pCoef,

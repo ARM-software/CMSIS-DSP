@@ -55,7 +55,7 @@
  */
 
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
-void arm_q15_to_float(
+ARM_DSP_ATTRIBUTE void arm_q15_to_float(
   const q15_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize)
@@ -95,7 +95,7 @@ void arm_q15_to_float(
 }
 #else
 #if defined(ARM_MATH_NEON_EXPERIMENTAL)
-void arm_q15_to_float(
+ARM_DSP_ATTRIBUTE void arm_q15_to_float(
   const q15_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize)
@@ -149,7 +149,7 @@ void arm_q15_to_float(
   }
 }
 #else
-void arm_q15_to_float(
+ARM_DSP_ATTRIBUTE void arm_q15_to_float(
   const q15_t * pSrc,
         float32_t * pDst,
         uint32_t blockSize)

@@ -63,7 +63,7 @@
                    This Function also initializes Twiddle factor table pointer and Bit reversal table pointer.
  */
 
-arm_status arm_cfft_radix4_init_q15(
+ARM_DSP_ATTRIBUTE arm_status arm_cfft_radix4_init_q15(
   arm_cfft_radix4_instance_q15 * S,
   uint16_t fftLen,
   uint8_t ifftFlag,

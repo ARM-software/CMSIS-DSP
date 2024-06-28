@@ -58,7 +58,7 @@
                    Use function \ref arm_fir_decimate_init_q31() to initialize the filter structure.
  */
 
-void arm_fir_decimate_fast_q31(
+ARM_DSP_ATTRIBUTE void arm_fir_decimate_fast_q31(
   const arm_fir_decimate_instance_q31 * S,
   const q31_t * pSrc,
         q31_t * pDst,

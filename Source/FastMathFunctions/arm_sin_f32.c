@@ -68,7 +68,7 @@
   @return        sin(x)
  */
 
-float32_t arm_sin_f32(
+ARM_DSP_ATTRIBUTE float32_t arm_sin_f32(
   float32_t x)
 {
   float32_t sinVal, fract, in;                   /* Temporary input, output variables */

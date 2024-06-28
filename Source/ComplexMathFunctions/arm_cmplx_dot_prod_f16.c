@@ -54,7 +54,7 @@
 
 #include "arm_helium_utils.h"
 
-void arm_cmplx_dot_prod_f16(
+ARM_DSP_ATTRIBUTE void arm_cmplx_dot_prod_f16(
     const float16_t * pSrcA,
     const float16_t * pSrcB,
     uint32_t numSamples,
@@ -160,7 +160,7 @@ void arm_cmplx_dot_prod_f16(
 }
 
 #else
-void arm_cmplx_dot_prod_f16(
+ARM_DSP_ATTRIBUTE void arm_cmplx_dot_prod_f16(
   const float16_t * pSrcA,
   const float16_t * pSrcB,
         uint32_t numSamples,

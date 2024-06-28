@@ -52,7 +52,7 @@
 
 
 
-arm_status arm_mat_trans_q15(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_trans_q15(
   const arm_matrix_instance_q15 * pSrc,
         arm_matrix_instance_q15 * pDst)
 {
@@ -96,7 +96,7 @@ arm_status arm_mat_trans_q15(
   return (status);
 }
 #else
-arm_status arm_mat_trans_q15(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_trans_q15(
   const arm_matrix_instance_q15 * pSrc,
         arm_matrix_instance_q15 * pDst)
 {

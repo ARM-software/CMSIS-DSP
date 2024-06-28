@@ -67,7 +67,7 @@
  */
 
 #if defined(ARM_MATH_NEON) && defined(__aarch64__)
-arm_status arm_mat_mult_f64(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_f64(
   const arm_matrix_instance_f64 * pSrcA,
   const arm_matrix_instance_f64 * pSrcB,
   arm_matrix_instance_f64 * pDst)
@@ -373,7 +373,7 @@ arm_status arm_mat_mult_f64(
   return (status);
 }
 #else
-arm_status arm_mat_mult_f64(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_f64(
   const arm_matrix_instance_f64 * pSrcA,
   const arm_matrix_instance_f64 * pSrcB,
         arm_matrix_instance_f64 * pDst)

@@ -50,7 +50,7 @@
   </pre>
  */
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
-void arm_q31_to_q15(
+ARM_DSP_ATTRIBUTE void arm_q31_to_q15(
   const q31_t * pSrc,
         q15_t * pDst,
         uint32_t blockSize)
@@ -96,7 +96,7 @@ void arm_q31_to_q15(
 }
 
 #else
-void arm_q31_to_q15(
+ARM_DSP_ATTRIBUTE void arm_q31_to_q15(
   const q31_t * pSrc,
         q15_t * pDst,
         uint32_t blockSize)

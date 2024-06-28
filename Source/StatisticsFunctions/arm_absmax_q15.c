@@ -48,7 +48,7 @@
 
 #include "arm_helium_utils.h"
 
-void arm_absmax_q15(
+ARM_DSP_ATTRIBUTE void arm_absmax_q15(
   const q15_t * pSrc,
         uint32_t blockSize,
         q15_t * pResult,
@@ -101,7 +101,7 @@ void arm_absmax_q15(
 
 #else
 #if defined(ARM_MATH_DSP)
-void arm_absmax_q15(
+ARM_DSP_ATTRIBUTE void arm_absmax_q15(
   const q15_t * pSrc,
         uint32_t blockSize,
         q15_t * pResult,
@@ -188,7 +188,7 @@ void arm_absmax_q15(
   *pIndex = outIndex;  
 }
 #else
-void arm_absmax_q15(
+ARM_DSP_ATTRIBUTE void arm_absmax_q15(
   const q15_t * pSrc,
         uint32_t blockSize,
         q15_t * pResult,

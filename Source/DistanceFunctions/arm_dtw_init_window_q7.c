@@ -57,7 +57,7 @@
  * The function will fill the matrix with 0 and 1.
  *
  */
-arm_status arm_dtw_init_window_q7(const arm_dtw_window windowType,
+ARM_DSP_ATTRIBUTE arm_status arm_dtw_init_window_q7(const arm_dtw_window windowType,
                             const int32_t windowSize,
                             arm_matrix_instance_q7 *pWindow)
 {

@@ -66,7 +66,7 @@
 #include "arm_helium_utils.h"
 #include "arm_vec_math_f16.h"
 
-float16_t arm_minkowski_distance_f16(const float16_t *pA,const float16_t *pB, int32_t order, uint32_t blockSize)
+ARM_DSP_ATTRIBUTE float16_t arm_minkowski_distance_f16(const float16_t *pA,const float16_t *pB, int32_t order, uint32_t blockSize)
 {
     uint32_t        blkCnt;
     f16x8_t         a, b, tmpV, sumV;
@@ -110,7 +110,7 @@ float16_t arm_minkowski_distance_f16(const float16_t *pA,const float16_t *pB, in
 #else
 
 
-float16_t arm_minkowski_distance_f16(const float16_t *pA,const float16_t *pB, int32_t order, uint32_t blockSize)
+ARM_DSP_ATTRIBUTE float16_t arm_minkowski_distance_f16(const float16_t *pA,const float16_t *pB, int32_t order, uint32_t blockSize)
 {
     _Float16 sum;
     uint32_t i;

@@ -62,7 +62,7 @@
  *
  */
 
-void arm_spline_init_f32(
+ARM_DSP_ATTRIBUTE void arm_spline_init_f32(
         arm_spline_instance_f32 * S,
         arm_spline_type type,
   const float32_t * x,

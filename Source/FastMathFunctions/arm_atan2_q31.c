@@ -182,7 +182,7 @@ __STATIC_FORCEINLINE q31_t arm_atan_q31(q31_t y,q31_t x)
 */
 
 
-arm_status arm_atan2_q31(q31_t y,q31_t x,q31_t *result)
+ARM_DSP_ATTRIBUTE arm_status arm_atan2_q31(q31_t y,q31_t x,q31_t *result)
 {
     if (x > 0)
     {

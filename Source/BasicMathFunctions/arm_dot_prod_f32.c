@@ -63,7 +63,7 @@
 #include "arm_helium_utils.h"
 
 
-void arm_dot_prod_f32(
+ARM_DSP_ATTRIBUTE void arm_dot_prod_f32(
     const float32_t * pSrcA,
     const float32_t * pSrcB,
     uint32_t    blockSize,
@@ -118,7 +118,7 @@ void arm_dot_prod_f32(
 
 #else
 
-void arm_dot_prod_f32(
+ARM_DSP_ATTRIBUTE void arm_dot_prod_f32(
   const float32_t * pSrcA,
   const float32_t * pSrcB,
         uint32_t blockSize,

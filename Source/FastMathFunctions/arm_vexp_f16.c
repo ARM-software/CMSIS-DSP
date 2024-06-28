@@ -45,7 +45,7 @@
   @param[out]    pDst       points to the output vector
   @param[in]     blockSize  number of samples in each vector
  */
-void arm_vexp_f16(
+ARM_DSP_ATTRIBUTE void arm_vexp_f16(
   const float16_t * pSrc,
         float16_t * pDst,
         uint32_t blockSize)

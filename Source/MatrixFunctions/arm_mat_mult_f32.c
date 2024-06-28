@@ -85,7 +85,7 @@
 #define MATRIX_DIM3 3 
 #define MATRIX_DIM4 4 
 
-__STATIC_INLINE  arm_status arm_mat_mult_f32_2x2_mve(
+__STATIC_INLINE arm_status arm_mat_mult_f32_2x2_mve(
     const arm_matrix_instance_f32 *pSrcA,
     const arm_matrix_instance_f32 *pSrcB,
     arm_matrix_instance_f32 *pDst)
@@ -137,7 +137,7 @@ __STATIC_INLINE  arm_status arm_mat_mult_f32_2x2_mve(
  *        {a10 b00 + a11 b10 + a12 b20, a10 b01 + a11 b11 + a12 b21, a10 b02 + a11 b12 + a12 b22},
  *        {a20 b00 + a21 b10 + a22 b20, a20 b01 + a21 b11 + a22 b21, a20 b02 + a21 b12 + a22 b22}}
  */
-__STATIC_INLINE  arm_status arm_mat_mult_f32_3x3_mve(
+__STATIC_INLINE arm_status arm_mat_mult_f32_3x3_mve(
     const arm_matrix_instance_f32 *pSrcA,
     const arm_matrix_instance_f32 *pSrcB,
     arm_matrix_instance_f32 *pDst)
@@ -283,7 +283,7 @@ __STATIC_INLINE arm_status arm_mat_mult_f32_4x4_mve(
  * @return          The function returns either
  * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
  */
-arm_status arm_mat_mult_f32(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_f32(
   const arm_matrix_instance_f32 * pSrcA,
   const arm_matrix_instance_f32 * pSrcB,
   arm_matrix_instance_f32 * pDst)
@@ -545,7 +545,7 @@ arm_status arm_mat_mult_f32(
  * @return          The function returns either
  * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
  */
-arm_status arm_mat_mult_f32(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_f32(
   const arm_matrix_instance_f32 * pSrcA,
   const arm_matrix_instance_f32 * pSrcB,
   arm_matrix_instance_f32 * pDst)
@@ -881,7 +881,7 @@ arm_status arm_mat_mult_f32(
  * @return          The function returns either
  * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
  */
-arm_status arm_mat_mult_f32(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_f32(
   const arm_matrix_instance_f32 * pSrcA,
   const arm_matrix_instance_f32 * pSrcB,
         arm_matrix_instance_f32 * pDst)

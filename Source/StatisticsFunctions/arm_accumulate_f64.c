@@ -45,7 +45,7 @@
  @param[out]    pResult    sum of values in input vector.
  */
 #if defined(ARM_MATH_NEON) && defined(__aarch64__)
-void arm_accumulate_f64(
+ARM_DSP_ATTRIBUTE void arm_accumulate_f64(
                         const float64_t * pSrc,
                         uint32_t blockSize,
                         float64_t * pResult)
@@ -93,7 +93,7 @@ void arm_accumulate_f64(
   *pResult = sum;
 }
 #else
-void arm_accumulate_f64(
+ARM_DSP_ATTRIBUTE void arm_accumulate_f64(
                         const float64_t * pSrc,
                         uint32_t blockSize,
                         float64_t *  pResult)

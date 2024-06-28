@@ -49,7 +49,7 @@
 
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-void arm_cmplx_mag_squared_q15(
+ARM_DSP_ATTRIBUTE void arm_cmplx_mag_squared_q15(
   const q15_t * pSrc,
         q15_t * pDst,
         uint32_t numSamples)
@@ -105,7 +105,7 @@ void arm_cmplx_mag_squared_q15(
 }
 
 #else
-void arm_cmplx_mag_squared_q15(
+ARM_DSP_ATTRIBUTE void arm_cmplx_mag_squared_q15(
   const q15_t * pSrc,
         q15_t * pDst,
         uint32_t numSamples)

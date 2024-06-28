@@ -45,7 +45,7 @@
  * @return distance
  *
  */
-float64_t arm_cityblock_distance_f64(const float64_t *pA,const float64_t *pB, uint32_t blockSize)
+ARM_DSP_ATTRIBUTE float64_t arm_cityblock_distance_f64(const float64_t *pA,const float64_t *pB, uint32_t blockSize)
 {
     float64_t accum,tmpA, tmpB;
     uint32_t blkCnt;

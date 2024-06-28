@@ -23,9 +23,21 @@
  * limitations under the License.
  */
 
-#ifndef _ARM_MATH_TYPES_H_
+#ifndef ARM_MATH_TYPES_H_
 
-#define _ARM_MATH_TYPES_H_
+#define ARM_MATH_TYPES_H_
+
+#if defined(ARM_DSP_CUSTOM_CONFIG)
+#include "arm_dsp_config.h"
+#endif
+
+#ifndef ARM_DSP_ATTRIBUTE 
+#define ARM_DSP_ATTRIBUTE 
+#endif
+
+#ifndef ARM_DSP_TABLE_ATTRIBUTE 
+#define ARM_DSP_TABLE_ATTRIBUTE 
+#endif
 
 #ifdef   __cplusplus
 extern "C"

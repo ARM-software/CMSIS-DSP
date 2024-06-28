@@ -50,7 +50,7 @@
 
 #include "arm_helium_utils.h"
 
-void arm_biquad_cascade_df1_f16(
+ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df1_f16(
   const arm_biquad_casd_df1_inst_f16 * S,
   const float16_t * pSrc,
         float16_t * pDst,
@@ -309,7 +309,7 @@ void arm_biquad_cascade_df1_f16(
 }
 
 #else
-void arm_biquad_cascade_df1_f16(
+ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df1_f16(
   const arm_biquad_casd_df1_inst_f16 * S,
   const float16_t * pSrc,
         float16_t * pDst,

@@ -73,7 +73,7 @@
 
  */
 
-void arm_fir_init_f16(
+ARM_DSP_ATTRIBUTE void arm_fir_init_f16(
         arm_fir_instance_f16 * S,
         uint16_t numTaps,
   const float16_t * pCoeffs,

@@ -128,7 +128,7 @@
   @param[in,out] pInlineBuffer points to the in-place input and output buffer
  */
 
-void arm_dct4_f32(
+ARM_DSP_ATTRIBUTE void arm_dct4_f32(
   const arm_dct4_instance_f32 * S,
         float32_t * pState,
         float32_t * pInlineBuffer)

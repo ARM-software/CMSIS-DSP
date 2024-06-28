@@ -50,7 +50,7 @@
 
 #include "arm_helium_utils.h"
 
-void arm_mat_vec_mult_q7(
+ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_q7(
     const arm_matrix_instance_q7 * pSrcMat,
     const q7_t     *pSrcVec,
     q7_t           *pDstVec)
@@ -276,7 +276,7 @@ void arm_mat_vec_mult_q7(
 }
 
 #else
-void arm_mat_vec_mult_q7(const arm_matrix_instance_q7 *pSrcMat, const q7_t *pVec, q7_t *pDst)
+ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_q7(const arm_matrix_instance_q7 *pSrcMat, const q7_t *pVec, q7_t *pDst)
 {
     uint32_t numRows = pSrcMat->numRows;
     uint32_t numCols = pSrcMat->numCols;

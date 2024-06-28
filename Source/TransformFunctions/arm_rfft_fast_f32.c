@@ -593,7 +593,7 @@ void merge_rfft_f32(
                    - value = 1: RIFFT
 */
 
-void arm_rfft_fast_f32(
+ARM_DSP_ATTRIBUTE void arm_rfft_fast_f32(
   const arm_rfft_fast_instance_f32 * S,
   float32_t * p,
   float32_t * pOut,

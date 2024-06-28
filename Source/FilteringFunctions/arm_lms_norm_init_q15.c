@@ -55,7 +55,7 @@
                    by each call to <code>arm_lms_norm_q15()</code>.
  */
 
-void arm_lms_norm_init_q15(
+ARM_DSP_ATTRIBUTE void arm_lms_norm_init_q15(
         arm_lms_norm_instance_q15 * S,
         uint16_t numTaps,
         q15_t * pCoeffs,

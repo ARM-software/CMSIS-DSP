@@ -211,7 +211,7 @@ q31x4_t vlogq_q31(q31x4_t src)
   @param[out]    pDst       points to the output vector q5.26
   @param[in]     blockSize  number of samples in each vector
  */
-void arm_vlog_q31(
+ARM_DSP_ATTRIBUTE void arm_vlog_q31(
   const q31_t * pSrc,
         q31_t * pDst,
         uint32_t blockSize)

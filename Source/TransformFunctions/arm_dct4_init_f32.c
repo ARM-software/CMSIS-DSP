@@ -68,7 +68,7 @@
 
  */
 
-arm_status arm_dct4_init_f32(
+ARM_DSP_ATTRIBUTE arm_status arm_dct4_init_f32(
   arm_dct4_instance_f32 * S,
   arm_rfft_instance_f32 * S_RFFT,
   arm_cfft_radix4_instance_f32 * S_CFFT,

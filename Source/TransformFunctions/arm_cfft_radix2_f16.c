@@ -34,13 +34,13 @@
 
 #if defined(ARM_FLOAT16_SUPPORTED)
 
-void arm_radix2_butterfly_f16(
+ARM_DSP_ATTRIBUTE void arm_radix2_butterfly_f16(
         float16_t * pSrc,
         uint32_t fftLen,
   const float16_t * pCoef,
         uint16_t twidCoefModifier);
 
-void arm_radix2_butterfly_inverse_f16(
+ARM_DSP_ATTRIBUTE void arm_radix2_butterfly_inverse_f16(
         float16_t * pSrc,
         uint32_t fftLen,
   const float16_t * pCoef,
@@ -69,8 +69,8 @@ extern void arm_bitreversal_f16(
   @param[in,out] pSrc points to the complex data buffer of size <code>2*fftLen</code>. Processing occurs in-place
  */
 
-void arm_cfft_radix2_f16(
-const arm_cfft_radix2_instance_f16 * S,
+ARM_DSP_ATTRIBUTE void arm_cfft_radix2_f16(
+ARM_DSP_ATTRIBUTE const arm_cfft_radix2_instance_f16 * S,
       float16_t * pSrc)
 {
 
@@ -114,7 +114,7 @@ const arm_cfft_radix2_instance_f16 * S,
 * @param[in]      twidCoefModifier twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table.
 */
 
-void arm_radix2_butterfly_f16(
+ARM_DSP_ATTRIBUTE void arm_radix2_butterfly_f16(
 float16_t * pSrc,
 uint32_t fftLen,
 const float16_t * pCoef,
@@ -282,7 +282,7 @@ uint16_t twidCoefModifier)
 }
 
 
-void arm_radix2_butterfly_inverse_f16(
+ARM_DSP_ATTRIBUTE void arm_radix2_butterfly_inverse_f16(
 float16_t * pSrc,
 uint32_t fftLen,
 const float16_t * pCoef,

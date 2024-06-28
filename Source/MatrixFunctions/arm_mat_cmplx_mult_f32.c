@@ -520,7 +520,7 @@ __STATIC_INLINE arm_status arm_mat_cmplx_mult_f32_4x4_mve(
     return (ARM_MATH_SUCCESS);
 }
 
-arm_status arm_mat_cmplx_mult_f32(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_f32(
   const arm_matrix_instance_f32 * pSrcA,
   const arm_matrix_instance_f32 * pSrcB,
   arm_matrix_instance_f32 * pDst)
@@ -836,7 +836,7 @@ arm_status arm_mat_cmplx_mult_f32(
 
 #else
 #if defined(ARM_MATH_NEON)
-arm_status arm_mat_cmplx_mult_f32(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_f32(
   const arm_matrix_instance_f32 * pSrcA,
   const arm_matrix_instance_f32 * pSrcB,
   arm_matrix_instance_f32 * pDst)
@@ -1178,7 +1178,7 @@ arm_status arm_mat_cmplx_mult_f32(
   return (status);
 }
 #else
-arm_status arm_mat_cmplx_mult_f32(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_f32(
   const arm_matrix_instance_f32 * pSrcA,
   const arm_matrix_instance_f32 * pSrcB,
         arm_matrix_instance_f32 * pDst)

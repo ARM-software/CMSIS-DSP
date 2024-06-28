@@ -54,7 +54,7 @@
   </pre>
  */
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
-void arm_q7_to_float(
+ARM_DSP_ATTRIBUTE void arm_q7_to_float(
   const q7_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize)
@@ -93,7 +93,7 @@ void arm_q7_to_float(
 }
 #else
 #if defined(ARM_MATH_NEON)
-void arm_q7_to_float(
+ARM_DSP_ATTRIBUTE void arm_q7_to_float(
   const q7_t * pSrc,
   float32_t * pDst,
   uint32_t blockSize)
@@ -160,7 +160,7 @@ void arm_q7_to_float(
   }
 }
 #else
-void arm_q7_to_float(
+ARM_DSP_ATTRIBUTE void arm_q7_to_float(
   const q7_t * pSrc,
         float32_t * pDst,
         uint32_t blockSize)

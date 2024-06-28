@@ -560,7 +560,7 @@ static void arm_cfft_radix4by2_inverse_q31_mve(const arm_cfft_instance_q31 *S, q
                    - value = 0: disables bit reversal of output
                    - value = 1: enables bit reversal of output
  */
-void arm_cfft_q31(
+ARM_DSP_ATTRIBUTE void arm_cfft_q31(
   const arm_cfft_instance_q31 * S,
         q31_t * pSrc,
         uint8_t ifftFlag,
@@ -632,12 +632,12 @@ extern void arm_bitreversal_32(
   const uint16_t bitRevLen,
   const uint16_t * pBitRevTable);
 
-void arm_cfft_radix4by2_q31(
+ARM_DSP_ATTRIBUTE void arm_cfft_radix4by2_q31(
         q31_t * pSrc,
         uint32_t fftLen,
   const q31_t * pCoef);
 
-void arm_cfft_radix4by2_inverse_q31(
+ARM_DSP_ATTRIBUTE void arm_cfft_radix4by2_inverse_q31(
         q31_t * pSrc,
         uint32_t fftLen,
   const q31_t * pCoef);
@@ -659,7 +659,7 @@ void arm_cfft_radix4by2_inverse_q31(
                    - value = 0: disables bit reversal of output
                    - value = 1: enables bit reversal of output
  */
-void arm_cfft_q31(
+ARM_DSP_ATTRIBUTE void arm_cfft_q31(
   const arm_cfft_instance_q31 * S,
         q31_t * p1,
         uint8_t ifftFlag,
@@ -716,7 +716,7 @@ void arm_cfft_q31(
   @} end of ComplexFFTQ31 group
  */
 
-void arm_cfft_radix4by2_q31(
+ARM_DSP_ATTRIBUTE void arm_cfft_radix4by2_q31(
         q31_t * pSrc,
         uint32_t fftLen,
   const q31_t * pCoef)
@@ -777,7 +777,7 @@ void arm_cfft_radix4by2_q31(
 
 }
 
-void arm_cfft_radix4by2_inverse_q31(
+ARM_DSP_ATTRIBUTE void arm_cfft_radix4by2_inverse_q31(
         q31_t * pSrc,
         uint32_t fftLen,
   const q31_t * pCoef)

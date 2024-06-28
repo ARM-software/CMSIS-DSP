@@ -48,7 +48,7 @@
                    In order to avoid overflows the input signal must be scaled down by 2*log2(numStages) bits.
  */
 
-void arm_fir_lattice_q31(
+ARM_DSP_ATTRIBUTE void arm_fir_lattice_q31(
   const arm_fir_lattice_instance_q31 * S,
   const q31_t * pSrc,
         q31_t * pDst,

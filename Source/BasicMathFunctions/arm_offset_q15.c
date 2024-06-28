@@ -52,7 +52,7 @@
 
 #include "arm_helium_utils.h"
 
-void arm_offset_q15(
+ARM_DSP_ATTRIBUTE void arm_offset_q15(
     const q15_t * pSrc,
     q15_t   offset,
     q15_t * pDst,
@@ -95,7 +95,7 @@ void arm_offset_q15(
 
 
 #else
-void arm_offset_q15(
+ARM_DSP_ATTRIBUTE void arm_offset_q15(
   const q15_t * pSrc,
         q15_t offset,
         q15_t * pDst,

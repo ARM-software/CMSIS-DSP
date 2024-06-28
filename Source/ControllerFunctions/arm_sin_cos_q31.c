@@ -47,7 +47,7 @@
   The Q31 input value is in the range [-1 0.999999] and is mapped to a degree value in the range [-180 179].
  */
 
-void arm_sin_cos_q31(
+ARM_DSP_ATTRIBUTE void arm_sin_cos_q31(
   q31_t theta,
   q31_t * pSinVal,
   q31_t * pCosVal)

@@ -24,8 +24,8 @@
  */
 
  
-#ifndef _CONTROLLER_FUNCTIONS_F16_H_
-#define _CONTROLLER_FUNCTIONS_F16_H_
+#ifndef CONTROLLER_FUNCTIONS_F16_H_
+#define CONTROLLER_FUNCTIONS_F16_H_
 
 #ifdef   __cplusplus
 extern "C"

@@ -59,7 +59,7 @@
 
 #include "arm_helium_utils.h"
 
-void arm_absmax_f32(
+ARM_DSP_ATTRIBUTE void arm_absmax_f32(
   const float32_t * pSrc,
         uint32_t blockSize,
         float32_t * pResult,
@@ -123,7 +123,7 @@ void arm_absmax_f32(
 
 #else
 #if defined(ARM_MATH_LOOPUNROLL)
-void arm_absmax_f32(
+ARM_DSP_ATTRIBUTE void arm_absmax_f32(
   const float32_t * pSrc,
         uint32_t blockSize,
         float32_t * pResult,
@@ -210,7 +210,7 @@ void arm_absmax_f32(
   *pIndex = outIndex;  
 }
 #else
-void arm_absmax_f32(
+ARM_DSP_ATTRIBUTE void arm_absmax_f32(
   const float32_t * pSrc,
         uint32_t blockSize,
         float32_t * pResult,

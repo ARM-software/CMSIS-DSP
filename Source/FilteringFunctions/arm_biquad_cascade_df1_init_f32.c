@@ -74,7 +74,7 @@
  */
 
 
-void arm_biquad_cascade_df1_init_f32(
+ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df1_init_f32(
         arm_biquad_casd_df1_inst_f32 * S,
         uint8_t numStages,
   const float32_t * pCoeffs,
@@ -122,7 +122,7 @@ static void generateCoefsFastBiquadF32(float32_t b0, float32_t b1, float32_t b2,
     }
 }
 
-void arm_biquad_cascade_df1_mve_init_f32(
+ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df1_mve_init_f32(
       arm_biquad_casd_df1_inst_f32 * S,
       uint8_t numStages,
       const float32_t * pCoeffs, 

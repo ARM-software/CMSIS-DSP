@@ -64,7 +64,7 @@
 
 
 
-void arm_bartlett_f64(
+ARM_DSP_ATTRIBUTE void arm_bartlett_f64(
         float64_t * pDst,
         uint32_t blockSize)
 {

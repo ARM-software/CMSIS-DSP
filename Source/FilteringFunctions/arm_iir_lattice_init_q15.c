@@ -47,7 +47,7 @@
   @param[in] blockSize  number of samples to process
  */
 
-void arm_iir_lattice_init_q15(
+ARM_DSP_ATTRIBUTE void arm_iir_lattice_init_q15(
   arm_iir_lattice_instance_q15 * S,
   uint16_t numStages,
   q15_t * pkCoeffs,

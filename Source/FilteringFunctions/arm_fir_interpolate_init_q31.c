@@ -61,7 +61,7 @@
                    where <code>blockSize</code> is the number of input samples processed by each call to <code>arm_fir_interpolate_q31()</code>.
  */
 
-arm_status arm_fir_interpolate_init_q31(
+ARM_DSP_ATTRIBUTE arm_status arm_fir_interpolate_init_q31(
         arm_fir_interpolate_instance_q31 * S,
         uint8_t L,
         uint16_t numTaps,

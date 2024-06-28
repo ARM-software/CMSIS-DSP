@@ -83,7 +83,7 @@ Teilinstitut Hannover
 
 
 
-void arm_hft144d_f32(
+ARM_DSP_ATTRIBUTE void arm_hft144d_f32(
         float32_t * pDst,
         uint32_t blockSize)
 {

@@ -60,7 +60,7 @@
 
 #define LANE23_MASK 0xFF00
 
-void arm_levinson_durbin_f32(const float32_t *phi,
+ARM_DSP_ATTRIBUTE void arm_levinson_durbin_f32(const float32_t *phi,
   float32_t *a, 
   float32_t *err,
   int nbCoefs)
@@ -216,7 +216,7 @@ void arm_levinson_durbin_f32(const float32_t *phi,
 }
 
 #else
-void arm_levinson_durbin_f32(const float32_t *phi,
+ARM_DSP_ATTRIBUTE void arm_levinson_durbin_f32(const float32_t *phi,
   float32_t *a, 
   float32_t *err,
   int nbCoefs)

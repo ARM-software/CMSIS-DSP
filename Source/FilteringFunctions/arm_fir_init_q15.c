@@ -83,7 +83,7 @@
                    to avoid having to manage too many different cases in the code.
  */
 
-arm_status arm_fir_init_q15(
+ARM_DSP_ATTRIBUTE arm_status arm_fir_init_q15(
         arm_fir_instance_q15 * S,
         uint16_t numTaps,
   const q15_t * pCoeffs,

@@ -46,7 +46,7 @@
 
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 #define RFFTINIT_Q31(LEN,CFFTLEN,TWIDMOD)                         \
-arm_status arm_rfft_init_##LEN##_q31( arm_rfft_instance_q31 * S,  \
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_##LEN##_q31( arm_rfft_instance_q31 * S,  \
     uint32_t ifftFlagR,                                           \
     uint32_t bitReverseFlag )                                     \
 {                                                                 \
@@ -77,7 +77,7 @@ arm_status arm_rfft_init_##LEN##_q31( arm_rfft_instance_q31 * S,  \
 }
 #else
 #define RFFTINIT_Q31(LEN,CFFTLEN,TWIDMOD)                         \
-arm_status arm_rfft_init_##LEN##_q31( arm_rfft_instance_q31 * S,  \
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_##LEN##_q31( arm_rfft_instance_q31 * S,  \
     uint32_t ifftFlagR,                                           \
     uint32_t bitReverseFlag )                                     \
 {                                                                 \
@@ -360,7 +360,7 @@ RFFTINIT_Q31(32,16,256)
 
 */
 
-arm_status arm_rfft_init_q31(
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_q31(
     arm_rfft_instance_q31 * S,
     uint32_t fftLenReal,
     uint32_t ifftFlagR,

@@ -56,7 +56,7 @@
 
  */
 
-void arm_dct4_q31(
+ARM_DSP_ATTRIBUTE void arm_dct4_q31(
   const arm_dct4_instance_q31 * S,
         q31_t * pState,
         q31_t * pInlineBuffer)

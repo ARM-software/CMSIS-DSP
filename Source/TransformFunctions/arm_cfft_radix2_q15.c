@@ -28,19 +28,19 @@
 
 #include "dsp/transform_functions.h"
 
-void arm_radix2_butterfly_q15(
+ARM_DSP_ATTRIBUTE void arm_radix2_butterfly_q15(
         q15_t * pSrc,
         uint32_t fftLen,
   const q15_t * pCoef,
         uint16_t twidCoefModifier);
 
-void arm_radix2_butterfly_inverse_q15(
+ARM_DSP_ATTRIBUTE void arm_radix2_butterfly_inverse_q15(
         q15_t * pSrc,
         uint32_t fftLen,
   const q15_t * pCoef,
         uint16_t twidCoefModifier);
 
-void arm_bitreversal_q15(
+ARM_DSP_ATTRIBUTE void arm_bitreversal_q15(
         q15_t * pSrc,
         uint32_t fftLen,
         uint16_t bitRevFactor,
@@ -59,7 +59,7 @@ void arm_bitreversal_q15(
   @param[in,out] pSrc points to the complex data buffer of size <code>2*fftLen</code>. Processing occurs in-place
  */
 
-void arm_cfft_radix2_q15(
+ARM_DSP_ATTRIBUTE void arm_cfft_radix2_q15(
   const arm_cfft_radix2_instance_q15 * S,
         q15_t * pSrc)
 {
@@ -80,7 +80,7 @@ void arm_cfft_radix2_q15(
   @} end of ComplexFFTDeprecated group
  */
 
-void arm_radix2_butterfly_q15(
+ARM_DSP_ATTRIBUTE void arm_radix2_butterfly_q15(
         q15_t * pSrc,
         uint32_t fftLen,
   const q15_t * pCoef,
@@ -390,7 +390,7 @@ void arm_radix2_butterfly_q15(
 }
 
 
-void arm_radix2_butterfly_inverse_q15(
+ARM_DSP_ATTRIBUTE void arm_radix2_butterfly_inverse_q15(
         q15_t * pSrc,
         uint32_t fftLen,
   const q15_t * pCoef,

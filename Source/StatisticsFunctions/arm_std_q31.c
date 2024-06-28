@@ -57,7 +57,7 @@
                    Finally, the 18.46 accumulator is right shifted by 15 bits to yield a 1.31 format value.
  */
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
-void arm_std_q31(
+ARM_DSP_ATTRIBUTE void arm_std_q31(
   const q31_t * pSrc,
         uint32_t blockSize,
         q31_t * pResult)
@@ -68,7 +68,7 @@ void arm_std_q31(
     arm_sqrt_q31(var, pResult);
 }
 #else
-void arm_std_q31(
+ARM_DSP_ATTRIBUTE void arm_std_q31(
   const q31_t * pSrc,
         uint32_t blockSize,
         q31_t * pResult)

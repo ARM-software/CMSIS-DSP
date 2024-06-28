@@ -108,7 +108,7 @@ static void arm_small_blk_absmax_q7(
     *pResult = maxValue;
 }
 
-void arm_absmax_q7(
+ARM_DSP_ATTRIBUTE void arm_absmax_q7(
   const q7_t * pSrc,
         uint32_t blockSize,
         q7_t * pResult,
@@ -163,7 +163,7 @@ void arm_absmax_q7(
 }
 #else
 #if defined(ARM_MATH_DSP)
-void arm_absmax_q7(
+ARM_DSP_ATTRIBUTE void arm_absmax_q7(
   const q7_t * pSrc,
         uint32_t blockSize,
         q7_t * pResult,
@@ -250,7 +250,7 @@ void arm_absmax_q7(
   *pIndex = outIndex;  
 }
 #else
-void arm_absmax_q7(
+ARM_DSP_ATTRIBUTE void arm_absmax_q7(
   const q7_t * pSrc,
         uint32_t blockSize,
         q7_t * pResult,

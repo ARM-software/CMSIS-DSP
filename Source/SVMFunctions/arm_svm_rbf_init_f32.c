@@ -64,7 +64,7 @@
  *
  */
 
-void arm_svm_rbf_init_f32(arm_svm_rbf_instance_f32 *S, 
+ARM_DSP_ATTRIBUTE void arm_svm_rbf_init_f32(arm_svm_rbf_instance_f32 *S, 
   uint32_t nbOfSupportVectors,
   uint32_t vectorDimension,
   float32_t intercept,

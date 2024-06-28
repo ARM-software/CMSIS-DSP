@@ -49,7 +49,7 @@
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_helium_utils.h"
-void arm_clip_q15(const q15_t * pSrc, 
+ARM_DSP_ATTRIBUTE void arm_clip_q15(const q15_t * pSrc, 
   q15_t * pDst, 
   q15_t low, 
   q15_t high, 
@@ -109,7 +109,7 @@ void arm_clip_q15(const q15_t * pSrc,
 }
 
 #else
-void arm_clip_q15(const q15_t * pSrc, 
+ARM_DSP_ATTRIBUTE void arm_clip_q15(const q15_t * pSrc, 
   q15_t * pDst, 
   q15_t low, 
   q15_t high, 

@@ -63,7 +63,7 @@
 
 #if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-void arm_f16_to_q15(
+ARM_DSP_ATTRIBUTE void arm_f16_to_q15(
   const float16_t * pSrc,
   q15_t * pDst,
   uint32_t blockSize)
@@ -95,7 +95,7 @@ void arm_f16_to_q15(
 
 #else
 
-void arm_f16_to_q15(
+ARM_DSP_ATTRIBUTE void arm_f16_to_q15(
   const float16_t * pSrc,
         q15_t * pDst,
         uint32_t blockSize)

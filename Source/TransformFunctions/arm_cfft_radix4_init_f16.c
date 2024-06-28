@@ -65,7 +65,7 @@
 
 #if defined(ARM_FLOAT16_SUPPORTED)
 
-arm_status arm_cfft_radix4_init_f16(
+ARM_DSP_ATTRIBUTE arm_status arm_cfft_radix4_init_f16(
   arm_cfft_radix4_instance_f16 * S,
   uint16_t fftLen,
   uint8_t ifftFlag,

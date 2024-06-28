@@ -57,7 +57,7 @@
   to the saturated negative or positive value.
  */
 
-arm_status arm_divide_q15(q15_t numerator,
+ARM_DSP_ATTRIBUTE arm_status arm_divide_q15(q15_t numerator,
   q15_t denominator,
   q15_t *quotient,
   int16_t *shift)

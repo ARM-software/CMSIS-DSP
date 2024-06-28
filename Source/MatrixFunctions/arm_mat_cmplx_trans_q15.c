@@ -49,7 +49,7 @@
 
 #include "arm_helium_utils.h"
 
-arm_status arm_mat_cmplx_trans_q15(const arm_matrix_instance_q15 * pSrc, arm_matrix_instance_q15 * pDst)
+ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_trans_q15(const arm_matrix_instance_q15 * pSrc, arm_matrix_instance_q15 * pDst)
 {
     return arm_mat_cmplx_trans_16bit(pSrc->numRows, pSrc->numCols, (uint16_t *) pSrc->pData,
                                    pDst->numRows, pDst->numCols, (uint16_t *) pDst->pData);
@@ -57,7 +57,7 @@ arm_status arm_mat_cmplx_trans_q15(const arm_matrix_instance_q15 * pSrc, arm_mat
 
 
 #else
-arm_status arm_mat_cmplx_trans_q15(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_trans_q15(
   const arm_matrix_instance_q15 * pSrc,
   arm_matrix_instance_q15 * pDst)
 {

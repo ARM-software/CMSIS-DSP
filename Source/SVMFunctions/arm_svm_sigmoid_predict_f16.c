@@ -53,7 +53,7 @@
 #include "arm_helium_utils.h"
 #include "arm_vec_math_f16.h"
 
-void arm_svm_sigmoid_predict_f16(
+ARM_DSP_ATTRIBUTE void arm_svm_sigmoid_predict_f16(
     const arm_svm_sigmoid_instance_f16 *S,
     const float16_t * in,
     int32_t * pResult)
@@ -300,7 +300,7 @@ void arm_svm_sigmoid_predict_f16(
 }
 
 #else
-void arm_svm_sigmoid_predict_f16(
+ARM_DSP_ATTRIBUTE void arm_svm_sigmoid_predict_f16(
     const arm_svm_sigmoid_instance_f16 *S,
     const float16_t * in,
     int32_t * pResult)

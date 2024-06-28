@@ -58,7 +58,7 @@
 
 #if defined (ARM_MATH_DSP)
 
-void arm_fir_decimate_fast_q15(
+ARM_DSP_ATTRIBUTE void arm_fir_decimate_fast_q15(
   const arm_fir_decimate_instance_q15 * S,
   const q15_t * pSrc,
         q15_t * pDst,
@@ -304,7 +304,7 @@ void arm_fir_decimate_fast_q15(
 
 #else /* #if defined (ARM_MATH_DSP) */
 
-void arm_fir_decimate_fast_q15(
+ARM_DSP_ATTRIBUTE void arm_fir_decimate_fast_q15(
   const arm_fir_decimate_instance_q15 * S,
   const q15_t * pSrc,
         q15_t * pDst,

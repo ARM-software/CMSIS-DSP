@@ -50,7 +50,7 @@
 #if defined(ARM_MATH_MVE_FLOAT16)
 #include "arm_helium_utils.h"
 
-void arm_mse_f16(
+ARM_DSP_ATTRIBUTE void arm_mse_f16(
     const float16_t * pSrcA,
     const float16_t * pSrcB,
     uint32_t    blockSize,
@@ -112,7 +112,7 @@ void arm_mse_f16(
 
 
 
-void arm_mse_f16(
+ARM_DSP_ATTRIBUTE void arm_mse_f16(
     const float16_t * pSrcA,
     const float16_t * pSrcB,
     uint32_t    blockSize,

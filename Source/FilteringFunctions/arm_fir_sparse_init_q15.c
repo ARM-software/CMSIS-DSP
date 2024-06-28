@@ -56,7 +56,7 @@
                    number of words processed by <code>arm_fir_sparse_q15()</code> function.
  */
 
-void arm_fir_sparse_init_q15(
+ARM_DSP_ATTRIBUTE void arm_fir_sparse_init_q15(
         arm_fir_sparse_instance_q15 * S,
         uint16_t numTaps,
   const q15_t * pCoeffs,

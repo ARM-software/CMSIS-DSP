@@ -26,8 +26,8 @@
  * limitations under the License.
  */
 
-#ifndef _ARM_UTILS_HELIUM_H_
-#define _ARM_UTILS_HELIUM_H_
+#ifndef ARM_UTILS_HELIUM_H_
+#define ARM_UTILS_HELIUM_H_
 
 
 #ifdef   __cplusplus

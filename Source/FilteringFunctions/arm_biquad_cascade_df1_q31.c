@@ -56,7 +56,7 @@
  */
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-void arm_biquad_cascade_df1_q31(
+ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df1_q31(
   const arm_biquad_casd_df1_inst_q31 * S,
   const q31_t * pSrc,
         q31_t * pDst,
@@ -317,7 +317,7 @@ void arm_biquad_cascade_df1_q31(
     while (--stages);
 }
 #else
-void arm_biquad_cascade_df1_q31(
+ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df1_q31(
   const arm_biquad_casd_df1_inst_q31 * S,
   const q31_t * pSrc,
         q31_t * pDst,

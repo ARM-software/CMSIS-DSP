@@ -32,7 +32,7 @@
  * Internal functions prototypes
  * -------------------------------------------------------------------- */
 
-void arm_split_rfft_q31(
+ARM_DSP_ATTRIBUTE void arm_split_rfft_q31(
         q31_t * pSrc,
         uint32_t fftLen,
   const q31_t * pATable,
@@ -40,7 +40,7 @@ void arm_split_rfft_q31(
         q31_t * pDst,
         uint32_t modifier);
 
-void arm_split_rifft_q31(
+ARM_DSP_ATTRIBUTE void arm_split_rifft_q31(
         q31_t * pSrc,
         uint32_t fftLen,
   const q31_t * pATable,
@@ -102,7 +102,7 @@ void arm_split_rifft_q31(
                    
  */
 
-void arm_rfft_q31(
+ARM_DSP_ATTRIBUTE void arm_rfft_q31(
   const arm_rfft_instance_q31 * S,
         q31_t * pSrc,
         q31_t * pDst)
@@ -164,7 +164,7 @@ void arm_rfft_q31(
 
 #endif 
 
-void arm_split_rfft_q31(
+ARM_DSP_ATTRIBUTE void arm_split_rfft_q31(
     q31_t       *pSrc,
     uint32_t     fftLen,
     const q31_t       *pATable,
@@ -222,7 +222,7 @@ void arm_split_rfft_q31(
     pDst[1] = 0;
 }
 #else
-void arm_split_rfft_q31(
+ARM_DSP_ATTRIBUTE void arm_split_rfft_q31(
         q31_t * pSrc,
         uint32_t fftLen,
   const q31_t * pATable,
@@ -321,7 +321,7 @@ void arm_split_rfft_q31(
 
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-void arm_split_rifft_q31(
+ARM_DSP_ATTRIBUTE void arm_split_rifft_q31(
         q31_t * pSrc,
         uint32_t fftLen,
   const q31_t * pATable,
@@ -375,7 +375,7 @@ void arm_split_rifft_q31(
     }
 }
 #else
-void arm_split_rifft_q31(
+ARM_DSP_ATTRIBUTE void arm_split_rifft_q31(
         q31_t * pSrc,
         uint32_t fftLen,
   const q31_t * pATable,

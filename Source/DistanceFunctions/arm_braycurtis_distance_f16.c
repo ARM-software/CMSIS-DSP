@@ -72,7 +72,7 @@
 
 #include "arm_helium_utils.h"
 
-float16_t arm_braycurtis_distance_f16(const float16_t *pA,const float16_t *pB, uint32_t blockSize)
+ARM_DSP_ATTRIBUTE float16_t arm_braycurtis_distance_f16(const float16_t *pA,const float16_t *pB, uint32_t blockSize)
 {
     _Float16        accumDiff = 0.0f, accumSum = 0.0f;
     uint32_t        blkCnt;
@@ -125,7 +125,7 @@ float16_t arm_braycurtis_distance_f16(const float16_t *pA,const float16_t *pB, u
 }
 #else
 
-float16_t arm_braycurtis_distance_f16(const float16_t *pA,const float16_t *pB, uint32_t blockSize)
+ARM_DSP_ATTRIBUTE float16_t arm_braycurtis_distance_f16(const float16_t *pA,const float16_t *pB, uint32_t blockSize)
 {
    _Float16 accumDiff=0.0f16, accumSum=0.0f16, tmpA, tmpB;
 

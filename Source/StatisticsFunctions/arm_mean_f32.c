@@ -48,7 +48,7 @@
 
 #include "arm_helium_utils.h"
 
-void arm_mean_f32(
+ARM_DSP_ATTRIBUTE void arm_mean_f32(
   const float32_t * pSrc,
   uint32_t blockSize,
   float32_t * pResult)
@@ -89,7 +89,7 @@ void arm_mean_f32(
 
 #else
 #if defined(ARM_MATH_NEON_EXPERIMENTAL) && !defined(ARM_MATH_AUTOVECTORIZE)
-void arm_mean_f32(
+ARM_DSP_ATTRIBUTE void arm_mean_f32(
   const float32_t * pSrc,
   uint32_t blockSize,
   float32_t * pResult)
@@ -138,7 +138,7 @@ void arm_mean_f32(
   *pResult = sum / (float32_t) blockSize;
 }
 #else
-void arm_mean_f32(
+ARM_DSP_ATTRIBUTE void arm_mean_f32(
   const float32_t * pSrc,
         uint32_t blockSize,
         float32_t * pResult)

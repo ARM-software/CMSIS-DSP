@@ -279,7 +279,7 @@ CFFTINIT_F16(16,16)
                 that you need at build time, then it is better to use the initialization
                 functions defined for each FFT size.
  */
-arm_status arm_cfft_init_f16(
+ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_f16(
   arm_cfft_instance_f16 * S,
   uint16_t fftLen)
 {

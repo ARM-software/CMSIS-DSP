@@ -54,7 +54,7 @@
             pComputedCoeffs is the array to be used in arm_biquad_cascade_df2T_init_f32.
 
 */
-void arm_biquad_cascade_df2T_compute_coefs_f32(
+ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_compute_coefs_f32(
   uint8_t numStages,
   const float32_t * pCoeffs,
   float32_t * pComputedCoeffs)
@@ -188,7 +188,7 @@ void arm_biquad_cascade_df2T_compute_coefs_f32(
                    The state array has a total length of <code>2*numStages</code> values.
                    The state variables are updated after each block of data is processed; the coefficients are untouched.
  */
-void arm_biquad_cascade_df2T_init_f32(
+ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_init_f32(
         arm_biquad_cascade_df2T_instance_f32 * S,
         uint8_t numStages,
   const float32_t * pCoeffs,

@@ -378,7 +378,7 @@ __STATIC_FORCEINLINE arm_status arm_mat_cmplx_mult_f16_4x4_mve(
 
 
 
-arm_status arm_mat_cmplx_mult_f16(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_f16(
   const arm_matrix_instance_f16 * pSrcA,
   const arm_matrix_instance_f16 * pSrcB,
   arm_matrix_instance_f16 * pDst)
@@ -704,7 +704,7 @@ if ((pSrcA->numCols != pSrcB->numRows) ||
 }
 #else
 
-arm_status arm_mat_cmplx_mult_f16(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_f16(
   const arm_matrix_instance_f16 * pSrcA,
   const arm_matrix_instance_f16 * pSrcB,
         arm_matrix_instance_f16 * pDst)

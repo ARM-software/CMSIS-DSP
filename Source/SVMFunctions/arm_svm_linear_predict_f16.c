@@ -51,7 +51,7 @@
 
 #include "arm_helium_utils.h"
 
-void arm_svm_linear_predict_f16(
+ARM_DSP_ATTRIBUTE void arm_svm_linear_predict_f16(
     const arm_svm_linear_instance_f16 *S,
     const float16_t * in,
     int32_t * pResult)
@@ -282,7 +282,7 @@ void arm_svm_linear_predict_f16(
 }
 
 #else
-void arm_svm_linear_predict_f16(
+ARM_DSP_ATTRIBUTE void arm_svm_linear_predict_f16(
     const arm_svm_linear_instance_f16 *S,
     const float16_t * in,
     int32_t * pResult)

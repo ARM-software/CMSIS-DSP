@@ -80,7 +80,7 @@
  */
 
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
-arm_status arm_mat_add_f32(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_add_f32(
   const arm_matrix_instance_f32 * pSrcA,
   const arm_matrix_instance_f32 * pSrcB,
   arm_matrix_instance_f32 * pDst)
@@ -158,7 +158,7 @@ So no blocking is used for taking into account cache effects.
 For big matrix, there exist better libraries for Neon.
 
 */
-arm_status arm_mat_add_f32(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_add_f32(
   const arm_matrix_instance_f32 * pSrcA,
   const arm_matrix_instance_f32 * pSrcB,
   arm_matrix_instance_f32 * pDst)
@@ -234,7 +234,7 @@ arm_status arm_mat_add_f32(
   return (status);
 }
 #else
-arm_status arm_mat_add_f32(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_add_f32(
   const arm_matrix_instance_f32 * pSrcA,
   const arm_matrix_instance_f32 * pSrcB,
         arm_matrix_instance_f32 * pDst)

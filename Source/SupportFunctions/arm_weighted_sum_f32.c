@@ -52,7 +52,7 @@
 
 #include "arm_helium_utils.h"
 
-float32_t arm_weighted_sum_f32(const float32_t *in,const float32_t *weigths, uint32_t blockSize)
+ARM_DSP_ATTRIBUTE float32_t arm_weighted_sum_f32(const float32_t *in,const float32_t *weigths, uint32_t blockSize)
 {
     float32_t       accum1, accum2;
     f32x4_t         accum1V, accum2V;
@@ -101,7 +101,7 @@ float32_t arm_weighted_sum_f32(const float32_t *in,const float32_t *weigths, uin
 #if defined(ARM_MATH_NEON)
 
 #include "NEMath.h"
-float32_t arm_weighted_sum_f32(const float32_t *in,const float32_t *weigths, uint32_t blockSize)
+ARM_DSP_ATTRIBUTE float32_t arm_weighted_sum_f32(const float32_t *in,const float32_t *weigths, uint32_t blockSize)
 {
 
     float32_t accum1, accum2;
@@ -155,7 +155,7 @@ float32_t arm_weighted_sum_f32(const float32_t *in,const float32_t *weigths, uin
     return(accum1 / accum2);
 }
 #else
-float32_t arm_weighted_sum_f32(const float32_t *in, const float32_t *weigths, uint32_t blockSize)
+ARM_DSP_ATTRIBUTE float32_t arm_weighted_sum_f32(const float32_t *in, const float32_t *weigths, uint32_t blockSize)
 {
 
     float32_t accum1, accum2;

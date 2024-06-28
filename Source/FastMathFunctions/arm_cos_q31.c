@@ -46,7 +46,7 @@
   The Q31 input value is in the range [0 +0.9999] and is mapped to a radian value in the range [0 2*PI).
  */
 
-q31_t arm_cos_q31(
+ARM_DSP_ATTRIBUTE q31_t arm_cos_q31(
   q31_t x)
 {
   q31_t cosVal;                                  /* Temporary input, output variables */

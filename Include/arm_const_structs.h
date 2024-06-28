@@ -27,8 +27,8 @@
  * limitations under the License.
  */
 
-#ifndef _ARM_CONST_STRUCTS_H
-#define _ARM_CONST_STRUCTS_H
+#ifndef ARM_CONST_STRUCTS_H
+#define ARM_CONST_STRUCTS_H
 
 #include "arm_math_types.h"
 #include "arm_common_tables.h"

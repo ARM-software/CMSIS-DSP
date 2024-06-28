@@ -64,7 +64,7 @@
 * Cos and Sin values are in interleaved fashion
 *
 */
-const float16_t twiddleCoefF16_16[32] = {
+const float16_t twiddleCoefF16_16[32] ARM_DSP_TABLE_ATTRIBUTE = {
     (float16_t)1.000000000f,  (float16_t)0.000000000f,
     (float16_t)0.923879533f,  (float16_t)0.382683432f,
     (float16_t)0.707106781f,  (float16_t)0.707106781f,
@@ -99,7 +99,7 @@ const float16_t twiddleCoefF16_16[32] = {
 * Cos and Sin values are in interleaved fashion
 *
 */
-const float16_t twiddleCoefF16_32[64] = {
+const float16_t twiddleCoefF16_32[64] ARM_DSP_TABLE_ATTRIBUTE = {
     (float16_t)1.000000000f,  (float16_t)0.000000000f,
     (float16_t)0.980785280f,  (float16_t)0.195090322f,
     (float16_t)0.923879533f,  (float16_t)0.382683432f,
@@ -150,7 +150,7 @@ const float16_t twiddleCoefF16_32[64] = {
 * Cos and Sin values are in interleaved fashion
 *
 */
-const float16_t twiddleCoefF16_64[128] = {
+const float16_t twiddleCoefF16_64[128] ARM_DSP_TABLE_ATTRIBUTE = {
     (float16_t)1.000000000f,  (float16_t)0.000000000f,
     (float16_t)0.995184727f,  (float16_t)0.098017140f,
     (float16_t)0.980785280f,  (float16_t)0.195090322f,
@@ -233,7 +233,7 @@ const float16_t twiddleCoefF16_64[128] = {
 *
 */
 
-const float16_t twiddleCoefF16_128[256] = {
+const float16_t twiddleCoefF16_128[256] ARM_DSP_TABLE_ATTRIBUTE = {
     (float16_t)1.000000000f,  (float16_t)0.000000000f,
     (float16_t)0.998795456f,  (float16_t)0.049067674f,
     (float16_t)0.995184727f,  (float16_t)0.098017140f,
@@ -379,7 +379,7 @@ const float16_t twiddleCoefF16_128[256] = {
 * Cos and Sin values are in interleaved fashion
 *
 */
-const float16_t twiddleCoefF16_256[512] = {
+const float16_t twiddleCoefF16_256[512] ARM_DSP_TABLE_ATTRIBUTE = {
     (float16_t)1.000000000f,  (float16_t)0.000000000f,
     (float16_t)0.999698819f,  (float16_t)0.024541229f,
     (float16_t)0.998795456f,  (float16_t)0.049067674f,
@@ -653,7 +653,7 @@ const float16_t twiddleCoefF16_256[512] = {
 * Cos and Sin values are in interleaved fashion
 *
 */
-const float16_t twiddleCoefF16_512[1024] = {
+const float16_t twiddleCoefF16_512[1024] ARM_DSP_TABLE_ATTRIBUTE = {
     (float16_t)1.000000000f,  (float16_t)0.000000000f,
     (float16_t)0.999924702f,  (float16_t)0.012271538f,
     (float16_t)0.999698819f,  (float16_t)0.024541229f,
@@ -1183,7 +1183,7 @@ const float16_t twiddleCoefF16_512[1024] = {
 * Cos and Sin values are in interleaved fashion
 *
 */
-const float16_t twiddleCoefF16_1024[2048] = {
+const float16_t twiddleCoefF16_1024[2048] ARM_DSP_TABLE_ATTRIBUTE = {
     (float16_t)1.000000000f,  (float16_t)0.000000000f,
     (float16_t)0.999981175f,  (float16_t)0.006135885f,
     (float16_t)0.999924702f,  (float16_t)0.012271538f,
@@ -2225,7 +2225,7 @@ const float16_t twiddleCoefF16_1024[2048] = {
 * Cos and Sin values are in interleaved fashion
 *
 */
-const float16_t twiddleCoefF16_2048[4096] = {
+const float16_t twiddleCoefF16_2048[4096] ARM_DSP_TABLE_ATTRIBUTE = {
     (float16_t)1.000000000f,  (float16_t)0.000000000f,
     (float16_t)0.999995294f,  (float16_t)0.003067957f,
     (float16_t)0.999981175f,  (float16_t)0.006135885f,
@@ -4291,7 +4291,7 @@ const float16_t twiddleCoefF16_2048[4096] = {
 * Cos and Sin values are in interleaved fashion
 *
 */
-const float16_t twiddleCoefF16_4096[8192] = {
+const float16_t twiddleCoefF16_4096[8192] ARM_DSP_TABLE_ATTRIBUTE = {
     (float16_t)1.000000000f,  (float16_t)0.000000000f,
     (float16_t)0.999998823f,  (float16_t)0.001533980f,
     (float16_t)0.999995294f,  (float16_t)0.003067957f,
@@ -8398,7 +8398,7 @@ const float16_t twiddleCoefF16_4096[8192] = {
   @par
   Real and Imag values are in interleaved fashion
 */
-const float16_t twiddleCoefF16_rfft_32[32] = {
+const float16_t twiddleCoefF16_rfft_32[32] ARM_DSP_TABLE_ATTRIBUTE = {
     (float16_t)0.000000000f,  (float16_t)1.000000000f,
     (float16_t)0.195090322f,  (float16_t)0.980785280f,
     (float16_t)0.382683432f,  (float16_t)0.923879533f,
@@ -8417,7 +8417,7 @@ const float16_t twiddleCoefF16_rfft_32[32] = {
     (float16_t)0.195090322f, (float16_t)-0.980785280f
 };
 
-const float16_t twiddleCoefF16_rfft_64[64] = {
+const float16_t twiddleCoefF16_rfft_64[64] ARM_DSP_TABLE_ATTRIBUTE = {
     (float16_t)0.000000000000000f,  (float16_t)1.000000000000000f,
     (float16_t)0.098017140329561f,  (float16_t)0.995184726672197f,
     (float16_t)0.195090322016128f,  (float16_t)0.980785280403230f,
@@ -8452,7 +8452,7 @@ const float16_t twiddleCoefF16_rfft_64[64] = {
     (float16_t)0.098017140329561f, (float16_t)-0.995184726672197f
 };
 
-const float16_t twiddleCoefF16_rfft_128[128] = {
+const float16_t twiddleCoefF16_rfft_128[128] ARM_DSP_TABLE_ATTRIBUTE = {
     (float16_t)0.000000000f,  (float16_t)1.000000000f,
     (float16_t)0.049067674f,  (float16_t)0.998795456f,
     (float16_t)0.098017140f,  (float16_t)0.995184727f,
@@ -8519,7 +8519,7 @@ const float16_t twiddleCoefF16_rfft_128[128] = {
     (float16_t)0.049067674f, (float16_t)-0.998795456f
 };
 
-const float16_t twiddleCoefF16_rfft_256[256] = {
+const float16_t twiddleCoefF16_rfft_256[256] ARM_DSP_TABLE_ATTRIBUTE = {
     (float16_t)0.000000000f,  (float16_t)1.000000000f,
     (float16_t)0.024541229f,  (float16_t)0.999698819f,
     (float16_t)0.049067674f,  (float16_t)0.998795456f,
@@ -8650,7 +8650,7 @@ const float16_t twiddleCoefF16_rfft_256[256] = {
     (float16_t)0.024541229f, (float16_t)-0.999698819f
 };
 
-const float16_t twiddleCoefF16_rfft_512[512] = {
+const float16_t twiddleCoefF16_rfft_512[512] ARM_DSP_TABLE_ATTRIBUTE = {
     (float16_t)0.000000000f,  (float16_t)1.000000000f,
     (float16_t)0.012271538f,  (float16_t)0.999924702f,
     (float16_t)0.024541229f,  (float16_t)0.999698819f,
@@ -8909,7 +8909,7 @@ const float16_t twiddleCoefF16_rfft_512[512] = {
     (float16_t)0.012271538f, (float16_t)-0.999924702f
 };
 
-const float16_t twiddleCoefF16_rfft_1024[1024] = {
+const float16_t twiddleCoefF16_rfft_1024[1024] ARM_DSP_TABLE_ATTRIBUTE = {
     (float16_t)0.000000000f,  (float16_t)1.000000000f,
     (float16_t)0.006135885f,  (float16_t)0.999981175f,
     (float16_t)0.012271538f,  (float16_t)0.999924702f,
@@ -9424,7 +9424,7 @@ const float16_t twiddleCoefF16_rfft_1024[1024] = {
     (float16_t)0.006135885f, (float16_t)-0.999981175f
 };
 
-const float16_t twiddleCoefF16_rfft_2048[2048] = {
+const float16_t twiddleCoefF16_rfft_2048[2048] ARM_DSP_TABLE_ATTRIBUTE = {
     (float16_t)0.000000000f,  (float16_t)1.000000000f,
     (float16_t)0.003067957f,  (float16_t)0.999995294f,
     (float16_t)0.006135885f,  (float16_t)0.999981175f,
@@ -10451,7 +10451,7 @@ const float16_t twiddleCoefF16_rfft_2048[2048] = {
     (float16_t)0.003067957f, (float16_t)-0.999995294f
 };
 
-const float16_t twiddleCoefF16_rfft_4096[4096] = {
+const float16_t twiddleCoefF16_rfft_4096[4096] ARM_DSP_TABLE_ATTRIBUTE = {
     (float16_t)0.000000000f,  (float16_t)1.000000000f,
     (float16_t)0.001533980f,  (float16_t)0.999998823f,
     (float16_t)0.003067957f,  (float16_t)0.999995294f,
@@ -12504,7 +12504,7 @@ const float16_t twiddleCoefF16_rfft_4096[4096] = {
 
 #if (defined(ARM_MATH_MVEF) || defined(ARM_MATH_HELIUM)) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-const float16_t exp_tab_f16[8] = {
+const float16_t exp_tab_f16[8] ARM_DSP_TABLE_ATTRIBUTE = {
     (1.f16),
     (0.0416598916054f16),
     (0.500000596046f16),
@@ -12515,7 +12515,7 @@ const float16_t exp_tab_f16[8] = {
     (0.000195780929062f16),
 };
 
-const float16_t __logf_lut_f16[8] = {
+const float16_t __logf_lut_f16[8] ARM_DSP_TABLE_ATTRIBUTE = {
     -2.295614848256274f16,         /*p0*/
     -2.470711633419806f16,         /*p4*/
     -5.686926051100417f16,         /*p2*/

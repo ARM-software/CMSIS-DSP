@@ -45,7 +45,7 @@
   @param[in]     blockSize  number of samples in each vector.
  */
 
-void arm_mult_f64(
+ARM_DSP_ATTRIBUTE void arm_mult_f64(
   const float64_t * pSrcA,
   const float64_t * pSrcB,
         float64_t * pDst,

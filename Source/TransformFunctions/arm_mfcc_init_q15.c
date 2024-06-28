@@ -86,7 +86,7 @@
 
 
  */
-arm_status arm_mfcc_init_q15(
+ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_q15(
   arm_mfcc_instance_q15 * S,
   uint32_t fftLen,
   uint32_t nbMelFilters,
@@ -120,7 +120,7 @@ arm_status arm_mfcc_init_q15(
 
 #if defined(ARM_MFCC_CFFT_BASED)
 #define MFCC_INIT_Q15(LEN)                    \
-arm_status arm_mfcc_init_##LEN##_q15(         \
+ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_##LEN##_q15(         \
   arm_mfcc_instance_q15 * S,                  \
   uint32_t nbMelFilters,                      \
   uint32_t nbDctOutputs,                      \
@@ -148,7 +148,7 @@ arm_status arm_mfcc_init_##LEN##_q15(         \
 }
 #else
 #define MFCC_INIT_Q15(LEN)                        \
-arm_status arm_mfcc_init_##LEN##_q15(             \
+ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_##LEN##_q15(             \
   arm_mfcc_instance_q15 * S,                      \
   uint32_t nbMelFilters,                          \
   uint32_t nbDctOutputs,                          \

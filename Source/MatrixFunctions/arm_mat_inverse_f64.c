@@ -49,7 +49,7 @@
                    - \ref ARM_MATH_SINGULAR      : Input matrix is found to be singular (non-invertible)
  */
 
-arm_status arm_mat_inverse_f64(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_inverse_f64(
   const arm_matrix_instance_f64 * pSrc,
         arm_matrix_instance_f64 * pDst)
 {

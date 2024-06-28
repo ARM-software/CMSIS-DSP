@@ -45,7 +45,7 @@
   @param[in]     blockSize  number of samples to process
  */
 
-void arm_fir_lattice_q15(
+ARM_DSP_ATTRIBUTE void arm_fir_lattice_q15(
   const arm_fir_lattice_instance_q15 * S,
   const q15_t * pSrc,
         q15_t * pDst,

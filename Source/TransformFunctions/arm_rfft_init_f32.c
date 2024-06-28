@@ -68,7 +68,7 @@
                    This function also initializes Twiddle factor table.
  */
 
-arm_status arm_rfft_init_f32(
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_f32(
   arm_rfft_instance_f32 * S,
   arm_cfft_radix4_instance_f32 * S_CFFT,
   uint32_t fftLenReal,

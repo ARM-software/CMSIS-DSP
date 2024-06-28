@@ -54,7 +54,7 @@
 
 #include "arm_helium_utils.h"
 
-void arm_abs_q7(
+ARM_DSP_ATTRIBUTE void arm_abs_q7(
     const q7_t * pSrc,
     q7_t * pDst,
     uint32_t blockSize)
@@ -95,7 +95,7 @@ void arm_abs_q7(
 }
 
 #else
-void arm_abs_q7(
+ARM_DSP_ATTRIBUTE void arm_abs_q7(
   const q7_t * pSrc,
         q7_t * pDst,
         uint32_t blockSize)

@@ -52,39 +52,39 @@ For the MVE version, the new arm_cfft_init_f16 must be used.
 
 #if !defined(__CC_ARM)
  
-const arm_cfft_instance_f16 arm_cfft_sR_f16_len16 = {
+const arm_cfft_instance_f16 arm_cfft_sR_f16_len16 ARM_DSP_TABLE_ATTRIBUTE = {
   16, twiddleCoefF16_16, armBitRevIndexTable_fixed_16, ARMBITREVINDEXTABLE_FIXED_16_TABLE_LENGTH
 };
 
-const arm_cfft_instance_f16 arm_cfft_sR_f16_len32 = {
+const arm_cfft_instance_f16 arm_cfft_sR_f16_len32 ARM_DSP_TABLE_ATTRIBUTE = {
   32, twiddleCoefF16_32, armBitRevIndexTable_fixed_32, ARMBITREVINDEXTABLE_FIXED_32_TABLE_LENGTH
 };
 
-const arm_cfft_instance_f16 arm_cfft_sR_f16_len64 = {
+const arm_cfft_instance_f16 arm_cfft_sR_f16_len64 ARM_DSP_TABLE_ATTRIBUTE = {
   64, twiddleCoefF16_64, armBitRevIndexTable_fixed_64, ARMBITREVINDEXTABLE_FIXED_64_TABLE_LENGTH
 };
 
-const arm_cfft_instance_f16 arm_cfft_sR_f16_len128 = {
+const arm_cfft_instance_f16 arm_cfft_sR_f16_len128 ARM_DSP_TABLE_ATTRIBUTE = {
   128, twiddleCoefF16_128, armBitRevIndexTable_fixed_128, ARMBITREVINDEXTABLE_FIXED_128_TABLE_LENGTH
 };
 
-const arm_cfft_instance_f16 arm_cfft_sR_f16_len256 = {
+const arm_cfft_instance_f16 arm_cfft_sR_f16_len256 ARM_DSP_TABLE_ATTRIBUTE = {
   256, twiddleCoefF16_256, armBitRevIndexTable_fixed_256, ARMBITREVINDEXTABLE_FIXED_256_TABLE_LENGTH
 };
 
-const arm_cfft_instance_f16 arm_cfft_sR_f16_len512 = {
+const arm_cfft_instance_f16 arm_cfft_sR_f16_len512 ARM_DSP_TABLE_ATTRIBUTE = {
   512, twiddleCoefF16_512, armBitRevIndexTable_fixed_512, ARMBITREVINDEXTABLE_FIXED_512_TABLE_LENGTH
 };
 
-const arm_cfft_instance_f16 arm_cfft_sR_f16_len1024 = {
+const arm_cfft_instance_f16 arm_cfft_sR_f16_len1024 ARM_DSP_TABLE_ATTRIBUTE = {
   1024, twiddleCoefF16_1024, armBitRevIndexTable_fixed_1024, ARMBITREVINDEXTABLE_FIXED_1024_TABLE_LENGTH
 };
 
-const arm_cfft_instance_f16 arm_cfft_sR_f16_len2048 = {
+const arm_cfft_instance_f16 arm_cfft_sR_f16_len2048 ARM_DSP_TABLE_ATTRIBUTE = {
   2048, twiddleCoefF16_2048, armBitRevIndexTable_fixed_2048, ARMBITREVINDEXTABLE_FIXED_2048_TABLE_LENGTH
 };
 
-const arm_cfft_instance_f16 arm_cfft_sR_f16_len4096 = {
+const arm_cfft_instance_f16 arm_cfft_sR_f16_len4096 ARM_DSP_TABLE_ATTRIBUTE = {
   4096, twiddleCoefF16_4096, armBitRevIndexTable_fixed_4096, ARMBITREVINDEXTABLE_FIXED_4096_TABLE_LENGTH
 };
 

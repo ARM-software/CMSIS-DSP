@@ -63,7 +63,7 @@
  * may be smaller than query + template.
  *
  */
-void arm_dtw_path_f32(const arm_matrix_instance_f32 *pDTW,
+ARM_DSP_ATTRIBUTE void arm_dtw_path_f32(const arm_matrix_instance_f32 *pDTW,
                       int16_t *pPath,
                       uint32_t *pathLength)
 {

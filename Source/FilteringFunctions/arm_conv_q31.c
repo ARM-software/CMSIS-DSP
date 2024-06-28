@@ -62,7 +62,7 @@
 #include "arm_helium_utils.h"
 #include "arm_vec_filtering.h"
 
-void arm_conv_q31(
+ARM_DSP_ATTRIBUTE void arm_conv_q31(
   const q31_t * pSrcA,
         uint32_t srcALen,
   const q31_t * pSrcB,
@@ -222,7 +222,7 @@ void arm_conv_q31(
 }
 
 #else
-void arm_conv_q31(
+ARM_DSP_ATTRIBUTE void arm_conv_q31(
   const q31_t * pSrcA,
         uint32_t srcALen,
   const q31_t * pSrcB,

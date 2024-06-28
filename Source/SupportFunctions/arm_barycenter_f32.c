@@ -50,7 +50,7 @@
  */
 
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
-void arm_barycenter_f32(const float32_t *in, 
+ARM_DSP_ATTRIBUTE void arm_barycenter_f32(const float32_t *in, 
   const float32_t *weights, 
   float32_t *out, 
   uint32_t nbVectors,
@@ -196,7 +196,7 @@ void arm_barycenter_f32(const float32_t *in,
 #if defined(ARM_MATH_NEON)
 
 #include "NEMath.h"
-void arm_barycenter_f32(const float32_t *in, const float32_t *weights, float32_t *out, uint32_t nbVectors,uint32_t vecDim)
+ARM_DSP_ATTRIBUTE void arm_barycenter_f32(const float32_t *in, const float32_t *weights, float32_t *out, uint32_t nbVectors,uint32_t vecDim)
 {
 
    const float32_t *pIn,*pW, *pIn1, *pIn2, *pIn3, *pIn4;
@@ -349,7 +349,7 @@ void arm_barycenter_f32(const float32_t *in, const float32_t *weights, float32_t
 
 }
 #else
-void arm_barycenter_f32(const float32_t *in, const float32_t *weights, float32_t *out, uint32_t nbVectors,uint32_t vecDim)
+ARM_DSP_ATTRIBUTE void arm_barycenter_f32(const float32_t *in, const float32_t *weights, float32_t *out, uint32_t nbVectors,uint32_t vecDim)
 {
 
    const float32_t *pIn,*pW;

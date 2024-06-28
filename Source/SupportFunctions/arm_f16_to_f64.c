@@ -47,7 +47,7 @@
 
  */
 
-void arm_f16_to_f64(
+ARM_DSP_ATTRIBUTE void arm_f16_to_f64(
   const float16_t * pSrc,
         float64_t * pDst,
         uint32_t blockSize)

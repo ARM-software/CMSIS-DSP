@@ -46,7 +46,7 @@
   @param[out]    pResult     mean square error
  */
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
-void arm_mse_q15(
+ARM_DSP_ATTRIBUTE void arm_mse_q15(
   const q15_t * pSrcA,
   const q15_t * pSrcB,
         uint32_t blockSize,
@@ -99,7 +99,7 @@ void arm_mse_q15(
     *pResult = (q15_t) __SSAT((q31_t) (sum / blockSize)>>13, 16);
 }
 #else
-void arm_mse_q15(
+ARM_DSP_ATTRIBUTE void arm_mse_q15(
   const q15_t * pSrcA,
   const q15_t * pSrcB,
         uint32_t blockSize,

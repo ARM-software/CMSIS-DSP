@@ -47,7 +47,7 @@
 
 #if defined(ARM_MATH_NEON) && defined(__aarch64__)
 
-void arm_mean_f64(
+ARM_DSP_ATTRIBUTE void arm_mean_f64(
     const float64_t * pSrc,
     uint32_t blockSize,
     float64_t * pResult)
@@ -87,7 +87,7 @@ void arm_mean_f64(
     *pResult = (sum/blockSize);
 }
 #else
-void arm_mean_f64(
+ARM_DSP_ATTRIBUTE void arm_mean_f64(
     const float64_t * pSrc,
     uint32_t blockSize,
     float64_t * pResult)

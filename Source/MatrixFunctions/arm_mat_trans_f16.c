@@ -52,7 +52,7 @@
 
 #include "arm_helium_utils.h"
 
-arm_status arm_mat_trans_f16(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_trans_f16(
   const arm_matrix_instance_f16 * pSrc,
   arm_matrix_instance_f16 * pDst)
 {
@@ -98,7 +98,7 @@ arm_status arm_mat_trans_f16(
 
 #else
 
-arm_status arm_mat_trans_f16(
+ARM_DSP_ATTRIBUTE arm_status arm_mat_trans_f16(
   const arm_matrix_instance_f16 * pSrc,
         arm_matrix_instance_f16 * pDst)
 {
