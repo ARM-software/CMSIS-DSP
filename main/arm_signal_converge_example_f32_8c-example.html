@@ -259,10 +259,10 @@ $(document).ready(function(){initNavTree('arm_signal_converge_example_f32_8c-exa
 <div class="line">  <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> minValue;</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Initialize the LMSNorm data structure */</span></div>
-<div class="line">  <a id="a2" name="a2"></a><a class="code hl_function" href="group__LMS__NORM.html#gac7ccbaea863882056eee815456464670" title="Initialization function for floating-point normalized LMS filter.">arm_lms_norm_init_f32</a>(&amp;lmsNorm_instance, NUMTAPS, lmsNormCoeff_f32, lmsStateF32, MU, BLOCKSIZE);</div>
+<div class="line">  <a id="a2" name="a2"></a><a class="code hl_function" href="group__LMS__NORM.html#ga032118d2f6dd15836d7fb7dc54e489fd" title="Initialization function for floating-point normalized LMS filter.">arm_lms_norm_init_f32</a>(&amp;lmsNorm_instance, NUMTAPS, lmsNormCoeff_f32, lmsStateF32, MU, BLOCKSIZE);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Initialize the FIR data structure */</span></div>
-<div class="line">  <a id="a3" name="a3"></a><a class="code hl_function" href="group__FIR.html#ga5afaa7b8e6735bbc19e582aa9755b0e1" title="Initialization function for the floating-point FIR filter.">arm_fir_init_f32</a>(&amp;LPF_instance, NUMTAPS, (<a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> *)FIRCoeff_f32, firStateF32, BLOCKSIZE);</div>
+<div class="line">  <a id="a3" name="a3"></a><a class="code hl_function" href="group__FIR.html#ga651fa25c26ee73387b3d5ccb64ffb493" title="Initialization function for the floating-point FIR filter.">arm_fir_init_f32</a>(&amp;LPF_instance, NUMTAPS, (<a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> *)FIRCoeff_f32, firStateF32, BLOCKSIZE);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">  * Loop over the frames of data and execute each of the processing</span></div>
@@ -272,14 +272,14 @@ $(document).ready(function(){initNavTree('arm_signal_converge_example_f32_8c-exa
 <div class="line">  <span class="keywordflow">for</span>(i=0; i &lt; NUMFRAMES; i++)</div>
 <div class="line">  {</div>
 <div class="line">    <span class="comment">/* Read the input data - uniformly distributed random noise - into wire1 */</span></div>
-<div class="line">    <a id="a4" name="a4"></a><a class="code hl_function" href="group__copy.html#gaa6dfe9554ca61eb3d1eee498396bce88" title="Copies the elements of a floating-point vector.">arm_copy_f32</a>(testInput_f32 + (i * BLOCKSIZE), wire1, BLOCKSIZE);</div>
+<div class="line">    <a id="a4" name="a4"></a><a class="code hl_function" href="group__copy.html#gaf3007f9bcf86ba72d10c9fafa4bec995" title="Copies the elements of a floating-point vector.">arm_copy_f32</a>(testInput_f32 + (i * BLOCKSIZE), wire1, BLOCKSIZE);</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">/* Execute the FIR processing function.  Input wire1 and output wire2 */</span></div>
-<div class="line">    <a id="a5" name="a5"></a><a class="code hl_function" href="group__FIR.html#ga0cf008f650a75f5e2cf82d10691b64d9" title="Processing function for the floating-point FIR filter.">arm_fir_f32</a>(&amp;LPF_instance, wire1, wire2, BLOCKSIZE);</div>
+<div class="line">    arm_fir_f32(&amp;LPF_instance, wire1, wire2, BLOCKSIZE);</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">/* Execute the LMS Norm processing function*/</span></div>
 <div class="line"> </div>
-<div class="line">    <a id="a6" name="a6"></a><a class="code hl_function" href="group__LMS__NORM.html#ga72b3755ed1cf97622851cbbeff83c69e" title="Processing function for floating-point normalized LMS filter.">arm_lms_norm_f32</a>(&amp;lmsNorm_instance, <span class="comment">/* LMSNorm instance */</span></div>
+<div class="line">    <a id="a5" name="a5"></a><a class="code hl_function" href="group__LMS__NORM.html#gaebe4706102f73a507ddc9770d7478952" title="Processing function for floating-point normalized LMS filter.">arm_lms_norm_f32</a>(&amp;lmsNorm_instance, <span class="comment">/* LMSNorm instance */</span></div>
 <div class="line">         wire1,                         <span class="comment">/* Input signal */</span></div>
 <div class="line">         wire2,                         <span class="comment">/* Reference Signal */</span></div>
 <div class="line">         wire3,                         <span class="comment">/* Converged Signal */</span></div>
@@ -287,31 +287,31 @@ $(document).ready(function(){initNavTree('arm_signal_converge_example_f32_8c-exa
 <div class="line">         BLOCKSIZE);                    <span class="comment">/* BlockSize */</span></div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">/* apply overall gain */</span></div>
-<div class="line">    <a id="a7" name="a7"></a><a class="code hl_function" href="group__BasicScale.html#ga5e769c8e22da173674c6abca7291e713" title="Multiplies a floating-point vector by a scalar.">arm_scale_f32</a>(wire3, 5, wire3, BLOCKSIZE);   <span class="comment">/* in-place buffer */</span></div>
+<div class="line">    <a id="a6" name="a6"></a><a class="code hl_function" href="group__BasicScale.html#ga541ff6661371c197c76d59b57f4cc650" title="Multiplies a floating-point vector by a scalar.">arm_scale_f32</a>(wire3, 5, wire3, BLOCKSIZE);   <span class="comment">/* in-place buffer */</span></div>
 <div class="line">  }</div>
 <div class="line"> </div>
-<div class="line">  status = <a id="a8" name="a8"></a><a class="code hl_enumvalue" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>;</div>
+<div class="line">  status = <a id="a7" name="a7"></a><a class="code hl_enumvalue" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* -------------------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">  * Test whether the error signal has reached towards 0.</span></div>
 <div class="line"><span class="comment">  * ----------------------------------------------------------------------------- */</span></div>
 <div class="line"> </div>
-<div class="line">  <a id="a9" name="a9"></a><a class="code hl_function" href="group__BasicAbs.html#ga0e8fc7df3033cdbe9cda8a766a46e6d9" title="Floating-point vector absolute value.">arm_abs_f32</a>(err_signal, err_signal, BLOCKSIZE);</div>
-<div class="line">  <a id="a10" name="a10"></a><a class="code hl_function" href="group__Min.html#ga514e2c920c432e1a3df2cb03f01d2797" title="Minimum value of a floating-point vector.">arm_min_f32</a>(err_signal, BLOCKSIZE, &amp;minValue, &amp;index);</div>
+<div class="line">  <a id="a8" name="a8"></a><a class="code hl_function" href="group__BasicAbs.html#ga5f4a01b6d9343fe441f47c94961320d0" title="Floating-point vector absolute value.">arm_abs_f32</a>(err_signal, err_signal, BLOCKSIZE);</div>
+<div class="line">  <a id="a9" name="a9"></a><a class="code hl_function" href="group__Min.html#gaee27e6a07d286b4bfa84903fb3e9e4d2" title="Minimum value of a floating-point vector.">arm_min_f32</a>(err_signal, BLOCKSIZE, &amp;minValue, &amp;index);</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">if</span> (minValue &gt; DELTA_ERROR)</div>
 <div class="line">  {</div>
-<div class="line">    status = <a id="a11" name="a11"></a><a class="code hl_enumvalue" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a09457f2be656b35015fd6d36202fa376">ARM_MATH_TEST_FAILURE</a>;</div>
+<div class="line">    status = <a id="a10" name="a10"></a><a class="code hl_enumvalue" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a09457f2be656b35015fd6d36202fa376">ARM_MATH_TEST_FAILURE</a>;</div>
 <div class="line">  }</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">  * Test whether the filter coefficients have converged.</span></div>
 <div class="line"><span class="comment">  * ------------------------------------------------------------------- */</span></div>
 <div class="line"> </div>
-<div class="line">  <a id="a12" name="a12"></a><a class="code hl_function" href="group__BasicSub.html#ga76b8b2aec34269c6de0b090cab00fb33" title="Floating-point vector subtraction.">arm_sub_f32</a>((<a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> *)FIRCoeff_f32, lmsNormCoeff_f32, lmsNormCoeff_f32, NUMTAPS);</div>
+<div class="line">  <a id="a11" name="a11"></a><a class="code hl_function" href="group__BasicSub.html#gaa7cd710b891f8162f01efab904ddf45b" title="Floating-point vector subtraction.">arm_sub_f32</a>((<a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> *)FIRCoeff_f32, lmsNormCoeff_f32, lmsNormCoeff_f32, NUMTAPS);</div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_function" href="group__BasicAbs.html#ga0e8fc7df3033cdbe9cda8a766a46e6d9" title="Floating-point vector absolute value.">arm_abs_f32</a>(lmsNormCoeff_f32, lmsNormCoeff_f32, NUMTAPS);</div>
-<div class="line">  <a class="code hl_function" href="group__Min.html#ga514e2c920c432e1a3df2cb03f01d2797" title="Minimum value of a floating-point vector.">arm_min_f32</a>(lmsNormCoeff_f32, NUMTAPS, &amp;minValue, &amp;index);</div>
+<div class="line">  <a class="code hl_function" href="group__BasicAbs.html#ga5f4a01b6d9343fe441f47c94961320d0" title="Floating-point vector absolute value.">arm_abs_f32</a>(lmsNormCoeff_f32, lmsNormCoeff_f32, NUMTAPS);</div>
+<div class="line">  <a class="code hl_function" href="group__Min.html#gaee27e6a07d286b4bfa84903fb3e9e4d2" title="Minimum value of a floating-point vector.">arm_min_f32</a>(lmsNormCoeff_f32, NUMTAPS, &amp;minValue, &amp;index);</div>
 <div class="line"> </div>
 <div class="line">  status = (minValue &gt; DELTA_COEFF) ? <a class="code hl_enumvalue" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a09457f2be656b35015fd6d36202fa376">ARM_MATH_TEST_FAILURE</a> : <a class="code hl_enumvalue" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>;</div>
 <div class="line">  </div>

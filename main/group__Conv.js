@@ -1,12 +1,12 @@
 var group__Conv =
 [
-    [ "arm_conv_f32", "group__Conv.html#ga2e977f76e873bd47c6c41c7d940fdf7e", null ],
-    [ "arm_conv_fast_opt_q15", "group__Conv.html#ga8ecd292b8e74c8f05b208e7948d05a90", null ],
-    [ "arm_conv_fast_q15", "group__Conv.html#gaf6bc2c8d655ef8c9b66affdae489f366", null ],
-    [ "arm_conv_fast_q31", "group__Conv.html#ga2d2b29b1f7f00a8651f1bc7f0560464b", null ],
-    [ "arm_conv_opt_q15", "group__Conv.html#ga0d60c7a8349c6235d88bf87b04172252", null ],
-    [ "arm_conv_opt_q7", "group__Conv.html#gaf23966af04840f17c26c93849986baeb", null ],
-    [ "arm_conv_q15", "group__Conv.html#ga372d3fd79b107dc6b12163a00c22da18", null ],
-    [ "arm_conv_q31", "group__Conv.html#ga08ce299fb5c3329505cb8ce4bf4f6e06", null ],
-    [ "arm_conv_q7", "group__Conv.html#ga625b30107443b6d145350bc242749764", null ]
+    [ "arm_conv_f32", "group__Conv.html#ga90d544fef93396165e53d466f66c05d2", null ],
+    [ "arm_conv_fast_opt_q15", "group__Conv.html#ga5bca836d070cb5610642a42505e57ff5", null ],
+    [ "arm_conv_fast_q15", "group__Conv.html#gae82bc38536acb16637c51edb898c1d7f", null ],
+    [ "arm_conv_fast_q31", "group__Conv.html#ga7027add4749283db540f68f9f40379fc", null ],
+    [ "arm_conv_opt_q15", "group__Conv.html#gaac84a49134e72bc4db158a56f5e1021b", null ],
+    [ "arm_conv_opt_q7", "group__Conv.html#gaa96496cd300098607875a3095e7beaa5", null ],
+    [ "arm_conv_q15", "group__Conv.html#ga32635b9eb55fe49571b65bb3f42f6070", null ],
+    [ "arm_conv_q31", "group__Conv.html#gad9c40053c521cf9974417f91179e61ba", null ],
+    [ "arm_conv_q7", "group__Conv.html#ga40ce6892a59638b487415bfc80411819", null ]
 ];

@@ -210,17 +210,17 @@ $(document).ready(function(){initNavTree('arm_fft_bin_example_f32_8c-example.htm
 <div class="line"> </div>
 <div class="line">  status = <a id="a1" name="a1"></a><a class="code hl_enumvalue" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>;</div>
 <div class="line"> </div>
-<div class="line">  status=<a id="a2" name="a2"></a><a class="code hl_function" href="group__ComplexFFTF32.html#ga251035459b597a287d0e3b34d7a4fac4" title="Initialization function for the cfft f32 function with 1024 samples.">arm_cfft_init_1024_f32</a>(&amp;varInstCfftF32);</div>
+<div class="line">  status=<a id="a2" name="a2"></a><a class="code hl_function" href="group__ComplexFFTF32.html#gaa97b9ae831cf396ee66b7ac3d1eb34af" title="Initialization function for the cfft f32 function with 1024 samples.">arm_cfft_init_1024_f32</a>(&amp;varInstCfftF32);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Process the data through the CFFT/CIFFT module */</span></div>
-<div class="line">  <a id="a3" name="a3"></a><a class="code hl_function" href="group__ComplexFFTF32.html#gade0f9c4ff157b6b9c72a1eafd86ebf80" title="Processing function for the floating-point complex FFT.">arm_cfft_f32</a>(&amp;varInstCfftF32, testInput_f32_10khz, ifftFlag, doBitReverse);</div>
+<div class="line">  <a id="a3" name="a3"></a><a class="code hl_function" href="group__ComplexFFTF32.html#gac416594aa3cb2ef330c2f504beb41f65" title="Processing function for the floating-point complex FFT.">arm_cfft_f32</a>(&amp;varInstCfftF32, testInput_f32_10khz, ifftFlag, doBitReverse);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Process the data through the Complex Magnitude Module for</span></div>
 <div class="line"><span class="comment">  calculating the magnitude at each bin */</span></div>
-<div class="line">  <a id="a4" name="a4"></a><a class="code hl_function" href="group__cmplx__mag.html#gaba4e0eff7816fe80d01121fb4cf6c6bc" title="Floating-point complex magnitude.">arm_cmplx_mag_f32</a>(testInput_f32_10khz, testOutput, fftSize);</div>
+<div class="line">  <a id="a4" name="a4"></a><a class="code hl_function" href="group__cmplx__mag.html#ga0a85ce170660e5e46fc387ab718be8ca" title="Floating-point complex magnitude.">arm_cmplx_mag_f32</a>(testInput_f32_10khz, testOutput, fftSize);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Calculates maxValue and returns corresponding BIN value */</span></div>
-<div class="line">  <a id="a5" name="a5"></a><a class="code hl_function" href="group__Max.html#gad1eabd31544fe59c414d9ce5bd0cc151" title="Maximum value of a floating-point vector.">arm_max_f32</a>(testOutput, fftSize, &amp;maxValue, &amp;testIndex);</div>
+<div class="line">  <a id="a5" name="a5"></a><a class="code hl_function" href="group__Max.html#ga04466e0d45be27edd9c334d28a179e06" title="Maximum value of a floating-point vector.">arm_max_f32</a>(testOutput, fftSize, &amp;maxValue, &amp;testIndex);</div>
 <div class="line"> </div>
 <div class="line">  status = (testIndex != refIndex) ? <a id="a6" name="a6"></a><a class="code hl_enumvalue" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a09457f2be656b35015fd6d36202fa376">ARM_MATH_TEST_FAILURE</a> : <a class="code hl_enumvalue" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>;</div>
 <div class="line">  </div>

@@ -225,13 +225,13 @@ $(document).ready(function(){initNavTree('arm_sin_cos_example_f32_8c-example.htm
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">for</span>(i=0; i&lt; blockSize; i++)</div>
 <div class="line">  {</div>
-<div class="line">    cosOutput = <a id="a0" name="a0"></a><a class="code hl_function" href="group__cos.html#gace15287f9c64b9b4084d1c797d4c49d8" title="Fast approximation to the trigonometric cosine function for floating-point data.">arm_cos_f32</a>(testInput_f32[i]);</div>
-<div class="line">    sinOutput = <a id="a1" name="a1"></a><a class="code hl_function" href="group__sin.html#gae164899c4a3fc0e946dc5d55555fe541" title="Fast approximation to the trigonometric sine function for floating-point data.">arm_sin_f32</a>(testInput_f32[i]);</div>
+<div class="line">    cosOutput = <a id="a0" name="a0"></a><a class="code hl_function" href="group__cos.html#ga7b01472b6b8a5af4e80421eff3bb80d7" title="Fast approximation to the trigonometric cosine function for floating-point data.">arm_cos_f32</a>(testInput_f32[i]);</div>
+<div class="line">    sinOutput = <a id="a1" name="a1"></a><a class="code hl_function" href="group__sin.html#ga0482660c99ca5ee91103d6f26f2733dc" title="Fast approximation to the trigonometric sine function for floating-point data.">arm_sin_f32</a>(testInput_f32[i]);</div>
 <div class="line"> </div>
-<div class="line">    <a id="a2" name="a2"></a><a class="code hl_function" href="group__BasicMult.html#gacf950935141cad927bea886e88fd9e9b" title="Floating-point vector multiplication.">arm_mult_f32</a>(&amp;cosOutput, &amp;cosOutput, &amp;cosSquareOutput, 1);</div>
-<div class="line">    <a class="code hl_function" href="group__BasicMult.html#gacf950935141cad927bea886e88fd9e9b" title="Floating-point vector multiplication.">arm_mult_f32</a>(&amp;sinOutput, &amp;sinOutput, &amp;sinSquareOutput, 1);</div>
+<div class="line">    <a id="a2" name="a2"></a><a class="code hl_function" href="group__BasicMult.html#gac3b6675e3abb723777cc4761cb49866b" title="Floating-point vector multiplication.">arm_mult_f32</a>(&amp;cosOutput, &amp;cosOutput, &amp;cosSquareOutput, 1);</div>
+<div class="line">    <a class="code hl_function" href="group__BasicMult.html#gac3b6675e3abb723777cc4761cb49866b" title="Floating-point vector multiplication.">arm_mult_f32</a>(&amp;sinOutput, &amp;sinOutput, &amp;sinSquareOutput, 1);</div>
 <div class="line"> </div>
-<div class="line">    <a id="a3" name="a3"></a><a class="code hl_function" href="group__BasicAdd.html#gabfef1e86e458314a61f4baa441d9765e" title="Floating-point vector addition.">arm_add_f32</a>(&amp;cosSquareOutput, &amp;sinSquareOutput, &amp;testOutput, 1);</div>
+<div class="line">    <a id="a3" name="a3"></a><a class="code hl_function" href="group__BasicAdd.html#ga31b8e2344e6968750aafb7f5a18ae495" title="Floating-point vector addition.">arm_add_f32</a>(&amp;cosSquareOutput, &amp;sinSquareOutput, &amp;testOutput, 1);</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">/* absolute value of difference between ref and test */</span></div>
 <div class="line">    diff = fabsf(testRefOutput_f32 - testOutput);</div>

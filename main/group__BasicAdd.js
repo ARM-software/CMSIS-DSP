@@ -1,9 +1,9 @@
 var group__BasicAdd =
 [
-    [ "arm_add_f16", "group__BasicAdd.html#gac8809169a5ff3feacc40dc085c1093b8", null ],
-    [ "arm_add_f32", "group__BasicAdd.html#gabfef1e86e458314a61f4baa441d9765e", null ],
-    [ "arm_add_f64", "group__BasicAdd.html#ga54ae86c75656d03fea8cc4a0e642a96b", null ],
-    [ "arm_add_q15", "group__BasicAdd.html#gacea7c052f62fdd71c8f1a14f0495cbed", null ],
-    [ "arm_add_q31", "group__BasicAdd.html#ga63e5862d90971bff4181b22bfa6ac753", null ],
-    [ "arm_add_q7", "group__BasicAdd.html#gafaecefa2be70b02118c8a317e183f247", null ]
+    [ "arm_add_f16", "group__BasicAdd.html#ga218e00a888fa05cb84b8651972e995ce", null ],
+    [ "arm_add_f32", "group__BasicAdd.html#ga31b8e2344e6968750aafb7f5a18ae495", null ],
+    [ "arm_add_f64", "group__BasicAdd.html#ga43ed1a29a6e63a680e9824295e89a0cd", null ],
+    [ "arm_add_q15", "group__BasicAdd.html#ga1347782f55c55cb1e35f03f700a243ef", null ],
+    [ "arm_add_q31", "group__BasicAdd.html#ga7a12efd2a60f1dd88378e29eabe86cc4", null ],
+    [ "arm_add_q7", "group__BasicAdd.html#gab8f7049684e95e25396359999203fa52", null ]
 ];

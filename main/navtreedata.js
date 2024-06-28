@@ -43,7 +43,7 @@ var NAVTREEINDEX =
 "group__FIXED.html#a2d6406bd24ea114ba6b092bd28c915cf",
 "group__GenericQ15Number.html#a5d7353ee1e142d2d816dd479c088bedf",
 "group__Matrix.html#a39ac7c6f90f1e1add6e5b4a2fc20f222",
-"group__Max.html#ga96f240086b586a9c724fb5285fd15570",
+"group__Max.html#ga83e357f296eca22f6444222ad42e4d4f",
 "group__VECTOR.html#a69556ec665477f5fec2c155b58af059f",
 "group__genericTypes.html#ga956128b7a0d71442fb29cbcbecd71d71",
 "structarm__cfft__radix2__instance__f16.html",

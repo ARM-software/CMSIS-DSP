@@ -1,6 +1,6 @@
 var group__DTW =
 [
-    [ "arm_dtw_distance_f32", "group__DTW.html#ga3054a8c2bd87ec5ab533e1e31363837a", null ],
-    [ "arm_dtw_init_window_q7", "group__DTW.html#gaec9aeb4005af427929bd3dbb9ba4376e", null ],
-    [ "arm_dtw_path_f32", "group__DTW.html#gab413c9d09441e997b1d8d74da4b7245f", null ]
+    [ "arm_dtw_distance_f32", "group__DTW.html#ga71fe7bc7aed8ae64e4d61ae6c30e2d9e", null ],
+    [ "arm_dtw_init_window_q7", "group__DTW.html#gad01cfea6e191b26eb12deddaf4a8c8c7", null ],
+    [ "arm_dtw_path_f32", "group__DTW.html#ga26f2e5b0a972fe282b190f2b6fbf7d22", null ]
 ];

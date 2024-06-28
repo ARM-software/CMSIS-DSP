@@ -1,8 +1,8 @@
 var group__MatrixChol =
 [
-    [ "arm_mat_cholesky_f16", "group__MatrixChol.html#gaf94a1d82b0f71856e0eecb87675a5427", null ],
-    [ "arm_mat_cholesky_f32", "group__MatrixChol.html#ga93fb3e349876dfa93658a73114341290", null ],
-    [ "arm_mat_cholesky_f64", "group__MatrixChol.html#gadea9a5bd7f46d2dc604799b653fd8cdf", null ],
-    [ "arm_mat_ldlt_f32", "group__MatrixChol.html#ga1d834976c8687e4925e5a061d65668c4", null ],
-    [ "arm_mat_ldlt_f64", "group__MatrixChol.html#gabc7f0d81b9d1e4899ca47d13775bbbc1", null ]
+    [ "arm_mat_cholesky_f16", "group__MatrixChol.html#ga60db50db356274176d56fa8830d154c5", null ],
+    [ "arm_mat_cholesky_f32", "group__MatrixChol.html#ga88790ae0583afdbef5142dd38c43e004", null ],
+    [ "arm_mat_cholesky_f64", "group__MatrixChol.html#gaca40ff53d34a13d536875526b87ff588", null ],
+    [ "arm_mat_ldlt_f32", "group__MatrixChol.html#gae760a1cdf75f07172bb7ddd600af62f7", null ],
+    [ "arm_mat_ldlt_f64", "group__MatrixChol.html#gae753cc1481d506b7d81f26902e14ac96", null ]
 ];

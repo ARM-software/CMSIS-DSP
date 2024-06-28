@@ -1,5 +1,5 @@
 var group__divide =
 [
-    [ "arm_divide_q15", "group__divide.html#ga3d5bc8179cdfb12288d58d99d635e4cb", null ],
-    [ "arm_divide_q31", "group__divide.html#ga250c0a49bd2e42282f3296d51138a5cb", null ]
+    [ "arm_divide_q15", "group__divide.html#ga3b61a30b32ec85bca22ffc2974dde7a8", null ],
+    [ "arm_divide_q31", "group__divide.html#gaf02c0a420ea315dba5d0d4a7274b53c2", null ]
 ];

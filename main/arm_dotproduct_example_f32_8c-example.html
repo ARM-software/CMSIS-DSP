@@ -241,13 +241,13 @@ $(document).ready(function(){initNavTree('arm_dotproduct_example_f32_8c-example.
 <div class="line">  <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> diff;     <span class="comment">/* Difference between reference and test outputs */</span></div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Multiplication of two input buffers */</span></div>
-<div class="line">  <a id="a0" name="a0"></a><a class="code hl_function" href="group__BasicMult.html#gacf950935141cad927bea886e88fd9e9b" title="Floating-point vector multiplication.">arm_mult_f32</a>(srcA_buf_f32, srcB_buf_f32, multOutput, MAX_BLOCKSIZE);</div>
+<div class="line">  <a id="a0" name="a0"></a><a class="code hl_function" href="group__BasicMult.html#gac3b6675e3abb723777cc4761cb49866b" title="Floating-point vector multiplication.">arm_mult_f32</a>(srcA_buf_f32, srcB_buf_f32, multOutput, MAX_BLOCKSIZE);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Accumulate the multiplication output values to</span></div>
 <div class="line"><span class="comment">     get the dot product of the two inputs */</span></div>
 <div class="line">  <span class="keywordflow">for</span>(i=0; i&lt; MAX_BLOCKSIZE; i++)</div>
 <div class="line">  {</div>
-<div class="line">    <a id="a1" name="a1"></a><a class="code hl_function" href="group__BasicAdd.html#gabfef1e86e458314a61f4baa441d9765e" title="Floating-point vector addition.">arm_add_f32</a>(&amp;testOutput, &amp;multOutput[i], &amp;testOutput, 1);</div>
+<div class="line">    <a id="a1" name="a1"></a><a class="code hl_function" href="group__BasicAdd.html#ga31b8e2344e6968750aafb7f5a18ae495" title="Floating-point vector addition.">arm_add_f32</a>(&amp;testOutput, &amp;multOutput[i], &amp;testOutput, 1);</div>
 <div class="line">  }</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* absolute value of difference between ref and test */</span></div>

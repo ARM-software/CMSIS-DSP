@@ -364,23 +364,23 @@ $(document).ready(function(){initNavTree('arm_graphic_equalizer_example_q31_8c-e
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Initialize the state and coefficient buffers for all Biquad sections */</span></div>
 <div class="line"> </div>
-<div class="line">  <a id="a2" name="a2"></a><a class="code hl_function" href="group__BiquadCascadeDF1__32x64.html#ga426cd78591a717e87d66d1eaa9a3d074" title="Initialization function for the Q31 Biquad cascade 32x64 filter.">arm_biquad_cas_df1_32x64_init_q31</a>(&amp;S1, NUMSTAGES,</div>
+<div class="line">  <a id="a2" name="a2"></a><a class="code hl_function" href="group__BiquadCascadeDF1__32x64.html#ga424587bb467df15a47c08cedc4b0d647" title="Initialization function for the Q31 Biquad cascade 32x64 filter.">arm_biquad_cas_df1_32x64_init_q31</a>(&amp;S1, NUMSTAGES,</div>
 <div class="line">            (<a class="code hl_typedef" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0" title="32-bit fractional data type in 1.31 format.">q31_t</a> *) &amp;coeffTable[190*0 + 10*(gainDB[0] + 9)],</div>
 <div class="line">            &amp;biquadStateBand1Q31[0], 2);</div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_function" href="group__BiquadCascadeDF1__32x64.html#ga426cd78591a717e87d66d1eaa9a3d074" title="Initialization function for the Q31 Biquad cascade 32x64 filter.">arm_biquad_cas_df1_32x64_init_q31</a>(&amp;S2, NUMSTAGES,</div>
+<div class="line">  <a class="code hl_function" href="group__BiquadCascadeDF1__32x64.html#ga424587bb467df15a47c08cedc4b0d647" title="Initialization function for the Q31 Biquad cascade 32x64 filter.">arm_biquad_cas_df1_32x64_init_q31</a>(&amp;S2, NUMSTAGES,</div>
 <div class="line">            (<a class="code hl_typedef" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0" title="32-bit fractional data type in 1.31 format.">q31_t</a> *) &amp;coeffTable[190*1 + 10*(gainDB[1] + 9)],</div>
 <div class="line">            &amp;biquadStateBand2Q31[0], 2);</div>
 <div class="line"> </div>
-<div class="line">  <a id="a3" name="a3"></a><a class="code hl_function" href="group__BiquadCascadeDF1.html#ga5563b156af44d1be2a7548626988bf4e" title="Initialization function for the Q31 Biquad cascade filter.">arm_biquad_cascade_df1_init_q31</a>(&amp;S3, NUMSTAGES,</div>
+<div class="line">  <a id="a3" name="a3"></a><a class="code hl_function" href="group__BiquadCascadeDF1.html#ga29effe682eefa967c2cd2c110b1109d4" title="Initialization function for the Q31 Biquad cascade filter.">arm_biquad_cascade_df1_init_q31</a>(&amp;S3, NUMSTAGES,</div>
 <div class="line">          (<a class="code hl_typedef" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0" title="32-bit fractional data type in 1.31 format.">q31_t</a> *) &amp;coeffTable[190*2 + 10*(gainDB[2] + 9)],</div>
 <div class="line">          &amp;biquadStateBand3Q31[0], 2);</div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_function" href="group__BiquadCascadeDF1.html#ga5563b156af44d1be2a7548626988bf4e" title="Initialization function for the Q31 Biquad cascade filter.">arm_biquad_cascade_df1_init_q31</a>(&amp;S4, NUMSTAGES,</div>
+<div class="line">  <a class="code hl_function" href="group__BiquadCascadeDF1.html#ga29effe682eefa967c2cd2c110b1109d4" title="Initialization function for the Q31 Biquad cascade filter.">arm_biquad_cascade_df1_init_q31</a>(&amp;S4, NUMSTAGES,</div>
 <div class="line">          (<a class="code hl_typedef" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0" title="32-bit fractional data type in 1.31 format.">q31_t</a> *) &amp;coeffTable[190*3 + 10*(gainDB[3] + 9)],</div>
 <div class="line">          &amp;biquadStateBand4Q31[0], 2);</div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_function" href="group__BiquadCascadeDF1.html#ga5563b156af44d1be2a7548626988bf4e" title="Initialization function for the Q31 Biquad cascade filter.">arm_biquad_cascade_df1_init_q31</a>(&amp;S5, NUMSTAGES,</div>
+<div class="line">  <a class="code hl_function" href="group__BiquadCascadeDF1.html#ga29effe682eefa967c2cd2c110b1109d4" title="Initialization function for the Q31 Biquad cascade filter.">arm_biquad_cascade_df1_init_q31</a>(&amp;S5, NUMSTAGES,</div>
 <div class="line">          (<a class="code hl_typedef" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0" title="32-bit fractional data type in 1.31 format.">q31_t</a> *) &amp;coeffTable[190*4 + 10*(gainDB[4] + 9)],</div>
 <div class="line">          &amp;biquadStateBand5Q31[0], 2);</div>
 <div class="line"> </div>
@@ -395,41 +395,41 @@ $(document).ready(function(){initNavTree('arm_graphic_equalizer_example_q31_8c-e
 <div class="line"><span class="comment">    ** Convert block of input data from float to Q31</span></div>
 <div class="line"><span class="comment">    ** ------------------------------------------------------------------- */</span></div>
 <div class="line"> </div>
-<div class="line">    <a id="a4" name="a4"></a><a class="code hl_function" href="group__float__to__x.html#gaae21be47db707e79552f3e8221a48fb0" title="Converts the elements of the floating-point vector to Q31 vector.">arm_float_to_q31</a>(inputF32 + (i*BLOCKSIZE), inputQ31, BLOCKSIZE);</div>
+<div class="line">    <a id="a4" name="a4"></a><a class="code hl_function" href="group__float__to__x.html#ga7c4bb054f57a52b41d099c0f06ad7a8c" title="Converts the elements of the floating-point vector to Q31 vector.">arm_float_to_q31</a>(inputF32 + (i*BLOCKSIZE), inputQ31, BLOCKSIZE);</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">    ** Scale down by 1/8.  This provides additional headroom so that the</span></div>
 <div class="line"><span class="comment">    ** graphic EQ can apply gain.</span></div>
 <div class="line"><span class="comment">    ** ------------------------------------------------------------------- */</span></div>
 <div class="line"> </div>
-<div class="line">    <a id="a5" name="a5"></a><a class="code hl_function" href="group__BasicScale.html#ga8b2b6ea2e39ca464e8f2cfdd937c022b" title="Multiplies a Q31 vector by a scalar.">arm_scale_q31</a>(inputQ31, 0x7FFFFFFF, -3, inputQ31, BLOCKSIZE);</div>
+<div class="line">    <a id="a5" name="a5"></a><a class="code hl_function" href="group__BasicScale.html#gaa70c0ee242db427c0b2491a48a1680b8" title="Multiplies a Q31 vector by a scalar.">arm_scale_q31</a>(inputQ31, 0x7FFFFFFF, -3, inputQ31, BLOCKSIZE);</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">    ** Call the Q31 Biquad Cascade DF1 32x64 process function for band1, band2</span></div>
 <div class="line"><span class="comment">    ** ------------------------------------------------------------------- */</span></div>
 <div class="line"> </div>
-<div class="line">    <a id="a6" name="a6"></a><a class="code hl_function" href="group__BiquadCascadeDF1__32x64.html#gae71a3095b94939418618ddf83caf739a" title="Processing function for the Q31 Biquad cascade 32x64 filter.">arm_biquad_cas_df1_32x64_q31</a>(&amp;S1, inputQ31, outputQ31, BLOCKSIZE);</div>
-<div class="line">    <a class="code hl_function" href="group__BiquadCascadeDF1__32x64.html#gae71a3095b94939418618ddf83caf739a" title="Processing function for the Q31 Biquad cascade 32x64 filter.">arm_biquad_cas_df1_32x64_q31</a>(&amp;S2, outputQ31, outputQ31, BLOCKSIZE);</div>
+<div class="line">    <a id="a6" name="a6"></a><a class="code hl_function" href="group__BiquadCascadeDF1__32x64.html#gaa16bf8fa012c3e82eb0e3fd5c10ea8d8" title="Processing function for the Q31 Biquad cascade 32x64 filter.">arm_biquad_cas_df1_32x64_q31</a>(&amp;S1, inputQ31, outputQ31, BLOCKSIZE);</div>
+<div class="line">    <a class="code hl_function" href="group__BiquadCascadeDF1__32x64.html#gaa16bf8fa012c3e82eb0e3fd5c10ea8d8" title="Processing function for the Q31 Biquad cascade 32x64 filter.">arm_biquad_cas_df1_32x64_q31</a>(&amp;S2, outputQ31, outputQ31, BLOCKSIZE);</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">    ** Call the Q31 Biquad Cascade DF1 process function for band3, band4, band5</span></div>
 <div class="line"><span class="comment">    ** ------------------------------------------------------------------- */</span></div>
 <div class="line"> </div>
-<div class="line">    <a id="a7" name="a7"></a><a class="code hl_function" href="group__BiquadCascadeDF1.html#ga4e7dad0ee6949005909fd4fcf1249b79" title="Processing function for the Q31 Biquad cascade filter.">arm_biquad_cascade_df1_q31</a>(&amp;S3, outputQ31, outputQ31, BLOCKSIZE);</div>
-<div class="line">    <a class="code hl_function" href="group__BiquadCascadeDF1.html#ga4e7dad0ee6949005909fd4fcf1249b79" title="Processing function for the Q31 Biquad cascade filter.">arm_biquad_cascade_df1_q31</a>(&amp;S4, outputQ31, outputQ31, BLOCKSIZE);</div>
-<div class="line">    <a class="code hl_function" href="group__BiquadCascadeDF1.html#ga4e7dad0ee6949005909fd4fcf1249b79" title="Processing function for the Q31 Biquad cascade filter.">arm_biquad_cascade_df1_q31</a>(&amp;S5, outputQ31, outputQ31, BLOCKSIZE);</div>
+<div class="line">    <a id="a7" name="a7"></a><a class="code hl_function" href="group__BiquadCascadeDF1.html#ga76ce2ff72f56c06e9a621fe35c103ff2" title="Processing function for the Q31 Biquad cascade filter.">arm_biquad_cascade_df1_q31</a>(&amp;S3, outputQ31, outputQ31, BLOCKSIZE);</div>
+<div class="line">    <a class="code hl_function" href="group__BiquadCascadeDF1.html#ga76ce2ff72f56c06e9a621fe35c103ff2" title="Processing function for the Q31 Biquad cascade filter.">arm_biquad_cascade_df1_q31</a>(&amp;S4, outputQ31, outputQ31, BLOCKSIZE);</div>
+<div class="line">    <a class="code hl_function" href="group__BiquadCascadeDF1.html#ga76ce2ff72f56c06e9a621fe35c103ff2" title="Processing function for the Q31 Biquad cascade filter.">arm_biquad_cascade_df1_q31</a>(&amp;S5, outputQ31, outputQ31, BLOCKSIZE);</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">    ** Convert Q31 result back to float</span></div>
 <div class="line"><span class="comment">    ** ------------------------------------------------------------------- */</span></div>
 <div class="line"> </div>
-<div class="line">    <a id="a8" name="a8"></a><a class="code hl_function" href="group__q31__to__x.html#ga19a9d023aca1f99abd5da6f13a42b6cf" title="Converts the elements of the Q31 vector to floating-point vector.">arm_q31_to_float</a>(outputQ31, outputF32 + (i * BLOCKSIZE), BLOCKSIZE);</div>
+<div class="line">    <a id="a8" name="a8"></a><a class="code hl_function" href="group__q31__to__x.html#ga85165019cd7b0c22d738a0b3f96c738f" title="Converts the elements of the Q31 vector to floating-point vector.">arm_q31_to_float</a>(outputQ31, outputF32 + (i * BLOCKSIZE), BLOCKSIZE);</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">    ** Scale back up</span></div>
 <div class="line"><span class="comment">    ** ------------------------------------------------------------------- */</span></div>
 <div class="line"> </div>
-<div class="line">    <a id="a9" name="a9"></a><a class="code hl_function" href="group__BasicScale.html#ga5e769c8e22da173674c6abca7291e713" title="Multiplies a floating-point vector by a scalar.">arm_scale_f32</a>(outputF32 + (i * BLOCKSIZE), 8.0f, outputF32 + (i * BLOCKSIZE), BLOCKSIZE);</div>
+<div class="line">    <a id="a9" name="a9"></a><a class="code hl_function" href="group__BasicScale.html#ga541ff6661371c197c76d59b57f4cc650" title="Multiplies a floating-point vector by a scalar.">arm_scale_f32</a>(outputF32 + (i * BLOCKSIZE), 8.0f, outputF32 + (i * BLOCKSIZE), BLOCKSIZE);</div>
 <div class="line">  };</div>
 <div class="line"> </div>
 <div class="line">  snr = arm_snr_f32(testRefOutput_f32, testOutput, TESTLENGTH);</div>

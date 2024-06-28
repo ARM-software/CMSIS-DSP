@@ -1,6 +1,6 @@
 var group__Xor =
 [
-    [ "arm_xor_u16", "group__Xor.html#ga5048ed05ab7821cdb5118d7c410c6db7", null ],
-    [ "arm_xor_u32", "group__Xor.html#gab009f33485bd79c752561a65552b0f77", null ],
-    [ "arm_xor_u8", "group__Xor.html#gaae18d7ea4f37e37ad094ece610bab3dd", null ]
+    [ "arm_xor_u16", "group__Xor.html#gab22b7884774eb28f00b5dd2730916390", null ],
+    [ "arm_xor_u32", "group__Xor.html#gad730267de21d7b7ee0ee7c831fbbe453", null ],
+    [ "arm_xor_u8", "group__Xor.html#ga0c795d070bf8a829d75717a0b71aaf10", null ]
 ];

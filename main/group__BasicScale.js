@@ -1,9 +1,9 @@
 var group__BasicScale =
 [
-    [ "arm_scale_f16", "group__BasicScale.html#gad70fdbfb371663aa224c76ce90e5a300", null ],
-    [ "arm_scale_f32", "group__BasicScale.html#ga5e769c8e22da173674c6abca7291e713", null ],
-    [ "arm_scale_f64", "group__BasicScale.html#ga98a3022590a4367a4c9da645a94a13f5", null ],
-    [ "arm_scale_q15", "group__BasicScale.html#ga4663809f04249df5ea186ea09335e687", null ],
-    [ "arm_scale_q31", "group__BasicScale.html#ga8b2b6ea2e39ca464e8f2cfdd937c022b", null ],
-    [ "arm_scale_q7", "group__BasicScale.html#ga0d135086c6b813251b47a0d127b75eb8", null ]
+    [ "arm_scale_f16", "group__BasicScale.html#gaec4f762263c065191ff86a12c8e77b5d", null ],
+    [ "arm_scale_f32", "group__BasicScale.html#ga541ff6661371c197c76d59b57f4cc650", null ],
+    [ "arm_scale_f64", "group__BasicScale.html#ga5a14778d7872e5aaedafc3e21b49d896", null ],
+    [ "arm_scale_q15", "group__BasicScale.html#ga7575735fd67442425ccc3a170b29caae", null ],
+    [ "arm_scale_q31", "group__BasicScale.html#gaa70c0ee242db427c0b2491a48a1680b8", null ],
+    [ "arm_scale_q7", "group__BasicScale.html#ga914dd475d988643c061ef7550b78b0ff", null ]
 ];

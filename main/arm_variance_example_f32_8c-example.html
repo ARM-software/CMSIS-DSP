@@ -239,17 +239,17 @@ $(document).ready(function(){initNavTree('arm_variance_example_f32_8c-example.ht
 <div class="line">  <span class="comment">/* x&#39; = 1/blockSize * (x(0)* 1 + x(1) * 1 + ... + x(n-1) * 1) */</span></div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Fill wire1 buffer with 1.0 value */</span></div>
-<div class="line">  <a id="a1" name="a1"></a><a class="code hl_function" href="group__Fill.html#ga2248e8d3901b4afb7827163132baad94" title="Fills a constant value into a floating-point vector.">arm_fill_f32</a>(1.0,  wire1, blockSize);</div>
+<div class="line">  <a id="a1" name="a1"></a><a class="code hl_function" href="group__Fill.html#ga361552dc88133d2c7c1721f374c4a798" title="Fills a constant value into a floating-point vector.">arm_fill_f32</a>(1.0,  wire1, blockSize);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Calculate the dot product of wire1 and wire2 */</span></div>
 <div class="line">  <span class="comment">/* (x(0)* 1 + x(1) * 1 + ...+ x(n-1) * 1) */</span></div>
-<div class="line">  <a id="a2" name="a2"></a><a class="code hl_function" href="group__BasicDotProd.html#gadf26f6bc62d6416528663ad3e46fbf67" title="Dot product of floating-point vectors.">arm_dot_prod_f32</a>(testInput_f32, wire1, blockSize, &amp;mean);</div>
+<div class="line">  <a id="a2" name="a2"></a><a class="code hl_function" href="group__BasicDotProd.html#ga5cd4a5a3d43a2ae38abe154f3dd457db" title="Dot product of floating-point vectors.">arm_dot_prod_f32</a>(testInput_f32, wire1, blockSize, &amp;mean);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Calculation of 1/blockSize */</span></div>
 <div class="line">  oneByBlockSize = 1.0 / (blockSize);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* 1/blockSize * (x(0)* 1 + x(1) * 1 + ... + x(n-1) * 1)  */</span></div>
-<div class="line">  <a id="a3" name="a3"></a><a class="code hl_function" href="group__BasicMult.html#gacf950935141cad927bea886e88fd9e9b" title="Floating-point vector multiplication.">arm_mult_f32</a>(&amp;mean, &amp;oneByBlockSize, &amp;mean, 1);</div>
+<div class="line">  <a id="a3" name="a3"></a><a class="code hl_function" href="group__BasicMult.html#gac3b6675e3abb723777cc4761cb49866b" title="Floating-point vector multiplication.">arm_mult_f32</a>(&amp;mean, &amp;oneByBlockSize, &amp;mean, 1);</div>
 <div class="line"> </div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Calculation of variance value of input */</span></div>
@@ -257,22 +257,22 @@ $(document).ready(function(){initNavTree('arm_variance_example_f32_8c-example.ht
 <div class="line">  <span class="comment">/* (1/blockSize) * (x(0) - x&#39;) * (x(0) - x&#39;) + (x(1) - x&#39;) * (x(1) - x&#39;) + ... + (x(n-1) - x&#39;) * (x(n-1) - x&#39;) */</span></div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Fill wire2 with mean value x&#39; */</span></div>
-<div class="line">  <a class="code hl_function" href="group__Fill.html#ga2248e8d3901b4afb7827163132baad94" title="Fills a constant value into a floating-point vector.">arm_fill_f32</a>(mean,  wire2, blockSize);</div>
+<div class="line">  <a class="code hl_function" href="group__Fill.html#ga361552dc88133d2c7c1721f374c4a798" title="Fills a constant value into a floating-point vector.">arm_fill_f32</a>(mean,  wire2, blockSize);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* wire3 contains (x-x&#39;) */</span></div>
-<div class="line">  <a id="a4" name="a4"></a><a class="code hl_function" href="group__BasicSub.html#ga76b8b2aec34269c6de0b090cab00fb33" title="Floating-point vector subtraction.">arm_sub_f32</a>(testInput_f32, wire2, wire3, blockSize);</div>
+<div class="line">  <a id="a4" name="a4"></a><a class="code hl_function" href="group__BasicSub.html#gaa7cd710b891f8162f01efab904ddf45b" title="Floating-point vector subtraction.">arm_sub_f32</a>(testInput_f32, wire2, wire3, blockSize);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* wire2 contains (x-x&#39;) */</span></div>
-<div class="line">  <a id="a5" name="a5"></a><a class="code hl_function" href="group__copy.html#gaa6dfe9554ca61eb3d1eee498396bce88" title="Copies the elements of a floating-point vector.">arm_copy_f32</a>(wire3, wire2, blockSize);</div>
+<div class="line">  <a id="a5" name="a5"></a><a class="code hl_function" href="group__copy.html#gaf3007f9bcf86ba72d10c9fafa4bec995" title="Copies the elements of a floating-point vector.">arm_copy_f32</a>(wire3, wire2, blockSize);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* (x(0) - x&#39;) * (x(0) - x&#39;) + (x(1) - x&#39;) * (x(1) - x&#39;) + ... + (x(n-1) - x&#39;) * (x(n-1) - x&#39;) */</span></div>
-<div class="line">  <a class="code hl_function" href="group__BasicDotProd.html#gadf26f6bc62d6416528663ad3e46fbf67" title="Dot product of floating-point vectors.">arm_dot_prod_f32</a>(wire2, wire3, blockSize, &amp;variance);</div>
+<div class="line">  <a class="code hl_function" href="group__BasicDotProd.html#ga5cd4a5a3d43a2ae38abe154f3dd457db" title="Dot product of floating-point vectors.">arm_dot_prod_f32</a>(wire2, wire3, blockSize, &amp;variance);</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">/* Calculation of 1/blockSize */</span></div>
 <div class="line">  oneByBlockSize = 1.0 / (blockSize - 1);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Calculation of variance */</span></div>
-<div class="line">  <a class="code hl_function" href="group__BasicMult.html#gacf950935141cad927bea886e88fd9e9b" title="Floating-point vector multiplication.">arm_mult_f32</a>(&amp;variance, &amp;oneByBlockSize, &amp;variance, 1);</div>
+<div class="line">  <a class="code hl_function" href="group__BasicMult.html#gac3b6675e3abb723777cc4761cb49866b" title="Floating-point vector multiplication.">arm_mult_f32</a>(&amp;variance, &amp;oneByBlockSize, &amp;variance, 1);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* absolute value of difference between ref and test */</span></div>
 <div class="line">  diff = fabsf(refVarianceOut - variance);</div>

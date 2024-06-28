@@ -1,9 +1,9 @@
 var group__BasicDotProd =
 [
-    [ "arm_dot_prod_f16", "group__BasicDotProd.html#ga4b1c07e74162ebfeed1eb08020b15d70", null ],
-    [ "arm_dot_prod_f32", "group__BasicDotProd.html#gadf26f6bc62d6416528663ad3e46fbf67", null ],
-    [ "arm_dot_prod_f64", "group__BasicDotProd.html#gaa923ad5a22eb55e10009a88c396a36ad", null ],
-    [ "arm_dot_prod_q15", "group__BasicDotProd.html#gac2314012fbbf73bfd95ce8c57bc9ba69", null ],
-    [ "arm_dot_prod_q31", "group__BasicDotProd.html#gafe3f9ace6c4576847eabf44ed7ca7b96", null ],
-    [ "arm_dot_prod_q7", "group__BasicDotProd.html#gaadd347d5f5adf902c63f0b90ffc19538", null ]
+    [ "arm_dot_prod_f16", "group__BasicDotProd.html#gac75041c7fae25e19956d3119891dcc89", null ],
+    [ "arm_dot_prod_f32", "group__BasicDotProd.html#ga5cd4a5a3d43a2ae38abe154f3dd457db", null ],
+    [ "arm_dot_prod_f64", "group__BasicDotProd.html#ga60a08c10a5d28c1ad8a8ae92289d47f2", null ],
+    [ "arm_dot_prod_q15", "group__BasicDotProd.html#ga6d321f586004b6ce5171498f38b434bb", null ],
+    [ "arm_dot_prod_q31", "group__BasicDotProd.html#gacbce445c18e8e9a31507b78cab0ce2ea", null ],
+    [ "arm_dot_prod_q7", "group__BasicDotProd.html#ga85cbc59234f39bb4bb688ae43677830c", null ]
 ];

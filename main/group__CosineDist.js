@@ -1,6 +1,6 @@
 var group__CosineDist =
 [
-    [ "arm_cosine_distance_f16", "group__CosineDist.html#gae49d07336b571b4b349a11c66f6f4cf4", null ],
-    [ "arm_cosine_distance_f32", "group__CosineDist.html#ga376f5fccfe6ddba6ed7121bc1cec7f70", null ],
-    [ "arm_cosine_distance_f64", "group__CosineDist.html#ga0f00ad1993b20b2928107e6a8fc4e2ef", null ]
+    [ "arm_cosine_distance_f16", "group__CosineDist.html#ga3486a2fab110290fc507850e4a2f18b1", null ],
+    [ "arm_cosine_distance_f32", "group__CosineDist.html#ga5ffb28616cd4962066a1abbd6f2e5fea", null ],
+    [ "arm_cosine_distance_f64", "group__CosineDist.html#ga7d358553262762a7102c48aae4be6547", null ]
 ];

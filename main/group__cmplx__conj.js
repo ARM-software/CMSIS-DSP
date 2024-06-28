@@ -1,7 +1,7 @@
 var group__cmplx__conj =
 [
-    [ "arm_cmplx_conj_f16", "group__cmplx__conj.html#ga91b6d975a58310fa5b78a712c8d10010", null ],
-    [ "arm_cmplx_conj_f32", "group__cmplx__conj.html#ga1b5571244b051bb72db30886896da2da", null ],
-    [ "arm_cmplx_conj_q15", "group__cmplx__conj.html#ga2eef7dba99852d5f7ec3e025b2e5653b", null ],
-    [ "arm_cmplx_conj_q31", "group__cmplx__conj.html#ga652edf2688aae9b2f53c5da73f6cc2bc", null ]
+    [ "arm_cmplx_conj_f16", "group__cmplx__conj.html#gace1b91725708b5c09d1752e423fd27f3", null ],
+    [ "arm_cmplx_conj_f32", "group__cmplx__conj.html#gab9f51cec2124ff7ffa2d22a21fbbd2fd", null ],
+    [ "arm_cmplx_conj_q15", "group__cmplx__conj.html#gafc95174a12b9935960a1b24dcbd3e77b", null ],
+    [ "arm_cmplx_conj_q31", "group__cmplx__conj.html#ga9ea2b7b0eea967ca5335ff03a6def835", null ]
 ];

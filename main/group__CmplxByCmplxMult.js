@@ -1,8 +1,8 @@
 var group__CmplxByCmplxMult =
 [
-    [ "arm_cmplx_mult_cmplx_f16", "group__CmplxByCmplxMult.html#ga64edbd74c111181599a910a067e666c8", null ],
-    [ "arm_cmplx_mult_cmplx_f32", "group__CmplxByCmplxMult.html#gae221504b01e4abfe5f335eafd801b4ed", null ],
-    [ "arm_cmplx_mult_cmplx_f64", "group__CmplxByCmplxMult.html#ga0db9aa8b946f424f75a24662357d02ff", null ],
-    [ "arm_cmplx_mult_cmplx_q15", "group__CmplxByCmplxMult.html#ga683b32a91cffbf021f58ace5a62904e8", null ],
-    [ "arm_cmplx_mult_cmplx_q31", "group__CmplxByCmplxMult.html#ga7748c92e0922cf14e3d7bb257d77593f", null ]
+    [ "arm_cmplx_mult_cmplx_f16", "group__CmplxByCmplxMult.html#ga3af9b6e09b20f559722f3ba9f418967d", null ],
+    [ "arm_cmplx_mult_cmplx_f32", "group__CmplxByCmplxMult.html#ga8d82cf92ce4f920c8660804098071d9e", null ],
+    [ "arm_cmplx_mult_cmplx_f64", "group__CmplxByCmplxMult.html#ga63c13cf06221e463ec6451cb8250fddb", null ],
+    [ "arm_cmplx_mult_cmplx_q15", "group__CmplxByCmplxMult.html#ga60f5c2d9b6192b39394d6974f0bedf9e", null ],
+    [ "arm_cmplx_mult_cmplx_q31", "group__CmplxByCmplxMult.html#gae7192ac48ea1e8b6494c40bfe5d71597", null ]
 ];

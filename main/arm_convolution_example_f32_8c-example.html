@@ -278,30 +278,30 @@ $(document).ready(function(){initNavTree('arm_convolution_example_f32_8c-example
 <div class="line">  outLen = srcALen + srcBLen - 1;</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Initialise the fft input buffers with all zeros */</span></div>
-<div class="line">  <a id="a1" name="a1"></a><a class="code hl_function" href="group__Fill.html#ga2248e8d3901b4afb7827163132baad94" title="Fills a constant value into a floating-point vector.">arm_fill_f32</a>(0.0,  Ak, MAX_BLOCKSIZE);</div>
-<div class="line">  <a class="code hl_function" href="group__Fill.html#ga2248e8d3901b4afb7827163132baad94" title="Fills a constant value into a floating-point vector.">arm_fill_f32</a>(0.0,  Bk, MAX_BLOCKSIZE);</div>
+<div class="line">  <a id="a1" name="a1"></a><a class="code hl_function" href="group__Fill.html#ga361552dc88133d2c7c1721f374c4a798" title="Fills a constant value into a floating-point vector.">arm_fill_f32</a>(0.0,  Ak, MAX_BLOCKSIZE);</div>
+<div class="line">  <a class="code hl_function" href="group__Fill.html#ga361552dc88133d2c7c1721f374c4a798" title="Fills a constant value into a floating-point vector.">arm_fill_f32</a>(0.0,  Bk, MAX_BLOCKSIZE);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Copy the input values to the fft input buffers */</span></div>
-<div class="line">  <a id="a2" name="a2"></a><a class="code hl_function" href="group__copy.html#gaa6dfe9554ca61eb3d1eee498396bce88" title="Copies the elements of a floating-point vector.">arm_copy_f32</a>(testInputA_f32,  Ak, MAX_BLOCKSIZE/2);</div>
-<div class="line">  <a class="code hl_function" href="group__copy.html#gaa6dfe9554ca61eb3d1eee498396bce88" title="Copies the elements of a floating-point vector.">arm_copy_f32</a>(testInputB_f32,  Bk, MAX_BLOCKSIZE/2);</div>
+<div class="line">  <a id="a2" name="a2"></a><a class="code hl_function" href="group__copy.html#gaf3007f9bcf86ba72d10c9fafa4bec995" title="Copies the elements of a floating-point vector.">arm_copy_f32</a>(testInputA_f32,  Ak, MAX_BLOCKSIZE/2);</div>
+<div class="line">  <a class="code hl_function" href="group__copy.html#gaf3007f9bcf86ba72d10c9fafa4bec995" title="Copies the elements of a floating-point vector.">arm_copy_f32</a>(testInputB_f32,  Bk, MAX_BLOCKSIZE/2);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Initialize the CFFT function to compute 64 point fft */</span></div>
-<div class="line">  status = <a id="a3" name="a3"></a><a class="code hl_function" href="group__ComplexFFTDeprecated.html#gaf336459f684f0b17bfae539ef1b1b78a" title="Initialization function for the floating-point CFFT/CIFFT.">arm_cfft_radix4_init_f32</a>(cfft_instance_ptr, 64, 0, 1);</div>
+<div class="line">  status = <a id="a3" name="a3"></a><a class="code hl_function" href="group__ComplexFFTDeprecated.html#ga4bb15488a420e343c1ded7ee99daa307" title="Initialization function for the floating-point CFFT/CIFFT.">arm_cfft_radix4_init_f32</a>(cfft_instance_ptr, 64, 0, 1);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Transform input a[n] from time domain to frequency domain A[k] */</span></div>
-<div class="line">  <a id="a4" name="a4"></a><a class="code hl_function" href="group__ComplexFFTDeprecated.html#ga521f670cd9c571bc61aff9bec89f4c26" title="Processing function for the floating-point Radix-4 CFFT/CIFFT.">arm_cfft_radix4_f32</a>(cfft_instance_ptr, Ak);</div>
+<div class="line">  <a id="a4" name="a4"></a><a class="code hl_function" href="group__ComplexFFTDeprecated.html#gad504b6752cbf57d7002a641bf766c20f" title="Processing function for the floating-point Radix-4 CFFT/CIFFT.">arm_cfft_radix4_f32</a>(cfft_instance_ptr, Ak);</div>
 <div class="line">  <span class="comment">/* Transform input b[n] from time domain to frequency domain B[k] */</span></div>
-<div class="line">  <a class="code hl_function" href="group__ComplexFFTDeprecated.html#ga521f670cd9c571bc61aff9bec89f4c26" title="Processing function for the floating-point Radix-4 CFFT/CIFFT.">arm_cfft_radix4_f32</a>(cfft_instance_ptr, Bk);</div>
+<div class="line">  <a class="code hl_function" href="group__ComplexFFTDeprecated.html#gad504b6752cbf57d7002a641bf766c20f" title="Processing function for the floating-point Radix-4 CFFT/CIFFT.">arm_cfft_radix4_f32</a>(cfft_instance_ptr, Bk);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Complex Multiplication of the two input buffers in frequency domain */</span></div>
-<div class="line">  <a id="a5" name="a5"></a><a class="code hl_function" href="group__CmplxByCmplxMult.html#gae221504b01e4abfe5f335eafd801b4ed" title="Floating-point complex-by-complex multiplication.">arm_cmplx_mult_cmplx_f32</a>(Ak, Bk, AxB, MAX_BLOCKSIZE/2);</div>
+<div class="line">  <a id="a5" name="a5"></a><a class="code hl_function" href="group__CmplxByCmplxMult.html#ga8d82cf92ce4f920c8660804098071d9e" title="Floating-point complex-by-complex multiplication.">arm_cmplx_mult_cmplx_f32</a>(Ak, Bk, AxB, MAX_BLOCKSIZE/2);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Initialize the CIFFT function to compute 64 point ifft */</span></div>
-<div class="line">  status = <a class="code hl_function" href="group__ComplexFFTDeprecated.html#gaf336459f684f0b17bfae539ef1b1b78a" title="Initialization function for the floating-point CFFT/CIFFT.">arm_cfft_radix4_init_f32</a>(cfft_instance_ptr, 64, 1, 1);</div>
+<div class="line">  status = <a class="code hl_function" href="group__ComplexFFTDeprecated.html#ga4bb15488a420e343c1ded7ee99daa307" title="Initialization function for the floating-point CFFT/CIFFT.">arm_cfft_radix4_init_f32</a>(cfft_instance_ptr, 64, 1, 1);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Transform the multiplication output from frequency domain to time domain,</span></div>
 <div class="line"><span class="comment">     that gives the convolved output. */</span></div>
-<div class="line">  <a class="code hl_function" href="group__ComplexFFTDeprecated.html#ga521f670cd9c571bc61aff9bec89f4c26" title="Processing function for the floating-point Radix-4 CFFT/CIFFT.">arm_cfft_radix4_f32</a>(cfft_instance_ptr, AxB);</div>
+<div class="line">  <a class="code hl_function" href="group__ComplexFFTDeprecated.html#gad504b6752cbf57d7002a641bf766c20f" title="Processing function for the floating-point Radix-4 CFFT/CIFFT.">arm_cfft_radix4_f32</a>(cfft_instance_ptr, AxB);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* SNR Calculation */</span></div>
 <div class="line">  snr = arm_snr_f32((<a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> *)testRefOutput_f32, AxB, srcALen + srcBLen - 1);</div>

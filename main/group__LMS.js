@@ -1,9 +1,9 @@
 var group__LMS =
 [
-    [ "arm_lms_f32", "group__LMS.html#gac518f7acd1778a8ee90e81c421cfbb90", null ],
-    [ "arm_lms_init_f32", "group__LMS.html#ga9fc7adca0966ff2cec1746fca8364cee", null ],
-    [ "arm_lms_init_q15", "group__LMS.html#ga9544cc26f18cd4465cfbed371be822b3", null ],
-    [ "arm_lms_init_q31", "group__LMS.html#ga8d4bc251169f4b102355097a9f7530d6", null ],
-    [ "arm_lms_q15", "group__LMS.html#ga12fd93f61401b365789cdfd5dca07e5b", null ],
-    [ "arm_lms_q31", "group__LMS.html#ga69c9c64338c067f1fb4990dcdc8c143f", null ]
+    [ "arm_lms_f32", "group__LMS.html#ga1af62677d6950c64061e4a087166fbef", null ],
+    [ "arm_lms_init_f32", "group__LMS.html#ga68038aca61b9c4baf6bd1c935d7e93b4", null ],
+    [ "arm_lms_init_q15", "group__LMS.html#gaea8bddb83666e0a176e26a708c015e6e", null ],
+    [ "arm_lms_init_q31", "group__LMS.html#ga01c4fcd0775ef70632606a8d88e41976", null ],
+    [ "arm_lms_q15", "group__LMS.html#ga044a03763196c16ed7fdb1ca9f831be2", null ],
+    [ "arm_lms_q31", "group__LMS.html#gaaa10da82a4783aab0db7b3f4670038d9", null ]
 ];

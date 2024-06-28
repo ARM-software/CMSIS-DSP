@@ -275,7 +275,7 @@ $(document).ready(function(){initNavTree('arm_fir_example_f32_8c-example.html','
 <div class="line">  outputF32 = &amp;testOutput[0];</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Call FIR init function to initialize the instance structure. */</span></div>
-<div class="line">  <a id="a1" name="a1"></a><a class="code hl_function" href="group__FIR.html#ga5afaa7b8e6735bbc19e582aa9755b0e1" title="Initialization function for the floating-point FIR filter.">arm_fir_init_f32</a>(&amp;S, NUM_TAPS, (<a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> *)&amp;firCoeffs32[0], &amp;firStateF32[0], blockSize);</div>
+<div class="line">  <a id="a1" name="a1"></a><a class="code hl_function" href="group__FIR.html#ga651fa25c26ee73387b3d5ccb64ffb493" title="Initialization function for the floating-point FIR filter.">arm_fir_init_f32</a>(&amp;S, NUM_TAPS, (<a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> *)&amp;firCoeffs32[0], &amp;firStateF32[0], blockSize);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">  ** Call the FIR process function for every blockSize samples</span></div>
@@ -283,7 +283,7 @@ $(document).ready(function(){initNavTree('arm_fir_example_f32_8c-example.html','
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">for</span>(i=0; i &lt; numBlocks; i++)</div>
 <div class="line">  {</div>
-<div class="line">    <a id="a2" name="a2"></a><a class="code hl_function" href="group__FIR.html#ga0cf008f650a75f5e2cf82d10691b64d9" title="Processing function for the floating-point FIR filter.">arm_fir_f32</a>(&amp;S, inputF32 + (i * blockSize), outputF32 + (i * blockSize), blockSize);</div>
+<div class="line">    arm_fir_f32(&amp;S, inputF32 + (i * blockSize), outputF32 + (i * blockSize), blockSize);</div>
 <div class="line">  }</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* ----------------------------------------------------------------------</span></div>
@@ -293,7 +293,7 @@ $(document).ready(function(){initNavTree('arm_fir_example_f32_8c-example.html','
 <div class="line"> </div>
 <div class="line">  snr = arm_snr_f32(&amp;refOutput[0], &amp;testOutput[0], TEST_LENGTH_SAMPLES);</div>
 <div class="line"> </div>
-<div class="line">  status = (snr &lt; SNR_THRESHOLD_F32) ? <a id="a3" name="a3"></a><a class="code hl_enumvalue" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a09457f2be656b35015fd6d36202fa376">ARM_MATH_TEST_FAILURE</a> : <a id="a4" name="a4"></a><a class="code hl_enumvalue" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>;</div>
+<div class="line">  status = (snr &lt; SNR_THRESHOLD_F32) ? <a id="a2" name="a2"></a><a class="code hl_enumvalue" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a09457f2be656b35015fd6d36202fa376">ARM_MATH_TEST_FAILURE</a> : <a id="a3" name="a3"></a><a class="code hl_enumvalue" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>;</div>
 <div class="line">  </div>
 <div class="line">  <span class="keywordflow">if</span> (status != <a class="code hl_enumvalue" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a>)</div>
 <div class="line">  {</div>

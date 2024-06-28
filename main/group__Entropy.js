@@ -1,6 +1,6 @@
 var group__Entropy =
 [
-    [ "arm_entropy_f16", "group__Entropy.html#gab3e36901a96ea5d6c5a835c46c36d355", null ],
-    [ "arm_entropy_f32", "group__Entropy.html#gab9afb0c43fdc7066c3336bc8429f984d", null ],
-    [ "arm_entropy_f64", "group__Entropy.html#ga16bd9a361efc4fab8b8ec29936c07d23", null ]
+    [ "arm_entropy_f16", "group__Entropy.html#gaa2269e7fa9333419ef39a8ed1f9baea6", null ],
+    [ "arm_entropy_f32", "group__Entropy.html#gaa988c23d0d3f41e4990bbe4787a2033c", null ],
+    [ "arm_entropy_f64", "group__Entropy.html#gab9a997c0146c20d221e6904d7805483e", null ]
 ];
