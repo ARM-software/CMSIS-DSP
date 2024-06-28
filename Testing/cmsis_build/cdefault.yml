@@ -29,7 +29,7 @@ default:
         - -Wno-reserved-identifier
         - -ffunction-sections
         - -DARM_DSP_ATTRIBUTE="__attribute__((weak))"
-        - -DARM_DSP_TABLE_ATTRIBUTE="__attribute__((section ("dsp_table")))"
+        - -DARM_DSP_TABLE_ATTRIBUTE="__attribute__((section (\"dsp_table\")))"
       CPP:
         - -fno-rtti 
         - -DNDEBUG 
@@ -71,7 +71,7 @@ default:
         - -fdata-sections
         - -mfp16-format=ieee
         - -DARM_DSP_ATTRIBUTE="__attribute__((weak))"
-        - -DARM_DSP_TABLE_ATTRIBUTE="__attribute__((section ("dsp_table")))"
+        - -DARM_DSP_TABLE_ATTRIBUTE='__attribute__((section ("dsp_table")))'
       CPP:
         - -fno-rtti 
         - -DNDEBUG 
@@ -121,7 +121,7 @@ default:
          - -Wno-reserved-identifier
          - -ffunction-sections
          - -DARM_DSP_ATTRIBUTE="__attribute__((weak))"
-         - -DARM_DSP_TABLE_ATTRIBUTE="__attribute__((section ("dsp_table")))"
+         - -DARM_DSP_TABLE_ATTRIBUTE='__attribute__((section ("dsp_table")))'
       CPP:
         - -fno-rtti 
         - -DNDEBUG 

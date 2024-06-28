@@ -27,6 +27,10 @@
 
 #define ARM_MATH_TYPES_H_
 
+#if defined(ARM_DSP_CUSTOM_CONFIG)
+#include "arm_dsp_config.h"
+#endif
+
 #ifndef ARM_DSP_ATTRIBUTE 
 #define ARM_DSP_ATTRIBUTE 
 #endif
