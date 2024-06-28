@@ -36,44 +36,44 @@
 #if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 
-const uint32_t rearranged_twiddle_tab_stride1_arr_16_f16[2]={
+const uint32_t rearranged_twiddle_tab_stride1_arr_16_f16[2] ARM_DSP_TABLE_ATTRIBUTE ={
 0,0,};
 
-const uint32_t rearranged_twiddle_tab_stride2_arr_16_f16[2]={
+const uint32_t rearranged_twiddle_tab_stride2_arr_16_f16[2] ARM_DSP_TABLE_ATTRIBUTE ={
 0,0,};
 
-const uint32_t rearranged_twiddle_tab_stride3_arr_16_f16[2]={
+const uint32_t rearranged_twiddle_tab_stride3_arr_16_f16[2] ARM_DSP_TABLE_ATTRIBUTE ={
 0,0,};
 
-const float16_t rearranged_twiddle_stride1_16_f16[8]={
+const float16_t rearranged_twiddle_stride1_16_f16[8] ARM_DSP_TABLE_ATTRIBUTE ={
 (float16_t)1.0000000000000f,(float16_t)0.0000000000000f,
 (float16_t)0.9238281250000f,(float16_t)0.3825683593750f,
 (float16_t)0.7070312500000f,(float16_t)0.7070312500000f,
 (float16_t)0.3825683593750f,(float16_t)0.9238281250000f,};
 
-const float16_t rearranged_twiddle_stride2_16_f16[8]={
+const float16_t rearranged_twiddle_stride2_16_f16[8] ARM_DSP_TABLE_ATTRIBUTE ={
 (float16_t)1.0000000000000f,(float16_t)0.0000000000000f,
 (float16_t)0.7070312500000f,(float16_t)0.7070312500000f,
 (float16_t)0.0000000000000f,(float16_t)1.0000000000000f,
 (float16_t)-0.7070312500000f,(float16_t)0.7070312500000f,};
 
-const float16_t rearranged_twiddle_stride3_16_f16[8]={
+const float16_t rearranged_twiddle_stride3_16_f16[8] ARM_DSP_TABLE_ATTRIBUTE ={
 (float16_t)1.0000000000000f,(float16_t)0.0000000000000f,
 (float16_t)0.3825683593750f,(float16_t)0.9238281250000f,
 (float16_t)-0.7070312500000f,(float16_t)0.7070312500000f,
 (float16_t)-0.9238281250000f,(float16_t)-0.3825683593750f,};
 
 
-const uint32_t rearranged_twiddle_tab_stride1_arr_64_f16[3]={
+const uint32_t rearranged_twiddle_tab_stride1_arr_64_f16[3] ARM_DSP_TABLE_ATTRIBUTE ={
 0,32,0,};
 
-const uint32_t rearranged_twiddle_tab_stride2_arr_64_f16[3]={
+const uint32_t rearranged_twiddle_tab_stride2_arr_64_f16[3] ARM_DSP_TABLE_ATTRIBUTE ={
 0,32,0,};
 
-const uint32_t rearranged_twiddle_tab_stride3_arr_64_f16[3]={
+const uint32_t rearranged_twiddle_tab_stride3_arr_64_f16[3] ARM_DSP_TABLE_ATTRIBUTE ={
 0,32,0,};
 
-const float16_t rearranged_twiddle_stride1_64_f16[40]={
+const float16_t rearranged_twiddle_stride1_64_f16[40] ARM_DSP_TABLE_ATTRIBUTE ={
 (float16_t)1.0000000000000f,(float16_t)0.0000000000000f,
 (float16_t)0.9951171875000f,(float16_t)0.0980224609375f,
 (float16_t)0.9809570312500f,(float16_t)0.1950683593750f,
@@ -95,7 +95,7 @@ const float16_t rearranged_twiddle_stride1_64_f16[40]={
 (float16_t)0.7070312500000f,(float16_t)0.7070312500000f,
 (float16_t)0.3825683593750f,(float16_t)0.9238281250000f,};
 
-const float16_t rearranged_twiddle_stride2_64_f16[40]={
+const float16_t rearranged_twiddle_stride2_64_f16[40] ARM_DSP_TABLE_ATTRIBUTE ={
 (float16_t)1.0000000000000f,(float16_t)0.0000000000000f,
 (float16_t)0.9809570312500f,(float16_t)0.1950683593750f,
 (float16_t)0.9238281250000f,(float16_t)0.3825683593750f,
@@ -117,7 +117,7 @@ const float16_t rearranged_twiddle_stride2_64_f16[40]={
 (float16_t)0.0000000000000f,(float16_t)1.0000000000000f,
 (float16_t)-0.7070312500000f,(float16_t)0.7070312500000f,};
 
-const float16_t rearranged_twiddle_stride3_64_f16[40]={
+const float16_t rearranged_twiddle_stride3_64_f16[40] ARM_DSP_TABLE_ATTRIBUTE ={
 (float16_t)1.0000000000000f,(float16_t)0.0000000000000f,
 (float16_t)0.9570312500000f,(float16_t)0.2902832031250f,
 (float16_t)0.8315429687500f,(float16_t)0.5556640625000f,
@@ -139,16 +139,16 @@ const float16_t rearranged_twiddle_stride3_64_f16[40]={
 (float16_t)-0.7070312500000f,(float16_t)0.7070312500000f,
 (float16_t)-0.9238281250000f,(float16_t)-0.3825683593750f,};
 
-const uint32_t rearranged_twiddle_tab_stride1_arr_256_f16[4]={
+const uint32_t rearranged_twiddle_tab_stride1_arr_256_f16[4] ARM_DSP_TABLE_ATTRIBUTE ={
 0,128,160,0,};
 
-const uint32_t rearranged_twiddle_tab_stride2_arr_256_f16[4]={
+const uint32_t rearranged_twiddle_tab_stride2_arr_256_f16[4] ARM_DSP_TABLE_ATTRIBUTE ={
 0,128,160,0,};
 
-const uint32_t rearranged_twiddle_tab_stride3_arr_256_f16[4]={
+const uint32_t rearranged_twiddle_tab_stride3_arr_256_f16[4] ARM_DSP_TABLE_ATTRIBUTE ={
 0,128,160,0,};
 
-const float16_t rearranged_twiddle_stride1_256_f16[168]={
+const float16_t rearranged_twiddle_stride1_256_f16[168] ARM_DSP_TABLE_ATTRIBUTE ={
 (float16_t)1.0000000000000f,(float16_t)0.0000000000000f,
 (float16_t)0.9995117187500f,(float16_t)0.0245361328125f,
 (float16_t)0.9990234375000f,(float16_t)0.0490722656250f,
@@ -234,7 +234,7 @@ const float16_t rearranged_twiddle_stride1_256_f16[168]={
 (float16_t)0.7070312500000f,(float16_t)0.7070312500000f,
 (float16_t)0.3825683593750f,(float16_t)0.9238281250000f,};
 
-const float16_t rearranged_twiddle_stride2_256_f16[168]={
+const float16_t rearranged_twiddle_stride2_256_f16[168] ARM_DSP_TABLE_ATTRIBUTE ={
 (float16_t)1.0000000000000f,(float16_t)0.0000000000000f,
 (float16_t)0.9990234375000f,(float16_t)0.0490722656250f,
 (float16_t)0.9951171875000f,(float16_t)0.0980224609375f,
@@ -320,7 +320,7 @@ const float16_t rearranged_twiddle_stride2_256_f16[168]={
 (float16_t)0.0000000000000f,(float16_t)1.0000000000000f,
 (float16_t)-0.7070312500000f,(float16_t)0.7070312500000f,};
 
-const float16_t rearranged_twiddle_stride3_256_f16[168]={
+const float16_t rearranged_twiddle_stride3_256_f16[168] ARM_DSP_TABLE_ATTRIBUTE ={
 (float16_t)1.0000000000000f,(float16_t)0.0000000000000f,
 (float16_t)0.9970703125000f,(float16_t)0.0735473632812f,
 (float16_t)0.9892578125000f,(float16_t)0.1467285156250f,
@@ -407,16 +407,16 @@ const float16_t rearranged_twiddle_stride3_256_f16[168]={
 (float16_t)-0.9238281250000f,(float16_t)-0.3825683593750f,};
 
 
-const uint32_t rearranged_twiddle_tab_stride1_arr_1024_f16[5]={
+const uint32_t rearranged_twiddle_tab_stride1_arr_1024_f16[5] ARM_DSP_TABLE_ATTRIBUTE ={
 0,512,640,672,0,};
 
-const uint32_t rearranged_twiddle_tab_stride2_arr_1024_f16[5]={
+const uint32_t rearranged_twiddle_tab_stride2_arr_1024_f16[5] ARM_DSP_TABLE_ATTRIBUTE ={
 0,512,640,672,0,};
 
-const uint32_t rearranged_twiddle_tab_stride3_arr_1024_f16[5]={
+const uint32_t rearranged_twiddle_tab_stride3_arr_1024_f16[5] ARM_DSP_TABLE_ATTRIBUTE ={
 0,512,640,672,0,};
 
-const float16_t rearranged_twiddle_stride1_1024_f16[680]={
+const float16_t rearranged_twiddle_stride1_1024_f16[680] ARM_DSP_TABLE_ATTRIBUTE ={
 (float16_t)1.0000000000000f,(float16_t)0.0000000000000f,
 (float16_t)1.0000000000000f,(float16_t)0.0061340332031f,
 (float16_t)1.0000000000000f,(float16_t)0.0122680664062f,
@@ -758,7 +758,7 @@ const float16_t rearranged_twiddle_stride1_1024_f16[680]={
 (float16_t)0.7070312500000f,(float16_t)0.7070312500000f,
 (float16_t)0.3825683593750f,(float16_t)0.9238281250000f,};
 
-const float16_t rearranged_twiddle_stride2_1024_f16[680]={
+const float16_t rearranged_twiddle_stride2_1024_f16[680] ARM_DSP_TABLE_ATTRIBUTE ={
 (float16_t)1.0000000000000f,(float16_t)0.0000000000000f,
 (float16_t)1.0000000000000f,(float16_t)0.0122680664062f,
 (float16_t)0.9995117187500f,(float16_t)0.0245361328125f,
@@ -1100,7 +1100,7 @@ const float16_t rearranged_twiddle_stride2_1024_f16[680]={
 (float16_t)0.0000000000000f,(float16_t)1.0000000000000f,
 (float16_t)-0.7070312500000f,(float16_t)0.7070312500000f,};
 
-const float16_t rearranged_twiddle_stride3_1024_f16[680]={
+const float16_t rearranged_twiddle_stride3_1024_f16[680] ARM_DSP_TABLE_ATTRIBUTE ={
 (float16_t)1.0000000000000f,(float16_t)0.0000000000000f,
 (float16_t)1.0000000000000f,(float16_t)0.0184020996094f,
 (float16_t)0.9995117187500f,(float16_t)0.0368041992188f,
@@ -1443,16 +1443,16 @@ const float16_t rearranged_twiddle_stride3_1024_f16[680]={
 (float16_t)-0.9238281250000f,(float16_t)-0.3825683593750f,};
 
 
-const uint32_t rearranged_twiddle_tab_stride1_arr_4096_f16[6]={
+const uint32_t rearranged_twiddle_tab_stride1_arr_4096_f16[6] ARM_DSP_TABLE_ATTRIBUTE ={
 0,2048,2560,2688,2720,0,};
 
-const uint32_t rearranged_twiddle_tab_stride2_arr_4096_f16[6]={
+const uint32_t rearranged_twiddle_tab_stride2_arr_4096_f16[6] ARM_DSP_TABLE_ATTRIBUTE ={
 0,2048,2560,2688,2720,0,};
 
-const uint32_t rearranged_twiddle_tab_stride3_arr_4096_f16[6]={
+const uint32_t rearranged_twiddle_tab_stride3_arr_4096_f16[6] ARM_DSP_TABLE_ATTRIBUTE ={
 0,2048,2560,2688,2720,0,};
 
-const float16_t rearranged_twiddle_stride1_4096_f16[2728]={
+const float16_t rearranged_twiddle_stride1_4096_f16[2728] ARM_DSP_TABLE_ATTRIBUTE ={
 (float16_t)1.0000000000000f,(float16_t)0.0000000000000f,
 (float16_t)1.0000000000000f,(float16_t)0.0015335083008f,
 (float16_t)1.0000000000000f,(float16_t)0.0030670166016f,
@@ -2818,7 +2818,7 @@ const float16_t rearranged_twiddle_stride1_4096_f16[2728]={
 (float16_t)0.7070312500000f,(float16_t)0.7070312500000f,
 (float16_t)0.3825683593750f,(float16_t)0.9238281250000f,};
 
-const float16_t rearranged_twiddle_stride2_4096_f16[2728]={
+const float16_t rearranged_twiddle_stride2_4096_f16[2728] ARM_DSP_TABLE_ATTRIBUTE ={
 (float16_t)1.0000000000000f,(float16_t)0.0000000000000f,
 (float16_t)1.0000000000000f,(float16_t)0.0030670166016f,
 (float16_t)1.0000000000000f,(float16_t)0.0061340332031f,
@@ -4184,7 +4184,7 @@ const float16_t rearranged_twiddle_stride2_4096_f16[2728]={
 (float16_t)0.0000000000000f,(float16_t)1.0000000000000f,
 (float16_t)-0.7070312500000f,(float16_t)0.7070312500000f,};
 
-const float16_t rearranged_twiddle_stride3_4096_f16[2728]={
+const float16_t rearranged_twiddle_stride3_4096_f16[2728] ARM_DSP_TABLE_ATTRIBUTE ={
 (float16_t)1.0000000000000f,(float16_t)0.0000000000000f,
 (float16_t)1.0000000000000f,(float16_t)0.0046005249023f,
 (float16_t)1.0000000000000f,(float16_t)0.0092010498047f,

@@ -36,39 +36,39 @@ for compilation.
 */
 
 /* Floating-point structs */
-const arm_cfft_instance_f64 arm_cfft_sR_f64_len16 = {
+const arm_cfft_instance_f64 arm_cfft_sR_f64_len16 ARM_DSP_TABLE_ATTRIBUTE = {
   16, (const float64_t *)twiddleCoefF64_16, armBitRevIndexTableF64_16, ARMBITREVINDEXTABLEF64_16_TABLE_LENGTH
 };
 
-const arm_cfft_instance_f64 arm_cfft_sR_f64_len32 = {
+const arm_cfft_instance_f64 arm_cfft_sR_f64_len32 ARM_DSP_TABLE_ATTRIBUTE = {
   32, (const float64_t *)twiddleCoefF64_32, armBitRevIndexTableF64_32, ARMBITREVINDEXTABLEF64_32_TABLE_LENGTH
 };
 
-const arm_cfft_instance_f64 arm_cfft_sR_f64_len64 = {
+const arm_cfft_instance_f64 arm_cfft_sR_f64_len64 ARM_DSP_TABLE_ATTRIBUTE = {
   64, (const float64_t *)twiddleCoefF64_64, armBitRevIndexTableF64_64, ARMBITREVINDEXTABLEF64_64_TABLE_LENGTH
 };
 
-const arm_cfft_instance_f64 arm_cfft_sR_f64_len128 = {
+const arm_cfft_instance_f64 arm_cfft_sR_f64_len128 ARM_DSP_TABLE_ATTRIBUTE = {
   128, (const float64_t *)twiddleCoefF64_128, armBitRevIndexTableF64_128, ARMBITREVINDEXTABLEF64_128_TABLE_LENGTH
 };
 
-const arm_cfft_instance_f64 arm_cfft_sR_f64_len256 = {
+const arm_cfft_instance_f64 arm_cfft_sR_f64_len256 ARM_DSP_TABLE_ATTRIBUTE = {
   256, (const float64_t *)twiddleCoefF64_256, armBitRevIndexTableF64_256, ARMBITREVINDEXTABLEF64_256_TABLE_LENGTH
 };
 
-const arm_cfft_instance_f64 arm_cfft_sR_f64_len512 = {
+const arm_cfft_instance_f64 arm_cfft_sR_f64_len512 ARM_DSP_TABLE_ATTRIBUTE = {
   512, (const float64_t *)twiddleCoefF64_512, armBitRevIndexTableF64_512, ARMBITREVINDEXTABLEF64_512_TABLE_LENGTH
 };
 
-const arm_cfft_instance_f64 arm_cfft_sR_f64_len1024 = {
+const arm_cfft_instance_f64 arm_cfft_sR_f64_len1024 ARM_DSP_TABLE_ATTRIBUTE = {
   1024, (const float64_t *)twiddleCoefF64_1024, armBitRevIndexTableF64_1024, ARMBITREVINDEXTABLEF64_1024_TABLE_LENGTH
 };
 
-const arm_cfft_instance_f64 arm_cfft_sR_f64_len2048 = {
+const arm_cfft_instance_f64 arm_cfft_sR_f64_len2048 ARM_DSP_TABLE_ATTRIBUTE = {
   2048, (const float64_t *)twiddleCoefF64_2048, armBitRevIndexTableF64_2048, ARMBITREVINDEXTABLEF64_2048_TABLE_LENGTH
 };
 
-const arm_cfft_instance_f64 arm_cfft_sR_f64_len4096 = {
+const arm_cfft_instance_f64 arm_cfft_sR_f64_len4096 ARM_DSP_TABLE_ATTRIBUTE = {
   4096, (const float64_t *)twiddleCoefF64_4096, armBitRevIndexTableF64_4096, ARMBITREVINDEXTABLEF64_4096_TABLE_LENGTH
 };
 
@@ -76,40 +76,40 @@ const arm_cfft_instance_f64 arm_cfft_sR_f64_len4096 = {
 #if !defined(ARM_MATH_MVEF) || defined(ARM_MATH_AUTOVECTORIZE)
 
 
-const arm_cfft_instance_f32 arm_cfft_sR_f32_len16 = {
+const arm_cfft_instance_f32 arm_cfft_sR_f32_len16 ARM_DSP_TABLE_ATTRIBUTE = {
   16, twiddleCoef_16, armBitRevIndexTable16, ARMBITREVINDEXTABLE_16_TABLE_LENGTH
 };
 
 
-const arm_cfft_instance_f32 arm_cfft_sR_f32_len32 = {
+const arm_cfft_instance_f32 arm_cfft_sR_f32_len32 ARM_DSP_TABLE_ATTRIBUTE = {
   32, twiddleCoef_32, armBitRevIndexTable32, ARMBITREVINDEXTABLE_32_TABLE_LENGTH
 };
 
-const arm_cfft_instance_f32 arm_cfft_sR_f32_len64 = {
+const arm_cfft_instance_f32 arm_cfft_sR_f32_len64 ARM_DSP_TABLE_ATTRIBUTE = {
   64, twiddleCoef_64, armBitRevIndexTable64, ARMBITREVINDEXTABLE_64_TABLE_LENGTH
 };
 
-const arm_cfft_instance_f32 arm_cfft_sR_f32_len128 = {
+const arm_cfft_instance_f32 arm_cfft_sR_f32_len128 ARM_DSP_TABLE_ATTRIBUTE = {
   128, twiddleCoef_128, armBitRevIndexTable128, ARMBITREVINDEXTABLE_128_TABLE_LENGTH
 };
 
-const arm_cfft_instance_f32 arm_cfft_sR_f32_len256 = {
+const arm_cfft_instance_f32 arm_cfft_sR_f32_len256 ARM_DSP_TABLE_ATTRIBUTE = {
   256, twiddleCoef_256, armBitRevIndexTable256, ARMBITREVINDEXTABLE_256_TABLE_LENGTH
 };
 
-const arm_cfft_instance_f32 arm_cfft_sR_f32_len512 = {
+const arm_cfft_instance_f32 arm_cfft_sR_f32_len512 ARM_DSP_TABLE_ATTRIBUTE = {
   512, twiddleCoef_512, armBitRevIndexTable512, ARMBITREVINDEXTABLE_512_TABLE_LENGTH
 };
 
-const arm_cfft_instance_f32 arm_cfft_sR_f32_len1024 = {
+const arm_cfft_instance_f32 arm_cfft_sR_f32_len1024 ARM_DSP_TABLE_ATTRIBUTE = {
   1024, twiddleCoef_1024, armBitRevIndexTable1024, ARMBITREVINDEXTABLE_1024_TABLE_LENGTH
 };
 
-const arm_cfft_instance_f32 arm_cfft_sR_f32_len2048 = {
+const arm_cfft_instance_f32 arm_cfft_sR_f32_len2048 ARM_DSP_TABLE_ATTRIBUTE = {
   2048, twiddleCoef_2048, armBitRevIndexTable2048, ARMBITREVINDEXTABLE_2048_TABLE_LENGTH
 };
 
-const arm_cfft_instance_f32 arm_cfft_sR_f32_len4096 = {
+const arm_cfft_instance_f32 arm_cfft_sR_f32_len4096 ARM_DSP_TABLE_ATTRIBUTE = {
   4096, twiddleCoef_4096, armBitRevIndexTable4096, ARMBITREVINDEXTABLE_4096_TABLE_LENGTH
 };
 
@@ -129,76 +129,76 @@ For the MVE version, the new arm_cfft_init_f32 must be used.
 
 */
 
-const arm_cfft_instance_q31 arm_cfft_sR_q31_len16 = {
+const arm_cfft_instance_q31 arm_cfft_sR_q31_len16 ARM_DSP_TABLE_ATTRIBUTE = {
   16, twiddleCoef_16_q31, armBitRevIndexTable_fixed_16, ARMBITREVINDEXTABLE_FIXED_16_TABLE_LENGTH
 };
 
-const arm_cfft_instance_q31 arm_cfft_sR_q31_len32 = {
+const arm_cfft_instance_q31 arm_cfft_sR_q31_len32 ARM_DSP_TABLE_ATTRIBUTE = {
   32, twiddleCoef_32_q31, armBitRevIndexTable_fixed_32, ARMBITREVINDEXTABLE_FIXED_32_TABLE_LENGTH
 };
 
-const arm_cfft_instance_q31 arm_cfft_sR_q31_len64 = {
+const arm_cfft_instance_q31 arm_cfft_sR_q31_len64 ARM_DSP_TABLE_ATTRIBUTE = {
   64, twiddleCoef_64_q31, armBitRevIndexTable_fixed_64, ARMBITREVINDEXTABLE_FIXED_64_TABLE_LENGTH
 };
 
-const arm_cfft_instance_q31 arm_cfft_sR_q31_len128 = {
+const arm_cfft_instance_q31 arm_cfft_sR_q31_len128 ARM_DSP_TABLE_ATTRIBUTE = {
   128, twiddleCoef_128_q31, armBitRevIndexTable_fixed_128, ARMBITREVINDEXTABLE_FIXED_128_TABLE_LENGTH
 };
 
-const arm_cfft_instance_q31 arm_cfft_sR_q31_len256 = {
+const arm_cfft_instance_q31 arm_cfft_sR_q31_len256 ARM_DSP_TABLE_ATTRIBUTE = {
   256, twiddleCoef_256_q31, armBitRevIndexTable_fixed_256, ARMBITREVINDEXTABLE_FIXED_256_TABLE_LENGTH
 };
 
-const arm_cfft_instance_q31 arm_cfft_sR_q31_len512 = {
+const arm_cfft_instance_q31 arm_cfft_sR_q31_len512 ARM_DSP_TABLE_ATTRIBUTE = {
   512, twiddleCoef_512_q31, armBitRevIndexTable_fixed_512, ARMBITREVINDEXTABLE_FIXED_512_TABLE_LENGTH
 };
 
-const arm_cfft_instance_q31 arm_cfft_sR_q31_len1024 = {
+const arm_cfft_instance_q31 arm_cfft_sR_q31_len1024 ARM_DSP_TABLE_ATTRIBUTE = {
   1024, twiddleCoef_1024_q31, armBitRevIndexTable_fixed_1024, ARMBITREVINDEXTABLE_FIXED_1024_TABLE_LENGTH
 };
 
-const arm_cfft_instance_q31 arm_cfft_sR_q31_len2048 = {
+const arm_cfft_instance_q31 arm_cfft_sR_q31_len2048 ARM_DSP_TABLE_ATTRIBUTE = {
   2048, twiddleCoef_2048_q31, armBitRevIndexTable_fixed_2048, ARMBITREVINDEXTABLE_FIXED_2048_TABLE_LENGTH
 };
 
-const arm_cfft_instance_q31 arm_cfft_sR_q31_len4096 = {
+const arm_cfft_instance_q31 arm_cfft_sR_q31_len4096 ARM_DSP_TABLE_ATTRIBUTE = {
   4096, twiddleCoef_4096_q31, armBitRevIndexTable_fixed_4096, ARMBITREVINDEXTABLE_FIXED_4096_TABLE_LENGTH
 };
 
 
-const arm_cfft_instance_q15 arm_cfft_sR_q15_len16 = {
+const arm_cfft_instance_q15 arm_cfft_sR_q15_len16 ARM_DSP_TABLE_ATTRIBUTE = {
   16, twiddleCoef_16_q15, armBitRevIndexTable_fixed_16, ARMBITREVINDEXTABLE_FIXED_16_TABLE_LENGTH
 };
 
-const arm_cfft_instance_q15 arm_cfft_sR_q15_len32 = {
+const arm_cfft_instance_q15 arm_cfft_sR_q15_len32 ARM_DSP_TABLE_ATTRIBUTE = {
   32, twiddleCoef_32_q15, armBitRevIndexTable_fixed_32, ARMBITREVINDEXTABLE_FIXED_32_TABLE_LENGTH
 };
 
-const arm_cfft_instance_q15 arm_cfft_sR_q15_len64 = {
+const arm_cfft_instance_q15 arm_cfft_sR_q15_len64 ARM_DSP_TABLE_ATTRIBUTE = {
   64, twiddleCoef_64_q15, armBitRevIndexTable_fixed_64, ARMBITREVINDEXTABLE_FIXED_64_TABLE_LENGTH
 };
 
-const arm_cfft_instance_q15 arm_cfft_sR_q15_len128 = {
+const arm_cfft_instance_q15 arm_cfft_sR_q15_len128 ARM_DSP_TABLE_ATTRIBUTE = {
   128, twiddleCoef_128_q15, armBitRevIndexTable_fixed_128, ARMBITREVINDEXTABLE_FIXED_128_TABLE_LENGTH
 };
 
-const arm_cfft_instance_q15 arm_cfft_sR_q15_len256 = {
+const arm_cfft_instance_q15 arm_cfft_sR_q15_len256 ARM_DSP_TABLE_ATTRIBUTE = {
   256, twiddleCoef_256_q15, armBitRevIndexTable_fixed_256, ARMBITREVINDEXTABLE_FIXED_256_TABLE_LENGTH
 };
 
-const arm_cfft_instance_q15 arm_cfft_sR_q15_len512 = {
+const arm_cfft_instance_q15 arm_cfft_sR_q15_len512 ARM_DSP_TABLE_ATTRIBUTE = {
   512, twiddleCoef_512_q15, armBitRevIndexTable_fixed_512, ARMBITREVINDEXTABLE_FIXED_512_TABLE_LENGTH
 };
 
-const arm_cfft_instance_q15 arm_cfft_sR_q15_len1024 = {
+const arm_cfft_instance_q15 arm_cfft_sR_q15_len1024 ARM_DSP_TABLE_ATTRIBUTE = {
   1024, twiddleCoef_1024_q15, armBitRevIndexTable_fixed_1024, ARMBITREVINDEXTABLE_FIXED_1024_TABLE_LENGTH
 };
 
-const arm_cfft_instance_q15 arm_cfft_sR_q15_len2048 = {
+const arm_cfft_instance_q15 arm_cfft_sR_q15_len2048 ARM_DSP_TABLE_ATTRIBUTE = {
   2048, twiddleCoef_2048_q15, armBitRevIndexTable_fixed_2048, ARMBITREVINDEXTABLE_FIXED_2048_TABLE_LENGTH
 };
 
-const arm_cfft_instance_q15 arm_cfft_sR_q15_len4096 = {
+const arm_cfft_instance_q15 arm_cfft_sR_q15_len4096 ARM_DSP_TABLE_ATTRIBUTE = {
   4096, twiddleCoef_4096_q15, armBitRevIndexTable_fixed_4096, ARMBITREVINDEXTABLE_FIXED_4096_TABLE_LENGTH
 };
 
@@ -207,49 +207,49 @@ const arm_cfft_instance_q15 arm_cfft_sR_q15_len4096 = {
 /* Structure for real-value inputs */
 /* Double precision strucs */
 
-const arm_rfft_fast_instance_f64 arm_rfft_fast_sR_f64_len32 = {
+const arm_rfft_fast_instance_f64 arm_rfft_fast_sR_f64_len32 ARM_DSP_TABLE_ATTRIBUTE = {
   { 16, (const float64_t *)twiddleCoefF64_16, armBitRevIndexTableF64_16, ARMBITREVINDEXTABLEF64_16_TABLE_LENGTH },
   32U,
   (float64_t *)twiddleCoefF64_rfft_32
 };
 
-const arm_rfft_fast_instance_f64 arm_rfft_fast_sR_f64_len64 = {
+const arm_rfft_fast_instance_f64 arm_rfft_fast_sR_f64_len64 ARM_DSP_TABLE_ATTRIBUTE = {
    { 32, (const float64_t *)twiddleCoefF64_32, armBitRevIndexTableF64_32, ARMBITREVINDEXTABLEF64_32_TABLE_LENGTH },
   64U,
   (float64_t *)twiddleCoefF64_rfft_64
 };
 
-const arm_rfft_fast_instance_f64 arm_rfft_fast_sR_f64_len128 = {
+const arm_rfft_fast_instance_f64 arm_rfft_fast_sR_f64_len128 ARM_DSP_TABLE_ATTRIBUTE = {
   { 64, (const float64_t *)twiddleCoefF64_64, armBitRevIndexTableF64_64, ARMBITREVINDEXTABLEF64_64_TABLE_LENGTH },
   128U,
   (float64_t *)twiddleCoefF64_rfft_128
 };
 
-const arm_rfft_fast_instance_f64 arm_rfft_fast_sR_f64_len256 = {
+const arm_rfft_fast_instance_f64 arm_rfft_fast_sR_f64_len256 ARM_DSP_TABLE_ATTRIBUTE = {
   { 128, (const float64_t *)twiddleCoefF64_128, armBitRevIndexTableF64_128, ARMBITREVINDEXTABLEF64_128_TABLE_LENGTH },
   256U,
   (float64_t *)twiddleCoefF64_rfft_256
 };
 
-const arm_rfft_fast_instance_f64 arm_rfft_fast_sR_f64_len512 = {
+const arm_rfft_fast_instance_f64 arm_rfft_fast_sR_f64_len512 ARM_DSP_TABLE_ATTRIBUTE = {
   { 256, (const float64_t *)twiddleCoefF64_256, armBitRevIndexTableF64_256, ARMBITREVINDEXTABLEF64_256_TABLE_LENGTH },
   512U,
   (float64_t *)twiddleCoefF64_rfft_512
 };
 
-const arm_rfft_fast_instance_f64 arm_rfft_fast_sR_f64_len1024 = {
+const arm_rfft_fast_instance_f64 arm_rfft_fast_sR_f64_len1024 ARM_DSP_TABLE_ATTRIBUTE = {
   { 512, (const float64_t *)twiddleCoefF64_512, armBitRevIndexTableF64_512, ARMBITREVINDEXTABLEF64_512_TABLE_LENGTH },
   1024U,
   (float64_t *)twiddleCoefF64_rfft_1024
 };
 
-const arm_rfft_fast_instance_f64 arm_rfft_fast_sR_f64_len2048 = {
+const arm_rfft_fast_instance_f64 arm_rfft_fast_sR_f64_len2048 ARM_DSP_TABLE_ATTRIBUTE = {
   { 1024, (const float64_t *)twiddleCoefF64_1024, armBitRevIndexTableF64_1024, ARMBITREVINDEXTABLEF64_1024_TABLE_LENGTH },
   2048U,
   (float64_t *)twiddleCoefF64_rfft_2048
 };
 
-const arm_rfft_fast_instance_f64 arm_rfft_fast_sR_f64_len4096 = {
+const arm_rfft_fast_instance_f64 arm_rfft_fast_sR_f64_len4096 ARM_DSP_TABLE_ATTRIBUTE = {
   { 2048, (const float64_t *)twiddleCoefF64_2048, armBitRevIndexTableF64_2048, ARMBITREVINDEXTABLEF64_2048_TABLE_LENGTH },
   4096U,
   (float64_t *)twiddleCoefF64_rfft_4096
@@ -259,49 +259,49 @@ const arm_rfft_fast_instance_f64 arm_rfft_fast_sR_f64_len4096 = {
 
 #if !defined(ARM_MATH_MVEF) || defined(ARM_MATH_AUTOVECTORIZE)
 
-const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len32 = {
+const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len32 ARM_DSP_TABLE_ATTRIBUTE = {
   { 16, twiddleCoef_16, armBitRevIndexTable16, ARMBITREVINDEXTABLE_16_TABLE_LENGTH },
   32U,
   (float32_t *)twiddleCoef_rfft_32
 };
 
-const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len64 = {
+const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len64 ARM_DSP_TABLE_ATTRIBUTE = {
    { 32, twiddleCoef_32, armBitRevIndexTable32, ARMBITREVINDEXTABLE_32_TABLE_LENGTH },
   64U,
   (float32_t *)twiddleCoef_rfft_64
 };
 
-const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len128 = {
+const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len128 ARM_DSP_TABLE_ATTRIBUTE = {
   { 64, twiddleCoef_64, armBitRevIndexTable64, ARMBITREVINDEXTABLE_64_TABLE_LENGTH },
   128U,
   (float32_t *)twiddleCoef_rfft_128
 };
 
-const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len256 = {
+const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len256 ARM_DSP_TABLE_ATTRIBUTE = {
   { 128, twiddleCoef_128, armBitRevIndexTable128, ARMBITREVINDEXTABLE_128_TABLE_LENGTH },
   256U,
   (float32_t *)twiddleCoef_rfft_256
 };
 
-const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len512 = {
+const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len512 ARM_DSP_TABLE_ATTRIBUTE = {
   { 256, twiddleCoef_256, armBitRevIndexTable256, ARMBITREVINDEXTABLE_256_TABLE_LENGTH },
   512U,
   (float32_t *)twiddleCoef_rfft_512
 };
 
-const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len1024 = {
+const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len1024 ARM_DSP_TABLE_ATTRIBUTE = {
   { 512, twiddleCoef_512, armBitRevIndexTable512, ARMBITREVINDEXTABLE_512_TABLE_LENGTH },
   1024U,
   (float32_t *)twiddleCoef_rfft_1024
 };
 
-const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len2048 = {
+const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len2048 ARM_DSP_TABLE_ATTRIBUTE = {
   { 1024, twiddleCoef_1024, armBitRevIndexTable1024, ARMBITREVINDEXTABLE_1024_TABLE_LENGTH },
   2048U,
   (float32_t *)twiddleCoef_rfft_2048
 };
 
-const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len4096 = {
+const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len4096 ARM_DSP_TABLE_ATTRIBUTE = {
   { 2048, twiddleCoef_2048, armBitRevIndexTable2048, ARMBITREVINDEXTABLE_2048_TABLE_LENGTH },
   4096U,
   (float32_t *)twiddleCoef_rfft_4096
@@ -324,7 +324,7 @@ For the MVE version, the new arm_cfft_init_f32 must be used.
 
 */
 
-const arm_rfft_instance_q31 arm_rfft_sR_q31_len32 = {
+const arm_rfft_instance_q31 arm_rfft_sR_q31_len32 ARM_DSP_TABLE_ATTRIBUTE = {
   32U,
   0,
   1,
@@ -334,7 +334,7 @@ const arm_rfft_instance_q31 arm_rfft_sR_q31_len32 = {
   &arm_cfft_sR_q31_len16
 };
 
-const arm_rfft_instance_q31 arm_rfft_sR_q31_len64 = {
+const arm_rfft_instance_q31 arm_rfft_sR_q31_len64 ARM_DSP_TABLE_ATTRIBUTE = {
   64U,
   0,
   1,
@@ -344,7 +344,7 @@ const arm_rfft_instance_q31 arm_rfft_sR_q31_len64 = {
   &arm_cfft_sR_q31_len32
 };
 
-const arm_rfft_instance_q31 arm_rfft_sR_q31_len128 = {
+const arm_rfft_instance_q31 arm_rfft_sR_q31_len128 ARM_DSP_TABLE_ATTRIBUTE = {
   128U,
   0,
   1,
@@ -354,7 +354,7 @@ const arm_rfft_instance_q31 arm_rfft_sR_q31_len128 = {
   &arm_cfft_sR_q31_len64
 };
 
-const arm_rfft_instance_q31 arm_rfft_sR_q31_len256 = {
+const arm_rfft_instance_q31 arm_rfft_sR_q31_len256 ARM_DSP_TABLE_ATTRIBUTE = {
   256U,
   0,
   1,
@@ -364,7 +364,7 @@ const arm_rfft_instance_q31 arm_rfft_sR_q31_len256 = {
   &arm_cfft_sR_q31_len128
 };
 
-const arm_rfft_instance_q31 arm_rfft_sR_q31_len512 = {
+const arm_rfft_instance_q31 arm_rfft_sR_q31_len512 ARM_DSP_TABLE_ATTRIBUTE = {
   512U,
   0,
   1,
@@ -374,7 +374,7 @@ const arm_rfft_instance_q31 arm_rfft_sR_q31_len512 = {
   &arm_cfft_sR_q31_len256
 };
 
-const arm_rfft_instance_q31 arm_rfft_sR_q31_len1024 = {
+const arm_rfft_instance_q31 arm_rfft_sR_q31_len1024 ARM_DSP_TABLE_ATTRIBUTE = {
   1024U,
   0,
   1,
@@ -384,7 +384,7 @@ const arm_rfft_instance_q31 arm_rfft_sR_q31_len1024 = {
   &arm_cfft_sR_q31_len512
 };
 
-const arm_rfft_instance_q31 arm_rfft_sR_q31_len2048 = {
+const arm_rfft_instance_q31 arm_rfft_sR_q31_len2048 ARM_DSP_TABLE_ATTRIBUTE = {
   2048U,
   0,
   1,
@@ -394,7 +394,7 @@ const arm_rfft_instance_q31 arm_rfft_sR_q31_len2048 = {
   &arm_cfft_sR_q31_len1024
 };
 
-const arm_rfft_instance_q31 arm_rfft_sR_q31_len4096 = {
+const arm_rfft_instance_q31 arm_rfft_sR_q31_len4096 ARM_DSP_TABLE_ATTRIBUTE = {
   4096U,
   0,
   1,
@@ -404,7 +404,7 @@ const arm_rfft_instance_q31 arm_rfft_sR_q31_len4096 = {
   &arm_cfft_sR_q31_len2048
 };
 
-const arm_rfft_instance_q31 arm_rfft_sR_q31_len8192 = {
+const arm_rfft_instance_q31 arm_rfft_sR_q31_len8192 ARM_DSP_TABLE_ATTRIBUTE = {
   8192U,
   0,
   1,
@@ -415,7 +415,7 @@ const arm_rfft_instance_q31 arm_rfft_sR_q31_len8192 = {
 };
 
 /* q15_t */
-const arm_rfft_instance_q15 arm_rfft_sR_q15_len32 = {
+const arm_rfft_instance_q15 arm_rfft_sR_q15_len32 ARM_DSP_TABLE_ATTRIBUTE = {
   32U,
   0,
   1,
@@ -425,7 +425,7 @@ const arm_rfft_instance_q15 arm_rfft_sR_q15_len32 = {
   &arm_cfft_sR_q15_len16
 };
 
-const arm_rfft_instance_q15 arm_rfft_sR_q15_len64 = {
+const arm_rfft_instance_q15 arm_rfft_sR_q15_len64 ARM_DSP_TABLE_ATTRIBUTE = {
   64U,
   0,
   1,
@@ -435,7 +435,7 @@ const arm_rfft_instance_q15 arm_rfft_sR_q15_len64 = {
   &arm_cfft_sR_q15_len32
 };
 
-const arm_rfft_instance_q15 arm_rfft_sR_q15_len128 = {
+const arm_rfft_instance_q15 arm_rfft_sR_q15_len128 ARM_DSP_TABLE_ATTRIBUTE = {
   128U,
   0,
   1,
@@ -445,7 +445,7 @@ const arm_rfft_instance_q15 arm_rfft_sR_q15_len128 = {
   &arm_cfft_sR_q15_len64
 };
 
-const arm_rfft_instance_q15 arm_rfft_sR_q15_len256 = {
+const arm_rfft_instance_q15 arm_rfft_sR_q15_len256 ARM_DSP_TABLE_ATTRIBUTE = {
   256U,
   0,
   1,
@@ -455,7 +455,7 @@ const arm_rfft_instance_q15 arm_rfft_sR_q15_len256 = {
   &arm_cfft_sR_q15_len128
 };
 
-const arm_rfft_instance_q15 arm_rfft_sR_q15_len512 = {
+const arm_rfft_instance_q15 arm_rfft_sR_q15_len512 ARM_DSP_TABLE_ATTRIBUTE = {
   512U,
   0,
   1,
@@ -465,7 +465,7 @@ const arm_rfft_instance_q15 arm_rfft_sR_q15_len512 = {
   &arm_cfft_sR_q15_len256
 };
 
-const arm_rfft_instance_q15 arm_rfft_sR_q15_len1024 = {
+const arm_rfft_instance_q15 arm_rfft_sR_q15_len1024 ARM_DSP_TABLE_ATTRIBUTE = {
   1024U,
   0,
   1,
@@ -475,7 +475,7 @@ const arm_rfft_instance_q15 arm_rfft_sR_q15_len1024 = {
   &arm_cfft_sR_q15_len512
 };
 
-const arm_rfft_instance_q15 arm_rfft_sR_q15_len2048 = {
+const arm_rfft_instance_q15 arm_rfft_sR_q15_len2048 ARM_DSP_TABLE_ATTRIBUTE = {
   2048U,
   0,
   1,
@@ -485,7 +485,7 @@ const arm_rfft_instance_q15 arm_rfft_sR_q15_len2048 = {
   &arm_cfft_sR_q15_len1024
 };
 
-const arm_rfft_instance_q15 arm_rfft_sR_q15_len4096 = {
+const arm_rfft_instance_q15 arm_rfft_sR_q15_len4096 ARM_DSP_TABLE_ATTRIBUTE = {
   4096U,
   0,
   1,
@@ -495,7 +495,7 @@ const arm_rfft_instance_q15 arm_rfft_sR_q15_len4096 = {
   &arm_cfft_sR_q15_len2048
 };
 
-const arm_rfft_instance_q15 arm_rfft_sR_q15_len8192 = {
+const arm_rfft_instance_q15 arm_rfft_sR_q15_len8192 ARM_DSP_TABLE_ATTRIBUTE = {
   8192U,
   0,
   1,

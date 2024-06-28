@@ -31,6 +31,10 @@
 #define ARM_DSP_ATTRIBUTE 
 #endif
 
+#ifndef ARM_DSP_TABLE_ATTRIBUTE 
+#define ARM_DSP_TABLE_ATTRIBUTE 
+#endif
+
 #ifdef   __cplusplus
 extern "C"
 {
