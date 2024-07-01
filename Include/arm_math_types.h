@@ -64,7 +64,7 @@ extern "C"
   #pragma GCC diagnostic ignored "-Wconversion"
   #pragma GCC diagnostic ignored "-Wunused-parameter"
   // Disable some code having issue with GCC
-  #define __CMSIS_GCC_H 
+  #define ARM_DSP_BUILT_WITH_GCC 
 
 #elif defined ( __ICCARM__ )
 

@@ -157,7 +157,7 @@ ARM_DSP_ATTRIBUTE void arm_rfft_q31(
 #include "arm_helium_utils.h"
 #include "arm_vec_fft.h"
 
-#if defined(__CMSIS_GCC_H)
+#if defined(ARM_DSP_BUILT_WITH_GCC)
 
 #define MVE_CMPLX_MULT_FX_AxB_S32(A,B)          vqdmladhxq_s32(vqdmlsdhq_s32((__typeof(A))vuninitializedq_s32(), A, B), A, B)
 #define MVE_CMPLX_MULT_FX_AxConjB_S32(A,B)      vqdmladhq_s32(vqdmlsdhxq_s32((__typeof(A))vuninitializedq_s32(), A, B), A, B)
@@ -199,7 +199,7 @@ ARM_DSP_ATTRIBUTE void arm_split_rfft_q31(
         q31x4_t         in2 = vldrwq_gather_shifted_offset_s32(pSrc, offset);
         q31x4_t         coefA = vldrwq_gather_shifted_offset_s32(pCoefAb, offsetCoef);
         q31x4_t         coefB = vldrwq_gather_shifted_offset_s32(pCoefBb, offsetCoef);
-#if defined(__CMSIS_GCC_H)
+#if defined(ARM_DSP_BUILT_WITH_GCC)
         q31x4_t         out = vhaddq_s32(MVE_CMPLX_MULT_FX_AxB_S32(in1, coefA),MVE_CMPLX_MULT_FX_AxConjB_S32(coefB, in2));
 #else
         q31x4_t         out = vhaddq_s32(MVE_CMPLX_MULT_FX_AxB(in1, coefA, q31x4_t),
@@ -357,7 +357,7 @@ ARM_DSP_ATTRIBUTE void arm_split_rifft_q31(
         q31x4_t         coefB = vldrwq_gather_shifted_offset_s32(pCoefBb, offsetCoef);
 
         /* can we avoid the conjugate here ? */
-#if defined(__CMSIS_GCC_H)
+#if defined(ARM_DSP_BUILT_WITH_GCC)
         q31x4_t         out = vhaddq_s32(MVE_CMPLX_MULT_FX_AxConjB_S32(in1, coefA),
                                      vmulq_s32(conj, MVE_CMPLX_MULT_FX_AxB_S32(in2, coefB)));
 #else

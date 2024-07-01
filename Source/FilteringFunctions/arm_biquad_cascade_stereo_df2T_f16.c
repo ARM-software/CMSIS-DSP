@@ -46,11 +46,11 @@
   @param[in]     blockSize number of samples to process
  */
 
-#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE) && defined(__CMSIS_GCC_H)
+#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE) && defined(ARM_DSP_BUILT_WITH_GCC)
 #pragma GCC warning "Scalar version of arm_biquad_cascade_stereo_df2T_f16 built. Helium version has build issues with gcc."
 #endif 
 
-#if (defined(ARM_MATH_MVE_FLOAT16) && defined(ARM_MATH_HELIUM_EXPERIMENTAL)) && !defined(ARM_MATH_AUTOVECTORIZE) && !defined(__CMSIS_GCC_H)
+#if (defined(ARM_MATH_MVE_FLOAT16) && defined(ARM_MATH_HELIUM_EXPERIMENTAL)) && !defined(ARM_MATH_AUTOVECTORIZE) && !defined(ARM_DSP_BUILT_WITH_GCC)
 ARM_DSP_ATTRIBUTE void arm_biquad_cascade_stereo_df2T_f16(
   const arm_biquad_cascade_stereo_df2T_instance_f16 * S,
   const float16_t * pSrc,
