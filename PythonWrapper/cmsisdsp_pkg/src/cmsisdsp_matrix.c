@@ -1908,6 +1908,15 @@ cmsis_arm_mat_cholesky_f32(PyObject *obj, PyObject *args)
     uint32_t row = src_converted.numRows ;
     createf32Matrix(&dst_converted,row,column);
 
+    float32_t *p=dst_converted.pData;
+    for(int r=0;r<row;r++)
+    {
+        for(int c =0; c < column;c++)
+        {
+          *p++=0.0f;
+        }
+    }
+
     arm_status returnValue = arm_mat_cholesky_f32(&src_converted,&dst_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
     PyObject* dstOBJ=NumpyArrayFromf32Matrix(&dst_converted);
@@ -1938,6 +1947,16 @@ cmsis_arm_mat_cholesky_f64(PyObject *obj, PyObject *args)
     uint32_t column = src_converted.numCols ;
     uint32_t row = src_converted.numRows ;
     createf64Matrix(&dst_converted,row,column);
+
+    float64_t *p=dst_converted.pData;
+    for(int r=0;r<row;r++)
+    {
+        for(int c =0; c < column;c++)
+        {
+          *p++=0.0f;
+        }
+    }
+
 
     arm_status returnValue = arm_mat_cholesky_f64(&src_converted,&dst_converted);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);

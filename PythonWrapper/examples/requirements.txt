@@ -1,0 +1,4 @@
+numpy>=1.23.5
+scipy~=1.13.1
+scikit_learn~=1.5.0
+colorama~=0.4.6

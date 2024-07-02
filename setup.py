@@ -188,7 +188,7 @@ def build():
          author = 'Copyright (C) 2010-2024 ARM Limited or its affiliates. All rights reserved.',
          author_email = 'christophe.favergeon@arm.com',
          url="https://github.com/ARM-software/CMSIS-DSP",
-         python_requires='>=3.7',
+         python_requires='>=3.9',
          license="License :: OSI Approved :: Apache Software License",
          platforms=['any'],
          classifiers=[
@@ -205,7 +205,7 @@ def build():
           ],
           keywords=['development','dsp','cmsis','cmsis-dsp','Arm','signal processing','maths','ml','cortex-m','cortex-a'],
           install_requires=[
-          'numpy>=1.22',
+          'numpy>=1.23.5',
           ],
           project_urls={  # Optional
              'Bug Reports': 'https://github.com/ARM-software/CMSIS-DSP/issues',

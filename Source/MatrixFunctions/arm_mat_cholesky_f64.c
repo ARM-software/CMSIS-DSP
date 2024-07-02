@@ -50,6 +50,10 @@
    * @par
    * If the matrix is ill conditioned or only semi-definite, then it is better using the LDL^t decomposition.
    * The decomposition of A is returning a lower triangular matrix L such that A = L L^t
+   *
+   * @par
+   * The destination matrix should be set to 0 before calling the functions because
+   * the function may not overwrite all output elements.
    */
 
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE) && defined(__aarch64__)
