@@ -159,11 +159,6 @@ ARM_DSP_ATTRIBUTE void arm_rfft_q15(
 #include "arm_helium_utils.h"
 #include "arm_vec_fft.h"
 
-#if defined(ARM_DSP_BUILT_WITH_GCC)
-#define MVE_CMPLX_MULT_FX_AxB_S16(A,B)          vqdmladhxq_s16(vqdmlsdhq_s16((__typeof(A))vuninitializedq_s16(), A, B), A, B)
-#define MVE_CMPLX_MULT_FX_AxConjB_S16(A,B)      vqdmladhq_s16(vqdmlsdhxq_s16((__typeof(A))vuninitializedq_s16(), A, B), A, B)
-
-#endif 
 
 ARM_DSP_ATTRIBUTE void arm_split_rfft_q15(
         q15_t * pSrc,
@@ -205,13 +200,9 @@ ARM_DSP_ATTRIBUTE void arm_split_rfft_q15(
         q15x8_t         coefA = vldrhq_gather_shifted_offset_s16(pCoefAb, offsetCoef);
         q15x8_t         coefB = vldrhq_gather_shifted_offset_s16(pCoefBb, offsetCoef);
 
-#if defined(ARM_DSP_BUILT_WITH_GCC)
-        q15x8_t         out = vhaddq_s16(MVE_CMPLX_MULT_FX_AxB_S16(in1, coefA),
-                                     MVE_CMPLX_MULT_FX_AxConjB_S16(coefB, in2));
-#else
+
         q15x8_t         out = vhaddq_s16(MVE_CMPLX_MULT_FX_AxB(in1, coefA, q15x8_t),
                                          MVE_CMPLX_MULT_FX_AxConjB(coefB, in2, q15x8_t));
-#endif
         vst1q_s16(pOut1, out);
         pOut1 += 8;
 

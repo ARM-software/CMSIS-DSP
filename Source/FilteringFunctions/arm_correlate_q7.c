@@ -56,11 +56,7 @@
                    Refer to \ref arm_correlate_opt_q7() for a faster implementation of this function.
  */
 
-#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE) && defined(ARM_DSP_BUILT_WITH_GCC)
-#pragma GCC warning "Scalar version of arm_correlate_q7 built. Helium version has build issues with gcc."
-#endif 
-
-#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE) &&  !defined(ARM_DSP_BUILT_WITH_GCC)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 #include "arm_helium_utils.h"
 
 #include "arm_vec_filtering.h"
