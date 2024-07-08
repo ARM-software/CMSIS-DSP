@@ -54,7 +54,7 @@ The library ships with a number of examples which demonstrate how to use the lib
 
 ## Toolchain Support {#toolchain}
 
-The library is now tested on Fast Models building with cmake. Core M0, M4, M7, M33, M55, A32 are tested.
+The library is now tested on Fast Models building with cmake. Core M0, M4, M7, M33, M55 are tested.
 
 ## Access to CMSIS-DSP {#pack}
 
@@ -119,6 +119,26 @@ Each library project has different preprocessor macros.
 
  - `ARM_MATH_AUTOVECTORIZE`:
    - With Helium or Neon, disable the use of vectorized code with C intrinsics and use pure C instead. The vectorization is then done by the compiler.
+
+ - `ARM_DSP_ATTRIBUTE`: Can be set to define CMSIS-DSP function as weak functions. This can either be set on the command line when building or in a new `arm_dsp_config.h` header (see below)
+
+ - `ARM_DSP_TABLE_ATTRIBUTE`: Can be set to define in which section constant tables must be mapped. This can either be set on the command line when building or in a new `arm_dsp_config.h` header (see below). Another way to set those sections is by modifying the linker scripts since the constant tables are defined only in a restricted set of source files. 
+
+ - `ARM_DSP_CUSTOM_CONFIG` When set, the file `arm_dsp_config.h` is included by the `arm_math_types.h` headers. You can use this file to define any of the above compilation symbols.
+
+## Code size
+
+Constant tables can use a lot of read only memory. The linker can remove the unused functions and constant tables.
+
+For this you need to use the right initialization functions in the library and the right options for the linker (they are compiler dependent).
+
+For all transforms functions (CFFT, RFFT ...) instead of using a generic initialization function that works for all lengths (like `arm_cff_init_f32`), use a dedicated initialization function for a specific size (like `arm_cfft_init_1024_f32`).
+
+By using the right initialization function, you're telling the linker what is really used.
+
+If you use a generic function, the linker cannot deduce the used lengths and thus will keep all the constant tables required for each length.
+
+Then you need to use the right options for the compiler so that the unused tables and functions are removed. It is compiler dependent but generally the options are named like `-ffunction-sections`, `-fdata-sections`, `--gc-sections` ...
 
 ## License {#license}
 
