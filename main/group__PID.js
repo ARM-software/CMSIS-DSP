@@ -28,12 +28,12 @@ var group__PID =
       [ "state", "group__PID.html#a473556ac6100fc188e77930d56f51062", null ]
     ] ],
     [ "arm_pid_f32", "group__PID.html#gabf40f5029a63619ed735cd51c3b34870", null ],
-    [ "arm_pid_init_f32", "group__PID.html#ga2d4e4aac5dd17c861388b799dc8d8b8f", null ],
-    [ "arm_pid_init_q15", "group__PID.html#ga1c39027589a35392391c73aab841851c", null ],
-    [ "arm_pid_init_q31", "group__PID.html#ga99984e72419f23ddc171ca4c6070694b", null ],
+    [ "arm_pid_init_f32", "group__PID.html#gae31536b19b82b93ed184fb1ab73cfcb3", null ],
+    [ "arm_pid_init_q15", "group__PID.html#ga2cb1e3d3ebb167348fdabec74653d5c3", null ],
+    [ "arm_pid_init_q31", "group__PID.html#gad9d88485234fa9460b1ce9e64989ac86", null ],
     [ "arm_pid_q15", "group__PID.html#ga878e97b91fb7f32e53d3ef1046d4b8d2", null ],
     [ "arm_pid_q31", "group__PID.html#ga01a65b2820410600279078b416ca905b", null ],
-    [ "arm_pid_reset_f32", "group__PID.html#ga36100cfd13521e2a6d8ff515d0057be6", null ],
-    [ "arm_pid_reset_q15", "group__PID.html#ga1cf58d7ed03d63ce3fec0b391d5b592f", null ],
-    [ "arm_pid_reset_q31", "group__PID.html#ga4d057b0fc8c76967d41952208dce7693", null ]
+    [ "arm_pid_reset_f32", "group__PID.html#ga9ec860bcb6f8ca31205bf0f1b51ab723", null ],
+    [ "arm_pid_reset_q15", "group__PID.html#ga408566dacb4fa6e0458b2c75672e525f", null ],
+    [ "arm_pid_reset_q31", "group__PID.html#gaeecbacd3fb37c608ec25474d3a0dffa9", null ]
 ];

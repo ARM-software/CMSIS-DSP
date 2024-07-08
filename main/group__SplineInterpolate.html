@@ -136,12 +136,12 @@ $(document).ready(function(){initNavTree('group__SplineInterpolate.html',''); in
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga8916035e20d14ab28b34e7a19fe357fc"><td class="memItemLeft" align="right" valign="top">ARM_DSP_ATTRIBUTE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SplineInterpolate.html#ga8916035e20d14ab28b34e7a19fe357fc">arm_spline_f32</a> (<a class="el" href="structarm__spline__instance__f32.html">arm_spline_instance_f32</a> *S, const <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *xq, <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *pDst, uint32_t blockSize)</td></tr>
-<tr class="memdesc:ga8916035e20d14ab28b34e7a19fe357fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processing function for the floating-point cubic spline interpolation.  <br /></td></tr>
-<tr class="separator:ga8916035e20d14ab28b34e7a19fe357fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa1819dc3662cb1c315b99d84f383b684"><td class="memItemLeft" align="right" valign="top">ARM_DSP_ATTRIBUTE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SplineInterpolate.html#gaa1819dc3662cb1c315b99d84f383b684">arm_spline_init_f32</a> (<a class="el" href="structarm__spline__instance__f32.html">arm_spline_instance_f32</a> *S, arm_spline_type type, const <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *x, const <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *y, uint32_t n, <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *coeffs, <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *tempBuffer)</td></tr>
-<tr class="memdesc:gaa1819dc3662cb1c315b99d84f383b684"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialization function for the floating-point cubic spline interpolation.  <br /></td></tr>
-<tr class="separator:gaa1819dc3662cb1c315b99d84f383b684"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4ef053a783b251b085454b28f8aecb94"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SplineInterpolate.html#ga4ef053a783b251b085454b28f8aecb94">arm_spline_f32</a> (<a class="el" href="structarm__spline__instance__f32.html">arm_spline_instance_f32</a> *S, const <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *xq, <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *pDst, uint32_t blockSize)</td></tr>
+<tr class="memdesc:ga4ef053a783b251b085454b28f8aecb94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processing function for the floating-point cubic spline interpolation.  <br /></td></tr>
+<tr class="separator:ga4ef053a783b251b085454b28f8aecb94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5370a3c4a213e15bf57726406ec52ae0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SplineInterpolate.html#ga5370a3c4a213e15bf57726406ec52ae0">arm_spline_init_f32</a> (<a class="el" href="structarm__spline__instance__f32.html">arm_spline_instance_f32</a> *S, arm_spline_type type, const <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *x, const <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *y, uint32_t n, <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *coeffs, <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *tempBuffer)</td></tr>
+<tr class="memdesc:ga5370a3c4a213e15bf57726406ec52ae0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialization function for the floating-point cubic spline interpolation.  <br /></td></tr>
+<tr class="separator:ga5370a3c4a213e15bf57726406ec52ae0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>Spline interpolation is a method of interpolation where the interpolant is a piecewise-defined polynomial called "spline".</p>
@@ -205,14 +205,14 @@ Functions</h2></td></tr>
 <dl class="section user"><dt></dt><dd></dd></dl>
 <p>The x input array must be strictly sorted in ascending order and it must not contain twice the same value (x(i)&lt;x(i+1)). </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ga8916035e20d14ab28b34e7a19fe357fc" name="ga8916035e20d14ab28b34e7a19fe357fc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga8916035e20d14ab28b34e7a19fe357fc">&#9670;&#160;</a></span>arm_spline_f32()</h2>
+<a id="ga4ef053a783b251b085454b28f8aecb94" name="ga4ef053a783b251b085454b28f8aecb94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4ef053a783b251b085454b28f8aecb94">&#9670;&#160;</a></span>arm_spline_f32()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">ARM_DSP_ATTRIBUTE void arm_spline_f32 </td>
+          <td class="memname">void arm_spline_f32 </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structarm__spline__instance__f32.html">arm_spline_instance_f32</a> *&#160;</td>
           <td class="paramname"><em>S</em>, </td>
@@ -256,14 +256,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="gaa1819dc3662cb1c315b99d84f383b684" name="gaa1819dc3662cb1c315b99d84f383b684"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaa1819dc3662cb1c315b99d84f383b684">&#9670;&#160;</a></span>arm_spline_init_f32()</h2>
+<a id="ga5370a3c4a213e15bf57726406ec52ae0" name="ga5370a3c4a213e15bf57726406ec52ae0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5370a3c4a213e15bf57726406ec52ae0">&#9670;&#160;</a></span>arm_spline_init_f32()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">ARM_DSP_ATTRIBUTE void arm_spline_init_f32 </td>
+          <td class="memname">void arm_spline_init_f32 </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structarm__spline__instance__f32.html">arm_spline_instance_f32</a> *&#160;</td>
           <td class="paramname"><em>S</em>, </td>

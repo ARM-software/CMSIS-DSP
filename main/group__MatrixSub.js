@@ -1,8 +1,8 @@
 var group__MatrixSub =
 [
-    [ "arm_mat_sub_f16", "group__MatrixSub.html#ga8b4b595993a42bc79afa472d83066974", null ],
-    [ "arm_mat_sub_f32", "group__MatrixSub.html#gab8a2573dce05775f12ef9cb619dba84e", null ],
-    [ "arm_mat_sub_f64", "group__MatrixSub.html#ga41a972a84c8eb7da1c51d3c8de54ce03", null ],
-    [ "arm_mat_sub_q15", "group__MatrixSub.html#ga12d981ce7bbe4b9a37237b36c30fd7cb", null ],
-    [ "arm_mat_sub_q31", "group__MatrixSub.html#gadf947157a70ec11344abdaf8fbf63cf4", null ]
+    [ "arm_mat_sub_f16", "group__MatrixSub.html#ga785d8331832eec038cef82c12b0012d5", null ],
+    [ "arm_mat_sub_f32", "group__MatrixSub.html#gac8b72fb70246ccfee3b372002345732c", null ],
+    [ "arm_mat_sub_f64", "group__MatrixSub.html#gacae21792b19d19d238dcf9d341aa7ae3", null ],
+    [ "arm_mat_sub_q15", "group__MatrixSub.html#gaf647776a425b7f9dd0aca3e11d81f02f", null ],
+    [ "arm_mat_sub_q31", "group__MatrixSub.html#ga39f42e0e3b7f115fbb909d6ff4e1329d", null ]
 ];

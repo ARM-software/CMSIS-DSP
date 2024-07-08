@@ -1,4 +1,4 @@
 var group__QuatNorm =
 [
-    [ "arm_quaternion_norm_f32", "group__QuatNorm.html#ga6c5275cadc2649057a72d0608709e93e", null ]
+    [ "arm_quaternion_norm_f32", "group__QuatNorm.html#ga49a1e25e3a6147aecfecb6f4074e41d4", null ]
 ];

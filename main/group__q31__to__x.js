@@ -1,7 +1,7 @@
 var group__q31__to__x =
 [
-    [ "arm_q31_to_f64", "group__q31__to__x.html#ga08058e70bb47f5a1b58ff0a8e356a558", null ],
-    [ "arm_q31_to_float", "group__q31__to__x.html#ga85165019cd7b0c22d738a0b3f96c738f", null ],
-    [ "arm_q31_to_q15", "group__q31__to__x.html#ga44bd41d4c8dd939556656bd78800d279", null ],
-    [ "arm_q31_to_q7", "group__q31__to__x.html#gac39848d8401d0dc7b785e81c550bae2c", null ]
+    [ "arm_q31_to_f64", "group__q31__to__x.html#ga53d188bae95b097762ff7d34d0e9c4ab", null ],
+    [ "arm_q31_to_float", "group__q31__to__x.html#ga19a9d023aca1f99abd5da6f13a42b6cf", null ],
+    [ "arm_q31_to_q15", "group__q31__to__x.html#ga775f3a1996f00a8048c4b7acba2e0828", null ],
+    [ "arm_q31_to_q7", "group__q31__to__x.html#gabef5357eb3348b3b5b38915fffce8f3d", null ]
 ];

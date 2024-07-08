@@ -175,7 +175,7 @@ Examples</h1>
 <p>The library ships with a number of examples which demonstrate how to use the library functions. Please refer to <a class="el" href="group__groupExamples.html">Examples</a>.</p>
 <h1><a class="anchor" id="toolchain"></a>
 Toolchain Support</h1>
-<p>The library is now tested on Fast Models building with cmake. Core M0, M4, M7, M33, M55, A32 are tested.</p>
+<p>The library is now tested on Fast Models building with cmake. Core M0, M4, M7, M33, M55 are tested.</p>
 <h1><a class="anchor" id="pack"></a>
 Access to CMSIS-DSP</h1>
 <p>CMSIS-DSP is actively maintained in the <a href="https://github.com/ARM-software/CMSIS-DSP"><b>CMSIS-DSP GitHub repository</b></a> and is released as a standalone <a href="https://www.keil.arm.com/packs/cmsis-dsp-arm/versions/"><b>CMSIS-DSP pack</b></a> in the <a href="https://open-cmsis-pack.github.io/Open-CMSIS-Pack-Spec/main/html/index.html">CMSIS-Pack format</a>.</p>
@@ -259,7 +259,21 @@ Preprocessor Macros</h1>
 <li>With Helium or Neon, disable the use of vectorized code with C intrinsics and use pure C instead. The vectorization is then done by the compiler.</li>
 </ul>
 </li>
+<li><code>ARM_DSP_ATTRIBUTE</code>: Can be set to define CMSIS-DSP function as weak functions. This can either be set on the command line when building or in a new <code>arm_dsp_config.h</code> header (see below)</li>
+<li><code>ARM_DSP_TABLE_ATTRIBUTE</code>: Can be set to define in which section constant tables must be mapped. This can either be set on the command line when building or in a new <code>arm_dsp_config.h</code> header (see below). Another way to set those sections is by modifying the linker scripts since the constant tables are defined only in a restricted set of source files.</li>
+<li><code>ARM_DSP_CUSTOM_CONFIG</code> When set, the file <code>arm_dsp_config.h</code> is included by the <code>arm_math_types.h</code> headers. You can use this file to define any of the above compilation symbols.</li>
 </ul>
+<h1><a class="anchor" id="autotoc_md4"></a>
+Code size</h1>
+<p>Previous versions were using lots of compilation flags to control code size. It was enabled with <code>ARM_DSP_CONFIG_TABLES</code>. It was getting too complex and has been removed. Now code size optimizations are relying on the linker.</p>
+<p>You no more need to use any compilation flags like <code>ARM_TABLE_TWIDDLECOEF_F32_2048</code>, <code>ARM_FFT_ALLOW_TABLES</code> etc ...</p>
+<p>They have been removed.</p>
+<p>Constant tables can use a lot of read only memory but the linker can remove the unused functions and constant tables if it can deduce that those tables or functions are not used.</p>
+<p>For this you need to use the right initialization functions in the library and the right options for the linker (they are compiler dependent).</p>
+<p>For all transforms functions (CFFT, RFFT ...) instead of using a generic initialization function that works for all lengths (like <code>arm_cff_init_f32</code>), use a dedicated initialization function for a specific size (like <code>arm_cfft_init_1024_f32</code>).</p>
+<p>By using the right initialization function, you're telling the linker what is really used.</p>
+<p>If you use a generic function, the linker cannot deduce the used lengths and thus will keep all the constant tables required for each length.</p>
+<p>Then you need to use the right options for the compiler so that the unused tables and functions are removed. It is compiler dependent but generally the options are named like <code>-ffunction-sections</code>, <code>-fdata-sections</code>, <code>--gc-sections</code> ...</p>
 <h1><a class="anchor" id="license"></a>
 License</h1>
 <p>The CMSIS-DSP is provided free of charge under the <a href="https://raw.githubusercontent.com/ARM-software/CMSIS-DSP/main/LICENSE">Apache 2.0 License</a>. </p>

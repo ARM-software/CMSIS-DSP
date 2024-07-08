@@ -1,7 +1,7 @@
 var group__polysvm =
 [
-    [ "arm_svm_polynomial_init_f16", "group__polysvm.html#gaf4cf33b219786ff3cad4dd1cfb360e12", null ],
-    [ "arm_svm_polynomial_init_f32", "group__polysvm.html#ga0e777fbdea19a7f49976a65a22c6671d", null ],
-    [ "arm_svm_polynomial_predict_f16", "group__polysvm.html#ga8f837f29d3561cddbafbc4535a81c13e", null ],
-    [ "arm_svm_polynomial_predict_f32", "group__polysvm.html#ga81c3bbc577a9c610ac7f3731f95533f3", null ]
+    [ "arm_svm_polynomial_init_f16", "group__polysvm.html#ga6dcdfd9ae4e94b8e2239fdd22ddf10bd", null ],
+    [ "arm_svm_polynomial_init_f32", "group__polysvm.html#gad004464aae8fdecfc985a02a0de6b0af", null ],
+    [ "arm_svm_polynomial_predict_f16", "group__polysvm.html#gafd022241fbd983b4184a9edfa813044e", null ],
+    [ "arm_svm_polynomial_predict_f32", "group__polysvm.html#ga5719f32544ecc1b568aaba7f5d237df8", null ]
 ];

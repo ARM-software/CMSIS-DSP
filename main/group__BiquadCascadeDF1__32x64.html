@@ -136,12 +136,12 @@ $(document).ready(function(){initNavTree('group__BiquadCascadeDF1__32x64.html','
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga424587bb467df15a47c08cedc4b0d647"><td class="memItemLeft" align="right" valign="top">ARM_DSP_ATTRIBUTE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__BiquadCascadeDF1__32x64.html#ga424587bb467df15a47c08cedc4b0d647">arm_biquad_cas_df1_32x64_init_q31</a> (<a class="el" href="structarm__biquad__cas__df1__32x64__ins__q31.html">arm_biquad_cas_df1_32x64_ins_q31</a> *S, uint8_t numStages, const <a class="el" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *pCoeffs, <a class="el" href="group__genericTypes.html#ga5aea1cb12fc02d9d44c8abf217eaa5c6">q63_t</a> *pState, uint8_t postShift)</td></tr>
-<tr class="memdesc:ga424587bb467df15a47c08cedc4b0d647"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialization function for the Q31 Biquad cascade 32x64 filter.  <br /></td></tr>
-<tr class="separator:ga424587bb467df15a47c08cedc4b0d647"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa16bf8fa012c3e82eb0e3fd5c10ea8d8"><td class="memItemLeft" align="right" valign="top">ARM_DSP_ATTRIBUTE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__BiquadCascadeDF1__32x64.html#gaa16bf8fa012c3e82eb0e3fd5c10ea8d8">arm_biquad_cas_df1_32x64_q31</a> (const <a class="el" href="structarm__biquad__cas__df1__32x64__ins__q31.html">arm_biquad_cas_df1_32x64_ins_q31</a> *S, const <a class="el" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *pSrc, <a class="el" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *pDst, uint32_t blockSize)</td></tr>
-<tr class="memdesc:gaa16bf8fa012c3e82eb0e3fd5c10ea8d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processing function for the Q31 Biquad cascade 32x64 filter.  <br /></td></tr>
-<tr class="separator:gaa16bf8fa012c3e82eb0e3fd5c10ea8d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga426cd78591a717e87d66d1eaa9a3d074"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__BiquadCascadeDF1__32x64.html#ga426cd78591a717e87d66d1eaa9a3d074">arm_biquad_cas_df1_32x64_init_q31</a> (<a class="el" href="structarm__biquad__cas__df1__32x64__ins__q31.html">arm_biquad_cas_df1_32x64_ins_q31</a> *S, uint8_t numStages, const <a class="el" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *pCoeffs, <a class="el" href="group__genericTypes.html#ga5aea1cb12fc02d9d44c8abf217eaa5c6">q63_t</a> *pState, uint8_t postShift)</td></tr>
+<tr class="memdesc:ga426cd78591a717e87d66d1eaa9a3d074"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialization function for the Q31 Biquad cascade 32x64 filter.  <br /></td></tr>
+<tr class="separator:ga426cd78591a717e87d66d1eaa9a3d074"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae71a3095b94939418618ddf83caf739a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__BiquadCascadeDF1__32x64.html#gae71a3095b94939418618ddf83caf739a">arm_biquad_cas_df1_32x64_q31</a> (const <a class="el" href="structarm__biquad__cas__df1__32x64__ins__q31.html">arm_biquad_cas_df1_32x64_ins_q31</a> *S, const <a class="el" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *pSrc, <a class="el" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *pDst, uint32_t blockSize)</td></tr>
+<tr class="memdesc:gae71a3095b94939418618ddf83caf739a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processing function for the Q31 Biquad cascade 32x64 filter.  <br /></td></tr>
+<tr class="separator:gae71a3095b94939418618ddf83caf739a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>This function implements a high precision Biquad cascade filter which operates on Q31 data values. The filter coefficients are in 1.31 format and the state variables are in 1.63 format. The double precision state variables reduce quantization noise in the filter and provide a cleaner output. These filters are particularly useful when implementing filters in which the singularities are close to the unit circle. This is common for low pass or high pass filters with very low cutoff frequencies.</p>
@@ -191,14 +191,14 @@ Fixed-point Biquad with shift by postShift bits after accumulator</div></div>
 <dl class="section user"><dt></dt><dd>The second thing to keep in mind is the gain through the filter. The frequency response of a Biquad filter is a function of its coefficients. It is possible for the gain through the filter to exceed 1.0 meaning that the filter increases the amplitude of certain frequencies. This means that an input signal with amplitude &lt; 1.0 may result in an output &gt; 1.0 and these are saturated or overflowed based on the implementation of the filter. To avoid this behavior the filter needs to be scaled down such that its peak gain &lt; 1.0 or the input signal must be scaled down so that the combination of input and filter are never overflowed. </dd></dl>
 <dl class="section user"><dt></dt><dd>The third item to consider is the overflow and saturation behavior of the fixed-point Q31 version. This is described in the function specific documentation below. </dd></dl>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ga424587bb467df15a47c08cedc4b0d647" name="ga424587bb467df15a47c08cedc4b0d647"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga424587bb467df15a47c08cedc4b0d647">&#9670;&#160;</a></span>arm_biquad_cas_df1_32x64_init_q31()</h2>
+<a id="ga426cd78591a717e87d66d1eaa9a3d074" name="ga426cd78591a717e87d66d1eaa9a3d074"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga426cd78591a717e87d66d1eaa9a3d074">&#9670;&#160;</a></span>arm_biquad_cas_df1_32x64_init_q31()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">ARM_DSP_ATTRIBUTE void arm_biquad_cas_df1_32x64_init_q31 </td>
+          <td class="memname">void arm_biquad_cas_df1_32x64_init_q31 </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structarm__biquad__cas__df1__32x64__ins__q31.html">arm_biquad_cas_df1_32x64_ins_q31</a> *&#160;</td>
           <td class="paramname"><em>S</em>, </td>
@@ -255,14 +255,14 @@ Fixed-point Biquad with shift by postShift bits after accumulator</div></div>
 
 </div>
 </div>
-<a id="gaa16bf8fa012c3e82eb0e3fd5c10ea8d8" name="gaa16bf8fa012c3e82eb0e3fd5c10ea8d8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaa16bf8fa012c3e82eb0e3fd5c10ea8d8">&#9670;&#160;</a></span>arm_biquad_cas_df1_32x64_q31()</h2>
+<a id="gae71a3095b94939418618ddf83caf739a" name="gae71a3095b94939418618ddf83caf739a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae71a3095b94939418618ddf83caf739a">&#9670;&#160;</a></span>arm_biquad_cas_df1_32x64_q31()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">ARM_DSP_ATTRIBUTE void arm_biquad_cas_df1_32x64_q31 </td>
+          <td class="memname">void arm_biquad_cas_df1_32x64_q31 </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="structarm__biquad__cas__df1__32x64__ins__q31.html">arm_biquad_cas_df1_32x64_ins_q31</a> *&#160;</td>
           <td class="paramname"><em>S</em>, </td>
@@ -305,8 +305,8 @@ Fixed-point Biquad with shift by postShift bits after accumulator</div></div>
 </dl>
 <dl class="section user"><dt>Details</dt><dd>The function is implemented using an internal 64-bit accumulator. The accumulator has a 2.62 format and maintains full precision of the intermediate multiplication results but provides only a single guard bit. Thus, if the accumulator result overflows it wraps around rather than clip. In order to avoid overflows completely the input signal must be scaled down by 2 bits and lie in the range [-0.25 +0.25). After all 5 multiply-accumulates are performed, the 2.62 accumulator is shifted by <code>postShift</code> bits and the result truncated to 1.31 format by discarding the low 32 bits. </dd></dl>
 <dl class="section user"><dt></dt><dd>Two related functions are provided in the CMSIS DSP library.<ul>
-<li><a class="el" href="group__BiquadCascadeDF1.html#ga76ce2ff72f56c06e9a621fe35c103ff2">arm_biquad_cascade_df1_q31()</a> implements a Biquad cascade with 32-bit coefficients and state variables with a Q63 accumulator.</li>
-<li><a class="el" href="group__BiquadCascadeDF1.html#gadb98711a8dce52f343141442c17b38cd">arm_biquad_cascade_df1_fast_q31()</a> implements a Biquad cascade with 32-bit coefficients and state variables with a Q31 accumulator. </li>
+<li><a class="el" href="group__BiquadCascadeDF1.html#ga4e7dad0ee6949005909fd4fcf1249b79">arm_biquad_cascade_df1_q31()</a> implements a Biquad cascade with 32-bit coefficients and state variables with a Q63 accumulator.</li>
+<li><a class="el" href="group__BiquadCascadeDF1.html#gaa09ea758c0b24eed9ef92b8d1e5c80c2">arm_biquad_cascade_df1_fast_q31()</a> implements a Biquad cascade with 32-bit coefficients and state variables with a Q31 accumulator. </li>
 </ul>
 </dd></dl>
 

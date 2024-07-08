@@ -1,11 +1,11 @@
 var group__FIR__Sparse =
 [
-    [ "arm_fir_sparse_f32", "group__FIR__Sparse.html#ga5fd37ec4c09f90fc84c06a7c20ed0f06", null ],
-    [ "arm_fir_sparse_init_f32", "group__FIR__Sparse.html#ga876f55eb33092d482a9ff926bc02f4a7", null ],
-    [ "arm_fir_sparse_init_q15", "group__FIR__Sparse.html#gaa9914d50052fdaa5c0138037ff9acf3c", null ],
-    [ "arm_fir_sparse_init_q31", "group__FIR__Sparse.html#gac75a71c660a15c3cff36662975788adf", null ],
-    [ "arm_fir_sparse_init_q7", "group__FIR__Sparse.html#ga8afe21a9d62d6d819825ad857e8afbd4", null ],
-    [ "arm_fir_sparse_q15", "group__FIR__Sparse.html#ga5a2f03f3862e444f5318e7292ae9f8c5", null ],
-    [ "arm_fir_sparse_q31", "group__FIR__Sparse.html#gae1cad2659f8a4b4b707df91138fb95fc", null ],
-    [ "arm_fir_sparse_q7", "group__FIR__Sparse.html#ga1cbfe40ac7bfcfb77b335c39d9623823", null ]
+    [ "arm_fir_sparse_f32", "group__FIR__Sparse.html#gac6817bc86974b7121c3288fce25dbc5f", null ],
+    [ "arm_fir_sparse_init_f32", "group__FIR__Sparse.html#ga967a0564d6d59f2b9e12f4a5b7a3f877", null ],
+    [ "arm_fir_sparse_init_q15", "group__FIR__Sparse.html#gad1c7f891760e91301aac7e3a48aca449", null ],
+    [ "arm_fir_sparse_init_q31", "group__FIR__Sparse.html#gade71e2e0432a0e6de36fa9f23b2c984c", null ],
+    [ "arm_fir_sparse_init_q7", "group__FIR__Sparse.html#ga5e74f8f4e4df85de5feb4e62125ff590", null ],
+    [ "arm_fir_sparse_q15", "group__FIR__Sparse.html#gac3e43b06bff38ac8e62e145f88e9dbc7", null ],
+    [ "arm_fir_sparse_q31", "group__FIR__Sparse.html#gaba9f7ef4acf293034af42baa2fd3df52", null ],
+    [ "arm_fir_sparse_q7", "group__FIR__Sparse.html#ga319b3d9032ba723a8efb819b9d2a3676", null ]
 ];

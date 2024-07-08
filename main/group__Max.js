@@ -1,15 +1,15 @@
 var group__Max =
 [
-    [ "arm_max_f16", "group__Max.html#gab2c195230680af24b8346d7ffcd3c851", null ],
-    [ "arm_max_f32", "group__Max.html#ga04466e0d45be27edd9c334d28a179e06", null ],
-    [ "arm_max_f64", "group__Max.html#gaedbc8acbf6b2827fab1a748d977f06c1", null ],
-    [ "arm_max_no_idx_f16", "group__Max.html#ga54ee15a6ada520849c3f688e25f8a14f", null ],
-    [ "arm_max_no_idx_f32", "group__Max.html#gab3aa277e5080283b32edd51b8a81785e", null ],
-    [ "arm_max_no_idx_f64", "group__Max.html#ga3fa6c30341bb0386ea3b828a2fbe648c", null ],
-    [ "arm_max_no_idx_q15", "group__Max.html#ga83e357f296eca22f6444222ad42e4d4f", null ],
-    [ "arm_max_no_idx_q31", "group__Max.html#gac0044215423b7209e0eb09199c4f372a", null ],
-    [ "arm_max_no_idx_q7", "group__Max.html#ga38b786ca69712197f6b279a87ae06087", null ],
-    [ "arm_max_q15", "group__Max.html#gaf5d37e0b0ebcdaaa63c57352678a6653", null ],
-    [ "arm_max_q31", "group__Max.html#gaf41f5201ba59f68106011c26d60d4c21", null ],
-    [ "arm_max_q7", "group__Max.html#ga2cb80c528b6eec1799d16d4fdb5fd7de", null ]
+    [ "arm_max_f16", "group__Max.html#gab712e1093e7d0fe3dc8915cd82251acd", null ],
+    [ "arm_max_f32", "group__Max.html#gad1eabd31544fe59c414d9ce5bd0cc151", null ],
+    [ "arm_max_f64", "group__Max.html#ga80f46e9e699ffdadc61c097ed3b62abf", null ],
+    [ "arm_max_no_idx_f16", "group__Max.html#gacca0874363ebd7917b7597b4c6c9647e", null ],
+    [ "arm_max_no_idx_f32", "group__Max.html#ga5102001341a8e70908c263fc8fba53bd", null ],
+    [ "arm_max_no_idx_f64", "group__Max.html#gafcbb5015738c695822575adac8d1bca7", null ],
+    [ "arm_max_no_idx_q15", "group__Max.html#ga1013b68db551ed1db67581be572e8470", null ],
+    [ "arm_max_no_idx_q31", "group__Max.html#ga96f240086b586a9c724fb5285fd15570", null ],
+    [ "arm_max_no_idx_q7", "group__Max.html#gae057269295b3eb71c90fbe30b07773ca", null ],
+    [ "arm_max_q15", "group__Max.html#gaea9ba2039faeca04b034989a2a2a9e36", null ],
+    [ "arm_max_q31", "group__Max.html#ga74015f9e9852c710a981c5b488417298", null ],
+    [ "arm_max_q7", "group__Max.html#ga504abf036854dc0c4a43bd9a27827863", null ]
 ];

@@ -1,14 +1,14 @@
 var group__ComplexFFTF32 =
 [
-    [ "arm_cfft_f32", "group__ComplexFFTF32.html#gac416594aa3cb2ef330c2f504beb41f65", null ],
-    [ "arm_cfft_init_1024_f32", "group__ComplexFFTF32.html#gaa97b9ae831cf396ee66b7ac3d1eb34af", null ],
-    [ "arm_cfft_init_128_f32", "group__ComplexFFTF32.html#ga89584b98cc662a4ba80f55b1b64e8cf2", null ],
-    [ "arm_cfft_init_16_f32", "group__ComplexFFTF32.html#gaf43c84cb63c7ecfd1eb05750937c9d79", null ],
-    [ "arm_cfft_init_2048_f32", "group__ComplexFFTF32.html#gaa949d0b4f2369204e85911d4993b8f30", null ],
-    [ "arm_cfft_init_256_f32", "group__ComplexFFTF32.html#ga6ac27b0162276c383ffcd42acfe3e7e5", null ],
-    [ "arm_cfft_init_32_f32", "group__ComplexFFTF32.html#gac27636e2e1c7a3c84f58542c3cab72d3", null ],
-    [ "arm_cfft_init_4096_f32", "group__ComplexFFTF32.html#ga8aae39a39c7eb3ee860a531de1bebeae", null ],
-    [ "arm_cfft_init_512_f32", "group__ComplexFFTF32.html#ga2e637988b31119c5bebe35155f2cccf8", null ],
-    [ "arm_cfft_init_64_f32", "group__ComplexFFTF32.html#ga9a54d76038dcd55da4c1bc7e931338ec", null ],
-    [ "arm_cfft_init_f32", "group__ComplexFFTF32.html#gaf6b6baa58e1822293272c833e874d84a", null ]
+    [ "arm_cfft_f32", "group__ComplexFFTF32.html#gade0f9c4ff157b6b9c72a1eafd86ebf80", null ],
+    [ "arm_cfft_init_1024_f32", "group__ComplexFFTF32.html#ga251035459b597a287d0e3b34d7a4fac4", null ],
+    [ "arm_cfft_init_128_f32", "group__ComplexFFTF32.html#ga983cc826d1e40e820e8e79d90aed9d9c", null ],
+    [ "arm_cfft_init_16_f32", "group__ComplexFFTF32.html#gab3c2dede6536aff07ed7b5da4d7ec5cb", null ],
+    [ "arm_cfft_init_2048_f32", "group__ComplexFFTF32.html#gad9bda4202c7d45e153d4b7222d6ed79b", null ],
+    [ "arm_cfft_init_256_f32", "group__ComplexFFTF32.html#ga126c40379f1f167f6180b6e7e1be4968", null ],
+    [ "arm_cfft_init_32_f32", "group__ComplexFFTF32.html#ga4e14b1d2e4a4f5a51d25ca451ae8596e", null ],
+    [ "arm_cfft_init_4096_f32", "group__ComplexFFTF32.html#ga1b12f5fef79aaf88f1fbf0fbdd3b01f1", null ],
+    [ "arm_cfft_init_512_f32", "group__ComplexFFTF32.html#ga4ffc9417385425afee6f74ed406fec33", null ],
+    [ "arm_cfft_init_64_f32", "group__ComplexFFTF32.html#gad48fa7b617a00ead9eb769bf37a3a1a5", null ],
+    [ "arm_cfft_init_f32", "group__ComplexFFTF32.html#gae945cbeefda447a2f4b303a4ae6fa579", null ]
 ];

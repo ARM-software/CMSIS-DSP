@@ -145,7 +145,7 @@ $(document).ready(function(){initNavTree('dsppp_vector_example.html',''); initRe
 <li>initialize the vectors</li>
 <li>make the computation.</li>
 </ol>
-<h1><a class="anchor" id="autotoc_md11"></a>
+<h1><a class="anchor" id="autotoc_md12"></a>
 Include the headers</h1>
 <p>The headers are not yet part of the CMSIS-DSP packs since they are experimental. You can get them from the <a href="https://github.com/ARM-software/CMSIS-DSP/tree/main/dsppp/Include/dsppp">CMSIS-DSP github</a></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;dsppp/memory_pool&gt;</span></div>
@@ -154,7 +154,7 @@ Include the headers</h1>
 <div class="line"><span class="keyword">using namespace </span><a class="code hl_namespace" href="namespacearm__cmsis__dsp.html">arm_cmsis_dsp</a>;</div>
 </div><!-- fragment --><p>If fixed point datatypes are required, <code>#include &lt;dsppp/fixed_point&gt;</code> should be used before <code>&lt;dsppp/matrix&gt;</code></p>
 <p>Fixed point requires the use of CMSIS-DSP.</p>
-<h1><a class="anchor" id="autotoc_md12"></a>
+<h1><a class="anchor" id="autotoc_md13"></a>
 Creation of the vectors</h1>
 <p>To create a vector <code>a</code> you would write:</p>
 <div class="fragment"><div class="line"><span class="keyword">constexpr</span> <span class="keywordtype">int</span> NB = 32;</div>
@@ -169,14 +169,14 @@ Creation of the vectors</h1>
 <p>If you don't know the dimension at build time, you can use a different type of vector with:</p>
 <div class="fragment"><div class="line"><a class="code hl_struct" href="group__VECTOR.html#structarm__cmsis__dsp_1_1Vector" title="Vector template for size knonw at build time.">Vector&lt;float32_t&gt;</a> a(NB);</div>
 </div><!-- fragment --><p>For the trade-off between vector with build time dimension or runtime dimension please see the section <a class="el" href="dsppp_memory_static_dynamic.html">Static / dynamic</a> .</p>
-<h1><a class="anchor" id="autotoc_md13"></a>
+<h1><a class="anchor" id="autotoc_md14"></a>
 Initialization of the vectors</h1>
 <p>You can index the vectors as normal C arrays.</p>
 <div class="fragment"><div class="line"><span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0;i&lt; NB;i++)</div>
 <div class="line">{</div>
 <div class="line">        a[i] = b[i] = c[i] = i;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md14"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md15"></a>
 Computation</h1>
 <p>The computation can be written normally as :</p>
 <div class="fragment"><div class="line"><a class="code hl_struct" href="group__VECTOR.html#structarm__cmsis__dsp_1_1Vector" title="Vector template for size knonw at build time.">Vector&lt;float32_t,NB&gt;</a> d = a + b * c;</div>
@@ -186,7 +186,7 @@ Computation</h1>
 <p>The operators <code>+</code>, <code>*</code> are computed in one pass with one loop : we have loop fusion and instead of having a loop per operator we have a loop for the whole computation.</p>
 <p>To understand fusion and how to extend it with new operators, see section <a class="el" href="dsppp_fusion.html">Fusion</a> .</p>
 <p>For an overview of vector operators, see section <a class="el" href="dsppp_vector.html">Vector</a> . For an overview of matrix operators, see section <a class="el" href="dsppp_matrix.html">Matrix</a> .</p>
-<h1><a class="anchor" id="autotoc_md15"></a>
+<h1><a class="anchor" id="autotoc_md16"></a>
 Displaying the result</h1>
 <p>The vectors can be displayed on <code>stdout</code> for debug purpose.</p>
 <div class="fragment"><div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;Result = &quot;</span> &lt;&lt; d ;</div>

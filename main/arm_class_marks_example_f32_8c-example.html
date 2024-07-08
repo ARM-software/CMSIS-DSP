@@ -258,9 +258,9 @@ $(document).ready(function(){initNavTree('arm_class_marks_example_f32_8c-example
 <div class="line">  <a class="code hl_struct" href="structarm__matrix__instance__f32.html" title="Instance structure for the floating-point matrix structure.">arm_matrix_instance_f32</a> dstC;</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Input and output matrices initializations */</span></div>
-<div class="line">  <a id="a1" name="a1"></a><a class="code hl_function" href="group__MatrixInit.html#ga750a582d71f582c699207c2743e127d3" title="Floating-point matrix initialization.">arm_mat_init_f32</a>(&amp;srcA, numStudents, numSubjects, (<a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> *)testMarks_f32);</div>
-<div class="line">  <a class="code hl_function" href="group__MatrixInit.html#ga750a582d71f582c699207c2743e127d3" title="Floating-point matrix initialization.">arm_mat_init_f32</a>(&amp;srcB, numSubjects, 1, (<a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> *)testUnity_f32);</div>
-<div class="line">  <a class="code hl_function" href="group__MatrixInit.html#ga750a582d71f582c699207c2743e127d3" title="Floating-point matrix initialization.">arm_mat_init_f32</a>(&amp;dstC, numStudents, 1, testOutput);</div>
+<div class="line">  <a id="a1" name="a1"></a><a class="code hl_function" href="group__MatrixInit.html#ga11e3dc41592a6401c13182fef9416a27" title="Floating-point matrix initialization.">arm_mat_init_f32</a>(&amp;srcA, numStudents, numSubjects, (<a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> *)testMarks_f32);</div>
+<div class="line">  <a class="code hl_function" href="group__MatrixInit.html#ga11e3dc41592a6401c13182fef9416a27" title="Floating-point matrix initialization.">arm_mat_init_f32</a>(&amp;srcB, numSubjects, 1, (<a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> *)testUnity_f32);</div>
+<div class="line">  <a class="code hl_function" href="group__MatrixInit.html#ga11e3dc41592a6401c13182fef9416a27" title="Floating-point matrix initialization.">arm_mat_init_f32</a>(&amp;dstC, numStudents, 1, testOutput);</div>
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#else</span></div>
 <div class="line"> </div>
@@ -275,32 +275,32 @@ $(document).ready(function(){initNavTree('arm_class_marks_example_f32_8c-example
 <div class="line">  <span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">  *Call the Matrix multiplication process function</span></div>
 <div class="line"><span class="comment">  * ------------------------------------------------------------------- */</span></div>
-<div class="line">  <a id="a2" name="a2"></a><a class="code hl_function" href="group__MatrixMult.html#gaf108a0beeafd4575054d677603e12203" title="Floating-point matrix multiplication.">arm_mat_mult_f32</a>(&amp;srcA, &amp;srcB, &amp;dstC);</div>
+<div class="line">  <a id="a2" name="a2"></a><a class="code hl_function" href="group__MatrixMult.html#ga917bf0270310c1d3f0eda1fc7c0026a0" title="Floating-point matrix multiplication.">arm_mat_mult_f32</a>(&amp;srcA, &amp;srcB, &amp;dstC);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">  ** Call the Max function to calculate max marks among numStudents</span></div>
 <div class="line"><span class="comment">  ** ------------------------------------------------------------------- */</span></div>
-<div class="line">  <a id="a3" name="a3"></a><a class="code hl_function" href="group__Max.html#ga04466e0d45be27edd9c334d28a179e06" title="Maximum value of a floating-point vector.">arm_max_f32</a>(testOutput, numStudents, &amp;max_marks, &amp;student_num);</div>
+<div class="line">  <a id="a3" name="a3"></a><a class="code hl_function" href="group__Max.html#gad1eabd31544fe59c414d9ce5bd0cc151" title="Maximum value of a floating-point vector.">arm_max_f32</a>(testOutput, numStudents, &amp;max_marks, &amp;student_num);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">  ** Call the Min function to calculate min marks among numStudents</span></div>
 <div class="line"><span class="comment">  ** ------------------------------------------------------------------- */</span></div>
-<div class="line">  <a id="a4" name="a4"></a><a class="code hl_function" href="group__Min.html#gaee27e6a07d286b4bfa84903fb3e9e4d2" title="Minimum value of a floating-point vector.">arm_min_f32</a>(testOutput, numStudents, &amp;min_marks, &amp;student_num);</div>
+<div class="line">  <a id="a4" name="a4"></a><a class="code hl_function" href="group__Min.html#ga514e2c920c432e1a3df2cb03f01d2797" title="Minimum value of a floating-point vector.">arm_min_f32</a>(testOutput, numStudents, &amp;min_marks, &amp;student_num);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">  ** Call the Mean function to calculate mean</span></div>
 <div class="line"><span class="comment">  ** ------------------------------------------------------------------- */</span></div>
-<div class="line">  <a id="a5" name="a5"></a><a class="code hl_function" href="group__mean.html#gabec37ffd5045a762e97f4011489b0fda" title="Mean value of a floating-point vector.">arm_mean_f32</a>(testOutput, numStudents, &amp;mean);</div>
+<div class="line">  <a id="a5" name="a5"></a><a class="code hl_function" href="group__mean.html#gae4fb7698771d7c24f536ed24347c1488" title="Mean value of a floating-point vector.">arm_mean_f32</a>(testOutput, numStudents, &amp;mean);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">  ** Call the std function to calculate standard deviation</span></div>
 <div class="line"><span class="comment">  ** ------------------------------------------------------------------- */</span></div>
-<div class="line">  <a id="a6" name="a6"></a><a class="code hl_function" href="group__STD.html#gacd87e8823d9e50151419ca33167651d5" title="Standard deviation of the elements of a floating-point vector.">arm_std_f32</a>(testOutput, numStudents, &amp;std);</div>
+<div class="line">  <a id="a6" name="a6"></a><a class="code hl_function" href="group__STD.html#ga287b6ce703636c7e8cb9833b290ae4ce" title="Standard deviation of the elements of a floating-point vector.">arm_std_f32</a>(testOutput, numStudents, &amp;std);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">  ** Call the var function to calculate variance</span></div>
 <div class="line"><span class="comment">  ** ------------------------------------------------------------------- */</span></div>
-<div class="line">  <a id="a7" name="a7"></a><a class="code hl_function" href="group__variance.html#ga0722d0193480cb94fed2cab426ef6b80" title="Variance of the elements of a floating-point vector.">arm_var_f32</a>(testOutput, numStudents, &amp;var);</div>
+<div class="line">  <a id="a7" name="a7"></a><a class="code hl_function" href="group__variance.html#gaae455544f0c8ac92469a1e25d3906515" title="Variance of the elements of a floating-point vector.">arm_var_f32</a>(testOutput, numStudents, &amp;var);</div>
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#if defined(SEMIHOSTING)</span></div>
 <div class="line">  printf(<span class="stringliteral">&quot;mean = %f, std = %f\n&quot;</span>,(<span class="keywordtype">double</span>)mean,(<span class="keywordtype">double</span>)std);</div>

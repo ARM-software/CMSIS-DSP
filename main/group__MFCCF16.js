@@ -1,13 +1,13 @@
 var group__MFCCF16 =
 [
-    [ "arm_mfcc_f16", "group__MFCCF16.html#ga068ce505b5ec492580b4a56c74b1b7cd", null ],
-    [ "arm_mfcc_init_1024_f16", "group__MFCCF16.html#ga2ad311b4c64cf5639287edaf38f3c853", null ],
-    [ "arm_mfcc_init_128_f16", "group__MFCCF16.html#ga82804322e1ba9b28af1ad6f087248433", null ],
-    [ "arm_mfcc_init_2048_f16", "group__MFCCF16.html#gae59aea7a0e90e213a006dd0a93267558", null ],
-    [ "arm_mfcc_init_256_f16", "group__MFCCF16.html#ga526a0c0b5d7d7fe7ad834ab42c8e6832", null ],
-    [ "arm_mfcc_init_32_f16", "group__MFCCF16.html#ga3d15c54b788481f6ae7fc7af0e915708", null ],
-    [ "arm_mfcc_init_4096_f16", "group__MFCCF16.html#gade58aa7cd03465e33f28830050a0e725", null ],
-    [ "arm_mfcc_init_512_f16", "group__MFCCF16.html#ga35adbfe772858b8ab3afb3c24b83f5b2", null ],
-    [ "arm_mfcc_init_64_f16", "group__MFCCF16.html#ga2836151874581bb36c28c5ddd99d4791", null ],
-    [ "arm_mfcc_init_f16", "group__MFCCF16.html#ga3af18a3fec3965cf8b8bb4f501cf0634", null ]
+    [ "arm_mfcc_f16", "group__MFCCF16.html#ga0b817baf579405c6765d5e3e2360cc2e", null ],
+    [ "arm_mfcc_init_1024_f16", "group__MFCCF16.html#gaa7d50f7c15d2a3816851a43590590a29", null ],
+    [ "arm_mfcc_init_128_f16", "group__MFCCF16.html#gacb303d4371873b338c003bc3b28618ed", null ],
+    [ "arm_mfcc_init_2048_f16", "group__MFCCF16.html#ga8fc578706fca63a5e293d3a1f993b39b", null ],
+    [ "arm_mfcc_init_256_f16", "group__MFCCF16.html#gafa1973c0b2f573afca2bb250f7142e1b", null ],
+    [ "arm_mfcc_init_32_f16", "group__MFCCF16.html#gab4ce8687295e19ef91acda3eef32a9bb", null ],
+    [ "arm_mfcc_init_4096_f16", "group__MFCCF16.html#ga5775e7edc5bc8e7d5145e3c0951b3df9", null ],
+    [ "arm_mfcc_init_512_f16", "group__MFCCF16.html#gaafe0cf442a410c8c40592e61332d2692", null ],
+    [ "arm_mfcc_init_64_f16", "group__MFCCF16.html#ga88e209e61eb60797428547dca05d1c23", null ],
+    [ "arm_mfcc_init_f16", "group__MFCCF16.html#gae6a307eafd0bb6534369d239e76ef766", null ]
 ];

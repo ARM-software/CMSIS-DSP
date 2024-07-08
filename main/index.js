@@ -10,5 +10,6 @@ var index =
     [ "Toolchain Support", "index.html#toolchain", null ],
     [ "Access to CMSIS-DSP", "index.html#pack", null ],
     [ "Preprocessor Macros", "index.html#preprocessor", null ],
+    [ "Code size", "index.html#autotoc_md4", null ],
     [ "License", "index.html#license", null ]
 ];

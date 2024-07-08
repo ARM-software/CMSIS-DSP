@@ -1,13 +1,13 @@
 var group__MFCCQ15 =
 [
-    [ "arm_mfcc_init_1024_q15", "group__MFCCQ15.html#ga08d40244f20ff365e4d6f99c80b5614d", null ],
-    [ "arm_mfcc_init_128_q15", "group__MFCCQ15.html#ga8df834daeec32240bfdaadfd6fe70837", null ],
-    [ "arm_mfcc_init_2048_q15", "group__MFCCQ15.html#ga6c55714513e9fac9ce4830a47da1730c", null ],
-    [ "arm_mfcc_init_256_q15", "group__MFCCQ15.html#ga76c6a05c0cf12599c0714b9a624b321f", null ],
-    [ "arm_mfcc_init_32_q15", "group__MFCCQ15.html#ga0ee2dba818572ab0dd437242521005e0", null ],
-    [ "arm_mfcc_init_4096_q15", "group__MFCCQ15.html#gad885c26fe5631b68476fc37576544bf9", null ],
-    [ "arm_mfcc_init_512_q15", "group__MFCCQ15.html#ga4d9487a61990e4866833c0075b207b78", null ],
-    [ "arm_mfcc_init_64_q15", "group__MFCCQ15.html#gaf15299b9845c062dbe899da54e4f4e95", null ],
-    [ "arm_mfcc_init_q15", "group__MFCCQ15.html#gaa2e22b2ee4e4a306a629fa7ceebb3988", null ],
-    [ "arm_mfcc_q15", "group__MFCCQ15.html#ga6186d88b5686093e0df4d64a14a38d45", null ]
+    [ "arm_mfcc_init_1024_q15", "group__MFCCQ15.html#ga0f3a569a30d49fac7d1779b1380077e6", null ],
+    [ "arm_mfcc_init_128_q15", "group__MFCCQ15.html#ga5cdbf9211b3ea623c98c6d024f6ec988", null ],
+    [ "arm_mfcc_init_2048_q15", "group__MFCCQ15.html#ga16eb851cd34ed5e5b9a621349be06610", null ],
+    [ "arm_mfcc_init_256_q15", "group__MFCCQ15.html#gaeac1ce06889d545e77612f637382e866", null ],
+    [ "arm_mfcc_init_32_q15", "group__MFCCQ15.html#gac9625f6d1562ad68aa00933f8fa27d75", null ],
+    [ "arm_mfcc_init_4096_q15", "group__MFCCQ15.html#ga5418fd6137b68ce1685d52a12924d25d", null ],
+    [ "arm_mfcc_init_512_q15", "group__MFCCQ15.html#ga016c9831b8349737168f1897e1a1d1d1", null ],
+    [ "arm_mfcc_init_64_q15", "group__MFCCQ15.html#ga9297e9be5d6c3e6ecf40cd837358c48c", null ],
+    [ "arm_mfcc_init_q15", "group__MFCCQ15.html#ga7e55fc08a473af73055021aedae27c32", null ],
+    [ "arm_mfcc_q15", "group__MFCCQ15.html#ga1ec288fa9eb7e85c8196c32dfe8f3f9b", null ]
 ];

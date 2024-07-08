@@ -1,6 +1,6 @@
 var group__Chebyshev =
 [
-    [ "arm_chebyshev_distance_f16", "group__Chebyshev.html#gaa3fb30f69d039181dbd757fecf62ff36", null ],
-    [ "arm_chebyshev_distance_f32", "group__Chebyshev.html#ga30c1a95077ceddaf204a44ee8fe84acd", null ],
-    [ "arm_chebyshev_distance_f64", "group__Chebyshev.html#ga529a2e00b0e5d2074af5487e884097d2", null ]
+    [ "arm_chebyshev_distance_f16", "group__Chebyshev.html#ga5cf07beec12cfe0ad126aadc9a6f5f97", null ],
+    [ "arm_chebyshev_distance_f32", "group__Chebyshev.html#gaeac7e25faa01178ba6de05be8e1a31e9", null ],
+    [ "arm_chebyshev_distance_f64", "group__Chebyshev.html#ga47f287c9b4ba01fde36fd2480854646b", null ]
 ];

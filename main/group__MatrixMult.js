@@ -1,12 +1,12 @@
 var group__MatrixMult =
 [
-    [ "arm_mat_mult_f16", "group__MatrixMult.html#gaf73982b72f74cd7d32905846d9ee0f87", null ],
-    [ "arm_mat_mult_f32", "group__MatrixMult.html#gaf108a0beeafd4575054d677603e12203", null ],
-    [ "arm_mat_mult_f64", "group__MatrixMult.html#ga598af1b0bfc9267ba1b8a9688b4cee98", null ],
-    [ "arm_mat_mult_fast_q15", "group__MatrixMult.html#ga593d61ec4750f34f618b5cdf322229f4", null ],
-    [ "arm_mat_mult_fast_q31", "group__MatrixMult.html#ga31fe3acd1dfd9672390c9b1e64525808", null ],
-    [ "arm_mat_mult_opt_q31", "group__MatrixMult.html#ga5acafca3979e4aaae0bd8c84778a1586", null ],
-    [ "arm_mat_mult_q15", "group__MatrixMult.html#ga1d9a293db40e98ba07a6198784a0d1e7", null ],
-    [ "arm_mat_mult_q31", "group__MatrixMult.html#ga314ad66bb959a5bd12f9633c289df8aa", null ],
-    [ "arm_mat_mult_q7", "group__MatrixMult.html#ga46f1d125b2e3c4ce9294417800444347", null ]
+    [ "arm_mat_mult_f16", "group__MatrixMult.html#gaee4dce0bfe4ca464a55ed8cb8f01a79b", null ],
+    [ "arm_mat_mult_f32", "group__MatrixMult.html#ga917bf0270310c1d3f0eda1fc7c0026a0", null ],
+    [ "arm_mat_mult_f64", "group__MatrixMult.html#ga552b019bfeebe0be7551153f53b59046", null ],
+    [ "arm_mat_mult_fast_q15", "group__MatrixMult.html#ga08f37d93a5bfef0c5000dc5e0a411f93", null ],
+    [ "arm_mat_mult_fast_q31", "group__MatrixMult.html#ga2785e8c1b785348b0c439b56aaf585a3", null ],
+    [ "arm_mat_mult_opt_q31", "group__MatrixMult.html#gae9ef4cf0a04c7c0c6814f5235ecdc14f", null ],
+    [ "arm_mat_mult_q15", "group__MatrixMult.html#ga7521d59196189bb6dde26e8cdfb66e21", null ],
+    [ "arm_mat_mult_q31", "group__MatrixMult.html#ga2ec612a8c2c4916477fb9bc1ab548a6e", null ],
+    [ "arm_mat_mult_q7", "group__MatrixMult.html#ga0394722e0e0d1515379161b260739c2e", null ]
 ];

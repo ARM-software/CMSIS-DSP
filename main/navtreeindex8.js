@@ -1,5 +1,6 @@
 var NAVTREEINDEX8 =
 {
+"structarm__cfft__instance__q31.html#ab8db3bbe7c61e6bb8ca2a55e3446e11a":[5,0,28,1],
 "structarm__cfft__radix2__instance__f16.html":[5,0,29],
 "structarm__cfft__radix2__instance__f16.html#a09a221a818c6d0e064557a99e2fe9a8b":[5,0,29,0],
 "structarm__cfft__radix2__instance__f16.html#a3105983ff5c852a5c17028dee33f24c6":[5,0,29,6],
@@ -248,6 +249,5 @@ var NAVTREEINDEX8 =
 "structarm__lms__instance__q31.html#aa2cacddfc5e1d86905d7d31a18b1979b":[5,0,69,3],
 "structarm__lms__instance__q31.html#adee4ba3ee8869865af7d8fa08ca913d6":[5,0,69,4],
 "structarm__lms__norm__instance__f32.html":[5,0,70],
-"structarm__lms__norm__instance__f32.html#a11402afa7c9b9dac4cb953fa386e74d2":[5,0,70,1],
-"structarm__lms__norm__instance__f32.html#a335c87e6fdc4b96601d95a5de8b9c463":[5,0,70,4]
+"structarm__lms__norm__instance__f32.html#a11402afa7c9b9dac4cb953fa386e74d2":[5,0,70,1]
 };

@@ -1,15 +1,15 @@
 var group__AbsMin =
 [
-    [ "arm_absmin_f16", "group__AbsMin.html#ga89ca8b8dedbd1569165ea55130c17075", null ],
-    [ "arm_absmin_f32", "group__AbsMin.html#ga66d71825257f114ef666a705dc591306", null ],
-    [ "arm_absmin_f64", "group__AbsMin.html#ga19347a442c1ffd09f57857dba671207d", null ],
-    [ "arm_absmin_no_idx_f16", "group__AbsMin.html#gac8c2da3b97b678db910a89ca06d36823", null ],
-    [ "arm_absmin_no_idx_f32", "group__AbsMin.html#ga33edb5a9012576c492097b5197b780be", null ],
-    [ "arm_absmin_no_idx_f64", "group__AbsMin.html#ga51438dc61ac09cccc234e83d86c1cdd3", null ],
-    [ "arm_absmin_no_idx_q15", "group__AbsMin.html#gad639c12701a87f77496ce80cf3b814c6", null ],
-    [ "arm_absmin_no_idx_q31", "group__AbsMin.html#gabcfd11afceede4032fcb57e89f381246", null ],
-    [ "arm_absmin_no_idx_q7", "group__AbsMin.html#ga12f3f49f58074391e9cef1d718b92530", null ],
-    [ "arm_absmin_q15", "group__AbsMin.html#ga0e518c5d9722e76bfc4055cccc2435c0", null ],
-    [ "arm_absmin_q31", "group__AbsMin.html#ga950e2856f37e1fb505c9c2903aae9659", null ],
-    [ "arm_absmin_q7", "group__AbsMin.html#ga45e223dc2c51860a2e41b6c7979a8ca9", null ]
+    [ "arm_absmin_f16", "group__AbsMin.html#ga165c99bb5b3cf415696f75dcde1b3fe4", null ],
+    [ "arm_absmin_f32", "group__AbsMin.html#ga8f2559cadfc72b164e403d226d52b85d", null ],
+    [ "arm_absmin_f64", "group__AbsMin.html#ga143de85a2785ea75a2669608ac8599b9", null ],
+    [ "arm_absmin_no_idx_f16", "group__AbsMin.html#gafb9e895412ec3891703d03147e0218f9", null ],
+    [ "arm_absmin_no_idx_f32", "group__AbsMin.html#gad8252a79fad35712b5a733521efa8eb0", null ],
+    [ "arm_absmin_no_idx_f64", "group__AbsMin.html#gadbc149dcc2b67e27660560a62daf12d6", null ],
+    [ "arm_absmin_no_idx_q15", "group__AbsMin.html#gae16f84e5b1d5ca575bf745bb4754e724", null ],
+    [ "arm_absmin_no_idx_q31", "group__AbsMin.html#gaebee898232f3408b94ae147e882a1e0e", null ],
+    [ "arm_absmin_no_idx_q7", "group__AbsMin.html#ga3bc7ea4fabc61479d1e797b778c6799a", null ],
+    [ "arm_absmin_q15", "group__AbsMin.html#ga953e9c24ef899d9c57453937a8f11da6", null ],
+    [ "arm_absmin_q31", "group__AbsMin.html#gaa79e86e75e1e55fec5dd78002ec6a742", null ],
+    [ "arm_absmin_q7", "group__AbsMin.html#ga2321f7727d32ab4f296eb687c3a623dd", null ]
 ];

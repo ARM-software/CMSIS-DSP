@@ -1,5 +1,5 @@
 var group__WindowNUTTALL4A =
 [
-    [ "arm_nuttall4a_f32", "group__WindowNUTTALL4A.html#gaff22b0fddf0428bab3582573528286d4", null ],
-    [ "arm_nuttall4a_f64", "group__WindowNUTTALL4A.html#ga21f9ba456c02b15319c8f65ba216babc", null ]
+    [ "arm_nuttall4a_f32", "group__WindowNUTTALL4A.html#ga4a6e2804f2a18c85de67b233b1c0cd99", null ],
+    [ "arm_nuttall4a_f64", "group__WindowNUTTALL4A.html#gaa0dc66a8e5e39cbc3e10f5063c92904b", null ]
 ];

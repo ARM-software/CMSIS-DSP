@@ -136,12 +136,12 @@ $(document).ready(function(){initNavTree('group__SinCos.html',''); initResizable
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gab650b185927a9d44c0df7bf030359caa"><td class="memItemLeft" align="right" valign="top">ARM_DSP_ATTRIBUTE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SinCos.html#gab650b185927a9d44c0df7bf030359caa">arm_sin_cos_f32</a> (<a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> theta, <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *pSinVal, <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *pCosVal)</td></tr>
-<tr class="memdesc:gab650b185927a9d44c0df7bf030359caa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Floating-point sin_cos function.  <br /></td></tr>
-<tr class="separator:gab650b185927a9d44c0df7bf030359caa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3ba532fabe0de13fdaa88e9e17ffb52c"><td class="memItemLeft" align="right" valign="top">ARM_DSP_ATTRIBUTE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SinCos.html#ga3ba532fabe0de13fdaa88e9e17ffb52c">arm_sin_cos_q31</a> (<a class="el" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0">q31_t</a> theta, <a class="el" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *pSinVal, <a class="el" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *pCosVal)</td></tr>
-<tr class="memdesc:ga3ba532fabe0de13fdaa88e9e17ffb52c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Q31 sin_cos function.  <br /></td></tr>
-<tr class="separator:ga3ba532fabe0de13fdaa88e9e17ffb52c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4420d45c37d58c310ef9ae1b5fe58020"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SinCos.html#ga4420d45c37d58c310ef9ae1b5fe58020">arm_sin_cos_f32</a> (<a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> theta, <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *pSinVal, <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *pCosVal)</td></tr>
+<tr class="memdesc:ga4420d45c37d58c310ef9ae1b5fe58020"><td class="mdescLeft">&#160;</td><td class="mdescRight">Floating-point sin_cos function.  <br /></td></tr>
+<tr class="separator:ga4420d45c37d58c310ef9ae1b5fe58020"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae9e4ddebff9d4eb5d0a093e28e0bc504"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SinCos.html#gae9e4ddebff9d4eb5d0a093e28e0bc504">arm_sin_cos_q31</a> (<a class="el" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0">q31_t</a> theta, <a class="el" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *pSinVal, <a class="el" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *pCosVal)</td></tr>
+<tr class="memdesc:gae9e4ddebff9d4eb5d0a093e28e0bc504"><td class="mdescLeft">&#160;</td><td class="mdescRight">Q31 sin_cos function.  <br /></td></tr>
+<tr class="separator:gae9e4ddebff9d4eb5d0a093e28e0bc504"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>Computes the trigonometric sine and cosine values using a combination of table lookup and linear interpolation. There are separate functions for Q31 and floating-point data types. The input to the floating-point version is in degrees while the fixed-point Q31 have a scaled input with the range [-1 0.9999] mapping to [-180 +180] degrees.</p>
@@ -156,14 +156,14 @@ Functions</h2></td></tr>
 <li>Cosine value is computed as <code> *pcosVal = y0 + (fract * (y1 - y0))</code>. </li>
 </ol>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="gab650b185927a9d44c0df7bf030359caa" name="gab650b185927a9d44c0df7bf030359caa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gab650b185927a9d44c0df7bf030359caa">&#9670;&#160;</a></span>arm_sin_cos_f32()</h2>
+<a id="ga4420d45c37d58c310ef9ae1b5fe58020" name="ga4420d45c37d58c310ef9ae1b5fe58020"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4420d45c37d58c310ef9ae1b5fe58020">&#9670;&#160;</a></span>arm_sin_cos_f32()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">ARM_DSP_ATTRIBUTE void arm_sin_cos_f32 </td>
+          <td class="memname">void arm_sin_cos_f32 </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a>&#160;</td>
           <td class="paramname"><em>theta</em>, </td>
@@ -200,14 +200,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ga3ba532fabe0de13fdaa88e9e17ffb52c" name="ga3ba532fabe0de13fdaa88e9e17ffb52c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga3ba532fabe0de13fdaa88e9e17ffb52c">&#9670;&#160;</a></span>arm_sin_cos_q31()</h2>
+<a id="gae9e4ddebff9d4eb5d0a093e28e0bc504" name="gae9e4ddebff9d4eb5d0a093e28e0bc504"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae9e4ddebff9d4eb5d0a093e28e0bc504">&#9670;&#160;</a></span>arm_sin_cos_q31()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">ARM_DSP_ATTRIBUTE void arm_sin_cos_q31 </td>
+          <td class="memname">void arm_sin_cos_q31 </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0">q31_t</a>&#160;</td>
           <td class="paramname"><em>theta</em>, </td>
