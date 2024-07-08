@@ -65,9 +65,7 @@
 
         <!-- DSP sources (core) -->
         <file category="source"   name="Source/BasicMathFunctions/BasicMathFunctions.c"/>
-
         <file category="source"   name="Source/QuaternionMathFunctions/QuaternionMathFunctions.c"/>
-
         <file category="source"   name="Source/BayesFunctions/BayesFunctions.c"/>
         <file category="source"   name="Source/CommonTables/CommonTables.c"/>
         <file category="source"   name="Source/ComplexMathFunctions/ComplexMathFunctions.c"/>
@@ -80,8 +78,8 @@
         <file category="source"   name="Source/SupportFunctions/SupportFunctions.c"/>
         <file category="source"   name="Source/SVMFunctions/SVMFunctions.c"/>
         <file category="source"   name="Source/TransformFunctions/TransformFunctions.c"/>
-
         <file category="source"   name="Source/InterpolationFunctions/InterpolationFunctions.c"/>
+        <file category="source"   name="Source/WindowFunctions/WindowFunctions.c"/>
 
         <!-- DSP sources F16 versions -->
         <file category="source"   name="Source/BasicMathFunctions/BasicMathFunctionsF16.c"/>
