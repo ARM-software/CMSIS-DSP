@@ -34,16 +34,16 @@
 
 #if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-void stage_rfft_f16(
+static void stage_rfft_f16(
   const arm_rfft_fast_instance_f16 * S,
-        float16_t * p,
+  const float16_t * p,
         float16_t * pOut)
 {
         int32_t  k;                                /* Loop Counter */
         float16_t twR, twI;                         /* RFFT Twiddle coefficients */
   const float16_t * pCoeff = S->pTwiddleRFFT;       /* Points to RFFT Twiddle factors */
-        float16_t *pA = p;                          /* increasing pointer */
-        float16_t *pB = p;                          /* decreasing pointer */
+  const float16_t *pA = p;                          /* increasing pointer */
+  const float16_t *pB = p;                          /* decreasing pointer */
         float16_t xAR, xAI, xBR, xBI;               /* temporary variables */
         float16_t t1a, t1b;                         /* temporary variables */
         float16_t p0, p1, p2, p3;                   /* temporary variables */
@@ -194,16 +194,16 @@ void stage_rfft_f16(
 }
 
 /* Prepares data for inverse cfft */
-void merge_rfft_f16(
+static void merge_rfft_f16(
   const arm_rfft_fast_instance_f16 * S,
-        float16_t * p,
+  const float16_t * p,
         float16_t * pOut)
 {
         int32_t  k;                                /* Loop Counter */
         float16_t twR, twI;                         /* RFFT Twiddle coefficients */
   const float16_t *pCoeff = S->pTwiddleRFFT;        /* Points to RFFT Twiddle factors */
-        float16_t *pA = p;                          /* increasing pointer */
-        float16_t *pB = p;                          /* decreasing pointer */
+  const float16_t *pA = p;                          /* increasing pointer */
+  const float16_t *pB = p;                          /* decreasing pointer */
         float16_t xAR, xAI, xBR, xBI;               /* temporary variables */
         float16_t t1a, t1b, r, s, t, u;             /* temporary variables */
 
@@ -313,16 +313,16 @@ void merge_rfft_f16(
 
 }
 #else
-void stage_rfft_f16(
+static void stage_rfft_f16(
   const arm_rfft_fast_instance_f16 * S,
-        float16_t * p,
+  const float16_t * p,
         float16_t * pOut)
 {
         int32_t  k;                                /* Loop Counter */
         float16_t twR, twI;                         /* RFFT Twiddle coefficients */
   const float16_t * pCoeff = S->pTwiddleRFFT;       /* Points to RFFT Twiddle factors */
-        float16_t *pA = p;                          /* increasing pointer */
-        float16_t *pB = p;                          /* decreasing pointer */
+  const float16_t *pA = p;                          /* increasing pointer */
+  const float16_t *pB = p;                          /* decreasing pointer */
         float16_t xAR, xAI, xBR, xBI;               /* temporary variables */
         float16_t t1a, t1b;                         /* temporary variables */
         float16_t p0, p1, p2, p3;                   /* temporary variables */
@@ -402,16 +402,16 @@ void stage_rfft_f16(
 }
 
 /* Prepares data for inverse cfft */
-void merge_rfft_f16(
+static void merge_rfft_f16(
   const arm_rfft_fast_instance_f16 * S,
-        float16_t * p,
+  const float16_t * p,
         float16_t * pOut)
 {
         int32_t  k;                                /* Loop Counter */
         float16_t twR, twI;                         /* RFFT Twiddle coefficients */
   const float16_t *pCoeff = S->pTwiddleRFFT;        /* Points to RFFT Twiddle factors */
-        float16_t *pA = p;                          /* increasing pointer */
-        float16_t *pB = p;                          /* decreasing pointer */
+  const float16_t *pA = p;                          /* increasing pointer */
+  const float16_t *pB = p;                          /* decreasing pointer */
         float16_t xAR, xAI, xBR, xBI;               /* temporary variables */
         float16_t t1a, t1b, r, s, t, u;             /* temporary variables */
 
