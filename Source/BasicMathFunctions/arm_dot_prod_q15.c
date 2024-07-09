@@ -151,11 +151,7 @@ ARM_DSP_ATTRIBUTE void arm_dot_prod_q15(
     /* C = A[0]* B[0] + A[1]* B[1] + A[2]* B[2] + .....+ A[blockSize-1]* B[blockSize-1] */
 
     /* Calculate dot product and store result in a temporary buffer. */
-//#if defined (ARM_MATH_DSP)
-//    sum  = __SMLALD(*pSrcA++, *pSrcB++, sum);
-//#else
     sum += (q63_t)((q31_t) *pSrcA++ * *pSrcB++);
-//#endif
 
     /* Decrement loop counter */
     blkCnt--;
