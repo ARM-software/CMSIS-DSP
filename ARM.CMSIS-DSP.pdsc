@@ -30,13 +30,6 @@
       <require Cclass="CMSIS" Cgroup="CORE"/>
     </condition>
 
-    <condition id="CMSISDSPLIB">
-      <description>Components required for DSP</description>
-      <require condition="CMSISCORE"/>
-      <require Cclass="CMSIS" Cgroup="DSP" Csub=""/>
-    </condition>
-
-
     <condition id="ARMv7-A Device">
       <description>Armv7-A architecture based device</description>
       <accept Dcore="Cortex-A5"/>
