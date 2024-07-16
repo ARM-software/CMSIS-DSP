@@ -754,7 +754,7 @@ extern void arm_bitreversal_32(
 
  */
 
-ARM_DSP_ATTRIBUTE void arm_cfft_radix8by2_f32 (arm_cfft_instance_f32 * S, float32_t * p1)
+static void arm_cfft_radix8by2_f32 (arm_cfft_instance_f32 * S, float32_t * p1)
 {
   uint32_t    L  = S->fftLen;
   float32_t * pCol1, * pCol2, * pMid1, * pMid2;
@@ -868,7 +868,7 @@ ARM_DSP_ATTRIBUTE void arm_cfft_radix8by2_f32 (arm_cfft_instance_f32 * S, float3
   arm_radix8_butterfly_f32 (pCol2, L, (float32_t *) S->pTwiddle, 2U);
 }
 
-ARM_DSP_ATTRIBUTE void arm_cfft_radix8by4_f32 (arm_cfft_instance_f32 * S, float32_t * p1)
+static void arm_cfft_radix8by4_f32 (arm_cfft_instance_f32 * S, float32_t * p1)
 {
     uint32_t    L  = S->fftLen >> 1;
     float32_t * pCol1, *pCol2, *pCol3, *pCol4, *pEnd1, *pEnd2, *pEnd3, *pEnd4;

@@ -123,7 +123,7 @@ static uint32_t arm_scalar_log_q31(uint32_t src)
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 
-q31x4_t vlogq_q31(q31x4_t src)
+static q31x4_t vlogq_q31(q31x4_t src)
 {
 
    int32_t i;

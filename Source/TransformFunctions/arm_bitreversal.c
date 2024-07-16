@@ -29,6 +29,11 @@
 #include "dsp/transform_functions.h"
 #include "arm_common_tables.h"
 
+void arm_bitreversal_f32(
+        float32_t * pSrc,
+        uint16_t fftSize,
+        uint16_t bitRevFactor,
+  const uint16_t * pBitRevTab);
 
 /**
   @brief         In-place floating-point bit reversal function.
@@ -99,6 +104,11 @@ ARM_DSP_ATTRIBUTE void arm_bitreversal_f32(
    }
 }
 
+void arm_bitreversal_q31(
+        q31_t * pSrc,
+        uint32_t fftLen,
+        uint16_t bitRevFactor,
+  const uint16_t * pBitRevTab);
 
 /**
   @brief         In-place Q31 bit reversal function.
@@ -168,6 +178,11 @@ ARM_DSP_ATTRIBUTE void arm_bitreversal_q31(
    }
 }
 
+void arm_bitreversal_q15(
+        q15_t * pSrc16,
+        uint32_t fftLen,
+        uint16_t bitRevFactor,
+  const uint16_t * pBitRevTab);
 
 
 /**

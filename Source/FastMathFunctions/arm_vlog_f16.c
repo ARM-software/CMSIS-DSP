@@ -72,7 +72,7 @@ static float16_t lut_logf16[NB_LUT_LOGF16]={
    0.0625,-0.00195305,0.0000804357};
 
 
-float16_t logf16_scalar(float16_t x)
+static float16_t logf16_scalar(float16_t x)
 {
     int16_t i =  arm_typecast_s16_f16(x);
 
@@ -108,7 +108,7 @@ float16_t logf16_scalar(float16_t x)
 #include "arm_vec_math_f16.h"
 
 
-float16x8_t vlogq_lut_f16(float16x8_t vecIn)
+static float16x8_t vlogq_lut_f16(float16x8_t vecIn)
 {
     int16x8_t i =  vreinterpretq_s16_f16(vecIn);
 

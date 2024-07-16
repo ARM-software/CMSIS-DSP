@@ -29,6 +29,11 @@
 #include "dsp/transform_functions.h"
 #include "arm_common_tables.h"
 
+void arm_bitreversal_64(
+        uint64_t *pSrc,
+  const uint16_t bitRevLen,
+  const uint16_t *pBitRevTab);
+
 
 /**
   @brief         In-place 64 bit reversal function.
@@ -64,6 +69,11 @@ ARM_DSP_ATTRIBUTE void arm_bitreversal_64(
   }
 }
 
+void arm_bitreversal_32(
+        uint32_t *pSrc,
+  const uint16_t bitRevLen,
+  const uint16_t *pBitRevTab);
+
 /**
   @brief         In-place 32 bit reversal function.
   @param[in,out] pSrc        points to in-place buffer of unknown 32-bit data type
@@ -96,6 +106,11 @@ ARM_DSP_ATTRIBUTE void arm_bitreversal_32(
     i += 2;
   }
 }
+
+void arm_bitreversal_16(
+        uint16_t *pSrc,
+  const uint16_t bitRevLen,
+  const uint16_t *pBitRevTab);
 
 
 /**

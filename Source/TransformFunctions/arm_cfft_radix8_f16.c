@@ -30,6 +30,11 @@
 
 #if defined(ARM_FLOAT16_SUPPORTED)
 
+void arm_radix8_butterfly_f16(
+  float16_t * pSrc,
+  uint16_t fftLen,
+  const float16_t * pCoef,
+  uint16_t twidCoefModifier);
 
 /* ----------------------------------------------------------------------
  * Internal helper function used by the FFTs

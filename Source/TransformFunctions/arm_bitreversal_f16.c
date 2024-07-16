@@ -28,6 +28,12 @@
 
 #include "dsp/transform_functions_f16.h"
 
+void arm_bitreversal_f16(
+float16_t * pSrc,
+uint16_t fftSize,
+uint16_t bitRevFactor,
+const uint16_t * pBitRevTab);
+
 /*
 * @brief  In-place bit reversal function.
 * @param[in, out] *pSrc        points to the in-place buffer of floating-point data type.

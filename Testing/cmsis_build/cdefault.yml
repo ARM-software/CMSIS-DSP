@@ -28,6 +28,7 @@ default:
         - -Wno-parentheses-equality 
         - -Wno-reserved-identifier
         - -ffunction-sections
+        - -Wmissing-prototypes
         - -DARM_DSP_ATTRIBUTE="__attribute__((weak))"
         - -DARM_DSP_TABLE_ATTRIBUTE="__attribute__((section (\"dsp_table\")))"
       CPP:
@@ -70,6 +71,7 @@ default:
         - -Wno-maybe-uninitialized
         - -fdata-sections
         - -mfp16-format=ieee
+        - -Wmissing-prototypes
         - -DARM_DSP_ATTRIBUTE="__attribute__((weak))"
         - -DARM_DSP_TABLE_ATTRIBUTE="__attribute__((section (\"dsp_table\")))"
       CPP:
@@ -120,6 +122,7 @@ default:
          - -Wno-parentheses-equality 
          - -Wno-reserved-identifier
          - -ffunction-sections
+         - -Wmissing-prototypes
          - -DARM_DSP_ATTRIBUTE="__attribute__((weak))"
          - -DARM_DSP_TABLE_ATTRIBUTE="__attribute__((section (\"dsp_table\")))"
       CPP:

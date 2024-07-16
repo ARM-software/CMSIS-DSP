@@ -186,7 +186,7 @@ ARM_DSP_ATTRIBUTE void arm_radix4_butterfly_f64(
 * @param[in]      twidCoefModifier twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table.
 */
 
-ARM_DSP_ATTRIBUTE void arm_cfft_radix4by2_f64(
+static void arm_cfft_radix4by2_f64(
     float64_t * pSrc,
     uint32_t fftLen,
     const float64_t * pCoef)

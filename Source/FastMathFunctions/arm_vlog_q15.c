@@ -128,7 +128,7 @@ static uint16_t arm_scalar_log_q15(uint16_t src)
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 
-q15x8_t vlogq_q15(q15x8_t src)
+static q15x8_t vlogq_q15(q15x8_t src)
 {
 
    int i;

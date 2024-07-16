@@ -33,6 +33,12 @@
  * Internal helper function used by the FFTs
  * -------------------------------------------------------------------- */
 
+void arm_radix8_butterfly_f32(
+  float32_t * pSrc,
+  uint16_t fftLen,
+  const float32_t * pCoef,
+  uint16_t twidCoefModifier);
+
 /**
   brief         Core function for the floating-point CFFT butterfly process.
   param[in,out] pSrc             points to the in-place buffer of floating-point data type.

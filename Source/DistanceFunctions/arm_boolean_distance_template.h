@@ -52,6 +52,23 @@
 
 #define FUNC(EXT) _FUNC(arm_boolean_distance, EXT)
 
+extern void FUNC(EXT)(const uint32_t *pA
+       , const uint32_t *pB
+       , uint32_t numberOfBools
+#ifdef TT
+       , uint32_t *cTT
+#endif
+#ifdef FF
+       , uint32_t *cFF
+#endif
+#ifdef TF
+       , uint32_t *cTF
+#endif
+#ifdef FT
+       , uint32_t *cFT
+#endif
+       );
+
 /**
  * @brief        Elements of boolean distances
  *
