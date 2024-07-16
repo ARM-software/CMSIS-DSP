@@ -28,11 +28,7 @@
 
 #include "dsp/transform_functions_f16.h"
 
-void arm_bitreversal_f16(
-float16_t * pSrc,
-uint16_t fftSize,
-uint16_t bitRevFactor,
-const uint16_t * pBitRevTab);
+
 
 /*
 * @brief  In-place bit reversal function.
@@ -43,6 +39,12 @@ const uint16_t * pBitRevTab);
 */
 
 #if defined(ARM_FLOAT16_SUPPORTED)
+
+void arm_bitreversal_f16(
+float16_t * pSrc,
+uint16_t fftSize,
+uint16_t bitRevFactor,
+const uint16_t * pBitRevTab);
 
 ARM_DSP_ATTRIBUTE void arm_bitreversal_f16(
 float16_t * pSrc,

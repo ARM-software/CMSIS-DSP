@@ -135,7 +135,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_atan2_f16(float16_t y,float16_t x,float16_t *re
         }
         else
         {
-            if (signbit(y))
+            if (signbit((float)y))
             {
                *result= -(_Float16)PIF16;
             }

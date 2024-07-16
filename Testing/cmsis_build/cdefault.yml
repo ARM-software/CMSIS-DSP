@@ -7,6 +7,7 @@ default:
       C:
         - -Wsign-compare 
         - -Wdouble-promotion 
+        - -Wfloat-conversion 
         - -DNDEBUG 
         - -Wall 
         - -Wextra  
@@ -55,6 +56,7 @@ default:
       C:
         - -Wsign-compare 
         - -Wdouble-promotion 
+        - -Wfloat-conversion 
         - -DNDEBUG 
         - -Wall 
         - -Wextra  
@@ -102,6 +104,7 @@ default:
       C:
          - -Wsign-compare 
          - -Wdouble-promotion 
+         - -Wfloat-conversion 
          - -DNDEBUG 
          - -Wall 
          - -Wextra  

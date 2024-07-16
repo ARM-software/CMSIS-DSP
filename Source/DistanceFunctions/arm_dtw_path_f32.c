@@ -141,18 +141,19 @@ ARM_DSP_ATTRIBUTE void arm_dtw_path_f32(const arm_matrix_instance_f32 *pDTW,
 
   /* Reverse the path */
   int16_t *fh,*sh;
+  int16_t itemp;
   fh = pPath;
   sh = pPath + 2* (*pathLength)-2;
   int halfLength = (*pathLength)>>1;
   for(int i = 0; i< halfLength; i++)
   {
-     temp = fh[0];
+     itemp = fh[0];
      fh[0] = sh[0];
-     sh[0] = temp;
+     sh[0] = itemp;
 
-     temp = fh[1];
+     itemp = fh[1];
      fh[1] = sh[1];
-     sh[1] = temp;
+     sh[1] = itemp;
 
      fh += 2;
      sh -= 2;
