@@ -47,7 +47,7 @@
 #include "arm_selection_sort_f32.c"
 #include "arm_sort_f32.c"
 #include "arm_sort_init_f32.c"
-#include "arm_weighted_sum_f32.c"
+#include "arm_weighted_average_f32.c"
 
 #include "arm_f64_to_float.c"
 #include "arm_f64_to_q31.c"

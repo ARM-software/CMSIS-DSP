@@ -19,7 +19,7 @@
 #define ABS_Q7_ERROR ((q7_t)10)
 
 
-void SupportTestsF16::test_weighted_sum_f16()
+void SupportTestsF16::test_weighted_average_f16()
 {
  const float16_t *inp = input.ptr();
  const float16_t *coefsp = coefs.ptr();
@@ -28,7 +28,7 @@ void SupportTestsF16::test_weighted_sum_f16()
  float16_t *outp = output.ptr();
  
  
- *outp=arm_weighted_sum_f16(inp, coefsp,this->nbSamples);
+ *outp=arm_weighted_average_f16(inp, coefsp,this->nbSamples);
 
  ASSERT_CLOSE_ERROR(*outp,refp[this->offset],ABS_WEIGHTEDSUM_ERROR,REL_WEIGHTEDSUM_ERROR);
  ASSERT_EMPTY_TAIL(output);
@@ -160,7 +160,7 @@ void SupportTestsF16::setUp(Testing::testID_t id,std::vector<Testing::param_t>& 
   switch(id)
   {    
 
-    case TEST_WEIGHTED_SUM_F16_1:
+    case TEST_WEIGHTED_AVERAGE_F16_1:
     this->nbSamples = 7;
     input.reload(SupportTestsF16::INPUTS_F16_ID,mgr,this->nbSamples);
     coefs.reload(SupportTestsF16::WEIGHTS_F16_ID,mgr,this->nbSamples);
@@ -171,7 +171,7 @@ void SupportTestsF16::setUp(Testing::testID_t id,std::vector<Testing::param_t>& 
     this->offset=0;
     break;
 
-    case TEST_WEIGHTED_SUM_F16_2:
+    case TEST_WEIGHTED_AVERAGE_F16_2:
     this->nbSamples = 16;
     input.reload(SupportTestsF16::INPUTS_F16_ID,mgr,this->nbSamples);
     coefs.reload(SupportTestsF16::WEIGHTS_F16_ID,mgr,this->nbSamples);
@@ -182,7 +182,7 @@ void SupportTestsF16::setUp(Testing::testID_t id,std::vector<Testing::param_t>& 
     this->offset=1;
     break;
 
-    case TEST_WEIGHTED_SUM_F16_3:
+    case TEST_WEIGHTED_AVERAGE_F16_3:
     this->nbSamples = 23;
     input.reload(SupportTestsF16::INPUTS_F16_ID,mgr,this->nbSamples);
     coefs.reload(SupportTestsF16::WEIGHTS_F16_ID,mgr,this->nbSamples);

@@ -1,7 +1,7 @@
 /* ----------------------------------------------------------------------
  * Project:      CMSIS DSP Library
- * Title:        arm_weighted_sum_f32.c
- * Description:  Weighted Sum
+ * Title:        arm_weighted_average_f32.c
+ * Description:  Weighted Average
  *
  * $Date:        23 April 2021
  * $Revision:    V1.9.0
@@ -32,19 +32,19 @@
 #include "dsp/support_functions.h"
 
 /**
- * @addtogroup weightedsum
+ * @addtogroup weightedaverage
  * @{
  */
 
 
 /**
- * @brief Weighted sum
+ * @brief Weighted average
  *
  *
  * @param[in]    *in           Array of input values.
  * @param[in]    *weigths      Weights
  * @param[in]    blockSize     Number of samples in the input array.
- * @return       Weighted sum
+ * @return       Weighted average
  *
  */
 
@@ -52,7 +52,7 @@
 
 #include "arm_helium_utils.h"
 
-ARM_DSP_ATTRIBUTE float32_t arm_weighted_sum_f32(const float32_t *in,const float32_t *weigths, uint32_t blockSize)
+ARM_DSP_ATTRIBUTE float32_t arm_weighted_average_f32(const float32_t *in,const float32_t *weigths, uint32_t blockSize)
 {
     float32_t       accum1, accum2;
     f32x4_t         accum1V, accum2V;
@@ -101,7 +101,7 @@ ARM_DSP_ATTRIBUTE float32_t arm_weighted_sum_f32(const float32_t *in,const float
 #if defined(ARM_MATH_NEON)
 
 #include "NEMath.h"
-ARM_DSP_ATTRIBUTE float32_t arm_weighted_sum_f32(const float32_t *in,const float32_t *weigths, uint32_t blockSize)
+ARM_DSP_ATTRIBUTE float32_t arm_weighted_average_f32(const float32_t *in,const float32_t *weigths, uint32_t blockSize)
 {
 
     float32_t accum1, accum2;
@@ -155,7 +155,7 @@ ARM_DSP_ATTRIBUTE float32_t arm_weighted_sum_f32(const float32_t *in,const float
     return(accum1 / accum2);
 }
 #else
-ARM_DSP_ATTRIBUTE float32_t arm_weighted_sum_f32(const float32_t *in, const float32_t *weigths, uint32_t blockSize)
+ARM_DSP_ATTRIBUTE float32_t arm_weighted_average_f32(const float32_t *in, const float32_t *weigths, uint32_t blockSize)
 {
 
     float32_t accum1, accum2;
@@ -183,5 +183,5 @@ ARM_DSP_ATTRIBUTE float32_t arm_weighted_sum_f32(const float32_t *in, const floa
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
- * @} end of weightedsum group
+ * @} end of weightedaverage group
  */

@@ -1,7 +1,7 @@
 /* ----------------------------------------------------------------------
  * Project:      CMSIS DSP Library
- * Title:        arm_weighted_sum_f16.c
- * Description:  Weighted Sum
+ * Title:        arm_weighted_average_f16.c
+ * Description:  Weighted average
  *
  * $Date:        23 April 2021
  * $Revision:    V1.9.0
@@ -38,26 +38,27 @@
  */
 
 /**
-  @defgroup weightedsum Weighted Sum
+  @defgroup weightedaverage Weighted Average
 
-  Weighted sum of values
+  Weighted average of values
  */
 
 
 /**
- * @addtogroup weightedsum
+ * @addtogroup weightedaverage
  * @{
  */
 
 
 /**
- * @brief Weighted sum
+ * @brief Weighted average
  *
  *
  * @param[in]    *in           Array of input values.
  * @param[in]    *weigths      Weights
  * @param[in]    blockSize     Number of samples in the input array.
- * @return       Weighted sum
+ * 
+ * @return       Weighted average
  *
  */
 
@@ -65,7 +66,7 @@
 
 #include "arm_helium_utils.h"
 
-ARM_DSP_ATTRIBUTE float16_t arm_weighted_sum_f16(const float16_t *in,const float16_t *weigths, uint32_t blockSize)
+ARM_DSP_ATTRIBUTE float16_t arm_weighted_average_f16(const float16_t *in,const float16_t *weigths, uint32_t blockSize)
 {
     _Float16       accum1, accum2;
     float16x8_t    accum1V, accum2V;
@@ -112,7 +113,7 @@ ARM_DSP_ATTRIBUTE float16_t arm_weighted_sum_f16(const float16_t *in,const float
 
 #else
 
-ARM_DSP_ATTRIBUTE float16_t arm_weighted_sum_f16(const float16_t *in, const float16_t *weigths, uint32_t blockSize)
+ARM_DSP_ATTRIBUTE float16_t arm_weighted_average_f16(const float16_t *in, const float16_t *weigths, uint32_t blockSize)
 {
 
     _Float16 accum1, accum2;
@@ -139,7 +140,7 @@ ARM_DSP_ATTRIBUTE float16_t arm_weighted_sum_f16(const float16_t *in, const floa
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
- * @} end of weightedsum group
+ * @} end of weightedaverage group
  */
 
 #endif /* #if defined(ARM_FLOAT16_SUPPORTED) */ 

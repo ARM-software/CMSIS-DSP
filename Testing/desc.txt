@@ -581,9 +581,9 @@ group Root {
               Output  OUT_F64_ID : Output
              
               Functions {
-                disabled{test_weighted_sum_f64 nb=3:test_weighted_sum_f64}
-                disabled{test_weighted_sum_f64 nb=4n:test_weighted_sum_f64}
-                disabled{test_weighted_sum_f64 nb=4n+1:test_weighted_sum_f64}
+                disabled{test_weighted_average_f64 nb=3:test_weighted_average_f64}
+                disabled{test_weighted_average_f64 nb=4n:test_weighted_average_f64}
+                disabled{test_weighted_average_f64 nb=4n+1:test_weighted_average_f64}
                 test_copy_f64 nb=2:test_copy_f64
                 test_copy_f64 nb=2n:test_copy_f64
                 test_copy_f64 nb=2n+1:test_copy_f64
@@ -655,9 +655,9 @@ group Root {
               Output  OUT_F32_ID : Output
              
               Functions {
-                test_weighted_sum_f32 nb=3:test_weighted_sum_f32
-                test_weighted_sum_f32 nb=4n:test_weighted_sum_f32
-                test_weighted_sum_f32 nb=4n+1:test_weighted_sum_f32
+                test_weighted_average_f32 nb=3:test_weighted_average_f32
+                test_weighted_average_f32 nb=4n:test_weighted_average_f32
+                test_weighted_average_f32 nb=4n+1:test_weighted_average_f32
                 test_copy_f32 nb=3:test_copy_f32
                 test_copy_f32 nb=4n:test_copy_f32
                 test_copy_f32 nb=4n+1:test_copy_f32

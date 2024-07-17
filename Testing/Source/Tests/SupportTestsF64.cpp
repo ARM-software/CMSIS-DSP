@@ -11,7 +11,7 @@
 #define ABS_Q7_ERROR ((q7_t)10)
 
 /*
-void SupportTestsF64::test_weighted_sum_f64()
+void SupportTestsF64::test_weighted_average_f64()
 {
  const float64_t *inp = input.ptr();
  const float64_t *coefsp = coefs.ptr();
@@ -20,7 +20,7 @@ void SupportTestsF64::test_weighted_sum_f64()
  float64_t *outp = output.ptr();
  
  
- *outp=arm_weighted_sum_f64(inp, coefsp,this->nbSamples);
+ *outp=arm_weighted_average_f64(inp, coefsp,this->nbSamples);
  
  
  ASSERT_REL_ERROR(*outp,refp[this->offset],REL_ERROR);

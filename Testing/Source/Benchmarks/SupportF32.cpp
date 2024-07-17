@@ -27,9 +27,9 @@
       arm_q31_to_float(this->pSrcQ31,this->pDst,this->nbSamples);
     }
 
-    void SupportF32::test_weighted_sum_f32()
+    void SupportF32::test_weighted_average_f32()
     {
-      arm_weighted_sum_f32(this->pSrc, this->pWeights,this->nbSamples);
+      arm_weighted_average_f32(this->pSrc, this->pWeights,this->nbSamples);
     }
 
     void SupportF32::setUp(Testing::testID_t id,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr)
@@ -64,7 +64,7 @@
              this->pSrcQ7=samplesQ7.ptr();
            break;
 
-           case TEST_WEIGHTED_SUM_F32_6:
+           case TEST_WEIGHTED_AVERAGE_F32_6:
               samples.reload(SupportF32::INPUTS6_F32_ID,mgr,this->nbSamples);
               weights.reload(SupportF32::WEIGHTS6_F32_ID,mgr,this->nbSamples);
 

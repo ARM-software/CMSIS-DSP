@@ -34,5 +34,5 @@
 #include "arm_f64_to_f16.c"
 #include "arm_q15_to_f16.c"
 #include "arm_float_to_f16.c"
-#include "arm_weighted_sum_f16.c"
+#include "arm_weighted_average_f16.c"
 #include "arm_barycenter_f16.c"

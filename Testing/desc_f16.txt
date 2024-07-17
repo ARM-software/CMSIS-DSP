@@ -158,9 +158,9 @@ group Root {
               Output  OUT_F16_ID : OutputF16
              
               Functions {
-                test_weighted_sum_f16 nb=3:test_weighted_sum_f16
-                test_weighted_sum_f16 nb=4n:test_weighted_sum_f16
-                test_weighted_sum_f16 nb=4n+1:test_weighted_sum_f16
+                test_weighted_average_f16 nb=3:test_weighted_average_f16
+                test_weighted_average_f16 nb=4n:test_weighted_average_f16
+                test_weighted_average_f16 nb=4n+1:test_weighted_average_f16
                 test_copy_f16 nb=7:test_copy_f16
                 test_copy_f16 nb=8n:test_copy_f16
                 test_copy_f16 nb=8n+1:test_copy_f16
