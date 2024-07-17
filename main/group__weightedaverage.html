@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CMSIS-DSP: Weighted Sum</title>
+<title>CMSIS-DSP: Weighted Average</title>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -102,7 +102,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('group__weightedsum.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('group__weightedaverage.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -130,30 +130,30 @@ $(document).ready(function(){initNavTree('group__weightedsum.html',''); initResi
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">Weighted Sum<div class="ingroups"><a class="el" href="group__groupSupport.html">Support Functions</a></div></div></div>
+  <div class="headertitle"><div class="title">Weighted Average<div class="ingroups"><a class="el" href="group__groupSupport.html">Support Functions</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga06e10e847786d8d96c5459fb36d5c752"><td class="memItemLeft" align="right" valign="top">float16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__weightedsum.html#ga06e10e847786d8d96c5459fb36d5c752">arm_weighted_sum_f16</a> (const float16_t *in, const float16_t *weigths, uint32_t blockSize)</td></tr>
-<tr class="memdesc:ga06e10e847786d8d96c5459fb36d5c752"><td class="mdescLeft">&#160;</td><td class="mdescRight">Weighted sum.  <br /></td></tr>
-<tr class="separator:ga06e10e847786d8d96c5459fb36d5c752"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaffef5e0e3e1d0289e419c23853e20850"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__weightedsum.html#gaffef5e0e3e1d0289e419c23853e20850">arm_weighted_sum_f32</a> (const <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *in, const <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *weigths, uint32_t blockSize)</td></tr>
-<tr class="memdesc:gaffef5e0e3e1d0289e419c23853e20850"><td class="mdescLeft">&#160;</td><td class="mdescRight">Weighted sum.  <br /></td></tr>
-<tr class="separator:gaffef5e0e3e1d0289e419c23853e20850"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5109e2a8b99632973843d86bd7ad851b"><td class="memItemLeft" align="right" valign="top">float16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__weightedaverage.html#ga5109e2a8b99632973843d86bd7ad851b">arm_weighted_average_f16</a> (const float16_t *in, const float16_t *weigths, uint32_t blockSize)</td></tr>
+<tr class="memdesc:ga5109e2a8b99632973843d86bd7ad851b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Weighted average.  <br /></td></tr>
+<tr class="separator:ga5109e2a8b99632973843d86bd7ad851b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacb3c3c0baca35abeb83b8cb3554046ab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__weightedaverage.html#gacb3c3c0baca35abeb83b8cb3554046ab">arm_weighted_average_f32</a> (const <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *in, const <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *weigths, uint32_t blockSize)</td></tr>
+<tr class="memdesc:gacb3c3c0baca35abeb83b8cb3554046ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Weighted average.  <br /></td></tr>
+<tr class="separator:gacb3c3c0baca35abeb83b8cb3554046ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
-<p>Weighted sum of values </p>
+<p>Weighted average of values </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ga06e10e847786d8d96c5459fb36d5c752" name="ga06e10e847786d8d96c5459fb36d5c752"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga06e10e847786d8d96c5459fb36d5c752">&#9670;&#160;</a></span>arm_weighted_sum_f16()</h2>
+<a id="ga5109e2a8b99632973843d86bd7ad851b" name="ga5109e2a8b99632973843d86bd7ad851b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5109e2a8b99632973843d86bd7ad851b">&#9670;&#160;</a></span>arm_weighted_average_f16()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">float16_t arm_weighted_sum_f16 </td>
+          <td class="memname">float16_t arm_weighted_average_f16 </td>
           <td>(</td>
           <td class="paramtype">const float16_t *&#160;</td>
           <td class="paramname"><em>in</em>, </td>
@@ -178,27 +178,27 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Weighted sum. </p>
+<p>Weighted average. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">*in</td><td>Array of input values. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">*weigths</td><td>Weights </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">blockSize</td><td>Number of samples in the input array. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">blockSize</td><td>Number of samples in the input array.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Weighted sum </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Weighted average </dd></dl>
 
 </div>
 </div>
-<a id="gaffef5e0e3e1d0289e419c23853e20850" name="gaffef5e0e3e1d0289e419c23853e20850"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaffef5e0e3e1d0289e419c23853e20850">&#9670;&#160;</a></span>arm_weighted_sum_f32()</h2>
+<a id="gacb3c3c0baca35abeb83b8cb3554046ab" name="gacb3c3c0baca35abeb83b8cb3554046ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gacb3c3c0baca35abeb83b8cb3554046ab">&#9670;&#160;</a></span>arm_weighted_average_f32()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> arm_weighted_sum_f32 </td>
+          <td class="memname"><a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> arm_weighted_average_f32 </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *&#160;</td>
           <td class="paramname"><em>in</em>, </td>
@@ -223,7 +223,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Weighted sum. </p>
+<p>Weighted average. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">*in</td><td>Array of input values. </td></tr>
@@ -232,7 +232,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Weighted sum </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Weighted average </dd></dl>
 
 </div>
 </div>

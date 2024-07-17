@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['weighted_20sum_0',['Weighted Sum',['../group__weightedsum.html',1,'']]],
+  ['weighted_20average_0',['Weighted Average',['../group__weightedaverage.html',1,'']]],
   ['weights_5f128_1',['Weights_128',['../group__DCT4__IDCT4__Table.html#gad00f29d896d64d6da7afbbb9d3e182a4',1,'Weights_128():&#160;arm_common_tables.c'],['../group__DCT4__IDCT4__Table.html#gad00f29d896d64d6da7afbbb9d3e182a4',1,'Weights_128():&#160;arm_common_tables.c']]],
   ['weightsq15_5f128_2',['WeightsQ15_128',['../group__DCT4__IDCT4__Table.html#ga8e8f0253c5a4337bd90968838db6164d',1,'WeightsQ15_128():&#160;arm_common_tables.c'],['../group__DCT4__IDCT4__Table.html#ga8e8f0253c5a4337bd90968838db6164d',1,'WeightsQ15_128():&#160;arm_common_tables.c']]],
   ['weightsq31_5f128_3',['WeightsQ31_128',['../group__DCT4__IDCT4__Table.html#ga02d7024538a87214296b01d83ba36b02',1,'WeightsQ31_128():&#160;arm_common_tables.c'],['../group__DCT4__IDCT4__Table.html#ga02d7024538a87214296b01d83ba36b02',1,'WeightsQ31_128():&#160;arm_common_tables.c']]],

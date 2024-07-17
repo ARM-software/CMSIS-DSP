@@ -11,5 +11,5 @@ var group__groupSupport =
     [ "Convert 16-bit fixed point value", "group__q15__to__x.html", "group__q15__to__x" ],
     [ "Convert 32-bit fixed point value", "group__q31__to__x.html", "group__q31__to__x" ],
     [ "Convert 8-bit fixed point value", "group__q7__to__x.html", "group__q7__to__x" ],
-    [ "Weighted Sum", "group__weightedsum.html", "group__weightedsum" ]
+    [ "Weighted Average", "group__weightedaverage.html", "group__weightedaverage" ]
 ];

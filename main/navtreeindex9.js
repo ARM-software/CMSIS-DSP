@@ -1,5 +1,6 @@
 var NAVTREEINDEX9 =
 {
+"structarm__lms__norm__instance__f32.html#a11402afa7c9b9dac4cb953fa386e74d2":[5,0,70,1],
 "structarm__lms__norm__instance__f32.html#a335c87e6fdc4b96601d95a5de8b9c463":[5,0,70,4],
 "structarm__lms__norm__instance__f32.html#a751941891e47f522a7f5375fe8990aac":[5,0,70,2],
 "structarm__lms__norm__instance__f32.html#aacbb8dd8eeba4b21fc2bb40076405ee3":[5,0,70,3],

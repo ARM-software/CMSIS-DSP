@@ -154,10 +154,10 @@ $(document).ready(function(){initNavTree('dsppp_matrix.html',''); initResizable(
 <div class="fragment"><div class="line">Matrix&lt;float32_t,ROWS,COLS&gt; result = a * a + b;</div>
 </div><!-- fragment --><p>The operators <code>+</code> and <code>*</code> are merged into the loop. <code>*</code> is the element-wise multiply. For the vector / matrix products you should use the operator <code>dot</code>.</p>
 <p>Note that fusion of operators will not work with <code>dot(Matrix, Matrix</code>). It is only supported with vectors : <code>dot(Vector,Vector)</code> or <code>dot(Matrix,Vector)</code>.</p>
-<h1><a class="anchor" id="autotoc_md21"></a>
+<h1><a class="anchor" id="autotoc_md22"></a>
 VectorView</h1>
 <p>We can create virtual vectors which are view of some slices of the matrix.</p>
-<h2><a class="anchor" id="autotoc_md22"></a>
+<h2><a class="anchor" id="autotoc_md23"></a>
 Row vector</h2>
 <p>To set the second row to <code>0.0f</code>, you can do:</p>
 <div class="fragment"><div class="line">result.row(1) = 0.0f;</div>
@@ -171,12 +171,12 @@ Row vector</h2>
 <div class="line">VectorView&lt;P,S&gt; row(<span class="keyword">const</span> index_t i,<span class="keyword">const</span> index_t start=0,<span class="keyword">const</span> index_t stop=C)</div>
 </div><!-- fragment --><p><code>stop</code> is the index of the first element <b>after</b> the end of the view.</p>
 <p><code>i</code> is the row index</p>
-<h2><a class="anchor" id="autotoc_md23"></a>
+<h2><a class="anchor" id="autotoc_md24"></a>
 Column vector</h2>
 <p>There is a similar API for columns.</p>
 <p>Let's set the odd elements of columns 3 to <code>5.0f</code>:</p>
 <div class="fragment"><div class="line">result.col&lt;2&gt;(2,1) = 5.0f;</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md24"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md25"></a>
 MatrixView</h1>
 <p>It is also possible to create a virtual matrix : a view onto a subset of the matrix.</p>
 <p>Let's add the bottom right corner of the matrix to itself:</p>
@@ -189,7 +189,7 @@ MatrixView</h1>
 </div><!-- fragment --><p>You specify the row start and row end, then column start and column end.</p>
 <p>Note that the end is the first index <b>after</b> the end of your rows or columns.</p>
 <p>No stride is supported for matrix view in this version of the library.</p>
-<h1><a class="anchor" id="autotoc_md25"></a>
+<h1><a class="anchor" id="autotoc_md26"></a>
 Matrix operations</h1>
 <p>In addition to the vector operations <code>+</code>,<code>-</code> and <code>*</code>, matrixes are supporting more operations:</p>
 <ul>
@@ -199,23 +199,23 @@ Matrix operations</h1>
 <li><code>tranpose</code> to create the transposed matrix</li>
 <li><code>outer</code> for the outer product of two vectors</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md26"></a>
+<h2><a class="anchor" id="autotoc_md27"></a>
 dot</h2>
 <div class="fragment"><div class="line">result = dot(a,b);</div>
 </div><!-- fragment --><p>The compiler may use the move semantic to copy the temporary result of the <code>dot</code> function to <code>result</code>.</p>
 <p>In this case, no copy would occur and <code>result</code> after the assignment would be a vector allocated by <code>dot</code> so using the <code>TMP_ALLOC</code> .</p>
-<h2><a class="anchor" id="autotoc_md27"></a>
+<h2><a class="anchor" id="autotoc_md28"></a>
 diagonal</h2>
 <div class="fragment"><div class="line">result = Matrix&lt;float32_t,ROWS,COLS&gt;::diagonal(c);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md28"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md29"></a>
 identity</h2>
 <div class="fragment"><div class="line">result = Matrix&lt;float32_t,ROWS,COLS&gt;::identity();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md29"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md30"></a>
 transpose</h2>
 <div class="fragment"><div class="line">result = a.transpose();</div>
 </div><!-- fragment --><p>or</p>
 <div class="fragment"><div class="line">transposeTo(result,a);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md30"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md31"></a>
 outer product</h2>
 <div class="fragment"><div class="line">result = outer(c,c);</div>
 </div><!-- fragment --> </div></div><!-- contents -->

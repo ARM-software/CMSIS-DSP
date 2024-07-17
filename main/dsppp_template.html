@@ -132,7 +132,7 @@ $(document).ready(function(){initNavTree('dsppp_template.html',''); initResizabl
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_src_template"></a> </p>
-<h1><a class="anchor" id="autotoc_md7"></a>
+<h1><a class="anchor" id="autotoc_md8"></a>
 What is a template useful for ?</h1>
 <p>In CMSIS-DSP, you have functions like:</p>
 <ul>
@@ -148,7 +148,7 @@ What is a template useful for ?</h1>
 <p>The generic <code>arm_add</code> source code is a template used to generate different implementations. It is like a code generator.</p>
 <p>And if the compiler is unable to generate an implementation because the type variable <code>T</code> is replaced by a type with no addition operator, then it would be detected by the compiler.</p>
 <p>Note that in C++, you can also use overloading of functions. They'll use the same name (but different arguments) but they won't share the same source code.</p>
-<h1><a class="anchor" id="autotoc_md8"></a>
+<h1><a class="anchor" id="autotoc_md9"></a>
 Templates for datatypes</h1>
 <p>C++ templates also apply to structs and classes.</p>
 <p>For instance, we could have a template <code>Vector&lt;T&gt;</code> and thus different types <code>Vector&lt;float32_t&gt;</code>, <code>Vector&lt;Q15&gt;</code> ...</p>
@@ -156,16 +156,16 @@ Templates for datatypes</h1>
 <p>For instance, one could have a type <code>Vector&lt;float32_t,10&gt;</code> for a vector of <code>float</code> and of length <code>10</code>. The length being known at build time.</p>
 <p>The types <code>Vector&lt;float32_t,10&gt;</code> and <code>Vector&lt;float32_t,5&gt;</code> should be considered as different types because they have different lengths. The length is part of the type.</p>
 <p>What we said above for code generation applies. For a template algorithm using any kind of vector, the compiler would generate different code for different vector types. The code for a template algorithm using <code>Vector&lt;float32_t,10&gt;</code> would be different from the code for <code>Vector&lt;float32_t,5&gt;</code> because those two types are different.</p>
-<h1><a class="anchor" id="autotoc_md9"></a>
+<h1><a class="anchor" id="autotoc_md10"></a>
 Implicit parameters</h1>
 <p>A template can also have implicit parameters.</p>
 <p>For instance one could use <code>Vector&lt;float32_t&gt;</code> or <code>Vector&lt;float32_t,10&gt;</code>.</p>
 <p>In the first case, the length is an implicit parameter with a default value and it is equivalent to writing <code>Vector&lt;float32_t,DYNAMIC&gt;</code> where <code>DYNAMIC</code> could be a special value (negative for instance) used to tell the compiler that the length of the vector is not known at build time but only at runtime.</p>
 <p>Both variants may use totally different implementations. The <code>DYNAMIC</code> variant may contain a <code>length</code> field in the <code>struct</code> definition whereas other variants do not need this field since the length is known at build time.</p>
-<h1><a class="anchor" id="autotoc_md10"></a>
+<h1><a class="anchor" id="autotoc_md11"></a>
 How to use templates ?</h1>
 <p>A template is just a C++ header. You only need to include this header to start using the template. There is nothing to build.</p>
-<h1><a class="anchor" id="autotoc_md11"></a>
+<h1><a class="anchor" id="autotoc_md12"></a>
 Example</h1>
 <p>Now you can look at an <a class="el" href="dsppp_vector_example.html">example with vector operations</a> showing how to use the library </p>
 </div></div><!-- contents -->

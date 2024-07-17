@@ -169,6 +169,13 @@ Experimental C++ template extension</h2>
 <h1><a class="anchor" id="using"></a>
 Using the CMSIS-DSP Library</h1>
 <p>The library is released in source form. It is strongly advised to compile the library using <code>-Ofast</code> optimization to have the best performances.</p>
+<p>Following options should be avoided:</p>
+<ul>
+<li><code>-fno-builtin</code></li>
+<li><code>-ffreestanding</code> because it enables previous options</li>
+</ul>
+<p>The library is doing some type <a href="https://en.wikipedia.org/wiki/Type_punning">punning</a> to process word 32 from memory as a pair of <code>q15</code> or a quadruple of <code>q7</code>. Those type manipulations are done through <code>memcpy</code> functions. Most compilers should be able to optimize out those function calls when the length to copy is small (4 bytes).</p>
+<p>This optimization will <b>not</b> occur when <code>-fno-builtin</code> is used and it will have a <b>very bad</b> impact on the performances.</p>
 <p>The library functions are declared in the public file <code>Include/arm_math.h</code>. Simply include this file to use the CMSIS-DSP library. If you don't want to include everything, you can also rely on individual header files from the <code>Include/dsp/</code> folder and include only those that are needed in the project.</p>
 <h1><a class="anchor" id="example"></a>
 Examples</h1>
@@ -196,10 +203,8 @@ Access to CMSIS-DSP</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyLeft">📂 Source   </td><td class="markdownTableBodyLeft">Source files    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft">📂 dsppp   </td><td class="markdownTableBodyLeft">Experimental C++ teamplate extension    </td></tr>
-<tr class="markdownTableRowEven">
 <td class="markdownTableBodyLeft">📄 ARM.CMSIS-DSP.pdsc   </td><td class="markdownTableBodyLeft">CMSIS-Pack description file    </td></tr>
-<tr class="markdownTableRowOdd">
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyLeft">📄 LICENSE   </td><td class="markdownTableBodyLeft">License Agreement (Apache 2.0)   </td></tr>
 </table>
 <p>See <a href="https://arm-software.github.io/CMSIS_6/">CMSIS Documentation</a> for an overview of CMSIS software components, tools and specifications.</p>
@@ -270,10 +275,15 @@ Code size</h1>
 <p>They have been removed.</p>
 <p>Constant tables can use a lot of read only memory but the linker can remove the unused functions and constant tables if it can deduce that those tables or functions are not used.</p>
 <p>For this you need to use the right initialization functions in the library and the right options for the linker (they are compiler dependent).</p>
-<p>For all transforms functions (CFFT, RFFT ...) instead of using a generic initialization function that works for all lengths (like <code>arm_cff_init_f32</code>), use a dedicated initialization function for a specific size (like <code>arm_cfft_init_1024_f32</code>).</p>
+<p>For all transforms functions (CFFT, RFFT ...) instead of using a generic initialization function that works for all lengths (like <code>arm_cfft_init_f32</code>), use a dedicated initialization function for a specific size (like <code>arm_cfft_init_1024_f32</code>).</p>
 <p>By using the right initialization function, you're telling the linker what is really used.</p>
 <p>If you use a generic function, the linker cannot deduce the used lengths and thus will keep all the constant tables required for each length.</p>
 <p>Then you need to use the right options for the compiler so that the unused tables and functions are removed. It is compiler dependent but generally the options are named like <code>-ffunction-sections</code>, <code>-fdata-sections</code>, <code>--gc-sections</code> ...</p>
+<h1><a class="anchor" id="autotoc_md5"></a>
+Variations between the architectures</h1>
+<p>Some algorithms may give slightlty different results on different architectures (like M0 or M4/M7 or M55). It is a tradeoff made for speed reasons and to make best use of the different instruction sets.</p>
+<p>All algorithms are compared with a double precision reference and the different versions (for different architectures) have the same characteristics when compared to the double precision (SNR bound, max bound for sample error ...)</p>
+<p>As consequence, the small differences that may exists between the different architecture implementations should be too small to have any practical consequences.</p>
 <h1><a class="anchor" id="license"></a>
 License</h1>
 <p>The CMSIS-DSP is provided free of charge under the <a href="https://raw.githubusercontent.com/ARM-software/CMSIS-DSP/main/LICENSE">Apache 2.0 License</a>. </p>

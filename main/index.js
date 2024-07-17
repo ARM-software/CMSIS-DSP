@@ -11,5 +11,6 @@ var index =
     [ "Access to CMSIS-DSP", "index.html#pack", null ],
     [ "Preprocessor Macros", "index.html#preprocessor", null ],
     [ "Code size", "index.html#autotoc_md4", null ],
+    [ "Variations between the architectures", "index.html#autotoc_md5", null ],
     [ "License", "index.html#license", null ]
 ];
