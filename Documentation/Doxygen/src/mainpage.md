@@ -46,6 +46,16 @@ More documentation about the @ref dsppp_main "DSP++" extension.
 
 The library is released in source form. It is strongly advised to compile the library using `-Ofast` optimization to have the best performances.
 
+Following options should be avoided:
+
+* `-fno-builtin`
+* `-ffreestanding` because it enables previous options
+
+The library is doing some type [punning](https://en.wikipedia.org/wiki/Type_punning) to process word 32 from memory as a pair of `q15` or a quadruple of `q7`.  Those type manipulations are done through `memcpy` functions. Most compilers should be able to optimize out those function calls when the length to copy is small (4 bytes).
+
+This optimization will **not** occur when `-fno-builtin` is used and it will have a **very bad** impact on the performances.
+
+
 The library functions are declared in the public file `Include/arm_math.h`. Simply include this file to use the CMSIS-DSP library. If you don't want to include everything, you can also rely on individual header files from the `Include/dsp/` folder and include only those that are needed in the project.
 
 ## Examples {#example}
@@ -70,7 +80,6 @@ The table below explains the content of **ARM::CMSIS-DSP** pack.
  📂 Include                            | Include files for using and building the lib
  📂 PrivateInclude                     | Private include files for building the lib
  📂 Source                             | Source files
- 📂 dsppp                              | Experimental C++ teamplate extension
  📄 ARM.CMSIS-DSP.pdsc                 | CMSIS-Pack description file
  📄 LICENSE                            | License Agreement (Apache 2.0)
 
@@ -138,13 +147,23 @@ Constant tables can use a lot of read only memory but the linker can remove the 
 
 For this you need to use the right initialization functions in the library and the right options for the linker (they are compiler dependent).
 
-For all transforms functions (CFFT, RFFT ...) instead of using a generic initialization function that works for all lengths (like `arm_cff_init_f32`), use a dedicated initialization function for a specific size (like `arm_cfft_init_1024_f32`).
+For all transforms functions (CFFT, RFFT ...) instead of using a generic initialization function that works for all lengths (like `arm_cfft_init_f32`), use a dedicated initialization function for a specific size (like `arm_cfft_init_1024_f32`).
 
 By using the right initialization function, you're telling the linker what is really used.
 
 If you use a generic function, the linker cannot deduce the used lengths and thus will keep all the constant tables required for each length.
 
 Then you need to use the right options for the compiler so that the unused tables and functions are removed. It is compiler dependent but generally the options are named like `-ffunction-sections`, `-fdata-sections`, `--gc-sections` ...
+
+## Variations between the architectures
+
+Some algorithms may give slightlty different results on different architectures (like M0 or M4/M7 or M55). It is a tradeoff made for speed reasons and to make best use of the different instruction sets.
+
+All algorithms are compared with a double precision reference and the different versions (for different architectures) have the same characteristics when compared to the double precision (SNR bound, max bound for sample error ...) 
+
+As consequence, the small differences that may exists between the different architecture implementations should be too small to have any practical consequences.
+
+
 
 ## License {#license}
 
