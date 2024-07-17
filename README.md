@@ -263,12 +263,6 @@ Other folders are part of different projects, tests or examples.
 * Scripts:
   * Debugging scripts
   * Script to generate some coefficient tables used by CMSIS-DSP
-* Compute Graph:
-  * Not needed to build CMSIS-DSP. This project is relying on CMSIS-DSP library
-  * Examples for the Compute Graph
-  * C++ templates for the Compute Graph
-  * Default (and optional) nodes
-  
 * Source:
   * CMSIS-DSP source
 * Testing:
@@ -284,9 +278,3 @@ Some files are needed to generate the PythonWrapper:
 * MANIFEST.in
 * pyproject.toml
 * setup.py
-
-And we have a script to make it easier to customize the build:
-
-* cmsisdspconfig.py:
-  * Web browser UI to generate build configurations (temporary until the CMSIS-DSP configuration is reworked to be simpler and more maintainable)
-
