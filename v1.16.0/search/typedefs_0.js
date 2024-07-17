@@ -1,0 +1,4 @@
+var searchData=
+[
+  ['accumulator_0',['accumulator',['../group__GenericDoubleNumber.html#a0bbe27ede4e373cb8dbe97fae9ea9db0',1,'number_traits&lt; double &gt;::accumulator()'],['../group__GenericFloatNumber.html#a7975ef80ce1e2a471e5a59129dcc705a',1,'number_traits&lt; float &gt;::accumulator()'],['../group__GenericTUPLENumber.html#a6ddf5d8b0b530318dcc5b330775a7d95',1,'number_traits&lt; std::tuple&lt; E... &gt; &gt;::accumulator()'],['../group__GenericHalfNumber.html#abcdb1f86d2e9c500c8203cc607766b00',1,'number_traits&lt; float16_t &gt;::accumulator()'],['../group__GenericQ15Number.html#a08c5ca411f83dd18746260721f1782eb',1,'number_traits&lt; Q15 &gt;::accumulator()'],['../group__GenericQ31Number.html#ad9fbed5d4f41babc7698af277ddff4ca',1,'number_traits&lt; Q31 &gt;::accumulator()'],['../group__GenericQ7Number.html#a11afc18b08766b3e9348591798333164',1,'number_traits&lt; Q7 &gt;::accumulator()']]]
+];

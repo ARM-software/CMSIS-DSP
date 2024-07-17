@@ -1,0 +1,36 @@
+var group__FUSION =
+[
+    [ "_Expr< T >", "group__FUSION.html#structarm__cmsis__dsp_1_1__Expr", [
+      [ "columns", "group__FUSION.html#a2407bc5c02d16073944b9eab16179c5a", null ],
+      [ "derived", "group__FUSION.html#a14eb873a3c94c910d97d7d5dc469a85c", null ],
+      [ "derived", "group__FUSION.html#a74e98b8e607f5ef000a6d75c6b3e0c03", null ],
+      [ "length", "group__FUSION.html#af2c51a1ca28b1c0c68aa24cbbda8d091", null ],
+      [ "matrix_op", "group__FUSION.html#a6b1af4850aca22b40d2769d4e07b9793", null ],
+      [ "matrix_op_tail", "group__FUSION.html#a0c23b31f84f27a18ee4a34e31534058d", null ],
+      [ "operator()", "group__FUSION.html#afcb859e301fbde747fc476ff7b5bf8fd", null ],
+      [ "operator[]", "group__FUSION.html#a6d5e7941c2aa2b4bd07a4186b7bf5290", null ],
+      [ "rows", "group__FUSION.html#abbc70838051cf545ac3b19f0eceba75c", null ],
+      [ "vector_op", "group__FUSION.html#a87d103b353abd756454367af97d98805", null ],
+      [ "vector_op_tail", "group__FUSION.html#a8c96bda91c2818ac500e643a08fd5430", null ]
+    ] ],
+    [ "_Binary< LHS, RHS, DerivedOp >", "group__FUSION.html#structarm__cmsis__dsp_1_1__Binary", null ],
+    [ "_Unary< LHS, DerivedOp >", "group__FUSION.html#structarm__cmsis__dsp_1_1__Unary", null ],
+    [ "_UnaryOperator< Scalar, Derived >", "group__FUSION.html#struct__UnaryOperator", null ],
+    [ "_BinaryOperator< Scalar, Derived >", "group__FUSION.html#struct__BinaryOperator", null ],
+    [ "_AddOp< Scalar >", "group__FUSION.html#struct__AddOp", null ],
+    [ "_SubOp< Scalar >", "group__FUSION.html#struct__SubOp", null ],
+    [ "_MulOp< Scalar >", "group__FUSION.html#struct__MulOp", null ],
+    [ "_NegOp< Scalar >", "group__FUSION.html#struct__NegOp", null ],
+    [ "_NoOp< Scalar >", "group__FUSION.html#struct__NoOp", null ],
+    [ "arm_cmsis_dsp::dot", "group__FUSION.html#ga33724358c41f7bf00015fb1297232b31", null ],
+    [ "arm_cmsis_dsp::has_predicate_inst", "group__FUSION.html#ga5cbfe80069a65eebf82f8b1b8e9ae86e", null ],
+    [ "arm_cmsis_dsp::has_vector_inst", "group__FUSION.html#ga29fc0caca6b223e2b108fd18f696b276", null ],
+    [ "arm_cmsis_dsp::is_only_vector", "group__FUSION.html#gad3bbb6d52dc030dd2adcf61f232689a7", null ],
+    [ "arm_cmsis_dsp::is_scalar", "group__FUSION.html#ga0e33c869f88a709094c90f6f9f0bcd5a", null ],
+    [ "arm_cmsis_dsp::must_use_matrix_idx", "group__FUSION.html#ga5cde8a194003dbc98c300f76989492aa", null ],
+    [ "arm_cmsis_dsp::must_use_matrix_idx_pair", "group__FUSION.html#gabd6c4626892c6496eb44f2111d71ddf5", null ],
+    [ "arm_cmsis_dsp::same_static_length", "group__FUSION.html#ga0d7636d950aa0638b9a6532e4814b22d", null ],
+    [ "arm_cmsis_dsp::static_length", "group__FUSION.html#ga5e94654d3f1f670867fb8957577396dc", null ],
+    [ "arm_cmsis_dsp::swap", "group__FUSION.html#ga6075eb8ee82582f275e7e166f9293fb9", null ],
+    [ "arm_cmsis_dsp::vector_idx_pair", "group__FUSION.html#gac46de68e57bd3e7c10bc879645583d6c", null ]
+];
