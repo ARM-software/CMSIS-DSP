@@ -60,6 +60,13 @@ def is_error(res,test_name,err):
         return(True)
     return(False)
 
+def has_test_error(msg):
+    lines = msg.splitlines()
+    for l in lines:
+        if re.search(r'Error',l) or re.search(r'failed',l):
+            return True
+    return False
+
 def run(args,mustPrint=False,dumpStdErr=True,timeout=20,printCmd=False):
     global ERROR_OCCURED
     global DEBUG
@@ -67,7 +74,7 @@ def run(args,mustPrint=False,dumpStdErr=True,timeout=20,printCmd=False):
         if DEBUG or printCmd:
             print(" ".join(args))
         result=subprocess.run(args,text=True,capture_output=True,timeout=timeout)
-        if result.returncode !=0 :
+        if result.returncode !=0 or has_test_error(result.stdout):
              ERROR_OCCURED = True
              if dumpStdErr:
                 return(Result(result.stderr + "\n\nSTDOUT:\n\n" + result.stdout,error=True))
@@ -92,6 +99,7 @@ parser.add_argument('-d', action='store_true', help="Dry run")
 parser.add_argument('-g', nargs='?',type = str, default="AC6",help="AC6 / CLANG / GCC")
 parser.add_argument('-u', nargs='?',type = str, default="L85986697A",help="Debug UUID")
 parser.add_argument('-t', action='store_true', help="Enable test mode")
+parser.add_argument('-r', action='store_true', help="No full rebuild")
 parser.add_argument('-avh', nargs='?',type = str, default="C:/Keil_v5/ARM/avh-fvp/bin/models", help="AVH folder")
 
 args = parser.parse_args()
@@ -200,8 +208,8 @@ MODE = ["STATIC_TEST",
         ]
 
 # Restricted tests for debugging
-#TESTS=["FUSION_TEST"]
-#DATATYPES=["Q15_DT"]
+#TESTS=["VECTOR_TEST"]
+#DATATYPES=["COMPLEX_F32_DT"]
 #MODE = ["STATIC_TEST"]
 
 all_tests = list(itertools.product(TESTS,DATATYPES,MODE))
@@ -243,14 +251,14 @@ HEADER = f"""#ifndef TEST_CONFIG_H
 def out_path():
     return(os.path.join("cprj","out","test",target_name(),"Release","test"+ ext))
 
-def configure_and_build_test(test_name,test,err,subtest,first):
+def configure_and_build_test(args,test_name,test,err,subtest,first):
     if subtest is not None:
         subteststr = f"#define SUBTEST{subtest}"
     else:
         subteststr = ""
     with open("test_config.h","w") as c:
         print(HEADER % (test + (subteststr,)),file=c)
-    if first:
+    if first and not args.r:
        res = run(["cbuild"] + cmd_args() + ["-r","--update-rte"],timeout=600,printCmd=True)
     else:
        res = run(["cbuild"] +cmd_args(),timeout=600,printCmd=True)
@@ -344,7 +352,7 @@ def runMPS3(test_name,test,err,subtest):
     if not is_error(res,test_name,err):
        process_result(test_name,test,res.msg,subtest)
    
-def runATest(test,file_err,nb,NB_MAX,current_nb_axf,nb_axf,first=True,subtest=None):
+def runATest(args,test,file_err,nb,NB_MAX,current_nb_axf,nb_axf,first=True,subtest=None):
     global DEBUG
     if subtest is not None:
        maxsub = SUBTESTS[test[0]]
@@ -356,7 +364,7 @@ def runATest(test,file_err,nb,NB_MAX,current_nb_axf,nb_axf,first=True,subtest=No
     if args.d:
         return
     printSubTitle("Configure and build")
-    if configure_and_build_test(test_name,test,file_err,subtest,first):
+    if configure_and_build_test(args,test_name,test,file_err,subtest,first):
         printSubTitle("Run")
         if args.p == "VHT":
             runVHT(test_name,test,file_err,subtest)
@@ -405,11 +413,11 @@ with open(os.path.join(results(),f"errors_{args.c}.txt"),"w") as err:
             if test[0] in SUBTESTS:
                 for subtestnbb in range(SUBTESTS[test[0]]):
                     if not args.b or not is_only_test(test,subtestnbb+1):
-                       runATest(test,err,nb,NB_MAX,current_axf,nb_axf,first,subtestnbb+1)
+                       runATest(args,test,err,nb,NB_MAX,current_axf,nb_axf,first,subtestnbb+1)
                        current_axf = current_axf + 1
                        first = False
             else:
-                runATest(test,err,nb,NB_MAX,current_axf,nb_axf,first)
+                runATest(args,test,err,nb,NB_MAX,current_axf,nb_axf,first)
                 current_axf = current_axf + 1
                 first = False
             nb = nb + 1
