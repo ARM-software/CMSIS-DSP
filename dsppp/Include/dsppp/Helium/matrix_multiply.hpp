@@ -89,6 +89,8 @@ __STATIC_INLINE void _dot_m_m(const MA&pSrcA,const MB&pSrcB,
     using T = typename traits<MA>::Scalar;
     using ACC = typename vector_traits<T>::temp_accumulator;
     using VEC = typename vector_traits<T>::vector;
+    using C = typename number_traits<T>::compute_type;
+
     constexpr int nb_lanes = vector_traits<T>::nb_lanes;
 
     T  *pInB = pSrcB.ptr();        /* input data matrix pointer B */
@@ -105,7 +107,7 @@ __STATIC_INLINE void _dot_m_m(const MA&pSrcA,const MB&pSrcB,
     if(numRowsA == numColsB && numColsB == numColsA) {
         if (numRowsA == 1)
         {
-           pDst(0,0)= pSrcA(0,0) * pSrcB(0,0);
+           pDst(0,0)= (C)pSrcA(0,0) * (C)pSrcB(0,0);
            return;
         }
         else if(numRowsA == 2)

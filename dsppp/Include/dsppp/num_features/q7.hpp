@@ -35,6 +35,9 @@ struct number_traits<Q7>
 
    //! Compute type
    typedef Q7 compute_type;
+
+   //! Display type for printf 
+   typedef Q7 display_type;
 };
 
 /**

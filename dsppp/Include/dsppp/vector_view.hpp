@@ -403,11 +403,12 @@ VectorView& operator=(VectorView&& other)  = delete;
     * 
     */
   friend std::ostream& operator<< (std::ostream& stream, const VectorView<T,stride>& other) {
+        using DT = typename number_traits<T>::display_type;
         constexpr int nb = 10;
         int i=0;
         for(index_t k=0;k<other.length();k++)
         {
-           stream << other[k] << " , ";
+           stream << (DT)other[k] << " , ";
            i++;
            if(i==nb)
            {
@@ -860,11 +861,12 @@ VectorView& operator=(VectorView&& other)  = delete;
     * 
     */
   friend std::ostream& operator<< (std::ostream& stream, const VectorView<T,DYNAMIC>& other) {
+        using DT = typename number_traits<T>::display_type;
         constexpr int nb = 10;
         int i=0;
         for(index_t k=0;k<other.length();k++)
         {
-           stream << other[k] << " , ";
+           stream << (DT)other[k] << " , ";
            i++;
            if(i==nb)
            {

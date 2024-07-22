@@ -4,7 +4,7 @@ extern "C" {
 
 #include "allocator.h"
 
-
+#include <complex>
 #include <dsppp/arch.hpp>
 #include <dsppp/fixed_point.hpp>
 #include <dsppp/matrix.hpp>
@@ -55,6 +55,51 @@ static void test()
    if (!validate(res.const_ptr(),ref.const_ptr(),NB))
    {
       printf("add failed \r\n");
+   }
+
+   std::cout << "=====\r\n";
+}
+
+template<typename T,int NB>
+static void test_mult()
+{
+   std::cout << "----\r\n" << "N = " << NB << "\r\n";
+   #if defined(STATIC_TEST)
+   PVector<T,NB> a;
+   PVector<T,NB> b;
+   #else 
+   PVector<T> a(NB);
+   PVector<T> b(NB);
+   #endif
+
+   init_array(a,NB);
+   init_array(b,NB);
+
+
+   INIT_SYSTICK;
+   START_CYCLE_MEASUREMENT;
+   startSectionNB(1);
+   #if defined(STATIC_TEST)
+   PVector<T,NB> res = a * b;
+   #else 
+   PVector<T> res = copy(a * b);
+   #endif
+   stopSectionNB(1);
+   STOP_CYCLE_MEASUREMENT;
+
+   INIT_SYSTICK
+   START_CYCLE_MEASUREMENT;
+   #if defined(STATIC_TEST)
+   PVector<T,NB> ref;
+   #else
+   PVector<T> ref(NB);
+   #endif
+   cmsisdsp_mult(a.const_ptr(),b.const_ptr(),ref.ptr(),NB);
+   STOP_CYCLE_MEASUREMENT;
+
+   if (!validate(res.const_ptr(),ref.const_ptr(),NB))
+   {
+      printf("mult failed \r\n");
    }
 
    std::cout << "=====\r\n";
@@ -161,6 +206,29 @@ void all_vector_test()
     test<T,nb_loops+1>();
     test<T,nb_loops+nb_tails>();
 
+    title<T>("Vector Mult");
+
+    // For benchmarks
+    test_mult<T,NBVEC_4>();
+    test_mult<T,NBVEC_8>();
+    test_mult<T,NBVEC_9>();
+    test_mult<T,NBVEC_16>();
+    test_mult<T,NBVEC_32>();
+    test_mult<T,NBVEC_64>();
+    test_mult<T,NBVEC_128>();
+    test_mult<T,NBVEC_256>();
+    test_mult<T,NBVEC_258>();
+    test_mult<T,NBVEC_512>();
+    test_mult<T,NBVEC_1024>();
+    test_mult<T,NBVEC_2048>();
+
+    // For tests
+    test_mult<T,1>();
+    test_mult<T,nb_tails>();
+    test_mult<T,nb_loops>();
+    test_mult<T,nb_loops+1>();
+    test_mult<T,nb_loops+nb_tails>();
+
 
     title<T>("Vector View");
 
@@ -197,23 +265,36 @@ void all_vector_test()
 void vector_test()
 {
 #if defined(VECTOR_TEST)
+
+   #if defined(COMPLEX_F64_DT)
+   all_vector_test<std::complex<double>>();
+   #endif
    #if defined(F64_DT)
    all_vector_test<double>();
+   #endif
+
+   #if defined(COMPLEX_F32_DT)
+   all_vector_test<std::complex<float>>();
    #endif
    #if defined(F32_DT)
    all_vector_test<float>();
    #endif
+
    #if defined(F16_DT) && !defined(DISABLEFLOAT16)
    all_vector_test<float16_t>();
    #endif
+
    #if defined(Q31_DT)
    all_vector_test<Q31>();
    #endif
+
    #if defined(Q15_DT)
    all_vector_test<Q15>();
    #endif
+
    #if defined(Q7_DT)
    all_vector_test<Q7>();
    #endif
+
 #endif
 }

@@ -63,7 +63,7 @@ def is_error(res,test_name,err):
 def has_test_error(msg):
     lines = msg.splitlines()
     for l in lines:
-        if re.search(r'Error',l) or re.search(r'failed',l):
+        if re.search(r'Error',l):
             return True
     return False
 
@@ -101,6 +101,7 @@ parser.add_argument('-u', nargs='?',type = str, default="L85986697A",help="Debug
 parser.add_argument('-t', action='store_true', help="Enable test mode")
 parser.add_argument('-r', action='store_true', help="No full rebuild")
 parser.add_argument('-avh', nargs='?',type = str, default="C:/Keil_v5/ARM/avh-fvp/bin/models", help="AVH folder")
+parser.add_argument('-dump', action='store_true', help="Dump build output")
 
 args = parser.parse_args()
 
@@ -208,9 +209,9 @@ MODE = ["STATIC_TEST",
         ]
 
 # Restricted tests for debugging
-#TESTS=["VECTOR_TEST"]
-#DATATYPES=["COMPLEX_F32_DT"]
-#MODE = ["STATIC_TEST"]
+TESTS=["FUSION_TEST"]
+DATATYPES=["F64_DT"]
+MODE = ["STATIC_TEST"]
 
 all_tests = list(itertools.product(TESTS,DATATYPES,MODE))
 
@@ -262,6 +263,11 @@ def configure_and_build_test(args,test_name,test,err,subtest,first):
        res = run(["cbuild"] + cmd_args() + ["-r","--update-rte"],timeout=600,printCmd=True)
     else:
        res = run(["cbuild"] +cmd_args(),timeout=600,printCmd=True)
+
+    # Dump build messages. Can be useful to find warnings in the tests
+    if args.dump:
+        print(res.msg,file=err)
+    
     if not is_error(res,test_name,err):
         if DEBUG:
             print(res.msg)

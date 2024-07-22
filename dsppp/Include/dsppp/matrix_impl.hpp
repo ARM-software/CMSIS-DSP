@@ -347,10 +347,11 @@ struct Matrix:Vector<P,R*C,Allocator>
     * 
     */
    friend std::ostream& operator<< (std::ostream& stream, const Matrix& other) {
+        using DT = typename number_traits<P>::display_type;
         int c=0;
         for(index_t k=0;k<other.length();k++)
         {
-           stream << other[k] << " , ";
+           stream << (DT)other[k] << " , ";
            c++;
            if (c == other.columns())
            {
@@ -739,10 +740,11 @@ struct Matrix<P,DYNAMIC,DYNAMIC,Allocator>:Vector<P,DYNAMIC,Allocator>
     * 
     */
    friend std::ostream& operator<< (std::ostream& stream, const Matrix& other) {
+        using DT = typename number_traits<P>::display_type;
         int c=0;
         for(index_t k=0;k<other.length();k++)
         {
-           stream << other[k] << " , ";
+           stream << (DT)other[k] << " , ";
            c++;
            if (c == other.columns())
            {

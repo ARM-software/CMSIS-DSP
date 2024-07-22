@@ -38,6 +38,9 @@ struct number_traits<float16_t>
 
    //! Compute datatype
    typedef _Float16 compute_type;
+
+   //! Display type for printf 
+   typedef float display_type;
 };
 
 

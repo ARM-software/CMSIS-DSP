@@ -2,20 +2,21 @@
 /** @file */ 
 #pragma once 
 
+
 /** \addtogroup GenericNumber Scalar number definitions
  *  \ingroup NUMBER
  *  @{
- *  \addtogroup GenericDoubleNumber Double
+ *  \addtogroup GenericComplexDoubleNumber Complex Double
  *  \ingroup GenericNumber
  *  @{
  */
 
 
 /**
- * @brief      Features for double
+ * @brief      Features for complex double
  */
 template<>
-struct number_traits<double>
+struct number_traits<std::complex<double>>
 {
    //! It is a float number
    static constexpr bool is_float = true;
@@ -24,20 +25,17 @@ struct number_traits<double>
    static constexpr bool is_fixed = false;
 
    //! Accumulator datatype for this scalar datatype
-   typedef double accumulator;
+   typedef std::complex<double> accumulator;
 
    /**
     * @brief      One for this datatype
     *
     * @return     Return 1 representation for this datatype
     */
-   static constexpr double one() {return 1.0;};
+   static constexpr std::complex<double> one() {return std::complex<double>(1.0,0.0);};
 
    //! Compute datatype for this scalar datatype
-   typedef double compute_type;
-
-   //! Display type for printf 
-   typedef double display_type;
+   typedef std::complex<double> compute_type;
 };
 
 /**
@@ -46,17 +44,17 @@ struct number_traits<double>
  * @tparam     arch  Current architecture
  */
 template<typename arch>
-struct vector_traits<double,arch,void> {
+struct vector_traits<std::complex<double>,arch,void> {
 
   /**
    * Scalar datatype
    */
-  typedef double type;
+  typedef std::complex<double> type;
 
   /**
    * Storage datatype
    */
-  typedef double storage_type;
+  typedef std::complex<double> storage_type;
 
   // No vector type but must still be defined
 
@@ -103,7 +101,7 @@ namespace inner {
     *
     * @return     Accumulator value converted to current datatype
     */
- __STATIC_FORCEINLINE double from_accumulator(const double a)
+ __STATIC_FORCEINLINE std::complex<double> from_accumulator(const std::complex<double>& a)
   {
      return(a);
   };
@@ -117,7 +115,9 @@ namespace inner {
  *
  * @return     Return acc + a*b
  */
-  __STATIC_FORCEINLINE double mac(const double acc,const double a,const double b)
+  __STATIC_FORCEINLINE std::complex<double> mac(const std::complex<double>& acc,
+                                                const std::complex<double>& a,
+                                                const std::complex<double>& b)
   {
      return(acc+a*b);
   };
@@ -128,7 +128,8 @@ namespace inner {
  * @param      a     Accumulator
  * @param[in]  b     VAlue to be added
  */
-  __STATIC_FORCEINLINE void accumulate(double &a,const double &b)
+  __STATIC_FORCEINLINE void accumulate(std::complex<double> &a,
+                                       const std::complex<double> &b)
 {
    a += b;
 }
@@ -141,7 +142,8 @@ namespace inner {
  *
  * @return     Return a*b
  */
-__STATIC_FORCEINLINE double mult(const double &a,const double &b)
+__STATIC_FORCEINLINE std::complex<double> mult(const std::complex<double> &a,
+                                               const std::complex<double> &b)
 {
    return(a*b);
 }

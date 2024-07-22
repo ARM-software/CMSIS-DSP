@@ -31,6 +31,9 @@ struct number_traits<Q31>
 
    //! Compute type
    typedef Q31 compute_type;
+
+   //! Display type for printf 
+   typedef Q31 display_type;
 };
 
 /**

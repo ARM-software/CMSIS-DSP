@@ -105,11 +105,13 @@ struct Vector_Base {
     * 
     */
     friend std::ostream& operator<< (std::ostream& stream, const Vector_Base<P>& other) {
+        using DT = typename number_traits<P>::display_type;
         constexpr int nb = 10;
         int i=0;
+
         for(index_t k=0;k<other.length();k++)
         {
-           stream << other[k] << " , ";
+           stream << (DT)other[k] << " , ";
            i++;
            if(i==nb)
            {

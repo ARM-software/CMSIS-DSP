@@ -4,6 +4,7 @@
 
 #include "fixed_point.hpp"
 #include <type_traits>
+#include <complex>
 
 #include "arm_math_types.h"
 
@@ -142,12 +143,20 @@ vmacc_p
 
 
 // Common to all architectures
+#include "num_features/complex_double.hpp"
 #include "num_features/double.hpp"
+
+#include "num_features/complex_float.hpp"
 #include "num_features/float.hpp"
+
 #include "num_features/half.hpp"
+
 #include "num_features/q31.hpp"
+
 #include "num_features/q15.hpp"
+
 #include "num_features/q7.hpp"
+
 
 // Specific for some architecture
 //#include <Scalar/num_features>

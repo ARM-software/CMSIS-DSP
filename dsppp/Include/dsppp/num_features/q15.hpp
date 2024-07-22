@@ -30,6 +30,9 @@ struct number_traits<Q15>
    static constexpr Q15 one() {return Q15::one();};
    //! Compute type
    typedef Q15 compute_type;
+
+   //! Display type for printf 
+   typedef Q15 display_type;
 };
 
 /**

@@ -243,11 +243,12 @@ struct MatrixView
     * 
     */
   friend std::ostream& operator<< (std::ostream& stream, const MatrixView& other) {
+        using DT = typename number_traits<T>::display_type;
         for(index_t row=0;row<other.rows();row++)
         {
            for(index_t col=0;col<other.columns();col++)
            {
-                stream << other(row,col)<< " , ";
+                stream << (DT)other(row,col)<< " , ";
            }
            stream << "\r\n";
         }
@@ -724,11 +725,12 @@ struct MatrixView<T,DYNAMIC>
     * 
     */
   friend std::ostream& operator<< (std::ostream& stream, const MatrixView& other) {
+        using DT = typename number_traits<T>::display_type;
         for(index_t row=0;row<other.rows();row++)
         {
            for(index_t col=0;col<other.columns();col++)
            {
-                stream << other(row,col)<< " , ";
+                stream << (DT)other(row,col)<< " , ";
            }
            stream << "\r\n";
         }
@@ -1213,11 +1215,12 @@ struct MatrixView<T,CONSTRAINED_DYNAMIC>:VectorView<T,1>
     * 
     */
   friend std::ostream& operator<< (std::ostream& stream, const MatrixView& other) {
+        using DT = typename number_traits<T>::display_type;
         for(index_t row=0;row<other.rows();row++)
         {
            for(index_t col=0;col<other.columns();col++)
            {
-                stream << other(row,col)<< " , ";
+                stream << (DT)other(row,col)<< " , ";
            }
            stream << "\r\n";
         }
