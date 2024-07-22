@@ -75,7 +75,6 @@ static void test_mult()
    init_array(a,NB);
    init_array(b,NB);
 
-
    INIT_SYSTICK;
    START_CYCLE_MEASUREMENT;
    startSectionNB(1);
@@ -97,7 +96,19 @@ static void test_mult()
    cmsisdsp_mult(a.const_ptr(),b.const_ptr(),ref.ptr(),NB);
    STOP_CYCLE_MEASUREMENT;
 
-   if (!validate(res.const_ptr(),ref.const_ptr(),NB))
+   if constexpr ((std::is_same<T,std::complex<Q15>>::value)
+                || (std::is_same<T,std::complex<Q31>>::value))
+   {
+      // Cmplx versions have 2 bits of fractional bit removed
+      for(int i=0;i<NB;i++)
+      {
+         res[i] = T(res[i].real().v >> 2,res[i].imag().v>>2);
+      }
+   }
+
+   if (!validate(res.const_ptr(),ref.const_ptr(),NB,
+      ErrT<T>::abs_error,
+      ErrT<T>::rel_error))
    {
       printf("mult failed \r\n");
    }
@@ -209,18 +220,24 @@ void all_vector_test()
     title<T>("Vector Mult");
 
     // For benchmarks
-    test_mult<T,NBVEC_4>();
-    test_mult<T,NBVEC_8>();
-    test_mult<T,NBVEC_9>();
-    test_mult<T,NBVEC_16>();
-    test_mult<T,NBVEC_32>();
-    test_mult<T,NBVEC_64>();
-    test_mult<T,NBVEC_128>();
-    test_mult<T,NBVEC_256>();
-    test_mult<T,NBVEC_258>();
-    test_mult<T,NBVEC_512>();
-    test_mult<T,NBVEC_1024>();
-    test_mult<T,NBVEC_2048>();
+    if constexpr (!std::is_same<T,std::complex<Q7>>::value)
+    {
+       test_mult<T,NBVEC_4>();
+       test_mult<T,NBVEC_8>();
+       test_mult<T,NBVEC_9>();
+       test_mult<T,NBVEC_16>();
+       test_mult<T,NBVEC_32>();
+       test_mult<T,NBVEC_64>();
+       test_mult<T,NBVEC_128>();
+       test_mult<T,NBVEC_256>();
+       //if constexpr (!std::is_same<T,std::complex<float16_t>>::value)
+       {
+           test_mult<T,NBVEC_258>();
+           test_mult<T,NBVEC_512>();
+           test_mult<T,NBVEC_1024>();
+           test_mult<T,NBVEC_2048>();
+       }
+    }
 
     // For tests
     test_mult<T,1>();
@@ -228,7 +245,7 @@ void all_vector_test()
     test_mult<T,nb_loops>();
     test_mult<T,nb_loops+1>();
     test_mult<T,nb_loops+nb_tails>();
-
+    
 
     title<T>("Vector View");
 
@@ -280,16 +297,32 @@ void vector_test()
    all_vector_test<float>();
    #endif
 
+   #if defined(COMPLEX_F16_DT) && !defined(DISABLEFLOAT16)
+   all_vector_test<std::complex<float16_t>>();
+   #endif
+
    #if defined(F16_DT) && !defined(DISABLEFLOAT16)
    all_vector_test<float16_t>();
+   #endif
+
+   #if defined(COMPLEX_Q31_DT)
+   all_vector_test<std::complex<Q31>>();
    #endif
 
    #if defined(Q31_DT)
    all_vector_test<Q31>();
    #endif
 
+   #if defined(COMPLEX_Q15_DT)
+   all_vector_test<std::complex<Q15>>();
+   #endif
+
    #if defined(Q15_DT)
    all_vector_test<Q15>();
+   #endif
+
+   #if defined(COMPLEX_Q7_DT)
+   all_vector_test<std::complex<Q7>>();
    #endif
 
    #if defined(Q7_DT)

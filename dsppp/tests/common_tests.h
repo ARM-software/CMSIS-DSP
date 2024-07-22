@@ -36,11 +36,13 @@ struct Display<const float16_t>
 #endif
 
 static float myabs(double a) {return (float)abs(a);};
-static float myabs(std::complex<double> a) {return (float)std::abs(a);};
+static float myabs(const std::complex<double> &a) {return (float)std::abs(a);};
+static float myabs(const std::complex<float> &a) {return (float)std::abs(a);};
 static float myabs(float a) {return (float)fabs(a);};
 
 
 #if !defined(DISABLEFLOAT16)
+static float myabs(const std::complex<float16_t>& a) {return (float)std::abs(a);};
 static float myabs(float16_t a) {return (float)fabs((float)a);};
 #endif
 
@@ -127,6 +129,17 @@ void init_array(Vector<std::complex<float>,L,A> &pDst,std::size_t nb)
 #if !defined(DISABLEFLOAT16)
 template<int L,
          template<int> typename A>
+void init_array(Vector<std::complex<float16_t>,L,A> &pDst,std::size_t nb)
+{
+   for(std::size_t i=0;i<nb;i++)
+   {
+      // Scaled down to prevent saturations in the tests
+      pDst[i] = std::complex<float16_t>(i*0.001,i*0.001*0.5);
+   }
+}
+
+template<int L,
+         template<int> typename A>
 void init_array(Vector<float16_t,L,A> &pDst,std::size_t nb)
 {
    for(std::size_t i=0;i<nb;i++)
@@ -136,6 +149,36 @@ void init_array(Vector<float16_t,L,A> &pDst,std::size_t nb)
    }
 }
 #endif
+
+template<int L,
+         template<int> typename A>
+void init_array(Vector<std::complex<Q31>,L,A> &pDst,std::size_t nb)
+{
+   for(std::size_t i=0;i<nb;i++)
+   {
+      pDst[i] = std::complex<Q31>(Q31(i),Q31(i>>1));
+   }
+}
+
+template<int L,
+         template<int> typename A>
+void init_array(Vector<std::complex<Q15>,L,A> &pDst,std::size_t nb)
+{
+   for(std::size_t i=0;i<nb;i++)
+   {
+      pDst[i] = std::complex<Q15>(Q15(i),Q15(i>>1));
+   }
+}
+
+template<int L,
+         template<int> typename A>
+void init_array(Vector<std::complex<Q7>,L,A> &pDst,std::size_t nb)
+{
+   for(std::size_t i=0;i<nb;i++)
+   {
+      pDst[i] = std::complex<Q7>(Q7(i),Q7(i>>1));
+   }
+}
 
 template<typename T>
 void init_array(Vector_Base<T> &pDst,std::size_t nb)

@@ -4,6 +4,8 @@
 
 #include <cstdint>
 #include "arch.hpp"
+#include <complex>
+#include <cmath>
 #include <cstdlib>
 
 #include <type_traits>
@@ -1774,7 +1776,93 @@ constexpr Q15 operator ""_q15(long double x){return Q15(Q15::convert((float)x));
  * 
  */
 constexpr Q7 operator ""_q7(long double x){return Q7(Q7::convert((float)x));}
+}
 
+namespace std {
+
+template<int M,int F,bool S>
+class complex<arm_cmsis_dsp::Q<M,F,S>>
+{
+
+public:
+    typedef arm_cmsis_dsp::Q<M,F,S> value_type;
+    using integer = typename value_type::value_type;
+private:
+  value_type __re_;
+  value_type __im_;
+public:
+    constexpr complex(const value_type& re = value_type(), const value_type& im = value_type())
+    : __re_(re), __im_(im) {};
+
+    /* Create complex from raw ints */
+    constexpr explicit complex(const integer& re = integer{}, const integer& im = integer{})
+    : __re_(value_type(re)), __im_(value_type(im)) {};
+
+    template<class X> constexpr complex(const complex<X>& __c)
+    : __re_(__c.real()), __im_(__c.imag()) {};
+
+    constexpr value_type real() const { return __re_; }
+    constexpr value_type imag() const { return __im_; }
+
+    constexpr void real(value_type __re) { __re_ = __re; }
+    constexpr void imag(value_type __im) { __im_ = __im; }
+
+
+    constexpr complex& operator=(const value_type& __re) {
+      __re_ = __re;
+      __im_ = value_type();
+      return *this;
+    }
+
+    constexpr complex& operator+=(const value_type& __re) {
+       __re_ += __re;
+       return *this;
+     }
+
+    constexpr complex& operator-=(const value_type& __re) {
+    __re_ -= __re;
+    return *this;
+  }
+
+  constexpr complex& operator*=(const value_type& __re) {
+    __re_ *= __re;
+    __im_ *= __re;
+    return *this;
+  }
+  
+
+  template <class _Xp>
+  constexpr complex& operator=(const complex<_Xp>& __c) {
+    __re_ = __c.real();
+    __im_ = __c.imag();
+    return *this;
+  }
+  template <class _Xp>
+  constexpr complex& operator+=(const complex<_Xp>& __c) {
+    __re_ += __c.real();
+    __im_ += __c.imag();
+    return *this;
+  }
+  template <class _Xp>
+  constexpr complex& operator-=(const complex<_Xp>& __c) {
+    __re_ -= __c.real();
+    __im_ -= __c.imag();
+    return *this;
+  }
+  template <class _Xp>
+  constexpr complex& operator*=(const complex<_Xp>& __c) {
+    *this = *this * complex(__c.real(), __c.imag());
+    return *this;
+  }
+
+
+};
+
+
+
+}
+
+namespace arm_cmsis_dsp {
 
 /**
  * @brief Multiplication of two fixed point numbers A and B
@@ -1818,6 +1906,16 @@ inline Q< MA+MB+1 , FA+FB,SA || SB> mult(const Q<MA,FA,SA> &a,
     return(Q<MA+MB+1,FA+FB,SA || SB>(res));
 }
 
+template<int M,int F,bool S>
+inline std::complex<Q< M+M+1 , F+F,S>> 
+       mult(const std::complex<Q<M,F,S>> &a,
+            const std::complex<Q<M,F,S>> &b)
+{
+  Q< M+M+1 , F+F,S> re,im;
+  re = mult(a.real(),b.real()) - mult(a.imag(),b.imag());
+  im = mult(a.real(),b.imag()) + mult(a.imag(),b.real());
+  return(std::complex<Q< M+M+1 , F+F,S>>(re,im));
+}
 
 /**
  * @brief Add two fixed point numbers with saturation
@@ -1970,6 +2068,16 @@ inline Q<MD,F,true> saturate(const Q<MS,F,true> &src,
     return(Q<MD,F,true>(__SSAT(src.v, MD+F+1)));
 }
 
+template<int MD=0,int MS,int F>
+inline std::complex<Q<MD,F,true>> saturate(const std::complex<Q<MS,F,true>> &src,
+                             typename std::enable_if<(MD < MS) && ((MD+F)<31)>::type* = nullptr)
+{
+    return(std::complex<Q<MD,F,true>>(
+      __SSAT(src.real().v, MD+F+1),__SSAT(src.imag().v, MD+F+1)
+      )
+    );
+}
+
 
 /**
  * @brief Saturate an unsigned fixed point number
@@ -1992,6 +2100,13 @@ inline Q<MD,F,false> saturate(const Q<MS,F,false> &src,typename std::enable_if<(
     return(Q<MD,F,false>(__USAT(src.v, MD+F+1)));
 }
 
+template<int MD=0,int MS,int F>
+inline std::complex<Q<MD,F,false>> saturate(const std::complex<Q<MS,F,false>> &src,typename std::enable_if<(MD < MS) && ((MD+F)<31)>::type* = nullptr)
+{
+    return(std::complex<Q<MD,F,false>>(
+      __USAT(src.real().v, MD+F+1),__USAT(src.imag().v, MD+F+1)
+      ));
+}
 
 template<int M,int FD,int FS,bool S,bool = true>
 struct FixedCastShift {};
@@ -2056,6 +2171,15 @@ inline Q<M,FD,S> toFrac(const Q<M,FS,S> &src)
     return(FixedCastShift<M,FD,FS,S>::shift(src));
 }
 
+template<int FD,int M,int FS,bool S>
+inline std::complex<Q<M,FD,S>> toFrac(const std::complex<Q<M,FS,S>> &src)
+{
+    Q<M,FD,S> re,im;
+    re = FixedCastShift<M,FD,FS,S>::shift(src.real());
+    im = FixedCastShift<M,FD,FS,S>::shift(src.imag());
+
+    return(std::complex<Q<M,FD,S>>(re,im));
+}
 
 /**
  * @brief Accumulation without saturation
@@ -2112,6 +2236,17 @@ template<int MD,int MS,int F,bool S>
 inline Q<MD,F,S> accumulate(const Q<MD,F,S> &a,const Q<MS,F,S> &b)
 {
    return(Accumulate<MD,MS,F,S,(MD>MS)>::acc(a,b));
+}
+
+template<int MD,int MS,int F,bool S>
+inline std::complex<Q<MD,F,S>> accumulate(const std::complex<Q<MD,F,S>> &a,
+                                          const std::complex<Q<MS,F,S>> &b)
+{
+   Q<MD,F,S> re,im;
+   re = accumulate(a.real(),b.real());
+   im = accumulate(a.imag(),b.imag());
+
+   return(std::complex<Q<MD,F,S>>(re,im));
 }
 
 
@@ -2301,3 +2436,40 @@ inline Q<M,F,S> operator+(const Q<M,F,S> &a)
 /*! @} */
 
 }
+
+namespace std {
+  template<int M,int F,bool S>
+constexpr complex<arm_cmsis_dsp::Q<M,F,S>>
+operator*(const complex<arm_cmsis_dsp::Q<M,F,S>>& __z, const complex<arm_cmsis_dsp::Q<M,F,S>>& __w) 
+{
+  arm_cmsis_dsp::Q<M,F,S> __a = __z.real();
+  arm_cmsis_dsp::Q<M,F,S> __b = __z.imag();
+  arm_cmsis_dsp::Q<M,F,S> __c = __w.real();
+  arm_cmsis_dsp::Q<M,F,S> __d = __w.imag();
+
+  arm_cmsis_dsp::Q<M,F,S> re,im;
+
+  re = saturate(toFrac<F>(mult(__a,__c) - mult(__b,__d)));
+  im = saturate(toFrac<F>(mult(__a,__d) + mult(__b,__c)));
+
+  return(complex<arm_cmsis_dsp::Q<M,F,S>>(re,im));
+};
+
+static complex<arm_cmsis_dsp::Q31>
+operator*(const complex<arm_cmsis_dsp::Q31>& __z, const complex<arm_cmsis_dsp::Q31>& __w) 
+{
+  arm_cmsis_dsp::Q31 __a = __z.real();
+  arm_cmsis_dsp::Q31 __b = __z.imag();
+  arm_cmsis_dsp::Q31 __c = __w.real();
+  arm_cmsis_dsp::Q31 __d = __w.imag();
+
+  arm_cmsis_dsp::Q31::wider_type re{},im{};
+
+  re = toFrac<31>(mult(__a,__c) - mult(__b,__d)).v;
+  im = toFrac<31>(mult(__a,__d) + mult(__b,__c)).v;
+
+  return(complex<arm_cmsis_dsp::Q31>(re,im));
+};
+
+}
+

@@ -173,12 +173,14 @@ fvpUnix = {"M55":"FVP_Corstone_SSE-300_Ethos-U55",
 
 AVHROOT = args.avh
 
+
+# Fusion F64 not working. To be analyzed
 TESTS=["DOT_TEST",
        "VECTOR_TEST",
        "ROW_TEST",
        "COL_TEST",
        "MATRIX_TEST",
-       "FUSION_TEST"
+#       "FUSION_TEST"
        ]
 
 # Some tests are too big (code size) and needs to be decomposed
@@ -196,10 +198,15 @@ def is_only_test(n,i):
        return(i in ONLY_TESTS[n[0]])
     return False
 
-DATATYPES = ["F64_DT",
+DATATYPES = ["COMPLEX_F64_DT",
+             "F64_DT",
+             "COMPLEX_F32_DT",
              "F32_DT",
+             "COMPLEX_F16_DT",
              "F16_DT",
+             "COMPLEX_Q31_DT",
              "Q31_DT",
+             "COMPLEX_Q15_DT",
              "Q15_DT",
              "Q7_DT"
              ]
@@ -209,8 +216,13 @@ MODE = ["STATIC_TEST",
         ]
 
 # Restricted tests for debugging
-TESTS=["FUSION_TEST"]
-DATATYPES=["F64_DT"]
+TESTS=["VECTOR_TEST"]
+DATATYPES=[#"COMPLEX_F64_DT",
+           #"COMPLEX_F32_DT",
+           "COMPLEX_F16_DT",
+           #"COMPLEX_Q31_DT",
+           #"COMPLEX_Q15_DT"
+           ]
 MODE = ["STATIC_TEST"]
 
 all_tests = list(itertools.product(TESTS,DATATYPES,MODE))

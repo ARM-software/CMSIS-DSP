@@ -5,13 +5,13 @@
 /** \addtogroup GenericNumber 
  *  \ingroup NUMBER
  *  @{
- *  \addtogroup GenericFloatNumber Float
+ *  \addtogroup GenericComplexFloatNumber Complex Float
  *  \ingroup GenericNumber
  *  @{
  */
 
 /**
- * @brief      Features for float
+ * @brief      Features for complex float
  */
 template<>
 struct number_traits<std::complex<float>>
@@ -45,21 +45,18 @@ no vectors for float
 */
 
 /**
- * @brief      Vector instructions for float when no Helium or Neon
+ * @brief      Vector instructions for complex float when no Helium or Neon
  *
  * @tparam     arch  Current architecture
  */
 template<typename arch>
-struct vector_traits<std::complex<float>,arch,
-    typename std::enable_if<!std::is_base_of<Helium,arch>::value &&
-                            !std::is_base_of<Neon,arch>::value>::type> {
+struct vector_traits<std::complex<float>,arch,void> {
   
   //! Current type
   typedef std::complex<float> type;
 
   //! Current storage type
   typedef std::complex<float> storage_type;
-
   // No vector type but must still be defined
 
   //! Dummy type. Not used when no vector instructions

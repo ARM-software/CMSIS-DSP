@@ -5,8 +5,8 @@
 #define POOL_ALLOCATOR
 //#define ONLY_BENCHMARKS
 
-#define FUSION_TEST
-#define F64_DT
+#define VECTOR_TEST
+#define COMPLEX_F16_DT
 #define STATIC_TEST
 
 

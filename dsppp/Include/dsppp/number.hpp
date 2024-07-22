@@ -4,7 +4,6 @@
 
 #include "fixed_point.hpp"
 #include <type_traits>
-#include <complex>
 
 #include "arm_math_types.h"
 
@@ -149,12 +148,16 @@ vmacc_p
 #include "num_features/complex_float.hpp"
 #include "num_features/float.hpp"
 
+#include "num_features/complex_half.hpp"
 #include "num_features/half.hpp"
 
+#include "num_features/complex_q31.hpp"
 #include "num_features/q31.hpp"
 
+#include "num_features/complex_q15.hpp"
 #include "num_features/q15.hpp"
 
+#include "num_features/complex_q7.hpp"
 #include "num_features/q7.hpp"
 
 
