@@ -115,6 +115,15 @@ struct VecRef<float>
    };
 };
 
+template<>
+struct VecRef<std::complex<float>>
+{
+   typedef std::complex<float> type;
+   static type ref(const std::complex<float> a){
+      return(a);
+   };
+};
+
 #if defined(ARM_FLOAT16_SUPPORTED)
 template<>
 struct VecRef<float16_t>
@@ -124,6 +133,16 @@ struct VecRef<float16_t>
       return(a);
    };
 };
+
+template<>
+struct VecRef<std::complex<float16_t>>
+{
+   typedef std::complex<float16_t> type;
+   static type ref(const std::complex<float16_t> a){
+      return(a);
+   };
+};
+
 #endif
 
 template<>
@@ -131,6 +150,15 @@ struct VecRef<Q7>
 {
    typedef Q7 type;
    static type ref(const Q7 a){
+      return(a);
+   };
+};
+
+template<>
+struct VecRef<std::complex<Q7>>
+{
+   typedef std::complex<Q7> type;
+   static type ref(const std::complex<Q7> a){
       return(a);
    };
 };
@@ -145,6 +173,15 @@ struct VecRef<Q15>
 };
 
 template<>
+struct VecRef<std::complex<Q15>>
+{
+   typedef std::complex<Q15> type;
+   static type ref(const std::complex<Q15> a){
+      return(a);
+   };
+};
+
+template<>
 struct VecRef<Q31>
 {
    typedef Q31 type;
@@ -153,6 +190,14 @@ struct VecRef<Q31>
    };
 };
 
+template<>
+struct VecRef<std::complex<Q31>>
+{
+   typedef std::complex<Q31> type;
+   static type ref(const std::complex<Q31> a){
+      return(a);
+   };
+};
 
 template<typename T,int S>
 struct traits<VectorView<T,S>>
@@ -461,6 +506,24 @@ inline auto operator-(const LHS &a)
     return(_Unary<typename VecLHS::type,_NegOp<Scalar>>(VecLHS::ref(a),_NegOp<Scalar>()));
 };
 
+/**
+ * @brief  - operator for expressions
+ *
+ * @tparam LHS Left hand side datatype
+ * @param a Left hand side expression tree
+ * @return Expression representing the - vector
+ * 
+ * -vector (including matrix)
+ */
+template<typename LHS,
+typename std::enable_if<!is_scalar<LHS>(),bool>::type = true>
+inline auto conjugate(const LHS &a)
+{ 
+    using Scalar = typename traits<LHS>::Scalar;
+    using VecLHS = VecRef<LHS>;
+
+    return(_Unary<typename VecLHS::type,_ConjugateOp<Scalar>>(VecLHS::ref(a),_ConjugateOp<Scalar>()));
+};
 
 /**
  * @brief  Element wise multiplication operator for expressions

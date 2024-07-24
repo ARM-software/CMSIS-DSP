@@ -92,6 +92,18 @@ namespace inner {
        return(vqnegq_m(vuninitializedq_s32(),a,p0));
     };
 
+    __STATIC_FORCEINLINE int32x4_t vconjugate(const int32x4_t a)
+    {
+       return(a);
+    };
+
+    __STATIC_FORCEINLINE int32x4_t vconjugate(const int32x4_t a,
+                                        const mve_pred16_t p0)
+    {
+       (void)p0;
+       return(a);
+    };
+
     __STATIC_FORCEINLINE int32x4_t vadd(const int32x4_t a,const int32x4_t b)
     {
        return(vqaddq(a,b));

@@ -21,7 +21,7 @@ struct number_traits<std::complex<Q31>>
    //! Is fixed point
    static constexpr bool is_fixed = true;
    //! Accumulator datatype
-   typedef Q<15,48> accumulator;
+   typedef std::complex<Q<15,48>> accumulator;
    /**
     * @brief      One value
     *

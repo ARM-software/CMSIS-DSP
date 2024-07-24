@@ -216,12 +216,12 @@ MODE = ["STATIC_TEST",
         ]
 
 # Restricted tests for debugging
-TESTS=["VECTOR_TEST"]
-DATATYPES=[#"COMPLEX_F64_DT",
-           #"COMPLEX_F32_DT",
+TESTS=["MATRIX_TEST"]
+DATATYPES=["COMPLEX_F64_DT",
+           "COMPLEX_F32_DT",
            "COMPLEX_F16_DT",
-           #"COMPLEX_Q31_DT",
-           #"COMPLEX_Q15_DT"
+           "COMPLEX_Q31_DT",
+           "COMPLEX_Q15_DT"
            ]
 MODE = ["STATIC_TEST"]
 

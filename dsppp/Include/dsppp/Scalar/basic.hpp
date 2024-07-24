@@ -181,6 +181,9 @@ inline void eval2D(DA &v,
       }
 }
 
+// Some compilers are generating incorrect code when this value > 1
+#undef SCALAR_UNROLL
+#define SCALAR_UNROLL 1
 /**
  * @brief      Dot product evaluator for scalar architectuire
  *
@@ -223,6 +226,8 @@ inline DotResult<DA> _dot(const DA& a,
     return(acc);
 }
 
+#undef SCALAR_UNROLL
+#define SCALAR_UNROLL 2
 /**
  * @brief      Swap evaluator for scalar architecture
  *

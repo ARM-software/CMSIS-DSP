@@ -402,4 +402,48 @@ struct _NoOp:_UnaryOperator<Scalar,_NoOp<Scalar>>
 #endif
 };
 
+/**
+ * @brief  Conjugate operator
+ *
+ * @tparam Scalar Datatype for scalar
+ * 
+ */
+template<typename Scalar>
+struct _ConjugateOp:_UnaryOperator<Scalar,_ConjugateOp<Scalar>>
+{
+
+    template<typename T=Scalar,
+             typename std::enable_if<IsComplexNumber<T>::value,bool>::type = true>
+    Scalar const operator()(const Scalar lhs) const {
+        return(std::conj(lhs));
+    }
+
+    template<typename T=Scalar,
+             typename std::enable_if<!IsComplexNumber<T>::value,bool>::type = true>
+    Scalar const operator()(const Scalar lhs) const {
+        return(lhs);
+    }
+
+#if defined(HAS_VECTOR)
+
+    using Vector= typename vector_traits<Scalar>::vector ;
+    using pred_t = typename vector_traits<Scalar>::predicate_t;
+
+    Vector const operator()(const Vector lhs) const
+    {
+        return(inner::vconjugate(lhs));
+    }
+
+    template<typename T=Scalar,
+             typename std::enable_if<vector_traits<T>::has_predicate,bool>::type = true>
+    Vector const operator()(const Vector lhs,
+                            const pred_t p0) const
+    {
+        return(inner::vconjugate(lhs,p0));
+    }
+
+ 
+#endif
+};
+
 /*! @} */

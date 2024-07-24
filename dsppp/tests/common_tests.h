@@ -40,6 +40,38 @@ static float myabs(const std::complex<double> &a) {return (float)std::abs(a);};
 static float myabs(const std::complex<float> &a) {return (float)std::abs(a);};
 static float myabs(float a) {return (float)fabs(a);};
 
+static int myabs(Q31 a) 
+{
+   return _abs(a).v;
+};
+
+static int myabs(Q15 a) 
+{
+   return _abs(a).v;
+};
+
+static int myabs(Q7 a) 
+{
+   return _abs(a).v;
+};
+
+static int myabs(std::complex<Q31> a) 
+{
+   int r = _abs(a.real()).v+_abs(a.imag()).v;
+   return int(sqrt(1.0*r));
+};
+
+static int myabs(std::complex<Q15> a) 
+{
+   int r = _abs(a.real()).v+_abs(a.imag()).v;
+   return int(sqrt(1.0*r));
+};
+
+static int myabs(std::complex<Q7> a) 
+{
+   int r = _abs(a.real()).v+_abs(a.imag()).v;
+   return int(sqrt(1.0*r));
+};
 
 #if !defined(DISABLEFLOAT16)
 static float myabs(const std::complex<float16_t>& a) {return (float)std::abs(a);};
@@ -356,7 +388,7 @@ template<typename MA,typename MB,
          typename std::enable_if<
          HasMatrixIndexing<MA>::value && 
          HasMatrixIndexing<MB>::value &&
-         number_traits<typename ElementType<MA>::type>::is_fixed,bool>::type = true>
+         number_traits<typename ElementType<MA>::type>::is_fixed ,bool>::type = true>
 bool validate(const MA& a, const MB& b,float abser = ABS_ERROR, float reler = REL_ERROR)
 {
    (void)abser;
@@ -367,10 +399,10 @@ bool validate(const MA& a, const MB& b,float abser = ABS_ERROR, float reler = RE
    {
       for(index_t col=0;col < a.columns() ; col++)
       {
-         if (a(row,col).v != b(row,col).v)
+         if (a(row,col) != b(row,col))
          {
             std::cout << "Error at : (" << row << "," << col << ") ; res=" << (EA)a(row,col) << " ; ref=" << (EB)b(row,col) << "\r\n";
-            std::cout << "Error = " << abs(a(row,col).v - b(row,col).v) << "\r\n";
+            std::cout << "Error = " << myabs(a(row,col) - b(row,col)) << "\r\n";
             return(false);
          }
       }

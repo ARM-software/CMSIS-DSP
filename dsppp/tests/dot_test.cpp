@@ -20,7 +20,7 @@ extern "C" {
 
 
 template<typename T,int NB,typename O>
-static void complex_test(const T scale)
+static void complicated_test(const T scale)
 {
    std::cout << "----\r\n" << "N = " << NB << "\r\n";
    #if defined(STATIC_TEST)
@@ -121,6 +121,50 @@ static void test()
 
 }
 
+template<typename T,int NB,typename O>
+static void test_hermitian()
+{
+   std::cout << "----\r\n" << "N = " << NB << "\r\n";
+   #if defined(STATIC_TEST)
+   PVector<T,NB> a;
+   PVector<T,NB> b;
+
+   PVector<T,NB> res;
+   #else
+   PVector<T> a(NB);
+   PVector<T> b(NB);
+
+   PVector<T> res(NB);
+   #endif
+
+   init_array(a,NB);
+   init_array(b,NB);
+
+   INIT_SYSTICK;
+   START_CYCLE_MEASUREMENT;
+   startSectionNB(1);
+   O result = dot(a,conjugate(b));
+   stopSectionNB(1);
+   STOP_CYCLE_MEASUREMENT;
+
+
+   O ref;
+   // b modified by this call
+   INIT_SYSTICK;
+   START_CYCLE_MEASUREMENT;
+   cmsisdsp_hermitian(a.const_ptr(),b.ptr(),ref,NB);
+   STOP_CYCLE_MEASUREMENT;
+
+   if (!validate(result,ref))
+   {
+      printf("dot failed \r\n");
+
+   }
+
+   std::cout << "=====\r\n";
+
+}
+
 
 template<typename T>
 void all_dot_test()
@@ -157,32 +201,59 @@ void all_dot_test()
     test<T,nb_loops+1,ACC>();
     test<T,nb_loops+nb_tails,ACC>();
 
+    title<T>("Hermitian product");
 
-    title<T>("Dot product with expressions");
-
     
-    complex_test<T,NBVEC_4,ACC>(v);
-    complex_test<T,NBVEC_8,ACC>(v);
-    complex_test<T,NBVEC_9,ACC>(v);
-    complex_test<T,NBVEC_32,ACC>(v);
-    complex_test<T,NBVEC_64,ACC>(v);
-    complex_test<T,NBVEC_128,ACC>(v);
-    
-    complex_test<T,NBVEC_256,ACC>(v);
-    
-    complex_test<T,NBVEC_258,ACC>(v);
-    complex_test<T,NBVEC_512,ACC>(v);
-    complex_test<T,NBVEC_1024,ACC>(v);
-    if constexpr (!std::is_same<T,double>::value)
+    test_hermitian<T,NBVEC_4,ACC>();
+    test_hermitian<T,NBVEC_8,ACC>();
+    test_hermitian<T,NBVEC_9,ACC>();
+    test_hermitian<T,NBVEC_16,ACC>();
+    test_hermitian<T,NBVEC_32,ACC>();
+    test_hermitian<T,NBVEC_64,ACC>();
+    test_hermitian<T,NBVEC_128,ACC>();
+    test_hermitian<T,NBVEC_256,ACC>();
+    test_hermitian<T,NBVEC_258,ACC>();
+    test_hermitian<T,NBVEC_512,ACC>();
+    test_hermitian<T,NBVEC_1024,ACC>();
     {
-       complex_test<T,NBVEC_2048,ACC>(v);
+       test_hermitian<T,NBVEC_2048,ACC>();
     }
 
-    complex_test<T,1,ACC>(v);
-    complex_test<T,nb_tails,ACC>(v);
-    complex_test<T,nb_loops,ACC>(v);
-    complex_test<T,nb_loops+1,ACC>(v);
-    complex_test<T,nb_loops+nb_tails,ACC>(v);
+    test_hermitian<T,1,ACC>();
+    test_hermitian<T,nb_tails,ACC>();
+    test_hermitian<T,nb_loops,ACC>();
+    test_hermitian<T,nb_loops+1,ACC>();
+    test_hermitian<T,nb_loops+nb_tails,ACC>();
+
+
+    if constexpr (!IsComplexNumber<T>::value)
+    {
+       title<T>("Dot product with expressions");
+   
+       
+       complicated_test<T,NBVEC_4,ACC>(v);
+       complicated_test<T,NBVEC_8,ACC>(v);
+       complicated_test<T,NBVEC_9,ACC>(v);
+       complicated_test<T,NBVEC_32,ACC>(v);
+       complicated_test<T,NBVEC_64,ACC>(v);
+       complicated_test<T,NBVEC_128,ACC>(v);
+       
+       complicated_test<T,NBVEC_256,ACC>(v);
+       
+       complicated_test<T,NBVEC_258,ACC>(v);
+       complicated_test<T,NBVEC_512,ACC>(v);
+       complicated_test<T,NBVEC_1024,ACC>(v);
+       if constexpr (!std::is_same<T,double>::value)
+       {
+          complicated_test<T,NBVEC_2048,ACC>(v);
+       }
+   
+       complicated_test<T,1,ACC>(v);
+       complicated_test<T,nb_tails,ACC>(v);
+       complicated_test<T,nb_loops,ACC>(v);
+       complicated_test<T,nb_loops+1,ACC>(v);
+       complicated_test<T,nb_loops+nb_tails,ACC>(v);
+    }
 
     //print_map("Stats",max_stats);
 
@@ -190,24 +261,53 @@ void all_dot_test()
 
 void dot_test()
 {
+   
 #if defined(DOT_TEST)
+
+   // No f64 complex dot product in CMSIS-DSP
+
    #if defined(F64_DT)
    all_dot_test<double>();
    #endif
+
+   #if defined(COMPLEX_F32_DT)
+   all_dot_test<std::complex<float>>();
+   #endif
+
    #if defined(F32_DT)
    all_dot_test<float>();
    #endif
+
+   #if defined(COMPLEX_F16_DT) && !defined(DISABLEFLOAT16)
+   all_dot_test<float16_t>();
+   #endif
+
    #if defined(F16_DT) && !defined(DISABLEFLOAT16)
    all_dot_test<float16_t>();
    #endif
+
+   #if defined(COMPLEX_Q31_DT)
+   all_dot_test<Q31>();
+   #endif
+
    #if defined(Q31_DT)
    all_dot_test<Q31>();
    #endif
+
+   #if defined(COMPLEX_Q15_DT)
+   all_dot_test<Q15>();
+   #endif
+
    #if defined(Q15_DT)
    all_dot_test<Q15>();
    #endif
+
+   // No Q7 complex dot product in CMSIS-DSP
+
    #if defined(Q7_DT)
    all_dot_test<Q7>();
    #endif
+
 #endif
+
 }

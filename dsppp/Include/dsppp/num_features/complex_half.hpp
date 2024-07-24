@@ -43,7 +43,6 @@ struct number_traits<std::complex<float16_t>>
    typedef std::complex<float> display_type;
 };
 
-
 /**
  * @brief      float16 vector descrition when no vector architecture
  */

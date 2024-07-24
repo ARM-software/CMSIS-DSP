@@ -28,7 +28,7 @@
 #if defined(ARM_COMPUTE_DISABLE_UNROLL)
 #define UNROLL_LOOP _Pragma ("clang loop unroll(disable)")
 #else
-#define UNROLL_LOOP _Pragma("clang loop unroll_count(4)")
+#define UNROLL_LOOP _Pragma("clang loop unroll_count(2)")
 #endif
 
 #define DISABLE_LOOP_UNROLL _Pragma("clang loop unroll(disable)")

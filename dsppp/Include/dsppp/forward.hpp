@@ -141,6 +141,9 @@ template<typename T>
 struct ElementType;
 
 template<typename T>
+struct IsComplexNumber;
+
+template<typename T>
 struct HasStaticStride;
 
 template<typename T>

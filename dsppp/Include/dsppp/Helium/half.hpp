@@ -157,6 +157,33 @@ namespace inner {
   {
      return(vnegq_x(a,p0));
   };
+
+  /**
+   * @brief      Vector conjugate
+   *
+   * @param[in]  a     Vector
+   *
+   * @return     Conjugate of vector
+   */
+   __STATIC_FORCEINLINE float16x8_t vconjugate(const float16x8_t a)
+  {
+     return(a);
+  };
+
+  /**
+   * @brief      Vector conjugate with tail predicate
+   *
+   * @param[in]  a     Vector
+   * @param[in]  p0    Predicate
+   *
+   * @return     Conjugate of vector with tail predicate
+   */
+  __STATIC_FORCEINLINE float16x8_t vconjugate(const float16x8_t a,
+                                        const mve_pred16_t p0)
+  {
+     (void)p0;
+     return(a);
+  };
    
    /*
 

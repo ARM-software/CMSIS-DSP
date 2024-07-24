@@ -34,6 +34,9 @@ struct number_traits<std::complex<float>>
 
    //! Compute datatype for this scalar datatype
    typedef std::complex<float> compute_type;
+
+   //! Display type for printf 
+   typedef std::complex<float> display_type;
 };
 
 

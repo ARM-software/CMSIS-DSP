@@ -32,6 +32,13 @@ struct MatTestConstant<double>
 };
 
 template<>
+struct MatTestConstant<std::complex<float32_t>>
+{
+    constexpr static std::complex<float32_t> value{0.001f,0.002f};
+    constexpr static std::complex<float32_t> half{0.5f,0.0f};
+};
+
+template<>
 struct MatTestConstant<float32_t>
 {
     constexpr static float value = 0.001f;
@@ -40,13 +47,26 @@ struct MatTestConstant<float32_t>
 
 #if !defined(DISABLEFLOAT16)
 template<>
+struct MatTestConstant<std::complex<float16_t>>
+{
+    constexpr static std::complex<float16_t> value{(float16_t)0.001f,(float16_t)0.002f} ;
+    constexpr static std::complex<float16_t> half{(float16_t)0.5f,(float16_t)0.0f};
+};
+
+template<>
 struct MatTestConstant<float16_t>
 {
     constexpr static float16_t value = (float16_t)0.001f;
     constexpr static float16_t half = (float16_t)0.5f;
-
 };
 #endif
+
+template<>
+struct MatTestConstant<std::complex<Q7>>
+{
+    constexpr static std::complex<Q7> value{0.001_q7,0.002_q7};
+    constexpr static std::complex<Q7> half{0.5_q7,Q7{}};
+};
 
 template<>
 struct MatTestConstant<Q7>
@@ -56,10 +76,24 @@ struct MatTestConstant<Q7>
 };
 
 template<>
+struct MatTestConstant<std::complex<Q15>>
+{
+    constexpr static std::complex<Q15> value{0.001_q15,0.002_q15};
+    constexpr static std::complex<Q15> half{0.5_q15,Q15{}};
+};
+
+template<>
 struct MatTestConstant<Q15>
 {
     constexpr static Q15 value = 0.001_q15;
     constexpr static Q15 half = 0.5_q15;
+};
+
+template<>
+struct MatTestConstant<std::complex<Q31>>
+{
+    constexpr static std::complex<Q31> value{0.001_q31,0.002_q31};
+    constexpr static std::complex<Q31> half{0.5_q31,Q31{}};
 };
 
 template<>
@@ -121,12 +155,48 @@ struct ErrThreshold<float32_t>
    constexpr static float relerr_inv = 5.0e-6;
 };
 
+template<>
+struct ErrThreshold<std::complex<float32_t>>
+{
+   constexpr static float abserr = 4.0e-6;
+   constexpr static float relerr = 1.0e-6;
+   constexpr static float abserr_cholesky = 3e-4;
+   constexpr static float relerr_cholesky = 1e-4;
+
+   constexpr static float abserr_householder = ABS_ERROR;
+   constexpr static float relerr_householder = REL_ERROR;
+   constexpr static float abserr_qr = ABS_ERROR;
+   constexpr static float relerr_qr = REL_ERROR;
+
+   constexpr static float abserr_inv = 4.0e-6;
+   constexpr static float relerr_inv = 5.0e-6;
+};
+
 #if !defined(DISABLEFLOAT16)
 template<>
 struct ErrThreshold<float16_t>
 {
    constexpr static float abserr = ABS_ERROR;
    constexpr static float relerr = REL_ERROR;
+   constexpr static float abserr_cholesky = 2e-1;
+   constexpr static float relerr_cholesky = 2e-1;
+
+   constexpr static float abserr_householder = 2e-4;
+   constexpr static float relerr_householder = 2e-3;
+   // 32x32 is not numerically behaving well with
+   // the matrix used as input
+   constexpr static float abserr_qr = 2.0;
+   constexpr static float relerr_qr = 1e-2;
+
+   constexpr static float abserr_inv = 3e-2;
+   constexpr static float relerr_inv = 3e-2;
+};
+
+template<>
+struct ErrThreshold<std::complex<float16_t>>
+{
+   constexpr static float abserr = 2e-3;
+   constexpr static float relerr = 1e-2;
    constexpr static float abserr_cholesky = 2e-1;
    constexpr static float relerr_cholesky = 2e-1;
 
@@ -933,7 +1003,14 @@ void testmatmult()
 
    
    startSectionNB(2);
-   cmsis_mat_mult(&SA, &SB, &RES,reinterpret_cast<S*>(tmp.ptr()));
+   if constexpr (IsComplexNumber<T>::value)
+   {
+      cmsis_cmplx_mat_mult(&SA, &SB, &RES,reinterpret_cast<S*>(tmp.ptr()));
+   }
+   else 
+   {
+     cmsis_mat_mult(&SA, &SB, &RES,reinterpret_cast<S*>(tmp.ptr()));
+   }
    startSectionNB(2);
    STOP_CYCLE_MEASUREMENT;
 
@@ -1030,7 +1107,14 @@ void testsubmatmult()
    startSectionNB(2);
    cmsis_ma = copy(ma.sub(Slice(0,R),Slice(0,K)));
    cmsis_mb = copy(mb.sub(Slice(0,K),Slice(0,C)));
-   cmsis_mat_mult(&SA, &SB, &RES,reinterpret_cast<S*>(tmp.ptr()));
+   if constexpr (IsComplexNumber<T>::value)
+   {
+      cmsis_cmplx_mat_mult(&SA, &SB, &RES,reinterpret_cast<S*>(tmp.ptr()));
+   }
+   else 
+   {
+      cmsis_mat_mult(&SA, &SB, &RES,reinterpret_cast<S*>(tmp.ptr()));
+   }
    startSectionNB(2);
    STOP_CYCLE_MEASUREMENT;
 
@@ -1096,7 +1180,14 @@ void testmattranspose()
 
    
    startSectionNB(2);
-   cmsis_mat_trans(&SA, &RES);
+   if constexpr (IsComplexNumber<T>::value)
+   {
+     cmsis_cmplx_mat_trans(&SA, &RES);
+   }
+   else 
+   {
+     cmsis_mat_trans(&SA, &RES);
+   }
    startSectionNB(2);
    STOP_CYCLE_MEASUREMENT;
 
@@ -1698,34 +1789,40 @@ void matrix_all_test()
 
 #if defined(SUBTEST1)
       
-      title<T>("Householder");
-      testHouseholder<T,NBVEC_4>();
-      testHouseholder<T,NBVEC_16>();
-      testHouseholder<T,NBVEC_32>();
-
-      title<T>("QR");
-      testQR<T,NBVEC_4,NBVEC_4>();
-      testQR<T,NBVEC_16,NBVEC_16>();
-      testQR<T,NBVEC_32,NBVEC_32>();
-
-      title<T>("Cholesky");
-      testCholesky<T,NBVEC_4>();
-      testCholesky<T,NBVEC_16>();
-      if constexpr (!std::is_same<T,float16_t>::value)
+      if constexpr (!IsComplexNumber<T>::value)
       {
-         // sqrt of negative value gives a nan
-         // looks like fp16 not accurate enough for this test
-         // // to be investigated
-         testCholesky<T,NBVEC_32>();
+         title<T>("Householder");
+         testHouseholder<T,NBVEC_4>();
+         testHouseholder<T,NBVEC_16>();
+         testHouseholder<T,NBVEC_32>();
+   
+         title<T>("QR");
+         testQR<T,NBVEC_4,NBVEC_4>();
+         testQR<T,NBVEC_16,NBVEC_16>();
+         testQR<T,NBVEC_32,NBVEC_32>();
+   
+         title<T>("Cholesky");
+         testCholesky<T,NBVEC_4>();
+         testCholesky<T,NBVEC_16>();
+         if constexpr (!std::is_same<T,float16_t>::value)
+         {
+            // sqrt of negative value gives a nan
+            // looks like fp16 not accurate enough for this test
+            // // to be investigated
+            testCholesky<T,NBVEC_32>();
+         }
       }
 
 #endif
 
 #if defined(SUBTEST2)
-      title<T>("Matrix inverse");
-      testinv<T,NBVEC_4,NBVEC_4>();
-      testinv<T,NBVEC_8,NBVEC_8>();
-      testinv<T,NBVEC_16,NBVEC_16>();
+      if constexpr (!IsComplexNumber<T>::value)
+      {
+         title<T>("Matrix inverse");
+         testinv<T,NBVEC_4,NBVEC_4>();
+         testinv<T,NBVEC_8,NBVEC_8>();
+         testinv<T,NBVEC_16,NBVEC_16>();
+      }
 #endif
       
 
@@ -1746,6 +1843,8 @@ void matrix_all_test()
 
       if constexpr (!std::is_same<T,double>::value)
       {
+         if constexpr (!IsComplexNumber<T>::value)
+         {
 #if defined(SUBTEST1)
           title<T>("Matrix times vector");
     
@@ -1775,6 +1874,7 @@ void matrix_all_test()
           title<T>("Matrix times vector expression");
           ALL_TESTS<TESTCOMPLEXMATVEC,UNROLL,VEC>::all();
 #endif
+         }
       }
 
    if constexpr (!std::is_same<T,Q7>::value && !std::is_same<T,double>::value)
@@ -1857,18 +1957,39 @@ void matrix_test()
    #if defined(F64_DT)
    matrix_all_test<double>();
    #endif
+
+   #if defined(COMPLEX_F32_DT)
+   matrix_all_test<std::complex<float>>();
+   #endif
+
    #if defined(F32_DT)
    matrix_all_test<float>();
    #endif
+
+   #if defined(COMPLEX_F16_DT) && !defined(DISABLEFLOAT16)
+   matrix_all_test<std::complex<float16_t>>();
+   #endif
+
    #if defined(F16_DT) && !defined(DISABLEFLOAT16)
    matrix_all_test<float16_t>();
    #endif
+
+   #if defined(COMPLEX_Q31_DT)
+   matrix_all_test<std::complex<Q31>>();
+   #endif
+
    #if defined(Q31_DT)
    matrix_all_test<Q31>();
    #endif
+
+   #if defined(COMPLEX_Q15_DT)
+   matrix_all_test<std::complex<Q15>>();
+   #endif
+
    #if defined(Q15_DT)
    matrix_all_test<Q15>();
    #endif
+
    #if defined(Q7_DT)
    matrix_all_test<Q7>();
    #endif

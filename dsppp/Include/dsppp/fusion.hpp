@@ -70,6 +70,18 @@ struct ElementType
     typedef T type;
 };
 
+template<typename T>
+struct IsComplexNumber
+{
+    constexpr static bool value = false;
+};
+
+template<typename T>
+struct IsComplexNumber<std::complex<T>>
+{
+    constexpr static bool value = true;
+};
+
 
 template<typename A,typename B>
 using SameElementType=std::is_same<typename ElementType<A>::type,typename ElementType<B>::type>;

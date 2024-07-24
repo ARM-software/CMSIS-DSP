@@ -1795,7 +1795,7 @@ public:
     : __re_(re), __im_(im) {};
 
     /* Create complex from raw ints */
-    constexpr explicit complex(const integer& re = integer{}, const integer& im = integer{})
+    constexpr explicit complex(const integer& re, const integer& im)
     : __re_(value_type(re)), __im_(value_type(im)) {};
 
     template<class X> constexpr complex(const complex<X>& __c)

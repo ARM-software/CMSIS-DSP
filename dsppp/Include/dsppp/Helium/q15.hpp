@@ -129,6 +129,18 @@ namespace inner {
        return(vqnegq_m(vuninitializedq_s16(),a,p0));
     };
 
+    __STATIC_FORCEINLINE int16x8_t vconjugate(const int16x8_t a)
+    {
+       return(a);
+    };
+
+    __STATIC_FORCEINLINE int16x8_t vconjugate(const int16x8_t a,
+                                        const mve_pred16_t p0)
+    {
+       (void)p0;
+       return(a);
+    };
+
     __STATIC_FORCEINLINE int16x8_t vadd(const int16x8_t a,const int16x8_t b)
     {
        return(vqaddq(a,b));

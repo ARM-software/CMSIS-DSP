@@ -90,21 +90,47 @@ void all_col_test()
 void col_test()
 {
 #if defined(COL_TEST)
+   
    #if defined(F64_DT)
    all_col_test<double>();
    #endif
+
+   #if defined(COMPLEX_F32_DT)
+   all_col_test<std::complex<float>>();
+   #endif
+
    #if defined(F32_DT)
    all_col_test<float>();
    #endif
+
+   #if defined(COMPLEX_F16_DT) && !defined(DISABLEFLOAT16)
+   all_col_test<std::complex<float16_t>>();
+   #endif
+
    #if defined(F16_DT) && !defined(DISABLEFLOAT16)
    all_col_test<float16_t>();
    #endif
+
+   #if defined(COMPLEX_Q31_DT)
+   all_col_test<std::complex<Q31>>();
+   #endif
+
    #if defined(Q31_DT)
    all_col_test<Q31>();
    #endif
+
+   #if defined(COMPLEX_Q15_DT)
+   all_col_test<std::complex<Q15>>();
+   #endif
+
    #if defined(Q15_DT)
    all_col_test<Q15>();
    #endif
+
+   #if defined(COMPLEX_Q7_DT)
+   all_col_test<std::complex<Q7>>();
+   #endif
+
    #if defined(Q7_DT)
    all_col_test<Q7>();
    #endif
