@@ -54,6 +54,7 @@ struct _UnaryOperator{
 #endif
 };
 
+
 /**
  * @brief  Unary operator
  *
@@ -61,64 +62,65 @@ struct _UnaryOperator{
  * @tparam Derived Datatype representing the operator expression
  * 
  */
-template<typename Scalar,typename Derived>
+template<typename ScalarLHS,typename ScalarRHS,typename Derived>
 struct _BinaryOperator{
     Derived& derived()  {return(static_cast<Derived&>(*this));}
 
     Derived const& derived() const {return(static_cast<Derived const&>(*this));}
 
-    Scalar const operator()(const Scalar lhs, 
-                            const Scalar rhs) const
+    auto  operator()(const ScalarLHS lhs, 
+                     const ScalarRHS rhs) const
     {
         return(this->derived()(lhs,rhs));
     }
 
     #if defined(HAS_VECTOR)
-    using Vector= typename vector_traits<Scalar>::vector ;
-    using pred_t = typename vector_traits<Scalar>::predicate_t;
+    using VectorLHS = typename vector_traits<ScalarLHS>::vector ;
+    using VectorRHS = typename vector_traits<ScalarRHS>::vector ;
+    using pred_t = typename vector_traits<ScalarLHS>::predicate_t;
 
 
-    Vector const operator()(const Vector lhs, 
-                            const Vector rhs) const
+    auto  operator()(const VectorLHS lhs, 
+                     const VectorRHS rhs) const
     {
         return(this->derived()(lhs,rhs));
     }
 
-    Vector const operator()(const Vector lhs, 
-                            const Scalar rhs) const
+    auto  operator()(const VectorLHS lhs, 
+                     const ScalarRHS rhs) const
     {
         return(this->derived()(lhs,rhs));
     }
 
-    Vector const operator()(const Scalar lhs, 
-                            const Vector rhs) const
+    auto  operator()(const ScalarLHS lhs, 
+                     const VectorRHS rhs) const
     {
         return(this->derived()(lhs,rhs));
     }
 
     template<typename T=Scalar,
              typename std::enable_if<vector_traits<T>::has_predicate,bool>::type = true>
-    Vector const operator()(const Vector lhs, 
-                            const Vector rhs,
-                            const pred_t p0) const
+    auto  operator()(const VectorLHS lhs, 
+                     const VectorRHS rhs,
+                     const pred_t p0) const
     {
         return(this->derived()(lhs,rhs,p0));
     }
 
     template<typename T=Scalar,
              typename std::enable_if<vector_traits<T>::has_predicate,bool>::type = true>
-    Vector const operator()(const Vector lhs, 
-                            const Scalar rhs,
-                            const pred_t p0) const
+    auto  operator()(const VectorLHS lhs, 
+                     const ScalarRHS rhs,
+                     const pred_t p0) const
     {
         return(this->derived()(lhs,rhs,p0));
     }
 
     template<typename T=Scalar,
              typename std::enable_if<vector_traits<T>::has_predicate,bool>::type = true>
-    Vector const operator()(const Scalar lhs, 
-                            const Vector rhs,
-                            const pred_t p0) const
+    auto  operator()(const ScalarLHS lhs, 
+                     const VectorRHS rhs,
+                     const pred_t p0) const
     {
         return(this->derived()(lhs,rhs,p0));
     }
@@ -137,59 +139,60 @@ struct _BinaryOperator{
  * @tparam Scalar Datatype for scalar
  * 
  */
-template<typename Scalar>
-struct _AddOp:_BinaryOperator<Scalar,_AddOp<Scalar>>
+template<typename ScalarLHS,typename ScalarRHS>
+struct _AddOp:_BinaryOperator<ScalarLHS,ScalarRHS,_AddOp<ScalarLHS,ScalarRHS>>
 {
-    Scalar const operator()(const Scalar lhs, 
-                            const Scalar rhs) const {
+    auto  operator()(const ScalarLHS lhs, 
+                     const ScalarRHS rhs) const {
         return(lhs + rhs);
     }
 
 #if defined(HAS_VECTOR)
-    using Vector=typename vector_traits<Scalar>::vector ;
-    using pred_t = typename vector_traits<Scalar>::predicate_t;
+    using VectorLHS = typename vector_traits<ScalarLHS>::vector ;
+    using VectorRHS = typename vector_traits<ScalarRHS>::vector ;
+    using pred_t = typename vector_traits<ScalarLHS>::predicate_t;
 
-    Vector const operator()(const Vector lhs, 
-                            const Vector rhs) const
+    auto  operator()(const VectorLHS lhs, 
+                     const VectorRHS rhs) const
     {
         return(inner::vadd(lhs,rhs));
     }
 
-    Vector const operator()(const Vector lhs, 
-                            const Scalar rhs) const
+    auto  operator()(const VectorLHS lhs, 
+                     const ScalarRHS rhs) const
     {
         return(inner::vadd(lhs,rhs));
     }
 
-    Vector const operator()(const Scalar lhs, 
-                            const Vector rhs) const
+    auto  operator()(const ScalarLHS lhs, 
+                     const VectorRHS rhs) const
     {
         return(inner::vadd(lhs,rhs));
     }
 
-    template<typename T=Scalar,
+    template<typename T=ScalarLHS,
              typename std::enable_if<vector_traits<T>::has_predicate,bool>::type = true>
-    Vector const operator()(const Vector lhs, 
-                            const Vector rhs,
-                            const pred_t p0) const
+    auto  operator()(const VectorLHS lhs, 
+                     const VectorRHS rhs,
+                     const pred_t p0) const
     {
         return(inner::vadd(lhs,rhs,p0));
     }
 
-    template<typename T=Scalar,
+    template<typename T=ScalarLHS,
              typename std::enable_if<vector_traits<T>::has_predicate,bool>::type = true>
-    Vector const operator()(const Vector lhs, 
-                            const Scalar rhs,
-                            const pred_t p0) const
+    auto  operator()(const VectorLHS lhs, 
+                     const ScalarRHS rhs,
+                     const pred_t p0) const
     {
         return(inner::vadd(lhs,rhs,p0));
     }
 
-    template<typename T=Scalar,
+    template<typename T=ScalarLHS,
              typename std::enable_if<vector_traits<T>::has_predicate,bool>::type = true>
-    Vector const operator()(const Scalar lhs, 
-                            const Vector rhs,
-                            const pred_t p0) const
+    auto  operator()(const ScalarLHS lhs, 
+                     const VectorRHS rhs,
+                     const pred_t p0) const
     {
         return(inner::vadd(lhs,rhs,p0));
     }
@@ -202,59 +205,60 @@ struct _AddOp:_BinaryOperator<Scalar,_AddOp<Scalar>>
  * @tparam Scalar Datatype for scalar
  * 
  */
-template<typename Scalar>
-struct _SubOp:_BinaryOperator<Scalar,_SubOp<Scalar>>
+template<typename ScalarLHS, typename ScalarRHS>
+struct _SubOp:_BinaryOperator<ScalarLHS,ScalarRHS,_SubOp<ScalarLHS,ScalarRHS>>
 {
-    Scalar const operator()(const Scalar lhs, 
-                            const Scalar rhs) const {
+    auto  operator()(const ScalarLHS lhs, 
+                     const ScalarRHS rhs) const {
         return(lhs - rhs);
     }
 
 #if defined(HAS_VECTOR)
-    using Vector=typename vector_traits<Scalar>::vector ;
-    using pred_t = typename vector_traits<Scalar>::predicate_t;
+    using VectorLHS = typename vector_traits<ScalarLHS>::vector ;
+    using VectorRHS = typename vector_traits<ScalarRHS>::vector ;
+    using pred_t = typename vector_traits<ScalarLHS>::predicate_t;
 
-    Vector const operator()(const Vector lhs, 
-                            const Vector rhs) const
+    auto  operator()(const VectorLHS lhs, 
+                     const VectorRHS rhs) const
     {
         return(inner::vsub(lhs,rhs));
     }
 
-    Vector const operator()(const Vector lhs, 
-                            const Scalar rhs) const
+    auto  operator()(const VectorLHS lhs, 
+                     const ScalarRHS rhs) const
     {
         return(inner::vsub(lhs,rhs));
     }
 
-    Vector const operator()(const Scalar lhs, 
-                            const Vector rhs) const
+    auto  operator()(const ScalarLHS lhs, 
+                     const VectorRHS rhs) const
     {
         return(inner::vsub(lhs,rhs));
     }
 
-    template<typename T=Scalar,
+    template<typename T=ScalarLHS,
              typename std::enable_if<vector_traits<T>::has_predicate,bool>::type = true>
-    Vector const operator()(const Vector lhs, 
-                            const Vector rhs,
-                            const pred_t p0) const
+    auto  operator()(const VectorLHS lhs, 
+                     const VectorRHS rhs,
+                     const pred_t p0) const
     {
         return(inner::vsub(lhs,rhs,p0));
     }
 
-    template<typename T=Scalar,
+    template<typename T=ScalarLHS,
              typename std::enable_if<vector_traits<T>::has_predicate,bool>::type = true>
-    Vector const operator()(const Vector lhs, 
-                            const Scalar rhs,
-                            const pred_t p0) const
+    auto  operator()(const VectorLHS lhs, 
+                     const ScalarRHS rhs,
+                     const pred_t p0) const
     {
         return(inner::vsub(lhs,rhs,p0));
     }
 
-    template<typename T=Scalar,
+    template<typename T=ScalarLHS,
              typename std::enable_if<vector_traits<T>::has_predicate,bool>::type = true>
-    Vector const operator()(const Scalar lhs, 
-                            const Vector rhs,
-                            const pred_t p0) const
+    auto  operator()(const ScalarLHS lhs, 
+                     const VectorRHS rhs,
+                     const pred_t p0) const
     {
         return(inner::vsub(lhs,rhs,p0));
     }
@@ -268,59 +272,61 @@ struct _SubOp:_BinaryOperator<Scalar,_SubOp<Scalar>>
  * @tparam Scalar Datatype for scalar
  * 
  */
-template<typename Scalar>
-struct _MulOp:_BinaryOperator<Scalar,_MulOp<Scalar>>
+template<typename ScalarLHS,typename ScalarRHS>
+struct _MulOp:_BinaryOperator<ScalarLHS,ScalarRHS,_MulOp<ScalarLHS,ScalarRHS>>
 {
-    Scalar const operator()(const Scalar lhs, 
-                            const Scalar rhs) const {
+    auto  operator()(const ScalarLHS lhs, 
+                     const ScalarRHS rhs) const {
         return(lhs * rhs);
     }
 
 #if defined(HAS_VECTOR)
-    using Vector= typename vector_traits<Scalar>::vector ;
-    using pred_t = typename vector_traits<Scalar>::predicate_t;
+    using VectorLHS = typename vector_traits<ScalarLHS>::vector ;
+    using VectorRHS = typename vector_traits<ScalarRHS>::vector ;
 
-    Vector const operator()(const Vector lhs, 
-                            const Vector rhs) const
+    using pred_t = typename vector_traits<ScalarLHS>::predicate_t;
+
+    auto  operator()(const VectorLHS lhs, 
+                     const VectorRHS rhs) const
     {
         return(inner::vmul(lhs,rhs));
     }
 
-    Vector const operator()(const Vector lhs, 
-                            const Scalar rhs) const
+    auto operator()(const VectorLHS lhs, 
+                    const ScalarRHS rhs) const
     {
         return(inner::vmul(lhs,rhs));
     }
 
-    Vector const operator()(const Scalar lhs, 
-                            const Vector rhs) const
+    auto operator()(const ScalarLHS lhs, 
+                    const VectorRHS rhs) const
     {
         return(inner::vmul(lhs,rhs));
     }
 
-    template<typename T=Scalar,
+    template<typename T=ScalarLHS,
              typename std::enable_if<vector_traits<T>::has_predicate,bool>::type = true>
-    Vector const operator()(const Vector lhs, 
-                            const Vector rhs,
-                            const pred_t p0) const
+    auto operator()(const VectorLHS lhs, 
+                    const VectorRHS rhs,
+                    const pred_t p0) const
     {
         return(inner::vmul(lhs,rhs,p0));
     }
 
-    template<typename T=Scalar,
+    template<typename T=ScalarLHS,
              typename std::enable_if<vector_traits<T>::has_predicate,bool>::type = true>
-    Vector const operator()(const Vector lhs, 
-                            const Scalar rhs,
-                            const pred_t p0) const
+    auto  operator()(const VectorLHS lhs, 
+                     const ScalarRHS rhs,
+                     const pred_t p0) const
     {
         return(inner::vmul(lhs,rhs,p0));
     }
 
-    template<typename T=Scalar,
+    template<typename T=ScalarLHS,
              typename std::enable_if<vector_traits<T>::has_predicate,bool>::type = true>
-    Vector const operator()(const Scalar lhs, 
-                            const Vector rhs,
-                            const pred_t p0) const
+    auto  operator()(const ScalarLHS lhs, 
+                     const VectorRHS rhs,
+                     const pred_t p0) const
     {
         return(inner::vmul(lhs,rhs,p0));
     }

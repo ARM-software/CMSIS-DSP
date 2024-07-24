@@ -1798,6 +1798,9 @@ public:
     constexpr explicit complex(const integer& re, const integer& im)
     : __re_(value_type(re)), __im_(value_type(im)) {};
 
+    constexpr explicit complex(const integer& re)
+    : __re_(value_type(re)), __im_(value_type{}) {};
+
     template<class X> constexpr complex(const complex<X>& __c)
     : __re_(__c.real()), __im_(__c.imag()) {};
 

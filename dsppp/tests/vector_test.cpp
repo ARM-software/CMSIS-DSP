@@ -60,6 +60,80 @@ static void test()
    std::cout << "=====\r\n";
 }
 
+template<typename TA,typename TB>
+struct MixedRes;
+
+template<typename T>
+struct MixedRes<std::complex<T>,T>
+{
+   typedef std::complex<T> type;
+};
+
+template<typename T>
+struct MixedRes<T,std::complex<T>>
+{
+   typedef std::complex<T> type;
+};
+
+template<typename TA,typename TB,int NB>
+static void test_mixed()
+{
+   using Res = typename MixedRes<TA,TB>::type;
+   std::cout << "----\r\n" << "N = " << NB << "\r\n";
+   #if defined(STATIC_TEST)
+   PVector<TA,NB> a;
+   PVector<TB,NB> b;
+   #else 
+   PVector<TA> a(NB);
+   PVector<TB> b(NB);
+   #endif
+
+   init_array(a,NB);
+   init_array(b,NB);
+
+
+   INIT_SYSTICK;
+   START_CYCLE_MEASUREMENT;
+   startSectionNB(1);
+   #if defined(STATIC_TEST)
+   PVector<Res,NB> res = a + b;
+   #else 
+   PVector<Res> res = copy(a + b);
+   #endif
+   stopSectionNB(1);
+   STOP_CYCLE_MEASUREMENT;
+
+  
+
+   
+   #if defined(STATIC_TEST)
+   PVector<Res,NB> ref;
+   PVector<Res,NB> acmplx;
+   PVector<Res,NB> bcmplx;
+   #else
+   PVector<Res> ref(NB);
+   PVector<Res> acmplx(NB);
+   PVector<Res> bcmplx(NB);
+   #endif
+
+   // Extend float to complex
+   acmplx = copy(a);
+   bcmplx = copy(b);
+
+   INIT_SYSTICK
+   START_CYCLE_MEASUREMENT;
+   cmsisdsp_add(acmplx.const_ptr(),bcmplx.const_ptr(),ref.ptr(),NB);
+   STOP_CYCLE_MEASUREMENT;
+
+
+   if (!validate(res.const_ptr(),ref.const_ptr(),NB))
+   {
+      printf("mixed add failed \r\n");
+   }
+
+   std::cout << "=====\r\n";
+}
+
 template<typename T,int NB>
 static void test_mult()
 {
@@ -216,6 +290,52 @@ void all_vector_test()
     test<T,nb_loops>();
     test<T,nb_loops+1>();
     test<T,nb_loops+nb_tails>();
+
+    // Mixed arithmetic
+    if constexpr (IsComplexNumber<T>::value)
+    {
+        title<T>("Vector mixed");
+
+        test_mixed<T,typename T::value_type,NBVEC_4>();
+        test_mixed<T,typename T::value_type,NBVEC_8>();
+        test_mixed<T,typename T::value_type,NBVEC_9>();
+        test_mixed<T,typename T::value_type,NBVEC_16>();
+        test_mixed<T,typename T::value_type,NBVEC_32>();
+        test_mixed<T,typename T::value_type,NBVEC_64>();
+        test_mixed<T,typename T::value_type,NBVEC_128>();
+        test_mixed<T,typename T::value_type,NBVEC_256>();
+        test_mixed<T,typename T::value_type,NBVEC_258>();
+        test_mixed<T,typename T::value_type,NBVEC_512>();
+        test_mixed<T,typename T::value_type,NBVEC_1024>();
+        test_mixed<T,typename T::value_type,NBVEC_2048>();
+    
+        // For tests
+        test_mixed<T,typename T::value_type,1>();
+        test_mixed<T,typename T::value_type,nb_tails>();
+        test_mixed<T,typename T::value_type,nb_loops>();
+        test_mixed<T,typename T::value_type,nb_loops+1>();
+        test_mixed<T,typename T::value_type,nb_loops+nb_tails>();
+
+        test_mixed<typename T::value_type,T,NBVEC_4>();
+        test_mixed<typename T::value_type,T,NBVEC_8>();
+        test_mixed<typename T::value_type,T,NBVEC_9>();
+        test_mixed<typename T::value_type,T,NBVEC_16>();
+        test_mixed<typename T::value_type,T,NBVEC_32>();
+        test_mixed<typename T::value_type,T,NBVEC_64>();
+        test_mixed<typename T::value_type,T,NBVEC_128>();
+        test_mixed<typename T::value_type,T,NBVEC_256>();
+        test_mixed<typename T::value_type,T,NBVEC_258>();
+        test_mixed<typename T::value_type,T,NBVEC_512>();
+        test_mixed<typename T::value_type,T,NBVEC_1024>();
+        test_mixed<typename T::value_type,T,NBVEC_2048>();
+    
+        // For tests
+        test_mixed<typename T::value_type,T,1>();
+        test_mixed<typename T::value_type,T,nb_tails>();
+        test_mixed<typename T::value_type,T,nb_loops>();
+        test_mixed<typename T::value_type,T,nb_loops+1>();
+        test_mixed<typename T::value_type,T,nb_loops+nb_tails>();
+    }
 
     title<T>("Vector Mult");
 

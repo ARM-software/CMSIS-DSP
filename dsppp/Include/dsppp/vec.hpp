@@ -376,15 +376,16 @@ using StaticType=typename std::conditional<IsDynamic<VA>::value,VB,VA>::type;
 template<typename LHS,typename RHS,
 typename std::enable_if<(!is_scalar<LHS>() || 
                         !is_scalar<RHS>()) && 
-                        SameElementType<LHS,RHS>::value && 
+                        compatible_element<LHS,RHS>() && 
                         same_static_length<LHS,RHS>(),bool>::type = true>
 inline auto operator+(const LHS &a,const RHS &b)
 { 
-    using Scalar = typename traits<LHS>::Scalar;
+    using ScalarLHS = typename traits<LHS>::Scalar;
+    using ScalarRHS = typename traits<RHS>::Scalar;
     using VecLHS = VecRef<LHS>;
     using VecRHS = VecRef<RHS>;
 
-    return(_Binary<typename VecLHS::type,typename VecRHS::type,_AddOp<Scalar>>(VecLHS::ref(a),VecRHS::ref(b),_AddOp<Scalar>()));
+    return(_Binary<typename VecLHS::type,typename VecRHS::type,_AddOp<ScalarLHS,ScalarRHS>>(VecLHS::ref(a),VecRHS::ref(b),_AddOp<ScalarLHS,ScalarRHS>()));
 };
 
 
@@ -474,16 +475,17 @@ inline auto copy(const LHS &a)
 template<typename LHS,typename RHS,
 typename std::enable_if<(!is_scalar<LHS>() || 
                         !is_scalar<RHS>()) && 
-                        SameElementType<LHS,RHS>::value && 
+                        compatible_element<LHS,RHS>() && 
                         same_static_length<LHS,RHS>(),bool>::type = true>
 inline auto operator-(const LHS &a,const RHS &b)
 { 
-    using Scalar = typename traits<LHS>::Scalar;
+    using ScalarLHS = typename traits<LHS>::Scalar;
+    using ScalarRHS = typename traits<RHS>::Scalar;
     using VecLHS = VecRef<LHS>;
     using VecRHS = VecRef<RHS>;
 
-    return(_Binary<typename VecLHS::type,typename VecRHS::type,_SubOp<Scalar>>(
-        VecLHS::ref(a),VecRHS::ref(b),_SubOp<Scalar>()));
+    return(_Binary<typename VecLHS::type,typename VecRHS::type,_SubOp<ScalarLHS,ScalarRHS>>(
+        VecLHS::ref(a),VecRHS::ref(b),_SubOp<ScalarLHS,ScalarRHS>()));
 };
 
 
@@ -539,16 +541,17 @@ inline auto conjugate(const LHS &a)
 template<typename LHS,typename RHS,
 typename std::enable_if<(!is_scalar<LHS>() || 
                         !is_scalar<RHS>())  && 
-                        SameElementType<LHS,RHS>::value && 
+                        compatible_element<LHS,RHS>() && 
                         same_static_length<LHS,RHS>(),bool>::type = true>
 inline auto operator*(const LHS &a,const RHS &b)
 { 
-    using Scalar = typename traits<LHS>::Scalar;
+    using ScalarLHS = typename traits<LHS>::Scalar;
+    using ScalarRHS = typename traits<RHS>::Scalar;
     using VecLHS = VecRef<LHS>;
     using VecRHS = VecRef<RHS>;
 
-    return(_Binary<typename VecLHS::type,typename VecRHS::type,_MulOp<Scalar>>(
-        VecLHS::ref(a),VecRHS::ref(b),_MulOp<Scalar>()));
+    return(_Binary<typename VecLHS::type,typename VecRHS::type,_MulOp<ScalarLHS,ScalarRHS>>(
+        VecLHS::ref(a),VecRHS::ref(b),_MulOp<ScalarLHS,ScalarRHS>()));
 };
 
 

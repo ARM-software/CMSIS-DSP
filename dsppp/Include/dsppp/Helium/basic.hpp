@@ -32,7 +32,7 @@
 template<typename T,typename DST,
 typename std::enable_if<has_vector_inst<DST>() &&
           IsVector<DST>::value &&
-         SameElementType<DST,T>::value,bool>::type = true>
+         compatible_element<DST,T>(),bool>::type = true>
 inline void _Fill(DST &v,
                   const T val, 
                   const vector_length_t l,
@@ -62,7 +62,7 @@ inline void _Fill(DST &v,
 template<typename T,typename DST,
 typename std::enable_if<has_vector_inst<DST>() &&
          must_use_matrix_idx<DST>() &&
-         SameElementType<DST,T>::value,bool>::type = true>
+         compatible_element<DST,T>(),bool>::type = true>
 inline void _Fill2D(DST &v,
                   const T val, 
                   const vector_length_t rows,
@@ -115,7 +115,8 @@ inline void _Fill2D(DST &v,
  * @tparam     <unnamed>  Check vector indexing and compatible vectors
  */
 template<typename DA,typename DB,
-typename std::enable_if<has_vector_inst<DA>() && 
+typename std::enable_if<has_vector_inst<DA>() &&
+                        has_vector_inst<DB>() && 
                         vector_idx_pair<DA,DB>(),bool>::type = true>
 inline void eval(DA &v,
                  const DB& other,

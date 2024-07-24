@@ -63,7 +63,7 @@ template<typename P,int R,
          template<int> typename A,
          typename VB,
 typename std::enable_if<IsVector<VB>::value &&
-         SameElementType<VB,P>::value,bool>::type = true>
+         compatible_element<VB,P>(),bool>::type = true>
 inline void _diagonal(Matrix<P,R,R,A> &v,
                       const VB& other,
                       const vector_length_t rows)
@@ -87,7 +87,7 @@ template<typename P,int R,
          template<int> typename A,
          typename VB,
 typename std::enable_if<IsVector<VB>::value &&
-         SameElementType<VB,P>::value,bool>::type = true>
+         compatible_element<VB,P>(),bool>::type = true>
 inline void _fill_diagonal(Matrix<P,R,R,A> &v,
                            const VB& other,
                            const vector_length_t rows)

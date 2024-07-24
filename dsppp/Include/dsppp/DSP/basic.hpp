@@ -23,7 +23,7 @@
 template<typename T,typename DST,
 typename std::enable_if<has_vector_inst<DST>() &&
                         IsVector<DST>::value &&
-         SameElementType<DST,T>::value,bool>::type = true>
+         compatible_element<DST,T>(),bool>::type = true>
 inline void _Fill(DST &v,
                   const T val, 
                   vector_length_t l,
@@ -50,7 +50,7 @@ inline void _Fill(DST &v,
 template<typename T,typename DST,
 typename std::enable_if<has_vector_inst<DST>() &&
          must_use_matrix_idx<DST>() &&
-         SameElementType<DST,T>::value,bool>::type = true>
+         SameElementType<DST,T>(),bool>::type = true>
 inline void _Fill2D(DST &v,
                     const T val, 
                     const vector_length_t rows,

@@ -82,6 +82,23 @@ struct IsComplexNumber<std::complex<T>>
     constexpr static bool value = true;
 };
 
+/* Type of elements for a complex number including the real
+ * numbers
+ */
+template<typename T>
+struct ComplexNumberType
+{
+    typedef T type;
+};
+
+template<typename T>
+struct ComplexNumberType<std::complex<T>>
+{
+    typedef T type;
+};
+
+
+
 
 template<typename A,typename B>
 using SameElementType=std::is_same<typename ElementType<A>::type,typename ElementType<B>::type>;
@@ -96,6 +113,25 @@ using SameElementType=std::is_same<typename ElementType<A>::type,typename Elemen
  */
 template<typename DA>
 constexpr bool has_vector_inst() {return (vector_traits<typename ElementType<DA>::type>::has_vector);}
+
+/**
+ * @brief      Check if datatype are compatible and accept mixed
+ *             arithmetic complex with real
+ *
+ * @tparam     A     LHS datatype
+ * @tparam     B     RHS datatype
+ *
+ * @return     True if types are compatible
+ */
+template<typename A,typename B>
+constexpr bool compatible_element() {
+    using EA = typename ElementType<A>::type;
+    using EB = typename ElementType<B>::type;
+return (std::is_same<EA,EB>::value || 
+(IsComplexNumber<EA>::value && std::is_same<typename ComplexNumberType<EA>::type,EB>::value) ||
+(IsComplexNumber<EB>::value && std::is_same<typename ComplexNumberType<EB>::type,EA>::value));
+
+}
 
 /**
  * @brief      Determines if datatype has predicated loop for current architecture
@@ -140,7 +176,7 @@ constexpr bool must_use_matrix_idx() {return (!IsVector<DA>::value &&
 template<typename DA,typename DB>
 constexpr bool vector_idx_pair() {return (IsVector<DA>::value && 
                                           IsVector<DB>::value &&
-                                          SameElementType<DA,DB>::value);}
+                                          compatible_element<DA,DB>());}
 
 // By default scalar has no vector size so can't be used
 // to infer a size at build time. They are considered as dynamic
@@ -369,13 +405,15 @@ protected:
 template<typename LHS,typename RHS,typename DerivedOp>
 struct _Binary: _Expr<_Binary<LHS,RHS,DerivedOp>>
 {
-    using Scalar = typename traits<LHS>::Scalar;
+    using ScalarLHS = typename traits<LHS>::Scalar;
+    using ScalarRHS = typename traits<RHS>::Scalar;
 #if defined(HAS_VECTOR)
-    using Vector = typename traits<LHS>::Vector;
+    using VectorLHS = typename traits<LHS>::Vector;
+    using VectorRHS = typename traits<RHS>::Vector;
 #endif
     _Binary(const LHS &lhs,
             const RHS &rhs,
-            const _BinaryOperator<Scalar,DerivedOp> &op):
+            const _BinaryOperator<ScalarLHS,ScalarRHS,DerivedOp> &op):
             lhs_(lhs),rhs_(rhs),op_(op){
     }
 
@@ -434,28 +472,28 @@ struct _Binary: _Expr<_Binary<LHS,RHS,DerivedOp>>
              typename std::enable_if< 
                         IsVector<L>::value && 
                         IsVector<R>::value,bool>::type = true>
-    Scalar const operator[](const index_t i) const {
+    auto  operator[](const index_t i) const {
         return(op_(lhs_[i],rhs_[i]));
     }
 
     template<typename R=RHS, typename L=LHS,
              typename std::enable_if<IsVector<L>::value && 
                        is_scalar<R>(),bool>::type = true>
-    Scalar const operator[](const index_t i) const {
+    auto  operator[](const index_t i) const {
         return(op_(lhs_[i],rhs_));
     }
 
     template<typename R=RHS, typename L=LHS,
              typename std::enable_if<is_scalar<L>() && 
                         IsVector<R>::value,bool>::type = true>
-    Scalar const operator[](const index_t i) const {
+    auto  operator[](const index_t i) const {
         return(op_(lhs_,rhs_[i]));
     }
 
     template<typename R=RHS, typename L=LHS,
              typename std::enable_if<HasMatrixIndexing<L>::value && 
                         HasMatrixIndexing<R>::value,bool>::type = true>
-    Scalar const operator()(const index_t r,const index_t c) const
+    auto  operator()(const index_t r,const index_t c) const
     {
         return(op_(lhs_(r,c),rhs_(r,c)));
     }
@@ -463,7 +501,7 @@ struct _Binary: _Expr<_Binary<LHS,RHS,DerivedOp>>
     template<typename R=RHS, typename L=LHS,
              typename std::enable_if<is_scalar<L>() && 
                         HasMatrixIndexing<R>::value,bool>::type = true>
-    Scalar const operator()(const index_t r,const index_t c) const
+    auto  operator()(const index_t r,const index_t c) const
     {
         return(op_(lhs_,rhs_(r,c)));
     }
@@ -471,7 +509,7 @@ struct _Binary: _Expr<_Binary<LHS,RHS,DerivedOp>>
     template<typename R=RHS, typename L=LHS,
              typename std::enable_if<HasMatrixIndexing<L>::value && 
                         is_scalar<R>(),bool>::type = true>
-    Scalar const operator()(const index_t r,const index_t c) const
+    auto  operator()(const index_t r,const index_t c) const
     {
         return(op_(lhs_(r,c),rhs_));
     }
@@ -482,7 +520,7 @@ struct _Binary: _Expr<_Binary<LHS,RHS,DerivedOp>>
              typename std::enable_if< 
                         IsVector<L>::value && 
                         IsVector<R>::value,bool>::type = true>
-    Vector const vector_op(const index_t i) const
+    auto  vector_op(const index_t i) const
     {
         return(op_(lhs_.vector_op(i),rhs_.vector_op(i)));
     }
@@ -492,9 +530,9 @@ struct _Binary: _Expr<_Binary<LHS,RHS,DerivedOp>>
                         has_predicate_inst<L>() &&
                         IsVector<L>::value && 
                         IsVector<R>::value,bool>::type = true>
-    Vector const vector_op_tail(const index_t i,const vector_length_t remaining) const
+    auto  vector_op_tail(const index_t i,const vector_length_t remaining) const
     {
-        return(op_(lhs_.vector_op_tail(i,remaining),rhs_.vector_op_tail(i,remaining),inner::vctpq<Scalar>::mk(remaining)));
+        return(op_(lhs_.vector_op_tail(i,remaining),rhs_.vector_op_tail(i,remaining),inner::vctpq<ScalarLHS>::mk(remaining)));
     }
 
     /* V + S */
@@ -502,7 +540,7 @@ struct _Binary: _Expr<_Binary<LHS,RHS,DerivedOp>>
             typename std::enable_if< 
                         IsVector<L>::value && 
                         is_scalar<R>(),bool>::type = true>
-    Vector const vector_op(const index_t i) const
+    auto  vector_op(const index_t i) const
     {
         return(op_(lhs_.vector_op(i),rhs_));
     }
@@ -512,9 +550,9 @@ struct _Binary: _Expr<_Binary<LHS,RHS,DerivedOp>>
                         has_predicate_inst<L>() &&
                         IsVector<L>::value && 
                         is_scalar<R>(),bool>::type = true>
-    Vector const vector_op_tail(const index_t i,const vector_length_t remaining) const
+    auto  vector_op_tail(const index_t i,const vector_length_t remaining) const
     {
-        return(op_(lhs_.vector_op_tail(i,remaining),rhs_,inner::vctpq<Scalar>::mk(remaining)));
+        return(op_(lhs_.vector_op_tail(i,remaining),rhs_,inner::vctpq<ScalarLHS>::mk(remaining)));
     }
 
 
@@ -523,7 +561,7 @@ struct _Binary: _Expr<_Binary<LHS,RHS,DerivedOp>>
     template<typename R=RHS, typename L=LHS,
              typename std::enable_if<is_scalar<L>() && 
                         IsVector<R>::value,bool>::type = true>
-    Vector const vector_op(const index_t i) const
+    auto  vector_op(const index_t i) const
     {
         return(op_(lhs_,rhs_.vector_op(i)));
     }
@@ -533,9 +571,9 @@ struct _Binary: _Expr<_Binary<LHS,RHS,DerivedOp>>
                         has_predicate_inst<L>() &&
                         is_scalar<L>() && 
                         IsVector<R>::value,bool>::type = true>
-    Vector const vector_op_tail(const index_t i,const vector_length_t remaining) const
+    auto  vector_op_tail(const index_t i,const vector_length_t remaining) const
     {
-        return(op_(lhs_,rhs_.vector_op_tail(i,remaining),inner::vctpq<Scalar>::mk(remaining)));
+        return(op_(lhs_,rhs_.vector_op_tail(i,remaining),inner::vctpq<ScalarLHS>::mk(remaining)));
     }
 
 
@@ -549,7 +587,7 @@ struct _Binary: _Expr<_Binary<LHS,RHS,DerivedOp>>
     template<typename R=RHS, typename L=LHS,
              typename std::enable_if<HasMatrixIndexing<L>::value && 
                         HasMatrixIndexing<R>::value,bool>::type = true>
-    Vector const matrix_op(const index_t r,const index_t c) const
+    auto  matrix_op(const index_t r,const index_t c) const
     {
         return(op_(lhs_.matrix_op(r,c),rhs_.matrix_op(r,c)));
     }
@@ -559,16 +597,16 @@ struct _Binary: _Expr<_Binary<LHS,RHS,DerivedOp>>
                         has_predicate_inst<L>() &&
                         HasMatrixIndexing<L>::value && 
                         HasMatrixIndexing<R>::value,bool>::type = true>
-    Vector const matrix_op_tail(const index_t r,const index_t c,const vector_length_t remaining) const
+    auto  matrix_op_tail(const index_t r,const index_t c,const vector_length_t remaining) const
     {
-        return(op_(lhs_.matrix_op_tail(r,c,remaining),rhs_.matrix_op_tail(r,c,remaining),inner::vctpq<Scalar>::mk(remaining)));
+        return(op_(lhs_.matrix_op_tail(r,c,remaining),rhs_.matrix_op_tail(r,c,remaining),inner::vctpq<ScalarLHS>::mk(remaining)));
     }
 
     /* V + S */
     template<typename R=RHS, typename L=LHS,
             typename std::enable_if<HasMatrixIndexing<L>::value && 
                                     is_scalar<R>(),bool>::type = true>
-    Vector const matrix_op(const index_t r,const index_t c) const
+    auto  matrix_op(const index_t r,const index_t c) const
     {
         return(op_(lhs_.matrix_op(r,c),rhs_));
     }
@@ -577,9 +615,9 @@ struct _Binary: _Expr<_Binary<LHS,RHS,DerivedOp>>
              typename std::enable_if<has_predicate_inst<L>() &&
                                      HasMatrixIndexing<L>::value && 
                                      is_scalar<R>(),bool>::type = true>
-    Vector const matrix_op_tail(const index_t r,const index_t c,const vector_length_t remaining) const
+    auto  matrix_op_tail(const index_t r,const index_t c,const vector_length_t remaining) const
     {
-        return(op_(lhs_.matrix_op_tail(r,c,remaining),rhs_,inner::vctpq<Scalar>::mk(remaining)));
+        return(op_(lhs_.matrix_op_tail(r,c,remaining),rhs_,inner::vctpq<ScalarLHS>::mk(remaining)));
     }
 
 
@@ -588,7 +626,7 @@ struct _Binary: _Expr<_Binary<LHS,RHS,DerivedOp>>
     template<typename R=RHS, typename L=LHS,
              typename std::enable_if<is_scalar<L>() && 
                         HasMatrixIndexing<R>::value,bool>::type = true>
-    Vector const matrix_op(const index_t r,const index_t c) const
+    auto  matrix_op(const index_t r,const index_t c) const
     {
         return(op_(lhs_,rhs_.matrix_op(r,c)));
     }
@@ -597,16 +635,16 @@ struct _Binary: _Expr<_Binary<LHS,RHS,DerivedOp>>
              typename std::enable_if<has_predicate_inst<L>() &&
                                      is_scalar<L>() && 
                                      HasMatrixIndexing<R>::value,bool>::type = true>
-    Vector const matrix_op_tail(const index_t r,const index_t c,const vector_length_t remaining) const
+    auto  matrix_op_tail(const index_t r,const index_t c,const vector_length_t remaining) const
     {
-        return(op_(lhs_,rhs_.matrix_op_tail(r,c,remaining),inner::vctpq<Scalar>::mk(remaining)));
+        return(op_(lhs_,rhs_.matrix_op_tail(r,c,remaining),inner::vctpq<ScalarLHS>::mk(remaining)));
     }
 
 
 #endif
     const LHS lhs_;
     const RHS rhs_;
-    const _BinaryOperator<Scalar,DerivedOp> op_;
+    const _BinaryOperator<ScalarLHS,ScalarRHS,DerivedOp> op_;
 };
 
 template<typename DerivedOp>
