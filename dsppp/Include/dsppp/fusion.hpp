@@ -17,11 +17,39 @@ template<typename T> struct traits
 #endif
 };
 
+
 template<typename M>
 struct Complexity
 {
    constexpr static int value = 0;
 };
+
+/*
+
+For mixed operations with complex / real
+
+*/
+template<typename TA,typename TB>
+struct MixedRes;
+
+template<typename T>
+struct MixedRes<std::complex<T>,T>
+{
+   typedef std::complex<T> type;
+};
+
+template<typename T>
+struct MixedRes<T,std::complex<T>>
+{
+   typedef std::complex<T> type;
+};
+
+template<typename T>
+struct MixedRes<T,T>
+{
+   typedef T type;
+};
+
 
 /*
 
@@ -741,9 +769,12 @@ struct traits<_Expr<DerivedOp>>
 template<typename LHS,typename RHS,typename DerivedOp>
 struct traits<_Binary<LHS,RHS,DerivedOp>>
 {
-    typedef typename traits<LHS>::Scalar Scalar;
+    using LScalar = typename traits<LHS>::Scalar;
+    using RScalar = typename traits<RHS>::Scalar;
+
+    typedef typename MixedRes<LScalar,RScalar>::type Scalar;
 #if defined(HAS_VECTOR)
-    typedef typename traits<LHS>::Vector Vector;
+    typedef typename traits<Scalar>::Vector Vector;
 #endif
 };
 
@@ -907,16 +938,19 @@ struct traits<_Unary<LHS,DerivedOp>>
 };
 
 
-
-
 /*
 
 Dot product 
 
 */
 
-template<typename DA>
-using DotResult = typename number_traits<typename traits<DA>::Scalar>::accumulator;
+template<typename DT>
+using DotResult = typename number_traits<DT>::accumulator;
+
+// T or std::complex<T>
+// and from this we can infer the types of the accumulators.
+template<typename DA,typename DB>
+using DotFieldResult = typename MixedRes<typename traits<DA>::Scalar,typename traits<DB>::Scalar>::type;
 
 
 
@@ -937,8 +971,8 @@ template<typename VA,typename VB,
          is_only_vector<VA>() &&
          is_only_vector<VB>() &&
          (!IsDynamic<VA>::value || !IsDynamic<VB>::value),bool>::type = true>
-inline DotResult<VA> dot(const VA& a,
-                         const VB& b)
+inline DotResult<DotFieldResult<VA,VB>> dot(const VA& a,
+                                            const VB& b)
 {
    constexpr vector_length_t l = static_length<VA,VB>();
    return(_dot(a,b,l,CURRENT_ARCH));
@@ -950,8 +984,8 @@ template<typename VA,typename VB,
          is_only_vector<VA>() &&
          is_only_vector<VB>() &&
          (IsDynamic<VA>::value && IsDynamic<VB>::value),bool>::type = true>
-inline DotResult<VA> dot(const VA& a,
-                         const VB& b)
+inline DotResult<DotFieldResult<VA,VB>> dot(const VA& a,
+                                            const VB& b)
 {
    const vector_length_t l = a.length();
    

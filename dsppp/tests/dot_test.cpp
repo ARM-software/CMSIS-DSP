@@ -121,6 +121,62 @@ static void test()
 
 }
 
+template<typename TA,typename TB,int NB,typename O>
+static void test_mixed()
+{
+   using Res = typename MixedRes<TA,TB>::type;
+   std::cout << "----\r\n" << "N = " << NB << "\r\n";
+   #if defined(STATIC_TEST)
+   PVector<TA,NB> a;
+   PVector<TB,NB> b;
+
+   PVector<Res,NB> res;
+   #else
+   PVector<TA> a(NB);
+   PVector<TB> b(NB);
+
+   PVector<Res> res(NB);
+   #endif
+
+   init_array(a,NB);
+   init_array(b,NB);
+
+   INIT_SYSTICK;
+   START_CYCLE_MEASUREMENT;
+   startSectionNB(1);
+   O result = dot(a,b);
+   stopSectionNB(1);
+   STOP_CYCLE_MEASUREMENT;
+
+
+   O ref;
+
+   #if defined(STATIC_TEST)
+   PVector<Res,NB> acmplx;
+   PVector<Res,NB> bcmplx;
+   #else
+   PVector<Res> acmplx(NB);
+   PVector<Res> bcmplx(NB);
+   #endif
+
+   acmplx = copy(a);
+   bcmplx = copy(b);
+
+   INIT_SYSTICK;
+   START_CYCLE_MEASUREMENT;
+   cmsisdsp_dot(acmplx.const_ptr(),bcmplx.const_ptr(),ref,NB);
+   STOP_CYCLE_MEASUREMENT;
+
+   if (!validate(result,ref))
+   {
+      printf("dot mixed failed \r\n");
+
+   }
+
+   std::cout << "=====\r\n";
+
+}
+
 template<typename T,int NB,typename O>
 static void test_hermitian()
 {
@@ -200,6 +256,56 @@ void all_dot_test()
     test<T,nb_loops,ACC>();
     test<T,nb_loops+1,ACC>();
     test<T,nb_loops+nb_tails,ACC>();
+
+    if constexpr (IsComplexNumber<T>::value)
+    {
+      title<T>("Dot mixed product");
+
+    
+      test_mixed<T,typename T::value_type,NBVEC_4,ACC>();
+      test_mixed<T,typename T::value_type,NBVEC_8,ACC>();
+      test_mixed<T,typename T::value_type,NBVEC_9,ACC>();
+      test_mixed<T,typename T::value_type,NBVEC_16,ACC>();
+      test_mixed<T,typename T::value_type,NBVEC_32,ACC>();
+      test_mixed<T,typename T::value_type,NBVEC_64,ACC>();
+      test_mixed<T,typename T::value_type,NBVEC_128,ACC>();
+      test_mixed<T,typename T::value_type,NBVEC_256,ACC>();
+      test_mixed<T,typename T::value_type,NBVEC_258,ACC>();
+      test_mixed<T,typename T::value_type,NBVEC_512,ACC>();
+      test_mixed<T,typename T::value_type,NBVEC_1024,ACC>();
+      if constexpr (!std::is_same<T,double>::value)
+      {
+         test_mixed<T,typename T::value_type,NBVEC_2048,ACC>();
+      }
+
+      test_mixed<T,typename T::value_type,1,ACC>();
+      test_mixed<T,typename T::value_type,nb_tails,ACC>();
+      test_mixed<T,typename T::value_type,nb_loops,ACC>();
+      test_mixed<T,typename T::value_type,nb_loops+1,ACC>();
+      test_mixed<T,typename T::value_type,nb_loops+nb_tails,ACC>();
+
+      test_mixed<typename T::value_type,T,NBVEC_4,ACC>();
+      test_mixed<typename T::value_type,T,NBVEC_8,ACC>();
+      test_mixed<typename T::value_type,T,NBVEC_9,ACC>();
+      test_mixed<typename T::value_type,T,NBVEC_16,ACC>();
+      test_mixed<typename T::value_type,T,NBVEC_32,ACC>();
+      test_mixed<typename T::value_type,T,NBVEC_64,ACC>();
+      test_mixed<typename T::value_type,T,NBVEC_128,ACC>();
+      test_mixed<typename T::value_type,T,NBVEC_256,ACC>();
+      test_mixed<typename T::value_type,T,NBVEC_258,ACC>();
+      test_mixed<typename T::value_type,T,NBVEC_512,ACC>();
+      test_mixed<typename T::value_type,T,NBVEC_1024,ACC>();
+      if constexpr (!std::is_same<T,double>::value)
+      {
+         test_mixed<typename T::value_type,T,NBVEC_2048,ACC>();
+      }
+
+      test_mixed<typename T::value_type,T,1,ACC>();
+      test_mixed<typename T::value_type,T,nb_tails,ACC>();
+      test_mixed<typename T::value_type,T,nb_loops,ACC>();
+      test_mixed<typename T::value_type,T,nb_loops+1,ACC>();
+      test_mixed<typename T::value_type,T,nb_loops+nb_tails,ACC>();
+    }
 
     title<T>("Hermitian product");
 

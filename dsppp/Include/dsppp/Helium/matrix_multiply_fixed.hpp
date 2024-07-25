@@ -24,6 +24,7 @@ template<typename MA,
          typename MB,
          typename RES,
          typename std::enable_if<has_vector_inst<MA>() &&
+         has_vector_inst<MB>() &&
          number_traits<typename traits<MA>::Scalar>::is_fixed,bool>::type = true>
 inline void arm_mat_mult_2x2_mve(
     const MA & pSrcA,
@@ -90,6 +91,7 @@ template<typename MA,
          typename MB,
          typename RES,
          typename std::enable_if<has_vector_inst<MA>() &&
+         has_vector_inst<MB>() &&
          number_traits<typename traits<MA>::Scalar>::is_fixed,bool>::type = true>
 inline void arm_mat_mult_3x3_mve(
     const MA & pSrcA,
@@ -184,6 +186,7 @@ template<typename MA,
          typename MB,
          typename RES,
          typename std::enable_if<has_vector_inst<MA>() &&
+         has_vector_inst<MB>() &&
          number_traits<typename traits<MA>::Scalar>::is_fixed,bool>::type = true>
 inline void arm_mat_mult_4x4_mve(
     const MA & pSrcA,
@@ -314,6 +317,7 @@ template<typename MA,
          typename RES,
          typename TMP,
          typename std::enable_if<has_vector_inst<MA>() &&
+         has_vector_inst<MB>() &&
          number_traits<typename traits<MA>::Scalar>::is_fixed,bool>::type = true>
    __STATIC_INLINE void _dot_m_m(const MA&pSrcA,const MB&pSrcB,
                         RES &&pDst,

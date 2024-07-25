@@ -60,20 +60,6 @@ static void test()
    std::cout << "=====\r\n";
 }
 
-template<typename TA,typename TB>
-struct MixedRes;
-
-template<typename T>
-struct MixedRes<std::complex<T>,T>
-{
-   typedef std::complex<T> type;
-};
-
-template<typename T>
-struct MixedRes<T,std::complex<T>>
-{
-   typedef std::complex<T> type;
-};
 
 template<typename TA,typename TB,int NB>
 static void test_mixed()
@@ -185,6 +171,73 @@ static void test_mult()
       ErrT<T>::rel_error))
    {
       printf("mult failed \r\n");
+   }
+
+   std::cout << "=====\r\n";
+}
+
+template<typename TA,typename TB,int NB>
+static void test_mult_mixed()
+{
+   using Res = typename MixedRes<TA,TB>::type;
+   std::cout << "----\r\n" << "N = " << NB << "\r\n";
+   #if defined(STATIC_TEST)
+   PVector<TA,NB> a;
+   PVector<TB,NB> b;
+   #else 
+   PVector<TA> a(NB);
+   PVector<TB> b(NB);
+   #endif
+
+   init_array(a,NB);
+   init_array(b,NB);
+
+   INIT_SYSTICK;
+   START_CYCLE_MEASUREMENT;
+   startSectionNB(1);
+   #if defined(STATIC_TEST)
+   PVector<Res,NB> res = a * b;
+   #else 
+   PVector<Res> res = copy(a * b);
+   #endif
+   stopSectionNB(1);
+   STOP_CYCLE_MEASUREMENT;
+
+   
+   #if defined(STATIC_TEST)
+   PVector<Res,NB> ref;
+   PVector<Res,NB> acmplx;
+   PVector<Res,NB> bcmplx;
+   #else
+   PVector<Res> ref(NB);
+   PVector<Res> acmplx(NB);
+   PVector<Res> bcmplx(NB);
+   #endif
+
+   // Real to complex
+   acmplx = copy(a);
+   bcmplx = copy(b);
+
+   INIT_SYSTICK
+   START_CYCLE_MEASUREMENT;
+   cmsisdsp_mult(acmplx.const_ptr(),bcmplx.const_ptr(),ref.ptr(),NB);
+   STOP_CYCLE_MEASUREMENT;
+
+   if constexpr ((std::is_same<Res,std::complex<Q15>>::value)
+                || (std::is_same<Res,std::complex<Q31>>::value))
+   {
+      // Cmplx versions have 2 bits of fractional bit removed
+      for(int i=0;i<NB;i++)
+      {
+         res[i] = Res(res[i].real().v >> 2,res[i].imag().v>>2);
+      }
+   }
+
+   if (!validate(res.const_ptr(),ref.const_ptr(),NB,
+      ErrT<Res>::abs_error,
+      ErrT<Res>::rel_error))
+   {
+      printf("mult mixed failed \r\n");
    }
 
    std::cout << "=====\r\n";
@@ -339,9 +392,9 @@ void all_vector_test()
 
     title<T>("Vector Mult");
 
-    // For benchmarks
     if constexpr (!std::is_same<T,std::complex<Q7>>::value)
     {
+       // For benchmarks
        test_mult<T,NBVEC_4>();
        test_mult<T,NBVEC_8>();
        test_mult<T,NBVEC_9>();
@@ -350,21 +403,74 @@ void all_vector_test()
        test_mult<T,NBVEC_64>();
        test_mult<T,NBVEC_128>();
        test_mult<T,NBVEC_256>();
-       //if constexpr (!std::is_same<T,std::complex<float16_t>>::value)
-       {
-           test_mult<T,NBVEC_258>();
-           test_mult<T,NBVEC_512>();
-           test_mult<T,NBVEC_1024>();
-           test_mult<T,NBVEC_2048>();
-       }
+       
+       test_mult<T,NBVEC_258>();
+       test_mult<T,NBVEC_512>();
+       test_mult<T,NBVEC_1024>();
+       test_mult<T,NBVEC_2048>();
+
+        // For tests
+        test_mult<T,1>();
+        test_mult<T,nb_tails>();
+        test_mult<T,nb_loops>();
+        test_mult<T,nb_loops+1>();
+        test_mult<T,nb_loops+nb_tails>();
+       
     }
 
-    // For tests
-    test_mult<T,1>();
-    test_mult<T,nb_tails>();
-    test_mult<T,nb_loops>();
-    test_mult<T,nb_loops+1>();
-    test_mult<T,nb_loops+nb_tails>();
+   
+
+    // Mixed arithmetic
+    if constexpr (IsComplexNumber<T>::value)
+    {
+        title<T>("Vector mixed mult");
+
+        if constexpr (!std::is_same<T,std::complex<Q7>>::value)
+        {
+           // For benchmarks
+           test_mult_mixed<T,typename T::value_type,NBVEC_4>();
+           test_mult_mixed<T,typename T::value_type,NBVEC_8>();
+           test_mult_mixed<T,typename T::value_type,NBVEC_9>();
+           test_mult_mixed<T,typename T::value_type,NBVEC_16>();
+           test_mult_mixed<T,typename T::value_type,NBVEC_32>();
+           test_mult_mixed<T,typename T::value_type,NBVEC_64>();
+           test_mult_mixed<T,typename T::value_type,NBVEC_128>();
+           test_mult_mixed<T,typename T::value_type,NBVEC_256>();
+           test_mult_mixed<T,typename T::value_type,NBVEC_258>();
+           test_mult_mixed<T,typename T::value_type,NBVEC_512>();
+           test_mult_mixed<T,typename T::value_type,NBVEC_1024>();
+           test_mult_mixed<T,typename T::value_type,NBVEC_2048>();
+           // For tests
+           test_mult_mixed<T,typename T::value_type,1>();
+           test_mult_mixed<T,typename T::value_type,nb_tails>();
+           test_mult_mixed<T,typename T::value_type,nb_loops>();
+           test_mult_mixed<T,typename T::value_type,nb_loops+1>();
+           test_mult_mixed<T,typename T::value_type,nb_loops+nb_tails>();
+
+           // For benchmarks
+           test_mult_mixed<typename T::value_type,T,NBVEC_4>();
+           test_mult_mixed<typename T::value_type,T,NBVEC_8>();
+           test_mult_mixed<typename T::value_type,T,NBVEC_9>();
+           test_mult_mixed<typename T::value_type,T,NBVEC_16>();
+           test_mult_mixed<typename T::value_type,T,NBVEC_32>();
+           test_mult_mixed<typename T::value_type,T,NBVEC_64>();
+           test_mult_mixed<typename T::value_type,T,NBVEC_128>();
+           test_mult_mixed<typename T::value_type,T,NBVEC_256>();
+           test_mult_mixed<typename T::value_type,T,NBVEC_258>();
+           test_mult_mixed<typename T::value_type,T,NBVEC_512>();
+           test_mult_mixed<typename T::value_type,T,NBVEC_1024>();
+           test_mult_mixed<typename T::value_type,T,NBVEC_2048>();
+           // For tests
+           test_mult_mixed<typename T::value_type,T,1>();
+           test_mult_mixed<typename T::value_type,T,nb_tails>();
+           test_mult_mixed<typename T::value_type,T,nb_loops>();
+           test_mult_mixed<typename T::value_type,T,nb_loops+1>();
+           test_mult_mixed<typename T::value_type,T,nb_loops+nb_tails>();
+           
+        }
+    
+        
+    }
     
 
     title<T>("Vector View");

@@ -81,6 +81,7 @@ template<typename MA,
          typename RES,
          typename std::enable_if<
          has_vector_inst<MA>() &&
+         has_vector_inst<MB>() &&
          number_traits<typename traits<MA>::Scalar>::is_float,bool>::type = true>
 __STATIC_INLINE void _dot_m_m(const MA&pSrcA,const MB&pSrcB,
                      RES &&pDst,

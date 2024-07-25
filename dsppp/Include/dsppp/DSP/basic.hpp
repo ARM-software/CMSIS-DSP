@@ -183,20 +183,20 @@ inline void eval2D(DA &v,
 template<typename DA,typename DB,
          typename std::enable_if<has_vector_inst<DA>() &&
                                 vector_idx_pair<DA,DB>(),bool>::type = true>
-inline DotResult<DA> _dot(const DA& a,
-                         const DB& b,
-                         const vector_length_t l,
-                         const DSP* = nullptr)
+inline DotResult<DotFieldResult<DA,DB>> _dot(const DA& a,
+                                              const DB& b,
+                                              const vector_length_t l,
+                                              const DSP* = nullptr)
 {
-    using Acc = DotResult<DA>;
-    using T = typename traits<DA>::Scalar;
-    using Temp = typename vector_traits<T>::temp_accumulator;
-    constexpr int nb_lanes = vector_traits<T>::nb_lanes;
+    using ScalarResult = DotFieldResult<DA,DB> ;
+    using Acc = DotResult<ScalarResult>;
+    using Temp = typename vector_traits<ScalarResult>::temp_accumulator;
+    constexpr int nb_lanes = vector_traits<ScalarResult>::nb_lanes;
     constexpr unsigned int U = DSP_UNROLL;
     index_t i;
 
     Acc acc = Acc{};
-    Temp vacc = vector_traits<T>::temp_acc_zero();
+    Temp vacc = vector_traits<ScalarResult>::temp_acc_zero();
 
     for(i=0 ; i <= l-(nb_lanes<<U); i += (nb_lanes<<U))
     {

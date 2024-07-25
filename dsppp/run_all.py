@@ -102,6 +102,7 @@ parser.add_argument('-t', action='store_true', help="Enable test mode")
 parser.add_argument('-r', action='store_true', help="No full rebuild")
 parser.add_argument('-avh', nargs='?',type = str, default="C:/Keil_v5/ARM/avh-fvp/bin/models", help="AVH folder")
 parser.add_argument('-dump', action='store_true', help="Dump build output")
+parser.add_argument('-s', nargs='?',type = int,help="Force subtest")
 
 args = parser.parse_args()
 
@@ -189,7 +190,7 @@ TESTS=["DOT_TEST",
 # suite
 # No need to define an entry in this dictionary when no
 # subtest is defined
-SUBTESTS = {"MATRIX_TEST":19}
+SUBTESTS = {"MATRIX_TEST":20}
 # Subtests that are only for testing and not benchmarks
 ONLY_TESTS = {"MATRIX_TEST":[3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]}
 
@@ -216,10 +217,10 @@ MODE = ["STATIC_TEST",
         ]
 
 # Restricted tests for debugging
-TESTS=["VECTOR_TEST"]
-DATATYPES=[#"COMPLEX_F64_DT",
-           #"COMPLEX_F32_DT",
-           #"COMPLEX_F16_DT",
+TESTS=["MATRIX_TEST"]
+DATATYPES=["COMPLEX_F64_DT",
+           "COMPLEX_F32_DT",
+           "COMPLEX_F16_DT",
            "COMPLEX_Q31_DT",
            "COMPLEX_Q15_DT"
            ]
@@ -392,7 +393,10 @@ def runATest(args,test,file_err,nb,NB_MAX,current_nb_axf,nb_axf,first=True,subte
 nb_axf = 0
 for test in all_tests:
     if test[0] in SUBTESTS:
-        for subtestnbb in range(SUBTESTS[test[0]]):
+        torun = range(SUBTESTS[test[0]]) 
+        if args.s:
+            torun = [args.s - 1]
+        for subtestnbb in torun:
             if not args.b or not is_only_test(test,subtestnbb+1):
                nb_axf = nb_axf + 1
     else:
@@ -429,7 +433,10 @@ with open(os.path.join(results(),f"errors_{args.c}.txt"),"w") as err:
         first = True
         for test in all_tests:
             if test[0] in SUBTESTS:
-                for subtestnbb in range(SUBTESTS[test[0]]):
+                torun = range(SUBTESTS[test[0]]) 
+                if args.s:
+                    torun = [args.s - 1]
+                for subtestnbb in torun:
                     if not args.b or not is_only_test(test,subtestnbb+1):
                        runATest(args,test,err,nb,NB_MAX,current_axf,nb_axf,first,subtestnbb+1)
                        current_axf = current_axf + 1

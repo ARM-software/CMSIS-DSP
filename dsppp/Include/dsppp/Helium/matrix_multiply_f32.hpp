@@ -17,6 +17,7 @@ template<typename MA,
          typename RES,
 typename std::enable_if<
          has_vector_inst<MA>() &&
+         has_vector_inst<MB>() &&
          SameElementType<MA,float32_t>::value,bool>::type = true>
 __STATIC_INLINE  void _arm_mat_mult_2x2_mve(
     const MA &pSrcA,
@@ -124,6 +125,7 @@ template<typename MA,
          typename RES,
 typename std::enable_if<
          has_vector_inst<MA>() &&
+         has_vector_inst<MB>() &&
          SameElementType<MA,float32_t>::value,bool>::type = true>
 __STATIC_INLINE  void _arm_mat_mult_3x3_mve(
     const MA &pSrcA,
@@ -193,6 +195,7 @@ template<typename MA,
          typename RES,
 typename std::enable_if<
          has_vector_inst<MA>() &&
+         has_vector_inst<MB>() &&
          SameElementType<MA,float32_t>::value,bool>::type = true>
 __STATIC_INLINE  void _arm_mat_mult_4x4_mve(
     const MA &pSrcA,

@@ -390,7 +390,7 @@ struct CompatibleDynamicMatMatProduct
 
 template<typename M,typename V>
 struct OutputVector {
-    typedef Vector<typename traits<V>::Scalar,
+    typedef Vector<DotFieldResult<M,V>,
                    OutputVectorDim<M>::value,TMP_ALLOC> type;
 };
 
@@ -400,7 +400,7 @@ struct OutputMatrix {
     constexpr static vector_length_t nbrows = dynamic ? DYNAMIC : NbRows<MA>::value;
     constexpr static vector_length_t nbcols = dynamic ? DYNAMIC : NbCols<MB>::value;
 
-    typedef Matrix<typename traits<MA>::Scalar,nbrows,nbcols,TMP_ALLOC> type;
+    typedef Matrix<DotFieldResult<MA,MB>,nbrows,nbcols,TMP_ALLOC> type;
 };
 
 

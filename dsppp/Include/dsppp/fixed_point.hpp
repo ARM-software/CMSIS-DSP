@@ -1828,8 +1828,8 @@ public:
   }
 
   constexpr complex& operator*=(const value_type& __re) {
-    __re_ *= __re;
-    __im_ *= __re;
+    __re_ = __re_ * __re;
+    __im_ = __im_ * __re;
     return *this;
   }
   
@@ -1852,6 +1852,8 @@ public:
     __im_ -= __c.imag();
     return *this;
   }
+
+
   template <class _Xp>
   constexpr complex& operator*=(const complex<_Xp>& __c) {
     *this = *this * complex(__c.real(), __c.imag());

@@ -1027,6 +1027,110 @@ void testmatmult()
   
 }
 
+template<typename TA,typename TB,int R, int K,int C>
+void testmatmult_mixed()
+{
+   using Res = typename MixedRes<TA,TB>::type;
+
+   std::cout << "----\r\n";
+   std::cout << R << " x " << K << " x " << C << "\r\n";
+
+
+   #if defined(STATIC_TEST)
+   PMat<TA,R,K> ma;
+   #else
+   PMat<TA> ma(R,K);
+   #endif
+   init_array(ma,R*K);
+
+   #if defined(STATIC_TEST)
+   PMat<TB,K,C> mb;
+   #else
+   PMat<TB> mb(K,C);
+   #endif
+   init_array(mb,K*C);
+
+
+
+   mb += TestConstant<TB>::small;
+
+   //std::cout << ma;
+   //std::cout << mb;
+   
+
+   INIT_SYSTICK;
+   START_CYCLE_MEASUREMENT;
+   startSectionNB(1);
+   #if defined(STATIC_TEST)
+   PMat<Res,R,C> res = dot(ma,mb);
+   #else
+   PMat<Res> res = dot(ma,mb);
+   #endif
+   stopSectionNB(1);
+   STOP_CYCLE_MEASUREMENT;
+
+   //PrintType<decltype(ma)>();
+   //PrintType<decltype(mb)>();
+   //std::cout << ma;
+   //std::cout << mb;
+   //std::cout << res;
+   
+
+   //std::cout << IsMatrix<decltype(r+r)>::value << "\r\n";
+
+   PMat<Res> tmp(C,K);
+
+   INIT_SYSTICK;
+   START_CYCLE_MEASUREMENT;
+   #if defined(STATIC_TEST)
+   PMat<Res,R,C> cmsis_res;
+   PMat<Res,R,K> ma_cmplx;
+   PMat<Res,K,C> mb_cmplx;
+   #else
+   PMat<Res> cmsis_res(R,C);
+   PMat<Res> ma_cmplx(R,K);
+   PMat<Res> mb_cmplx(K,C);
+   #endif
+
+   ma_cmplx = copy(ma);
+   mb_cmplx = copy(mb);
+
+
+   typename CMSISMatrixType<Res>::type SA;
+   typedef typename CMSISMatrixType<Res>::scalar S;
+   SA.numRows = R;
+   SA.numCols = K;
+   SA.pData = reinterpret_cast<S*>(ma_cmplx.ptr());
+
+   typename CMSISMatrixType<Res>::type SB;
+   SB.numRows = K;
+   SB.numCols = C;
+   SB.pData = reinterpret_cast<S*>(mb_cmplx.ptr());
+
+   typename CMSISMatrixType<Res>::type RES;
+   RES.numRows = R;
+   RES.numCols = C;
+   RES.pData = reinterpret_cast<S*>(cmsis_res.ptr());
+
+   
+   startSectionNB(2);
+   cmsis_cmplx_mat_mult(&SA, &SB, &RES,reinterpret_cast<S*>(tmp.ptr()));
+   startSectionNB(2);
+   STOP_CYCLE_MEASUREMENT;
+
+  
+   //std::cout << cmsis_res;
+   
+   if (!validate(res,cmsis_res,
+       ErrThreshold<Res>::abserr,ErrThreshold<Res>::relerr))
+   {
+      printf("matrix times matrix mixed expression failed \r\n");
+   }
+
+   std::cout << "=====\r\n";
+  
+}
+
 template<typename T,int R,int K, int C>
 void testsubmatmult()
 {
@@ -1744,7 +1848,7 @@ void matrix_all_test()
 {
 
 #if defined(MATRIX_TEST)
-   #if !defined(SUBTEST1) && !defined(SUBTEST2)
+   #if !defined(SUBTEST1) && !defined(SUBTEST2) && !defined(SUBTEST20)
    const int nb_tails = TailForTests<T>::tail;
    const int nb_loops = TailForTests<T>::loop;
    using UNROLL = mp_rename<mp_list_v<1,2,4,8,9,11>,mp_list>;
@@ -1770,7 +1874,7 @@ void matrix_all_test()
    using UNROLLA = mp_rename<mp_list_v<11>,mp_list>;
    #endif
 
-   #if !defined(SUBTEST1) && !defined(SUBTEST2)
+   #if !defined(SUBTEST1) && !defined(SUBTEST2) && !defined(SUBTEST20)
    using VEC = mp_rename<mp_list_v<1,
                                    nb_tails,
                                    nb_loops,
@@ -1943,6 +2047,21 @@ void matrix_all_test()
    title<T>("Submatrix multiply");
    ALL_TESTS<TESTSUBMATMULT,UNROLLA,VEC,UNROLL>::all();
 #endif
+
+#if defined(SUBTEST20)
+   if constexpr (IsComplexNumber<T>::value)
+   {
+      title<T>("Matrix mixed multiply");
+      testmatmult_mixed<T,typename T::value_type,NBVEC_4,NBVEC_4,NBVEC_4>();
+      testmatmult_mixed<T,typename T::value_type,NBVEC_16,NBVEC_16,NBVEC_16>();
+      testmatmult_mixed<T,typename T::value_type,NBVEC_32,NBVEC_32,NBVEC_32>();
+
+      testmatmult_mixed<typename T::value_type,T,NBVEC_4,NBVEC_4,NBVEC_4>();
+      testmatmult_mixed<typename T::value_type,T,NBVEC_16,NBVEC_16,NBVEC_16>();
+      testmatmult_mixed<typename T::value_type,T,NBVEC_32,NBVEC_32,NBVEC_32>();
+   }
+#endif
+
 
    //testsubmatmult<T,NBVEC_32>();
 #endif

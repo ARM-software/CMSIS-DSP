@@ -98,7 +98,7 @@ struct _BinaryOperator{
         return(this->derived()(lhs,rhs));
     }
 
-    template<typename T=Scalar,
+    template<typename T=ScalarLHS,
              typename std::enable_if<vector_traits<T>::has_predicate,bool>::type = true>
     auto  operator()(const VectorLHS lhs, 
                      const VectorRHS rhs,
@@ -107,7 +107,7 @@ struct _BinaryOperator{
         return(this->derived()(lhs,rhs,p0));
     }
 
-    template<typename T=Scalar,
+    template<typename T=ScalarLHS,
              typename std::enable_if<vector_traits<T>::has_predicate,bool>::type = true>
     auto  operator()(const VectorLHS lhs, 
                      const ScalarRHS rhs,
@@ -116,7 +116,7 @@ struct _BinaryOperator{
         return(this->derived()(lhs,rhs,p0));
     }
 
-    template<typename T=Scalar,
+    template<typename T=ScalarLHS,
              typename std::enable_if<vector_traits<T>::has_predicate,bool>::type = true>
     auto  operator()(const ScalarLHS lhs, 
                      const VectorRHS rhs,

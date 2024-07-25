@@ -199,12 +199,13 @@ inline void eval2D(DA &v,
  */
 template<typename DA,typename DB,
          typename std::enable_if<vector_idx_pair<DA,DB>(),bool>::type = true>
-inline DotResult<DA> _dot(const DA& a,
-                         const DB& b,
-                         const vector_length_t l,
-                         const Scalar* = nullptr)
+inline DotResult<DotFieldResult<DA,DB>> _dot(const DA& a,
+                                              const DB& b,
+                                              const vector_length_t l,
+                                              const Scalar* = nullptr)
 {
-    using Acc = DotResult<DA>;
+    using ScalarResult = DotFieldResult<DA,DB>;
+    using Acc = DotResult<ScalarResult>;
     constexpr unsigned int U = SCALAR_UNROLL;
     index_t i;
 

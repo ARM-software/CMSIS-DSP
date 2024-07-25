@@ -31,8 +31,8 @@
  */
 template<typename T,typename DST,
 typename std::enable_if<has_vector_inst<DST>() &&
-          IsVector<DST>::value &&
-         compatible_element<DST,T>(),bool>::type = true>
+                        IsVector<DST>::value &&
+                        compatible_element<DST,T>(),bool>::type = true>
 inline void _Fill(DST &v,
                   const T val, 
                   const vector_length_t l,
@@ -61,8 +61,8 @@ inline void _Fill(DST &v,
  */
 template<typename T,typename DST,
 typename std::enable_if<has_vector_inst<DST>() &&
-         must_use_matrix_idx<DST>() &&
-         compatible_element<DST,T>(),bool>::type = true>
+                        must_use_matrix_idx<DST>() &&
+                        compatible_element<DST,T>(),bool>::type = true>
 inline void _Fill2D(DST &v,
                   const T val, 
                   const vector_length_t rows,
@@ -149,6 +149,7 @@ inline void eval(DA &v,
  */
 template<typename DA,typename DB,
 typename std::enable_if<has_vector_inst<DA>() &&
+                        has_vector_inst<DB>() &&
                         must_use_matrix_idx_pair<DA,DB>(),bool>::type = true>
 inline void eval2D(DA &v,
                    const DB& other,
@@ -249,21 +250,20 @@ void printt (const std::tuple<T...>& _tup)
  */
 template<typename DA,typename DB,
          typename std::enable_if<has_vector_inst<DA>() &&
-         vector_idx_pair<DA,DB>(),bool>::type = true>
-inline DotResult<DA> _dot(const DA& a,
-                          const DB& b,
-                          const vector_length_t l,
-                          const Helium* = nullptr)
+                                 has_vector_inst<DB>() &&
+                                 vector_idx_pair<DA,DB>(),bool>::type = true>
+inline DotResult<DotFieldResult<DA,DB>> _dot(const DA& a,
+                                             const DB& b,
+                                             const vector_length_t l,
+                                             const Helium* = nullptr)
 {
-   //using Res = DotResult<DA>;
-   // Vector scalar datatype
 
-   using T = typename traits<DA>::Scalar;
-   using Temp = typename vector_traits<T>::temp_accumulator;
+   using T = DotFieldResult<DA,DB>;
+   using Temp =  typename vector_traits<T>::temp_accumulator;
 
    constexpr int nb_lanes = vector_traits<T>::nb_lanes;
 
-   Temp acc = vector_traits<T>::temp_acc_zero();
+    Temp acc = vector_traits<T>::temp_acc_zero();
 
     UNROLL_LOOP
     for(index_t i=0; i<l; i+=nb_lanes)
@@ -287,6 +287,7 @@ inline DotResult<DA> _dot(const DA& a,
  */
 template<typename DA,typename DB,
          typename std::enable_if<has_vector_inst<DA>() &&
+                                 has_vector_inst<DB>() &&
                                  vector_idx_pair<DA,DB>(),bool>::type = true>
 inline void _swap(DA&& a,
                   DB&& b,
