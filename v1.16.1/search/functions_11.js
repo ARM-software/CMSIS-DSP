@@ -1,0 +1,11 @@
+var searchData=
+[
+  ['temp_5facc_5fzero_0',['temp_acc_zero',['../group__DSPQ15Number.html#a2828ef5b1c219971f9f32b3f893d9f3f',1,'vector_traits&lt; Q15, DSP, typename std::enable_if&lt; true &gt;::type &gt;::temp_acc_zero()'],['../group__HeliumFloatNumber.html#af3aca4d4238acef42e16bc700750a591',1,'vector_traits&lt; float, arch, typename std::enable_if&lt; std::is_base_of&lt; Helium, arch &gt;::value &gt;::type &gt;::temp_acc_zero()'],['../group__HeliumHalfNumber.html#aa01b6f27c6c360d9e2abd98ff58751da',1,'vector_traits&lt; float16_t, arch, typename std::enable_if&lt; std::is_base_of&lt; Helium, arch &gt;::value &gt;::type &gt;::temp_acc_zero()'],['../group__HeliumQ15Number.html#a2828ef5b1c219971f9f32b3f893d9f3f',1,'vector_traits&lt; Q15, arch, typename std::enable_if&lt; std::is_base_of&lt; Helium, arch &gt;::value &gt;::type &gt;::temp_acc_zero()'],['../group__GenericTUPLENumber.html#a678616ea4a12a0ceb5a881d51cad9c8f',1,'vector_traits&lt; std::tuple&lt; E... &gt;, arch &gt;::temp_acc_zero()']]],
+  ['test16_1',['test16',['../group__FIXED.html#ga17b0ea005c375bc6596ed466b2dd2e29',1,'arm_cmsis_dsp']]],
+  ['test32_2',['test32',['../group__FIXED.html#ga6718751b99b39522bd3922845a8ac615',1,'arm_cmsis_dsp']]],
+  ['test64_3',['test64',['../group__FIXED.html#ga95a6d03c8204a5b55923ff90d850c476',1,'arm_cmsis_dsp']]],
+  ['test8_4',['test8',['../group__FIXED.html#ga9be6e20798da3a17a4b5179b55bfb465',1,'arm_cmsis_dsp']]],
+  ['tofrac_5',['toFrac',['../group__FIXED.html#ga149f07ea91b6d0eee7b3bae6c7d80d99',1,'arm_cmsis_dsp']]],
+  ['transpose_6',['transpose',['../group__Matrix.html#a78e2aa24c006e2bfa1d32dad4cd8362d',1,'arm_cmsis_dsp::Matrix::transpose()'],['../group__Matrix.html#af6a9502799ec81b84c2943ba4666418a',1,'arm_cmsis_dsp::Matrix&lt; P, DYNAMIC, DYNAMIC, Allocator &gt;::transpose()'],['../group__Matrix.html#af92b732111615edb4cd8fc670cec4a04',1,'arm_cmsis_dsp::MatrixView::transpose()'],['../group__Matrix.html#af92b732111615edb4cd8fc670cec4a04',1,'arm_cmsis_dsp::MatrixView&lt; T, DYNAMIC &gt;::transpose()'],['../group__Matrix.html#af92b732111615edb4cd8fc670cec4a04',1,'arm_cmsis_dsp::MatrixView&lt; T, CONSTRAINED_DYNAMIC &gt;::transpose()']]],
+  ['transposeto_7',['transposeTo',['../group__ALGO.html#ga25c5f009d6955ec75b47dff97784bfe6',1,'arm_cmsis_dsp']]]
+];
