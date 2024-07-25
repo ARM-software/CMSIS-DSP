@@ -14,7 +14,10 @@
 
 template<typename M,
          typename V,
-         typename RES>
+         typename RES,
+         typename std::enable_if<
+         has_vector_inst<M>() &&
+         has_vector_inst<V>(),bool>::type = true>
 inline void _dot_m_v(RES &res,
                     const M&m,const V&v,
                     const Helium* = nullptr)

@@ -706,6 +706,57 @@ void testouter()
 
 }
 
+template<typename TA,typename TB,int R,int C>
+void testouter_mixed()
+{
+   using Res = typename MixedRes<TA,TB>::type;
+   std::cout << "----\r\n";
+   std::cout << R << " x " << C << "\r\n";
+
+   PVector<TA,R> a;
+   PVector<TB,C> b;
+   init_array(a,R);
+   init_array(b,C);
+
+   b = b + b;
+
+   INIT_SYSTICK;
+   START_CYCLE_MEASUREMENT;
+   startSectionNB(1);
+   PMat<Res,R,C> res = outer(a,b);
+   stopSectionNB(1);
+   STOP_CYCLE_MEASUREMENT;
+
+   PVector<Res,R> acmplx;
+   PVector<Res,R> bcmplx;
+
+   acmplx = copy(a);
+   bcmplx = copy(b);
+
+   INIT_SYSTICK;
+   START_CYCLE_MEASUREMENT;
+   startSectionNB(2);
+   #if defined(STATIC_TEST)
+   PMat<Res,R,C> cmsis_res;
+   #else
+   PMat<Res> cmsis_res(R,C);
+   #endif
+   CMSISOuter<Res>::run(acmplx.const_ptr(),bcmplx.const_ptr(),cmsis_res.ptr(),R,C);
+   startSectionNB(2);
+   STOP_CYCLE_MEASUREMENT;
+
+   //std::cout<<cmsis_res;
+
+   if (!validate(res.const_ptr(),cmsis_res.const_ptr(),R*C,
+       ErrThreshold<Res>::abserr,ErrThreshold<Res>::relerr))
+   {
+      printf("outer failed \r\n");
+   }
+
+   std::cout << "=====\r\n";
+
+}
+
 template<typename T,int R,int C>
 void testview()
 {
@@ -839,6 +890,45 @@ void testmatvec()
    {
       printf("matrix times vector failed \r\n");
    }
+   std::cout << "=====\r\n";
+  
+}
+
+template<typename TA,typename TB,int R,int C>
+void testmatvec_mixed()
+{
+   using Res = typename MixedRes<TA,TB>::type;
+
+   std::cout << "----\r\n";
+   std::cout << R << " x " << C << "\r\n";
+
+   #if defined(STATIC_TEST)
+   PVector<TA,C> a;
+   #else
+   PVector<TA> a(C);
+   #endif
+   init_array(a,C);
+
+   #if defined(STATIC_TEST)
+   PMat<TB,R,C> m;
+   #else
+   PMat<TB> m(R,C);
+   #endif
+   init_array(m,R*C);
+
+   
+   INIT_SYSTICK;
+   START_CYCLE_MEASUREMENT;
+   startSectionNB(1);
+   #if defined(STATIC_TEST)
+   PVector<Res,R> res = dot(m,a);
+   #else
+   PVector<Res> res = dot(m,a);
+   #endif
+   stopSectionNB(1);
+   STOP_CYCLE_MEASUREMENT;
+
+  
    std::cout << "=====\r\n";
   
 }
@@ -2059,6 +2149,29 @@ void matrix_all_test()
       testmatmult_mixed<typename T::value_type,T,NBVEC_4,NBVEC_4,NBVEC_4>();
       testmatmult_mixed<typename T::value_type,T,NBVEC_16,NBVEC_16,NBVEC_16>();
       testmatmult_mixed<typename T::value_type,T,NBVEC_32,NBVEC_32,NBVEC_32>();
+
+      title<T>("Matrix times vector mixed");
+
+      // The test is only that it builds since
+      // there is no corresponding CMSIS-DSP function to compare with
+    
+      testmatvec_mixed<T,typename T::value_type,NBVEC_4 ,NBVEC_4>();
+      testmatvec_mixed<T,typename T::value_type,NBVEC_16,NBVEC_16>();
+      testmatvec_mixed<T,typename T::value_type,NBVEC_32,NBVEC_32>();
+
+      testmatvec_mixed<typename T::value_type,T,NBVEC_4 ,NBVEC_4>();
+      testmatvec_mixed<typename T::value_type,T,NBVEC_16,NBVEC_16>();
+      testmatvec_mixed<typename T::value_type,T,NBVEC_32,NBVEC_32>();
+
+      title<T>("Matrix outer product mixed");
+   
+      testouter_mixed<T,typename T::value_type,NBVEC_4,NBVEC_4>();
+      testouter_mixed<T,typename T::value_type,NBVEC_8,NBVEC_8>();
+      testouter_mixed<T,typename T::value_type,NBVEC_16,NBVEC_16>();
+
+      testouter_mixed<typename T::value_type,T,NBVEC_4,NBVEC_4>();
+      testouter_mixed<typename T::value_type,T,NBVEC_8,NBVEC_8>();
+      testouter_mixed<typename T::value_type,T,NBVEC_16,NBVEC_16>();
    }
 #endif
 

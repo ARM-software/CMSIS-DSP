@@ -244,7 +244,7 @@ constexpr bool is_only_vector() {return (IsVector<DA>::value &&
  */
 template<typename DA,typename DB>
 constexpr bool must_use_matrix_idx_pair() {return ((must_use_matrix_idx<DA>() || must_use_matrix_idx<DB>()) &&
-                                                 SameElementType<DA,DB>::value);}
+                                                 compatible_element<DA,DB>());}
 
 
 /*
