@@ -137,6 +137,10 @@ $(document).ready(function(){initNavTree('rev_hist.html',''); initResizable(); }
 <tr>
 <th>Version </th><th>Description  </th></tr>
 <tr>
+<td>v1.16.0 </td><td><p class="starttd">v1.16.0 release</p>
+<p class="endtd">Improvements to documentation Added arm_fir_decimate_f64 Removed some gcc workarounds that are no more needed for Helium Removed redundant test in atan2_q15 and q31 Replaced INFINITY by maximum positive float Replaced hex constants with 2's complement equivalents Added C++ template extension (outside of pack - headers can be got from github * repository) Solved issue #198 Solved issue #197 Solved issue #197 Solved issue #98 Solved issue #195 Solved issue #180 Solved issue #191 Solved issue #189 Solved issue #188 Solved issue #187 Solved issue #178 Solved issue #184 Solved issue #183 Solved issue #172 Solved issue #170 Solved issue #165 Solved issue #156 Solved issue #164 Solved issue #163 Solved issue #160 Solved issue #159 Solved issue #146 Solved issue #145 Solved issue #133 Solved issue #144 Solved issue #142 Solved issue #141 Solved issue #140 Solved issue #139 Solved issue #138 Solved issue #135 Solved issue #131 Solved issue #118 Solved issue #124 Solved issue #99   </p>
+</td></tr>
+<tr>
 <td>v1.15.0 </td><td><p class="starttd">v1.15.0</p>
 <p class="endtd">Switched to semantic versioning Corrections to MFCC Updated support for cmsis build tools 2.0 Compute graph removed. It is now part of CMSIS-Stream Github issues: 95,96,105,106,108,111,112 New FFT initializations to allow linker to do code size optimizations If you know the size of the transform at build time, prefer functions like arm_cfft_init_64_q15 to functions like arm_cfft_init_q15. It applies for CFFT, RFFT and MFCC and other datatypes.   </p>
 </td></tr>
