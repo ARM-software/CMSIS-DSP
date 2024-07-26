@@ -70,7 +70,7 @@ extern void arm_bitreversal_f16(
  */
 
 ARM_DSP_ATTRIBUTE void arm_cfft_radix2_f16(
-ARM_DSP_ATTRIBUTE const arm_cfft_radix2_instance_f16 * S,
+const arm_cfft_radix2_instance_f16 * S,
       float16_t * pSrc)
 {
 

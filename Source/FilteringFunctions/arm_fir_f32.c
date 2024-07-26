@@ -358,7 +358,7 @@ __STATIC_INLINE void arm_fir_f32_5_8_mve(const arm_fir_instance_f32 * S,
 
 
 ARM_DSP_ATTRIBUTE void arm_fir_f32(
-ARM_DSP_ATTRIBUTE const arm_fir_instance_f32 * S,
+const arm_fir_instance_f32 * S,
 const float32_t * pSrc,
 float32_t * pDst,
 uint32_t blockSize)
@@ -690,7 +690,7 @@ uint32_t blockSize)
 #if defined(ARM_MATH_NEON)
 
 ARM_DSP_ATTRIBUTE void arm_fir_f32(
-ARM_DSP_ATTRIBUTE const arm_fir_instance_f32 * S,
+const arm_fir_instance_f32 * S,
 const float32_t * pSrc,
 float32_t * pDst,
 uint32_t blockSize)

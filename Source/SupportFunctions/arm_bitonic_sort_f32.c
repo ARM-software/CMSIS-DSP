@@ -910,7 +910,7 @@ static float32x4x2_t arm_bitonic_sort_8_f32(float32x4_t a, float32x4_t b, uint8_
    * @param[in]  blockSize  number of samples to process.
    */
 ARM_DSP_ATTRIBUTE void arm_bitonic_sort_f32(
-ARM_DSP_ATTRIBUTE const arm_sort_instance_f32 * S, 
+const arm_sort_instance_f32 * S, 
       float32_t * pSrc,
       float32_t * pDst, 
       uint32_t blockSize)

@@ -62,7 +62,7 @@ extern void arm_bitreversal_f32(
  */
 
 ARM_DSP_ATTRIBUTE void arm_cfft_radix2_f32(
-ARM_DSP_ATTRIBUTE const arm_cfft_radix2_instance_f32 * S,
+const arm_cfft_radix2_instance_f32 * S,
       float32_t * pSrc)
 {
 
