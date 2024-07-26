@@ -150,7 +150,7 @@ namespace inner {
 
      __STATIC_FORCEINLINE int32x4_t vsub(const Q31 a,const int32x4_t b)
     {
-       return(vqsubq_n_s32(b,a.v));
+       return(vqsubq(vdupq_n_s32(a.v),b));
     };
 
     __STATIC_FORCEINLINE int32x4_t vsub(const int32x4_t a,const int32x4_t b,
@@ -168,7 +168,7 @@ namespace inner {
      __STATIC_FORCEINLINE int32x4_t vsub(const Q31 a,const int32x4_t b,
                                         const mve_pred16_t p0)
     {
-       return(vqsubq_m_n_s32(vuninitializedq_s32(),b,a.v,p0));
+       return(vqsubq_m(vuninitializedq_s32(),vdupq_n_s32(a.v),b,p0));
     };
   
     __STATIC_FORCEINLINE int32x4_t vmul(const int32x4_t a,const int32x4_t b)

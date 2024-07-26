@@ -302,7 +302,7 @@ namespace inner {
    __STATIC_FORCEINLINE float16x8_t vsub(const float16_t a,
                                          const float16x8_t b)
    {
-      return(vsubq_n_f16(b,a));
+      return(vsubq(vdupq_n_f16(a),b));
    };
 
    __STATIC_FORCEINLINE float16x8_t vsub(const float16x8_t a,
@@ -323,7 +323,7 @@ namespace inner {
                                          const float16x8_t b,
                                          const mve_pred16_t p0)
    {
-     return(vsubq_x_n_f16(b,a,p0));
+     return(vsubq_x(vdupq_n_f16(a),b,p0));
    };
 
    /*

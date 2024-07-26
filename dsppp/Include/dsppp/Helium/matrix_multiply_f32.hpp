@@ -56,7 +56,7 @@ __STATIC_INLINE  void _arm_mat_mult_2x2_mve(
     else
     {
         constexpr int s = StaticStride<MA>::value;
-        vecInA = inner::vload1_gen_stride<0, 0, s, s>::run(pSrcA.const_ptr());
+        vecInA = inner::vload1_gen_stride<T,0, 0, s, s>::run(pSrcA.const_ptr());
     }
 
     if constexpr (!HasStaticStride<MB>::value)
@@ -65,7 +65,7 @@ __STATIC_INLINE  void _arm_mat_mult_2x2_mve(
     }
     else
     {
-        vecInB = inner::vload1_gen_stride<0, 1, 0, 1>::run(pSrcB.const_ptr());
+        vecInB = inner::vload1_gen_stride<T,0, 1, 0, 1>::run(pSrcB.const_ptr());
     }
     vecDst = inner::vmul(vecInA, vecInB);
 
@@ -86,7 +86,7 @@ __STATIC_INLINE  void _arm_mat_mult_2x2_mve(
     else 
     {
         constexpr int s = StaticStride<MA>::value;
-        vecInA = inner::vload1_gen_stride<1, 1, s+1, s+1>::run(pSrcA.const_ptr());
+        vecInA = inner::vload1_gen_stride<T,1, 1, s+1, s+1>::run(pSrcA.const_ptr());
 
     }
 
@@ -97,7 +97,7 @@ __STATIC_INLINE  void _arm_mat_mult_2x2_mve(
     else 
     {
         constexpr int s = StaticStride<MB>::value;
-        vecInB = inner::vload1_gen_stride<s, s+1, s, s+1>::run(pSrcB.const_ptr());
+        vecInB = inner::vload1_gen_stride<T,s, s+1, s, s+1>::run(pSrcB.const_ptr());
     }
 
     if constexpr (!HasStaticStride<RES>::value)
@@ -115,7 +115,7 @@ __STATIC_INLINE  void _arm_mat_mult_2x2_mve(
     else 
     {        
         constexpr int s = StaticStride<RES>::value;
-        inner::vstore1_gen_stride<0, 1, s, s+1>::run(pDst.ptr(),vecDst);
+        inner::vstore1_gen_stride<T,0, 1, s, s+1>::run(pDst.ptr(),vecDst);
     }
 
 }

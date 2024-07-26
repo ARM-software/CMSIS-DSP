@@ -187,7 +187,7 @@ namespace inner {
 
      __STATIC_FORCEINLINE int16x8_t vsub(const Q15 a,const int16x8_t b)
     {
-       return(vqsubq_n_s16(b,a.v));
+       return(vqsubq(vdupq_n_s16(a.v),b));
     };
 
     __STATIC_FORCEINLINE int16x8_t vsub(const int16x8_t a,const int16x8_t b,
@@ -205,7 +205,7 @@ namespace inner {
      __STATIC_FORCEINLINE int16x8_t vsub(const Q15 a,const int16x8_t b,
                                         const mve_pred16_t p0)
     {
-       return(vqsubq_m_n_s16(vuninitializedq_s16(),b,a.v,p0));
+       return(vqsubq_m(vuninitializedq_s16(),vdupq_n_s16(a.v),b,p0));
     };
   
     __STATIC_FORCEINLINE int16x8_t vmul(const int16x8_t a,const int16x8_t b)

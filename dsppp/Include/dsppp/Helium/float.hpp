@@ -317,7 +317,7 @@ namespace inner {
    */
    __STATIC_FORCEINLINE float32x4_t vsub(const float a,const float32x4_t b)
   {
-     return(vsubq_n_f32(b,a));
+     return(vsubq(vdupq_n_f32(a),b));
   };
 
   /**
@@ -362,7 +362,7 @@ namespace inner {
    __STATIC_FORCEINLINE float32x4_t vsub(const float a,const float32x4_t b,
                                         const mve_pred16_t p0)
   {
-     return(vsubq_x_n_f32(b,a,p0));
+     return(vsubq_x(vdupq_n_f32(a),b,p0));
   };
   
   /**
@@ -619,7 +619,7 @@ namespace inner {
    * @tparam     S     List of offsets known at built time
    */
   template<int ...S>
-  struct vload1_gen_stride
+  struct vload1_gen_stride<float32_t,S...>
   {
      /**
       * @brief      Load with generalized stride
@@ -639,7 +639,7 @@ namespace inner {
    * @brief      Load with generalized stride specialized for <0,1,2,3>
    */
   template<>
-  struct vload1_gen_stride<0,1,2,3>
+  struct vload1_gen_stride<float32_t,0,1,2,3>
   {
      /**
       * @brief      Load with generalized stride
@@ -662,7 +662,7 @@ namespace inner {
    * @tparam     S     List of offsets known at built time
    */
   template<int ...S>
-  struct vload1_gen_stride_z 
+  struct vload1_gen_stride_z<float32_t,S...>
   {
      /**
       * @brief      Load
@@ -687,7 +687,7 @@ namespace inner {
    * @tparam     S     List of offsets known at built time
    */
   template<>
-  struct vload1_gen_stride_z<0,1,2,3>
+  struct vload1_gen_stride_z<float32_t,0,1,2,3>
   {
      /**
       * @brief      Gather load with predicated specialized for <0,1,2,3>
@@ -807,7 +807,7 @@ namespace inner {
    * @tparam     S     Stride values known at built time
    */
   template<int ...S>
-  struct vstore1_gen_stride
+  struct vstore1_gen_stride<float32_t,S...>
   {
      /**
       * @brief      Scatter store
@@ -826,7 +826,7 @@ namespace inner {
    * @brief      Generalized store with stride (Specialized for <0,1,2,3>)
    */
   template<>
-  struct vstore1_gen_stride<0,1,2,3>
+  struct vstore1_gen_stride<float32_t,0,1,2,3>
   {
       /**
        * @brief      Scatter store
@@ -846,7 +846,7 @@ namespace inner {
    * @tparam     S     Strides values known at built time
    */
   template<int ...S>
-  struct vstore1_gen_stride_z
+  struct vstore1_gen_stride_z<float32_t,S...>
   {
       /**
        * @brief      Scatter store with tail predicate
@@ -868,7 +868,7 @@ namespace inner {
    * @brief      Scatter store with tail predicate (specialized for <0,1,2,3>)
    */
   template<>
-  struct vstore1_gen_stride_z<0,1,2,3>
+  struct vstore1_gen_stride_z<float32_t,0,1,2,3>
   {
      /**
       * @brief      Scatter store with tail predicate

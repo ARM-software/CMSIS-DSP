@@ -52,6 +52,14 @@ template<typename T>
 struct number_traits;
 
 
+/**
+ * @brief      Instrinsic vector containing complex values and not just real values
+ *
+ * @tparam     T     Datatype of vector
+ */
+template<typename T>
+struct ComplexVector;
+
 /*
 
 When vector is true we have a vector datatype

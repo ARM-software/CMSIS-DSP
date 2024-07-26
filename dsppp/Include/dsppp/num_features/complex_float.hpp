@@ -53,7 +53,9 @@ no vectors for float
  * @tparam     arch  Current architecture
  */
 template<typename arch>
-struct vector_traits<std::complex<float>,arch,void> {
+struct vector_traits<std::complex<float>,arch,
+    typename std::enable_if<!std::is_base_of<Helium,arch>::value &&
+                            !std::is_base_of<Neon,arch>::value>::type> {
   
   //! Current type
   typedef std::complex<float> type;
