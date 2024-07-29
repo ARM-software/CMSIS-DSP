@@ -1,0 +1,4 @@
+var searchData=
+[
+  ['compute_5ftype_0',['compute_type',['../group__GenericDoubleNumber.html#aa6623381154dc583b47d77a531bc985f',1,'number_traits&lt; double &gt;::compute_type()'],['../group__GenericFloatNumber.html#aec08c1acfde9095cc4b8f6af4dbbe114',1,'number_traits&lt; float &gt;::compute_type()'],['../group__GenericTUPLENumber.html#af278d4e4010149d9ca2551e5cba59e5e',1,'number_traits&lt; std::tuple&lt; E... &gt; &gt;::compute_type()'],['../group__GenericHalfNumber.html#a7adc5c6fcda771f3d0a7659d461b9811',1,'number_traits&lt; float16_t &gt;::compute_type()'],['../group__GenericQ15Number.html#ae8605595911fd5f57d114161a4bee00c',1,'number_traits&lt; Q15 &gt;::compute_type()'],['../group__GenericQ31Number.html#afc1144c389064f951c9d80b6d216eb86',1,'number_traits&lt; Q31 &gt;::compute_type()'],['../group__GenericQ7Number.html#ab02ccae7d994a07e68b06307bb92d827',1,'number_traits&lt; Q7 &gt;::compute_type()']]]
+];
