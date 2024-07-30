@@ -257,7 +257,7 @@ void all_dot_test()
     test<T,nb_loops+1,ACC>();
     test<T,nb_loops+nb_tails,ACC>();
 
-    if constexpr (IsComplexNumber<T>::value)
+    if constexpr (IsComplexNumber<T>::value && SupportMixedRealComplex<ARCH>::value)
     {
       title<T>("Dot mixed product");
 
@@ -367,7 +367,6 @@ void all_dot_test()
 
 void dot_test()
 {
-   
 #if defined(DOT_TEST)
 
    // No f64 complex dot product in CMSIS-DSP
@@ -415,5 +414,4 @@ void dot_test()
    #endif
 
 #endif
-
 }

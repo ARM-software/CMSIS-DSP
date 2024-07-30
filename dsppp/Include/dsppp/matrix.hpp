@@ -635,6 +635,15 @@ struct _Outer: _Expr<_Outer<LHS,RHS,DerivedOp>>
 };
 
 template<typename LHS,typename RHS,typename DerivedOp>
+struct IsMixed<_Outer<LHS,RHS,DerivedOp>>
+{
+    using EA = typename ElementType<LHS>::type;
+    using EB = typename ElementType<RHS>::type;
+    constexpr static bool value = (IsComplexNumber<EA>::value != IsComplexNumber<EB>::value);
+};
+
+
+template<typename LHS,typename RHS,typename DerivedOp>
 struct IsVector<_Outer<LHS,RHS,DerivedOp>>
 {
     constexpr static bool value = false;

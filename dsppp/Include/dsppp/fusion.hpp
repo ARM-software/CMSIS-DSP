@@ -32,6 +32,18 @@ For mixed operations with complex / real
 template<typename TA,typename TB>
 struct MixedRes;
 
+/*
+
+Check if expression is using mixed arithmetic
+with complex and real
+
+*/
+template<typename TA>
+struct IsMixed
+{
+    constexpr static bool value = false;
+};
+
 template<typename T>
 struct MixedRes<std::complex<T>,T>
 {
@@ -159,6 +171,46 @@ return (std::is_same<EA,EB>::value ||
 (IsComplexNumber<EA>::value && std::is_same<typename ComplexNumberType<EA>::type,EB>::value) ||
 (IsComplexNumber<EB>::value && std::is_same<typename ComplexNumberType<EB>::type,EA>::value));
 
+}
+
+/**
+ * @brief      Check if vector / matrix contains complex numbers
+ *
+ * @tparam     A     Datatype
+ *
+ * @return     True if complex, False otherwise.
+ */
+template<typename A>
+constexpr bool is_complex() {
+    using EA = typename ElementType<A>::type;
+    return (IsComplexNumber<EA>::value);
+
+}
+
+/**
+ * @brief      Determines if datatype is a float (double, float, complex ...).
+ *
+ * @tparam     A     Datatype
+ *
+ * @return     True if float, False otherwise.
+ */
+template<typename A>
+constexpr bool is_float() {
+    using EA = typename ElementType<A>::type;
+    return (number_traits<EA>::is_float);
+}
+
+/**
+ * @brief      Determines if datatype is fixed (Q31,Q15, complex<Q15> ...).
+ *
+ * @tparam     A     The datatype
+ *
+ * @return     True if fixed, False otherwise.
+ */
+template<typename A>
+constexpr bool is_fixed() {
+    using EA = typename ElementType<A>::type;
+    return (number_traits<EA>::is_fixed);
 }
 
 /**
@@ -693,6 +745,14 @@ struct Complexity<_Binary<LHS,RHS,DerivedOp>>
    constexpr static int lhsv = Complexity<LHS>::value;
    constexpr static int rhsv = Complexity<RHS>::value;
    constexpr static int value = lhsv + rhsv + 1;
+};
+
+template<typename LHS,typename RHS,typename DerivedOp>
+struct IsMixed<_Binary<LHS,RHS,DerivedOp>>
+{
+    using EA = typename ElementType<LHS>::type;
+    using EB = typename ElementType<RHS>::type;
+    constexpr static bool value = (IsComplexNumber<EA>::value != IsComplexNumber<EB>::value);
 };
 
 template<typename LHS,typename RHS,typename DerivedOp>

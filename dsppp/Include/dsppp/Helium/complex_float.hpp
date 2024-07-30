@@ -735,7 +735,7 @@ namespace inner {
   struct vload1_gen_stride_z<std::complex<float32_t>,S...>
   {
      template<int...I>
-     static ComplexVector<float32x4_t> run(const std::complex<float32_t> *p,
+     static ComplexVector<float32x4_t> _run(const std::complex<float32_t> *p,
                                            const std::size_t nb,
                                            const mve_pred16_t p0,
                                            std::integer_sequence<int,I...>
@@ -757,7 +757,7 @@ namespace inner {
       */
      static ComplexVector<float32x4_t> run(const std::complex<float32_t> *p,const std::size_t nb,const mve_pred16_t p0)
      {
-        _run(p,nb,p0,typename ToComplexStride<S...>::type{});
+        return _run(p,nb,p0,typename ToComplexStride<S...>::type{});
      };
   };
 

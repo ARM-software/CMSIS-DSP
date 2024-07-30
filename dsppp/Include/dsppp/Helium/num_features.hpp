@@ -2,6 +2,8 @@
 /** @file */ 
 #pragma once 
 
+#include <iostream>
+
 /*
 
 vreduce is going from vector accumulator to scalar accumulator
@@ -23,7 +25,15 @@ struct ComplexVector<float32x4_t>
     explicit constexpr ComplexVector():v{}{};
     typedef float32x4_t type;
     float32x4_t v;
+
+    friend std::ostream& operator<< (std::ostream& stream, const ComplexVector<float32x4_t>& other) 
+    {
+        stream << "(" << other.v[0] << "," << other.v[1] << ") (" << other.v[2] << "," << other.v[3] << ") ";
+        return(stream);
+    };
 };
+
+
 
 namespace inner {
 

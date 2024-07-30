@@ -5,6 +5,12 @@
 
 namespace arm_cmsis_dsp {
 
+template<typename ARCH>
+struct SupportMixedRealComplex
+{
+  constexpr static bool value = false;
+};
+
 /** \addtogroup ARCH Architecture detection
  *  \ingroup DSPPP
  *  @{
@@ -36,6 +42,13 @@ class Helium82:public Helium {};
 class Neon:public Scalar {};
 
 /*! @} */
+
+
+template<>
+struct SupportMixedRealComplex<Scalar>
+{
+  constexpr static bool value = false;
+};
 
 }
 

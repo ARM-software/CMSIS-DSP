@@ -2101,6 +2101,8 @@ void matrix_all_test()
 
 #if defined(SUBTEST1)
    title<T>("Matrix multiply");
+   testmatmult<T,2,2,2>();
+   testmatmult<T,3,3,3>();
    testmatmult<T,NBVEC_4,NBVEC_4,NBVEC_4>();
    testmatmult<T,NBVEC_16,NBVEC_16,NBVEC_16>();
    testmatmult<T,NBVEC_32,NBVEC_32,NBVEC_32>();
@@ -2129,6 +2131,8 @@ void matrix_all_test()
 
 #if defined(SUBTEST1)
    title<T>("Submatrix multiply");
+   testsubmatmult<T,2,2,2>();
+   testsubmatmult<T,3,3,3>();
    testsubmatmult<T,NBVEC_4,NBVEC_4,NBVEC_4>();
    testsubmatmult<T,NBVEC_16,NBVEC_16,NBVEC_16>();
 #endif 
@@ -2139,7 +2143,7 @@ void matrix_all_test()
 #endif
 
 #if defined(SUBTEST20)
-   if constexpr (IsComplexNumber<T>::value)
+   if constexpr (IsComplexNumber<T>::value && SupportMixedRealComplex<ARCH>::value)
    {
       title<T>("Matrix mixed multiply");
       testmatmult_mixed<T,typename T::value_type,NBVEC_4,NBVEC_4,NBVEC_4>();
@@ -2185,6 +2189,13 @@ void matrix_all_test()
 
 void matrix_test()
 {
+#if 0
+   title<std::complex<float>>("Test mat mult");
+   testmatmult<std::complex<float>,2,2,2>();
+   testmatmult<std::complex<float>,3,3,3>();
+   testmatmult<std::complex<float>,4,4,4>();
+   testmatmult<std::complex<float>,5,5,5>();
+#else
 #if defined(MATRIX_TEST)
    #if defined(F64_DT)
    matrix_all_test<double>();
@@ -2225,5 +2236,6 @@ void matrix_test()
    #if defined(Q7_DT)
    matrix_all_test<Q7>();
    #endif
+#endif
 #endif
 }

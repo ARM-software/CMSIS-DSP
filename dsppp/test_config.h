@@ -6,8 +6,8 @@
 //#define ONLY_BENCHMARKS
 
 #define MATRIX_TEST
-#define COMPLEX_Q15_DT
-#define STATIC_TEST
+#define COMPLEX_F32_DT
+#define DYNAMIC_TEST
 #define SUBTEST20
 
 #endif

@@ -345,7 +345,7 @@ void all_vector_test()
     test<T,nb_loops+nb_tails>();
 
     // Mixed arithmetic
-    if constexpr (IsComplexNumber<T>::value)
+    if constexpr (IsComplexNumber<T>::value && SupportMixedRealComplex<ARCH>::value)
     {
         title<T>("Vector mixed");
 
@@ -421,7 +421,7 @@ void all_vector_test()
    
 
     // Mixed arithmetic
-    if constexpr (IsComplexNumber<T>::value)
+    if constexpr (IsComplexNumber<T>::value && SupportMixedRealComplex<ARCH>::value)
     {
         title<T>("Vector mixed mult");
 
@@ -505,8 +505,24 @@ void all_vector_test()
 
 }
 
+
+
 void vector_test()
 {
+#if 0
+   using T = std::complex<float>;
+   constexpr int NB = 128;
+   PVector<T,NB> a;
+   PVector<T,NB> b;
+  
+   init_array(a,NB);
+   init_array(b,NB);
+
+   PVector<T,NB> res = a * conjugate(b + std::complex<float>(2.0f,-1.0f));
+
+   std::cout << res;
+
+#else
 #if defined(VECTOR_TEST)
 
    #if defined(COMPLEX_F64_DT)
@@ -555,5 +571,6 @@ void vector_test()
    all_vector_test<Q7>();
    #endif
 
+#endif
 #endif
 }

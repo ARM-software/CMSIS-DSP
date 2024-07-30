@@ -115,11 +115,17 @@ __STATIC_INLINE void _dot_m_m(const MA&pSrcA,const MB&pSrcB,
            return;
         }
         else if(numRowsA == 2)
+        {
             return _arm_mat_mult_2x2_mve(pSrcA, pSrcB, std::forward<RES>(pDst));
+        }
         else if(numRowsA == 3)
+        {
             return _arm_mat_mult_3x3_mve(pSrcA, pSrcB, std::forward<RES>(pDst));
+        }
         else if(numRowsA == 4)
+        {
             return _arm_mat_mult_4x4_mve(pSrcA, pSrcB, std::forward<RES>(pDst));
+        }
     }
 
     /* main loop process 4 rows */
