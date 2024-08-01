@@ -74,6 +74,51 @@ typename std::enable_if<std::is_base_of<Helium,arch>::value>::type >
   
 };
 
+/**
+ * @brief      Vector datatype for Helium
+ *
+ * @tparam     arch  Current architecture
+ */
+template<typename arch>
+struct vector_traits<Dual<std::complex<float>>,arch,
+typename std::enable_if<std::is_base_of<Helium,arch>::value>::type >
+{
+  //! Scalar datatype
+  typedef std::complex<float> type;
+  //! Storage datatype
+  typedef std::complex<float> storage_type;
+  //! Vector datatype
+  typedef ComplexVectorQ<float32x4_t> vector;
+  //! Temp accumulator datatype (must be reduced to final scalar datatype)
+  typedef ComplexVectorQ<float32x4_t> temp_accumulator;
+  //! Predicate datatype (not used)
+  typedef bool predicate_t;
+  //! Has vector instruction
+  static constexpr bool has_vector = true;
+  //! Is float
+  static constexpr bool is_float = true;
+  //! Is not fixed point
+  static constexpr bool is_fixed = false;
+  //! Has predicated loops
+  static constexpr bool has_predicate = false;
+
+  //! Number of lanes (each lane being two floats)
+  static constexpr int nb_lanes = 4;
+
+  /**
+   * @brief      Temp accumulator initialized to 0
+   *
+   * @return     Temp accumulator initialized to 0
+   */
+  static ComplexVectorQ<float32x4_t> temp_acc_zero()
+  {
+     return(ComplexVectorQ<float32x4_t>());
+  }
+
+  
+  
+};
+
 
 /**
  * \ingroup HeliumNumber

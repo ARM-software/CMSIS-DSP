@@ -71,6 +71,9 @@ struct vector_traits<float16_t> {
   static constexpr bool is_fixed = false;
   //! Has predicated loop
   static constexpr bool has_predicate = false;
+
+  //! Number of lanes
+  static constexpr int nb_lanes = 1;
 };
 #endif 
 

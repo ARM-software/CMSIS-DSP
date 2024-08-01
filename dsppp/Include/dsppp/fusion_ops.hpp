@@ -54,6 +54,14 @@ struct _UnaryOperator{
 #endif
 };
 
+template<typename Scalar,typename Derived>
+struct DualType<_UnaryOperator<Scalar,Derived>>
+{
+   using Scalar_D = typename DualType<Scalar>::type;
+   using Derived_D = typename DualType<Derived>::type;
+
+   typedef _UnaryOperator<Scalar_D,Derived_D> type;
+};
 
 /**
  * @brief  Unary operator
@@ -125,6 +133,17 @@ struct _BinaryOperator{
         return(this->derived()(lhs,rhs,p0));
     }
 #endif
+};
+
+
+template<typename ScalarLHS,typename ScalarRHS, typename Derived>
+struct DualType<_BinaryOperator<ScalarLHS,ScalarRHS,Derived>>
+{
+   using ScalarLHS_D = typename DualType<ScalarLHS>::type;
+   using ScalarRHS_D = typename DualType<ScalarRHS>::type;
+   using Derived_D = typename DualType<Derived>::type;
+
+   typedef _BinaryOperator<ScalarLHS_D,ScalarRHS_D,Derived_D> type;
 };
 
 /*
@@ -199,6 +218,15 @@ struct _AddOp:_BinaryOperator<ScalarLHS,ScalarRHS,_AddOp<ScalarLHS,ScalarRHS>>
 #endif
 };
 
+template<typename ScalarLHS,typename ScalarRHS>
+struct DualType<_AddOp<ScalarLHS,ScalarRHS>>
+{
+   using ScalarLHS_D = typename DualType<ScalarLHS>::type;
+   using ScalarRHS_D = typename DualType<ScalarRHS>::type;
+
+   typedef _AddOp<ScalarLHS_D,ScalarRHS_D> type;
+};
+
 /**
  * @brief  Sub operator
  *
@@ -265,6 +293,14 @@ struct _SubOp:_BinaryOperator<ScalarLHS,ScalarRHS,_SubOp<ScalarLHS,ScalarRHS>>
 #endif
 };
 
+template<typename ScalarLHS,typename ScalarRHS>
+struct DualType<_SubOp<ScalarLHS,ScalarRHS>>
+{
+   using ScalarLHS_D = typename DualType<ScalarLHS>::type;
+   using ScalarRHS_D = typename DualType<ScalarRHS>::type;
+
+   typedef _SubOp<ScalarLHS_D,ScalarRHS_D> type;
+};
 
 /**
  * @brief  Mul operator
@@ -333,6 +369,15 @@ struct _MulOp:_BinaryOperator<ScalarLHS,ScalarRHS,_MulOp<ScalarLHS,ScalarRHS>>
 #endif
 };
 
+template<typename ScalarLHS,typename ScalarRHS>
+struct DualType<_MulOp<ScalarLHS,ScalarRHS>>
+{
+   using ScalarLHS_D = typename DualType<ScalarLHS>::type;
+   using ScalarRHS_D = typename DualType<ScalarRHS>::type;
+
+   typedef _MulOp<ScalarLHS_D,ScalarRHS_D> type;
+};
+
 /*
  * 
  * UNARY
@@ -373,6 +418,13 @@ struct _NegOp:_UnaryOperator<Scalar,_NegOp<Scalar>>
 #endif
 };
 
+template<typename Scalar>
+struct DualType<_NegOp<Scalar>>
+{
+   using Scalar_D = typename DualType<Scalar>::type;
+
+   typedef _NegOp<Scalar_D> type;
+};
 
 /**
  * @brief  No operator
@@ -406,6 +458,14 @@ struct _NoOp:_UnaryOperator<Scalar,_NoOp<Scalar>>
     }
 
 #endif
+};
+
+template<typename Scalar>
+struct DualType<_NoOp<Scalar>>
+{
+   using Scalar_D = typename DualType<Scalar>::type;
+
+   typedef _NoOp<Scalar_D> type;
 };
 
 /**
@@ -450,6 +510,14 @@ struct _ConjugateOp:_UnaryOperator<Scalar,_ConjugateOp<Scalar>>
 
  
 #endif
+};
+
+template<typename Scalar>
+struct DualType<_ConjugateOp<Scalar>>
+{
+   using Scalar_D = typename DualType<Scalar>::type;
+
+   typedef _ConjugateOp<Scalar_D> type;
 };
 
 /*! @} */

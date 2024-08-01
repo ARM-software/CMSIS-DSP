@@ -69,6 +69,9 @@ struct vector_traits<Q15,arch,
   //! Has no predicated loop
   static constexpr bool has_predicate = false;
 
+  //! Number of lanes
+  static constexpr int nb_lanes = 1;
+
 };
 
 /**

@@ -12,12 +12,7 @@ from_accumulator is going from scalar accumulator to scalar datatype
 
 */
 
-/*
 
-Must have 4 complex to be able to do mixed
-complex / real operations
-
-*/
 template<>
 struct ComplexVector<float32x4_t>
 {
@@ -33,7 +28,22 @@ struct ComplexVector<float32x4_t>
     };
 };
 
+template<>
+struct ComplexVectorQ<float32x4_t>
+{
+    explicit constexpr ComplexVectorQ(float32x4_t ma,float32x4_t mb):re_v(ma),im_v(mb){};
+    explicit constexpr ComplexVectorQ(float32x4_t m):re_v(m),im_v{}{};
+    explicit constexpr ComplexVectorQ():re_v{},im_v{}{};
+    typedef float32x4_t type;
+    float32x4_t re_v,im_v;
 
+    friend std::ostream& operator<< (std::ostream& stream, const ComplexVectorQ<float32x4_t>& other) 
+    {
+        stream << "(" << other.re_v[0] << "," << other.im_v[0] << ") (" << other.re_v[1] << "," << other.im_v[1] << ") ";
+        stream << "(" << other.re_v[2] << "," << other.im_v[2] << ") (" << other.re_v[3] << "," << other.im_v[3] << ") ";
+        return(stream);
+    };
+};
 
 namespace inner {
 

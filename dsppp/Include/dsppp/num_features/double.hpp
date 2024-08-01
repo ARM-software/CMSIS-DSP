@@ -89,6 +89,9 @@ struct vector_traits<double,arch,void> {
   static constexpr bool is_fixed = false;
   //! No predicated loops
   static constexpr bool has_predicate = false;
+
+  //! Number of lanes
+  static constexpr int nb_lanes = 1;
 };
 
 /**

@@ -17,7 +17,10 @@ template<typename M,
          typename RES,
          typename std::enable_if<
          has_vector_inst<M>() &&
-         has_vector_inst<V>(),bool>::type = true>
+         has_vector_inst<V>() && 
+         !is_mixed<V>() && 
+         same_nb_lanes<M,V>() &&
+         same_nb_lanes<M,RES>(),bool>::type = true>
 inline void _dot_m_v(RES &res,
                     const M&m,const V&v,
                     const Helium* = nullptr)
@@ -85,6 +88,8 @@ template<typename MA,
          typename std::enable_if<
          has_vector_inst<MA>() &&
          has_vector_inst<MB>() &&
+         same_nb_lanes<MA,MB>() &&
+         same_nb_lanes<MA,RES>() &&
          number_traits<typename traits<MA>::Scalar>::is_float,bool>::type = true>
 __STATIC_INLINE void _dot_m_m(const MA&pSrcA,const MB&pSrcB,
                      RES &&pDst,

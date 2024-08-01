@@ -154,23 +154,24 @@ using SameElementType=std::is_same<typename ElementType<A>::type,typename Elemen
 template<typename DA>
 constexpr bool has_vector_inst() {return (vector_traits<typename ElementType<DA>::type>::has_vector);}
 
+
+template<typename DA>
+constexpr bool is_mixed() {return IsMixed<DA>::value;}
+
+
 /**
- * @brief      Check if datatype are compatible and accept mixed
- *             arithmetic complex with real
+ * @brief      Check same number of lanes is used
  *
- * @tparam     A     LHS datatype
- * @tparam     B     RHS datatype
+ * @tparam     A     Datatype
+ * @tparam     B     Datatype
  *
- * @return     True if types are compatible
+ * @return     True is same number of lanes for A and B
  */
 template<typename A,typename B>
-constexpr bool compatible_element() {
+constexpr bool same_nb_lanes() {
     using EA = typename ElementType<A>::type;
     using EB = typename ElementType<B>::type;
-return (std::is_same<EA,EB>::value || 
-(IsComplexNumber<EA>::value && std::is_same<typename ComplexNumberType<EA>::type,EB>::value) ||
-(IsComplexNumber<EB>::value && std::is_same<typename ComplexNumberType<EB>::type,EA>::value));
-
+    return (vector_traits<EA>::nb_lanes == vector_traits<EB>::nb_lanes);
 }
 
 /**
@@ -186,6 +187,7 @@ constexpr bool is_complex() {
     return (IsComplexNumber<EA>::value);
 
 }
+
 
 /**
  * @brief      Determines if datatype is a float (double, float, complex ...).
@@ -235,6 +237,33 @@ constexpr bool is_scalar() {return (!IsVector<DA>::value &&
                                     !HasMatrixIndexing<DA>::value);}
 
 /**
+ * @brief      Check if datatype are compatible and accept mixed
+ *             arithmetic complex with real
+ *
+ * @tparam     A     LHS datatype
+ * @tparam     B     RHS datatype
+ *
+ * @return     True if types are compatible
+ */
+template<typename A,typename B>
+constexpr bool compatible_element() {
+    using EA = typename ElementType<A>::type;
+    using EB = typename ElementType<B>::type;
+return (
+(std::is_same<EA,EB>::value || 
+(IsComplexNumber<EA>::value && std::is_same<typename ComplexNumberType<EA>::type,EB>::value) ||
+(IsComplexNumber<EB>::value && std::is_same<typename ComplexNumberType<EB>::type,EA>::value))
+) ;
+}
+
+template<typename A,typename B>
+constexpr bool compatible_assignment() {
+    using EA = typename ElementType<A>::type;
+    using EB = typename ElementType<B>::type;
+return (std::is_same<EA,EB>::value);
+}
+
+/**
  * @brief      Check if datatype can only be used as a matrix (no vector addressing)
  *
  * @tparam     DA    Datatype
@@ -245,18 +274,19 @@ template<typename DA>
 constexpr bool must_use_matrix_idx() {return (!IsVector<DA>::value && 
                                        HasMatrixIndexing<DA>::value);}
 /**
- * @brief      Check if both datatype have vector indexing are
+ * @brief      Check if both datatype have vector indexing and are
  *             same scalar datatype
  *
  * @tparam     DA    First datatype
  * @tparam     DB    Second datatype
  *
- * @return     True if both datatype have vectro indexing and same scalar type
+ * @return     True if both datatype have vector indexing and same scalar type
  */
 template<typename DA,typename DB>
 constexpr bool vector_idx_pair() {return (IsVector<DA>::value && 
                                           IsVector<DB>::value &&
                                           compatible_element<DA,DB>());}
+
 
 // By default scalar has no vector size so can't be used
 // to infer a size at build time. They are considered as dynamic
@@ -727,6 +757,7 @@ struct _Binary: _Expr<_Binary<LHS,RHS,DerivedOp>>
     const _BinaryOperator<ScalarLHS,ScalarRHS,DerivedOp> op_;
 };
 
+
 template<typename DerivedOp>
 struct Complexity<_Expr<DerivedOp>>
 {
@@ -752,13 +783,20 @@ struct IsMixed<_Binary<LHS,RHS,DerivedOp>>
 {
     using EA = typename ElementType<LHS>::type;
     using EB = typename ElementType<RHS>::type;
-    constexpr static bool value = (IsComplexNumber<EA>::value != IsComplexNumber<EB>::value);
+    constexpr static bool value = (IsComplexNumber<EA>::value != IsComplexNumber<EB>::value)
+      || IsMixed<LHS>::value || IsMixed<RHS>::value;
 };
 
 template<typename LHS,typename RHS,typename DerivedOp>
 struct ElementType<_Binary<LHS,RHS,DerivedOp>>
 {
-    typedef typename ElementType<LHS>::type type;
+    using EA = typename ElementType<LHS>::type;
+    using EB = typename ElementType<RHS>::type;
+
+    typedef std::conditional_t <
+    IsComplexNumber<EA>::value && !IsComplexNumber<EB>::value,EA,
+    std::conditional_t <!IsComplexNumber<EA>::value && IsComplexNumber<EB>::value,
+    EB,EA>> type;
 };
 
 
@@ -955,6 +993,12 @@ template<typename LHS,typename DerivedOp>
 struct Complexity<_Unary<LHS,DerivedOp>>
 {
    constexpr static int value = 1 + Complexity<LHS>::value;
+};
+
+template<typename LHS,typename DerivedOp>
+struct IsMixed<_Unary<LHS,DerivedOp>>
+{
+    constexpr static bool value = IsMixed<LHS>::value;
 };
 
 template<typename LHS,typename DerivedOp>

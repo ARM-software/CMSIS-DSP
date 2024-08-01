@@ -117,7 +117,9 @@ inline void _Fill2D(DST &v,
 template<typename DA,typename DB,
 typename std::enable_if<has_vector_inst<DA>() &&
                         has_vector_inst<DB>() && 
-                        vector_idx_pair<DA,DB>(),bool>::type = true>
+                        vector_idx_pair<DA,DB>() &&
+                        !is_mixed<DB>() && 
+                        same_nb_lanes<DA,DB>(),bool>::type = true>
 inline void eval(DA &v,
                  const DB& other,
                  const vector_length_t l,
@@ -150,7 +152,9 @@ inline void eval(DA &v,
 template<typename DA,typename DB,
 typename std::enable_if<has_vector_inst<DA>() &&
                         has_vector_inst<DB>() &&
-                        must_use_matrix_idx_pair<DA,DB>(),bool>::type = true>
+                        must_use_matrix_idx_pair<DA,DB>() &&
+                        !is_mixed<DB>() && 
+                        same_nb_lanes<DA,DB>(),bool>::type = true>
 inline void eval2D(DA &v,
                    const DB& other,
                    const vector_length_t rows,
@@ -251,7 +255,10 @@ void printt (const std::tuple<T...>& _tup)
 template<typename DA,typename DB,
          typename std::enable_if<has_vector_inst<DA>() &&
                                  has_vector_inst<DB>() &&
-                                 vector_idx_pair<DA,DB>(),bool>::type = true>
+                                 vector_idx_pair<DA,DB>() &&
+                                 !is_mixed<DA>() &&
+                                 !is_mixed<DB>() && 
+                                 same_nb_lanes<DA,DB>(),bool>::type = true>
 inline DotResult<DotFieldResult<DA,DB>> _dot(const DA& a,
                                              const DB& b,
                                              const vector_length_t l,

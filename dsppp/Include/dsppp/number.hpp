@@ -60,6 +60,23 @@ struct number_traits;
 template<typename T>
 struct ComplexVector;
 
+/**
+ * @brief      Instrinsic vector containing complex values and not just real values
+ *
+ * @tparam     T     Datatype of vector
+ */
+template<typename T>
+struct ComplexVectorQ;
+
+
+/**
+ * @brief      Dual representation for complex
+ *
+ * @tparam     T     Scalar datatype for complex
+ */
+template<typename T>
+struct Dual;
+
 /*
 
 When vector is true we have a vector datatype
@@ -83,6 +100,7 @@ struct vector_traits {
   static constexpr bool has_vector = false; //!< True if scalar type has a related vector type 
   static constexpr bool is_float = false; //!< True if scalar type is a float (half, float or double)
   static constexpr bool is_fixed = false; //!< True if scalar type is fixed point
+  static constexpr int nb_lanes = 1; //! Number of lanes
 };
 
 /** @brief Scalar properties of fixed point datatype

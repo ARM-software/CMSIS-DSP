@@ -66,6 +66,9 @@ struct vector_traits<std::complex<Q31>,arch,void> {
   static constexpr bool is_fixed = true;
   //! No predicated loop
   static constexpr bool has_predicate = false;
+
+  //! Number of lanes
+  static constexpr int nb_lanes = 1;
 };
 
 /**

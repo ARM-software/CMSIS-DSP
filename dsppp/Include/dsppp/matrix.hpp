@@ -435,6 +435,18 @@ struct VecRef<MatrixView<T,S>>
    };
 };
 
+template<typename T,int S>
+struct DualType<MatrixView<T,S>>
+{
+   typedef MatrixView<T,S> type;
+};
+
+template<typename T,int S>
+struct DualType<MatrixView<std::complex<T>,S>>
+{
+   typedef MatrixView<Dual<std::complex<T>>,S> type;
+};
+
 template<typename P,int R,int C,
          template<int> typename A>
 struct VecRef<Matrix<P,R,C,A>,((R>0) && (C>0))>
@@ -639,9 +651,9 @@ struct IsMixed<_Outer<LHS,RHS,DerivedOp>>
 {
     using EA = typename ElementType<LHS>::type;
     using EB = typename ElementType<RHS>::type;
-    constexpr static bool value = (IsComplexNumber<EA>::value != IsComplexNumber<EB>::value);
+    constexpr static bool value = (IsComplexNumber<EA>::value != IsComplexNumber<EB>::value)
+      || IsMixed<LHS>::value || IsMixed<RHS>::value;
 };
-
 
 template<typename LHS,typename RHS,typename DerivedOp>
 struct IsVector<_Outer<LHS,RHS,DerivedOp>>
@@ -697,6 +709,16 @@ struct VecRef<_Outer<LHS,RHS,OP>>
    static type ref(const _Outer<LHS,RHS,OP>&a){
       return(a);
    };
+};
+
+template<typename LHS,typename RHS,typename OP>
+struct DualType<_Outer<LHS,RHS,OP>>
+{
+   using LHS_D = typename DualType<LHS>::type;
+   using RHS_D = typename DualType<RHS>::type;
+   using OP_D = typename DualType<OP>::type;
+
+   typedef _Outer<LHS_D,RHS_D,OP_D> type;
 };
 
 template<typename LHS,typename RHS,typename OP>

@@ -2143,7 +2143,7 @@ void matrix_all_test()
 #endif
 
 #if defined(SUBTEST20)
-   if constexpr (IsComplexNumber<T>::value && SupportMixedRealComplex<ARCH>::value)
+   if constexpr (IsComplexNumber<T>::value)
    {
       title<T>("Matrix mixed multiply");
       testmatmult_mixed<T,typename T::value_type,NBVEC_4,NBVEC_4,NBVEC_4>();

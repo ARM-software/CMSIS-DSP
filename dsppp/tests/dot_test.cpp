@@ -257,7 +257,7 @@ void all_dot_test()
     test<T,nb_loops+1,ACC>();
     test<T,nb_loops+nb_tails,ACC>();
 
-    if constexpr (IsComplexNumber<T>::value && SupportMixedRealComplex<ARCH>::value)
+    if constexpr (IsComplexNumber<T>::value)
     {
       title<T>("Dot mixed product");
 

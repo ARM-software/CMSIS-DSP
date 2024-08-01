@@ -5,10 +5,10 @@
 #define POOL_ALLOCATOR
 //#define ONLY_BENCHMARKS
 
-#define MATRIX_TEST
+#define VECTOR_TEST
 #define COMPLEX_F32_DT
 #define DYNAMIC_TEST
-#define SUBTEST20
+//#define SUBTEST20
 
 #endif
 
