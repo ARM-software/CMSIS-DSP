@@ -32,7 +32,8 @@ typename std::enable_if<
          has_vector_inst<MB>() &&
          same_nb_lanes<MA,MB>() &&
          same_nb_lanes<MA,RES>() &&
-         SameElementType<MA,float16_t>::value,bool>::type = true>
+         (!is_complex<MA>()) &&
+         same_type_as<MA,float16_t>(),bool>::type = true>
 __STATIC_INLINE  void _arm_mat_mult_2x2_mve(
     const MA &pSrcA,
     const MB &pSrcB,
@@ -120,7 +121,8 @@ typename std::enable_if<
          has_vector_inst<MB>() &&
          same_nb_lanes<MA,MB>() &&
          same_nb_lanes<MA,RES>() &&
-         SameElementType<MA,float16_t>::value,bool>::type = true>
+         (!is_complex<MA>()) &&
+         same_type_as<MA,float16_t>(),bool>::type = true>
 __STATIC_INLINE  void _arm_mat_mult_3x3_mve(
     const MA &pSrcA,
     const MB &pSrcB,
@@ -238,7 +240,8 @@ typename std::enable_if<
          has_vector_inst<MB>() &&
          same_nb_lanes<MA,MB>() &&
          same_nb_lanes<MA,RES>() &&
-         SameElementType<MA,float16_t>::value,bool>::type = true>
+         (!is_complex<MA>()) &&
+         same_type_as<MA,float16_t>(),bool>::type = true>
 __STATIC_INLINE  void _arm_mat_mult_4x4_mve(
     const MA &pSrcA,
     const MB &pSrcB,

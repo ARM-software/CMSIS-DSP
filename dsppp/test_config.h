@@ -5,10 +5,10 @@
 #define POOL_ALLOCATOR
 //#define ONLY_BENCHMARKS
 
-#define DOT_TEST
-#define F32_DT
-#define STATIC_TEST
-
+#define MATRIX_TEST
+#define Q7_DT
+#define DYNAMIC_TEST
+#define SUBTEST20
 
 #endif
 

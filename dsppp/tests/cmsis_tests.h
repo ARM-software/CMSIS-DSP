@@ -1029,6 +1029,15 @@ struct CMSISMatrixType<std::complex<Q31>>
 
 };
 
+template<>
+struct CMSISMatrixType<Q31>
+{
+   typedef arm_matrix_instance_q31 type;
+   typedef q31_t scalar;
+
+};
+
+
 template<typename T>
 struct TestConstant;
 

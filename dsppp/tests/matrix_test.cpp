@@ -2056,18 +2056,24 @@ void matrix_all_test()
 #endif 
 
 #if defined(SUBTEST1)
-          title<T>("Matrix times vector expression");
-    
-          testcomplexmatvec<T,NBVEC_4 ,NBVEC_4>();
-          testcomplexmatvec<T,NBVEC_16,NBVEC_16>();
-          testcomplexmatvec<T,NBVEC_32,NBVEC_32>();
-          testcomplexmatvec<T,NBVEC_44,NBVEC_44>();
-          testcomplexmatvec<T,NBVEC_47,NBVEC_47>();
-#endif
+          if constexpr (IsComplexNumber<T>::value)
+          {
+             title<T>("Matrix times vector expression");
+       
+             testcomplexmatvec<T,NBVEC_4 ,NBVEC_4>();
+             testcomplexmatvec<T,NBVEC_16,NBVEC_16>();
+             testcomplexmatvec<T,NBVEC_32,NBVEC_32>();
+             testcomplexmatvec<T,NBVEC_44,NBVEC_44>();
+             testcomplexmatvec<T,NBVEC_47,NBVEC_47>();
+          }
+#endif 
 
 #if defined(SUBTEST5)
-          title<T>("Matrix times vector expression");
-          ALL_TESTS<TESTCOMPLEXMATVEC,UNROLL,VEC>::all();
+          if constexpr (IsComplexNumber<T>::value)
+          {
+             title<T>("Matrix times vector expression");
+             ALL_TESTS<TESTCOMPLEXMATVEC,UNROLL,VEC>::all();
+          }
 #endif
          }
       }
@@ -2191,44 +2197,14 @@ void matrix_all_test()
 void matrix_test()
 {
 #if 0
-   using TA = float;
-   using TB = std::complex<float>;
-   using Res = typename MixedRes<TA,TB>::type;
-   constexpr int R = 2;
-   constexpr int C = 2;
-   constexpr int U = 2;
-   int row = 0;
+   //using T = float;
 
-   PVector<TA,C> a;
-   init_array(a,C);
-
-   PMat<TB,R,C> m;
-   init_array(m,R*C);
-
-   //PVector<Res,R> res = dot(m,a);
-
-   auto tmp = unroll<U>([&row,&m](index_t k){return m.row(row+k);});
-   using M = decltype(tmp);
-   using V = decltype(replicate<U>(a));
-
-   PrintType<M>();
-   PrintType<V>();
-
-   using EA = typename ElementType<M>::type;
-   using EB = typename ElementType<V>::type;
-   std::cout << "----\n";
-
-   PrintType<EA>();
-   PrintType<EB>();
-   //PrintType<MixedRes<EA,EB>::type>();
-   typedef MixedRes<EA,EB>::type T1;
-   PrintType<T1>();
-
-
-   std::cout << is_only_vector<V>() << "\n";
-   std::cout << is_only_vector<M>() << "\n";
-   std::cout << compatible_element<M,V>() << "\n";
-
+   //title<T>("Matrix times vector");
+    
+   //testmatvec<T,NBVEC_4 ,NBVEC_4>();
+   using R = MixedRes<std::tuple<float, float, float, float>, std::tuple<float, float, float, float>>::type;
+   PrintType<R>();
+  
 #else
 #if defined(MATRIX_TEST)
    #if defined(F64_DT)

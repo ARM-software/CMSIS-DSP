@@ -44,6 +44,50 @@ struct IsMixed
     constexpr static bool value = false;
 };
 
+template<>
+struct MixedRes<double,double>
+{
+   typedef double type;
+};
+
+template<>
+struct MixedRes<float,float>
+{
+   typedef float type;
+};
+
+#if defined(ARM_FLOAT16_SUPPORTED)
+template<>
+struct MixedRes<float16_t,float16_t>
+{
+   typedef float16_t type;
+};
+#endif
+
+template<>
+struct MixedRes<Q31,Q31>
+{
+   typedef Q31 type;
+};
+
+template<>
+struct MixedRes<Q15,Q15>
+{
+   typedef Q15 type;
+};
+
+template<>
+struct MixedRes<Q7,Q7>
+{
+   typedef Q7 type;
+};
+
+template<typename T>
+struct MixedRes<std::complex<T>,std::complex<T>>
+{
+   typedef std::complex<T> type;
+};
+
 template<typename T>
 struct MixedRes<std::complex<T>,T>
 {
@@ -56,11 +100,7 @@ struct MixedRes<T,std::complex<T>>
    typedef std::complex<T> type;
 };
 
-template<typename T>
-struct MixedRes<T,T>
-{
-   typedef T type;
-};
+
 
 
 /*
@@ -298,6 +338,12 @@ constexpr bool compatible_assignment() {
 return (std::is_same<EA,EB>::value);
 }
 
+
+template<typename A,typename B>
+constexpr bool same_type_as() {
+    using EA = typename FloatType<typename ElementType<A>::type>::type;
+    return (SameElementType<EA,B>::value);
+}
 /**
  * @brief      Check if datatype can only be used as a matrix (no vector addressing)
  *
