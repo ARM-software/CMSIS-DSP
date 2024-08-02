@@ -32,6 +32,7 @@ struct vector_traits<float16_t,arch,typename std::enable_if<std::is_base_of<Heli
   typedef float16_t storage_type;
   //! Vector datatype
   typedef float16x8_t vector;
+  typedef float16x8_t real_vector;
   //! Temp accumulator datatype
   typedef float16x8_t temp_accumulator;
   //! Predicate datatype

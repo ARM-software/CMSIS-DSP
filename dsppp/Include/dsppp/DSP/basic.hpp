@@ -72,7 +72,7 @@ inline void _Fill2D(DST &v,
               }
           }
 
-          for(; col < cols;col += nb_lanes)
+          for(; col < cols;col ++)
           {
              for(int k=0;k<(1<<DSP_UNROLL);k++)
              {
@@ -90,7 +90,7 @@ inline void _Fill2D(DST &v,
               v.matrix_store(row,col,inner::vconst(val));
           }
 
-          for(; col < cols;col += nb_lanes)
+          for(; col < cols;col ++)
           {
               v(row,col) = val;
           }
@@ -155,7 +155,7 @@ inline void eval2D(DA &v,
               }
           }
 
-          for(; col < cols;col += nb_lanes)
+          for(; col < cols;col ++)
           {
              for(int k=0;k<(1<<DSP_UNROLL);k++)
              {
@@ -173,7 +173,7 @@ inline void eval2D(DA &v,
               v.matrix_store(row,col,other.matrix_op(row,col));
           }
 
-          for(; col < cols;col += nb_lanes)
+          for(; col < cols;col ++)
           {
               v(row,col) = other(row,col);
           }

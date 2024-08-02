@@ -519,6 +519,33 @@ void cmsisdsp_dot_expr(const float32_t* a,
    arm_dot_prod_f32(tmp1,tmp2,l,&r);
 };
 
+void cmsisdsp_dot_expr(const std::complex<float32_t>* a, 
+                       const std::complex<float32_t>* b, 
+                       const std::complex<float32_t>* c, 
+                       const std::complex<float32_t>* d, 
+                       std::complex<float32_t>* tmp1, 
+                       std::complex<float32_t>* tmp2, 
+                       const float32_t scale,
+                       std::complex<float32_t> &r, 
+                       uint32_t l)
+{
+   arm_add_f32((const float32_t*)(a),
+               (const float32_t*)(b),
+               (float32_t*)tmp1,2*l);
+   arm_scale_f32((const float32_t*)(tmp1),
+                 scale,
+                 (float32_t*)(tmp1),2*l);
+   arm_cmplx_mult_cmplx_f32((const float32_t*)(c),
+                            (const float32_t*)(d),
+                            (float32_t*)(tmp2),l);
+   arm_cmplx_conj_f32((const float32_t*)(tmp2),
+                      (float32_t*)(tmp2),l);
+   float32_t re,im;
+   arm_cmplx_dot_prod_f32((const float32_t*)(tmp1),
+                          (const float32_t*)(tmp2),l,&re,&im);
+   r = std::complex<float32_t>(re,im);
+};
+
 #if !defined(DISABLEFLOAT16)
 void cmsisdsp_dot_expr(const float16_t* a, 
                        const float16_t* b, 

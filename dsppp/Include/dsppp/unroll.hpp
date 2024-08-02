@@ -149,6 +149,28 @@ struct ElementType<Merged<E...>>
     typedef std::tuple<typename ElementType<std::remove_reference_t<E>>::type...> type;
 };
 
+template<typename ...E>
+struct FloatType<Merged<E...>>
+{
+    typedef std::tuple<typename FloatType<E>::type...> type;
+};
+
+template<typename ...E>
+struct FloatType<std::tuple<E...>>
+{
+    typedef std::tuple<typename FloatType<E>::type...> type;
+};
+
+
+template<typename ...A,typename ...B>
+struct MixedRes<std::tuple<A...>,std::tuple<B...>>
+{
+    typedef std::tuple<typename MixedRes<A, B>::type...> type;
+};
+
+
+
+
 constexpr vector_length_t max_length(const vector_length_t a,const vector_length_t b) noexcept
 {
    return((a>b) ? a : b);

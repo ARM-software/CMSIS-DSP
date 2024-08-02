@@ -65,6 +65,7 @@ struct vector_traits<double,arch,void> {
    * since by default there is no vector architecture assumed
    */
   typedef bool vector;
+  typedef bool real_vector;
 
   /**
    * Dummy  datatype. Must be present for building but not used

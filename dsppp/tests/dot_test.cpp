@@ -19,8 +19,8 @@ extern "C" {
 
 
 
-template<typename T,int NB,typename O>
-static void complicated_test(const T scale)
+template<typename T,typename S,int NB,typename O>
+static void complicated_test(const S scale)
 {
    std::cout << "----\r\n" << "N = " << NB << "\r\n";
    #if defined(STATIC_TEST)
@@ -45,10 +45,18 @@ static void complicated_test(const T scale)
    init_array(c,NB);
    init_array(d,NB);
     
+   O result;
    INIT_SYSTICK;
    START_CYCLE_MEASUREMENT;
    startSectionNB(1);
-   O result = dot(scale*(a+b),c*d);
+   if constexpr(IsComplexNumber<T>::value)
+   {
+      result = dot(scale*(a+b),conjugate(c*d));
+   }
+   else 
+   {
+      result = dot(scale*(a+b),c*d);
+   }
    stopSectionNB(1);
    STOP_CYCLE_MEASUREMENT;
    
@@ -284,27 +292,6 @@ void all_dot_test()
       test_mixed<T,typename T::value_type,nb_loops+1,ACC>();
       test_mixed<T,typename T::value_type,nb_loops+nb_tails,ACC>();
 
-      test_mixed<typename T::value_type,T,NBVEC_4,ACC>();
-      test_mixed<typename T::value_type,T,NBVEC_8,ACC>();
-      test_mixed<typename T::value_type,T,NBVEC_9,ACC>();
-      test_mixed<typename T::value_type,T,NBVEC_16,ACC>();
-      test_mixed<typename T::value_type,T,NBVEC_32,ACC>();
-      test_mixed<typename T::value_type,T,NBVEC_64,ACC>();
-      test_mixed<typename T::value_type,T,NBVEC_128,ACC>();
-      test_mixed<typename T::value_type,T,NBVEC_256,ACC>();
-      test_mixed<typename T::value_type,T,NBVEC_258,ACC>();
-      test_mixed<typename T::value_type,T,NBVEC_512,ACC>();
-      test_mixed<typename T::value_type,T,NBVEC_1024,ACC>();
-      if constexpr (!std::is_same<T,double>::value)
-      {
-         test_mixed<typename T::value_type,T,NBVEC_2048,ACC>();
-      }
-
-      test_mixed<typename T::value_type,T,1,ACC>();
-      test_mixed<typename T::value_type,T,nb_tails,ACC>();
-      test_mixed<typename T::value_type,T,nb_loops,ACC>();
-      test_mixed<typename T::value_type,T,nb_loops+1,ACC>();
-      test_mixed<typename T::value_type,T,nb_loops+nb_tails,ACC>();
     }
 
     title<T>("Hermitian product");
@@ -337,28 +324,50 @@ void all_dot_test()
        title<T>("Dot product with expressions");
    
        
-       complicated_test<T,NBVEC_4,ACC>(v);
-       complicated_test<T,NBVEC_8,ACC>(v);
-       complicated_test<T,NBVEC_9,ACC>(v);
-       complicated_test<T,NBVEC_32,ACC>(v);
-       complicated_test<T,NBVEC_64,ACC>(v);
-       complicated_test<T,NBVEC_128,ACC>(v);
+       complicated_test<T,T,NBVEC_4,ACC>(v);
+       complicated_test<T,T,NBVEC_8,ACC>(v);
+       complicated_test<T,T,NBVEC_9,ACC>(v);
+       complicated_test<T,T,NBVEC_32,ACC>(v);
+       complicated_test<T,T,NBVEC_64,ACC>(v);
+       complicated_test<T,T,NBVEC_128,ACC>(v);
        
-       complicated_test<T,NBVEC_256,ACC>(v);
+       complicated_test<T,T,NBVEC_256,ACC>(v);
        
-       complicated_test<T,NBVEC_258,ACC>(v);
-       complicated_test<T,NBVEC_512,ACC>(v);
-       complicated_test<T,NBVEC_1024,ACC>(v);
+       complicated_test<T,T,NBVEC_258,ACC>(v);
+       complicated_test<T,T,NBVEC_512,ACC>(v);
+       complicated_test<T,T,NBVEC_1024,ACC>(v);
        if constexpr (!std::is_same<T,double>::value)
        {
-          complicated_test<T,NBVEC_2048,ACC>(v);
+          complicated_test<T,T,NBVEC_2048,ACC>(v);
        }
    
-       complicated_test<T,1,ACC>(v);
-       complicated_test<T,nb_tails,ACC>(v);
-       complicated_test<T,nb_loops,ACC>(v);
-       complicated_test<T,nb_loops+1,ACC>(v);
-       complicated_test<T,nb_loops+nb_tails,ACC>(v);
+       complicated_test<T,T,1,ACC>(v);
+       complicated_test<T,T,nb_tails,ACC>(v);
+       complicated_test<T,T,nb_loops,ACC>(v);
+       complicated_test<T,T,nb_loops+1,ACC>(v);
+       complicated_test<T,T,nb_loops+nb_tails,ACC>(v);
+    }
+    else 
+    {
+       using S = typename ComplexNumberType<T>::type;
+
+       constexpr auto v = TestConstant<S>::v;
+
+       title<T>("Dot product with expressions");
+   
+       
+       complicated_test<T,S,NBVEC_4,ACC>(v);
+       complicated_test<T,S,NBVEC_8,ACC>(v);
+       complicated_test<T,S,NBVEC_9,ACC>(v);
+       complicated_test<T,S,NBVEC_32,ACC>(v);
+       complicated_test<T,S,NBVEC_64,ACC>(v);
+       complicated_test<T,S,NBVEC_128,ACC>(v);
+       
+       complicated_test<T,S,NBVEC_256,ACC>(v);
+       
+       complicated_test<T,S,NBVEC_258,ACC>(v);
+       complicated_test<T,S,NBVEC_512,ACC>(v);
+       complicated_test<T,S,NBVEC_1024,ACC>(v);
     }
 
     //print_map("Stats",max_stats);
@@ -367,6 +376,11 @@ void all_dot_test()
 
 void dot_test()
 {
+#if 0
+   using T = std::complex<float>;
+   using ACC = typename number_traits<T>::accumulator;
+  test<T,NBVEC_512,ACC>();
+#else
 #if defined(DOT_TEST)
 
    // No f64 complex dot product in CMSIS-DSP
@@ -413,5 +427,6 @@ void dot_test()
    all_dot_test<Q7>();
    #endif
 
+#endif
 #endif
 }

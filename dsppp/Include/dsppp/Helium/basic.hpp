@@ -32,7 +32,8 @@
 template<typename T,typename DST,
 typename std::enable_if<has_vector_inst<DST>() &&
                         IsVector<DST>::value &&
-                        compatible_element<DST,T>(),bool>::type = true>
+                        compatible_element<DST,T>() && 
+                        has_predicate<DST>(),bool>::type = true>
 inline void _Fill(DST &v,
                   const T val, 
                   const vector_length_t l,
@@ -45,6 +46,35 @@ inline void _Fill(DST &v,
       {
         v.vector_store_tail(i,l-i,inner::vconst_tail(val,inner::vctpq<T>::mk(l-i)));
       }
+}
+
+template<typename T,typename DST,
+typename std::enable_if<has_vector_inst<DST>() &&
+                        IsVector<DST>::value &&
+                        compatible_element<DST,T>() && 
+                        !has_predicate<DST>(),bool>::type = true>
+inline void _Fill(DST &v,
+                  const T val, 
+                  const vector_length_t l,
+                  const Helium* = nullptr)
+{
+    constexpr int DSP_UNROLL = 2;
+    constexpr int nb_lanes = vector_traits<T>::nb_lanes;
+    index_t i;
+
+    UNROLL_LOOP
+    for(i=0 ; i <= l-(nb_lanes<<DSP_UNROLL); i += (nb_lanes<<DSP_UNROLL))
+    {
+        for(int k=0;k < (1<<DSP_UNROLL);k++)
+        {
+           v.vector_store(i + k*nb_lanes,inner::vconst(val));
+        }
+    }
+
+    for(; i < l ; i++)
+    {
+       v[i] = val;
+    }
 }
 
 /**
@@ -62,7 +92,8 @@ inline void _Fill(DST &v,
 template<typename T,typename DST,
 typename std::enable_if<has_vector_inst<DST>() &&
                         must_use_matrix_idx<DST>() &&
-                        compatible_element<DST,T>(),bool>::type = true>
+                        compatible_element<DST,T>() && 
+                        has_predicate<DST>(),bool>::type = true>
 inline void _Fill2D(DST &v,
                   const T val, 
                   const vector_length_t rows,
@@ -103,6 +134,58 @@ inline void _Fill2D(DST &v,
       }
 }
 
+template<typename T,typename DST,
+typename std::enable_if<has_vector_inst<DST>() &&
+                        must_use_matrix_idx<DST>() &&
+                        compatible_element<DST,T>() && 
+                        !has_predicate<DST>(),bool>::type = true>
+inline void _Fill2D(DST &v,
+                  const T val, 
+                  const vector_length_t rows,
+                  const vector_length_t cols,
+                  const Helium* = nullptr)
+{
+    constexpr int DSP_UNROLL = 0;
+    constexpr int nb_lanes = vector_traits<T>::nb_lanes;
+    index_t row=0;
+
+      for(; row <= rows-(1<<DSP_UNROLL);row += (1<<DSP_UNROLL))
+      {
+          index_t col;
+
+          for(col=0; col <= cols-nb_lanes;col += nb_lanes)
+          {
+              for(int k=0;k<(1<<DSP_UNROLL);k++)
+              {
+                  v.matrix_store(row+k,col,inner::vconst(val));
+              }
+          }
+
+          for(; col < cols;col ++)
+          {
+             for(int k=0;k<(1<<DSP_UNROLL);k++)
+             {
+                v(row+k,col) = val;
+             }
+          }
+
+      }
+
+      for(; row < rows;row ++)
+      {
+          index_t col;
+          for(col=0; col <= cols-nb_lanes;col += nb_lanes)
+          {
+              v.matrix_store(row,col,inner::vconst(val));
+          }
+
+          for(; col < cols;col ++)
+          {
+              v(row,col) = val;
+          }
+      }
+}
+
 /**
  * @brief      Eval function for Helium
  *
@@ -118,8 +201,9 @@ template<typename DA,typename DB,
 typename std::enable_if<has_vector_inst<DA>() &&
                         has_vector_inst<DB>() && 
                         vector_idx_pair<DA,DB>() &&
-                        !is_mixed<DB>() && 
-                        same_nb_lanes<DA,DB>(),bool>::type = true>
+                        //!is_mixed<DB>() && 
+                        same_nb_lanes<DA,DB>() && 
+                        has_predicate<DA>(),bool>::type = true>
 inline void eval(DA &v,
                  const DB& other,
                  const vector_length_t l,
@@ -137,6 +221,37 @@ inline void eval(DA &v,
       }
 }
 
+template<typename DA,typename DB,
+typename std::enable_if<has_vector_inst<DA>() &&
+                        has_vector_inst<DB>() && 
+                        vector_idx_pair<DA,DB>() &&
+                        //!is_mixed<DB>() && 
+                        same_nb_lanes<DA,DB>() && 
+                        !has_predicate<DA>(),bool>::type = true>
+inline void eval(DA &v,
+                 const DB& other,
+                 const vector_length_t l,
+                 const Helium* = nullptr)
+{
+    using T = typename traits<DA>::Scalar;
+    constexpr int nb_lanes = vector_traits<T>::nb_lanes;
+    constexpr unsigned int U = 0;
+    index_t i;
+
+    UNROLL_LOOP
+    for(i=0 ; i <= l-(nb_lanes<<U); i += (nb_lanes<<U))
+    {
+        for(int k=0;k < (1<<U);k++)
+        {
+           v.vector_store(i + k*nb_lanes,other.vector_op(i+k*nb_lanes));
+        }
+    }
+
+    for(; i < l ; i++)
+    {
+       v[i] = other[i];
+    }
+}
 /**
  * @brief      Eval2D function for Helium
  *
@@ -154,7 +269,8 @@ typename std::enable_if<has_vector_inst<DA>() &&
                         has_vector_inst<DB>() &&
                         must_use_matrix_idx_pair<DA,DB>() &&
                         !is_mixed<DB>() && 
-                        same_nb_lanes<DA,DB>(),bool>::type = true>
+                        same_nb_lanes<DA,DB>() &&
+                        has_predicate<DA>(),bool>::type = true>
 inline void eval2D(DA &v,
                    const DB& other,
                    const vector_length_t rows,
@@ -192,6 +308,61 @@ inline void eval2D(DA &v,
           for(index_t col=0; col < cols;col += nb_lanes)
           {
               v.matrix_store_tail(row,col,cols-col,other.matrix_op_tail(row,col,cols-col));
+          }
+      }
+}
+
+template<typename DA,typename DB,
+typename std::enable_if<has_vector_inst<DA>() &&
+                        has_vector_inst<DB>() &&
+                        must_use_matrix_idx_pair<DA,DB>() &&
+                        !is_mixed<DB>() && 
+                        same_nb_lanes<DA,DB>() &&
+                        !has_predicate<DA>(),bool>::type = true>
+inline void eval2D(DA &v,
+                   const DB& other,
+                   const vector_length_t rows,
+                   const vector_length_t cols,
+                   const Helium* = nullptr)
+{
+      constexpr int DSP_UNROLL = 0;
+      using T = typename traits<DA>::Scalar;
+      constexpr int nb_lanes = vector_traits<T>::nb_lanes;
+      index_t row=0;
+
+      for(; row <= rows-(1<<DSP_UNROLL);row += (1<<DSP_UNROLL))
+      {
+          index_t col;
+
+          for(col=0; col <= cols-nb_lanes;col += nb_lanes)
+          {
+              for(int k=0;k<(1<<DSP_UNROLL);k++)
+              {
+                  v.matrix_store(row+k,col,other.matrix_op(row+k,col));
+              }
+          }
+
+          for(; col < cols;col ++)
+          {
+             for(int k=0;k<(1<<DSP_UNROLL);k++)
+             {
+                v(row+k,col) = other(row+k,col);
+             }
+          }
+
+      }
+
+      for(; row < rows;row ++)
+      {
+          index_t col;
+          for(col=0; col <= cols-nb_lanes;col += nb_lanes)
+          {
+              v.matrix_store(row,col,other.matrix_op(row,col));
+          }
+
+          for(; col < cols;col ++)
+          {
+              v(row,col) = other(row,col);
           }
       }
 }
@@ -256,9 +427,10 @@ template<typename DA,typename DB,
          typename std::enable_if<has_vector_inst<DA>() &&
                                  has_vector_inst<DB>() &&
                                  vector_idx_pair<DA,DB>() &&
-                                 !is_mixed<DA>() &&
-                                 !is_mixed<DB>() && 
-                                 same_nb_lanes<DA,DB>(),bool>::type = true>
+                                 //!is_mixed<DA>() &&
+                                 //!is_mixed<DB>() && 
+                                 same_nb_lanes<DA,DB>() &&
+                                 has_predicate<DotFieldResult<DA,DB>>(),bool>::type = true>
 inline DotResult<DotFieldResult<DA,DB>> _dot(const DA& a,
                                              const DB& b,
                                              const vector_length_t l,
@@ -281,6 +453,48 @@ inline DotResult<DotFieldResult<DA,DB>> _dot(const DA& a,
      return(inner::vreduce(acc));
 }
 
+template<typename DA,typename DB,
+         typename std::enable_if<has_vector_inst<DA>() &&
+                                 has_vector_inst<DB>() &&
+                                 vector_idx_pair<DA,DB>() &&
+                                 //!is_mixed<DA>() &&
+                                 //!is_mixed<DB>() && 
+                                 same_nb_lanes<DA,DB>() &&
+                                 !has_predicate<DotFieldResult<DA,DB>>(),bool>::type = true>
+inline DotResult<DotFieldResult<DA,DB>> _dot(const DA& a,
+                                             const DB& b,
+                                             const vector_length_t l,
+                                             const Helium* = nullptr)
+{
+    constexpr int DSP_UNROLL = 0;
+    using ScalarResult = DotFieldResult<DA,DB> ;
+    using Acc = DotResult<ScalarResult>;
+    using Temp = typename vector_traits<ScalarResult>::temp_accumulator;
+    constexpr int nb_lanes = vector_traits<ScalarResult>::nb_lanes;
+    constexpr unsigned int U = DSP_UNROLL;
+    index_t i;
+
+    Acc acc = Acc{};
+    Temp vacc = vector_traits<ScalarResult>::temp_acc_zero();
+
+    UNROLL_LOOP
+    for(i=0 ; i <= l-(nb_lanes<<U); i += (nb_lanes<<U))
+    {
+        for(int k=0;k < (1<<U);k++)
+        {
+           vacc = inner::vmacc(vacc,a.vector_op(i+k*nb_lanes),b.vector_op(i+k*nb_lanes));
+        }
+    }
+
+    acc = inner::vreduce(vacc);
+
+    for(; i < l ; i++)
+    {
+       acc = inner::mac(acc , a[i] , b[i]);
+    }
+
+    return(acc);
+}
 /**
  * @brief      Swap operator for Helium
  *
@@ -295,7 +509,8 @@ inline DotResult<DotFieldResult<DA,DB>> _dot(const DA& a,
 template<typename DA,typename DB,
          typename std::enable_if<has_vector_inst<DA>() &&
                                  has_vector_inst<DB>() &&
-                                 vector_idx_pair<DA,DB>(),bool>::type = true>
+                                 vector_idx_pair<DA,DB>() && 
+                                 has_predicate<DA>(),bool>::type = true>
 inline void _swap(DA&& a,
                   DB&& b,
                   const vector_length_t l,
@@ -316,6 +531,41 @@ inline void _swap(DA&& a,
         b.vector_store_tail(i,l-i,tmpa);
         a.vector_store_tail(i,l-i,tmpb);
       }
+}
+
+template<typename DA,typename DB,
+         typename std::enable_if<has_vector_inst<DA>() &&
+                                 has_vector_inst<DB>() &&
+                                 vector_idx_pair<DA,DB>() && 
+                                 !has_predicate<DA>(),bool>::type = true>
+inline void _swap(DA&& a,
+                  DB&& b,
+                  const vector_length_t l,
+                  const Helium* = nullptr)
+{
+      using Scalar = typename ElementType<DA>::type;
+      using Vector = typename vector_traits<Scalar>::vector;
+
+      constexpr int nb_lanes = vector_traits<typename ElementType<DA>::type>::nb_lanes;
+      index_t i=0;
+      Vector tmpa,tmpb;
+    
+      UNROLL_LOOP
+      for(i=0 ; i <= l-nb_lanes; i += nb_lanes)
+      {
+        tmpa = a.vector_op(i);
+        tmpb = b.vector_op(i);
+        b.vector_store(i,tmpa);
+        a.vector_store(i,tmpb);
+      }
+
+      for(;i<l;i++)
+      {
+         const auto tmp = a[i];
+         a[i] = b[i];
+         b[i] = tmp;
+      }
+
 }
 #endif
 

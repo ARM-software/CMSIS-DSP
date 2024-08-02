@@ -48,24 +48,6 @@ struct VecRef<VectorView<T,S>>
    };
 };
 
-template<typename T>
-struct DualType
-{
-   typedef T type;
-};
-
-
-template<typename T,int S>
-struct DualType<VectorView<T,S>>
-{
-   typedef VectorView<T,S> type;
-};
-
-template<typename T,int S>
-struct DualType<VectorView<std::complex<T>,S>>
-{
-   typedef VectorView<Dual<std::complex<T>>,S> type;
-};
 
 template<typename P,int L,
          template<int> typename A>
@@ -100,16 +82,6 @@ struct VecRef<_Binary<LHS,RHS,OP>>
    };
 };
 
-template<typename LHS,typename RHS,typename OP>
-struct DualType<_Binary<LHS,RHS,OP>>
-{
-   using LHS_D = typename DualType<LHS>::type;
-   using RHS_D = typename DualType<RHS>::type;
-   using OP_D = typename DualType<OP>::type;
-
-   typedef _Binary<LHS_D,RHS_D,OP_D> type;
-};
-
 
 template<typename LHS,typename OP>
 struct VecRef<_Unary<LHS,OP>>
@@ -120,14 +92,6 @@ struct VecRef<_Unary<LHS,OP>>
    };
 };
 
-template<typename LHS,typename OP>
-struct DualType<_Unary<LHS,OP>>
-{
-   using LHS_D = typename DualType<LHS>::type;
-   using OP_D = typename DualType<OP>::type;
-   typedef _Unary<LHS_D,OP_D> type;
-};
-
 template<typename Derived>
 struct VecRef<_Expr<Derived>>
 {
@@ -135,13 +99,6 @@ struct VecRef<_Expr<Derived>>
    static type ref(const _Expr<Derived>&a){
       return(a.derived());
    };
-};
-
-template<typename Derived>
-struct DualType<_Expr<Derived>>
-{
-   using Derived_D = typename DualType<Derived>::type;
-   typedef _Expr<Derived_D> type;
 };
 
 template<>
@@ -154,12 +111,6 @@ struct VecRef<double>
 };
 
 template<>
-struct DualType<double>
-{
-   typedef double type;
-};
-
-template<>
 struct VecRef<float>
 {
    typedef float type;
@@ -168,11 +119,6 @@ struct VecRef<float>
    };
 };
 
-template<>
-struct DualType<float>
-{
-   typedef float type;
-};
 
 template<>
 struct VecRef<std::complex<float>>
@@ -183,11 +129,6 @@ struct VecRef<std::complex<float>>
    };
 };
 
-template<>
-struct DualType<std::complex<float>>
-{
-   typedef Dual<std::complex<float>> type;
-};
 
 #if defined(ARM_FLOAT16_SUPPORTED)
 template<>
@@ -200,24 +141,12 @@ struct VecRef<float16_t>
 };
 
 template<>
-struct DualType<float16_t>
-{
-   typedef float16_t type;
-};
-
-template<>
 struct VecRef<std::complex<float16_t>>
 {
    typedef std::complex<float16_t> type;
    static type ref(const std::complex<float16_t> a){
       return(a);
    };
-};
-
-template<>
-struct DualType<std::complex<float16_t>>
-{
-   typedef Dual<std::complex<float16_t>> type;
 };
 
 #endif
@@ -232,24 +161,12 @@ struct VecRef<Q7>
 };
 
 template<>
-struct DualType<Q7>
-{
-   typedef Q7 type;
-};
-
-template<>
 struct VecRef<std::complex<Q7>>
 {
    typedef std::complex<Q7> type;
    static type ref(const std::complex<Q7> a){
       return(a);
    };
-};
-
-template<>
-struct DualType<std::complex<Q7>>
-{
-   typedef Dual<std::complex<Q7>> type;
 };
 
 template<>
@@ -262,25 +179,12 @@ struct VecRef<Q15>
 };
 
 template<>
-struct DualType<Q15>
-{
-   typedef Q15 type;
-};
-
-
-template<>
 struct VecRef<std::complex<Q15>>
 {
    typedef std::complex<Q15> type;
    static type ref(const std::complex<Q15> a){
       return(a);
    };
-};
-
-template<>
-struct DualType<std::complex<Q15>>
-{
-   typedef Dual<std::complex<Q15>> type;
 };
 
 
@@ -293,12 +197,6 @@ struct VecRef<Q31>
    };
 };
 
-template<>
-struct DualType<Q31>
-{
-   typedef Q31 type;
-};
-
 
 template<>
 struct VecRef<std::complex<Q31>>
@@ -308,13 +206,6 @@ struct VecRef<std::complex<Q31>>
       return(a);
    };
 };
-
-template<>
-struct DualType<std::complex<Q31>>
-{
-   typedef Dual<std::complex<Q31>> type;
-};
-
 
 
 template<typename T,int S>

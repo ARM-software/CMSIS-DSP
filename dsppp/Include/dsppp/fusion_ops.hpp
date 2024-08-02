@@ -54,14 +54,6 @@ struct _UnaryOperator{
 #endif
 };
 
-template<typename Scalar,typename Derived>
-struct DualType<_UnaryOperator<Scalar,Derived>>
-{
-   using Scalar_D = typename DualType<Scalar>::type;
-   using Derived_D = typename DualType<Derived>::type;
-
-   typedef _UnaryOperator<Scalar_D,Derived_D> type;
-};
 
 /**
  * @brief  Unary operator
@@ -88,23 +80,27 @@ struct _BinaryOperator{
     using pred_t = typename vector_traits<ScalarLHS>::predicate_t;
 
 
+    /* Vector + Vector */
     auto  operator()(const VectorLHS lhs, 
                      const VectorRHS rhs) const
     {
         return(this->derived()(lhs,rhs));
     }
 
+    /* Vector + Scalar */
     auto  operator()(const VectorLHS lhs, 
                      const ScalarRHS rhs) const
     {
         return(this->derived()(lhs,rhs));
     }
 
+    /* Scalar + Vector */
     auto  operator()(const ScalarLHS lhs, 
                      const VectorRHS rhs) const
     {
         return(this->derived()(lhs,rhs));
     }
+
 
     template<typename T=ScalarLHS,
              typename std::enable_if<vector_traits<T>::has_predicate,bool>::type = true>
@@ -124,7 +120,7 @@ struct _BinaryOperator{
         return(this->derived()(lhs,rhs,p0));
     }
 
-    template<typename T=ScalarLHS,
+    template<typename T=ScalarRHS,
              typename std::enable_if<vector_traits<T>::has_predicate,bool>::type = true>
     auto  operator()(const ScalarLHS lhs, 
                      const VectorRHS rhs,
@@ -132,19 +128,11 @@ struct _BinaryOperator{
     {
         return(this->derived()(lhs,rhs,p0));
     }
+
+   
 #endif
 };
 
-
-template<typename ScalarLHS,typename ScalarRHS, typename Derived>
-struct DualType<_BinaryOperator<ScalarLHS,ScalarRHS,Derived>>
-{
-   using ScalarLHS_D = typename DualType<ScalarLHS>::type;
-   using ScalarRHS_D = typename DualType<ScalarRHS>::type;
-   using Derived_D = typename DualType<Derived>::type;
-
-   typedef _BinaryOperator<ScalarLHS_D,ScalarRHS_D,Derived_D> type;
-};
 
 /*
  * 
@@ -218,15 +206,6 @@ struct _AddOp:_BinaryOperator<ScalarLHS,ScalarRHS,_AddOp<ScalarLHS,ScalarRHS>>
 #endif
 };
 
-template<typename ScalarLHS,typename ScalarRHS>
-struct DualType<_AddOp<ScalarLHS,ScalarRHS>>
-{
-   using ScalarLHS_D = typename DualType<ScalarLHS>::type;
-   using ScalarRHS_D = typename DualType<ScalarRHS>::type;
-
-   typedef _AddOp<ScalarLHS_D,ScalarRHS_D> type;
-};
-
 /**
  * @brief  Sub operator
  *
@@ -291,15 +270,6 @@ struct _SubOp:_BinaryOperator<ScalarLHS,ScalarRHS,_SubOp<ScalarLHS,ScalarRHS>>
         return(inner::vsub(lhs,rhs,p0));
     }
 #endif
-};
-
-template<typename ScalarLHS,typename ScalarRHS>
-struct DualType<_SubOp<ScalarLHS,ScalarRHS>>
-{
-   using ScalarLHS_D = typename DualType<ScalarLHS>::type;
-   using ScalarRHS_D = typename DualType<ScalarRHS>::type;
-
-   typedef _SubOp<ScalarLHS_D,ScalarRHS_D> type;
 };
 
 /**
@@ -369,15 +339,6 @@ struct _MulOp:_BinaryOperator<ScalarLHS,ScalarRHS,_MulOp<ScalarLHS,ScalarRHS>>
 #endif
 };
 
-template<typename ScalarLHS,typename ScalarRHS>
-struct DualType<_MulOp<ScalarLHS,ScalarRHS>>
-{
-   using ScalarLHS_D = typename DualType<ScalarLHS>::type;
-   using ScalarRHS_D = typename DualType<ScalarRHS>::type;
-
-   typedef _MulOp<ScalarLHS_D,ScalarRHS_D> type;
-};
-
 /*
  * 
  * UNARY
@@ -418,14 +379,6 @@ struct _NegOp:_UnaryOperator<Scalar,_NegOp<Scalar>>
 #endif
 };
 
-template<typename Scalar>
-struct DualType<_NegOp<Scalar>>
-{
-   using Scalar_D = typename DualType<Scalar>::type;
-
-   typedef _NegOp<Scalar_D> type;
-};
-
 /**
  * @brief  No operator
  *
@@ -460,13 +413,6 @@ struct _NoOp:_UnaryOperator<Scalar,_NoOp<Scalar>>
 #endif
 };
 
-template<typename Scalar>
-struct DualType<_NoOp<Scalar>>
-{
-   using Scalar_D = typename DualType<Scalar>::type;
-
-   typedef _NoOp<Scalar_D> type;
-};
 
 /**
  * @brief  Conjugate operator
@@ -512,12 +458,5 @@ struct _ConjugateOp:_UnaryOperator<Scalar,_ConjugateOp<Scalar>>
 #endif
 };
 
-template<typename Scalar>
-struct DualType<_ConjugateOp<Scalar>>
-{
-   using Scalar_D = typename DualType<Scalar>::type;
-
-   typedef _ConjugateOp<Scalar_D> type;
-};
 
 /*! @} */

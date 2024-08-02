@@ -66,6 +66,7 @@ struct vector_traits<std::complex<float>,arch,
 
   //! Dummy type. Not used when no vector instructions
   typedef bool vector;
+  typedef bool real_vector;
   //! Dummy type. Not used when no vector instructions
   typedef bool temp_accumulator;
   //! Dummy type. Not used when no vector instructions

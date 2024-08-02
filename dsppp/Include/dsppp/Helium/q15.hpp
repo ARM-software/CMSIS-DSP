@@ -41,6 +41,7 @@ typename std::enable_if<std::is_base_of<Helium,arch>::value>::type >
 
   //! Vector datatype
   typedef int16x8_t vector;
+  typedef int16x8_t real_vector;
 
   //! Temp accumulator datatype
   typedef Q<33,30> temp_accumulator;

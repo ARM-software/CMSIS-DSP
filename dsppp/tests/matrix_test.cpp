@@ -1301,6 +1301,7 @@ void testsubmatmult()
    startSectionNB(2);
    cmsis_ma = copy(ma.sub(Slice(0,R),Slice(0,K)));
    cmsis_mb = copy(mb.sub(Slice(0,K),Slice(0,C)));
+
    if constexpr (IsComplexNumber<T>::value)
    {
       cmsis_cmplx_mat_mult(&SA, &SB, &RES,reinterpret_cast<S*>(tmp.ptr()));
@@ -2190,11 +2191,44 @@ void matrix_all_test()
 void matrix_test()
 {
 #if 0
-   title<std::complex<float>>("Test mat mult");
-   testmatmult<std::complex<float>,2,2,2>();
-   testmatmult<std::complex<float>,3,3,3>();
-   testmatmult<std::complex<float>,4,4,4>();
-   testmatmult<std::complex<float>,5,5,5>();
+   using TA = float;
+   using TB = std::complex<float>;
+   using Res = typename MixedRes<TA,TB>::type;
+   constexpr int R = 2;
+   constexpr int C = 2;
+   constexpr int U = 2;
+   int row = 0;
+
+   PVector<TA,C> a;
+   init_array(a,C);
+
+   PMat<TB,R,C> m;
+   init_array(m,R*C);
+
+   //PVector<Res,R> res = dot(m,a);
+
+   auto tmp = unroll<U>([&row,&m](index_t k){return m.row(row+k);});
+   using M = decltype(tmp);
+   using V = decltype(replicate<U>(a));
+
+   PrintType<M>();
+   PrintType<V>();
+
+   using EA = typename ElementType<M>::type;
+   using EB = typename ElementType<V>::type;
+   std::cout << "----\n";
+
+   PrintType<EA>();
+   PrintType<EB>();
+   //PrintType<MixedRes<EA,EB>::type>();
+   typedef MixedRes<EA,EB>::type T1;
+   PrintType<T1>();
+
+
+   std::cout << is_only_vector<V>() << "\n";
+   std::cout << is_only_vector<M>() << "\n";
+   std::cout << compatible_element<M,V>() << "\n";
+
 #else
 #if defined(MATRIX_TEST)
    #if defined(F64_DT)

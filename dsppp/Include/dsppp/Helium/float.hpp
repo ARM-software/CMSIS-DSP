@@ -44,6 +44,7 @@ typename std::enable_if<std::is_base_of<Helium,arch>::value>::type >
   typedef float storage_type;
   //! Vector datatype
   typedef float32x4_t vector;
+  typedef float32x4_t real_vector;
   //! Temp accumulator datatype (must be reduced to final scalar datatype)
   typedef float32x4_t temp_accumulator;
   //! Predicate datatype

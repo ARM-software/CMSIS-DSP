@@ -33,6 +33,7 @@ typename std::enable_if<std::is_base_of<Helium,arch>::value>::type >
   typedef Q31 type;
   typedef type::value_type storage_type;
   typedef int32x4_t vector;
+  typedef int32x4_t real_vector;
   typedef Q<9,54> temp_accumulator;
   typedef mve_pred16_t predicate_t;
 

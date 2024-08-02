@@ -54,6 +54,7 @@ struct vector_traits<Q31,arch,
   // No vector type but must still be defined
   //! Dummy type when no vector instructions are supported
   typedef bool vector;
+  typedef bool real_vector;
   //! Dummy type when no vector instructions are supported
   typedef bool temp_accumulator;
   //! Dummy type when no vector instructions are supported

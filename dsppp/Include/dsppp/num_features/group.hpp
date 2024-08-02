@@ -73,6 +73,9 @@ struct vector_traits<std::tuple<E...>,arch> {
   
   //! Vector datatype
   typedef std::tuple<typename vector_traits<E,arch>::vector...> vector;
+
+  //! Real vector datatype
+  typedef std::tuple<typename vector_traits<E,arch>::real_vector...> real_vector;
   
   //! Predicate datatype
   typedef std::tuple<typename vector_traits<E,arch>::predicate_t...> predicate_t;
@@ -166,8 +169,8 @@ namespace inner {
    *
    * @return     tuple of results
    */
-  template<typename A,typename V,std::size_t... Ns>
-  __STATIC_FORCEINLINE A vmacc_impl(const A &acc,const V &a,const V &b, std::index_sequence<Ns...>)
+  template<typename A,typename VA,typename VB,std::size_t... Ns>
+  __STATIC_FORCEINLINE A vmacc_impl(const A &acc,const VA &a,const VB &b, std::index_sequence<Ns...>)
   {
      return(std::make_tuple(vmacc(std::get<Ns>(acc),std::get<Ns>(a),std::get<Ns>(b))...));
   };
@@ -184,11 +187,11 @@ namespace inner {
    *
    * @return     Accumulator result
    */
-  template<typename A,typename ...E>
+  template<typename A,typename ...EA, typename ...EB>
   __STATIC_FORCEINLINE A 
-  vmacc(const A &acc,const std::tuple<E...> &a,const std::tuple<E...> &b)
+  vmacc(const A &acc,const std::tuple<EA...> &a,const std::tuple<EB...> &b)
   {
-     return(vmacc_impl(acc,a,b,std::make_index_sequence<sizeof...(E)>()));
+     return(vmacc_impl(acc,a,b,std::make_index_sequence<sizeof...(EA)>()));
   };
 
   /**
@@ -206,8 +209,8 @@ namespace inner {
    *
    * @return     Tuple of accumulated values
    */
-  template<typename A,typename V,typename B,std::size_t... Ns>
-  __STATIC_FORCEINLINE A vmacc_impl(const A &acc,const V &a,const V &b, const B p0,std::index_sequence<Ns...>)
+  template<typename A,typename VA,typename VB,typename B,std::size_t... Ns>
+  __STATIC_FORCEINLINE A vmacc_impl(const A &acc,const VA &a,const VB &b, const B p0,std::index_sequence<Ns...>)
   {
      return(std::make_tuple(vmacc(std::get<Ns>(acc),std::get<Ns>(a),std::get<Ns>(b),p0)...));
   };
@@ -226,11 +229,11 @@ namespace inner {
    *
    * @return     Tuple of accumulated vectors
    */
-  template<typename A,typename B,typename ...E>
+  template<typename A,typename B,typename ...EA, typename ...EB>
   __STATIC_FORCEINLINE A 
-  vmacc(const A &acc,const std::tuple<E...> &a,const std::tuple<E...> &b,const B p0)
+  vmacc(const A &acc,const std::tuple<EA...> &a,const std::tuple<EB...> &b,const B p0)
   {
-     return(vmacc_impl(acc,a,b,p0,std::make_index_sequence<sizeof...(E)>()));
+     return(vmacc_impl(acc,a,b,p0,std::make_index_sequence<sizeof...(EA)>()));
   };
 
  
@@ -325,8 +328,8 @@ namespace inner {
    *
    * @return     Tuples of accumulated values
    */
-  template<typename A,typename V,std::size_t... Ns>
-  __STATIC_FORCEINLINE A mac_impl(const A &acc,const V &a,const V &b, std::index_sequence<Ns...>)
+  template<typename A,typename VA,typename VB,std::size_t... Ns>
+  __STATIC_FORCEINLINE A mac_impl(const A &acc,const VA &a,const VB &b, std::index_sequence<Ns...>)
   {
      return(std::make_tuple(mac(std::get<Ns>(acc),std::get<Ns>(a),std::get<Ns>(b))...));
   };
@@ -343,11 +346,11 @@ namespace inner {
  *
  * @return     Accumulated values
  */
-  template<typename A,typename ...E>
+  template<typename A,typename ...EA, typename ...EB>
   __STATIC_FORCEINLINE A 
-  mac(const A &acc,const std::tuple<E...> &a,const std::tuple<E...> &b)
+  mac(const A &acc,const std::tuple<EA...> &a,const std::tuple<EB...> &b)
   {
-     return(mac_impl(acc,a,b,std::make_index_sequence<sizeof...(E)>()));
+     return(mac_impl(acc,a,b,std::make_index_sequence<sizeof...(EA)>()));
   };
 
 /**
@@ -365,8 +368,8 @@ namespace inner {
    *
    * @return     Tuples of accumulated values
    */
- template<typename A,typename V,typename B,std::size_t... Ns>
-  __STATIC_FORCEINLINE A mac_impl(const A &acc,const V &a,const V &b, const B p0,std::index_sequence<Ns...>)
+ template<typename A,typename VA,typename VB,typename B,std::size_t... Ns>
+  __STATIC_FORCEINLINE A mac_impl(const A &acc,const VA &a,const VB &b, const B p0,std::index_sequence<Ns...>)
   {
      return(std::make_tuple(mac(std::get<Ns>(acc),std::get<Ns>(a),std::get<Ns>(b),p0)...));
   };
@@ -385,11 +388,11 @@ namespace inner {
  *
  * @return     Accumulated values
  */
-   template<typename A,typename B,typename ...E>
+   template<typename A,typename B,typename ...EA, typename ...EB>
   __STATIC_FORCEINLINE A 
-  mac(const A &acc,const std::tuple<E...> &a,const std::tuple<E...> &b,const B p0)
+  mac(const A &acc,const std::tuple<EA...> &a,const std::tuple<EB...> &b,const B p0)
   {
-     return(mac_impl(acc,a,b,p0,std::make_index_sequence<sizeof...(E)>()));
+     return(mac_impl(acc,a,b,p0,std::make_index_sequence<sizeof...(EA)>()));
   };
 
 };

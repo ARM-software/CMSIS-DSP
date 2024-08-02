@@ -57,8 +57,6 @@ struct OutputVector;
 template<typename MA,typename MB>
 struct OutputMatrix;
 
-template<typename T>
-struct DualType;
 
 /*
 

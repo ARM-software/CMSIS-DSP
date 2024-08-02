@@ -137,7 +137,11 @@ struct ComplexNumberType<std::complex<T>>
     typedef T type;
 };
 
-
+template<typename T>
+struct ComplexNumberType<const std::complex<T>>
+{
+    typedef const T type;
+};
 
 
 template<typename A,typename B>
@@ -154,7 +158,23 @@ using SameElementType=std::is_same<typename ElementType<A>::type,typename Elemen
 template<typename DA>
 constexpr bool has_vector_inst() {return (vector_traits<typename ElementType<DA>::type>::has_vector);}
 
+/**
+ * @brief      Check if predicated instructions are supported
+ *
+ * @tparam     DA    The datatype
+ *
+ * @return     True if predicated instructions are supported
+ */
+template<typename DA>
+constexpr bool has_predicate() {return (vector_traits<typename ElementType<DA>::type>::has_predicate);}
 
+/**
+ * @brief      Check if expression contains a mix of complex / real operations
+ *
+ * @tparam     DA    Expression datatype
+ *
+ * @return     True if mixed, False otherwise.
+ */
 template<typename DA>
 constexpr bool is_mixed() {return IsMixed<DA>::value;}
 
@@ -173,6 +193,7 @@ constexpr bool same_nb_lanes() {
     using EB = typename ElementType<B>::type;
     return (vector_traits<EA>::nb_lanes == vector_traits<EB>::nb_lanes);
 }
+
 
 /**
  * @brief      Check if vector / matrix contains complex numbers
@@ -245,15 +266,29 @@ constexpr bool is_scalar() {return (!IsVector<DA>::value &&
  *
  * @return     True if types are compatible
  */
+
+
+/*
+
+Get float type for complex
+
+*/
+template<typename E>
+struct FloatType
+{
+    using T = typename ElementType<std::remove_reference_t<E>>::type;
+
+    typedef std::conditional_t<
+      IsComplexNumber<T>::value,   
+      typename ComplexNumberType<T>::type,
+      T> type;
+};
+
 template<typename A,typename B>
 constexpr bool compatible_element() {
     using EA = typename ElementType<A>::type;
     using EB = typename ElementType<B>::type;
-return (
-(std::is_same<EA,EB>::value || 
-(IsComplexNumber<EA>::value && std::is_same<typename ComplexNumberType<EA>::type,EB>::value) ||
-(IsComplexNumber<EB>::value && std::is_same<typename ComplexNumberType<EB>::type,EA>::value))
-) ;
+return std::is_same<typename FloatType<EA>::type,typename FloatType<EB>::type>::value ;
 }
 
 template<typename A,typename B>

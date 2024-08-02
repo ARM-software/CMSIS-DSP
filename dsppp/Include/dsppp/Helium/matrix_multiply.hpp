@@ -18,9 +18,9 @@ template<typename M,
          typename std::enable_if<
          has_vector_inst<M>() &&
          has_vector_inst<V>() && 
-         !is_mixed<V>() && 
+         //!is_mixed<V>() && 
          same_nb_lanes<M,V>() &&
-         same_nb_lanes<M,RES>(),bool>::type = true>
+         same_nb_lanes<M,RES>() ,bool>::type = true>
 inline void _dot_m_v(RES &res,
                     const M&m,const V&v,
                     const Helium* = nullptr)

@@ -542,6 +542,16 @@ extern void cmsisdsp_dot_expr(const float32_t* a,
                               float32_t &r, 
                               uint32_t l);
 
+extern void cmsisdsp_dot_expr(const std::complex<float32_t>* a, 
+                              const std::complex<float32_t>* b, 
+                              const std::complex<float32_t>* c, 
+                              const std::complex<float32_t>* d, 
+                              std::complex<float32_t>* tmp1, 
+                              std::complex<float32_t>* tmp2, 
+                              const float32_t scale,
+                              std::complex<float32_t> &r, 
+                              uint32_t l);
+
 #if !defined(DISABLEFLOAT16)
 extern void cmsisdsp_dot_expr(const float16_t* a, 
                               const float16_t* b, 

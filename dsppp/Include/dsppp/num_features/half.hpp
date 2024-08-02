@@ -58,6 +58,7 @@ struct vector_traits<float16_t> {
   // No vector type but must still be defined
   //! Dummy type when no vector instruction is supported
   typedef bool vector;
+  typedef bool real_vector;
   //! Dummy type when no vector instruction is supported
   typedef bool temp_accumulator;
   //! Dummy type when no vector instruction is supported

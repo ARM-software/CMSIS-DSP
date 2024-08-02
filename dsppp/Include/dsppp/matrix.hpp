@@ -435,17 +435,6 @@ struct VecRef<MatrixView<T,S>>
    };
 };
 
-template<typename T,int S>
-struct DualType<MatrixView<T,S>>
-{
-   typedef MatrixView<T,S> type;
-};
-
-template<typename T,int S>
-struct DualType<MatrixView<std::complex<T>,S>>
-{
-   typedef MatrixView<Dual<std::complex<T>>,S> type;
-};
 
 template<typename P,int R,int C,
          template<int> typename A>
@@ -711,15 +700,6 @@ struct VecRef<_Outer<LHS,RHS,OP>>
    };
 };
 
-template<typename LHS,typename RHS,typename OP>
-struct DualType<_Outer<LHS,RHS,OP>>
-{
-   using LHS_D = typename DualType<LHS>::type;
-   using RHS_D = typename DualType<RHS>::type;
-   using OP_D = typename DualType<OP>::type;
-
-   typedef _Outer<LHS_D,RHS_D,OP_D> type;
-};
 
 template<typename LHS,typename RHS,typename OP>
 struct NbRows<_Outer<LHS,RHS,OP>>

@@ -513,18 +513,19 @@ void vector_test()
    using T = std::complex<float>;
    constexpr int NB = 8;
    PVector<T,NB> a;
-   PVector<float,NB> b;
+   PVector<T,NB> b;
+   PVector<float,NB> c;
   
    init_array(a,NB);
    init_array(b,NB);
+   init_array(c,NB);
 
   // PVector<T,NB> res = a * conjugate(b + std::complex<float>(2.0f,-1.0f));
 
    //PVector<T,NB> res = copy(b);
    startSectionNB(1);
    //PVector<T,NB> res = copy(b);
-   PVector<T,NB> tmp = copy(b);
-   PVector<T,NB> res = a + tmp;
+   PVector<T,NB> res = a * c;
    stopSectionNB(1);
 
    //PrintType<decltype(a + b)>();
