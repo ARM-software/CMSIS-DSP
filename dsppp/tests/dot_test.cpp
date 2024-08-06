@@ -167,12 +167,20 @@ static void test_mixed()
    PVector<Res> bcmplx(NB);
    #endif
 
-   acmplx = copy(a);
-   bcmplx = copy(b);
+   
 
    INIT_SYSTICK;
    START_CYCLE_MEASUREMENT;
-   cmsisdsp_dot(acmplx.const_ptr(),bcmplx.const_ptr(),ref,NB);
+   if constexpr (IsComplexNumber<TA>::value)
+   {
+      bcmplx = copy(b);
+      cmsisdsp_dot(a.const_ptr(),bcmplx.const_ptr(),ref,NB);
+   }
+   else 
+   {
+      acmplx = copy(a);
+      cmsisdsp_dot(acmplx.const_ptr(),b.const_ptr(),ref,NB);
+   }
    STOP_CYCLE_MEASUREMENT;
 
    if (!validate(result,ref))
@@ -267,9 +275,8 @@ void all_dot_test()
 
     if constexpr (IsComplexNumber<T>::value)
     {
-      title<T>("Dot mixed product");
+      title<T>("Dot mixed product c X r");
 
-    
       test_mixed<T,typename T::value_type,NBVEC_4,ACC>();
       test_mixed<T,typename T::value_type,NBVEC_8,ACC>();
       test_mixed<T,typename T::value_type,NBVEC_9,ACC>();
@@ -291,6 +298,30 @@ void all_dot_test()
       test_mixed<T,typename T::value_type,nb_loops,ACC>();
       test_mixed<T,typename T::value_type,nb_loops+1,ACC>();
       test_mixed<T,typename T::value_type,nb_loops+nb_tails,ACC>();
+
+      title<T>("Dot mixed product r X c");
+
+      test_mixed<typename T::value_type,T,NBVEC_4,ACC>();
+      test_mixed<typename T::value_type,T,NBVEC_8,ACC>();
+      test_mixed<typename T::value_type,T,NBVEC_9,ACC>();
+      test_mixed<typename T::value_type,T,NBVEC_16,ACC>();
+      test_mixed<typename T::value_type,T,NBVEC_32,ACC>();
+      test_mixed<typename T::value_type,T,NBVEC_64,ACC>();
+      test_mixed<typename T::value_type,T,NBVEC_128,ACC>();
+      test_mixed<typename T::value_type,T,NBVEC_256,ACC>();
+      test_mixed<typename T::value_type,T,NBVEC_258,ACC>();
+      test_mixed<typename T::value_type,T,NBVEC_512,ACC>();
+      test_mixed<typename T::value_type,T,NBVEC_1024,ACC>();
+      if constexpr (!std::is_same<T,double>::value)
+      {
+         test_mixed<typename T::value_type,T,NBVEC_2048,ACC>();
+      }
+
+      test_mixed<typename T::value_type,T,1,ACC>();
+      test_mixed<typename T::value_type,T,nb_tails,ACC>();
+      test_mixed<typename T::value_type,T,nb_loops,ACC>();
+      test_mixed<typename T::value_type,T,nb_loops+1,ACC>();
+      test_mixed<typename T::value_type,T,nb_loops+nb_tails,ACC>();
 
     }
 
@@ -376,10 +407,10 @@ void all_dot_test()
 
 void dot_test()
 {
-#if 0
+#if 1
    using T = std::complex<float>;
    using ACC = typename number_traits<T>::accumulator;
-  test<T,NBVEC_512,ACC>();
+   test<T,NBVEC_512,ACC>();
 #else
 #if defined(DOT_TEST)
 

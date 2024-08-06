@@ -23,8 +23,6 @@
 
 #if defined(ARM_MATH_MVEF)
 
-// Create complex constant from float using scatter gather
-#define SCATTER_CONST
 
 /*
 
@@ -47,6 +45,8 @@ typename std::enable_if<std::is_base_of<Helium,arch>::value>::type >
   typedef std::complex<float> storage_type;
   //! Vector datatype
   typedef ComplexVector<float32x4_t> vector;
+  //! Half vector datatype
+  typedef HalfComplexVector<float32x4_t> half_vector;
   //! Real vector datatype
   typedef float32x4_t real_vector;
   //! Temp accumulator datatype (must be reduced to final scalar datatype)
@@ -92,14 +92,24 @@ typename std::enable_if<std::is_base_of<Helium,arch>::value>::type >
 namespace inner {
 
 
-  /* Needed to build but not used : no predication for this
-   * datatype
+  /* 
+   * For a complex (2 helium vector)
+   * it generates the predicate to use on the last
+   * or first vector.
+   * 
    */
   template<>
   struct vctpq<std::complex<float>> {
     static uint32_t mk(uint32_t v)
     {
-       return(v);
+       if (v>2)
+       {
+         return(vctp32q(2*(v-2)));
+       }
+       else 
+       {
+          return(vctp32q(2*v));
+       }
     };
   };
   
@@ -113,23 +123,33 @@ namespace inner {
   __STATIC_FORCEINLINE ComplexVector<float32x4_t> vconst(const std::complex<float> v)
   {
      float32x4_t bv;
+
+#if defined(SCATTER_CONST)
+     static constexpr uint32x4_t rd_offset = {0,1,0,1};
+     bv=vldrwq_gather_shifted_offset_f32(reinterpret_cast<const float32_t*>(&v),rd_offset);
+#else
      bv = vdupq_n_f32(v.real());
      bv[1] = v.imag();
      bv[3] = v.imag();
+#endif
 
      return(ComplexVector<float32x4_t>(bv,bv));
   }
 
   __STATIC_FORCEINLINE ComplexVector<float32x4_t> vconst(const float32x4_t v)
   {
-     float32x4_t ca=vdupq_n_f32(0.0f);
-     float32x4_t cb=vdupq_n_f32(0.0f);
+     float32x4_t ca;
+     float32x4_t cb;
+
+     ca=vdupq_n_f32(0.0f);
+     cb=vdupq_n_f32(0.0f);
 
      ca[0] = v[0];
      ca[2] = v[1];
 
      cb[0] = v[2];
      cb[2] = v[3];
+
      return(ComplexVector<float32x4_t>(ca,cb));
   }
 
@@ -137,17 +157,33 @@ namespace inner {
 
   __STATIC_FORCEINLINE float32x4_t half_vconst(const std::complex<float> v)
   {
-     float32x4_t bv = vdupq_n_f32(v.real());
+     float32x4_t bv;
+#if defined(SCATTER_CONST)
+     static constexpr uint32x4_t rd_offset = {0,1,0,1};
+     bv=vldrwq_gather_shifted_offset_f32(reinterpret_cast<const float32_t*>(&v),rd_offset);
+#else
+     bv = vdupq_n_f32(v.real());
      bv[1] = v.imag();
      bv[3] = v.imag();
+#endif
      return(bv);
+
   }
 
   __STATIC_FORCEINLINE float32x4_t half_vconst(const float v)
   {
-     float32x4_t bv = vdupq_n_f32(v);
+     float32x4_t bv;
+#if defined(SCATTER_CONST)
+     static float32_t tmp[2];
+     tmp[0] = v;
+     tmp[1] = 0.0f;
+     static constexpr uint32x4_t rd_offset = {0,1,0,1};
+     bv=vldrwq_gather_shifted_offset_f32(reinterpret_cast<const float32_t*>(tmp),rd_offset);
+#else  
+     bv = vdupq_n_f32(v);
      bv[1] = 0.0f;
      bv[3] = 0.0f;
+#endif
      return(bv);
   }
 
@@ -267,19 +303,6 @@ namespace inner {
      return(ComplexVector<float32x4_t>(vsubq(a.va,b.va),vsubq(a.vb,b.vb)));
   };
 
-  __STATIC_FORCEINLINE ComplexVector<float32x4_t> vsub(const float32x4_t a,
-                                                       const ComplexVector<float32x4_t> &b)
-  {
-     ComplexVector<float32x4_t> c = vconst(a);
-     return vsub(c,b);
-  };
-
-  __STATIC_FORCEINLINE ComplexVector<float32x4_t> vsub(const ComplexVector<float32x4_t> &a,
-                                                       const float32x4_t b)
-  {
-     ComplexVector<float32x4_t> c = vconst(b);
-     return vsub(a,c);
-  };
 
   /**
    * @brief      Vector - Scalar
@@ -301,6 +324,13 @@ namespace inner {
   {
      const float32x4_t c = half_vconst(b);
      return(ComplexVector<float32x4_t>(vsubq(a.va,c),vsubq(a.vb,c)));
+  };
+
+  __STATIC_FORCEINLINE ComplexVector<float32x4_t> vsub(const ComplexVector<float32x4_t> &a,
+                                                       const float32x4_t b)
+  {
+     ComplexVector<float32x4_t> c = vconst(b);
+     return vsub(a,c);
   };
 
   /**
@@ -325,6 +355,13 @@ namespace inner {
      return(ComplexVector<float32x4_t>(vsubq(c,b.va),vsubq(c,b.vb)));
   };
 
+   __STATIC_FORCEINLINE ComplexVector<float32x4_t> vsub(const float32x4_t a,
+                                                       const ComplexVector<float32x4_t> &b)
+  {
+     ComplexVector<float32x4_t> c = vconst(a);
+     return vsub(c,b);
+  };
+
   
   /**
    * @brief      Vector * Vector
@@ -346,23 +383,16 @@ namespace inner {
      return(ComplexVector<float32x4_t>(vec_acc_a,vec_acc_b));
   };
 
-  __STATIC_FORCEINLINE ComplexVector<float32x4_t> vmul(const float32x4_t a,
-                                                       const ComplexVector<float32x4_t> &b)
+  __STATIC_FORCEINLINE HalfComplexVector<float32x4_t> vmul(const HalfComplexVector<float32x4_t> &a,
+                                                           const HalfComplexVector<float32x4_t> &b)
   {
-     const ComplexVector<float32x4_t> c = vconst(a);
+     float32x4_t vec_acc_a = vcmulq(a.va, b.va);
+     vec_acc_a = vcmlaq_rot90(vec_acc_a, a.va, b.va);
 
-     return(vmul(c,b));
+     return(HalfComplexVector<float32x4_t>(vec_acc_a));
   };
 
-  __STATIC_FORCEINLINE ComplexVector<float32x4_t> vmul(const ComplexVector<float32x4_t> &a,
-                                                       const float32x4_t b)
-  {
-     const ComplexVector<float32x4_t> c = vconst(b);
-
-     return(vmul(a,c));
-  };
-
-
+ 
 
   /**
    * @brief      Vector * Scalar
@@ -386,6 +416,21 @@ namespace inner {
      return(ComplexVector<float32x4_t>(vec_acc_a,vec_acc_b));
   };
 
+  __STATIC_FORCEINLINE ComplexVector<float32x4_t> vmul(const float32x4_t &a,
+                                                       const std::complex<float> &b)
+  {
+     static float32_t tmp[8];
+     float32x4x2_t c;
+     float32x4_t va,vb;
+     c.val[0] = vmulq_n_f32(a,b.real());
+     c.val[1] = vmulq_n_f32(a,b.imag());
+     vst2q(tmp,c);
+     va=vld1q(tmp);
+     vb=vld1q(tmp+4);
+
+     return(ComplexVector<float32x4_t>(va,vb));
+  };
+
   __STATIC_FORCEINLINE ComplexVector<float32x4_t> vmul(const ComplexVector<float32x4_t> &a,
                                                        const float b)
   {
@@ -394,6 +439,13 @@ namespace inner {
      float32x4_t vec_acc_b = vmulq_n_f32(a.vb, b);
 
      return(ComplexVector<float32x4_t>(vec_acc_a,vec_acc_b));
+  };
+
+  __STATIC_FORCEINLINE ComplexVector<float32x4_t> vmul(const ComplexVector<float32x4_t> &a,
+                                                       const float32x4_t b)
+  {
+     ComplexVector<float32x4_t> c = vconst(b);
+     return vmul(a,c);
   };
 
   /**
@@ -418,6 +470,22 @@ namespace inner {
      return(ComplexVector<float32x4_t>(vec_acc_a,vec_acc_b));
   };
 
+   __STATIC_FORCEINLINE ComplexVector<float32x4_t> vmul(const std::complex<float> &a,
+                                                        const float32x4_t &b
+                                                       )
+  {
+     static float32_t tmp[8];
+     float32x4x2_t c;
+     float32x4_t va,vb;
+     c.val[0] = vmulq_n_f32(b,a.real());
+     c.val[1] = vmulq_n_f32(b,a.imag());
+     vst2q(tmp,c);
+     va=vld1q(tmp);
+     vb=vld1q(tmp+4);
+
+     return(ComplexVector<float32x4_t>(va,vb));
+  };
+
 
   __STATIC_FORCEINLINE ComplexVector<float32x4_t> vmul(const float a,
                                                        const ComplexVector<float32x4_t> &b)
@@ -427,6 +495,13 @@ namespace inner {
 
      return(ComplexVector<float32x4_t>(vec_acc_a,vec_acc_b));
   };
+
+  __STATIC_FORCEINLINE ComplexVector<float32x4_t> vmul(const float32x4_t a,
+                                                       const ComplexVector<float32x4_t> &b)
+  {
+     ComplexVector<float32x4_t> c = vconst(a);
+     return vmul(c,b);
+  }
 
   /**
    * @brief      Multiply accumulate (Vector * Vector)
@@ -450,6 +525,17 @@ namespace inner {
      vec_acc_b = vcmlaq_rot90(vec_acc_b, a.vb, b.vb);
      
      return(ComplexVector<float32x4_t>(vec_acc_a,vec_acc_b));
+  };
+
+  __STATIC_FORCEINLINE HalfComplexVector<float32x4_t> vmacc(const HalfComplexVector<float32x4_t> &acc,
+                                                            const HalfComplexVector<float32x4_t> &a,
+                                                            const HalfComplexVector<float32x4_t> &b)
+  {
+     float32x4_t vec_acc_a = vcmlaq(acc.va, a.va, b.va);
+     vec_acc_a = vcmlaq_rot90(vec_acc_a, a.va, b.va);
+
+    
+     return(HalfComplexVector<float32x4_t>(vec_acc_a));
   };
 
   __STATIC_FORCEINLINE ComplexVector<float32x4_t> vmacc(const ComplexVector<float32x4_t> &acc,
@@ -494,6 +580,23 @@ namespace inner {
   };
 
   __STATIC_FORCEINLINE ComplexVector<float32x4_t> vmacc(const ComplexVector<float32x4_t> &acc,
+                                                        const float32x4_t &a,
+                                                        const std::complex<float> &b)
+  {
+     float32x4_t vec_acc_a,vec_acc_b;
+     float32x4_t vecB = half_vconst(b);
+     ComplexVector<float32x4_t> ca = vconst(a);
+
+     vec_acc_a = vcmlaq(acc.va, ca.va, vecB);
+     vec_acc_a = vcmlaq_rot90(vec_acc_a, ca.va, vecB);
+
+     vec_acc_b = vcmlaq(acc.vb, ca.vb, vecB);
+     vec_acc_b = vcmlaq_rot90(vec_acc_b, ca.vb, vecB);
+     
+     return(ComplexVector<float32x4_t>(vec_acc_a,vec_acc_b));
+  };
+
+  __STATIC_FORCEINLINE ComplexVector<float32x4_t> vmacc(const ComplexVector<float32x4_t> &acc,
                                                         const ComplexVector<float32x4_t> &a,
                                                         const float b)
   {
@@ -528,6 +631,16 @@ namespace inner {
      return(std::complex<float>(re,im));
   };
 
+  __STATIC_FORCEINLINE std::complex<float> vreduce(const HalfComplexVector<float32x4_t> &in)
+  {
+     float re,im;
+
+     re = vgetq_lane(in.va, 0) + vgetq_lane(in.va, 2);
+     im = vgetq_lane(in.va, 1) + vgetq_lane(in.va, 3);
+
+     return(std::complex<float>(re,im));
+  };
+
 
 
   /**
@@ -550,6 +663,50 @@ namespace inner {
       ));
   };
 
+  template<int S,
+  typename std::enable_if<S==1,bool>::type = true>
+  inline HalfComplexVector<float32x4_t> vload1_half(const std::complex<float32_t> *p)
+  {
+     return(HalfComplexVector<float32x4_t>(
+      vld1q(reinterpret_cast<const float32_t*>(p))
+      ));
+  };
+
+  inline HalfComplexVector<float32x4_t> vload1_half(const std::complex<float32_t> *p,const index_t stride)
+  {
+   
+   constexpr uint32x4_t scale = {0,0,2,2};
+   constexpr uint32x4_t cmplx = {0,1,0,1};
+   uint32x4_t offset;
+
+   offset = vmulq_n_u32(scale,stride);
+   offset = vaddq(offset,cmplx);
+
+   return(HalfComplexVector<float32x4_t>(
+     vldrwq_gather_shifted_offset_f32(reinterpret_cast<const float32_t*>(p),offset))
+   );
+  }
+
+  template<int S,
+  typename std::enable_if<S==1,bool>::type = true>
+  inline ComplexVector<float32x4_t> vload1_z(const std::complex<float32_t> *p,const std::size_t nb,const mve_pred16_t p0)
+  {
+     if (nb > 2)
+     {
+         return(ComplexVector<float32x4_t>(
+               vld1q(reinterpret_cast<const float32_t*>(p)),
+               vld1q_z(reinterpret_cast<const float32_t*>(p)+4,p0)
+         ));
+     }
+     else 
+     {
+         return(ComplexVector<float32x4_t>(
+               vld1q_z(reinterpret_cast<const float32_t*>(p),p0),
+               vdupq_n_f32(0.0f)
+         ));
+     }
+  };
+
  
   template<int S,
   typename std::enable_if<(S>1),bool>::type = true>
@@ -560,6 +717,16 @@ namespace inner {
       vldrwq_gather_shifted_offset_f32(reinterpret_cast<const float32_t*>(p),offset),
       vldrwq_gather_shifted_offset_f32(reinterpret_cast<const float32_t*>(p)+4*S,offset)
       ));
+  };
+
+  template<int S,
+  typename std::enable_if<S==1,bool>::type = true>
+  inline HalfComplexVector<float32x4_t> vload1_half_z(const std::complex<float32_t> *p,
+                                                      const std::size_t nb,
+                                                      const mve_pred16_t p0)
+  {
+     (void)nb;
+     return(HalfComplexVector<float32x4_t>(vld1q_z(reinterpret_cast<const float32_t*>(p),p0)));
   };
 
 
@@ -658,6 +825,33 @@ namespace inner {
      };
   };
 
+  template<int ...S>
+  struct vload1_half_gen_stride<std::complex<float32_t>,S...>
+  {
+     template<int ...I>
+     static HalfComplexVector<float32x4_t> _run(const std::complex<float32_t> *p,
+      std::integer_sequence<int,I...>)
+     {
+        constexpr uint32x4_t offsetA={I...};
+        return(HalfComplexVector<float32x4_t>(
+         vldrwq_gather_shifted_offset_f32(
+            reinterpret_cast<const float32_t*>(p),offsetA)
+        ));
+     };
+
+     /**
+      * @brief      Load with generalized stride
+      *
+      * @param[in]  p     Load address
+      *
+      * @return     Gather load
+      */
+     static HalfComplexVector<float32x4_t> run(const std::complex<float32_t> *p)
+     {
+        return _run(p,typename ToComplexStride<S...>::type{});
+     };
+  };
+
   
   
   
@@ -677,6 +871,22 @@ namespace inner {
      vst1q(reinterpret_cast<float32_t*>(p),val.va);
      vst1q(reinterpret_cast<float32_t*>(p)+4,val.vb);
   };
+
+  template<int S,
+  typename std::enable_if<S==1,bool>::type = true>
+  inline void vstore1_z(std::complex<float32_t> *p,ComplexVector<float32x4_t> &val,const std::size_t nb,const mve_pred16_t p0)
+  {
+     if (nb>2)
+     {
+       vst1q(reinterpret_cast<float32_t*>(p),val.va);
+       vstrwq_p(reinterpret_cast<float32_t*>(p)+4,val.vb,p0);
+     }
+     else 
+     {
+        vstrwq_p(reinterpret_cast<float32_t*>(p),val.va,p0);
+     }
+  };
+
 
   template<int S,
   typename std::enable_if<S==1,bool>::type = true>
@@ -802,9 +1012,6 @@ namespace inner {
 
 };
 
-#if defined(SCATTER_CONST)
-#undef SCATTER_CONST
-#endif
 /*! @} */
 
 #endif

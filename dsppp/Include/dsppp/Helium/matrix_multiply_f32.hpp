@@ -20,18 +20,23 @@ typename std::enable_if<
          has_vector_inst<MB>() &&
          same_nb_lanes<MA,RES>() &&
          (is_complex<MA>()) &&
+         (is_complex<MB>()) &&
          same_type_as<MA,float32_t>(),bool>::type = true>
 __STATIC_INLINE  void _arm_mat_mult_2x2_mve(
     const MA &pSrcA,
     const MB &pSrcB,
     RES &&pDst)
 {
-    using EA = typename traits<MA>::Scalar;
-    //using ACC = typename vector_traits<T>::temp_accumulator;
-    using VEC = typename vector_traits<EA>::vector;
+    using EA = typename traits<remove_constref_t<MA>>::Scalar;
+    using EB = typename traits<remove_constref_t<MB>>::Scalar;
+    using EDST = typename traits<remove_constref_t<RES>>::Scalar;
 
-    const EA   *pInA0, *pInA1,*pInB;
-    EA *pOut;
+    //using ACC = typename vector_traits<T>::temp_accumulator;
+    using VEC = typename vector_traits<EDST>::half_vector;
+
+    const EA   *pInA0, *pInA1;
+    const EB   *pInB;
+    EDST *pOut;
     VEC  acc0,acc1,vecA,vecB;
 
     pOut = pDst.ptr();
@@ -42,20 +47,20 @@ __STATIC_INLINE  void _arm_mat_mult_2x2_mve(
     /* col0 = B00 B10 */
     if constexpr (!HasStaticStride<MB>::value)
     {
-       vecB = inner::vload1(pInB, pSrcB.stride());
+       vecB = inner::vload1_half(pInB, pSrcB.stride());
     }
     else
     {
         constexpr int s = StaticStride<MB>::value;
-        vecB = inner::vload1_gen_stride<EA,0, s>::run(pInB);
+        vecB = inner::vload1_half_gen_stride<EA,0, s>::run(pInB);
     }
 
     /* Row0 : A00 A01 */
-    vecA = inner::vload1<1>(pInA0);
+    vecA = inner::vload1_half<1>(pInA0);
     acc0 = inner::vmul(vecA,vecB);
 
     /* Row1 : A10 A11 */
-    vecA = inner::vload1<1>(pInA1);
+    vecA = inner::vload1_half<1>(pInA1);
     acc1 = inner::vmul(vecA,vecB);
        
    
@@ -72,20 +77,20 @@ __STATIC_INLINE  void _arm_mat_mult_2x2_mve(
     /* col1 = B01 B11 */
     if constexpr (!HasStaticStride<MB>::value)
     {
-       vecB = inner::vload1(pInB, pSrcB.stride());
+       vecB = inner::vload1_half(pInB, pSrcB.stride());
     }
     else 
     {
         constexpr int s = StaticStride<MB>::value;
-        vecB = inner::vload1_gen_stride<EA,0, s>::run(pInB);
+        vecB = inner::vload1_half_gen_stride<EA,0, s>::run(pInB);
     }
 
     /* Row0 : A00 A01 */
-    vecA = inner::vload1<1>(pInA0);
+    vecA = inner::vload1_half<1>(pInA0);
     acc0 = inner::vmul(vecA,vecB);
 
     /* Row1 : A10 A11 */
-    vecA = inner::vload1<1>(pInA1);
+    vecA = inner::vload1_half<1>(pInA1);
     acc1 = inner::vmul(vecA,vecB);
 
     /* Output col 1 */
@@ -102,6 +107,7 @@ typename std::enable_if<
          has_vector_inst<MB>() &&
          same_nb_lanes<MA,RES>() &&
          (is_complex<MA>()) &&
+         (is_complex<MB>()) &&
          same_type_as<MA,float32_t>(),bool>::type = true>
 __STATIC_INLINE  void _arm_mat_mult_3x3_mve(
     const MA &pSrcA,
@@ -110,12 +116,11 @@ __STATIC_INLINE  void _arm_mat_mult_3x3_mve(
 {
     using EA = typename traits<MA>::Scalar;
     //using ACC = typename vector_traits<T>::temp_accumulator;
-    using VEC = typename vector_traits<EA>::vector;
+    using VEC = typename vector_traits<EA>::half_vector;
 
     const EA   *pInA0, *pInA1, *pInA2, *pInB;
     EA *pOut;
     VEC  acc0,acc1,acc2, vecA,vecB;
-
 
     mve_pred16_t p = inner::vctpq<EA>::mk(1);
 
@@ -128,33 +133,33 @@ __STATIC_INLINE  void _arm_mat_mult_3x3_mve(
 
     if constexpr (!HasStaticStride<MB>::value)
     {
-        vecB = inner::vload1(pInB, pSrcB.stride());
+        vecB = inner::vload1_half(pInB, pSrcB.stride());
     }
     else 
     {
         constexpr int s = StaticStride<MB>::value;
-        vecB = inner::vload1_gen_stride<EA,0, s>::run(pInB);
+        vecB = inner::vload1_half_gen_stride<EA,0, s>::run(pInB);
     }
 
 
-    vecA = inner::vload1<1>(pInA0);
+    vecA = inner::vload1_half<1>(pInA0);
     acc0 = inner::vmul(vecA,vecB);
 
-    vecA = inner::vload1<1>(pInA1);
+    vecA = inner::vload1_half<1>(pInA1);
     acc1 = inner::vmul(vecA,vecB);
 
-    vecA = inner::vload1<1>(pInA2);
+    vecA = inner::vload1_half<1>(pInA2);
     acc2 = inner::vmul(vecA,vecB);
 
-    vecB = inner::vload1_z<1>(pInB + 2*pSrcB.stride(),1,p);
+    vecB = inner::vload1_half_z<1>(pInB + 2*pSrcB.stride(),1,p);
 
-    vecA = inner::vload1<1>(pInA0+2);
+    vecA = inner::vload1_half<1>(pInA0+2);
     acc0 = inner::vmacc(acc0,vecA,vecB);
 
-    vecA = inner::vload1<1>(pInA1+2);
+    vecA = inner::vload1_half<1>(pInA1+2);
     acc1 = inner::vmacc(acc1,vecA,vecB);
 
-    vecA = inner::vload1<1>(pInA2+2);
+    vecA = inner::vload1_half<1>(pInA2+2);
     acc2 = inner::vmacc(acc2,vecA,vecB);
 
     pOut[0] = inner::vreduce(acc0);
@@ -166,32 +171,32 @@ __STATIC_INLINE  void _arm_mat_mult_3x3_mve(
 
     if constexpr (!HasStaticStride<MB>::value)
     {
-        vecB = inner::vload1(pInB, pSrcB.stride());
+        vecB = inner::vload1_half(pInB, pSrcB.stride());
     }
     else 
     {
         constexpr int s = StaticStride<MB>::value;
-        vecB = inner::vload1_gen_stride<EA,0, s>::run(pInB);
+        vecB = inner::vload1_half_gen_stride<EA,0, s>::run(pInB);
     }
 
-    vecA = inner::vload1<1>(pInA0);
+    vecA = inner::vload1_half<1>(pInA0);
     acc0 = inner::vmul(vecA,vecB);
 
-    vecA = inner::vload1<1>(pInA1);
+    vecA = inner::vload1_half<1>(pInA1);
     acc1 = inner::vmul(vecA,vecB);
 
-    vecA = inner::vload1<1>(pInA2);
+    vecA = inner::vload1_half<1>(pInA2);
     acc2 = inner::vmul(vecA,vecB);
 
-    vecB = inner::vload1_z<1>(pInB + 2*pSrcB.stride(),1,p);
+    vecB = inner::vload1_half_z<1>(pInB + 2*pSrcB.stride(),1,p);
 
-    vecA = inner::vload1<1>(pInA0+2);
+    vecA = inner::vload1_half<1>(pInA0+2);
     acc0 = inner::vmacc(acc0,vecA,vecB);
 
-    vecA = inner::vload1<1>(pInA1+2);
+    vecA = inner::vload1_half<1>(pInA1+2);
     acc1 = inner::vmacc(acc1,vecA,vecB);
 
-    vecA = inner::vload1<1>(pInA2+2);
+    vecA = inner::vload1_half<1>(pInA2+2);
     acc2 = inner::vmacc(acc2,vecA,vecB);
 
     pOut[0] = inner::vreduce(acc0);
@@ -203,33 +208,33 @@ __STATIC_INLINE  void _arm_mat_mult_3x3_mve(
 
     if constexpr (!HasStaticStride<MB>::value)
     {
-        vecB = inner::vload1(pInB, pSrcB.stride());
+        vecB = inner::vload1_half(pInB, pSrcB.stride());
     }
     else 
     {
         constexpr int s = StaticStride<MB>::value;
-        vecB = inner::vload1_gen_stride<EA,0, s>::run(pInB);
+        vecB = inner::vload1_half_gen_stride<EA,0, s>::run(pInB);
     }
 
-    vecA = inner::vload1<1>(pInA0);
+    vecA = inner::vload1_half<1>(pInA0);
     acc0 = inner::vmul(vecA,vecB);
 
-    vecA = inner::vload1<1>(pInA1);
+    vecA = inner::vload1_half<1>(pInA1);
     acc1 = inner::vmul(vecA,vecB);
 
-    vecA = inner::vload1<1>(pInA2);
+    vecA = inner::vload1_half<1>(pInA2);
     acc2 = inner::vmul(vecA,vecB);
 
-    vecB = inner::vload1_z<1>(pInB + 2*pSrcB.stride(),1,p);
+    vecB = inner::vload1_half_z<1>(pInB + 2*pSrcB.stride(),1,p);
 
 
-    vecA = inner::vload1<1>(pInA0+2);
+    vecA = inner::vload1_half<1>(pInA0+2);
     acc0 = inner::vmacc(acc0,vecA,vecB);
 
-    vecA = inner::vload1<1>(pInA1+2);
+    vecA = inner::vload1_half<1>(pInA1+2);
     acc1 = inner::vmacc(acc1,vecA,vecB);
 
-    vecA = inner::vload1<1>(pInA2+2);
+    vecA = inner::vload1_half<1>(pInA2+2);
     acc2 = inner::vmacc(acc2,vecA,vecB);
 
     pOut[0] = inner::vreduce(acc0);
@@ -246,6 +251,7 @@ typename std::enable_if<
          has_vector_inst<MB>() &&
          same_nb_lanes<MA,RES>() &&
          (is_complex<MA>()) &&
+         (is_complex<MB>()) &&
          same_type_as<MA,float32_t>(),bool>::type = true>
 __STATIC_INLINE  void _arm_mat_mult_4x4_mve(
     const MA &pSrcA,
@@ -254,7 +260,7 @@ __STATIC_INLINE  void _arm_mat_mult_4x4_mve(
 {
     using EA = typename traits<MA>::Scalar;
     //using ACC = typename vector_traits<T>::temp_accumulator;
-    using VEC = typename vector_traits<EA>::vector;
+    using VEC = typename vector_traits<EA>::half_vector;
 
     const EA   *pInA0, *pInA1, *pInA2, *pInA3, *pInB;
     EA *pOut;
@@ -270,46 +276,46 @@ __STATIC_INLINE  void _arm_mat_mult_4x4_mve(
    
     if constexpr (!HasStaticStride<MB>::value)
     {
-        vecB = inner::vload1(pInB, pSrcB.stride());
+        vecB = inner::vload1_half(pInB, pSrcB.stride());
     }
     else 
     {
         constexpr int s = StaticStride<MB>::value;
-        vecB = inner::vload1_gen_stride<EA,0, s>::run(pInB);
+        vecB = inner::vload1_half_gen_stride<EA,0, s>::run(pInB);
     }
 
-    vecA = inner::vload1<1>(pInA0);
+    vecA = inner::vload1_half<1>(pInA0);
     acc0 = inner::vmul(vecA,vecB);
 
-    vecA = inner::vload1<1>(pInA1);
+    vecA = inner::vload1_half<1>(pInA1);
     acc1 = inner::vmul(vecA,vecB);
 
-    vecA = inner::vload1<1>(pInA2);
+    vecA = inner::vload1_half<1>(pInA2);
     acc2 = inner::vmul(vecA,vecB);
 
-    vecA = inner::vload1<1>(pInA3);
+    vecA = inner::vload1_half<1>(pInA3);
     acc3 = inner::vmul(vecA,vecB);
 
     if constexpr (!HasStaticStride<MB>::value)
     {
-        vecB = inner::vload1(pInB + 2*pSrcB.stride(), pSrcB.stride());
+        vecB = inner::vload1_half(pInB + 2*pSrcB.stride(), pSrcB.stride());
     }
     else 
     {
         constexpr int s = StaticStride<MB>::value;
-        vecB = inner::vload1_gen_stride<EA,0,s>::run(pInB + 2*pSrcB.stride());
+        vecB = inner::vload1_half_gen_stride<EA,0,s>::run(pInB + 2*pSrcB.stride());
     }
 
-    vecA = inner::vload1<1>(pInA0+2);
+    vecA = inner::vload1_half<1>(pInA0+2);
     acc0 = inner::vmacc(acc0,vecA,vecB);
 
-    vecA = inner::vload1<1>(pInA1+2);
+    vecA = inner::vload1_half<1>(pInA1+2);
     acc1 = inner::vmacc(acc1,vecA,vecB);
 
-    vecA = inner::vload1<1>(pInA2+2);
+    vecA = inner::vload1_half<1>(pInA2+2);
     acc2 = inner::vmacc(acc2,vecA,vecB);
 
-    vecA = inner::vload1<1>(pInA3+2);
+    vecA = inner::vload1_half<1>(pInA3+2);
     acc3 = inner::vmacc(acc3,vecA,vecB);
 
     pOut[0] = inner::vreduce(acc0);
@@ -322,46 +328,46 @@ __STATIC_INLINE  void _arm_mat_mult_4x4_mve(
 
     if constexpr (!HasStaticStride<MB>::value)
     {
-        vecB = inner::vload1(pInB, pSrcB.stride());
+        vecB = inner::vload1_half(pInB, pSrcB.stride());
     }
     else 
     {
         constexpr int s = StaticStride<MB>::value;
-        vecB = inner::vload1_gen_stride<EA,0, s>::run(pInB);
+        vecB = inner::vload1_half_gen_stride<EA,0, s>::run(pInB);
     }
 
-    vecA = inner::vload1<1>(pInA0);
+    vecA = inner::vload1_half<1>(pInA0);
     acc0 = inner::vmul(vecA,vecB);
 
-    vecA = inner::vload1<1>(pInA1);
+    vecA = inner::vload1_half<1>(pInA1);
     acc1 = inner::vmul(vecA,vecB);
 
-    vecA = inner::vload1<1>(pInA2);
+    vecA = inner::vload1_half<1>(pInA2);
     acc2 = inner::vmul(vecA,vecB);
 
-    vecA = inner::vload1<1>(pInA3);
+    vecA = inner::vload1_half<1>(pInA3);
     acc3 = inner::vmul(vecA,vecB);
 
     if constexpr (!HasStaticStride<MB>::value)
     {
-        vecB = inner::vload1(pInB + 2*pSrcB.stride(), pSrcB.stride());
+        vecB = inner::vload1_half(pInB + 2*pSrcB.stride(), pSrcB.stride());
     }
     else 
     {
         constexpr int s = StaticStride<MB>::value;
-        vecB = inner::vload1_gen_stride<EA,0,s>::run(pInB + 2*pSrcB.stride());
+        vecB = inner::vload1_half_gen_stride<EA,0,s>::run(pInB + 2*pSrcB.stride());
     }
 
-    vecA = inner::vload1<1>(pInA0+2);
+    vecA = inner::vload1_half<1>(pInA0+2);
     acc0 = inner::vmacc(acc0,vecA,vecB);
 
-    vecA = inner::vload1<1>(pInA1+2);
+    vecA = inner::vload1_half<1>(pInA1+2);
     acc1 = inner::vmacc(acc1,vecA,vecB);
 
-    vecA = inner::vload1<1>(pInA2+2);
+    vecA = inner::vload1_half<1>(pInA2+2);
     acc2 = inner::vmacc(acc2,vecA,vecB);
 
-    vecA = inner::vload1<1>(pInA3+2);
+    vecA = inner::vload1_half<1>(pInA3+2);
     acc3 = inner::vmacc(acc3,vecA,vecB);
 
     pOut[0] = inner::vreduce(acc0);
@@ -374,46 +380,46 @@ __STATIC_INLINE  void _arm_mat_mult_4x4_mve(
 
     if constexpr (!HasStaticStride<MB>::value)
     {
-        vecB = inner::vload1(pInB, pSrcB.stride());
+        vecB = inner::vload1_half(pInB, pSrcB.stride());
     }
     else 
     {
         constexpr int s = StaticStride<MB>::value;
-        vecB = inner::vload1_gen_stride<EA,0, s>::run(pInB);
+        vecB = inner::vload1_half_gen_stride<EA,0, s>::run(pInB);
     }
 
-    vecA = inner::vload1<1>(pInA0);
+    vecA = inner::vload1_half<1>(pInA0);
     acc0 = inner::vmul(vecA,vecB);
 
-    vecA = inner::vload1<1>(pInA1);
+    vecA = inner::vload1_half<1>(pInA1);
     acc1 = inner::vmul(vecA,vecB);
 
-    vecA = inner::vload1<1>(pInA2);
+    vecA = inner::vload1_half<1>(pInA2);
     acc2 = inner::vmul(vecA,vecB);
 
-    vecA = inner::vload1<1>(pInA3);
+    vecA = inner::vload1_half<1>(pInA3);
     acc3 = inner::vmul(vecA,vecB);
 
     if constexpr (!HasStaticStride<MB>::value)
     {
-        vecB = inner::vload1(pInB + 2*pSrcB.stride(), pSrcB.stride());
+        vecB = inner::vload1_half(pInB + 2*pSrcB.stride(), pSrcB.stride());
     }
     else 
     {
         constexpr int s = StaticStride<MB>::value;
-        vecB = inner::vload1_gen_stride<EA,0,s>::run(pInB + 2*pSrcB.stride());
+        vecB = inner::vload1_half_gen_stride<EA,0,s>::run(pInB + 2*pSrcB.stride());
     }
 
-    vecA = inner::vload1<1>(pInA0+2);
+    vecA = inner::vload1_half<1>(pInA0+2);
     acc0 = inner::vmacc(acc0,vecA,vecB);
 
-    vecA = inner::vload1<1>(pInA1+2);
+    vecA = inner::vload1_half<1>(pInA1+2);
     acc1 = inner::vmacc(acc1,vecA,vecB);
 
-    vecA = inner::vload1<1>(pInA2+2);
+    vecA = inner::vload1_half<1>(pInA2+2);
     acc2 = inner::vmacc(acc2,vecA,vecB);
 
-    vecA = inner::vload1<1>(pInA3+2);
+    vecA = inner::vload1_half<1>(pInA3+2);
     acc3 = inner::vmacc(acc3,vecA,vecB);
 
     pOut[0] = inner::vreduce(acc0);
@@ -426,46 +432,46 @@ __STATIC_INLINE  void _arm_mat_mult_4x4_mve(
 
     if constexpr (!HasStaticStride<MB>::value)
     {
-        vecB = inner::vload1(pInB, pSrcB.stride());
+        vecB = inner::vload1_half(pInB, pSrcB.stride());
     }
     else 
     {
         constexpr int s = StaticStride<MB>::value;
-        vecB = inner::vload1_gen_stride<EA,0, s>::run(pInB);
+        vecB = inner::vload1_half_gen_stride<EA,0, s>::run(pInB);
     }
 
-    vecA = inner::vload1<1>(pInA0);
+    vecA = inner::vload1_half<1>(pInA0);
     acc0 = inner::vmul(vecA,vecB);
 
-    vecA = inner::vload1<1>(pInA1);
+    vecA = inner::vload1_half<1>(pInA1);
     acc1 = inner::vmul(vecA,vecB);
 
-    vecA = inner::vload1<1>(pInA2);
+    vecA = inner::vload1_half<1>(pInA2);
     acc2 = inner::vmul(vecA,vecB);
 
-    vecA = inner::vload1<1>(pInA3);
+    vecA = inner::vload1_half<1>(pInA3);
     acc3 = inner::vmul(vecA,vecB);
 
     if constexpr (!HasStaticStride<MB>::value)
     {
-        vecB = inner::vload1(pInB + 2*pSrcB.stride(), pSrcB.stride());
+        vecB = inner::vload1_half(pInB + 2*pSrcB.stride(), pSrcB.stride());
     }
     else 
     {
         constexpr int s = StaticStride<MB>::value;
-        vecB = inner::vload1_gen_stride<EA,0,s>::run(pInB + 2*pSrcB.stride());
+        vecB = inner::vload1_half_gen_stride<EA,0,s>::run(pInB + 2*pSrcB.stride());
     }
 
-    vecA = inner::vload1<1>(pInA0+2);
+    vecA = inner::vload1_half<1>(pInA0+2);
     acc0 = inner::vmacc(acc0,vecA,vecB);
 
-    vecA = inner::vload1<1>(pInA1+2);
+    vecA = inner::vload1_half<1>(pInA1+2);
     acc1 = inner::vmacc(acc1,vecA,vecB);
 
-    vecA = inner::vload1<1>(pInA2+2);
+    vecA = inner::vload1_half<1>(pInA2+2);
     acc2 = inner::vmacc(acc2,vecA,vecB);
 
-    vecA = inner::vload1<1>(pInA3+2);
+    vecA = inner::vload1_half<1>(pInA3+2);
     acc3 = inner::vmacc(acc3,vecA,vecB);
 
     pOut[0] = inner::vreduce(acc0);
@@ -486,6 +492,7 @@ typename std::enable_if<
          has_vector_inst<MB>() &&
          same_nb_lanes<MA,RES>() &&
          (!is_complex<MA>()) &&
+         (!is_complex<MB>()) &&
          same_type_as<MA,float32_t>(),bool>::type = true>
 __STATIC_INLINE  void _arm_mat_mult_2x2_mve(
     const MA &pSrcA,
@@ -597,6 +604,7 @@ typename std::enable_if<
          has_vector_inst<MB>() &&
          same_nb_lanes<MA,RES>() &&
          (!is_complex<MA>()) &&
+         (!is_complex<MB>()) &&
          same_type_as<MA,float32_t>(),bool>::type = true>
 __STATIC_INLINE  void _arm_mat_mult_3x3_mve(
     const MA &pSrcA,
@@ -669,6 +677,7 @@ typename std::enable_if<
          has_vector_inst<MB>() &&
          same_nb_lanes<MA,RES>() &&
          (!is_complex<MA>()) &&
+         (!is_complex<MB>()) &&
          same_type_as<MA,float32_t>(),bool>::type = true>
 __STATIC_INLINE  void _arm_mat_mult_4x4_mve(
     const MA &pSrcA,

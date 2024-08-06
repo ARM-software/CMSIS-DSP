@@ -89,6 +89,8 @@ def run(args,mustPrint=False,dumpStdErr=True,timeout=20,printCmd=False):
         ERROR_OCCURED = True
         return(Result(str(e),error=True))
 
+CORES = ["M55","M4","M0"]
+
 parser = argparse.ArgumentParser(description='Parse test description')
 parser.add_argument('-c', nargs='?',type = str, default="M55",help="M55/M4/M0")
 parser.add_argument('-p', nargs='?',type = str, default="VHT",help="VHT/MPS3")
@@ -230,6 +232,8 @@ DATATYPES=[ #"COMPLEX_F64_DT",
             "Q15_DT",
             "Q7_DT"
            ]
+#DATATYPES=[ "COMPLEX_F32_DT"
+#           ]
 #MODE = ["STATIC_TEST"]
 
 all_tests = list(itertools.product(TESTS,DATATYPES,MODE))
@@ -244,7 +248,6 @@ if args.t:
 if args.a:
     # Stat allocator enabled and we do stats on VHT CS300 only
     ALLOC = "//#define POOL_ALLOCATOR"
-    args.c = "M55"
     args.p = "VHT"
 
 BENCH = "//#define ONLY_BENCHMARKS"
@@ -254,9 +257,12 @@ if args.b:
 HEADER = f"""#ifndef TEST_CONFIG_H
 #define TEST_CONFIG_H
 
+#define {args.c}
+
 {TESTMODE}
 {ALLOC}
 {BENCH}
+
 
 #define %s
 #define %s
@@ -304,18 +310,18 @@ def process_allocator_data(test_name,test,msg,subtest):
         if re.match(r"^POOL.*$",l):
             alloc_h.append(l.strip())
     if subtest is not None:
-        HEADER=f"#if defined({test[0]}) && defined({test[1]}) && defined({test[2]}) && defined(SUBTEST{subtest})"
+        HEADER=f"#if defined({args.c}) && defined({test[0]}) && defined({test[1]}) && defined({test[2]}) && defined(SUBTEST{subtest})"
     else:
-        HEADER=f"#if defined({test[0]}) && defined({test[1]}) && defined({test[2]})"
+        HEADER=f"#if defined({args.c}) && defined({test[0]}) && defined({test[1]}) && defined({test[2]})"
     # Gen h
-    with open(os.path.join("allocation",test_name)+".h","w") as h:
+    with open(os.path.join("allocation",test_name+f"_{args.c}")+".h","w") as h:
         print(HEADER,file=h)
         for l in alloc_h:
             print(l,file=h)
         print("#endif",file=h)
 
     # Gen cpp
-    with open(os.path.join("allocation",test_name)+".cpp","w") as h:
+    with open(os.path.join("allocation",test_name+f"_{args.c}")+".cpp","w") as h:
          print(HEADER,file=h)
          for l in alloc_cpp:
              print(l,file=h)
@@ -413,24 +419,26 @@ with open(os.path.join(results(),f"errors_{args.c}.txt"),"w") as err:
     # Generate include for allocations
     if args.a or args.i:
         with open(os.path.join("allocation","all.h"),"w") as fh:
-            for test in all_tests:
-                if test[0] in SUBTESTS:
-                   for subtestnbb in range(SUBTESTS[test[0]]):
-                      test_name=f"{test[0]}_{test[1]}_{test[2]}_{subtestnbb+1}"
-                      print(f"#include \"{test_name}.h\"",file=fh)
-                else:
-                    test_name=f"{test[0]}_{test[1]}_{test[2]}"
-                    print(f"#include \"{test_name}.h\"",file=fh)
+            for c in CORES:
+                for test in all_tests:
+                    if test[0] in SUBTESTS:
+                       for subtestnbb in range(SUBTESTS[test[0]]):
+                          test_name=f"{test[0]}_{test[1]}_{test[2]}_{subtestnbb+1}"
+                          print(f"#include \"{test_name}_{c}.h\"",file=fh)
+                    else:
+                        test_name=f"{test[0]}_{test[1]}_{test[2]}"
+                        print(f"#include \"{test_name}_{c}.h\"",file=fh)
     
         with open(os.path.join("allocation","all.cpp"),"w") as fc:
-            for test in all_tests:
-                if test[0] in SUBTESTS:
-                   for subtestnbb in range(SUBTESTS[test[0]]):
-                       test_name=f"{test[0]}_{test[1]}_{test[2]}_{subtestnbb+1}"
-                       print(f"#include \"{test_name}.cpp\"",file=fc)
-                else:
-                   test_name=f"{test[0]}_{test[1]}_{test[2]}"
-                   print(f"#include \"{test_name}.cpp\"",file=fc)
+            for c in CORES:
+                for test in all_tests:
+                    if test[0] in SUBTESTS:
+                       for subtestnbb in range(SUBTESTS[test[0]]):
+                           test_name=f"{test[0]}_{test[1]}_{test[2]}_{subtestnbb+1}"
+                           print(f"#include \"{test_name}_{c}.cpp\"",file=fc)
+                    else:
+                       test_name=f"{test[0]}_{test[1]}_{test[2]}"
+                       print(f"#include \"{test_name}_{c}.cpp\"",file=fc)
     
     if not args.i:
         NB_MAX = len(all_tests)

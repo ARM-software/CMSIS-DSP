@@ -6,7 +6,6 @@
 #include <memory>
 #include <cstring>
 #include <algorithm>
-#include <iostream>
 #include "common.hpp"
 #include "arch.hpp"
 #include <type_traits>
@@ -638,8 +637,8 @@ struct _Outer: _Expr<_Outer<LHS,RHS,DerivedOp>>
 template<typename LHS,typename RHS,typename DerivedOp>
 struct IsMixed<_Outer<LHS,RHS,DerivedOp>>
 {
-    using EA = typename ElementType<LHS>::type;
-    using EB = typename ElementType<RHS>::type;
+    using EA = typename ElementType<remove_constref_t<LHS>>::type;
+    using EB = typename ElementType<remove_constref_t<RHS>>::type;
     constexpr static bool value = (IsComplexNumber<EA>::value != IsComplexNumber<EB>::value)
       || IsMixed<LHS>::value || IsMixed<RHS>::value;
 };
@@ -679,15 +678,18 @@ struct Complexity<_Outer<LHS,RHS,DerivedOp>>
 template<typename LHS,typename RHS,typename DerivedOp>
 struct ElementType<_Outer<LHS,RHS,DerivedOp>>
 {
-    typedef typename ElementType<LHS>::type type;
+    typedef typename ElementType<remove_constref_t<LHS>>::type type;
 };
 
 template<typename LHS,typename RHS,typename DerivedOp>
 struct traits<_Outer<LHS,RHS,DerivedOp>>
 {
-    typedef typename traits<LHS>::Scalar Scalar;
+    using LScalar = typename traits<LHS>::Scalar;
+    using RScalar = typename traits<RHS>::Scalar;
+    
+    typedef typename MixedRes<LScalar,RScalar>::type  Scalar;
 #if defined(HAS_VECTOR)
-    typedef typename traits<LHS>::Vector Vector;
+    typedef typename traits<Scalar>::Vector Vector;
 #endif
 };
 

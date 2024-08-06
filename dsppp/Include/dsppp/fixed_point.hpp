@@ -9,7 +9,6 @@
 #include <cstdlib>
 
 #include <type_traits>
-#include <iostream>
 namespace arm_cmsis_dsp {
 
 /** \addtogroup FIXED Fixed point datatypes

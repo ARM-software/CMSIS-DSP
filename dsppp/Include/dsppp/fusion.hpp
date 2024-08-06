@@ -4,6 +4,10 @@
 
 namespace arm_cmsis_dsp {
 
+template< class T >
+using remove_constref_t = std::remove_const_t<std::remove_reference_t<T>>;
+
+
 /** \addtogroup FUSION Abstract syntax tree for fusion
  *  \ingroup DSPPP
  *  @{
@@ -185,7 +189,7 @@ struct ComplexNumberType<const std::complex<T>>
 
 
 template<typename A,typename B>
-using SameElementType=std::is_same<typename ElementType<A>::type,typename ElementType<B>::type>;
+using SameElementType=std::is_same<typename ElementType<remove_constref_t<A>>::type,typename ElementType<remove_constref_t<B>>::type>;
 
 /**
  * @brief      Determines if vector datatype supports vector instruction
@@ -196,7 +200,7 @@ using SameElementType=std::is_same<typename ElementType<A>::type,typename Elemen
  * @return     True if has vector instructions
  */
 template<typename DA>
-constexpr bool has_vector_inst() {return (vector_traits<typename ElementType<DA>::type>::has_vector);}
+constexpr bool has_vector_inst() {return (vector_traits<typename ElementType<remove_constref_t<DA>>::type>::has_vector);}
 
 /**
  * @brief      Check if predicated instructions are supported
@@ -206,7 +210,7 @@ constexpr bool has_vector_inst() {return (vector_traits<typename ElementType<DA>
  * @return     True if predicated instructions are supported
  */
 template<typename DA>
-constexpr bool has_predicate() {return (vector_traits<typename ElementType<DA>::type>::has_predicate);}
+constexpr bool has_predicate() {return (vector_traits<typename ElementType<remove_constref_t<DA>>::type>::has_predicate);}
 
 /**
  * @brief      Check if expression contains a mix of complex / real operations
@@ -229,8 +233,8 @@ constexpr bool is_mixed() {return IsMixed<DA>::value;}
  */
 template<typename A,typename B>
 constexpr bool same_nb_lanes() {
-    using EA = typename ElementType<A>::type;
-    using EB = typename ElementType<B>::type;
+    using EA = typename ElementType<remove_constref_t<A>>::type;
+    using EB = typename ElementType<remove_constref_t<B>>::type;
     return (vector_traits<EA>::nb_lanes == vector_traits<EB>::nb_lanes);
 }
 
@@ -244,7 +248,7 @@ constexpr bool same_nb_lanes() {
  */
 template<typename A>
 constexpr bool is_complex() {
-    using EA = typename ElementType<A>::type;
+    using EA = typename ElementType<remove_constref_t<A>>::type;
     return (IsComplexNumber<EA>::value);
 
 }
@@ -259,7 +263,7 @@ constexpr bool is_complex() {
  */
 template<typename A>
 constexpr bool is_float() {
-    using EA = typename ElementType<A>::type;
+    using EA = typename ElementType<remove_constref_t<A>>::type;
     return (number_traits<EA>::is_float);
 }
 
@@ -272,7 +276,7 @@ constexpr bool is_float() {
  */
 template<typename A>
 constexpr bool is_fixed() {
-    using EA = typename ElementType<A>::type;
+    using EA = typename ElementType<remove_constref_t<A>>::type;
     return (number_traits<EA>::is_fixed);
 }
 
@@ -284,7 +288,7 @@ constexpr bool is_fixed() {
  * @return     True if has predicated loops
  */
 template<typename DA>
-constexpr bool has_predicate_inst() {return (vector_traits<typename ElementType<DA>::type>::has_predicate);}
+constexpr bool has_predicate_inst() {return (vector_traits<typename ElementType<remove_constref_t<DA>>::type>::has_predicate);}
 
 /**
  * @brief      Determines if scalar datatype (not vector, vectorview, matrix, matrixview)
@@ -316,7 +320,7 @@ Get float type for complex
 template<typename E>
 struct FloatType
 {
-    using T = typename ElementType<std::remove_reference_t<E>>::type;
+    using T = typename ElementType<remove_constref_t<E>>::type;
 
     typedef std::conditional_t<
       IsComplexNumber<T>::value,   
@@ -326,22 +330,22 @@ struct FloatType
 
 template<typename A,typename B>
 constexpr bool compatible_element() {
-    using EA = typename ElementType<A>::type;
-    using EB = typename ElementType<B>::type;
+    using EA = typename ElementType<remove_constref_t<A>>::type;
+    using EB = typename ElementType<remove_constref_t<B>>::type;
 return std::is_same<typename FloatType<EA>::type,typename FloatType<EB>::type>::value ;
 }
 
 template<typename A,typename B>
 constexpr bool compatible_assignment() {
-    using EA = typename ElementType<A>::type;
-    using EB = typename ElementType<B>::type;
+    using EA = typename ElementType<remove_constref_t<A>>::type;
+    using EB = typename ElementType<remove_constref_t<B>>::type;
 return (std::is_same<EA,EB>::value);
 }
 
 
 template<typename A,typename B>
 constexpr bool same_type_as() {
-    using EA = typename FloatType<typename ElementType<A>::type>::type;
+    using EA = typename FloatType<typename ElementType<remove_constref_t<A>>::type>::type;
     return (SameElementType<EA,B>::value);
 }
 /**
@@ -848,7 +852,7 @@ struct Complexity<_Expr<DerivedOp>>
 template<typename DerivedOp>
 struct ElementType<_Expr<DerivedOp>>
 {
-    typedef typename ElementType<DerivedOp>::type type;
+    typedef typename ElementType<remove_constref_t<DerivedOp>>::type type;
 };
 
 template<typename LHS,typename RHS,typename DerivedOp>
@@ -862,8 +866,8 @@ struct Complexity<_Binary<LHS,RHS,DerivedOp>>
 template<typename LHS,typename RHS,typename DerivedOp>
 struct IsMixed<_Binary<LHS,RHS,DerivedOp>>
 {
-    using EA = typename ElementType<LHS>::type;
-    using EB = typename ElementType<RHS>::type;
+    using EA = typename ElementType<remove_constref_t<LHS>>::type;
+    using EB = typename ElementType<remove_constref_t<RHS>>::type;
     constexpr static bool value = (IsComplexNumber<EA>::value != IsComplexNumber<EB>::value)
       || IsMixed<LHS>::value || IsMixed<RHS>::value;
 };
@@ -871,8 +875,8 @@ struct IsMixed<_Binary<LHS,RHS,DerivedOp>>
 template<typename LHS,typename RHS,typename DerivedOp>
 struct ElementType<_Binary<LHS,RHS,DerivedOp>>
 {
-    using EA = typename ElementType<LHS>::type;
-    using EB = typename ElementType<RHS>::type;
+    using EA = typename ElementType<remove_constref_t<LHS>>::type;
+    using EB = typename ElementType<remove_constref_t<RHS>>::type;
 
     typedef std::conditional_t <
     IsComplexNumber<EA>::value && !IsComplexNumber<EB>::value,EA,
@@ -1085,7 +1089,7 @@ struct IsMixed<_Unary<LHS,DerivedOp>>
 template<typename LHS,typename DerivedOp>
 struct ElementType<_Unary<LHS,DerivedOp>>
 {
-    typedef typename ElementType<LHS>::type type;
+    typedef typename ElementType<remove_constref_t<LHS>>::type type;
 };
 
 template<typename LHS,typename DerivedOp>

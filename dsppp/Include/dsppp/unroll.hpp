@@ -24,7 +24,7 @@ template<typename ... E>
 struct Merged
 {
 
-   using ScalarResult = std::tuple<typename traits<std::remove_reference_t<E>>::Scalar...>;
+   using ScalarResult = std::tuple<typename traits<remove_constref_t<E>>::Scalar...>;
    using TypeOfElement = typename std::tuple_element<0,ScalarResult>::type;
 
    constexpr explicit Merged(const E& ... values) : vals { values ...} { }
@@ -53,7 +53,7 @@ struct Merged
 
 #if defined(HAS_VECTOR)
 
-   using Vector = std::tuple<typename vector_traits<typename traits<std::remove_reference_t<E>>::Scalar>::vector...>;
+   using Vector = std::tuple<typename vector_traits<typename traits<remove_constref_t<E>>::Scalar>::vector...>;
 
    template<std::size_t... Ns>
    void vector_store_impl(const index_t i,const Vector &val, const std::index_sequence<Ns...>) const noexcept
@@ -124,10 +124,10 @@ results(_Tp&... __t) noexcept {return Merged<_Tp&...>(__t...);}
 template<typename ... E>
 struct traits<Merged<E...>>
 {
-    typedef std::tuple<typename traits<std::remove_reference_t<E>>::Scalar...> Scalar;
+    typedef std::tuple<typename traits<remove_constref_t<E>>::Scalar...> Scalar;
 
 #if defined(HAS_VECTOR)
-    typedef std::tuple<typename vector_traits<typename traits<std::remove_reference_t<E>>::Scalar>::vector...> Vector;
+    typedef std::tuple<typename vector_traits<typename traits<remove_constref_t<E>>::Scalar>::vector...> Vector;
 #endif
 };
 
@@ -140,13 +140,13 @@ struct IsVector<Merged<E...>>
 template<typename ... E>
 struct IsDynamic<Merged<E...>>
 {
-    constexpr static bool value = (... && IsDynamic<std::remove_reference_t<E>>::value);
+    constexpr static bool value = (... && IsDynamic<remove_constref_t<E>>::value);
 };
 
 template<typename ... E>
 struct ElementType<Merged<E...>>
 {
-    typedef std::tuple<typename ElementType<std::remove_reference_t<E>>::type...> type;
+    typedef std::tuple<typename ElementType<remove_constref_t<E>>::type...> type;
 };
 
 template<typename ...E>
@@ -194,7 +194,7 @@ constexpr vector_length_t max_vec_length(F a,N ...b) noexcept
 template<typename ... E>
 struct StaticLength<Merged<E...>>
 {
-    constexpr static vector_length_t value = max_vec_length(StaticLength<std::remove_reference_t<E>>::value...);
+    constexpr static vector_length_t value = max_vec_length(StaticLength<remove_constref_t<E>>::value...);
 };
 
 

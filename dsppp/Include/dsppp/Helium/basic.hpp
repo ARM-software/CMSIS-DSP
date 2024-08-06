@@ -268,9 +268,9 @@ template<typename DA,typename DB,
 typename std::enable_if<has_vector_inst<DA>() &&
                         has_vector_inst<DB>() &&
                         must_use_matrix_idx_pair<DA,DB>() &&
-                        !is_mixed<DB>() && 
+                        //!is_mixed<DB>() && 
                         same_nb_lanes<DA,DB>() &&
-                        has_predicate<DA>(),bool>::type = true>
+                        (has_predicate<DA>() && has_predicate<DB>()),bool>::type = true>
 inline void eval2D(DA &v,
                    const DB& other,
                    const vector_length_t rows,
@@ -316,9 +316,9 @@ template<typename DA,typename DB,
 typename std::enable_if<has_vector_inst<DA>() &&
                         has_vector_inst<DB>() &&
                         must_use_matrix_idx_pair<DA,DB>() &&
-                        !is_mixed<DB>() && 
+                        //!is_mixed<DB>() && 
                         same_nb_lanes<DA,DB>() &&
-                        !has_predicate<DA>(),bool>::type = true>
+                        (!has_predicate<DA>() || !has_predicate<DB>()),bool>::type = true>
 inline void eval2D(DA &v,
                    const DB& other,
                    const vector_length_t rows,
@@ -516,10 +516,10 @@ inline void _swap(DA&& a,
                   const vector_length_t l,
                   const Helium* = nullptr)
 {
-      using Scalar = typename ElementType<DA>::type;
+      using Scalar = typename ElementType<remove_constref_t<DA>>::type;
       using Vector = typename vector_traits<Scalar>::vector;
 
-      constexpr int nb_lanes = vector_traits<typename ElementType<DA>::type>::nb_lanes;
+      constexpr int nb_lanes = vector_traits<typename ElementType<remove_constref_t<DA>>::type>::nb_lanes;
       index_t i=0;
       Vector tmpa,tmpb;
 
@@ -543,10 +543,10 @@ inline void _swap(DA&& a,
                   const vector_length_t l,
                   const Helium* = nullptr)
 {
-      using Scalar = typename ElementType<DA>::type;
+      using Scalar = typename ElementType<remove_constref_t<DA>>::type;
       using Vector = typename vector_traits<Scalar>::vector;
 
-      constexpr int nb_lanes = vector_traits<typename ElementType<DA>::type>::nb_lanes;
+      constexpr int nb_lanes = vector_traits<typename ElementType<remove_constref_t<DA>>::type>::nb_lanes;
       index_t i=0;
       Vector tmpa,tmpb;
     

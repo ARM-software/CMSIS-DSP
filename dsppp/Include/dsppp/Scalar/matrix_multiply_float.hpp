@@ -21,11 +21,13 @@
 template<typename MA,
          typename MB,
          typename RES,
-         typename std::enable_if<number_traits<typename traits<MA>::Scalar>::is_float,bool>::type = true>
-__STATIC_INLINE void _dot_m_m(const MA&pSrcA,const MB&pSrcB,
-                     RES &&pDst,
-                     const Scalar* = nullptr)
+         typename std::enable_if<is_float<MA>(),bool>::type = true>
+__STATIC_INLINE void _dot_m_m(const MA&    pSrcA,
+                              const MB&    pSrcB,
+                                    RES && pDst,
+                              const Scalar* = nullptr)
 {
+  std::cout << "Mat mul scalar\n";
   using TA = typename traits<MA>::Scalar;
   using TB = typename traits<MB>::Scalar;
   using T = typename MixedRes<TA,TB>::type;

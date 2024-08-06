@@ -103,12 +103,19 @@ static void test_mixed()
    #endif
 
    // Extend float to complex
-   acmplx = copy(a);
-   bcmplx = copy(b);
-
+   
    INIT_SYSTICK
    START_CYCLE_MEASUREMENT;
-   cmsisdsp_add(acmplx.const_ptr(),bcmplx.const_ptr(),ref.ptr(),NB);
+   if constexpr(IsComplexNumber<TA>::value)
+   {
+      bcmplx = copy(b);
+      cmsisdsp_add(a.const_ptr(),bcmplx.const_ptr(),ref.ptr(),NB);
+   }
+   else 
+   {
+      acmplx = copy(a);
+      cmsisdsp_add(acmplx.const_ptr(),b.const_ptr(),ref.ptr(),NB);
+   }
    STOP_CYCLE_MEASUREMENT;
 
 
@@ -214,13 +221,22 @@ static void test_mult_mixed()
    PVector<Res> bcmplx(NB);
    #endif
 
-   // Real to complex
-   acmplx = copy(a);
-   bcmplx = copy(b);
+   
 
    INIT_SYSTICK
    START_CYCLE_MEASUREMENT;
-   cmsisdsp_mult(acmplx.const_ptr(),bcmplx.const_ptr(),ref.ptr(),NB);
+   if constexpr(IsComplexNumber<TA>::value)
+   {
+      // Real to complex
+      bcmplx = copy(b);
+      cmsisdsp_mult(a.const_ptr(),bcmplx.const_ptr(),ref.ptr(),NB);
+   }
+   else 
+   {
+      // Real to complex
+      acmplx = copy(a);
+      cmsisdsp_mult(acmplx.const_ptr(),b.const_ptr(),ref.ptr(),NB);
+   }
    STOP_CYCLE_MEASUREMENT;
 
    if constexpr ((std::is_same<Res,std::complex<Q15>>::value)
@@ -347,7 +363,7 @@ void all_vector_test()
     // Mixed arithmetic
     if constexpr (IsComplexNumber<T>::value)
     {
-        title<T>("Vector mixed");
+        title<T>("Vector mixed c X r");
 
         test_mixed<T,typename T::value_type,NBVEC_4>();
         test_mixed<T,typename T::value_type,NBVEC_8>();
@@ -369,6 +385,7 @@ void all_vector_test()
         test_mixed<T,typename T::value_type,nb_loops+1>();
         test_mixed<T,typename T::value_type,nb_loops+nb_tails>();
 
+        title<T>("Vector mixed r X c");
         test_mixed<typename T::value_type,T,NBVEC_4>();
         test_mixed<typename T::value_type,T,NBVEC_8>();
         test_mixed<typename T::value_type,T,NBVEC_9>();
@@ -423,10 +440,11 @@ void all_vector_test()
     // Mixed arithmetic
     if constexpr (IsComplexNumber<T>::value)
     {
-        title<T>("Vector mixed mult");
 
         if constexpr (!std::is_same<T,std::complex<Q7>>::value)
         {
+           title<T>("Vector mixed mult c X r");
+
            // For benchmarks
            test_mult_mixed<T,typename T::value_type,NBVEC_4>();
            test_mult_mixed<T,typename T::value_type,NBVEC_8>();
@@ -448,6 +466,9 @@ void all_vector_test()
            test_mult_mixed<T,typename T::value_type,nb_loops+nb_tails>();
 
            // For benchmarks
+
+           title<T>("Vector mixed mult r X c");
+
            test_mult_mixed<typename T::value_type,T,NBVEC_4>();
            test_mult_mixed<typename T::value_type,T,NBVEC_8>();
            test_mult_mixed<typename T::value_type,T,NBVEC_9>();
@@ -511,28 +532,11 @@ void vector_test()
 {
 #if 0
    using T = std::complex<float>;
-   constexpr int NB = 8;
-   PVector<T,NB> a;
-   PVector<T,NB> b;
-   PVector<float,NB> c;
-  
-   init_array(a,NB);
-   init_array(b,NB);
-   init_array(c,NB);
+   constexpr int NB = 1024;
+   
+   test_mixed<T,typename T::value_type,NB>();
 
-  // PVector<T,NB> res = a * conjugate(b + std::complex<float>(2.0f,-1.0f));
-
-   //PVector<T,NB> res = copy(b);
-   startSectionNB(1);
-   //PVector<T,NB> res = copy(b);
-   PVector<T,NB> res = a * c;
-   stopSectionNB(1);
-
-   //PrintType<decltype(a + b)>();
-   //PrintType<typename DualType<decltype(a + b)>::type>();
-
-   std::cout << res;
-
+   
 #else
 #if defined(VECTOR_TEST)
 

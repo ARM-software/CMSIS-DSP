@@ -14,6 +14,10 @@
 #define MEMORY_POOL_ALIGNMENT 128
 //#define MEMORY_ALLOCATION_DEBUG
 
+// Define to use scatter loading to convert real vector to complex vector
+#define SCATTER_CONST
+
+
 // TMP_ALLOC must be defined to use the library
 // It is generally defined in an external header not
 // part of the library.

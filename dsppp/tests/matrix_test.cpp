@@ -691,7 +691,7 @@ void testouter()
    PMat<T> cmsis_res(R,C);
    #endif
    CMSISOuter<T>::run(a.const_ptr(),b.const_ptr(),cmsis_res.ptr(),R,C);
-   startSectionNB(2);
+   stopSectionNB(2);
    STOP_CYCLE_MEASUREMENT;
 
    //std::cout<<cmsis_res;
@@ -730,8 +730,6 @@ void testouter_mixed()
    PVector<Res,R> acmplx;
    PVector<Res,R> bcmplx;
 
-   acmplx = copy(a);
-   bcmplx = copy(b);
 
    INIT_SYSTICK;
    START_CYCLE_MEASUREMENT;
@@ -741,8 +739,18 @@ void testouter_mixed()
    #else
    PMat<Res> cmsis_res(R,C);
    #endif
-   CMSISOuter<Res>::run(acmplx.const_ptr(),bcmplx.const_ptr(),cmsis_res.ptr(),R,C);
-   startSectionNB(2);
+
+   if constexpr (IsComplexNumber<TA>::value)
+   {
+      bcmplx = copy(b);
+      CMSISOuter<Res>::run(a.const_ptr(),bcmplx.const_ptr(),cmsis_res.ptr(),R,C);
+   }
+   else 
+   {
+      acmplx = copy(a);
+      CMSISOuter<Res>::run(acmplx.const_ptr(),b.const_ptr(),cmsis_res.ptr(),R,C);
+   }
+   stopSectionNB(2);
    STOP_CYCLE_MEASUREMENT;
 
    //std::cout<<cmsis_res;
@@ -810,7 +818,7 @@ void testview()
          cmsis_res(row,col) = (CT)r(row,col)+(CT)r(row,col);
       }
    }
-   startSectionNB(2);
+   stopSectionNB(2);
    STOP_CYCLE_MEASUREMENT;
 
    //std::cout<<resb;
@@ -880,7 +888,7 @@ void testmatvec()
   
    startSectionNB(2);
    cmsis_mat_vec_mult(&S, a.const_ptr(), cmsis_res.ptr());
-   startSectionNB(2);
+   stopSectionNB(2);
    STOP_CYCLE_MEASUREMENT;
 
    //std::cout << cmsis_res;
@@ -997,7 +1005,7 @@ void testcomplexmatvec()
                          scalar,
                          tmp.ptr(),
                          cmsis_res.ptr());
-   startSectionNB(2);
+   stopSectionNB(2);
    STOP_CYCLE_MEASUREMENT;
 
 
@@ -1013,6 +1021,7 @@ void testcomplexmatvec()
    std::cout << "=====\r\n";
   
 }
+
 
 
 template<typename T,int R, int K,int C>
@@ -1101,7 +1110,7 @@ void testmatmult()
    {
      cmsis_mat_mult(&SA, &SB, &RES,reinterpret_cast<S*>(tmp.ptr()));
    }
-   startSectionNB(2);
+   stopSectionNB(2);
    STOP_CYCLE_MEASUREMENT;
 
   
@@ -1182,20 +1191,18 @@ void testmatmult_mixed()
    PMat<Res> mb_cmplx(K,C);
    #endif
 
-   ma_cmplx = copy(ma);
-   mb_cmplx = copy(mb);
+   
 
 
    typename CMSISMatrixType<Res>::type SA;
    typedef typename CMSISMatrixType<Res>::scalar S;
+
    SA.numRows = R;
    SA.numCols = K;
-   SA.pData = reinterpret_cast<S*>(ma_cmplx.ptr());
 
    typename CMSISMatrixType<Res>::type SB;
    SB.numRows = K;
    SB.numCols = C;
-   SB.pData = reinterpret_cast<S*>(mb_cmplx.ptr());
 
    typename CMSISMatrixType<Res>::type RES;
    RES.numRows = R;
@@ -1204,8 +1211,26 @@ void testmatmult_mixed()
 
    
    startSectionNB(2);
-   cmsis_cmplx_mat_mult(&SA, &SB, &RES,reinterpret_cast<S*>(tmp.ptr()));
-   startSectionNB(2);
+   if constexpr (IsComplexNumber<TA>::value)
+   {
+       mb_cmplx = copy(mb);
+
+       SA.pData = reinterpret_cast<S*>(ma.ptr());
+       SB.pData = reinterpret_cast<S*>(mb_cmplx.ptr());
+
+       cmsis_cmplx_mat_mult(&SA, &SB, &RES,reinterpret_cast<S*>(tmp.ptr()));
+   }
+   else 
+   {
+       ma_cmplx = copy(ma);
+
+       SA.pData = reinterpret_cast<S*>(ma_cmplx.ptr());
+       SB.pData = reinterpret_cast<S*>(mb.ptr());
+
+       cmsis_cmplx_mat_mult(&SA, &SB, &RES,reinterpret_cast<S*>(tmp.ptr()));
+   }
+
+   stopSectionNB(2);
    STOP_CYCLE_MEASUREMENT;
 
   
@@ -1310,7 +1335,7 @@ void testsubmatmult()
    {
       cmsis_mat_mult(&SA, &SB, &RES,reinterpret_cast<S*>(tmp.ptr()));
    }
-   startSectionNB(2);
+   stopSectionNB(2);
    STOP_CYCLE_MEASUREMENT;
 
   
@@ -1383,7 +1408,7 @@ void testmattranspose()
    {
      cmsis_mat_trans(&SA, &RES);
    }
-   startSectionNB(2);
+   stopSectionNB(2);
    STOP_CYCLE_MEASUREMENT;
 
    //std::cout << cmsis_res;
@@ -1999,6 +2024,7 @@ void matrix_all_test()
          title<T>("Cholesky");
          testCholesky<T,NBVEC_4>();
          testCholesky<T,NBVEC_16>();
+#if !defined(DISABLEFLOAT16)
          if constexpr (!std::is_same<T,float16_t>::value)
          {
             // sqrt of negative value gives a nan
@@ -2006,6 +2032,7 @@ void matrix_all_test()
             // // to be investigated
             testCholesky<T,NBVEC_32>();
          }
+#endif
       }
 
 #endif
@@ -2152,16 +2179,17 @@ void matrix_all_test()
 #if defined(SUBTEST20)
    if constexpr (IsComplexNumber<T>::value)
    {
-      title<T>("Matrix mixed multiply");
+      title<T>("Matrix mixed multiply c X r");
       testmatmult_mixed<T,typename T::value_type,NBVEC_4,NBVEC_4,NBVEC_4>();
       testmatmult_mixed<T,typename T::value_type,NBVEC_16,NBVEC_16,NBVEC_16>();
       testmatmult_mixed<T,typename T::value_type,NBVEC_32,NBVEC_32,NBVEC_32>();
 
+      title<T>("Matrix mixed multiply r X c");
       testmatmult_mixed<typename T::value_type,T,NBVEC_4,NBVEC_4,NBVEC_4>();
       testmatmult_mixed<typename T::value_type,T,NBVEC_16,NBVEC_16,NBVEC_16>();
       testmatmult_mixed<typename T::value_type,T,NBVEC_32,NBVEC_32,NBVEC_32>();
 
-      title<T>("Matrix times vector mixed");
+      title<T>("Matrix times vector mixed c X r");
 
       // The test is only that it builds since
       // there is no corresponding CMSIS-DSP function to compare with
@@ -2170,16 +2198,18 @@ void matrix_all_test()
       testmatvec_mixed<T,typename T::value_type,NBVEC_16,NBVEC_16>();
       testmatvec_mixed<T,typename T::value_type,NBVEC_32,NBVEC_32>();
 
+      title<T>("Matrix times vector mixed r X c");
       testmatvec_mixed<typename T::value_type,T,NBVEC_4 ,NBVEC_4>();
       testmatvec_mixed<typename T::value_type,T,NBVEC_16,NBVEC_16>();
       testmatvec_mixed<typename T::value_type,T,NBVEC_32,NBVEC_32>();
 
-      title<T>("Matrix outer product mixed");
+      title<T>("Matrix outer product mixed c X r");
    
       testouter_mixed<T,typename T::value_type,NBVEC_4,NBVEC_4>();
       testouter_mixed<T,typename T::value_type,NBVEC_8,NBVEC_8>();
       testouter_mixed<T,typename T::value_type,NBVEC_16,NBVEC_16>();
 
+      title<T>("Matrix outer product mixed r X c");
       testouter_mixed<typename T::value_type,T,NBVEC_4,NBVEC_4>();
       testouter_mixed<typename T::value_type,T,NBVEC_8,NBVEC_8>();
       testouter_mixed<typename T::value_type,T,NBVEC_16,NBVEC_16>();
@@ -2197,14 +2227,12 @@ void matrix_all_test()
 void matrix_test()
 {
 #if 0
-   //using T = float;
+   using T = std::complex<float>;
+   constexpr int N = 32;
+   
+   testouter_mixed<T,typename T::value_type,N,N>();
+   testouter_mixed<typename T::value_type,T,N,N>();
 
-   //title<T>("Matrix times vector");
-    
-   //testmatvec<T,NBVEC_4 ,NBVEC_4>();
-   using R = MixedRes<std::tuple<float, float, float, float>, std::tuple<float, float, float, float>>::type;
-   PrintType<R>();
-  
 #else
 #if defined(MATRIX_TEST)
    #if defined(F64_DT)

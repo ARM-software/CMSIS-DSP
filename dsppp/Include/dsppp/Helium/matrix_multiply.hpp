@@ -90,21 +90,28 @@ template<typename MA,
          has_vector_inst<MB>() &&
          same_nb_lanes<MA,MB>() &&
          same_nb_lanes<MA,RES>() &&
-         number_traits<typename traits<MA>::Scalar>::is_float,bool>::type = true>
-__STATIC_INLINE void _dot_m_m(const MA&pSrcA,const MB&pSrcB,
-                     RES &&pDst,
-                     const Helium* = nullptr)
+         is_float<MA>(),bool>::type = true>
+__STATIC_INLINE void _dot_m_m(const MA&    pSrcA,
+                              const MB&    pSrcB,
+                                    RES && pDst,
+                              const Helium* = nullptr)
    {
-    using T = typename traits<MA>::Scalar;
-    using ACC = typename vector_traits<T>::temp_accumulator;
-    using VEC = typename vector_traits<T>::vector;
-    using C = typename number_traits<T>::compute_type;
+    using TA = typename traits<remove_constref_t<MA>>::Scalar;
+    using TB = typename traits<remove_constref_t<MB>>::Scalar;
+    using TDST = typename traits<remove_constref_t<RES>>::Scalar;
+    
 
-    constexpr int nb_lanes = vector_traits<T>::nb_lanes;
+    using ACC = typename vector_traits<TDST>::temp_accumulator;
+    using VECB = typename vector_traits<TB>::vector;
+    using C = typename number_traits<TDST>::compute_type;
 
-    T  *pInB = pSrcB.ptr();        /* input data matrix pointer B */
-    T  *pInA = pSrcA.ptr();        /* input data matrix pointer A  */
-    T  *pOut = pDst.ptr();         /* output data matrix pointer */
+    constexpr int nb_lanes = vector_traits<TDST>::nb_lanes;
+    constexpr int longunroll = IsComplexNumber<TDST>::value ? 0 : 1;
+    constexpr int unrolltail = longunroll ? 3 : 1;
+
+    TB  *pInB = pSrcB.ptr();        /* input data matrix pointer B */
+    TA  *pInA = pSrcA.ptr();        /* input data matrix pointer A  */
+    TDST  *pOut = pDst.ptr();         /* output data matrix pointer */
     int         numRowsA = pSrcA.rows();  /* number of rows of input matrix A */
     int         numColsB = pSrcB.columns();  /* number of columns of input matrix B */
     int         numColsA = pSrcA.columns();  /* number of columns of input matrix A */
@@ -112,42 +119,57 @@ __STATIC_INLINE void _dot_m_m(const MA&pSrcA,const MB&pSrcB,
     uint32_t    i;
 
   {
-      /* small squared matrix specialized routines */
-    if(numRowsA == numColsB && numColsB == numColsA) {
-        if (numRowsA == 1)
-        {
-           pDst(0,0)= (C)pSrcA(0,0) * (C)pSrcB(0,0);
-           return;
-        }
-        else if(numRowsA == 2)
-        {
-            return _arm_mat_mult_2x2_mve(pSrcA, pSrcB, std::forward<RES>(pDst));
-        }
-        else if(numRowsA == 3)
-        {
-            return _arm_mat_mult_3x3_mve(pSrcA, pSrcB, std::forward<RES>(pDst));
-        }
-        else if(numRowsA == 4)
-        {
-            return _arm_mat_mult_4x4_mve(pSrcA, pSrcB, std::forward<RES>(pDst));
+      /* small squared matrix specialized routines 
+       * but not for mixed complex / real product
+      */
+    if constexpr (std::is_same<TA,TB>::value)
+    {
+        if(numRowsA == numColsB && numColsB == numColsA) {
+            if (numRowsA == 1)
+            {
+               pDst(0,0)= (C)pSrcA(0,0) * (C)pSrcB(0,0);
+               return;
+            }
+            else if(numRowsA == 2)
+            {
+                return _arm_mat_mult_2x2_mve(pSrcA, pSrcB, std::forward<RES>(pDst));
+            }
+            else if(numRowsA == 3)
+            {
+                return _arm_mat_mult_3x3_mve(pSrcA, pSrcB, std::forward<RES>(pDst));
+            }
+            else if(numRowsA == 4)
+            {
+                return _arm_mat_mult_4x4_mve(pSrcA, pSrcB, std::forward<RES>(pDst));
+            }
         }
     }
 
     /* main loop process 4 rows */
-    i = numRowsA >> 2;
+    if constexpr (longunroll)
+    {
+       i = numRowsA >> 2;
+    }
+    else 
+    {
+        i = numRowsA >> 1;
+    }
     while (i > 0U)
     {
-        T *pInA0, *pInA1, *pInA2, *pInA3;
-        T *pInB0;
-        T *pOut0, *pOut1, *pOut2, *pOut3;
+        TA *pInA0, *pInA1, *pInA2, *pInA3;
+        TB *pInB0;
+        TDST *pOut0, *pOut1, *pOut2, *pOut3;
         ACC vecMac0, vecMac1, vecMac2, vecMac3;
-        VEC vecInB;
+        VECB vecInB;
 
         /* pointers to 4 consecutive output rows */
         pOut0 = pOut;
         pOut1 = pOut0 + pDst.stride();
-        pOut2 = pOut1 + pDst.stride();
-        pOut3 = pOut2 + pDst.stride();
+        if constexpr (longunroll)
+        {
+           pOut2 = pOut1 + pDst.stride();
+           pOut3 = pOut2 + pDst.stride();
+        }
         pInB0 = pInB;
 
         uint32_t  k = numColsB / nb_lanes;
@@ -156,13 +178,20 @@ __STATIC_INLINE void _dot_m_m(const MA&pSrcA,const MB&pSrcB,
             /* pointers to 4 consecutive Matrix A rows */
             pInA0 = pInA;
             pInA1 = pInA0 + pSrcA.stride();
-            pInA2 = pInA1 + pSrcA.stride();
-            pInA3 = pInA2 + pSrcA.stride();
+            if constexpr (longunroll)
+            {
+               pInA2 = pInA1 + pSrcA.stride();
+               pInA3 = pInA2 + pSrcA.stride();
+            }
 
-            vecMac0 = vector_traits<T>::temp_acc_zero();
-            vecMac1 = vector_traits<T>::temp_acc_zero();
-            vecMac2 = vector_traits<T>::temp_acc_zero();
-            vecMac3 = vector_traits<T>::temp_acc_zero();
+            vecMac0 = vector_traits<TDST>::temp_acc_zero();
+            vecMac1 = vector_traits<TDST>::temp_acc_zero();
+
+            if constexpr (longunroll)
+            {
+               vecMac2 = vector_traits<TDST>::temp_acc_zero();
+               vecMac3 = vector_traits<TDST>::temp_acc_zero();
+            }
 
             blkCnt = numColsA;
 
@@ -175,9 +204,11 @@ __STATIC_INLINE void _dot_m_m(const MA&pSrcA,const MB&pSrcB,
 
                 vecMac0 = inner::vmacc(vecMac0, vecInB, *pInA0++);
                 vecMac1 = inner::vmacc(vecMac1, vecInB, *pInA1++);
-                vecMac2 = inner::vmacc(vecMac2, vecInB, *pInA2++);
-                vecMac3 = inner::vmacc(vecMac3, vecInB, *pInA3++);
-
+                if constexpr (longunroll)
+                {
+                   vecMac2 = inner::vmacc(vecMac2, vecInB, *pInA2++);
+                   vecMac3 = inner::vmacc(vecMac3, vecInB, *pInA3++);
+                }
                 pInB0 = pInB0 + pSrcB.stride();
                 /*
                  * Decrement the blockSize loop counter
@@ -190,10 +221,14 @@ __STATIC_INLINE void _dot_m_m(const MA&pSrcA,const MB&pSrcB,
             pOut0 += nb_lanes;
             inner::vstore1<1>(pOut1, vecMac1);  
             pOut1 += nb_lanes;
-            inner::vstore1<1>(pOut2, vecMac2);  
-            pOut2 += nb_lanes;
-            inner::vstore1<1>(pOut3, vecMac3);  
-            pOut3 += nb_lanes;
+
+            if constexpr (longunroll)
+            {
+               inner::vstore1<1>(pOut2, vecMac2);  
+               pOut2 += nb_lanes;
+               inner::vstore1<1>(pOut3, vecMac3);  
+               pOut3 += nb_lanes;
+            }
 
             /*
              * rewind
@@ -207,15 +242,21 @@ __STATIC_INLINE void _dot_m_m(const MA&pSrcA,const MB&pSrcB,
         {
             pInA0 = pInA;
             pInA1 = pInA0 + pSrcA.stride();
-            pInA2 = pInA1 + pSrcA.stride();
-            pInA3 = pInA2 + pSrcA.stride();
+            if constexpr (longunroll)
+            {
+               pInA2 = pInA1 + pSrcA.stride();
+               pInA3 = pInA2 + pSrcA.stride();
+            }
             
-            mve_pred16_t    p0 = inner::vctpq<T>::mk(colBLeft);
+            mve_pred16_t    p0 = inner::vctpq<TDST>::mk(colBLeft);
 
-            vecMac0 = vector_traits<T>::temp_acc_zero();
-            vecMac1 = vector_traits<T>::temp_acc_zero();
-            vecMac2 = vector_traits<T>::temp_acc_zero();
-            vecMac3 = vector_traits<T>::temp_acc_zero();
+            vecMac0 = vector_traits<TDST>::temp_acc_zero();
+            vecMac1 = vector_traits<TDST>::temp_acc_zero();
+            if constexpr (longunroll)
+            {
+               vecMac2 = vector_traits<TDST>::temp_acc_zero();
+               vecMac3 = vector_traits<TDST>::temp_acc_zero();
+            }
 
             blkCnt = numColsA;
 
@@ -228,8 +269,11 @@ __STATIC_INLINE void _dot_m_m(const MA&pSrcA,const MB&pSrcB,
 
                 vecMac0 = inner::vmacc(vecMac0, vecInB, *pInA0++);
                 vecMac1 = inner::vmacc(vecMac1, vecInB, *pInA1++);
-                vecMac2 = inner::vmacc(vecMac2, vecInB, *pInA2++);
-                vecMac3 = inner::vmacc(vecMac3, vecInB, *pInA3++);
+                if constexpr (longunroll)
+                {
+                   vecMac2 = inner::vmacc(vecMac2, vecInB, *pInA2++);
+                   vecMac3 = inner::vmacc(vecMac3, vecInB, *pInA3++);
+                }
 
                 pInB0 = pInB0 + pSrcB.stride();
                 /*
@@ -241,13 +285,24 @@ __STATIC_INLINE void _dot_m_m(const MA&pSrcA,const MB&pSrcB,
             /* Store the results (4 x colBLeft block) in the destination buffer */
             inner::vstore1_z<1>(pOut0, vecMac0, colBLeft,p0);
             inner::vstore1_z<1>(pOut1, vecMac1, colBLeft,p0);
-            inner::vstore1_z<1>(pOut2, vecMac2, colBLeft,p0);
-            inner::vstore1_z<1>(pOut3, vecMac3, colBLeft,p0);
+            if constexpr (longunroll)
+            {
+               inner::vstore1_z<1>(pOut2, vecMac2, colBLeft,p0);
+               inner::vstore1_z<1>(pOut3, vecMac3, colBLeft,p0);
+            }
         }
 
         /* move to next rows */
-        pInA += 4 * pSrcA.stride();
-        pOut += 4 * pDst.stride();
+        if constexpr (longunroll)
+        {
+           pInA += 4 * pSrcA.stride();
+           pOut += 4 * pDst.stride();
+        }
+        else 
+        {
+           pInA += 2 * pSrcA.stride();
+           pOut += 2 * pDst.stride();
+        }
         i--;
     }
 
@@ -255,15 +310,15 @@ __STATIC_INLINE void _dot_m_m(const MA&pSrcA,const MB&pSrcB,
      * non multiple of 4 rows for Matrix A
      * process single row
      */
-    if (numRowsA & 3)
+    if (numRowsA & unrolltail)
     {
-        i = numRowsA & 3;
+        i = numRowsA & unrolltail;
         while (i > 0U)
         {
-            T   *pInA0;
-            T   *pInB0;
-            T   *pOut0;
-            VEC    vecInB;
+            TA   *pInA0;
+            TB   *pInB0;
+            TDST   *pOut0;
+            VECB    vecInB;
             ACC    vecMac0;
 
             pOut0 = pOut;
@@ -274,7 +329,7 @@ __STATIC_INLINE void _dot_m_m(const MA&pSrcA,const MB&pSrcB,
             {
                 pInA0 = pInA;
 
-                vecMac0 = vector_traits<T>::temp_acc_zero();
+                vecMac0 = vector_traits<TDST>::temp_acc_zero();
                 blkCnt = numColsA;
                 while (blkCnt > 0U)
                 {
@@ -307,9 +362,9 @@ __STATIC_INLINE void _dot_m_m(const MA&pSrcA,const MB&pSrcB,
             if (colBLeft)
             {
                 pInA0 = pInA;
-                mve_pred16_t    p0 = inner::vctpq<T>::mk(colBLeft);
+                mve_pred16_t    p0 = inner::vctpq<TDST>::mk(colBLeft);
 
-                vecMac0 = vector_traits<T>::temp_acc_zero();
+                vecMac0 = vector_traits<TDST>::temp_acc_zero();
                 blkCnt = numColsA;
                 while (blkCnt > 0U)
                 {

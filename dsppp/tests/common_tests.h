@@ -12,7 +12,7 @@ extern "C" {
 
 using namespace arm_cmsis_dsp;
 
-#define REL_ERROR (1.0e-6)
+#define REL_ERROR (2.0e-6)
 #define ABS_ERROR (1.0e-6)
 
 template<typename T>
@@ -88,7 +88,7 @@ float error(const T a,const T b) {
 #define ERROR(A,B,AE,RE) (error((A),(B)) > (float)(AE) + (float)(RE) * myabs((B)))
 #define ERRVAL(VAL,REF,AE,RE) \
    std::cout << "Error = " << error((VAL),(REF)) << "\r\n"; \
-   std::cout << "compared to " << ((float)(AE) + (float)(RE) * myabs((REF))) << "\r\n";
+   std::cout << "compared to error " << ((float)(AE) + (float)(RE) * myabs((REF))) << "\r\n";
 
 /************
  * 

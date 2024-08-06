@@ -224,10 +224,10 @@ inline void _swap(DA&& a,
                   const vector_length_t l,
                   const DSP* = nullptr)
 {
-      using Scalar = typename ElementType<DA>::type;
+      using Scalar = typename ElementType<remove_constref_t<DA>>::type;
       using Vector = typename vector_traits<Scalar>::vector;
 
-      constexpr int nb_lanes = vector_traits<typename ElementType<DA>::type>::nb_lanes;
+      constexpr int nb_lanes = vector_traits<typename ElementType<remove_constref_t<DA>>::type>::nb_lanes;
       index_t i=0;
       Vector tmpa,tmpb;
     

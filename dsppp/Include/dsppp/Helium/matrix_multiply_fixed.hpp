@@ -27,7 +27,7 @@ template<typename MA,
          has_vector_inst<MB>() &&
          same_nb_lanes<MA,MB>() &&
          same_nb_lanes<MA,RES>() &&
-         number_traits<typename traits<MA>::Scalar>::is_fixed,bool>::type = true>
+         is_fixed<MA>(),bool>::type = true>
 inline void arm_mat_mult_2x2_mve(
     const MA & pSrcA,
     const MB & pSrcB,
@@ -96,7 +96,7 @@ template<typename MA,
          has_vector_inst<MB>() &&
          same_nb_lanes<MA,MB>() &&
          same_nb_lanes<MA,RES>() &&
-         number_traits<typename traits<MA>::Scalar>::is_fixed,bool>::type = true>
+         is_fixed<MA>(),bool>::type = true>
 inline void arm_mat_mult_3x3_mve(
     const MA & pSrcA,
     const MB & pSrcB,
@@ -193,7 +193,7 @@ template<typename MA,
          has_vector_inst<MB>() &&
          same_nb_lanes<MA,MB>() &&
          same_nb_lanes<MA,RES>() &&
-         number_traits<typename traits<MA>::Scalar>::is_fixed,bool>::type = true>
+         is_fixed<MA>(),bool>::type = true>
 inline void arm_mat_mult_4x4_mve(
     const MA & pSrcA,
     const MB & pSrcB,
@@ -326,7 +326,7 @@ template<typename MA,
          has_vector_inst<MB>() &&
          same_nb_lanes<MA,MB>() &&
          same_nb_lanes<MA,RES>() &&
-         number_traits<typename traits<MA>::Scalar>::is_fixed,bool>::type = true>
+         is_fixed<MA>(),bool>::type = true>
    __STATIC_INLINE void _dot_m_m(const MA&pSrcA,const MB&pSrcB,
                         RES &&pDst,
                         const TMP &BT,

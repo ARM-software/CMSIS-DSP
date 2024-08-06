@@ -53,7 +53,8 @@ struct number_traits;
 
 
 /**
- * @brief      Instrinsic vector containing complex values and not just real values
+ * @brief      Vector containing complex values and not just real values
+ *             but with same number of lanes than a normal float vector
  *
  * @tparam     T     Datatype of vector
  */
@@ -61,12 +62,12 @@ template<typename T>
 struct ComplexVector;
 
 /**
- * @brief      Instrinsic vector containing complex values and not just real values
+ * @brief      Vector of complex but with half lanes compared to real (2 complex)
  *
- * @tparam     T     Datatype of vector
+ * @tparam     T     Data type of vector
  */
 template<typename T>
-struct ComplexVectorQ;
+struct HalfComplexVector;
 
 
 /**

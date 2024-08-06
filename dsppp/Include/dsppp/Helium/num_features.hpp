@@ -2,8 +2,6 @@
 /** @file */ 
 #pragma once 
 
-#include <iostream>
-
 
 /*
 
@@ -12,7 +10,7 @@ from_accumulator is going from scalar accumulator to scalar datatype
 
 
 */
-
+#if defined(ARM_MATH_MVEF)
 
 template<>
 struct ComplexVector<float32x4_t>
@@ -33,6 +31,24 @@ struct ComplexVector<float32x4_t>
 };
 
 
+
+template<>
+struct HalfComplexVector<float32x4_t>
+{
+    explicit constexpr HalfComplexVector(float32x4_t ma):va(ma){};
+    explicit constexpr HalfComplexVector():va{}{};
+    typedef float32x4_t type;
+    float32x4_t va;
+
+    friend std::ostream& operator<< (std::ostream& stream, const HalfComplexVector<float32x4_t>& other) 
+    {
+        stream << "(" << other.va[0] << "," << other.va[1] << ") (" << other.va[2] << "," << other.va[3] << ") ";
+        return(stream);
+    };
+};
+
+#endif
+
 namespace inner {
 
 template<typename T,int ...S>
@@ -46,6 +62,9 @@ struct vstore1_gen_stride;
 
 template<typename T,int ...S>
 struct vstore1_gen_stride_z;
+
+template<typename T,int ...S>
+struct vload1_half_gen_stride;
 
 template<typename VA, typename VB>
 struct ToComplexStrideComp;
