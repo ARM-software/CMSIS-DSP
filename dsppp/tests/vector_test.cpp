@@ -534,7 +534,7 @@ void vector_test()
    using T = std::complex<float>;
    constexpr int NB = 1024;
    
-   test_mixed<T,typename T::value_type,NB>();
+   test<T,NB>();
 
    
 #else

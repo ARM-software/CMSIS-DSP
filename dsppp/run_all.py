@@ -219,7 +219,7 @@ MODE = ["STATIC_TEST",
         ]
 
 # Restricted tests for debugging
-#TESTS=["MATRIX_TEST"]
+#TESTS=["DOT_TEST"]
 DATATYPES=[ #"COMPLEX_F64_DT",
             "F64_DT",
             "COMPLEX_F32_DT",

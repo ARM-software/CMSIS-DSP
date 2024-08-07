@@ -420,6 +420,7 @@ struct _NoOp:_UnaryOperator<Scalar,_NoOp<Scalar>>
  * @tparam Scalar Datatype for scalar
  * 
  */
+
 template<typename Scalar>
 struct _ConjugateOp:_UnaryOperator<Scalar,_ConjugateOp<Scalar>>
 {
@@ -441,13 +442,16 @@ struct _ConjugateOp:_UnaryOperator<Scalar,_ConjugateOp<Scalar>>
     using Vector= typename vector_traits<Scalar>::vector ;
     using pred_t = typename vector_traits<Scalar>::predicate_t;
 
+    template<typename T=Scalar,
+             typename std::enable_if<IsComplexNumber<T>::value,bool>::type = true>
     Vector const operator()(const Vector lhs) const
     {
         return(inner::vconjugate(lhs));
     }
 
     template<typename T=Scalar,
-             typename std::enable_if<vector_traits<T>::has_predicate,bool>::type = true>
+             typename std::enable_if<IsComplexNumber<T>::value &&
+                                     vector_traits<T>::has_predicate,bool>::type = true>
     Vector const operator()(const Vector lhs,
                             const pred_t p0) const
     {

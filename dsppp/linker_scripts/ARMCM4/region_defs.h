@@ -17,7 +17,7 @@
 //   <o> Region size [bytes] <0x0-0xFFFFFFFF:8>
 //   <i> Defines size of memory region.
 //   <i> Default: 0x00040000
-#define __ROM0_SIZE 0x00040000
+#define __ROM0_SIZE 0x00050000
 //   <q>Default region
 //   <i> Enables memory region globally for the application.
 #define __ROM0_DEFAULT 1

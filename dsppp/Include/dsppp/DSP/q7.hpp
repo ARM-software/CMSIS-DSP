@@ -93,6 +93,11 @@ namespace inner {
        return(Q7DSPVector(__QSUB8(0, a.v)));
     };
 
+    __STATIC_FORCEINLINE Q7DSPVector vconjugate(const Q7DSPVector a)
+    {
+       return(a);
+    };
+
     __STATIC_FORCEINLINE Q7DSPVector vadd(const Q7DSPVector a,
                                            const Q7DSPVector b)
     {

@@ -157,6 +157,11 @@ namespace inner {
        return(Q15DSPVector(__QSUB16(0, a.v)));
     };
 
+    __STATIC_FORCEINLINE Q15DSPVector vconjugate(const Q15DSPVector a)
+    {
+       return(a);
+    };
+
     __STATIC_FORCEINLINE Q15DSPVector vadd(const Q15DSPVector a,
                                            const Q15DSPVector b)
     {

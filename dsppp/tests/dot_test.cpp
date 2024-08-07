@@ -325,29 +325,32 @@ void all_dot_test()
 
     }
 
-    title<T>("Hermitian product");
-
-    
-    test_hermitian<T,NBVEC_4,ACC>();
-    test_hermitian<T,NBVEC_8,ACC>();
-    test_hermitian<T,NBVEC_9,ACC>();
-    test_hermitian<T,NBVEC_16,ACC>();
-    test_hermitian<T,NBVEC_32,ACC>();
-    test_hermitian<T,NBVEC_64,ACC>();
-    test_hermitian<T,NBVEC_128,ACC>();
-    test_hermitian<T,NBVEC_256,ACC>();
-    test_hermitian<T,NBVEC_258,ACC>();
-    test_hermitian<T,NBVEC_512,ACC>();
-    test_hermitian<T,NBVEC_1024,ACC>();
+    if constexpr (IsComplexNumber<T>::value)
     {
-       test_hermitian<T,NBVEC_2048,ACC>();
-    }
-
-    test_hermitian<T,1,ACC>();
-    test_hermitian<T,nb_tails,ACC>();
-    test_hermitian<T,nb_loops,ACC>();
-    test_hermitian<T,nb_loops+1,ACC>();
-    test_hermitian<T,nb_loops+nb_tails,ACC>();
+       title<T>("Hermitian product");
+   
+       
+       test_hermitian<T,NBVEC_4,ACC>();
+       test_hermitian<T,NBVEC_8,ACC>();
+       test_hermitian<T,NBVEC_9,ACC>();
+       test_hermitian<T,NBVEC_16,ACC>();
+       test_hermitian<T,NBVEC_32,ACC>();
+       test_hermitian<T,NBVEC_64,ACC>();
+       test_hermitian<T,NBVEC_128,ACC>();
+       test_hermitian<T,NBVEC_256,ACC>();
+       test_hermitian<T,NBVEC_258,ACC>();
+       test_hermitian<T,NBVEC_512,ACC>();
+       test_hermitian<T,NBVEC_1024,ACC>();
+       {
+          test_hermitian<T,NBVEC_2048,ACC>();
+       }
+   
+       test_hermitian<T,1,ACC>();
+       test_hermitian<T,nb_tails,ACC>();
+       test_hermitian<T,nb_loops,ACC>();
+       test_hermitian<T,nb_loops+1,ACC>();
+       test_hermitian<T,nb_loops+nb_tails,ACC>();
+     }
 
 
     if constexpr (!IsComplexNumber<T>::value)
@@ -407,7 +410,7 @@ void all_dot_test()
 
 void dot_test()
 {
-#if 1
+#if 0
    using T = std::complex<float>;
    using ACC = typename number_traits<T>::accumulator;
    test<T,NBVEC_512,ACC>();

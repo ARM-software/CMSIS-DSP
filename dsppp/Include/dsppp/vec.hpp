@@ -525,6 +525,7 @@ inline auto operator-(const LHS &a)
  * 
  * -vector (including matrix)
  */
+
 template<typename LHS,
 typename std::enable_if<!is_scalar<LHS>(),bool>::type = true>
 inline auto conjugate(const LHS &a)
@@ -534,6 +535,7 @@ inline auto conjugate(const LHS &a)
 
     return(_Unary<typename VecLHS::type,_ConjugateOp<Scalar>>(VecLHS::ref(a),_ConjugateOp<Scalar>()));
 };
+
 
 /**
  * @brief  Element wise multiplication operator for expressions
