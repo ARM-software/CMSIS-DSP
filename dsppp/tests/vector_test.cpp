@@ -227,9 +227,8 @@ static void test_mult_mixed()
    START_CYCLE_MEASUREMENT;
    if constexpr(IsComplexNumber<TA>::value)
    {
-      // Real to complex
-      bcmplx = copy(b);
-      cmsisdsp_mult(a.const_ptr(),bcmplx.const_ptr(),ref.ptr(),NB);
+      // There is a complex * real in CMSIS-DSP
+      cmsisdsp_mult(a.const_ptr(),b.const_ptr(),ref.ptr(),NB);
    }
    else 
    {

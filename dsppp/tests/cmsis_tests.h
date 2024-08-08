@@ -305,6 +305,11 @@ extern void cmsisdsp_mult(const std::complex<float16_t>* a,
                     std::complex<float16_t>* c, 
               uint32_t l);
 
+extern void cmsisdsp_mult(const std::complex<float16_t>* a, 
+              const float16_t* b, 
+                    std::complex<float16_t>* c, 
+              uint32_t l);
+
 extern void cmsisdsp_mult(const float16_t* a, 
               const float16_t* b, 
                     float16_t* c, 
@@ -326,6 +331,11 @@ extern void cmsisdsp_mult(const std::complex<float32_t>* a,
                     std::complex<float32_t>* c, 
               uint32_t l);
 
+extern void cmsisdsp_mult(const std::complex<float32_t>* a, 
+              const float32_t* b, 
+                    std::complex<float32_t>* c, 
+              uint32_t l);
+
 extern void cmsisdsp_mult(const float32_t* a, 
               const float32_t* b, 
                     float32_t* c, 
@@ -336,6 +346,11 @@ extern void cmsisdsp_mult(const std::complex<Q31>* a,
                     std::complex<Q31>* c, 
               uint32_t l);
 
+extern void cmsisdsp_mult(const std::complex<Q31>* a, 
+              const Q31* b, 
+                    std::complex<Q31>* c, 
+              uint32_t l);
+
 extern void cmsisdsp_mult(const Q31* a, 
               const Q31* b, 
                     Q31* c, 
@@ -343,6 +358,11 @@ extern void cmsisdsp_mult(const Q31* a,
 
 extern void cmsisdsp_mult(const std::complex<Q15>* a, 
               const std::complex<Q15>* b, 
+                    std::complex<Q15>* c, 
+              uint32_t l);
+
+extern void cmsisdsp_mult(const std::complex<Q15>* a, 
+              const Q15* b, 
                     std::complex<Q15>* c, 
               uint32_t l);
 

@@ -219,7 +219,7 @@ MODE = ["STATIC_TEST",
         ]
 
 # Restricted tests for debugging
-#TESTS=["DOT_TEST"]
+#TESTS=["VECTOR_TEST"]
 DATATYPES=[ #"COMPLEX_F64_DT",
             "F64_DT",
             "COMPLEX_F32_DT",
@@ -232,8 +232,7 @@ DATATYPES=[ #"COMPLEX_F64_DT",
             "Q15_DT",
             "Q7_DT"
            ]
-#DATATYPES=[ "COMPLEX_F32_DT"
-#           ]
+#DATATYPES=[ "COMPLEX_F32_DT"]
 #MODE = ["STATIC_TEST"]
 
 all_tests = list(itertools.product(TESTS,DATATYPES,MODE))
@@ -387,8 +386,13 @@ def runATest(args,test,file_err,nb,NB_MAX,current_nb_axf,nb_axf,first=True,subte
     global DEBUG
     if subtest is not None:
        maxsub = SUBTESTS[test[0]]
+
+
        test_name=f"{test[0]}_{test[1]}_{test[2]}_{subtest}"
-       printTitle(test_name + f" : AXF {current_nb_axf} / {nb_axf}, TEST {nb}/{NB_MAX} (subtest {subtest}/{maxsub})")
+       if args.s:
+          printTitle(test_name + f" : AXF {current_nb_axf} / {nb_axf}, TEST {nb}/{NB_MAX} (forced subtest {subtest})")
+       else:
+          printTitle(test_name + f" : AXF {current_nb_axf} / {nb_axf}, TEST {nb}/{NB_MAX} (subtest {subtest}/{maxsub})")
     else:
        test_name=f"{test[0]}_{test[1]}_{test[2]}"
        printTitle(test_name + f" : AXF {current_nb_axf} / {nb_axf}, TEST {nb}/{NB_MAX}")

@@ -942,7 +942,7 @@ void testmatvec_mixed()
 }
 
 template<typename T,int R,int C>
-void testcomplexmatvec()
+void testcomplicatedmatvec()
 {
    const T scalar = MatTestConstant<T>::half;
    using STO = typename vector_traits<T>::storage_type;
@@ -999,7 +999,7 @@ void testcomplexmatvec()
 
    
    startSectionNB(2);
-     cmsis_complex_mat_vec(&S,
+     cmsis_complicated_mat_vec(&S,
                          a.const_ptr(),
                          b.const_ptr(),
                          scalar,
@@ -1900,11 +1900,11 @@ struct TESTMATVEC
 };
 
 template<typename TT,typename ...T>
-struct TESTCOMPLEXMATVEC
+struct TESTCOMPLICATEDMATVEC
 {
    static void all()
    {
-      testcomplexmatvec<TT,T::value...>();
+      testcomplicatedmatvec<TT,T::value...>();
    }
 };
 
@@ -2083,24 +2083,19 @@ void matrix_all_test()
 #endif 
 
 #if defined(SUBTEST1)
-          if constexpr (IsComplexNumber<T>::value)
-          {
-             title<T>("Matrix times vector expression");
+          title<T>("Matrix times vector expression");
        
-             testcomplexmatvec<T,NBVEC_4 ,NBVEC_4>();
-             testcomplexmatvec<T,NBVEC_16,NBVEC_16>();
-             testcomplexmatvec<T,NBVEC_32,NBVEC_32>();
-             testcomplexmatvec<T,NBVEC_44,NBVEC_44>();
-             testcomplexmatvec<T,NBVEC_47,NBVEC_47>();
-          }
+          testcomplicatedmatvec<T,NBVEC_4 ,NBVEC_4>();
+          testcomplicatedmatvec<T,NBVEC_16,NBVEC_16>();
+          testcomplicatedmatvec<T,NBVEC_32,NBVEC_32>();
+          testcomplicatedmatvec<T,NBVEC_44,NBVEC_44>();
+          testcomplicatedmatvec<T,NBVEC_47,NBVEC_47>();
+          
 #endif 
 
 #if defined(SUBTEST5)
-          if constexpr (IsComplexNumber<T>::value)
-          {
              title<T>("Matrix times vector expression");
-             ALL_TESTS<TESTCOMPLEXMATVEC,UNROLL,VEC>::all();
-          }
+             ALL_TESTS<TESTCOMPLICATEDMATVEC,UNROLL,VEC>::all();
 #endif
          }
       }
