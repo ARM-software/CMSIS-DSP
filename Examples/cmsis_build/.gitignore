@@ -5,3 +5,6 @@
 *.cbuild.yml 
 *.bat
 *.cbuild-pack.yml
+cprj/examples_ac6.cbuild-idx.yml
+cprj/out/
+cprj/tmp/
