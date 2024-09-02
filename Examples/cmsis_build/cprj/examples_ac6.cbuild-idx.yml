@@ -1,0 +1,216 @@
+build-idx:
+  generated-by: csolution version 2.4.0
+  csolution: ../examples_ac6.csolution.yml
+  cprojects:
+    - cproject: ../projects/bayes.cproject.yml
+      clayers:
+        - clayer: ../vht.clayer.yml
+        - clayer: ../../../Testing/cmsis_build/dsp.clayer.yml
+    - cproject: ../projects/classmarks.cproject.yml
+      clayers:
+        - clayer: ../vht.clayer.yml
+        - clayer: ../../../Testing/cmsis_build/dsp.clayer.yml
+    - cproject: ../projects/convolution.cproject.yml
+      clayers:
+        - clayer: ../vht.clayer.yml
+        - clayer: ../../../Testing/cmsis_build/dsp.clayer.yml
+    - cproject: ../projects/dotproduct.cproject.yml
+      clayers:
+        - clayer: ../vht.clayer.yml
+        - clayer: ../../../Testing/cmsis_build/dsp.clayer.yml
+    - cproject: ../projects/fftbin.cproject.yml
+      clayers:
+        - clayer: ../vht.clayer.yml
+        - clayer: ../../../Testing/cmsis_build/dsp.clayer.yml
+    - cproject: ../projects/fir.cproject.yml
+      clayers:
+        - clayer: ../vht.clayer.yml
+        - clayer: ../../../Testing/cmsis_build/dsp.clayer.yml
+    - cproject: ../projects/graphicequalizer.cproject.yml
+      clayers:
+        - clayer: ../vht.clayer.yml
+        - clayer: ../../../Testing/cmsis_build/dsp.clayer.yml
+    - cproject: ../projects/linearinterp.cproject.yml
+      clayers:
+        - clayer: ../vht.clayer.yml
+        - clayer: ../../../Testing/cmsis_build/dsp.clayer.yml
+    - cproject: ../projects/matrix.cproject.yml
+      clayers:
+        - clayer: ../vht.clayer.yml
+        - clayer: ../../../Testing/cmsis_build/dsp.clayer.yml
+    - cproject: ../projects/signalconverge.cproject.yml
+      clayers:
+        - clayer: ../vht.clayer.yml
+        - clayer: ../../../Testing/cmsis_build/dsp.clayer.yml
+    - cproject: ../projects/sincos.cproject.yml
+      clayers:
+        - clayer: ../vht.clayer.yml
+        - clayer: ../../../Testing/cmsis_build/dsp.clayer.yml
+    - cproject: ../projects/svm.cproject.yml
+      clayers:
+        - clayer: ../vht.clayer.yml
+        - clayer: ../../../Testing/cmsis_build/dsp.clayer.yml
+    - cproject: ../projects/variance.cproject.yml
+      clayers:
+        - clayer: ../vht.clayer.yml
+        - clayer: ../../../Testing/cmsis_build/dsp.clayer.yml
+  cbuilds:
+    - cbuild: bayes.Release+VHT-Corstone-300.cbuild.yml
+      project: bayes
+      configuration: .Release+VHT-Corstone-300
+    - cbuild: bayes.Release+VHT-Corstone-310.cbuild.yml
+      project: bayes
+      configuration: .Release+VHT-Corstone-310
+    - cbuild: bayes.Release+VHT_M0P.cbuild.yml
+      project: bayes
+      configuration: .Release+VHT_M0P
+    - cbuild: bayes.Release+VHT_M7.cbuild.yml
+      project: bayes
+      configuration: .Release+VHT_M7
+    - cbuild: classmarks.Release+VHT-Corstone-300.cbuild.yml
+      project: classmarks
+      configuration: .Release+VHT-Corstone-300
+    - cbuild: classmarks.Release+VHT-Corstone-310.cbuild.yml
+      project: classmarks
+      configuration: .Release+VHT-Corstone-310
+    - cbuild: classmarks.Release+VHT_M0P.cbuild.yml
+      project: classmarks
+      configuration: .Release+VHT_M0P
+    - cbuild: classmarks.Release+VHT_M7.cbuild.yml
+      project: classmarks
+      configuration: .Release+VHT_M7
+    - cbuild: convolution.Release+VHT-Corstone-300.cbuild.yml
+      project: convolution
+      configuration: .Release+VHT-Corstone-300
+    - cbuild: convolution.Release+VHT-Corstone-310.cbuild.yml
+      project: convolution
+      configuration: .Release+VHT-Corstone-310
+    - cbuild: convolution.Release+VHT_M0P.cbuild.yml
+      project: convolution
+      configuration: .Release+VHT_M0P
+    - cbuild: convolution.Release+VHT_M7.cbuild.yml
+      project: convolution
+      configuration: .Release+VHT_M7
+    - cbuild: dotproduct.Release+VHT-Corstone-300.cbuild.yml
+      project: dotproduct
+      configuration: .Release+VHT-Corstone-300
+    - cbuild: dotproduct.Release+VHT-Corstone-310.cbuild.yml
+      project: dotproduct
+      configuration: .Release+VHT-Corstone-310
+    - cbuild: dotproduct.Release+VHT_M0P.cbuild.yml
+      project: dotproduct
+      configuration: .Release+VHT_M0P
+    - cbuild: dotproduct.Release+VHT_M7.cbuild.yml
+      project: dotproduct
+      configuration: .Release+VHT_M7
+    - cbuild: fftbin.Release+VHT-Corstone-300.cbuild.yml
+      project: fftbin
+      configuration: .Release+VHT-Corstone-300
+    - cbuild: fftbin.Release+VHT-Corstone-310.cbuild.yml
+      project: fftbin
+      configuration: .Release+VHT-Corstone-310
+    - cbuild: fftbin.Release+VHT_M0P.cbuild.yml
+      project: fftbin
+      configuration: .Release+VHT_M0P
+    - cbuild: fftbin.Release+VHT_M7.cbuild.yml
+      project: fftbin
+      configuration: .Release+VHT_M7
+    - cbuild: fir.Release+VHT-Corstone-300.cbuild.yml
+      project: fir
+      configuration: .Release+VHT-Corstone-300
+    - cbuild: fir.Release+VHT-Corstone-310.cbuild.yml
+      project: fir
+      configuration: .Release+VHT-Corstone-310
+    - cbuild: fir.Release+VHT_M0P.cbuild.yml
+      project: fir
+      configuration: .Release+VHT_M0P
+    - cbuild: fir.Release+VHT_M7.cbuild.yml
+      project: fir
+      configuration: .Release+VHT_M7
+    - cbuild: graphicequalizer.Release+VHT-Corstone-300.cbuild.yml
+      project: graphicequalizer
+      configuration: .Release+VHT-Corstone-300
+      clayers:
+        - clayer: ../vht.clayer.yml
+        - clayer: ../../../Testing/cmsis_build/dsp.clayer.yml
+    - cbuild: graphicequalizer.Release+VHT-Corstone-310.cbuild.yml
+      project: graphicequalizer
+      configuration: .Release+VHT-Corstone-310
+    - cbuild: graphicequalizer.Release+VHT_M0P.cbuild.yml
+      project: graphicequalizer
+      configuration: .Release+VHT_M0P
+    - cbuild: graphicequalizer.Release+VHT_M7.cbuild.yml
+      project: graphicequalizer
+      configuration: .Release+VHT_M7
+    - cbuild: linearinterp.Release+VHT-Corstone-300.cbuild.yml
+      project: linearinterp
+      configuration: .Release+VHT-Corstone-300
+    - cbuild: linearinterp.Release+VHT-Corstone-310.cbuild.yml
+      project: linearinterp
+      configuration: .Release+VHT-Corstone-310
+    - cbuild: linearinterp.Release+VHT_M0P.cbuild.yml
+      project: linearinterp
+      configuration: .Release+VHT_M0P
+    - cbuild: linearinterp.Release+VHT_M7.cbuild.yml
+      project: linearinterp
+      configuration: .Release+VHT_M7
+    - cbuild: matrix.Release+VHT-Corstone-300.cbuild.yml
+      project: matrix
+      configuration: .Release+VHT-Corstone-300
+    - cbuild: matrix.Release+VHT-Corstone-310.cbuild.yml
+      project: matrix
+      configuration: .Release+VHT-Corstone-310
+    - cbuild: matrix.Release+VHT_M0P.cbuild.yml
+      project: matrix
+      configuration: .Release+VHT_M0P
+    - cbuild: matrix.Release+VHT_M7.cbuild.yml
+      project: matrix
+      configuration: .Release+VHT_M7
+    - cbuild: signalconverge.Release+VHT-Corstone-300.cbuild.yml
+      project: signalconverge
+      configuration: .Release+VHT-Corstone-300
+    - cbuild: signalconverge.Release+VHT-Corstone-310.cbuild.yml
+      project: signalconverge
+      configuration: .Release+VHT-Corstone-310
+    - cbuild: signalconverge.Release+VHT_M0P.cbuild.yml
+      project: signalconverge
+      configuration: .Release+VHT_M0P
+    - cbuild: signalconverge.Release+VHT_M7.cbuild.yml
+      project: signalconverge
+      configuration: .Release+VHT_M7
+    - cbuild: sincos.Release+VHT-Corstone-300.cbuild.yml
+      project: sincos
+      configuration: .Release+VHT-Corstone-300
+    - cbuild: sincos.Release+VHT-Corstone-310.cbuild.yml
+      project: sincos
+      configuration: .Release+VHT-Corstone-310
+    - cbuild: sincos.Release+VHT_M0P.cbuild.yml
+      project: sincos
+      configuration: .Release+VHT_M0P
+    - cbuild: sincos.Release+VHT_M7.cbuild.yml
+      project: sincos
+      configuration: .Release+VHT_M7
+    - cbuild: svm.Release+VHT-Corstone-300.cbuild.yml
+      project: svm
+      configuration: .Release+VHT-Corstone-300
+    - cbuild: svm.Release+VHT-Corstone-310.cbuild.yml
+      project: svm
+      configuration: .Release+VHT-Corstone-310
+    - cbuild: svm.Release+VHT_M0P.cbuild.yml
+      project: svm
+      configuration: .Release+VHT_M0P
+    - cbuild: svm.Release+VHT_M7.cbuild.yml
+      project: svm
+      configuration: .Release+VHT_M7
+    - cbuild: variance.Release+VHT-Corstone-300.cbuild.yml
+      project: variance
+      configuration: .Release+VHT-Corstone-300
+    - cbuild: variance.Release+VHT-Corstone-310.cbuild.yml
+      project: variance
+      configuration: .Release+VHT-Corstone-310
+    - cbuild: variance.Release+VHT_M0P.cbuild.yml
+      project: variance
+      configuration: .Release+VHT_M0P
+    - cbuild: variance.Release+VHT_M7.cbuild.yml
+      project: variance
+      configuration: .Release+VHT_M7

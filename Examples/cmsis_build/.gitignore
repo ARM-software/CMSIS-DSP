@@ -4,3 +4,4 @@
 .*@*
 *.cbuild.yml 
 *.bat
+*.cbuild-pack.yml
