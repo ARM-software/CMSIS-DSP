@@ -17,8 +17,8 @@
  */
 
 /*
- * This file is derivative of CMSIS V5.6.0 system_ARMv81MML.c
- * Git SHA: b5f0603d6a584d1724d952fd8b0737458b90d62b
+ * This file is derivative of CMSIS V5.9.0 system_ARMCM55.c
+ * Git SHA: 2b7495b8535bdcb306dac29b9ded4cfb679d7e5c
  */
 
 #include "SSE300MPS3.h"
@@ -31,11 +31,9 @@
  #define  PERIPHERAL_CLOCK (25000000UL)
 
 /*----------------------------------------------------------------------------
-  Externals
+  Exception / Interrupt Vector table
  *----------------------------------------------------------------------------*/
-#if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
-    extern uint32_t __VECTOR_TABLE;
-#endif
+extern const VECTOR_TABLE_Type __VECTOR_TABLE[496];
 
 /*----------------------------------------------------------------------------
   System Core Clock Variable
@@ -57,21 +55,27 @@ void SystemCoreClockUpdate (void)
  *----------------------------------------------------------------------------*/
 void SystemInit (void)
 {
-
 #if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
-    SCB->VTOR = (uint32_t)(&__VECTOR_TABLE);
+    SCB->VTOR = (uint32_t)(&__VECTOR_TABLE[0]);
 #endif
 
 #if (defined (__FPU_USED) && (__FPU_USED == 1U)) || \
-    (defined (__ARM_FEATURE_MVE) && (__ARM_FEATURE_MVE >= 1U))
+    (defined (__ARM_FEATURE_MVE) && (__ARM_FEATURE_MVE > 0U))
     SCB->CPACR |= ((3U << 10U*2U) |           /* enable CP10 Full Access */
                    (3U << 11U*2U)  );         /* enable CP11 Full Access */
 
-    /* Set CPDLPSTATE.CLPSTATE to 0, so PDCORE will not enter low-power state. Set
-     * CPDLPSTATE.ELPSTATE to 0, to stop the processor from trying to switch the EPU
-     * into retention state
-     */
-    PWRMODCTL->CPDLPSTATE &= 0xFFFFFF00UL;
+    /* Set low-power state for PDEPU                */
+    /*  0b00  | ON, PDEPU is not in low-power state */
+    /*  0b01  | ON, but the clock is off            */
+    /*  0b10  | RET(ention)                         */
+    /*  0b11  | OFF                                 */
+
+    /* Clear ELPSTATE, value is 0b11 on Cold reset */
+    PWRMODCTL->CPDLPSTATE &= ~(PWRMODCTL_CPDLPSTATE_ELPSTATE_Msk);
+
+    /* Favor best FP/MVE performance by default, avoid EPU switch-ON delays */
+    /* PDEPU ON, Clock OFF */
+    PWRMODCTL->CPDLPSTATE |= 0x1 << PWRMODCTL_CPDLPSTATE_ELPSTATE_Pos;
 #endif
 
 #ifdef UNALIGNED_SUPPORT_DISABLE
@@ -83,4 +87,7 @@ void SystemInit (void)
     __DSB();
     __ISB();
 
+
+    SystemCoreClock = SYSTEM_CLOCK;
+    PeripheralClock = PERIPHERAL_CLOCK;
 }
