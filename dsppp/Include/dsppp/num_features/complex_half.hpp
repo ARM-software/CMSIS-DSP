@@ -36,18 +36,20 @@ struct number_traits<std::complex<float16_t>>
     */
    static constexpr std::complex<float16_t> one() {return  (std::complex<float16_t>(1.0f,0.0f));};
 
-   //! Compute datatype
-   typedef std::complex<_Float16> compute_type;
+   //! Compute datatype (Less efficient than _Float16 but some C++ std lib is causing issues with _Float16)
+   typedef std::complex<float16_t> compute_type;
 
    //! Display type for printf 
-   typedef std::complex<float> display_type;
+   typedef std::complex<float16_t> display_type;
 };
 
 /**
  * @brief      float16 vector descrition when no vector architecture
  */
 template<typename arch>
-struct vector_traits<std::complex<float16_t>,arch,void> {
+struct vector_traits<std::complex<float16_t>,arch,
+    typename std::enable_if<!std::is_base_of<Helium,arch>::value &&
+                            !std::is_base_of<Neon,arch>::value>::type> {
   //! Float16 datatype
   typedef std::complex<float16_t> type;
   //! Float16 storage type

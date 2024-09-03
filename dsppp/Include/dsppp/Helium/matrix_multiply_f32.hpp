@@ -40,9 +40,9 @@ __STATIC_INLINE  void _arm_mat_mult_2x2_mve(
     VEC  acc0,acc1,vecA,vecB;
 
     pOut = pDst.ptr();
-    pInA0 = pSrcA.ptr();
+    pInA0 = pSrcA.const_ptr();
     pInA1 = pInA0 + pSrcA.stride();
-    pInB = pSrcB.ptr();
+    pInB = pSrcB.const_ptr();
 
     /* col0 = B00 B10 */
     if constexpr (!HasStaticStride<MB>::value)

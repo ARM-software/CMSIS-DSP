@@ -49,6 +49,54 @@ struct HalfComplexVector<float32x4_t>
 
 #endif
 
+#if defined(ARM_MATH_MVE_FLOAT16)
+
+template<>
+struct ComplexVector<float16x8_t>
+{
+    explicit constexpr ComplexVector(float16x8_t ma,float16x8_t mb):va(ma),vb(mb){};
+    explicit constexpr ComplexVector(float16x8_t ma):va(ma),vb{}{};
+    explicit constexpr ComplexVector():va{},vb{}{};
+    typedef float16x8_t type;
+    float16x8_t va,vb;
+
+    friend std::ostream& operator<< (std::ostream& stream, const ComplexVector<float16x8_t>& other) 
+    {
+        stream << "(" << (float)other.va[0] << "," << (float)other.va[1] << ") (" 
+                      << (float)other.va[2] << "," << (float)other.va[3] << ") (" 
+                      << (float)other.va[4] << "," << (float)other.va[5] << ") ("
+                      << (float)other.va[6] << "," << (float)other.va[7] << ") ";
+
+        stream << "(" << (float)other.vb[0] << "," << (float)other.vb[1] << ") (" 
+                      << (float)other.vb[2] << "," << (float)other.vb[3] << ") (" 
+                      << (float)other.vb[4] << "," << (float)other.vb[5] << ") ("
+                      << (float)other.vb[6] << "," << (float)other.vb[7] << ") ";
+        return(stream);
+    };
+};
+
+
+
+template<>
+struct HalfComplexVector<float16x8_t>
+{
+    explicit constexpr HalfComplexVector(float16x8_t ma):va(ma){};
+    explicit constexpr HalfComplexVector():va{}{};
+    typedef float16x8_t type;
+    float16x8_t va;
+
+    friend std::ostream& operator<< (std::ostream& stream, const HalfComplexVector<float16x8_t>& other) 
+    {
+        stream << "(" << (float)other.va[0] << "," << (float)other.va[1] << ") (" 
+                      << (float)other.va[2] << "," << (float)other.va[3] << ") (" 
+                      << (float)other.va[4] << "," << (float)other.va[5] << ") ("
+                      << (float)other.va[6] << "," << (float)other.va[7] << ") ";
+        return(stream);
+    };
+};
+
+#endif
+
 namespace inner {
 
 template<typename T,int ...S>
@@ -87,6 +135,11 @@ struct ToComplexStrideComp<std::integer_sequence<int,D...>, std::integer_sequenc
     using type = std::integer_sequence<int,D...>;
 };
 
+/*
+Convert a sequence of stride a,b,c ... to
+
+2*a, 2*a+1, 2*b, 2*b+1, 2*c, 2*c+1 ...
+*/
 template<int...D>
 struct ToComplexStride
 {
@@ -112,6 +165,14 @@ struct TakeDropComp<NB,std::integer_sequence<int,H...>,std::integer_sequence<int
     using lb = typename type::lb;
 };
 
+/*
+
+Split a sequence of length 2*NB a ... x ... into two sequences of length NB
+a...
+and
+x...
+
+*/
 template<int NB,int...D>
 struct TakeDrop
 {
@@ -127,6 +188,8 @@ struct TakeDrop
 
 #include "complex_float.hpp"
 #include "float.hpp"
+
+#include "complex_half.hpp"
 #include "half.hpp"
 #include "q31.hpp"
 #include "q15.hpp"
