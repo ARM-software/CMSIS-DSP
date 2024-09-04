@@ -42,7 +42,9 @@ struct number_traits<std::complex<Q31>>
  * @tparam     arch  Current architecture
  */
 template<typename arch>
-struct vector_traits<std::complex<Q31>,arch,void> {
+struct vector_traits<std::complex<Q31>,arch,
+    typename std::enable_if<!std::is_base_of<Helium,arch>::value &&
+                            !std::is_base_of<Neon,arch>::value>::type> {
   //! Datatype
   typedef std::complex<Q31> type;
 

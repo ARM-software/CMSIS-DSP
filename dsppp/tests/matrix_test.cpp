@@ -2221,12 +2221,16 @@ void matrix_all_test()
 
 void matrix_test()
 {
-#if 0
-   using T = std::complex<float>;
-   constexpr int N = 32;
+#if 1
+   using T = std::complex<Q31>;
+   //using T = Q31;
+   constexpr int N = 4;
    
-   testouter_mixed<T,typename T::value_type,N,N>();
-   testouter_mixed<typename T::value_type,T,N,N>();
+   title<T>("Matrix multiply");
+   testmatmult<T,N,N,N>();
+
+   //testmatmult_mixed<T,typename T::value_type,N,N,N>();
+   //testmatmult_mixed<typename T::value_type,T,N,N,N>();
 
 #else
 #if defined(MATRIX_TEST)

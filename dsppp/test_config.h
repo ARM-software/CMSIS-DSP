@@ -3,15 +3,15 @@
 
 #define M55
 
-
+#define TESTMODE
 #define POOL_ALLOCATOR
 //#define ONLY_BENCHMARKS
 
 
-#define VECTOR_TEST
-#define COMPLEX_F32_DT
-#define DYNAMIC_TEST
-
+#define MATRIX_TEST
+#define COMPLEX_Q31_DT
+#define STATIC_TEST
+#define SUBTEST1
 
 #endif
 

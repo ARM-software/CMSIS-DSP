@@ -30,6 +30,23 @@ struct ComplexVector<float32x4_t>
     };
 };
 
+template<>
+struct ComplexVector<int32x4_t>
+{
+    explicit constexpr ComplexVector(int32x4_t ma,int32x4_t mb):va(ma),vb(mb){};
+    explicit constexpr ComplexVector(int32x4_t ma):va(ma),vb{}{};
+    explicit constexpr ComplexVector():va{},vb{}{};
+    typedef int32x4_t type;
+    int32x4_t va,vb;
+
+    friend std::ostream& operator<< (std::ostream& stream, const ComplexVector<int32x4_t>& other) 
+    {
+        stream << "(" << other.va[0] << "," << other.va[1] << ") (" << other.va[2] << "," << other.va[3] << ") ";
+        stream << "(" << other.vb[0] << "," << other.vb[1] << ") (" << other.vb[2] << "," << other.vb[3] << ") ";
+
+        return(stream);
+    };
+};
 
 
 template<>
@@ -41,6 +58,22 @@ struct HalfComplexVector<float32x4_t>
     float32x4_t va;
 
     friend std::ostream& operator<< (std::ostream& stream, const HalfComplexVector<float32x4_t>& other) 
+    {
+        stream << "(" << other.va[0] << "," << other.va[1] << ") (" << other.va[2] << "," << other.va[3] << ") ";
+        return(stream);
+    };
+};
+
+
+template<>
+struct HalfComplexVector<int32x4_t>
+{
+    explicit constexpr HalfComplexVector(int32x4_t ma):va(ma){};
+    explicit constexpr HalfComplexVector():va{}{};
+    typedef int32x4_t type;
+    int32x4_t va;
+
+    friend std::ostream& operator<< (std::ostream& stream, const HalfComplexVector<int32x4_t>& other) 
     {
         stream << "(" << other.va[0] << "," << other.va[1] << ") (" << other.va[2] << "," << other.va[3] << ") ";
         return(stream);
@@ -186,11 +219,14 @@ struct TakeDrop
 
 }
 
-#include "complex_float.hpp"
 #include "float.hpp"
+#include "complex_float.hpp"
 
-#include "complex_half.hpp"
 #include "half.hpp"
+#include "complex_half.hpp"
+
 #include "q31.hpp"
+#include "complex_q31.hpp"
+
 #include "q15.hpp"
 #include "q7.hpp"

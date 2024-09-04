@@ -219,12 +219,12 @@ MODE = ["STATIC_TEST",
         ]
 
 # Restricted tests for debugging
-#TESTS=["VECTOR_TEST"]
+TESTS=["VECTOR_TEST"]
 DATATYPES=[ #"COMPLEX_F64_DT",
             "F64_DT",
             "COMPLEX_F32_DT",
             "F32_DT",
-            #"COMPLEX_F16_DT",
+            "COMPLEX_F16_DT",
             "F16_DT",
             #"COMPLEX_Q31_DT",
             "Q31_DT",
@@ -232,8 +232,8 @@ DATATYPES=[ #"COMPLEX_F64_DT",
             "Q15_DT",
             "Q7_DT"
            ]
-#DATATYPES=[ "COMPLEX_F32_DT"]
-#MODE = ["STATIC_TEST"]
+DATATYPES=[ "COMPLEX_Q31_DT"]
+MODE = ["STATIC_TEST"]
 
 all_tests = list(itertools.product(TESTS,DATATYPES,MODE))
 
