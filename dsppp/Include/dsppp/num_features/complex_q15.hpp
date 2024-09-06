@@ -35,13 +35,22 @@ struct number_traits<std::complex<Q15>>
    typedef std::complex<Q15> display_type;
 };
 
+template<>
+struct number_traits<std::complex<Q<33,30>>>
+{
+   static constexpr bool is_float = false;
+   static constexpr bool is_fixed = true;
+};
+
 /**
  * @brief      Vector features for Q15 when no vector architecture
  *
  * @tparam     arch  Current architecture
  */
 template<typename arch>
-struct vector_traits<std::complex<Q15>,arch,void> {
+struct vector_traits<std::complex<Q15>,arch,
+    typename std::enable_if<!std::is_base_of<Helium,arch>::value &&
+                            !std::is_base_of<Neon,arch>::value>::type> {
   //! Compute type
   typedef std::complex<Q15> type;
 

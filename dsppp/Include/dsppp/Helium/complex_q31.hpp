@@ -266,7 +266,7 @@ namespace inner {
         int32x4_t vec_acc_b = vqdmlsdhq(vuninitializedq_s32(),a.vb, b.vb);
         vec_acc_b = vqdmladhxq(vec_acc_b, a.vb, b.vb);
 
-        return(ComplexVector<int32x4_t>(vshrq(vec_acc_a,2),vshrq(vec_acc_b,2)));
+        return(ComplexVector<int32x4_t>(vec_acc_a,vec_acc_b));
     };
   
      __STATIC_FORCEINLINE ComplexVector<int32x4_t> vsub(const int32x4_t a,
@@ -285,7 +285,7 @@ namespace inner {
         int32x4_t vec_acc_a = vqdmlsdhq(vuninitializedq_s32(),a.va, b.va);
         vec_acc_a = vqdmladhxq(vec_acc_a, a.va, b.va);
 
-        return(HalfComplexVector<int32x4_t>(vshrq(vec_acc_a,2)));
+        return(HalfComplexVector<int32x4_t>(vec_acc_a));
     };
 
     __STATIC_FORCEINLINE ComplexVector<int32x4_t> vmul(const ComplexVector<int32x4_t> a,
@@ -299,7 +299,7 @@ namespace inner {
         int32x4_t vec_acc_b = vqdmlsdhq(vuninitializedq_s32(),a.vb, vecB);
         vec_acc_b = vqdmladhxq(vec_acc_b, a.vb, vecB);
 
-        return(ComplexVector<int32x4_t>(vshrq(vec_acc_a,2),vshrq(vec_acc_b,2)));
+        return(ComplexVector<int32x4_t>(vec_acc_a,vec_acc_b));
     };
 
     __STATIC_FORCEINLINE ComplexVector<int32x4_t> vmul(const int32x4_t &a,
@@ -346,7 +346,7 @@ namespace inner {
         int32x4_t vec_acc_b = vqdmlsdhq(vuninitializedq_s32(),vecA, b.vb);
         vec_acc_b = vqdmladhxq(vec_acc_b, vecA, b.vb);
 
-        return(ComplexVector<int32x4_t>(vshrq(vec_acc_a,2),vshrq(vec_acc_b,2)));
+        return(ComplexVector<int32x4_t>(vec_acc_a,vec_acc_b));
     };
 
     __STATIC_FORCEINLINE ComplexVector<int32x4_t> vmul(const std::complex<Q31> &a,

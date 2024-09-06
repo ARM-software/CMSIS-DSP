@@ -40,6 +40,13 @@ struct number_traits<std::complex<Q7>>
    typedef std::complex<Q7> display_type;
 };
 
+template<>
+struct number_traits<std::complex<Q<17,14>>>
+{
+   static constexpr bool is_float = false;
+   static constexpr bool is_fixed = true;
+};
+
 /**
  * @brief      Vector descrition when no vector architecture
  *

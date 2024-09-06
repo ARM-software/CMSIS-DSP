@@ -606,6 +606,33 @@ void cmsisdsp_dot_expr(const float16_t* a,
    arm_mult_f16(c,d,tmp2,l);
    arm_dot_prod_f16(tmp1,tmp2,l,&r);
 };
+
+void cmsisdsp_dot_expr(const std::complex<float16_t>* a, 
+                       const std::complex<float16_t>* b, 
+                       const std::complex<float16_t>* c, 
+                       const std::complex<float16_t>* d, 
+                       std::complex<float16_t>* tmp1, 
+                       std::complex<float16_t>* tmp2, 
+                       const float16_t scale,
+                       std::complex<float16_t> &r, 
+                       uint32_t l)
+{
+   arm_add_f16((const float16_t*)(a),
+               (const float16_t*)(b),
+               (float16_t*)tmp1,2*l);
+   arm_scale_f16((const float16_t*)(tmp1),
+                 scale,
+                 (float16_t*)(tmp1),2*l);
+   arm_cmplx_mult_cmplx_f16((const float16_t*)(c),
+                            (const float16_t*)(d),
+                            (float16_t*)(tmp2),l);
+   arm_cmplx_conj_f16((const float16_t*)(tmp2),
+                      (float16_t*)(tmp2),l);
+   float16_t re,im;
+   arm_cmplx_dot_prod_f16((const float16_t*)(tmp1),
+                          (const float16_t*)(tmp2),l,&re,&im);
+   r = std::complex<float16_t>(re,im);
+};
 #endif
 
 void cmsisdsp_fir(const arm_fir_instance_f32 * S,
@@ -692,6 +719,34 @@ void cmsisdsp_dot_expr(const Q15* a,
                     reinterpret_cast<q15_t*>(tmp2),l,&r.v);
 };
 
+void cmsisdsp_dot_expr(const std::complex<Q15>* a, 
+                       const std::complex<Q15>* b, 
+                       const std::complex<Q15>* c, 
+                       const std::complex<Q15>* d, 
+                       std::complex<Q15>* tmp1, 
+                       std::complex<Q15>* tmp2,
+                       const Q15 scale, 
+                       std::complex<Q<33,30>> &r, 
+                       uint32_t l)
+{
+   arm_add_q15(reinterpret_cast<const q15_t*>(a),
+               reinterpret_cast<const q15_t*>(b),
+               reinterpret_cast<q15_t*>(tmp1),2*l);
+   arm_scale_q15(reinterpret_cast<q15_t*>(tmp1),scale.v,0,
+                 reinterpret_cast<q15_t*>(tmp1),2*l);
+   arm_cmplx_mult_cmplx_q15(reinterpret_cast<const q15_t*>(c),
+               reinterpret_cast<const q15_t*>(d),
+               reinterpret_cast<q15_t*>(tmp2),l);
+   arm_cmplx_conj_q15(reinterpret_cast<const q15_t*>(tmp2),
+                      reinterpret_cast<q15_t*>(tmp2),l);
+   arm_shift_q15(reinterpret_cast<q15_t*>(tmp2),2,
+                 reinterpret_cast<q15_t*>(tmp2),2*l);
+   int32_t re,im;
+   arm_cmplx_dot_prod_q15(reinterpret_cast<q15_t*>(tmp1),
+                    reinterpret_cast<q15_t*>(tmp2),l,&re,&im);
+   r = std::complex<Q<33,30>>(Q<33,30>(re),Q<33,30>(im));
+};
+
 void cmsisdsp_dot_expr(const Q31* a, 
                        const Q31* b, 
                        const Q31* c, 
@@ -712,6 +767,39 @@ void cmsisdsp_dot_expr(const Q31* a,
                reinterpret_cast<q31_t*>(tmp2),l);
    arm_dot_prod_q31(reinterpret_cast<q31_t*>(tmp1),
                     reinterpret_cast<q31_t*>(tmp2),l,&r.v);
+};
+
+void cmsisdsp_dot_expr(const std::complex<Q31>* a, 
+                       const std::complex<Q31>* b, 
+                       const std::complex<Q31>* c, 
+                       const std::complex<Q31>* d, 
+                       std::complex<Q31>* tmp1, 
+                       std::complex<Q31>* tmp2,
+                       const Q31 scale, 
+                       std::complex<Q<15,48>> &r, 
+                       uint32_t l)
+{
+   
+   arm_add_q31(reinterpret_cast<const q31_t*>(a),
+               reinterpret_cast<const q31_t*>(b),
+               reinterpret_cast<q31_t*>(tmp1),2*l);
+   arm_scale_q31(reinterpret_cast<q31_t*>(tmp1),scale.v,0,
+                 reinterpret_cast<q31_t*>(tmp1),2*l);
+   arm_cmplx_mult_cmplx_q31(reinterpret_cast<const q31_t*>(c),
+               reinterpret_cast<const q31_t*>(d),
+               reinterpret_cast<q31_t*>(tmp2),l);
+   arm_cmplx_conj_q31(reinterpret_cast<const q31_t*>(tmp2),
+                      reinterpret_cast<q31_t*>(tmp2),l);
+   arm_shift_q31(reinterpret_cast<const q31_t*>(tmp2),2,
+                 reinterpret_cast<q31_t*>(tmp2),2*l);
+   
+   
+
+   int64_t re,im;
+   arm_cmplx_dot_prod_q31(reinterpret_cast<q31_t*>(tmp1),
+                    reinterpret_cast<q31_t*>(tmp2),l,&re,&im);
+   
+   r = std::complex<Q<15,48>>(Q<15,48>(re),Q<15,48>(im));
 };
 
 void cmsisdsp_mat_add(const std::complex<float32_t>* a, 

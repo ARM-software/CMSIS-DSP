@@ -117,6 +117,24 @@ struct ErrThreshold
    constexpr static float relerr_qr = 0;
    constexpr static float abserr_inv = 0;
    constexpr static float relerr_inv = 0;
+
+   constexpr static uint32_t fixerr = 0;
+};
+
+template<>
+struct ErrThreshold<std::complex<Q31>>
+{
+   constexpr static float abserr = 0;
+   constexpr static float relerr = 0;
+   constexpr static uint32_t fixerr = 15;
+};
+
+template<>
+struct ErrThreshold<std::complex<Q15>>
+{
+   constexpr static float abserr = 0;
+   constexpr static float relerr = 0;
+   constexpr static uint32_t fixerr = 8;
 };
 
 // Should be more accurate than F32 but right know
@@ -824,10 +842,20 @@ void testview()
    //std::cout<<resb;
    //std::cout<<cmsis_res;
 
-   if (!validate(resb,cmsis_res,
-       ErrThreshold<T>::abserr,ErrThreshold<T>::relerr))
+   if constexpr (number_traits<T>::is_float)
    {
-      printf("sub matrix failed \r\n");
+      if (!validate(resb,cmsis_res,
+          ErrThreshold<T>::abserr,ErrThreshold<T>::relerr))
+      {
+         printf("sub matrix failed \r\n");
+      } 
+   }
+   else 
+   {
+      if (!validate(resb,cmsis_res,ErrThreshold<T>::fixerr))
+      {
+         printf("sub matrix failed \r\n");
+      } 
    }
 
    std::cout << "=====\r\n";
@@ -1011,11 +1039,21 @@ void testcomplicatedmatvec()
 
 
    //std::cout << cmsis_res;
-   
-   if (!validate(res.const_ptr(),cmsis_res.const_ptr(),R,
-       ErrThreshold<T>::abserr,ErrThreshold<T>::relerr))
+   if constexpr (number_traits<T>::is_float)
    {
-      printf("matrix times vector expression failed \r\n");
+      if (!validate(res.const_ptr(),cmsis_res.const_ptr(),R,
+          ErrThreshold<T>::abserr,ErrThreshold<T>::relerr))
+      {
+         printf("matrix times vector expression failed \r\n");
+      }
+   }
+   else 
+   {
+      if (!validate(res.const_ptr(),cmsis_res.const_ptr(),R,
+          ErrThreshold<T>::fixerr))
+      {
+         printf("matrix times vector expression failed \r\n");
+      }
    }
 
    std::cout << "=====\r\n";
@@ -1116,10 +1154,21 @@ void testmatmult()
   
    //std::cout << cmsis_res;
    
-   if (!validate(res,cmsis_res,
-       ErrThreshold<T>::abserr,ErrThreshold<T>::relerr))
+   if constexpr (number_traits<T>::is_float)
    {
-      printf("matrix times matrix expression failed \r\n");
+      if (!validate(res,cmsis_res,
+          ErrThreshold<T>::abserr,ErrThreshold<T>::relerr))
+      {
+         printf("matrix times matrix expression failed \r\n");
+      }
+   }
+   else
+   {
+      if (!validate(res,cmsis_res,
+          ErrThreshold<T>::fixerr))
+      {
+         printf("matrix times matrix expression failed \r\n");
+      }
    }
 
    std::cout << "=====\r\n";
@@ -1236,10 +1285,21 @@ void testmatmult_mixed()
   
    //std::cout << cmsis_res;
    
-   if (!validate(res,cmsis_res,
-       ErrThreshold<Res>::abserr,ErrThreshold<Res>::relerr))
+   if constexpr (number_traits<Res>::is_float)
    {
-      printf("matrix times matrix mixed expression failed \r\n");
+      if (!validate(res,cmsis_res,
+          ErrThreshold<Res>::abserr,ErrThreshold<Res>::relerr))
+      {
+         printf("matrix times matrix mixed expression failed \r\n");
+      }
+   }
+   else
+   {
+      if (!validate(res,cmsis_res,
+          ErrThreshold<Res>::fixerr))
+      {
+         printf("matrix times matrix mixed expression failed \r\n");
+      }
    }
 
    std::cout << "=====\r\n";
@@ -1340,11 +1400,21 @@ void testsubmatmult()
 
   
    //std::cout << cmsis_res;
-   
-   if (!validate(res.sub(Slice(0,R),Slice(0,C)),cmsis_res,
-       ErrThreshold<T>::abserr,ErrThreshold<T>::relerr))
+   if constexpr (number_traits<T>::is_float)
    {
-      printf("matrix times matrix expression failed \r\n");
+      if (!validate(res.sub(Slice(0,R),Slice(0,C)),cmsis_res,
+          ErrThreshold<T>::abserr,ErrThreshold<T>::relerr))
+      {
+         printf("matrix times matrix expression failed \r\n");
+      }
+   }
+   else 
+   {
+      if (!validate(res.sub(Slice(0,R),Slice(0,C)),cmsis_res,
+          ErrThreshold<T>::fixerr))
+      {
+         printf("matrix times matrix expression failed \r\n");
+      }
    }
 
 
@@ -1412,11 +1482,21 @@ void testmattranspose()
    STOP_CYCLE_MEASUREMENT;
 
    //std::cout << cmsis_res;
-   
-   if (!validate(res,cmsis_res,
-       ErrThreshold<T>::abserr,ErrThreshold<T>::relerr))
+   if constexpr (number_traits<T>::is_float)
    {
-      printf("matrix transpose failed \r\n");
+      if (!validate(res,cmsis_res,
+          ErrThreshold<T>::abserr,ErrThreshold<T>::relerr))
+      {
+         printf("matrix transpose failed \r\n");
+      }
+   }
+   else 
+   {
+      if (!validate(res,cmsis_res,
+          ErrThreshold<T>::fixerr))
+      {
+         printf("matrix transpose failed \r\n");
+      }
    }
 
 
@@ -2221,7 +2301,7 @@ void matrix_all_test()
 
 void matrix_test()
 {
-#if 1
+#if 0
    using T = std::complex<Q31>;
    //using T = Q31;
    constexpr int N = 4;

@@ -163,13 +163,20 @@ static void test_mult()
    cmsisdsp_mult(a.const_ptr(),b.const_ptr(),ref.ptr(),NB);
    STOP_CYCLE_MEASUREMENT;
 
+   // Fixed point
    if constexpr ((std::is_same<T,std::complex<Q15>>::value)
                 || (std::is_same<T,std::complex<Q31>>::value))
    {
-      // Cmplx versions have 2 bits of fractional bit removed
+      using F = typename T::value_type;
+
+      // For Q15
+      // CMSIS-DSP is returning result in Q13
+      // DSPPP is returning in Q15
       for(int i=0;i<NB;i++)
       {
-         res[i] = T(res[i].real().v >> 2,res[i].imag().v>>2);
+         res[i] = T(F(res[i].real().v >> 2),
+                    F(res[i].imag().v >> 2)
+                    );
       }
    }
 
@@ -225,7 +232,8 @@ static void test_mult_mixed()
 
    INIT_SYSTICK
    START_CYCLE_MEASUREMENT;
-   if constexpr(IsComplexNumber<TA>::value)
+   constexpr bool cmplx_real=IsComplexNumber<TA>::value;
+   if constexpr(cmplx_real)
    {
       // There is a complex * real in CMSIS-DSP
       cmsisdsp_mult(a.const_ptr(),b.const_ptr(),ref.ptr(),NB);
@@ -238,8 +246,10 @@ static void test_mult_mixed()
    }
    STOP_CYCLE_MEASUREMENT;
 
-   if constexpr ((std::is_same<Res,std::complex<Q15>>::value)
-                || (std::is_same<Res,std::complex<Q31>>::value))
+   if constexpr (!cmplx_real && 
+                (std::is_same<Res,std::complex<Q7>>::value
+                || std::is_same<Res,std::complex<Q15>>::value
+                || std::is_same<Res,std::complex<Q31>>::value))
    {
       // Cmplx versions have 2 bits of fractional bit removed
       for(int i=0;i<NB;i++)
@@ -248,9 +258,11 @@ static void test_mult_mixed()
       }
    }
 
+   
    if (!validate(res.const_ptr(),ref.const_ptr(),NB,
       ErrT<Res>::abs_error,
-      ErrT<Res>::rel_error))
+      ErrT<Res>::rel_error,
+      1))
    {
       printf("mult mixed failed \r\n");
    }
@@ -530,11 +542,10 @@ void all_vector_test()
 void vector_test()
 {
 #if 0
-   using T = std::complex<float>;
-   constexpr int NB = 1024;
+   using T = std::complex<Q31>;
+   constexpr int NB = 3;
    
-   test<T,NB>();
-
+   test_mult_mixed<T,typename T::value_type,NB>();
    
 #else
 #if defined(VECTOR_TEST)

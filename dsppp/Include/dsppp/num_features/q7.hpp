@@ -40,6 +40,13 @@ struct number_traits<Q7>
    typedef Q7 display_type;
 };
 
+template<>
+struct number_traits<Q<17,14>>
+{
+   static constexpr bool is_float = false;
+   static constexpr bool is_fixed = true;
+};
+
 /**
  * @brief      Vector descrition when no vector architecture
  *

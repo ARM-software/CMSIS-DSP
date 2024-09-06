@@ -19,6 +19,7 @@ struct ErrT
 {
     constexpr static float rel_error = 1.0e-6;
     constexpr static float abs_error = 1.0e-6;
+    constexpr static int32_t fixed_error = 0;
 };
 
 #if !defined(DISABLEFLOAT16)
@@ -37,6 +38,23 @@ struct ErrT<std::complex<float16_t>>
 };
 
 #endif 
+
+template<>
+struct ErrT<Q31>
+{
+    constexpr static float rel_error = 1.0e-6;
+    constexpr static float abs_error = 1.0e-6;
+    constexpr static int32_t fixed_error = 1;
+};
+
+template<>
+struct ErrT<std::complex<Q31>>
+{
+    constexpr static float rel_error = 1.0e-6;
+    constexpr static float abs_error = 1.0e-6;
+    constexpr static int32_t fixed_error = 1;
+};
+
 
 template<typename T>
 struct NameOfType;
@@ -582,6 +600,16 @@ extern void cmsisdsp_dot_expr(const float16_t* a,
                               const float16_t scale,
                               float16_t &r, 
                               uint32_t l);
+
+extern void cmsisdsp_dot_expr(const std::complex<float16_t>* a, 
+                              const std::complex<float16_t>* b, 
+                              const std::complex<float16_t>* c, 
+                              const std::complex<float16_t>* d, 
+                              std::complex<float16_t>* tmp1, 
+                              std::complex<float16_t>* tmp2, 
+                              const float16_t scale,
+                              std::complex<float16_t> &r, 
+                              uint32_t l);
 #endif
 
 extern void cmsisdsp_dot_expr(const Q7* a, 
@@ -594,6 +622,7 @@ extern void cmsisdsp_dot_expr(const Q7* a,
                               Q<17,14> &r, 
                               uint32_t l);
 
+
 extern void cmsisdsp_dot_expr(const Q15* a, 
                               const Q15* b, 
                               const Q15* c, 
@@ -604,6 +633,16 @@ extern void cmsisdsp_dot_expr(const Q15* a,
                               Q<33,30> &r, 
                               uint32_t l);
 
+extern void cmsisdsp_dot_expr(const std::complex<Q15>* a, 
+                              const std::complex<Q15>* b, 
+                              const std::complex<Q15>* c, 
+                              const std::complex<Q15>* d, 
+                              std::complex<Q15>* tmp1, 
+                              std::complex<Q15>* tmp2,
+                              const Q15 scale, 
+                              std::complex<Q<33,30>> &r, 
+                              uint32_t l);
+
 extern void cmsisdsp_dot_expr(const Q31* a, 
                               const Q31* b, 
                               const Q31* c, 
@@ -612,6 +651,16 @@ extern void cmsisdsp_dot_expr(const Q31* a,
                               Q31* tmp2,
                               const Q31 scale, 
                               Q<15,48> &r, 
+                              uint32_t l);
+
+extern void cmsisdsp_dot_expr(const std::complex<Q31>* a, 
+                              const std::complex<Q31>* b, 
+                              const std::complex<Q31>* c, 
+                              const std::complex<Q31>* d, 
+                              std::complex<Q31>* tmp1, 
+                              std::complex<Q31>* tmp2,
+                              const Q31 scale, 
+                              std::complex<Q<15,48>> &r, 
                               uint32_t l);
 
 extern void cmsisdsp_fir(const arm_fir_instance_f32 * S,

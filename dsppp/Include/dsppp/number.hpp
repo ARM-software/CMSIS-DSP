@@ -178,14 +178,14 @@ vmacc_p
 #include "num_features/complex_half.hpp"
 #include "num_features/half.hpp"
 
-#include "num_features/complex_q31.hpp"
 #include "num_features/q31.hpp"
+#include "num_features/complex_q31.hpp"
 
-#include "num_features/complex_q15.hpp"
 #include "num_features/q15.hpp"
+#include "num_features/complex_q15.hpp"
 
-#include "num_features/complex_q7.hpp"
 #include "num_features/q7.hpp"
+#include "num_features/complex_q7.hpp"
 
 
 // Specific for some architecture

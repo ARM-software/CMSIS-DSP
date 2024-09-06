@@ -36,6 +36,13 @@ struct number_traits<Q31>
    typedef Q31 display_type;
 };
 
+template<>
+struct number_traits<Q<15,48>>
+{
+   static constexpr bool is_float = false;
+   static constexpr bool is_fixed = true;
+   };
+
 /**
  * @brief      Vector features for Q31 when no vector instructions
  *

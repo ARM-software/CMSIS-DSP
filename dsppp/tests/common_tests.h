@@ -40,6 +40,20 @@ static float myabs(const std::complex<double> &a) {return (float)std::abs(a);};
 static float myabs(const std::complex<float> &a) {return (float)std::abs(a);};
 static float myabs(float a) {return (float)fabs(a);};
 
+template <int M, int F, bool S>
+static uint32_t fixabs(Q<M,F,S> qa,Q<M,F,S> qb){return (uint32_t)(llabs((int64_t)qa.v - (int64_t)qb.v));};
+
+template <int M, int F, bool S>
+static uint32_t fixabs(std::complex<Q<M,F,S>> qa,
+                       std::complex<Q<M,F,S>> qb)
+{
+   uint32_t dr,di;
+   dr = fixabs(qa.real(),qb.real());
+   di = fixabs(qa.imag(),qb.imag());
+   return(di > dr ? di : dr);
+};
+
+/*
 static int myabs(Q31 a) 
 {
    return _abs(a).v;
@@ -72,6 +86,7 @@ static int myabs(std::complex<Q7> a)
    int r = _abs(a.real()).v+_abs(a.imag()).v;
    return int(sqrt(1.0*r));
 };
+*/
 
 #if !defined(DISABLEFLOAT16)
 static float myabs(const std::complex<float16_t>& a) {return (float)std::abs(a);};
@@ -188,7 +203,17 @@ void init_array(Vector<std::complex<Q31>,L,A> &pDst,std::size_t nb)
 {
    for(std::size_t i=0;i<nb;i++)
    {
-      pDst[i] = std::complex<Q31>(Q31(i),Q31(i>>1));
+      pDst[i] = std::complex<Q31>(Q31(0x1ff*i),Q31((0x1ff*i)>>1));
+   }
+}
+
+template<int L,
+         template<int> typename A>
+void init_array(Vector<Q31,L,A> &pDst,std::size_t nb)
+{
+   for(std::size_t i=0;i<nb;i++)
+   {
+      pDst[i] = Q31(0x1ff*i);
    }
 }
 
@@ -198,7 +223,17 @@ void init_array(Vector<std::complex<Q15>,L,A> &pDst,std::size_t nb)
 {
    for(std::size_t i=0;i<nb;i++)
    {
-      pDst[i] = std::complex<Q15>(Q15(i),Q15(i>>1));
+      pDst[i] = std::complex<Q15>(Q15(i),Q15((i)>>1));
+   }
+}
+
+template<int L,
+         template<int> typename A>
+void init_array(Vector<Q15,L,A> &pDst,std::size_t nb)
+{
+   for(std::size_t i=0;i<nb;i++)
+   {
+      pDst[i] = Q15(i);
    }
 }
 
@@ -232,7 +267,12 @@ void init_array(Vector_Base<T> &pDst,std::size_t nb)
 
 template<typename T,
  typename std::enable_if<std::is_pointer<T>::value,bool>::type = true>
-bool validate(const T a, const T b, std::size_t nb,float abser = ABS_ERROR, float reler = REL_ERROR)
+bool validate(const T a, 
+              const T b, 
+              std::size_t nb,
+              float abser = ABS_ERROR, 
+              float reler = REL_ERROR,
+              uint32_t fixerr=0)
 {
    (void)abser;
    (void)reler;
@@ -250,9 +290,10 @@ bool validate(const T a, const T b, std::size_t nb,float abser = ABS_ERROR, floa
       }
       else
       {
-         if (a[i]!=b[i])
+         if (fixabs(a[i],b[i])>fixerr)
          {
             std::cout << "Error at:" << i << " ; res=" << (EA)a[i] << " ; ref=" << (EA)b[i] << "\r\n";
+            std::cout << "Err =" << fixabs(a[i],b[i]) << "\r\n";
             return(false);
          }
       }
@@ -265,7 +306,11 @@ template<typename TA,typename TB,
                         !HasMatrixIndexing<TA>::value &&
                         IsVector<TB>::value && 
                         !HasMatrixIndexing<TB>::value,bool>::type = true>
-bool validate(const TA &a, const TB &b,float abser = ABS_ERROR, float reler = REL_ERROR)
+bool validate(const TA &a, 
+              const TB &b,
+              float abser = ABS_ERROR, 
+              float reler = REL_ERROR, 
+              uint32_t fixerr = 0)
 {
    (void)abser;
    (void)reler;
@@ -284,9 +329,10 @@ bool validate(const TA &a, const TB &b,float abser = ABS_ERROR, float reler = RE
       }
       else 
       {
-         if (a[i]!=b[i])
+         if (fixabs(a[i],b[i])>fixerr)
          {
             std::cout << "Error at:" << i << " ; res=" << (EA)a[i] << " ; ref=" << (EB)b[i] << "\r\n";
+            std::cout << "Err =" << fixabs(a[i],b[i]) << "\r\n";
             return(false);
          }
       }
@@ -298,7 +344,11 @@ bool validate(const TA &a, const TB &b,float abser = ABS_ERROR, float reler = RE
 template<typename T,
  typename std::enable_if<!std::is_pointer<T>::value
  && !IsVector<T>::value && !HasMatrixIndexing<T>::value,bool>::type = true>
-bool validate(const T a, const T b,float abser = ABS_ERROR, float reler = REL_ERROR)
+bool validate(const T a, 
+              const T b,
+              float abser = ABS_ERROR, 
+              float reler = REL_ERROR,
+              uint32_t fixerr = 0)
 {
     (void)abser;
     (void)reler;
@@ -314,9 +364,10 @@ bool validate(const T a, const T b,float abser = ABS_ERROR, float reler = REL_ER
     }
     else 
     {
-        if (a != b )
+        if (fixabs(a,b)>fixerr)
         {
              std::cout << "Error : res=" << (T)a << " ; ref=" << (T)b << "\r\n";
+             std::cout << "Err =" << fixabs(a,b) << "\r\n";
              return(false);
         }
     } 
@@ -329,7 +380,10 @@ template<typename MA,typename MB,
          HasMatrixIndexing<MA>::value && 
          HasMatrixIndexing<MB>::value &&
          number_traits<typename ElementType<MA>::type>::is_float,bool>::type = true>
-bool validate(const MA& a, const MB& b,float abser = ABS_ERROR, float reler = REL_ERROR)
+bool validate(const MA& a, 
+              const MB& b,
+              float abser = ABS_ERROR, 
+              float reler = REL_ERROR)
 {
    using EA = typename Display<typename ElementType<MA>::type>::type;
    using EB = typename Display<typename ElementType<MB>::type>::type;
@@ -358,7 +412,10 @@ template<typename MA,typename MB,
          HasMatrixIndexing<MA>::value && 
          HasMatrixIndexing<MB>::value &&
          number_traits<typename ElementType<MA>::type>::is_float,bool>::type = true>
-bool validateLT(const MA& a, const MB& b,float abser = ABS_ERROR, float reler = REL_ERROR)
+bool validateLT(const MA& a, 
+                const MB& b,
+                float abser = ABS_ERROR, 
+                float reler = REL_ERROR)
 {
    using EA = typename Display<typename ElementType<MA>::type>::type;
    using EB = typename Display<typename ElementType<MB>::type>::type;
@@ -389,20 +446,20 @@ template<typename MA,typename MB,
          HasMatrixIndexing<MA>::value && 
          HasMatrixIndexing<MB>::value &&
          number_traits<typename ElementType<MA>::type>::is_fixed ,bool>::type = true>
-bool validate(const MA& a, const MB& b,float abser = ABS_ERROR, float reler = REL_ERROR)
+bool validate(const MA& a, 
+              const MB& b,
+              uint32_t fixerr = 0)
 {
-   (void)abser;
-   (void)reler;
    using EA = typename Display<typename ElementType<MA>::type>::type;
    using EB = typename Display<typename ElementType<MB>::type>::type;
    for(index_t row=0;row < a.rows() ; row++)
    {
       for(index_t col=0;col < a.columns() ; col++)
       {
-         if (a(row,col) != b(row,col))
+         if (fixabs(a(row,col),b(row,col))>fixerr)
          {
             std::cout << "Error at : (" << row << "," << col << ") ; res=" << (EA)a(row,col) << " ; ref=" << (EB)b(row,col) << "\r\n";
-            std::cout << "Error = " << myabs(a(row,col) - b(row,col)) << "\r\n";
+            std::cout << "Error = " << fixabs(a(row,col) ,b(row,col)) << "\r\n";
             return(false);
          }
       }
@@ -411,11 +468,21 @@ bool validate(const MA& a, const MB& b,float abser = ABS_ERROR, float reler = RE
 }
 
 template<>
-bool validate(const float32_t* a, const float32_t* b, std::size_t nb,float abser , float reler );
+bool validate(const float32_t* a, 
+              const float32_t* b, 
+              std::size_t nb,
+              float abser , 
+              float reler,
+              uint32_t );
 
 
 extern template
-bool validate<>(const float32_t* a, const float32_t* b, std::size_t nb,float abser , float reler );
+bool validate<>(const float32_t* a, 
+                const float32_t* b, 
+                std::size_t nb,
+                float abser , 
+                float reler, 
+                uint32_t );
 
 
 

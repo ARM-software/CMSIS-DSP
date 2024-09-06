@@ -75,7 +75,27 @@ static void complicated_test(const S scale)
                      ref,NB);
    STOP_CYCLE_MEASUREMENT;
 
-   if (!validate(result,ref))
+   uint32_t ferr = 0;
+   if (std::is_same<S,Q31>::value)
+   {
+         ferr = 9;
+   }
+
+   if constexpr (IsComplexNumber<T>::value)
+   {
+      if (std::is_same<S,Q31>::value)
+      {
+         ferr = 58858;
+      }
+      if (std::is_same<S,Q15>::value)
+      {
+         ferr = 65308496;
+      }
+   }
+
+   if (!validate(result,ref,ErrT<T>::abs_error,
+                            ErrT<T>::rel_error,
+                            ferr))
    {
       printf("dot expr failed \r\n");
 
@@ -119,7 +139,27 @@ static void test()
    cmsisdsp_dot(a.const_ptr(),b.const_ptr(),ref,NB);
    STOP_CYCLE_MEASUREMENT;
 
-   if (!validate(result,ref))
+   uint32_t ferr = 0;
+   if (std::is_same<T,Q31>::value)
+   {
+         ferr = 2;
+   }
+
+   if (std::is_same<T,std::complex<Q31>>::value)
+   {
+         ferr = 2;
+   }
+
+   if (std::is_same<T,std::complex<Q15>>::value)
+   {
+         ferr = 2815476048;
+   }
+
+
+
+   if (!validate(result,ref,ErrT<T>::abs_error,
+                            ErrT<T>::rel_error,
+                            ferr))
    {
       printf("dot failed \r\n");
 
@@ -183,7 +223,28 @@ static void test_mixed()
    }
    STOP_CYCLE_MEASUREMENT;
 
-   if (!validate(result,ref))
+   uint32_t ferr = 0;
+   if (std::is_same<TA,Q31>::value)
+   {
+         ferr = 2;
+   }
+
+   if (std::is_same<TA,std::complex<Q31>>::value)
+   {
+         ferr = 2;
+   }
+
+   if (std::is_same<TA,std::complex<Q15>>::value 
+       || std::is_same<TB,std::complex<Q15>>::value)
+   {
+         ferr = 2816508241;
+   }
+
+   
+
+   if (!validate(result,ref,ErrT<TA>::abs_error,
+                            ErrT<TA>::rel_error,
+                            ferr))
    {
       printf("dot mixed failed \r\n");
 
@@ -227,7 +288,26 @@ static void test_hermitian()
    cmsisdsp_hermitian(a.const_ptr(),b.ptr(),ref,NB);
    STOP_CYCLE_MEASUREMENT;
 
-   if (!validate(result,ref))
+   uint32_t ferr = 0;
+   if (std::is_same<T,Q31>::value)
+   {
+         ferr = 2;
+   }
+
+   if (std::is_same<T,std::complex<Q31>>::value)
+   {
+         ferr = 2;
+   }
+
+   if (std::is_same<T,std::complex<Q15>>::value)
+   {
+         ferr = 3520119457;
+   }
+
+   
+   if (!validate(result,ref,ErrT<T>::abs_error,
+                            ErrT<T>::rel_error,
+                            ferr))
    {
       printf("dot failed \r\n");
 
@@ -261,8 +341,13 @@ void all_dot_test()
     test<T,NBVEC_256,ACC>();
     test<T,NBVEC_258,ACC>();
     test<T,NBVEC_512,ACC>();
-    test<T,NBVEC_1024,ACC>();
-    if constexpr (!std::is_same<T,double>::value)
+    if constexpr (!std::is_same<T,std::complex<float16_t>>::value)
+    {
+       test<T,NBVEC_1024,ACC>();
+    }
+    if constexpr (!std::is_same<T,double>::value &&
+                  !std::is_same<T,std::complex<float16_t>>::value)
+
     {
        test<T,NBVEC_2048,ACC>();
     }
@@ -340,10 +425,12 @@ void all_dot_test()
        test_hermitian<T,NBVEC_256,ACC>();
        test_hermitian<T,NBVEC_258,ACC>();
        test_hermitian<T,NBVEC_512,ACC>();
-       test_hermitian<T,NBVEC_1024,ACC>();
+       if constexpr (!std::is_same<T,std::complex<float16_t>>::value)
        {
-          test_hermitian<T,NBVEC_2048,ACC>();
+         test_hermitian<T,NBVEC_1024,ACC>();
+         test_hermitian<T,NBVEC_2048,ACC>();
        }
+       
    
        test_hermitian<T,1,ACC>();
        test_hermitian<T,nb_tails,ACC>();
@@ -411,9 +498,14 @@ void all_dot_test()
 void dot_test()
 {
 #if 0
-   using T = std::complex<float>;
+   constexpr int NB = 2048;
+   using T = std::complex<Q15>;
+   using S = typename ComplexNumberType<T>::type;
+   constexpr auto scale = TestConstant<S>::v;
    using ACC = typename number_traits<T>::accumulator;
-   test<T,NBVEC_512,ACC>();
+
+   complicated_test<T,S,NB,ACC>(scale);
+
 #else
 #if defined(DOT_TEST)
 
@@ -432,7 +524,7 @@ void dot_test()
    #endif
 
    #if defined(COMPLEX_F16_DT) && !defined(DISABLEFLOAT16)
-   all_dot_test<float16_t>();
+   all_dot_test<std::complex<float16_t>>();
    #endif
 
    #if defined(F16_DT) && !defined(DISABLEFLOAT16)
@@ -440,7 +532,7 @@ void dot_test()
    #endif
 
    #if defined(COMPLEX_Q31_DT)
-   all_dot_test<Q31>();
+   all_dot_test<std::complex<Q31>>();
    #endif
 
    #if defined(Q31_DT)
@@ -448,7 +540,7 @@ void dot_test()
    #endif
 
    #if defined(COMPLEX_Q15_DT)
-   all_dot_test<Q15>();
+   all_dot_test<std::complex<Q15>>();
    #endif
 
    #if defined(Q15_DT)

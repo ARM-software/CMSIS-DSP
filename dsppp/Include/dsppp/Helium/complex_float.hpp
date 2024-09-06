@@ -100,7 +100,7 @@ namespace inner {
    */
   template<>
   struct vctpq<std::complex<float>> {
-    static uint32_t mk(uint32_t v)
+    static mve_pred16_t mk(uint32_t v)
     {
        if (v>2)
        {

@@ -9,9 +9,9 @@
 
 
 #define MATRIX_TEST
-#define COMPLEX_Q31_DT
-#define STATIC_TEST
-#define SUBTEST1
+#define Q7_DT
+#define DYNAMIC_TEST
+#define SUBTEST20
 
 #endif
 
