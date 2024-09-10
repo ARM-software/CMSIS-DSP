@@ -2453,8 +2453,8 @@ operator*(const complex<arm_cmsis_dsp::Q<M,F,S>>& __z, const complex<arm_cmsis_d
 
   arm_cmsis_dsp::Q<M,F,S> re,im;
 
-  re = saturate(toFrac<F>(mult(__a,__c) - mult(__b,__d)));
-  im = saturate(toFrac<F>(mult(__a,__d) + mult(__b,__c)));
+  re = arm_cmsis_dsp::saturate(arm_cmsis_dsp::toFrac<F>(arm_cmsis_dsp::mult(__a,__c) - arm_cmsis_dsp::mult(__b,__d)));
+  im = arm_cmsis_dsp::saturate(arm_cmsis_dsp::toFrac<F>(arm_cmsis_dsp::mult(__a,__d) + arm_cmsis_dsp::mult(__b,__c)));
 
   return(complex<arm_cmsis_dsp::Q<M,F,S>>(re,im));
 };
@@ -2469,8 +2469,8 @@ operator*(const complex<arm_cmsis_dsp::Q31>& __z, const complex<arm_cmsis_dsp::Q
 
   arm_cmsis_dsp::Q31::wider_type re{},im{};
 
-  re = toFrac<31>(mult(__a,__c) - mult(__b,__d)).v;
-  im = toFrac<31>(mult(__a,__d) + mult(__b,__c)).v;
+  re = arm_cmsis_dsp::toFrac<31>(arm_cmsis_dsp::mult(__a,__c) - arm_cmsis_dsp::mult(__b,__d)).v;
+  im = arm_cmsis_dsp::toFrac<31>(arm_cmsis_dsp::mult(__a,__d) + arm_cmsis_dsp::mult(__b,__c)).v;
 
   return(complex<arm_cmsis_dsp::Q31>(re,im));
 };
