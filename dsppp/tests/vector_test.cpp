@@ -180,9 +180,24 @@ static void test_mult()
       }
    }
 
+   uint32_t ferr = 0;
+
+   if constexpr (IsComplexNumber<T>::value)
+   {
+      if (std::is_same<typename T::value_type,Q31>::value)
+      {
+         ferr = 1;
+      }
+      if (std::is_same<typename T::value_type,Q15>::value)
+      {
+         ferr = 1;
+      }
+   }
+
    if (!validate(res.const_ptr(),ref.const_ptr(),NB,
       ErrT<T>::abs_error,
-      ErrT<T>::rel_error))
+      ErrT<T>::rel_error,
+      ferr))
    {
       printf("mult failed \r\n");
    }

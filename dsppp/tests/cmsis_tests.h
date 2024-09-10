@@ -22,6 +22,14 @@ struct ErrT
     constexpr static int32_t fixed_error = 0;
 };
 
+template<>
+struct ErrT<std::complex<float32_t>>
+{
+    constexpr static float rel_error = 2.0e-6;
+    constexpr static float abs_error = 1.0e-6;
+    constexpr static int32_t fixed_error = 0;
+};
+
 #if !defined(DISABLEFLOAT16)
 template<>
 struct ErrT<float16_t>

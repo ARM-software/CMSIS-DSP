@@ -20,10 +20,12 @@
 
 #define DSP_UNROLL 1
 
+// No vector instruction for complex number implementation
 template<typename T,typename DST,
 typename std::enable_if<has_vector_inst<DST>() &&
                         IsVector<DST>::value &&
-         compatible_element<DST,T>(),bool>::type = true>
+         compatible_element<DST,T>() &&
+         !is_complex<DST>(),bool>::type = true>
 inline void _Fill(DST &v,
                   const T val, 
                   vector_length_t l,
@@ -50,7 +52,8 @@ inline void _Fill(DST &v,
 template<typename T,typename DST,
 typename std::enable_if<has_vector_inst<DST>() &&
          must_use_matrix_idx<DST>() &&
-         SameElementType<DST,T>(),bool>::type = true>
+         SameElementType<DST,T>() &&
+         !is_complex<DST>(),bool>::type = true>
 inline void _Fill2D(DST &v,
                     const T val, 
                     const vector_length_t rows,
@@ -105,7 +108,9 @@ Evaluation : used when result is a vector
 */
 template<typename DA,typename DB,
 typename std::enable_if<has_vector_inst<DA>() &&
-                        vector_idx_pair<DA,DB>(),bool>::type = true>
+                        vector_idx_pair<DA,DB>() &&
+                        !is_complex<DA>() &&
+                        !is_complex<DB>(),bool>::type = true>
 inline void eval(DA &v,
                  const DB& other,
                  const vector_length_t l,
@@ -132,7 +137,9 @@ inline void eval(DA &v,
 
 template<typename DA,typename DB,
 typename std::enable_if<has_vector_inst<DA>() &&
-                        must_use_matrix_idx_pair<DA,DB>(),bool>::type = true>
+                        must_use_matrix_idx_pair<DA,DB>() &&
+                        !is_complex<DA>() &&
+                        !is_complex<DB>(),bool>::type = true>
 inline void eval2D(DA &v,
                    const DB& other,
                    const vector_length_t rows,
@@ -182,6 +189,8 @@ inline void eval2D(DA &v,
 
 template<typename DA,typename DB,
          typename std::enable_if<has_vector_inst<DA>() &&
+                                !is_complex<DA>() &&
+                                !is_complex<DB>() &&
                                 vector_idx_pair<DA,DB>(),bool>::type = true>
 inline DotResult<DotFieldResult<DA,DB>> _dot(const DA& a,
                                               const DB& b,
@@ -218,7 +227,9 @@ inline DotResult<DotFieldResult<DA,DB>> _dot(const DA& a,
 
 template<typename DA,typename DB,
          typename std::enable_if<has_vector_inst<DA>() &&
-                                 vector_idx_pair<DA,DB>(),bool>::type = true>
+                                 vector_idx_pair<DA,DB>() &&
+                                 !is_complex<DA>() &&
+                                 !is_complex<DB>(),bool>::type = true>
 inline void _swap(DA&& a,
                   DB&& b,
                   const vector_length_t l,

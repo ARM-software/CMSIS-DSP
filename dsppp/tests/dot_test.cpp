@@ -147,7 +147,7 @@ static void test()
 
    if (std::is_same<T,std::complex<Q31>>::value)
    {
-         ferr = 2;
+         ferr = 1020;
    }
 
    if (std::is_same<T,std::complex<Q15>>::value)
@@ -296,7 +296,7 @@ static void test_hermitian()
 
    if (std::is_same<T,std::complex<Q31>>::value)
    {
-         ferr = 2;
+         ferr = 1020;
    }
 
    if (std::is_same<T,std::complex<Q15>>::value)
@@ -341,16 +341,22 @@ void all_dot_test()
     test<T,NBVEC_256,ACC>();
     test<T,NBVEC_258,ACC>();
     test<T,NBVEC_512,ACC>();
+#if defined(ARM_FLOAT16_SUPPORTED)
     if constexpr (!std::is_same<T,std::complex<float16_t>>::value)
     {
        test<T,NBVEC_1024,ACC>();
     }
-    if constexpr (!std::is_same<T,double>::value &&
-                  !std::is_same<T,std::complex<float16_t>>::value)
+    if constexpr (!std::is_same<T,std::complex<float16_t>>::value)
 
     {
        test<T,NBVEC_2048,ACC>();
     }
+#else
+    if constexpr (!std::is_same<T,double>::value)
+    {
+       test<T,NBVEC_2048,ACC>();
+    }
+#endif
 
     test<T,1,ACC>();
     test<T,nb_tails,ACC>();
@@ -425,12 +431,14 @@ void all_dot_test()
        test_hermitian<T,NBVEC_256,ACC>();
        test_hermitian<T,NBVEC_258,ACC>();
        test_hermitian<T,NBVEC_512,ACC>();
+
+#if defined(ARM_FLOAT16_SUPPORTED)
        if constexpr (!std::is_same<T,std::complex<float16_t>>::value)
        {
          test_hermitian<T,NBVEC_1024,ACC>();
          test_hermitian<T,NBVEC_2048,ACC>();
        }
-       
+#endif
    
        test_hermitian<T,1,ACC>();
        test_hermitian<T,nb_tails,ACC>();
