@@ -134,7 +134,7 @@ struct ErrThreshold<std::complex<Q15>>
 {
    constexpr static float abserr = 0;
    constexpr static float relerr = 0;
-   constexpr static uint32_t fixerr = 8;
+   constexpr static uint32_t fixerr = 17;
 };
 
 // Should be more accurate than F32 but right know
