@@ -155,7 +155,7 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga9f8543dd0b651ecd256678915c9427ac"><td class="memTemplParams" colspan="2">template&lt;typename LHS , typename RHS , typename std::enable_if&lt;(!<a class="el" href="group__FUSION.html#ga0e33c869f88a709094c90f6f9f0bcd5a">is_scalar</a>&lt; LHS &gt;()||!<a class="el" href="group__FUSION.html#ga0e33c869f88a709094c90f6f9f0bcd5a">is_scalar</a>&lt; RHS &gt;()) &amp;&amp;SameElementType&lt; LHS, RHS &gt;::value &amp;&amp;<a class="el" href="group__FUSION.html#ga0d7636d950aa0638b9a6532e4814b22d">same_static_length</a>&lt; LHS, RHS &gt;(), bool &gt;::type  = true&gt; </td></tr>
+<tr class="memitem:ga9f8543dd0b651ecd256678915c9427ac"><td class="memTemplParams" colspan="2">template&lt;typename LHS , typename RHS , typename std::enable_if&lt;(!<a class="el" href="group__FUSION.html#ga0e33c869f88a709094c90f6f9f0bcd5a">is_scalar</a>&lt; LHS &gt;()||!<a class="el" href="group__FUSION.html#ga0e33c869f88a709094c90f6f9f0bcd5a">is_scalar</a>&lt; RHS &gt;()) &amp;&amp;compatible_element&lt; LHS, RHS &gt;() &amp;&amp;<a class="el" href="group__FUSION.html#ga0d7636d950aa0638b9a6532e4814b22d">same_static_length</a>&lt; LHS, RHS &gt;(), bool &gt;::type  = true&gt; </td></tr>
 <tr class="memitem:ga9f8543dd0b651ecd256678915c9427ac"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__VECTOR.html#ga9f8543dd0b651ecd256678915c9427ac">operator+</a> (const LHS &amp;a, const RHS &amp;b)</td></tr>
 <tr class="memdesc:ga9f8543dd0b651ecd256678915c9427ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Addition operator for expressions.  <br /></td></tr>
 <tr class="separator:ga9f8543dd0b651ecd256678915c9427ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -174,7 +174,7 @@ Functions</h2></td></tr>
 <tr class="memitem:ga642296392b4581cbc3761d8d34625f12"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__VECTOR.html#ga642296392b4581cbc3761d8d34625f12">copy</a> (const LHS &amp;a)</td></tr>
 <tr class="memdesc:ga642296392b4581cbc3761d8d34625f12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Identity operator for expression.  <br /></td></tr>
 <tr class="separator:ga642296392b4581cbc3761d8d34625f12"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafb7a15c827548a566c90fda1a4bd0ed0"><td class="memTemplParams" colspan="2">template&lt;typename LHS , typename RHS , typename std::enable_if&lt;(!<a class="el" href="group__FUSION.html#ga0e33c869f88a709094c90f6f9f0bcd5a">is_scalar</a>&lt; LHS &gt;()||!<a class="el" href="group__FUSION.html#ga0e33c869f88a709094c90f6f9f0bcd5a">is_scalar</a>&lt; RHS &gt;()) &amp;&amp;SameElementType&lt; LHS, RHS &gt;::value &amp;&amp;<a class="el" href="group__FUSION.html#ga0d7636d950aa0638b9a6532e4814b22d">same_static_length</a>&lt; LHS, RHS &gt;(), bool &gt;::type  = true&gt; </td></tr>
+<tr class="memitem:gafb7a15c827548a566c90fda1a4bd0ed0"><td class="memTemplParams" colspan="2">template&lt;typename LHS , typename RHS , typename std::enable_if&lt;(!<a class="el" href="group__FUSION.html#ga0e33c869f88a709094c90f6f9f0bcd5a">is_scalar</a>&lt; LHS &gt;()||!<a class="el" href="group__FUSION.html#ga0e33c869f88a709094c90f6f9f0bcd5a">is_scalar</a>&lt; RHS &gt;()) &amp;&amp;compatible_element&lt; LHS, RHS &gt;() &amp;&amp;<a class="el" href="group__FUSION.html#ga0d7636d950aa0638b9a6532e4814b22d">same_static_length</a>&lt; LHS, RHS &gt;(), bool &gt;::type  = true&gt; </td></tr>
 <tr class="memitem:gafb7a15c827548a566c90fda1a4bd0ed0"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__VECTOR.html#gafb7a15c827548a566c90fda1a4bd0ed0">operator-</a> (const LHS &amp;a, const RHS &amp;b)</td></tr>
 <tr class="memdesc:gafb7a15c827548a566c90fda1a4bd0ed0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subtraction operator for expressions.  <br /></td></tr>
 <tr class="separator:gafb7a15c827548a566c90fda1a4bd0ed0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -185,7 +185,14 @@ Functions</h2></td></tr>
 </ul>
  <br /></td></tr>
 <tr class="separator:ga17bc7a3d066f076d89f5858e4bf6bcdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga598c716ed42fa423aa5ebdecdea243de"><td class="memTemplParams" colspan="2">template&lt;typename LHS , typename RHS , typename std::enable_if&lt;(!<a class="el" href="group__FUSION.html#ga0e33c869f88a709094c90f6f9f0bcd5a">is_scalar</a>&lt; LHS &gt;()||!<a class="el" href="group__FUSION.html#ga0e33c869f88a709094c90f6f9f0bcd5a">is_scalar</a>&lt; RHS &gt;()) &amp;&amp;SameElementType&lt; LHS, RHS &gt;::value &amp;&amp;<a class="el" href="group__FUSION.html#ga0d7636d950aa0638b9a6532e4814b22d">same_static_length</a>&lt; LHS, RHS &gt;(), bool &gt;::type  = true&gt; </td></tr>
+<tr class="memitem:ga8d88b4b24a63a8e76886bcbe9da8f239"><td class="memTemplParams" colspan="2">template&lt;typename LHS , typename std::enable_if&lt;!<a class="el" href="group__FUSION.html#ga0e33c869f88a709094c90f6f9f0bcd5a">is_scalar</a>&lt; LHS &gt;(), bool &gt;::type  = true&gt; </td></tr>
+<tr class="memitem:ga8d88b4b24a63a8e76886bcbe9da8f239"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__VECTOR.html#ga8d88b4b24a63a8e76886bcbe9da8f239">conjugate</a> (const LHS &amp;a)</td></tr>
+<tr class="memdesc:ga8d88b4b24a63a8e76886bcbe9da8f239"><td class="mdescLeft">&#160;</td><td class="mdescRight"><ul>
+<li>operator for expressions </li>
+</ul>
+ <br /></td></tr>
+<tr class="separator:ga8d88b4b24a63a8e76886bcbe9da8f239"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga598c716ed42fa423aa5ebdecdea243de"><td class="memTemplParams" colspan="2">template&lt;typename LHS , typename RHS , typename std::enable_if&lt;(!<a class="el" href="group__FUSION.html#ga0e33c869f88a709094c90f6f9f0bcd5a">is_scalar</a>&lt; LHS &gt;()||!<a class="el" href="group__FUSION.html#ga0e33c869f88a709094c90f6f9f0bcd5a">is_scalar</a>&lt; RHS &gt;()) &amp;&amp;compatible_element&lt; LHS, RHS &gt;() &amp;&amp;<a class="el" href="group__FUSION.html#ga0d7636d950aa0638b9a6532e4814b22d">same_static_length</a>&lt; LHS, RHS &gt;(), bool &gt;::type  = true&gt; </td></tr>
 <tr class="memitem:ga598c716ed42fa423aa5ebdecdea243de"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__VECTOR.html#ga598c716ed42fa423aa5ebdecdea243de">operator*</a> (const LHS &amp;a, const RHS &amp;b)</td></tr>
 <tr class="memdesc:ga598c716ed42fa423aa5ebdecdea243de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element wise multiplication operator for expressions.  <br /></td></tr>
 <tr class="separator:ga598c716ed42fa423aa5ebdecdea243de"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -253,12 +260,14 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>Vector</b> = typenam
 <tr class="memitem:aab12e58859127e63cc3b56177f9e8927"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__VECTOR.html#aab12e58859127e63cc3b56177f9e8927">vector_store</a> (const <a class="el" href="group__COMMON.html#ga6da8132ec1234c0d616142e3a246f858">index_t</a> i, const <a class="el" href="group__VECTOR.html#a308c13b7bc9aa9f3732d8e9af5e35894">Vector</a> val) const</td></tr>
 <tr class="memdesc:aab12e58859127e63cc3b56177f9e8927"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vector store at index i  <br /></td></tr>
 <tr class="separator:aab12e58859127e63cc3b56177f9e8927"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a43234ee88400c3276c152f7a5b42f57e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__VECTOR.html#a43234ee88400c3276c152f7a5b42f57e">vector_store_tail</a> (const <a class="el" href="group__COMMON.html#ga6da8132ec1234c0d616142e3a246f858">index_t</a> i, const <a class="el" href="group__COMMON.html#ga87032cf209a345081caeb3692af2174b">vector_length_t</a> remaining, const <a class="el" href="group__VECTOR.html#a308c13b7bc9aa9f3732d8e9af5e35894">Vector</a> val) const</td></tr>
-<tr class="memdesc:a43234ee88400c3276c152f7a5b42f57e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vector store at index i with predicated tail  <br /></td></tr>
-<tr class="separator:a43234ee88400c3276c152f7a5b42f57e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8c96bda91c2818ac500e643a08fd5430"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__VECTOR.html#a308c13b7bc9aa9f3732d8e9af5e35894">Vector</a> const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__VECTOR.html#a8c96bda91c2818ac500e643a08fd5430">vector_op_tail</a> (const <a class="el" href="group__COMMON.html#ga6da8132ec1234c0d616142e3a246f858">index_t</a> i, const <a class="el" href="group__COMMON.html#ga87032cf209a345081caeb3692af2174b">vector_length_t</a> remaining) const</td></tr>
-<tr class="memdesc:a8c96bda91c2818ac500e643a08fd5430"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vector operation at index i with predicated tail  <br /></td></tr>
-<tr class="separator:a8c96bda91c2818ac500e643a08fd5430"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42c936d12fb0533e78cbc8de18c1c897"><td class="memTemplParams" colspan="2">template&lt;typename T  = P, typename std::enable_if&lt; <a class="el" href="group__NUMBER.html#structarm__cmsis__dsp_1_1vector__traits">vector_traits</a>&lt; T &gt;<a class="el" href="group__FUSION.html#ga36c13882f29abdf00846e5437ee0057e">::has_predicate</a>, bool &gt;::type  = true&gt; </td></tr>
+<tr class="memitem:a42c936d12fb0533e78cbc8de18c1c897"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__VECTOR.html#a42c936d12fb0533e78cbc8de18c1c897">vector_store_tail</a> (const <a class="el" href="group__COMMON.html#ga6da8132ec1234c0d616142e3a246f858">index_t</a> i, const <a class="el" href="group__COMMON.html#ga87032cf209a345081caeb3692af2174b">vector_length_t</a> remaining, const <a class="el" href="group__VECTOR.html#a308c13b7bc9aa9f3732d8e9af5e35894">Vector</a> val) const</td></tr>
+<tr class="memdesc:a42c936d12fb0533e78cbc8de18c1c897"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vector store at index i with predicated tail  <br /></td></tr>
+<tr class="separator:a42c936d12fb0533e78cbc8de18c1c897"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46410f8cb42bb9876a6e6a4ff49591a3"><td class="memTemplParams" colspan="2">template&lt;typename T  = P, typename std::enable_if&lt; <a class="el" href="group__NUMBER.html#structarm__cmsis__dsp_1_1vector__traits">vector_traits</a>&lt; T &gt;<a class="el" href="group__FUSION.html#ga36c13882f29abdf00846e5437ee0057e">::has_predicate</a>, bool &gt;::type  = true&gt; </td></tr>
+<tr class="memitem:a46410f8cb42bb9876a6e6a4ff49591a3"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="group__VECTOR.html#a308c13b7bc9aa9f3732d8e9af5e35894">Vector</a> const&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__VECTOR.html#a46410f8cb42bb9876a6e6a4ff49591a3">vector_op_tail</a> (const <a class="el" href="group__COMMON.html#ga6da8132ec1234c0d616142e3a246f858">index_t</a> i, const <a class="el" href="group__COMMON.html#ga87032cf209a345081caeb3692af2174b">vector_length_t</a> remaining) const</td></tr>
+<tr class="memdesc:a46410f8cb42bb9876a6e6a4ff49591a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vector operation at index i with predicated tail  <br /></td></tr>
+<tr class="separator:a46410f8cb42bb9876a6e6a4ff49591a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a87d103b353abd756454367af97d98805"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__VECTOR.html#a308c13b7bc9aa9f3732d8e9af5e35894">Vector</a> const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__VECTOR.html#a87d103b353abd756454367af97d98805">vector_op</a> (const <a class="el" href="group__COMMON.html#ga6da8132ec1234c0d616142e3a246f858">index_t</a> i) const</td></tr>
 <tr class="memdesc:a87d103b353abd756454367af97d98805"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vector operation at index i  <br /></td></tr>
 <tr class="separator:a87d103b353abd756454367af97d98805"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -580,8 +589,8 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>Vector</b> = typenam
 
 </div>
 </div>
-<a id="a8c96bda91c2818ac500e643a08fd5430" name="a8c96bda91c2818ac500e643a08fd5430"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8c96bda91c2818ac500e643a08fd5430">&#9670;&#160;</a></span>vector_op_tail()</h2>
+<a id="a46410f8cb42bb9876a6e6a4ff49591a3" name="a46410f8cb42bb9876a6e6a4ff49591a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a46410f8cb42bb9876a6e6a4ff49591a3">&#9670;&#160;</a></span>vector_op_tail()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -679,8 +688,8 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>Vector</b> = typenam
 
 </div>
 </div>
-<a id="a43234ee88400c3276c152f7a5b42f57e" name="a43234ee88400c3276c152f7a5b42f57e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a43234ee88400c3276c152f7a5b42f57e">&#9670;&#160;</a></span>vector_store_tail()</h2>
+<a id="a42c936d12fb0533e78cbc8de18c1c897" name="a42c936d12fb0533e78cbc8de18c1c897"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42c936d12fb0533e78cbc8de18c1c897">&#9670;&#160;</a></span>vector_store_tail()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -867,12 +876,14 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>Vector</b> = typenam
 <tr class="memitem:aab12e58859127e63cc3b56177f9e8927 inherit pub_methods_group__VECTOR"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__VECTOR.html#aab12e58859127e63cc3b56177f9e8927">vector_store</a> (const <a class="el" href="group__COMMON.html#ga6da8132ec1234c0d616142e3a246f858">index_t</a> i, const <a class="el" href="group__VECTOR.html#a308c13b7bc9aa9f3732d8e9af5e35894">Vector</a> val) const</td></tr>
 <tr class="memdesc:aab12e58859127e63cc3b56177f9e8927 inherit pub_methods_group__VECTOR"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vector store at index i  <br /></td></tr>
 <tr class="separator:aab12e58859127e63cc3b56177f9e8927 inherit pub_methods_group__VECTOR"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a43234ee88400c3276c152f7a5b42f57e inherit pub_methods_group__VECTOR"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__VECTOR.html#a43234ee88400c3276c152f7a5b42f57e">vector_store_tail</a> (const <a class="el" href="group__COMMON.html#ga6da8132ec1234c0d616142e3a246f858">index_t</a> i, const <a class="el" href="group__COMMON.html#ga87032cf209a345081caeb3692af2174b">vector_length_t</a> remaining, const <a class="el" href="group__VECTOR.html#a308c13b7bc9aa9f3732d8e9af5e35894">Vector</a> val) const</td></tr>
-<tr class="memdesc:a43234ee88400c3276c152f7a5b42f57e inherit pub_methods_group__VECTOR"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vector store at index i with predicated tail  <br /></td></tr>
-<tr class="separator:a43234ee88400c3276c152f7a5b42f57e inherit pub_methods_group__VECTOR"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8c96bda91c2818ac500e643a08fd5430 inherit pub_methods_group__VECTOR"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__VECTOR.html#a308c13b7bc9aa9f3732d8e9af5e35894">Vector</a> const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__VECTOR.html#a8c96bda91c2818ac500e643a08fd5430">vector_op_tail</a> (const <a class="el" href="group__COMMON.html#ga6da8132ec1234c0d616142e3a246f858">index_t</a> i, const <a class="el" href="group__COMMON.html#ga87032cf209a345081caeb3692af2174b">vector_length_t</a> remaining) const</td></tr>
-<tr class="memdesc:a8c96bda91c2818ac500e643a08fd5430 inherit pub_methods_group__VECTOR"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vector operation at index i with predicated tail  <br /></td></tr>
-<tr class="separator:a8c96bda91c2818ac500e643a08fd5430 inherit pub_methods_group__VECTOR"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42c936d12fb0533e78cbc8de18c1c897 inherit pub_methods_group__VECTOR"><td class="memTemplParams" colspan="2">template&lt;typename T  = P, typename std::enable_if&lt; <a class="el" href="group__NUMBER.html#structarm__cmsis__dsp_1_1vector__traits">vector_traits</a>&lt; T &gt;<a class="el" href="group__FUSION.html#ga36c13882f29abdf00846e5437ee0057e">::has_predicate</a>, bool &gt;::type  = true&gt; </td></tr>
+<tr class="memitem:a42c936d12fb0533e78cbc8de18c1c897 inherit pub_methods_group__VECTOR"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__VECTOR.html#a42c936d12fb0533e78cbc8de18c1c897">vector_store_tail</a> (const <a class="el" href="group__COMMON.html#ga6da8132ec1234c0d616142e3a246f858">index_t</a> i, const <a class="el" href="group__COMMON.html#ga87032cf209a345081caeb3692af2174b">vector_length_t</a> remaining, const <a class="el" href="group__VECTOR.html#a308c13b7bc9aa9f3732d8e9af5e35894">Vector</a> val) const</td></tr>
+<tr class="memdesc:a42c936d12fb0533e78cbc8de18c1c897 inherit pub_methods_group__VECTOR"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vector store at index i with predicated tail  <br /></td></tr>
+<tr class="separator:a42c936d12fb0533e78cbc8de18c1c897 inherit pub_methods_group__VECTOR"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46410f8cb42bb9876a6e6a4ff49591a3 inherit pub_methods_group__VECTOR"><td class="memTemplParams" colspan="2">template&lt;typename T  = P, typename std::enable_if&lt; <a class="el" href="group__NUMBER.html#structarm__cmsis__dsp_1_1vector__traits">vector_traits</a>&lt; T &gt;<a class="el" href="group__FUSION.html#ga36c13882f29abdf00846e5437ee0057e">::has_predicate</a>, bool &gt;::type  = true&gt; </td></tr>
+<tr class="memitem:a46410f8cb42bb9876a6e6a4ff49591a3 inherit pub_methods_group__VECTOR"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="group__VECTOR.html#a308c13b7bc9aa9f3732d8e9af5e35894">Vector</a> const&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__VECTOR.html#a46410f8cb42bb9876a6e6a4ff49591a3">vector_op_tail</a> (const <a class="el" href="group__COMMON.html#ga6da8132ec1234c0d616142e3a246f858">index_t</a> i, const <a class="el" href="group__COMMON.html#ga87032cf209a345081caeb3692af2174b">vector_length_t</a> remaining) const</td></tr>
+<tr class="memdesc:a46410f8cb42bb9876a6e6a4ff49591a3 inherit pub_methods_group__VECTOR"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vector operation at index i with predicated tail  <br /></td></tr>
+<tr class="separator:a46410f8cb42bb9876a6e6a4ff49591a3 inherit pub_methods_group__VECTOR"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a87d103b353abd756454367af97d98805 inherit pub_methods_group__VECTOR"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__VECTOR.html#a308c13b7bc9aa9f3732d8e9af5e35894">Vector</a> const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__VECTOR.html#a87d103b353abd756454367af97d98805">vector_op</a> (const <a class="el" href="group__COMMON.html#ga6da8132ec1234c0d616142e3a246f858">index_t</a> i) const</td></tr>
 <tr class="memdesc:a87d103b353abd756454367af97d98805 inherit pub_methods_group__VECTOR"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vector operation at index i  <br /></td></tr>
 <tr class="separator:a87d103b353abd756454367af97d98805 inherit pub_methods_group__VECTOR"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1741,12 +1752,14 @@ struct arm_cmsis_dsp::Vector&lt; P, DYNAMIC, Allocator &gt;</div><p><a class="el
 <tr class="memitem:aab12e58859127e63cc3b56177f9e8927 inherit pub_methods_group__VECTOR"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__VECTOR.html#aab12e58859127e63cc3b56177f9e8927">vector_store</a> (const <a class="el" href="group__COMMON.html#ga6da8132ec1234c0d616142e3a246f858">index_t</a> i, const <a class="el" href="group__VECTOR.html#a308c13b7bc9aa9f3732d8e9af5e35894">Vector</a> val) const</td></tr>
 <tr class="memdesc:aab12e58859127e63cc3b56177f9e8927 inherit pub_methods_group__VECTOR"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vector store at index i  <br /></td></tr>
 <tr class="separator:aab12e58859127e63cc3b56177f9e8927 inherit pub_methods_group__VECTOR"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a43234ee88400c3276c152f7a5b42f57e inherit pub_methods_group__VECTOR"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__VECTOR.html#a43234ee88400c3276c152f7a5b42f57e">vector_store_tail</a> (const <a class="el" href="group__COMMON.html#ga6da8132ec1234c0d616142e3a246f858">index_t</a> i, const <a class="el" href="group__COMMON.html#ga87032cf209a345081caeb3692af2174b">vector_length_t</a> remaining, const <a class="el" href="group__VECTOR.html#a308c13b7bc9aa9f3732d8e9af5e35894">Vector</a> val) const</td></tr>
-<tr class="memdesc:a43234ee88400c3276c152f7a5b42f57e inherit pub_methods_group__VECTOR"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vector store at index i with predicated tail  <br /></td></tr>
-<tr class="separator:a43234ee88400c3276c152f7a5b42f57e inherit pub_methods_group__VECTOR"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8c96bda91c2818ac500e643a08fd5430 inherit pub_methods_group__VECTOR"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__VECTOR.html#a308c13b7bc9aa9f3732d8e9af5e35894">Vector</a> const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__VECTOR.html#a8c96bda91c2818ac500e643a08fd5430">vector_op_tail</a> (const <a class="el" href="group__COMMON.html#ga6da8132ec1234c0d616142e3a246f858">index_t</a> i, const <a class="el" href="group__COMMON.html#ga87032cf209a345081caeb3692af2174b">vector_length_t</a> remaining) const</td></tr>
-<tr class="memdesc:a8c96bda91c2818ac500e643a08fd5430 inherit pub_methods_group__VECTOR"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vector operation at index i with predicated tail  <br /></td></tr>
-<tr class="separator:a8c96bda91c2818ac500e643a08fd5430 inherit pub_methods_group__VECTOR"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42c936d12fb0533e78cbc8de18c1c897 inherit pub_methods_group__VECTOR"><td class="memTemplParams" colspan="2">template&lt;typename T  = P, typename std::enable_if&lt; <a class="el" href="group__NUMBER.html#structarm__cmsis__dsp_1_1vector__traits">vector_traits</a>&lt; T &gt;<a class="el" href="group__FUSION.html#ga36c13882f29abdf00846e5437ee0057e">::has_predicate</a>, bool &gt;::type  = true&gt; </td></tr>
+<tr class="memitem:a42c936d12fb0533e78cbc8de18c1c897 inherit pub_methods_group__VECTOR"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__VECTOR.html#a42c936d12fb0533e78cbc8de18c1c897">vector_store_tail</a> (const <a class="el" href="group__COMMON.html#ga6da8132ec1234c0d616142e3a246f858">index_t</a> i, const <a class="el" href="group__COMMON.html#ga87032cf209a345081caeb3692af2174b">vector_length_t</a> remaining, const <a class="el" href="group__VECTOR.html#a308c13b7bc9aa9f3732d8e9af5e35894">Vector</a> val) const</td></tr>
+<tr class="memdesc:a42c936d12fb0533e78cbc8de18c1c897 inherit pub_methods_group__VECTOR"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vector store at index i with predicated tail  <br /></td></tr>
+<tr class="separator:a42c936d12fb0533e78cbc8de18c1c897 inherit pub_methods_group__VECTOR"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46410f8cb42bb9876a6e6a4ff49591a3 inherit pub_methods_group__VECTOR"><td class="memTemplParams" colspan="2">template&lt;typename T  = P, typename std::enable_if&lt; <a class="el" href="group__NUMBER.html#structarm__cmsis__dsp_1_1vector__traits">vector_traits</a>&lt; T &gt;<a class="el" href="group__FUSION.html#ga36c13882f29abdf00846e5437ee0057e">::has_predicate</a>, bool &gt;::type  = true&gt; </td></tr>
+<tr class="memitem:a46410f8cb42bb9876a6e6a4ff49591a3 inherit pub_methods_group__VECTOR"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="group__VECTOR.html#a308c13b7bc9aa9f3732d8e9af5e35894">Vector</a> const&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__VECTOR.html#a46410f8cb42bb9876a6e6a4ff49591a3">vector_op_tail</a> (const <a class="el" href="group__COMMON.html#ga6da8132ec1234c0d616142e3a246f858">index_t</a> i, const <a class="el" href="group__COMMON.html#ga87032cf209a345081caeb3692af2174b">vector_length_t</a> remaining) const</td></tr>
+<tr class="memdesc:a46410f8cb42bb9876a6e6a4ff49591a3 inherit pub_methods_group__VECTOR"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vector operation at index i with predicated tail  <br /></td></tr>
+<tr class="separator:a46410f8cb42bb9876a6e6a4ff49591a3 inherit pub_methods_group__VECTOR"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a87d103b353abd756454367af97d98805 inherit pub_methods_group__VECTOR"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__VECTOR.html#a308c13b7bc9aa9f3732d8e9af5e35894">Vector</a> const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__VECTOR.html#a87d103b353abd756454367af97d98805">vector_op</a> (const <a class="el" href="group__COMMON.html#ga6da8132ec1234c0d616142e3a246f858">index_t</a> i) const</td></tr>
 <tr class="memdesc:a87d103b353abd756454367af97d98805 inherit pub_methods_group__VECTOR"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vector operation at index i  <br /></td></tr>
 <tr class="separator:a87d103b353abd756454367af97d98805 inherit pub_methods_group__VECTOR"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -5240,6 +5253,51 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>Vector</b> = typenam
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="ga8d88b4b24a63a8e76886bcbe9da8f239" name="ga8d88b4b24a63a8e76886bcbe9da8f239"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8d88b4b24a63a8e76886bcbe9da8f239">&#9670;&#160;</a></span>conjugate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto conjugate </td>
+          <td>(</td>
+          <td class="paramtype">const LHS &amp;&#160;</td>
+          <td class="paramname"><em>a</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><ul>
+<li>operator for expressions </li>
+</ul>
+</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">LHS</td><td>Left hand side datatype </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">a</td><td>Left hand side expression tree </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Expression representing the - vector</dd></dl>
+<p>-vector (including matrix) </p>
+
+</div>
+</div>
 <a id="ga642296392b4581cbc3761d8d34625f12" name="ga642296392b4581cbc3761d8d34625f12"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga642296392b4581cbc3761d8d34625f12">&#9670;&#160;</a></span>copy()</h2>
 

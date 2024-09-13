@@ -139,6 +139,9 @@ $(document).ready(function(){initNavTree('fusion_8hpp.html',''); initResizable()
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Data Structures</h2></td></tr>
+<tr class="memitem:structarm__cmsis__dsp_1_1FloatType"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__FUSION.html#structarm__cmsis__dsp_1_1FloatType">FloatType&lt; E &gt;</a></td></tr>
+<tr class="memdesc:structarm__cmsis__dsp_1_1FloatType"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if datatype are compatible and accept mixed arithmetic complex with real.  <a href="group__FUSION.html#structarm__cmsis__dsp_1_1FloatType">More...</a><br /></td></tr>
+<tr class="separator:structarm__cmsis__dsp_1_1FloatType"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structarm__cmsis__dsp_1_1__Expr"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__FUSION.html#structarm__cmsis__dsp_1_1__Expr">_Expr&lt; T &gt;</a></td></tr>
 <tr class="memdesc:structarm__cmsis__dsp_1_1__Expr"><td class="mdescLeft">&#160;</td><td class="mdescRight">Expression template.  <a href="group__FUSION.html#structarm__cmsis__dsp_1_1__Expr">More...</a><br /></td></tr>
 <tr class="separator:structarm__cmsis__dsp_1_1__Expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -160,6 +163,30 @@ Functions</h2></td></tr>
 <tr class="memitem:ga29fc0caca6b223e2b108fd18f696b276"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__FUSION.html#ga29fc0caca6b223e2b108fd18f696b276">has_vector_inst</a> ()</td></tr>
 <tr class="memdesc:ga29fc0caca6b223e2b108fd18f696b276"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines if vector datatype supports vector instruction on a current architecture.  <br /></td></tr>
 <tr class="separator:ga29fc0caca6b223e2b108fd18f696b276"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga36c13882f29abdf00846e5437ee0057e"><td class="memTemplParams" colspan="2">template&lt;typename DA &gt; </td></tr>
+<tr class="memitem:ga36c13882f29abdf00846e5437ee0057e"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__FUSION.html#ga36c13882f29abdf00846e5437ee0057e">has_predicate</a> ()</td></tr>
+<tr class="memdesc:ga36c13882f29abdf00846e5437ee0057e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if predicated instructions are supported.  <br /></td></tr>
+<tr class="separator:ga36c13882f29abdf00846e5437ee0057e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadaf89cc3b2046a99f2da37073ce60780"><td class="memTemplParams" colspan="2">template&lt;typename DA &gt; </td></tr>
+<tr class="memitem:gadaf89cc3b2046a99f2da37073ce60780"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__FUSION.html#gadaf89cc3b2046a99f2da37073ce60780">is_mixed</a> ()</td></tr>
+<tr class="memdesc:gadaf89cc3b2046a99f2da37073ce60780"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if expression contains a mix of complex / real operations.  <br /></td></tr>
+<tr class="separator:gadaf89cc3b2046a99f2da37073ce60780"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga38ba2ef20d9d28ef5e3ce091988aff60"><td class="memTemplParams" colspan="2">template&lt;typename A , typename B &gt; </td></tr>
+<tr class="memitem:ga38ba2ef20d9d28ef5e3ce091988aff60"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__FUSION.html#ga38ba2ef20d9d28ef5e3ce091988aff60">same_nb_lanes</a> ()</td></tr>
+<tr class="memdesc:ga38ba2ef20d9d28ef5e3ce091988aff60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check same number of lanes is used.  <br /></td></tr>
+<tr class="separator:ga38ba2ef20d9d28ef5e3ce091988aff60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1bd960439b8f3e0eeb5069d3d47457aa"><td class="memTemplParams" colspan="2">template&lt;typename A &gt; </td></tr>
+<tr class="memitem:ga1bd960439b8f3e0eeb5069d3d47457aa"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__FUSION.html#ga1bd960439b8f3e0eeb5069d3d47457aa">is_complex</a> ()</td></tr>
+<tr class="memdesc:ga1bd960439b8f3e0eeb5069d3d47457aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if vector / matrix contains complex numbers.  <br /></td></tr>
+<tr class="separator:ga1bd960439b8f3e0eeb5069d3d47457aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga623d69c13dcec6b1b10432550d31c184"><td class="memTemplParams" colspan="2">template&lt;typename A &gt; </td></tr>
+<tr class="memitem:ga623d69c13dcec6b1b10432550d31c184"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__FUSION.html#ga623d69c13dcec6b1b10432550d31c184">is_float</a> ()</td></tr>
+<tr class="memdesc:ga623d69c13dcec6b1b10432550d31c184"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines if datatype is a float (double, float, complex ...).  <br /></td></tr>
+<tr class="separator:ga623d69c13dcec6b1b10432550d31c184"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacea8d6d85638c8b0a14726eedee25128"><td class="memTemplParams" colspan="2">template&lt;typename A &gt; </td></tr>
+<tr class="memitem:gacea8d6d85638c8b0a14726eedee25128"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__FUSION.html#gacea8d6d85638c8b0a14726eedee25128">is_fixed</a> ()</td></tr>
+<tr class="memdesc:gacea8d6d85638c8b0a14726eedee25128"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines if datatype is fixed (Q31,Q15, complex&lt;Q15&gt; ...).  <br /></td></tr>
+<tr class="separator:gacea8d6d85638c8b0a14726eedee25128"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5cbfe80069a65eebf82f8b1b8e9ae86e"><td class="memTemplParams" colspan="2">template&lt;typename DA &gt; </td></tr>
 <tr class="memitem:ga5cbfe80069a65eebf82f8b1b8e9ae86e"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__FUSION.html#ga5cbfe80069a65eebf82f8b1b8e9ae86e">has_predicate_inst</a> ()</td></tr>
 <tr class="memdesc:ga5cbfe80069a65eebf82f8b1b8e9ae86e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines if datatype has predicated loop for current architecture.  <br /></td></tr>
@@ -174,7 +201,7 @@ Functions</h2></td></tr>
 <tr class="separator:ga5cde8a194003dbc98c300f76989492aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac46de68e57bd3e7c10bc879645583d6c"><td class="memTemplParams" colspan="2">template&lt;typename DA , typename DB &gt; </td></tr>
 <tr class="memitem:gac46de68e57bd3e7c10bc879645583d6c"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__FUSION.html#gac46de68e57bd3e7c10bc879645583d6c">vector_idx_pair</a> ()</td></tr>
-<tr class="memdesc:gac46de68e57bd3e7c10bc879645583d6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if both datatype have vector indexing are same scalar datatype.  <br /></td></tr>
+<tr class="memdesc:gac46de68e57bd3e7c10bc879645583d6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if both datatype have vector indexing and are same scalar datatype.  <br /></td></tr>
 <tr class="separator:gac46de68e57bd3e7c10bc879645583d6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad3bbb6d52dc030dd2adcf61f232689a7"><td class="memTemplParams" colspan="2">template&lt;typename DA &gt; </td></tr>
 <tr class="memitem:gad3bbb6d52dc030dd2adcf61f232689a7"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__FUSION.html#gad3bbb6d52dc030dd2adcf61f232689a7">is_only_vector</a> ()</td></tr>
@@ -192,10 +219,10 @@ Functions</h2></td></tr>
 <tr class="memitem:ga0d7636d950aa0638b9a6532e4814b22d"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__FUSION.html#ga0d7636d950aa0638b9a6532e4814b22d">same_static_length</a> ()</td></tr>
 <tr class="memdesc:ga0d7636d950aa0638b9a6532e4814b22d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check compatibility of length.  <br /></td></tr>
 <tr class="separator:ga0d7636d950aa0638b9a6532e4814b22d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga33724358c41f7bf00015fb1297232b31"><td class="memTemplParams" colspan="2">template&lt;typename VA , typename VB , typename std::enable_if&lt; vector_idx_pair&lt; VA, VB &gt;() &amp;&amp;is_only_vector&lt; VA &gt;() &amp;&amp;is_only_vector&lt; VB &gt;() &amp;&amp;(!IsDynamic&lt; VA &gt;::value||!IsDynamic&lt; VB &gt;::value), bool &gt;::type  = true&gt; </td></tr>
-<tr class="memitem:ga33724358c41f7bf00015fb1297232b31"><td class="memTemplItemLeft" align="right" valign="top">DotResult&lt; VA &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__FUSION.html#ga33724358c41f7bf00015fb1297232b31">dot</a> (const VA &amp;a, const VB &amp;b)</td></tr>
-<tr class="memdesc:ga33724358c41f7bf00015fb1297232b31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dot product.  <br /></td></tr>
-<tr class="separator:ga33724358c41f7bf00015fb1297232b31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafce937761484296b656518840d9e7b72"><td class="memTemplParams" colspan="2">template&lt;typename VA , typename VB , typename std::enable_if&lt; vector_idx_pair&lt; VA, VB &gt;() &amp;&amp;is_only_vector&lt; VA &gt;() &amp;&amp;is_only_vector&lt; VB &gt;() &amp;&amp;(!IsDynamic&lt; VA &gt;::value||!IsDynamic&lt; VB &gt;::value), bool &gt;::type  = true&gt; </td></tr>
+<tr class="memitem:gafce937761484296b656518840d9e7b72"><td class="memTemplItemLeft" align="right" valign="top">DotResult&lt; DotFieldResult&lt; VA, VB &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__FUSION.html#gafce937761484296b656518840d9e7b72">dot</a> (const VA &amp;a, const VB &amp;b)</td></tr>
+<tr class="memdesc:gafce937761484296b656518840d9e7b72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dot product.  <br /></td></tr>
+<tr class="separator:gafce937761484296b656518840d9e7b72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6075eb8ee82582f275e7e166f9293fb9"><td class="memTemplParams" colspan="2">template&lt;typename VA , typename VB , typename std::enable_if&lt; vector_idx_pair&lt; VA, VB &gt;() &amp;&amp;(!IsDynamic&lt; VA &gt;::value||!IsDynamic&lt; VB &gt;::value), bool &gt;::type  = true&gt; </td></tr>
 <tr class="memitem:ga6075eb8ee82582f275e7e166f9293fb9"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__FUSION.html#ga6075eb8ee82582f275e7e166f9293fb9">swap</a> (VA &amp;&amp;a, VB &amp;&amp;b)</td></tr>
 <tr class="memdesc:ga6075eb8ee82582f275e7e166f9293fb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swap vectors.  <br /></td></tr>

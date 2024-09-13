@@ -44,5 +44,6 @@ var dsppp_main =
       [ "To build", "dsppp_building.html#autotoc_md32", null ],
       [ "To run", "dsppp_building.html#autotoc_md33", null ]
     ] ],
-    [ "Guidelines", "dsppp_guidelines.html", null ]
+    [ "Guidelines", "dsppp_guidelines.html", null ],
+    [ "Complex numbers", "dsppp_complex.html", null ]
 ];

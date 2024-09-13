@@ -39,15 +39,16 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"group__Canberra.html",
-"group__FIXED.html#a2d6406bd24ea114ba6b092bd28c915cf",
-"group__GenericQ15Number.html#a5d7353ee1e142d2d816dd479c088bedf",
-"group__Matrix.html#a39ac7c6f90f1e1add6e5b4a2fc20f222",
-"group__Max.html#ga96f240086b586a9c724fb5285fd15570",
-"group__VECTOR.html#a69556ec665477f5fec2c155b58af059f",
-"group__genericTypes.html#ga956128b7a0d71442fb29cbcbecd71d71",
-"structarm__cfft__instance__q31.html#a9760c603af5d85652496dbffd63a8a2e",
-"structarm__lms__norm__instance__f32.html#a11402afa7c9b9dac4cb953fa386e74d2"
+"group__COMMON.html#ga87032cf209a345081caeb3692af2174b",
+"group__FIXED.html#ga1584849f3f51a524e17a48d8c0c4be0f",
+"group__FUSION.html#ga0d7636d950aa0638b9a6532e4814b22d",
+"group__IIR__Lattice.html#gaed3b0230bb77439dc902daa625985e04",
+"group__Matrix.html#aaa84d81a018b21a4612e48b89b621cf9",
+"group__QuatProd.html",
+"group__WindowBARTLETT.html#ga43616d15eb8b6e960d09063db316ed33",
+"group__q31__to__x.html#ga775f3a1996f00a8048c4b7acba2e0828",
+"structarm__dct4__instance__q15.html#a8ba8c9fa75542dac82553fee982ccd3e",
+"structarm__mfcc__instance__q31.html#a60390d32129e3b390a6b249223168b63"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

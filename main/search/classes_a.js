@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['user_5fallocator_5faligned_5fmalloc_0',['user_allocator_aligned_malloc',['../group__MEMORY.html#structarm__cmsis__dsp_1_1user__allocator__aligned__malloc',1,'arm_cmsis_dsp']]]
+  ['scalar_0',['Scalar',['../group__ARCH.html#classarm__cmsis__dsp_1_1Scalar',1,'arm_cmsis_dsp']]],
+  ['slice_1',['Slice',['../group__Matrix.html#structarm__cmsis__dsp_1_1Slice',1,'arm_cmsis_dsp']]]
 ];

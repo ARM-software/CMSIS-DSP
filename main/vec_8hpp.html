@@ -137,7 +137,6 @@ $(document).ready(function(){initNavTree('vec_8hpp.html',''); initResizable(); }
 <div class="textblock"><code>#include &lt;memory&gt;</code><br />
 <code>#include &lt;cstring&gt;</code><br />
 <code>#include &lt;algorithm&gt;</code><br />
-<code>#include &lt;iostream&gt;</code><br />
 <code>#include &quot;<a class="el" href="common_8hpp.html">common.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="arch_8hpp.html">arch.hpp</a>&quot;</code><br />
 <code>#include &lt;type_traits&gt;</code><br />
@@ -159,7 +158,7 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga9f8543dd0b651ecd256678915c9427ac"><td class="memTemplParams" colspan="2">template&lt;typename LHS , typename RHS , typename std::enable_if&lt;(!is_scalar&lt; LHS &gt;()||!is_scalar&lt; RHS &gt;()) &amp;&amp;SameElementType&lt; LHS, RHS &gt;::value &amp;&amp;same_static_length&lt; LHS, RHS &gt;(), bool &gt;::type  = true&gt; </td></tr>
+<tr class="memitem:ga9f8543dd0b651ecd256678915c9427ac"><td class="memTemplParams" colspan="2">template&lt;typename LHS , typename RHS , typename std::enable_if&lt;(!is_scalar&lt; LHS &gt;()||!is_scalar&lt; RHS &gt;()) &amp;&amp;compatible_element&lt; LHS, RHS &gt;() &amp;&amp;same_static_length&lt; LHS, RHS &gt;(), bool &gt;::type  = true&gt; </td></tr>
 <tr class="memitem:ga9f8543dd0b651ecd256678915c9427ac"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__VECTOR.html#ga9f8543dd0b651ecd256678915c9427ac">operator+</a> (const LHS &amp;a, const RHS &amp;b)</td></tr>
 <tr class="memdesc:ga9f8543dd0b651ecd256678915c9427ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Addition operator for expressions.  <br /></td></tr>
 <tr class="separator:ga9f8543dd0b651ecd256678915c9427ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -178,7 +177,7 @@ Functions</h2></td></tr>
 <tr class="memitem:ga642296392b4581cbc3761d8d34625f12"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__VECTOR.html#ga642296392b4581cbc3761d8d34625f12">copy</a> (const LHS &amp;a)</td></tr>
 <tr class="memdesc:ga642296392b4581cbc3761d8d34625f12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Identity operator for expression.  <br /></td></tr>
 <tr class="separator:ga642296392b4581cbc3761d8d34625f12"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafb7a15c827548a566c90fda1a4bd0ed0"><td class="memTemplParams" colspan="2">template&lt;typename LHS , typename RHS , typename std::enable_if&lt;(!is_scalar&lt; LHS &gt;()||!is_scalar&lt; RHS &gt;()) &amp;&amp;SameElementType&lt; LHS, RHS &gt;::value &amp;&amp;same_static_length&lt; LHS, RHS &gt;(), bool &gt;::type  = true&gt; </td></tr>
+<tr class="memitem:gafb7a15c827548a566c90fda1a4bd0ed0"><td class="memTemplParams" colspan="2">template&lt;typename LHS , typename RHS , typename std::enable_if&lt;(!is_scalar&lt; LHS &gt;()||!is_scalar&lt; RHS &gt;()) &amp;&amp;compatible_element&lt; LHS, RHS &gt;() &amp;&amp;same_static_length&lt; LHS, RHS &gt;(), bool &gt;::type  = true&gt; </td></tr>
 <tr class="memitem:gafb7a15c827548a566c90fda1a4bd0ed0"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__VECTOR.html#gafb7a15c827548a566c90fda1a4bd0ed0">operator-</a> (const LHS &amp;a, const RHS &amp;b)</td></tr>
 <tr class="memdesc:gafb7a15c827548a566c90fda1a4bd0ed0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subtraction operator for expressions.  <br /></td></tr>
 <tr class="separator:gafb7a15c827548a566c90fda1a4bd0ed0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -189,7 +188,14 @@ Functions</h2></td></tr>
 </ul>
  <br /></td></tr>
 <tr class="separator:ga17bc7a3d066f076d89f5858e4bf6bcdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga598c716ed42fa423aa5ebdecdea243de"><td class="memTemplParams" colspan="2">template&lt;typename LHS , typename RHS , typename std::enable_if&lt;(!is_scalar&lt; LHS &gt;()||!is_scalar&lt; RHS &gt;()) &amp;&amp;SameElementType&lt; LHS, RHS &gt;::value &amp;&amp;same_static_length&lt; LHS, RHS &gt;(), bool &gt;::type  = true&gt; </td></tr>
+<tr class="memitem:ga8d88b4b24a63a8e76886bcbe9da8f239"><td class="memTemplParams" colspan="2">template&lt;typename LHS , typename std::enable_if&lt;!is_scalar&lt; LHS &gt;(), bool &gt;::type  = true&gt; </td></tr>
+<tr class="memitem:ga8d88b4b24a63a8e76886bcbe9da8f239"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__VECTOR.html#ga8d88b4b24a63a8e76886bcbe9da8f239">conjugate</a> (const LHS &amp;a)</td></tr>
+<tr class="memdesc:ga8d88b4b24a63a8e76886bcbe9da8f239"><td class="mdescLeft">&#160;</td><td class="mdescRight"><ul>
+<li>operator for expressions </li>
+</ul>
+ <br /></td></tr>
+<tr class="separator:ga8d88b4b24a63a8e76886bcbe9da8f239"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga598c716ed42fa423aa5ebdecdea243de"><td class="memTemplParams" colspan="2">template&lt;typename LHS , typename RHS , typename std::enable_if&lt;(!is_scalar&lt; LHS &gt;()||!is_scalar&lt; RHS &gt;()) &amp;&amp;compatible_element&lt; LHS, RHS &gt;() &amp;&amp;same_static_length&lt; LHS, RHS &gt;(), bool &gt;::type  = true&gt; </td></tr>
 <tr class="memitem:ga598c716ed42fa423aa5ebdecdea243de"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__VECTOR.html#ga598c716ed42fa423aa5ebdecdea243de">operator*</a> (const LHS &amp;a, const RHS &amp;b)</td></tr>
 <tr class="memdesc:ga598c716ed42fa423aa5ebdecdea243de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element wise multiplication operator for expressions.  <br /></td></tr>
 <tr class="separator:ga598c716ed42fa423aa5ebdecdea243de"><td class="memSeparator" colspan="2">&#160;</td></tr>

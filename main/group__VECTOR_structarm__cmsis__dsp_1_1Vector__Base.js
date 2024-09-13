@@ -12,8 +12,8 @@ var group__VECTOR_structarm__cmsis__dsp_1_1Vector__Base =
     [ "ptr", "group__VECTOR.html#af12a57ecdc5aa7459bbe2f4e2b723a6c", null ],
     [ "ptr", "group__VECTOR.html#a3b54ceaeeebb31461d63a482309f46f7", null ],
     [ "vector_op", "group__VECTOR.html#a87d103b353abd756454367af97d98805", null ],
-    [ "vector_op_tail", "group__VECTOR.html#a8c96bda91c2818ac500e643a08fd5430", null ],
+    [ "vector_op_tail", "group__VECTOR.html#a46410f8cb42bb9876a6e6a4ff49591a3", null ],
     [ "vector_store", "group__VECTOR.html#aab12e58859127e63cc3b56177f9e8927", null ],
-    [ "vector_store_tail", "group__VECTOR.html#a43234ee88400c3276c152f7a5b42f57e", null ],
+    [ "vector_store_tail", "group__VECTOR.html#a42c936d12fb0533e78cbc8de18c1c897", null ],
     [ "operator<<", "group__VECTOR.html#a38679461ba64e2b1d915f057efcf8f08", null ]
 ];

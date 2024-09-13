@@ -9,12 +9,8 @@ var group__HeliumFloatNumber =
       [ "vector", "group__HeliumFloatNumber.html#a80c09e97407d5640a99667e3ea61d293", null ]
     ] ],
     [ "vctpq< float >", "group__HeliumFloatNumber.html#structinner_1_1vctpq_3_01float_01_4", null ],
-    [ "vload1_gen_stride< S >", "group__HeliumFloatNumber.html#structinner_1_1vload1__gen__stride", null ],
-    [ "vload1_gen_stride< 0, 1, 2, 3 >", "group__HeliumFloatNumber.html#structinner_1_1vload1__gen__stride_3_010_00_011_00_012_00_013_01_4", null ],
-    [ "vload1_gen_stride_z< S >", "group__HeliumFloatNumber.html#structinner_1_1vload1__gen__stride__z", null ],
-    [ "vload1_gen_stride_z< 0, 1, 2, 3 >", "group__HeliumFloatNumber.html#structinner_1_1vload1__gen__stride__z_3_010_00_011_00_012_00_013_01_4", null ],
-    [ "vstore1_gen_stride< S >", "group__HeliumFloatNumber.html#structinner_1_1vstore1__gen__stride", null ],
-    [ "vstore1_gen_stride< 0, 1, 2, 3 >", "group__HeliumFloatNumber.html#structinner_1_1vstore1__gen__stride_3_010_00_011_00_012_00_013_01_4", null ],
-    [ "vstore1_gen_stride_z< S >", "group__HeliumFloatNumber.html#structinner_1_1vstore1__gen__stride__z", null ],
-    [ "vstore1_gen_stride_z< 0, 1, 2, 3 >", "group__HeliumFloatNumber.html#structinner_1_1vstore1__gen__stride__z_3_010_00_011_00_012_00_013_01_4", null ]
+    [ "vload1_gen_stride< float32_t, 0, 1, 2, 3 >", "group__HeliumFloatNumber.html#structinner_1_1vload1__gen__stride_3_01float32__t_00_010_00_011_00_012_00_013_01_4", null ],
+    [ "vload1_gen_stride_z< float32_t, 0, 1, 2, 3 >", "group__HeliumFloatNumber.html#structinner_1_1vload1__gen__stride__z_3_01float32__t_00_010_00_011_00_012_00_013_01_4", null ],
+    [ "vstore1_gen_stride< float32_t, 0, 1, 2, 3 >", "group__HeliumFloatNumber.html#structinner_1_1vstore1__gen__stride_3_01float32__t_00_010_00_011_00_012_00_013_01_4", null ],
+    [ "vstore1_gen_stride_z< float32_t, 0, 1, 2, 3 >", "group__HeliumFloatNumber.html#structinner_1_1vstore1__gen__stride__z_3_01float32__t_00_010_00_011_00_012_00_013_01_4", null ]
 ];

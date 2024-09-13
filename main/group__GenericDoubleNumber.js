@@ -3,7 +3,8 @@ var group__GenericDoubleNumber =
     [ "inner", "namespaceinner.html", null ],
     [ "number_traits< double >", "group__GenericDoubleNumber.html#structnumber__traits_3_01double_01_4", [
       [ "accumulator", "group__GenericDoubleNumber.html#a0bbe27ede4e373cb8dbe97fae9ea9db0", null ],
-      [ "compute_type", "group__GenericDoubleNumber.html#aa6623381154dc583b47d77a531bc985f", null ]
+      [ "compute_type", "group__GenericDoubleNumber.html#aa6623381154dc583b47d77a531bc985f", null ],
+      [ "display_type", "group__GenericDoubleNumber.html#a062f06d3634a219afa279325c6b6c167", null ]
     ] ],
     [ "vector_traits< double, arch, void >", "group__GenericDoubleNumber.html#structvector__traits_3_01double_00_01arch_00_01void_01_4", [
       [ "predicate_t", "group__GenericDoubleNumber.html#a43936fffbd629b832c214366ab886489", null ],

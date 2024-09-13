@@ -3,7 +3,8 @@ var group__GenericQ31Number =
     [ "inner", "namespaceinner.html", null ],
     [ "number_traits< Q31 >", "group__GenericQ31Number.html#structnumber__traits_3_01Q31_01_4", [
       [ "accumulator", "group__GenericQ31Number.html#ad9fbed5d4f41babc7698af277ddff4ca", null ],
-      [ "compute_type", "group__GenericQ31Number.html#afc1144c389064f951c9d80b6d216eb86", null ]
+      [ "compute_type", "group__GenericQ31Number.html#afc1144c389064f951c9d80b6d216eb86", null ],
+      [ "display_type", "group__GenericQ31Number.html#a3cb3d6494bd19033b03a4a9f7c891000", null ]
     ] ],
     [ "vector_traits< Q31, arch, typename std::enable_if<!std::is_base_of< Helium, arch >::value &&!std::is_base_of< Neon, arch >::value >::type >", "group__GenericQ31Number.html#structvector__traits_3_01Q31_00_01arch_00_01typename_01std_1_1enable__if_3_9std_1_1is__base__of_ed6a72ce773710148e7beb817362a08f", [
       [ "predicate_t", "group__GenericQ31Number.html#a43936fffbd629b832c214366ab886489", null ],

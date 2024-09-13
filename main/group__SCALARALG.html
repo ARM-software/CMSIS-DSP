@@ -136,11 +136,11 @@ $(document).ready(function(){initNavTree('group__SCALARALG.html',''); initResiza
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaacfdbc65b4bc9eae30eae72788119c79"><td class="memTemplParams" colspan="2">template&lt;typename T , typename DST , typename std::enable_if&lt; IsVector&lt; DST &gt;::value &amp;&amp;SameElementType&lt; DST, T &gt;::value, bool &gt;::type  = true&gt; </td></tr>
+<tr class="memitem:gaacfdbc65b4bc9eae30eae72788119c79"><td class="memTemplParams" colspan="2">template&lt;typename T , typename DST , typename std::enable_if&lt; IsVector&lt; DST &gt;::value &amp;&amp;compatible_element&lt; DST, T &gt;(), bool &gt;::type  = true&gt; </td></tr>
 <tr class="memitem:gaacfdbc65b4bc9eae30eae72788119c79"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__SCALARALG.html#gaacfdbc65b4bc9eae30eae72788119c79">_Fill</a> (DST &amp;v, const T val, vector_length_t l, const Scalar *=nullptr)</td></tr>
 <tr class="memdesc:gaacfdbc65b4bc9eae30eae72788119c79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill evaluator for scalar architecture.  <br /></td></tr>
 <tr class="separator:gaacfdbc65b4bc9eae30eae72788119c79"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadcb70129a3f439ce785e0ffc2bbb79d0"><td class="memTemplParams" colspan="2">template&lt;typename T , typename DST , typename std::enable_if&lt; must_use_matrix_idx&lt; DST &gt;() &amp;&amp;SameElementType&lt; DST, T &gt;::value, bool &gt;::type  = true&gt; </td></tr>
+<tr class="memitem:gadcb70129a3f439ce785e0ffc2bbb79d0"><td class="memTemplParams" colspan="2">template&lt;typename T , typename DST , typename std::enable_if&lt; must_use_matrix_idx&lt; DST &gt;() &amp;&amp;compatible_element&lt; DST, T &gt;(), bool &gt;::type  = true&gt; </td></tr>
 <tr class="memitem:gadcb70129a3f439ce785e0ffc2bbb79d0"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__SCALARALG.html#gadcb70129a3f439ce785e0ffc2bbb79d0">_Fill2D</a> (DST &amp;v, const T val, const vector_length_t rows, const vector_length_t cols, const Scalar *=nullptr)</td></tr>
 <tr class="memdesc:gadcb70129a3f439ce785e0ffc2bbb79d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill2D evaluator for scalar architecture.  <br /></td></tr>
 <tr class="separator:gadcb70129a3f439ce785e0ffc2bbb79d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -152,10 +152,10 @@ Functions</h2></td></tr>
 <tr class="memitem:ga1369c8147f6a28ae003ee10844596337"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__SCALARALG.html#ga1369c8147f6a28ae003ee10844596337">eval2D</a> (DA &amp;v, const DB &amp;other, const vector_length_t rows, const vector_length_t cols, const Scalar *=nullptr)</td></tr>
 <tr class="memdesc:ga1369c8147f6a28ae003ee10844596337"><td class="mdescLeft">&#160;</td><td class="mdescRight">2D expression evaluator for scalar archiecture  <br /></td></tr>
 <tr class="separator:ga1369c8147f6a28ae003ee10844596337"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5cf13c3f71d165f946688b084ec87a6a"><td class="memTemplParams" colspan="2">template&lt;typename DA , typename DB , typename std::enable_if&lt; vector_idx_pair&lt; DA, DB &gt;(), bool &gt;::type  = true&gt; </td></tr>
-<tr class="memitem:ga5cf13c3f71d165f946688b084ec87a6a"><td class="memTemplItemLeft" align="right" valign="top">DotResult&lt; DA &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__SCALARALG.html#ga5cf13c3f71d165f946688b084ec87a6a">_dot</a> (const DA &amp;a, const DB &amp;b, const vector_length_t l, const Scalar *=nullptr)</td></tr>
-<tr class="memdesc:ga5cf13c3f71d165f946688b084ec87a6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dot product evaluator for scalar architectuire.  <br /></td></tr>
-<tr class="separator:ga5cf13c3f71d165f946688b084ec87a6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaab556ffb9401d98c72042cac1b9b1ea0"><td class="memTemplParams" colspan="2">template&lt;typename DA , typename DB , typename std::enable_if&lt; vector_idx_pair&lt; DA, DB &gt;(), bool &gt;::type  = true&gt; </td></tr>
+<tr class="memitem:gaab556ffb9401d98c72042cac1b9b1ea0"><td class="memTemplItemLeft" align="right" valign="top">DotResult&lt; DotFieldResult&lt; DA, DB &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__SCALARALG.html#gaab556ffb9401d98c72042cac1b9b1ea0">_dot</a> (const DA &amp;a, const DB &amp;b, const vector_length_t l, const Scalar *=nullptr)</td></tr>
+<tr class="memdesc:gaab556ffb9401d98c72042cac1b9b1ea0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dot product evaluator for scalar architectuire.  <br /></td></tr>
+<tr class="separator:gaab556ffb9401d98c72042cac1b9b1ea0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaeb8f0fc557ca32b051250003e56dba85"><td class="memTemplParams" colspan="2">template&lt;typename DA , typename DB , typename std::enable_if&lt; vector_idx_pair&lt; DA, DB &gt;(), bool &gt;::type  = true&gt; </td></tr>
 <tr class="memitem:gaeb8f0fc557ca32b051250003e56dba85"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__SCALARALG.html#gaeb8f0fc557ca32b051250003e56dba85">_swap</a> (DA &amp;&amp;a, DB &amp;&amp;b, const vector_length_t l, const Scalar *=nullptr)</td></tr>
 <tr class="memdesc:gaeb8f0fc557ca32b051250003e56dba85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swap evaluator for scalar architecture.  <br /></td></tr>
@@ -172,7 +172,7 @@ Functions</h2></td></tr>
 <tr class="memitem:ga4e6fec1c099138a96cf3f56e68b50880"><td class="memTemplItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__SCALARALG.html#ga4e6fec1c099138a96cf3f56e68b50880">_dot_m_m</a> (const MA &amp;pSrcA, const MB &amp;pSrcB, RES &amp;&amp;pDst, const TMP &amp;BT, const Scalar *=nullptr)</td></tr>
 <tr class="memdesc:ga4e6fec1c099138a96cf3f56e68b50880"><td class="mdescLeft">&#160;</td><td class="mdescRight">Matrix times matrix for scalar architecture and fixed point.  <br /></td></tr>
 <tr class="separator:ga4e6fec1c099138a96cf3f56e68b50880"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadcf9c4800720cb2ffba648426eea4411"><td class="memTemplParams" colspan="2">template&lt;typename MA , typename MB , typename RES , typename std::enable_if&lt; number_traits&lt; typename traits&lt; MA &gt;::Scalar &gt;::is_float, bool &gt;::type  = true&gt; </td></tr>
+<tr class="memitem:gadcf9c4800720cb2ffba648426eea4411"><td class="memTemplParams" colspan="2">template&lt;typename MA , typename MB , typename RES , typename std::enable_if&lt; is_float&lt; MA &gt;(), bool &gt;::type  = true&gt; </td></tr>
 <tr class="memitem:gadcf9c4800720cb2ffba648426eea4411"><td class="memTemplItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__SCALARALG.html#gadcf9c4800720cb2ffba648426eea4411">_dot_m_m</a> (const MA &amp;pSrcA, const MB &amp;pSrcB, RES &amp;&amp;pDst, const Scalar *=nullptr)</td></tr>
 <tr class="memdesc:gadcf9c4800720cb2ffba648426eea4411"><td class="mdescLeft">&#160;</td><td class="mdescRight">Matrix times matrix for scalar architecture and float.  <br /></td></tr>
 <tr class="separator:gadcf9c4800720cb2ffba648426eea4411"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -229,8 +229,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ga5cf13c3f71d165f946688b084ec87a6a" name="ga5cf13c3f71d165f946688b084ec87a6a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga5cf13c3f71d165f946688b084ec87a6a">&#9670;&#160;</a></span>_dot()</h2>
+<a id="gaab556ffb9401d98c72042cac1b9b1ea0" name="gaab556ffb9401d98c72042cac1b9b1ea0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaab556ffb9401d98c72042cac1b9b1ea0">&#9670;&#160;</a></span>_dot()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -239,7 +239,7 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">DotResult&lt; DA &gt; _dot </td>
+          <td class="memname">DotResult&lt; DotFieldResult&lt; DA, DB &gt; &gt; _dot </td>
           <td>(</td>
           <td class="paramtype">const DA &amp;&#160;</td>
           <td class="paramname"><em>a</em>, </td>

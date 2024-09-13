@@ -1,6 +1,6 @@
 var group__HELIUMALG =
 [
-    [ "_dot", "group__HELIUMALG.html#ga6e93f3782669bf2f1870ea177c536d7e", null ],
+    [ "_dot", "group__HELIUMALG.html#ga8b3315347db8969ec7d77c8277fdc692", null ],
     [ "_Fill", "group__HELIUMALG.html#ga86891b1c2eb658a9f15746434e30fdd5", null ],
     [ "_Fill2D", "group__HELIUMALG.html#ga2acf49f8cba5a245ed8a3d30b8300c3b", null ],
     [ "_swap", "group__HELIUMALG.html#gaf769d651b0aa9c7cbc026beefc8257ba", null ],

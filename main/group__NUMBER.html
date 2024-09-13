@@ -149,6 +149,15 @@ Data Structures</h2></td></tr>
 <tr class="memitem:structarm__cmsis__dsp_1_1number__traits"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NUMBER.html#structarm__cmsis__dsp_1_1number__traits">number_traits&lt; T &gt;</a></td></tr>
 <tr class="memdesc:structarm__cmsis__dsp_1_1number__traits"><td class="mdescLeft">&#160;</td><td class="mdescRight">Properties of a scalar datatype.  <a href="group__NUMBER.html#structarm__cmsis__dsp_1_1number__traits">More...</a><br /></td></tr>
 <tr class="separator:structarm__cmsis__dsp_1_1number__traits"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structarm__cmsis__dsp_1_1ComplexVector"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NUMBER.html#structarm__cmsis__dsp_1_1ComplexVector">ComplexVector&lt; T &gt;</a></td></tr>
+<tr class="memdesc:structarm__cmsis__dsp_1_1ComplexVector"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="group__VECTOR.html#structarm__cmsis__dsp_1_1Vector" title="Vector template for size knonw at build time.">Vector</a> containing complex values and not just real values but with same number of lanes than a normal float vector.  <a href="group__NUMBER.html#structarm__cmsis__dsp_1_1ComplexVector">More...</a><br /></td></tr>
+<tr class="separator:structarm__cmsis__dsp_1_1ComplexVector"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structarm__cmsis__dsp_1_1HalfComplexVector"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NUMBER.html#structarm__cmsis__dsp_1_1HalfComplexVector">HalfComplexVector&lt; T &gt;</a></td></tr>
+<tr class="memdesc:structarm__cmsis__dsp_1_1HalfComplexVector"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="group__VECTOR.html#structarm__cmsis__dsp_1_1Vector" title="Vector template for size knonw at build time.">Vector</a> of complex but with half lanes compared to real (2 complex)  <a href="group__NUMBER.html#structarm__cmsis__dsp_1_1HalfComplexVector">More...</a><br /></td></tr>
+<tr class="separator:structarm__cmsis__dsp_1_1HalfComplexVector"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structarm__cmsis__dsp_1_1Dual"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NUMBER.html#structarm__cmsis__dsp_1_1Dual">Dual&lt; T &gt;</a></td></tr>
+<tr class="memdesc:structarm__cmsis__dsp_1_1Dual"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="group__NUMBER.html#structarm__cmsis__dsp_1_1Dual" title="Dual representation for complex.">Dual</a> representation for complex.  <a href="group__NUMBER.html#structarm__cmsis__dsp_1_1Dual">More...</a><br /></td></tr>
+<tr class="separator:structarm__cmsis__dsp_1_1Dual"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structarm__cmsis__dsp_1_1vector__traits"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NUMBER.html#structarm__cmsis__dsp_1_1vector__traits">vector_traits&lt; T, arch, typename &gt;</a></td></tr>
 <tr class="memdesc:structarm__cmsis__dsp_1_1vector__traits"><td class="mdescLeft">&#160;</td><td class="mdescRight">Properties of a vector datatype linked to a scalar datatype.  <a href="group__NUMBER.html#structarm__cmsis__dsp_1_1vector__traits">More...</a><br /></td></tr>
 <tr class="separator:structarm__cmsis__dsp_1_1vector__traits"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -181,6 +190,72 @@ struct arm_cmsis_dsp::number_traits&lt; T &gt;</div><p>Properties of a scalar da
 </dl>
 <p>Needs to contain two static bool : is_float and is_fixed</p>
 <p>Needs to contain a static function <code>one</code> returning the value 1 for this datatype (used to write some datatype generic algorithms) </p>
+</div>
+</div>
+</div>
+<a name="structarm__cmsis__dsp_1_1ComplexVector" id="structarm__cmsis__dsp_1_1ComplexVector"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structarm__cmsis__dsp_1_1ComplexVector">&#9670;&#160;</a></span>arm_cmsis_dsp::ComplexVector</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct arm_cmsis_dsp::ComplexVector</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
+struct arm_cmsis_dsp::ComplexVector&lt; T &gt;</div><p><a class="el" href="group__VECTOR.html#structarm__cmsis__dsp_1_1Vector" title="Vector template for size knonw at build time.">Vector</a> containing complex values and not just real values but with same number of lanes than a normal float vector. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Datatype of vector </td></tr>
+  </table>
+  </dd>
+</dl>
+</div>
+</div>
+</div>
+<a name="structarm__cmsis__dsp_1_1HalfComplexVector" id="structarm__cmsis__dsp_1_1HalfComplexVector"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structarm__cmsis__dsp_1_1HalfComplexVector">&#9670;&#160;</a></span>arm_cmsis_dsp::HalfComplexVector</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct arm_cmsis_dsp::HalfComplexVector</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
+struct arm_cmsis_dsp::HalfComplexVector&lt; T &gt;</div><p><a class="el" href="group__VECTOR.html#structarm__cmsis__dsp_1_1Vector" title="Vector template for size knonw at build time.">Vector</a> of complex but with half lanes compared to real (2 complex) </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Data type of vector </td></tr>
+  </table>
+  </dd>
+</dl>
+</div>
+</div>
+</div>
+<a name="structarm__cmsis__dsp_1_1Dual" id="structarm__cmsis__dsp_1_1Dual"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structarm__cmsis__dsp_1_1Dual">&#9670;&#160;</a></span>arm_cmsis_dsp::Dual</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct arm_cmsis_dsp::Dual</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
+struct arm_cmsis_dsp::Dual&lt; T &gt;</div><p><a class="el" href="group__NUMBER.html#structarm__cmsis__dsp_1_1Dual" title="Dual representation for complex.">Dual</a> representation for complex. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td><a class="el" href="group__ARCH.html#classarm__cmsis__dsp_1_1Scalar">Scalar</a> datatype for complex </td></tr>
+  </table>
+  </dd>
+</dl>
 </div>
 </div>
 </div>
