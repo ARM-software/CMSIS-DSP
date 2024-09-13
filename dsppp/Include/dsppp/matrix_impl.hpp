@@ -6,7 +6,6 @@
 #include <memory>
 #include <cstring>
 #include <algorithm>
-#include <iostream>
 #include "common.hpp"
 #include "arch.hpp"
 #include <type_traits>
@@ -347,10 +346,11 @@ struct Matrix:Vector<P,R*C,Allocator>
     * 
     */
    friend std::ostream& operator<< (std::ostream& stream, const Matrix& other) {
+        using DT = typename number_traits<P>::display_type;
         int c=0;
         for(index_t k=0;k<other.length();k++)
         {
-           stream << other[k] << " , ";
+           stream << (DT)other[k] << " , ";
            c++;
            if (c == other.columns())
            {
@@ -435,7 +435,7 @@ struct Matrix:Vector<P,R*C,Allocator>
     template<int RA=R,int CA=C,typename VA,
             typename std::enable_if<IsVector<VA>::value && 
             (RA == CA) && (RA>0) &&
-            SameElementType<VA,P>::value,bool>::type = true>
+            compatible_element<VA,P>(),bool>::type = true>
     static Matrix<P,RA,CA,Allocator> diagonal(const VA& a)
     {
        Matrix<P,RA,CA,Allocator> res;
@@ -455,7 +455,7 @@ struct Matrix:Vector<P,R*C,Allocator>
     template<int RA=R,int CA=C,typename VA,
             typename std::enable_if<IsVector<VA>::value && 
             (RA == CA) && (RA>0) &&
-            SameElementType<VA,P>::value,bool>::type = true>
+            compatible_element<VA,P>(),bool>::type = true>
     void fill_diagonal(const VA& a)
     {
        _fill_diagonal(*this,a,RA);
@@ -739,10 +739,11 @@ struct Matrix<P,DYNAMIC,DYNAMIC,Allocator>:Vector<P,DYNAMIC,Allocator>
     * 
     */
    friend std::ostream& operator<< (std::ostream& stream, const Matrix& other) {
+        using DT = typename number_traits<P>::display_type;
         int c=0;
         for(index_t k=0;k<other.length();k++)
         {
-           stream << other[k] << " , ";
+           stream << (DT)other[k] << " , ";
            c++;
            if (c == other.columns())
            {
@@ -763,7 +764,7 @@ struct Matrix<P,DYNAMIC,DYNAMIC,Allocator>:Vector<P,DYNAMIC,Allocator>
     */
     template<typename VA,
             typename std::enable_if<IsVector<VA>::value && 
-            SameElementType<VA,P>::value,bool>::type = true>
+            compatible_element<VA,P>(),bool>::type = true>
     static Matrix<P,DYNAMIC,DYNAMIC,Allocator> diagonal(const VA& a)
     {
        Matrix<P,DYNAMIC,DYNAMIC,Allocator> res(a.length(),a.length());
@@ -778,7 +779,7 @@ struct Matrix<P,DYNAMIC,DYNAMIC,Allocator>:Vector<P,DYNAMIC,Allocator>
     */
     template<typename VA,
             typename std::enable_if<IsVector<VA>::value && 
-            SameElementType<VA,P>::value,bool>::type = true>
+            compatible_element<VA,P>(),bool>::type = true>
     void fill_diagonal(const VA& a)
     {
        _fill_diagonal(*this,a,this->length());

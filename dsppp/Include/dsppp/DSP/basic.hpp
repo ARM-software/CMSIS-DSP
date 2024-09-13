@@ -20,10 +20,12 @@
 
 #define DSP_UNROLL 1
 
+// No vector instruction for complex number implementation
 template<typename T,typename DST,
 typename std::enable_if<has_vector_inst<DST>() &&
                         IsVector<DST>::value &&
-         SameElementType<DST,T>::value,bool>::type = true>
+         compatible_element<DST,T>() &&
+         !is_complex<DST>(),bool>::type = true>
 inline void _Fill(DST &v,
                   const T val, 
                   vector_length_t l,
@@ -50,7 +52,8 @@ inline void _Fill(DST &v,
 template<typename T,typename DST,
 typename std::enable_if<has_vector_inst<DST>() &&
          must_use_matrix_idx<DST>() &&
-         SameElementType<DST,T>::value,bool>::type = true>
+         SameElementType<DST,T>() &&
+         !is_complex<DST>(),bool>::type = true>
 inline void _Fill2D(DST &v,
                     const T val, 
                     const vector_length_t rows,
@@ -72,7 +75,7 @@ inline void _Fill2D(DST &v,
               }
           }
 
-          for(; col < cols;col += nb_lanes)
+          for(; col < cols;col ++)
           {
              for(int k=0;k<(1<<DSP_UNROLL);k++)
              {
@@ -90,7 +93,7 @@ inline void _Fill2D(DST &v,
               v.matrix_store(row,col,inner::vconst(val));
           }
 
-          for(; col < cols;col += nb_lanes)
+          for(; col < cols;col ++)
           {
               v(row,col) = val;
           }
@@ -105,7 +108,9 @@ Evaluation : used when result is a vector
 */
 template<typename DA,typename DB,
 typename std::enable_if<has_vector_inst<DA>() &&
-                        vector_idx_pair<DA,DB>(),bool>::type = true>
+                        vector_idx_pair<DA,DB>() &&
+                        !is_complex<DA>() &&
+                        !is_complex<DB>(),bool>::type = true>
 inline void eval(DA &v,
                  const DB& other,
                  const vector_length_t l,
@@ -132,7 +137,9 @@ inline void eval(DA &v,
 
 template<typename DA,typename DB,
 typename std::enable_if<has_vector_inst<DA>() &&
-                        must_use_matrix_idx_pair<DA,DB>(),bool>::type = true>
+                        must_use_matrix_idx_pair<DA,DB>() &&
+                        !is_complex<DA>() &&
+                        !is_complex<DB>(),bool>::type = true>
 inline void eval2D(DA &v,
                    const DB& other,
                    const vector_length_t rows,
@@ -155,7 +162,7 @@ inline void eval2D(DA &v,
               }
           }
 
-          for(; col < cols;col += nb_lanes)
+          for(; col < cols;col ++)
           {
              for(int k=0;k<(1<<DSP_UNROLL);k++)
              {
@@ -173,7 +180,7 @@ inline void eval2D(DA &v,
               v.matrix_store(row,col,other.matrix_op(row,col));
           }
 
-          for(; col < cols;col += nb_lanes)
+          for(; col < cols;col ++)
           {
               v(row,col) = other(row,col);
           }
@@ -182,21 +189,23 @@ inline void eval2D(DA &v,
 
 template<typename DA,typename DB,
          typename std::enable_if<has_vector_inst<DA>() &&
+                                !is_complex<DA>() &&
+                                !is_complex<DB>() &&
                                 vector_idx_pair<DA,DB>(),bool>::type = true>
-inline DotResult<DA> _dot(const DA& a,
-                         const DB& b,
-                         const vector_length_t l,
-                         const DSP* = nullptr)
+inline DotResult<DotFieldResult<DA,DB>> _dot(const DA& a,
+                                              const DB& b,
+                                              const vector_length_t l,
+                                              const DSP* = nullptr)
 {
-    using Acc = DotResult<DA>;
-    using T = typename traits<DA>::Scalar;
-    using Temp = typename vector_traits<T>::temp_accumulator;
-    constexpr int nb_lanes = vector_traits<T>::nb_lanes;
+    using ScalarResult = DotFieldResult<DA,DB> ;
+    using Acc = DotResult<ScalarResult>;
+    using Temp = typename vector_traits<ScalarResult>::temp_accumulator;
+    constexpr int nb_lanes = vector_traits<ScalarResult>::nb_lanes;
     constexpr unsigned int U = DSP_UNROLL;
     index_t i;
 
     Acc acc = Acc{};
-    Temp vacc = vector_traits<T>::temp_acc_zero();
+    Temp vacc = vector_traits<ScalarResult>::temp_acc_zero();
 
     for(i=0 ; i <= l-(nb_lanes<<U); i += (nb_lanes<<U))
     {
@@ -218,16 +227,18 @@ inline DotResult<DA> _dot(const DA& a,
 
 template<typename DA,typename DB,
          typename std::enable_if<has_vector_inst<DA>() &&
-                                 vector_idx_pair<DA,DB>(),bool>::type = true>
+                                 vector_idx_pair<DA,DB>() &&
+                                 !is_complex<DA>() &&
+                                 !is_complex<DB>(),bool>::type = true>
 inline void _swap(DA&& a,
                   DB&& b,
                   const vector_length_t l,
                   const DSP* = nullptr)
 {
-      using Scalar = typename ElementType<DA>::type;
+      using Scalar = typename ElementType<remove_constref_t<DA>>::type;
       using Vector = typename vector_traits<Scalar>::vector;
 
-      constexpr int nb_lanes = vector_traits<typename ElementType<DA>::type>::nb_lanes;
+      constexpr int nb_lanes = vector_traits<typename ElementType<remove_constref_t<DA>>::type>::nb_lanes;
       index_t i=0;
       Vector tmpa,tmpb;
     

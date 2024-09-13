@@ -52,6 +52,32 @@ template<typename T>
 struct number_traits;
 
 
+/**
+ * @brief      Vector containing complex values and not just real values
+ *             but with same number of lanes than a normal float vector
+ *
+ * @tparam     T     Datatype of vector
+ */
+template<typename T>
+struct ComplexVector;
+
+/**
+ * @brief      Vector of complex but with half lanes compared to real (2 complex)
+ *
+ * @tparam     T     Data type of vector
+ */
+template<typename T>
+struct HalfComplexVector;
+
+
+/**
+ * @brief      Dual representation for complex
+ *
+ * @tparam     T     Scalar datatype for complex
+ */
+template<typename T>
+struct Dual;
+
 /*
 
 When vector is true we have a vector datatype
@@ -75,6 +101,7 @@ struct vector_traits {
   static constexpr bool has_vector = false; //!< True if scalar type has a related vector type 
   static constexpr bool is_float = false; //!< True if scalar type is a float (half, float or double)
   static constexpr bool is_fixed = false; //!< True if scalar type is fixed point
+  static constexpr int nb_lanes = 1; //! Number of lanes
 };
 
 /** @brief Scalar properties of fixed point datatype
@@ -142,12 +169,24 @@ vmacc_p
 
 
 // Common to all architectures
+#include "num_features/complex_double.hpp"
 #include "num_features/double.hpp"
+
+#include "num_features/complex_float.hpp"
 #include "num_features/float.hpp"
+
+#include "num_features/complex_half.hpp"
 #include "num_features/half.hpp"
+
 #include "num_features/q31.hpp"
+#include "num_features/complex_q31.hpp"
+
 #include "num_features/q15.hpp"
+#include "num_features/complex_q15.hpp"
+
 #include "num_features/q7.hpp"
+#include "num_features/complex_q7.hpp"
+
 
 // Specific for some architecture
 //#include <Scalar/num_features>

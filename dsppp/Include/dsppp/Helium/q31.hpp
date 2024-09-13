@@ -33,6 +33,7 @@ typename std::enable_if<std::is_base_of<Helium,arch>::value>::type >
   typedef Q31 type;
   typedef type::value_type storage_type;
   typedef int32x4_t vector;
+  typedef int32x4_t real_vector;
   typedef Q<9,54> temp_accumulator;
   typedef mve_pred16_t predicate_t;
 
@@ -57,7 +58,7 @@ typename std::enable_if<std::is_base_of<Helium,arch>::value>::type >
 
 /**
  * Inner implementation of Helium intrinsics
- * \ingroup HeliumNumber
+ * \ingroup HeliumQ31Number
  */
 namespace inner {
 
@@ -90,6 +91,18 @@ namespace inner {
                                         const mve_pred16_t p0)
     {
        return(vqnegq_m(vuninitializedq_s32(),a,p0));
+    };
+
+    __STATIC_FORCEINLINE int32x4_t vconjugate(const int32x4_t a)
+    {
+       return(a);
+    };
+
+    __STATIC_FORCEINLINE int32x4_t vconjugate(const int32x4_t a,
+                                        const mve_pred16_t p0)
+    {
+       (void)p0;
+       return(a);
     };
 
     __STATIC_FORCEINLINE int32x4_t vadd(const int32x4_t a,const int32x4_t b)
@@ -138,7 +151,7 @@ namespace inner {
 
      __STATIC_FORCEINLINE int32x4_t vsub(const Q31 a,const int32x4_t b)
     {
-       return(vqsubq_n_s32(b,a.v));
+       return(vqsubq(vdupq_n_s32(a.v),b));
     };
 
     __STATIC_FORCEINLINE int32x4_t vsub(const int32x4_t a,const int32x4_t b,
@@ -156,7 +169,7 @@ namespace inner {
      __STATIC_FORCEINLINE int32x4_t vsub(const Q31 a,const int32x4_t b,
                                         const mve_pred16_t p0)
     {
-       return(vqsubq_m_n_s32(vuninitializedq_s32(),b,a.v,p0));
+       return(vqsubq_m(vuninitializedq_s32(),vdupq_n_s32(a.v),b,p0));
     };
   
     __STATIC_FORCEINLINE int32x4_t vmul(const int32x4_t a,const int32x4_t b)

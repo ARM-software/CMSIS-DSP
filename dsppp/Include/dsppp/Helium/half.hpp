@@ -32,6 +32,7 @@ struct vector_traits<float16_t,arch,typename std::enable_if<std::is_base_of<Heli
   typedef float16_t storage_type;
   //! Vector datatype
   typedef float16x8_t vector;
+  typedef float16x8_t real_vector;
   //! Temp accumulator datatype
   typedef float16x8_t temp_accumulator;
   //! Predicate datatype
@@ -82,7 +83,7 @@ struct vector_traits<float16_t,arch,typename std::enable_if<std::is_base_of<Heli
 
 
 /**
- * \ingroup HeliumNumber
+ * \ingroup HeliumHalfNumber
  */
 namespace inner {
 
@@ -156,6 +157,33 @@ namespace inner {
                                         const mve_pred16_t p0)
   {
      return(vnegq_x(a,p0));
+  };
+
+  /**
+   * @brief      Vector conjugate
+   *
+   * @param[in]  a     Vector
+   *
+   * @return     Conjugate of vector
+   */
+   __STATIC_FORCEINLINE float16x8_t vconjugate(const float16x8_t a)
+  {
+     return(a);
+  };
+
+  /**
+   * @brief      Vector conjugate with tail predicate
+   *
+   * @param[in]  a     Vector
+   * @param[in]  p0    Predicate
+   *
+   * @return     Conjugate of vector with tail predicate
+   */
+  __STATIC_FORCEINLINE float16x8_t vconjugate(const float16x8_t a,
+                                        const mve_pred16_t p0)
+  {
+     (void)p0;
+     return(a);
   };
    
    /*
@@ -275,7 +303,7 @@ namespace inner {
    __STATIC_FORCEINLINE float16x8_t vsub(const float16_t a,
                                          const float16x8_t b)
    {
-      return(vsubq_n_f16(b,a));
+      return(vsubq(vdupq_n_f16(a),b));
    };
 
    __STATIC_FORCEINLINE float16x8_t vsub(const float16x8_t a,
@@ -296,7 +324,7 @@ namespace inner {
                                          const float16x8_t b,
                                          const mve_pred16_t p0)
    {
-     return(vsubq_x_n_f16(b,a,p0));
+     return(vsubq_x(vdupq_n_f16(a),b,p0));
    };
 
    /*

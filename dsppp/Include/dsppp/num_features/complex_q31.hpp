@@ -5,55 +5,55 @@
 /** \addtogroup GenericNumber 
  *  \ingroup NUMBER
  *  @{
- *  \addtogroup GenericQ31Number Q31
+ *  \addtogroup GenericComplexQ31Number Complex Q31
  *  \ingroup GenericNumber
  *  @{
  */
 
 /**
- * @brief      Features for Q31
+ * @brief      Features for complex Q31
  */
 template<>
-struct number_traits<Q31>
+struct number_traits<std::complex<Q31>>
 {
    //! Is not a float
    static constexpr bool is_float = false;
    //! Is fixed point
    static constexpr bool is_fixed = true;
    //! Accumulator datatype
-   typedef Q<15,48> accumulator;
+   typedef std::complex<Q<15,48>> accumulator;
    /**
     * @brief      One value
     *
     * @return     One value
     */
-   static constexpr Q31 one() {return Q31::one();};
+   static constexpr std::complex<Q31> one() {return std::complex<Q31>(Q31::one(),Q31{});};
 
    //! Compute type
-   typedef Q31 compute_type;
+   typedef std::complex<Q31> compute_type;
 
    //! Display type for printf 
-   typedef Q31 display_type;
+   typedef std::complex<Q31> display_type;
 };
 
 template<>
-struct number_traits<Q<15,48>>
+struct number_traits<std::complex<Q<15,48>>>
 {
    static constexpr bool is_float = false;
    static constexpr bool is_fixed = true;
-   };
+};
 
 /**
- * @brief      Vector features for Q31 when no vector instructions
+ * @brief      Vector features for std::complex<Q31> when no vector instructions
  *
  * @tparam     arch  Current architecture
  */
 template<typename arch>
-struct vector_traits<Q31,arch,
+struct vector_traits<std::complex<Q31>,arch,
     typename std::enable_if<!std::is_base_of<Helium,arch>::value &&
                             !std::is_base_of<Neon,arch>::value>::type> {
   //! Datatype
-  typedef Q31 type;
+  typedef std::complex<Q31> type;
 
   //! Storage tpe (int32_t)
   typedef type::value_type storage_type;
@@ -83,7 +83,7 @@ struct vector_traits<Q31,arch,
 
 /**
  * Inner implementation of generic intrinsics
- * \ingroup GenericQ31Number
+ * \ingroup GenericComplexQ31Number
  */
 namespace inner {
 #if defined(ARM_MATH_MVEI)
@@ -94,9 +94,9 @@ namespace inner {
    *
    * @return     Converted value
    */
-  __STATIC_FORCEINLINE Q31 from_accumulator(const Q<15,48> a)
+  __STATIC_FORCEINLINE std::complex<Q31> from_accumulator(const std::complex<Q<15,48>> a)
   {
-        return(Q31(asrl(a.v, 17)));
+        return(std::complex<Q31>(Q31(asrl(a.real().v, 17)),Q31(asrl(a.imag().v, 17))));
   };
 #else
    /**
@@ -106,9 +106,9 @@ namespace inner {
    *
    * @return     Converted value
    */
-  __STATIC_FORCEINLINE Q31 from_accumulator(const Q<15,48> a)
+  __STATIC_FORCEINLINE std::complex<Q31> from_accumulator(const std::complex<Q<15,48>> a)
   {
-        return(Q31(a.v >> 17));
+        return(std::complex<Q31>(Q31(a.real().v >> 17),Q31(a.imag().v >> 17)));
   };
 #endif
 
@@ -122,7 +122,9 @@ namespace inner {
  *
  * @return     acc + a*b
  */
-__STATIC_FORCEINLINE Q<15,48> mac(const Q<15,48> acc,const Q31 a,const Q31 b)
+__STATIC_FORCEINLINE std::complex<Q<15,48>> mac(const std::complex<Q<15,48>> acc,
+                                                const std::complex<Q31> a,
+                                                const std::complex<Q31> b)
 {
     return(accumulate(acc , toFrac<48>(mult(a,b))));
 };

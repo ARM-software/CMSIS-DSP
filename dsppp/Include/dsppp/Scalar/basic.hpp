@@ -27,7 +27,7 @@
  */
 template<typename T,typename DST,
 typename std::enable_if<IsVector<DST>::value &&
-         SameElementType<DST,T>::value,bool>::type = true>
+         compatible_element<DST,T>(),bool>::type = true>
 inline void _Fill(DST &v,
                   const T val, 
                   vector_length_t l,
@@ -65,7 +65,7 @@ inline void _Fill(DST &v,
  */
 template<typename T,typename DST,
 typename std::enable_if<must_use_matrix_idx<DST>() &&
-         SameElementType<DST,T>::value,bool>::type = true>
+         compatible_element<DST,T>(),bool>::type = true>
 inline void _Fill2D(DST &v,
                     const T val, 
                     const vector_length_t rows,
@@ -181,6 +181,9 @@ inline void eval2D(DA &v,
       }
 }
 
+// Some compilers are generating incorrect code when this value > 1
+#undef SCALAR_UNROLL
+#define SCALAR_UNROLL 1
 /**
  * @brief      Dot product evaluator for scalar architectuire
  *
@@ -196,12 +199,13 @@ inline void eval2D(DA &v,
  */
 template<typename DA,typename DB,
          typename std::enable_if<vector_idx_pair<DA,DB>(),bool>::type = true>
-inline DotResult<DA> _dot(const DA& a,
-                         const DB& b,
-                         const vector_length_t l,
-                         const Scalar* = nullptr)
+inline DotResult<DotFieldResult<DA,DB>> _dot(const DA& a,
+                                              const DB& b,
+                                              const vector_length_t l,
+                                              const Scalar* = nullptr)
 {
-    using Acc = DotResult<DA>;
+    using ScalarResult = DotFieldResult<DA,DB>;
+    using Acc = DotResult<ScalarResult>;
     constexpr unsigned int U = SCALAR_UNROLL;
     index_t i;
 
@@ -223,6 +227,8 @@ inline DotResult<DA> _dot(const DA& a,
     return(acc);
 }
 
+#undef SCALAR_UNROLL
+#define SCALAR_UNROLL 2
 /**
  * @brief      Swap evaluator for scalar architecture
  *

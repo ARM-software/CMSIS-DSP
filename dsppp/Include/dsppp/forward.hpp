@@ -58,7 +58,6 @@ template<typename MA,typename MB>
 struct OutputMatrix;
 
 
-
 /*
 
 Identifications
@@ -139,6 +138,12 @@ Type of elements in vector or matrix
 */
 template<typename T>
 struct ElementType;
+
+template<typename T>
+struct IsComplexNumber;
+
+template<typename T>
+struct ComplexNumberType;
 
 template<typename T>
 struct HasStaticStride;

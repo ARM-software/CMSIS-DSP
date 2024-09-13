@@ -31,13 +31,16 @@ __STATIC_INLINE void _dot_m_m(const MA&pSrcA,const MB&pSrcB,
                      const TMP &BT,
                      const Scalar* = nullptr)
 {
-  using T = typename traits<MA>::Scalar;
+  using TA = typename traits<MA>::Scalar;
+  using TB = typename traits<MB>::Scalar;
+
+  using T = typename MixedRes<TA,TB>::type;
   using Acc = typename number_traits<T>::accumulator;
 
-  T *pIn1 = pSrcA.ptr();                    /* Input data matrix pointer A */
-  T *pIn2 = pSrcB.ptr();                    /* Input data matrix pointer B */
-  T *pInA = pSrcA.ptr();                    /* Input data matrix pointer A */
-  T *pInB = pSrcB.ptr();                    /* Input data matrix pointer B */
+  TA *pIn1 = pSrcA.ptr();                    /* Input data matrix pointer A */
+  TB *pIn2 = pSrcB.ptr();                    /* Input data matrix pointer B */
+  TA *pInA = pSrcA.ptr();                    /* Input data matrix pointer A */
+  TB *pInB = pSrcB.ptr();                    /* Input data matrix pointer B */
   T *pOut = pDst.ptr();                     /* Output data matrix pointer */
   T *px;                                     /* Temporary output data matrix pointer */
   Acc sum;                                     /* Accumulator */

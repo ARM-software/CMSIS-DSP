@@ -6,7 +6,6 @@
 #include <memory>
 #include <cstring>
 #include <algorithm>
-#include <iostream>
 #include "common.hpp"
 #include "arch.hpp"
 #include <type_traits>
@@ -327,7 +326,7 @@ struct CompatibleStaticMatVecProduct
    HasMatrixIndexing<M>::value &&
    (NbCols<M>::value == StaticLength<V>::value) &&
    !IsDynamic<M>::value
-   && SameElementType<M,V>::value;
+   && compatible_element<M,V>();
 
 };
 
@@ -340,7 +339,7 @@ struct CompatibleStaticMatMatProduct
    IsMatrix<MB>::value &&
    (NbCols<MA>::value == NbRows<MB>::value) &&
    !IsDynamic<MA>::value && 
-   SameElementType<MA,MB>::value;
+   compatible_element<MA,MB>();
 
 };
 
@@ -351,7 +350,7 @@ struct CompatibleDynamicMatVecProduct
    HasMatrixIndexing<M>::value &&
    IsDynamic<M>::value &&
    is_only_vector<V>() &&
-   SameElementType<M,V>::value;
+   compatible_element<M,V>();
 
 };
 
@@ -364,7 +363,7 @@ struct CompatibleDynamicMatMatProductStaticStride
    IsMatrix<MB>::value &&
    IsDynamic<MA>::value &&
    HasStaticStride<MB>::value &&
-   SameElementType<MA,MB>::value;
+   compatible_element<MA,MB>();
 };
 
 template<typename MA,typename MB>
@@ -375,7 +374,7 @@ struct CompatibleDynamicMatMatProductDynamicStride
    IsMatrix<MB>::value &&
    IsDynamic<MA>::value &&
    !HasStaticStride<MB>::value &&
-   SameElementType<MA,MB>::value;
+   compatible_element<MA,MB>();
 };
 
 template<typename MA,typename MB>
@@ -385,12 +384,12 @@ struct CompatibleDynamicMatMatProduct
    HasMatrixIndexing<MA>::value &&
    IsMatrix<MB>::value &&
    IsDynamic<MA>::value &&
-   SameElementType<MA,MB>::value;
+   compatible_element<MA,MB>();
 };
 
 template<typename M,typename V>
 struct OutputVector {
-    typedef Vector<typename traits<V>::Scalar,
+    typedef Vector<DotFieldResult<M,V>,
                    OutputVectorDim<M>::value,TMP_ALLOC> type;
 };
 
@@ -400,7 +399,7 @@ struct OutputMatrix {
     constexpr static vector_length_t nbrows = dynamic ? DYNAMIC : NbRows<MA>::value;
     constexpr static vector_length_t nbcols = dynamic ? DYNAMIC : NbCols<MB>::value;
 
-    typedef Matrix<typename traits<MA>::Scalar,nbrows,nbcols,TMP_ALLOC> type;
+    typedef Matrix<DotFieldResult<MA,MB>,nbrows,nbcols,TMP_ALLOC> type;
 };
 
 
@@ -434,6 +433,7 @@ struct VecRef<MatrixView<T,S>>
       return(a);
    };
 };
+
 
 template<typename P,int R,int C,
          template<int> typename A>
@@ -476,10 +476,12 @@ template<typename LHS,typename RHS,typename DerivedOp>
 struct _Outer: _Expr<_Outer<LHS,RHS,DerivedOp>>
 {
     //! Type of vector elements
-    using Scalar = typename traits<LHS>::Scalar;
+    using ScalarLHS = typename traits<LHS>::Scalar;
+    using ScalarRHS = typename traits<RHS>::Scalar;
 #if defined(HAS_VECTOR)
     //! Type of vector in the architecture
-    using Vector = typename traits<LHS>::Vector;
+    using VectorLHS = typename traits<LHS>::Vector;
+    using VectorRHS = typename traits<RHS>::Vector;
 #endif
     /**
     * @brief      Create an Outer operator
@@ -490,7 +492,7 @@ struct _Outer: _Expr<_Outer<LHS,RHS,DerivedOp>>
     */
     _Outer(const LHS &lhs,
             const RHS &rhs,
-            const _BinaryOperator<Scalar,DerivedOp> &op):
+            const _BinaryOperator<ScalarLHS,ScalarRHS,DerivedOp> &op):
             lhs_(lhs),rhs_(rhs),op_(op){
     }
 
@@ -571,7 +573,7 @@ struct _Outer: _Expr<_Outer<LHS,RHS,DerivedOp>>
     template<typename R=RHS, typename L=LHS,
              typename std::enable_if<IsVector<L>::value && 
                         IsVector<R>::value,bool>::type = true>
-    Scalar const operator()(const index_t r,const index_t c) const
+    auto  operator()(const index_t r,const index_t c) const
     {
         return(op_(lhs_[r],rhs_[c]));
     }
@@ -600,7 +602,7 @@ struct _Outer: _Expr<_Outer<LHS,RHS,DerivedOp>>
     template<typename R=RHS, typename L=LHS,
              typename std::enable_if<IsVector<L>::value && 
                         IsVector<R>::value,bool>::type = true>
-    Vector const matrix_op(const index_t r,const index_t c) const
+    auto  matrix_op(const index_t r,const index_t c) const
     {
         return(op_(lhs_[r],rhs_.vector_op(c)));
     }
@@ -620,16 +622,25 @@ struct _Outer: _Expr<_Outer<LHS,RHS,DerivedOp>>
     template<typename R=RHS, typename L=LHS,
              typename std::enable_if<IsVector<L>::value && 
                         IsVector<R>::value,bool>::type = true>
-    Vector const matrix_op_tail(const index_t r,const index_t c,const vector_length_t remaining) const
+    auto  matrix_op_tail(const index_t r,const index_t c,const vector_length_t remaining) const
     {
-        return(op_(lhs_[r],rhs_.vector_op_tail(c,remaining),inner::vctpq<Scalar>::mk(remaining)));
+        return(op_(lhs_[r],rhs_.vector_op_tail(c,remaining),inner::vctpq<ScalarLHS>::mk(remaining)));
     }
 
 
 #endif
     const LHS lhs_;
     const RHS rhs_;
-    const _BinaryOperator<Scalar,DerivedOp> op_;
+    const _BinaryOperator<ScalarLHS,ScalarRHS,DerivedOp> op_;
+};
+
+template<typename LHS,typename RHS,typename DerivedOp>
+struct IsMixed<_Outer<LHS,RHS,DerivedOp>>
+{
+    using EA = typename ElementType<remove_constref_t<LHS>>::type;
+    using EB = typename ElementType<remove_constref_t<RHS>>::type;
+    constexpr static bool value = (IsComplexNumber<EA>::value != IsComplexNumber<EB>::value)
+      || IsMixed<LHS>::value || IsMixed<RHS>::value;
 };
 
 template<typename LHS,typename RHS,typename DerivedOp>
@@ -667,15 +678,18 @@ struct Complexity<_Outer<LHS,RHS,DerivedOp>>
 template<typename LHS,typename RHS,typename DerivedOp>
 struct ElementType<_Outer<LHS,RHS,DerivedOp>>
 {
-    typedef typename ElementType<LHS>::type type;
+    typedef typename ElementType<remove_constref_t<LHS>>::type type;
 };
 
 template<typename LHS,typename RHS,typename DerivedOp>
 struct traits<_Outer<LHS,RHS,DerivedOp>>
 {
-    typedef typename traits<LHS>::Scalar Scalar;
+    using LScalar = typename traits<LHS>::Scalar;
+    using RScalar = typename traits<RHS>::Scalar;
+    
+    typedef typename MixedRes<LScalar,RScalar>::type  Scalar;
 #if defined(HAS_VECTOR)
-    typedef typename traits<LHS>::Vector Vector;
+    typedef typename traits<Scalar>::Vector Vector;
 #endif
 };
 
@@ -687,6 +701,7 @@ struct VecRef<_Outer<LHS,RHS,OP>>
       return(a);
    };
 };
+
 
 template<typename LHS,typename RHS,typename OP>
 struct NbRows<_Outer<LHS,RHS,OP>>
@@ -723,11 +738,12 @@ inline auto outer(const VA&a,const VB&b)
 
    //Matrix<T,NBROWS,NBCOLS,TMP_ALLOC> res;
    //_outer(res,a,b);
-    using Scalar = typename traits<VA>::Scalar;
+    using ScalarLHS = typename traits<VA>::Scalar;
+    using ScalarRHS = typename traits<VB>::Scalar;
     using VecLHS = VecRef<VA>;
     using VecRHS = VecRef<VB>;
 
-    return(_Outer<typename VecLHS::type,typename VecRHS::type,_MulOp<Scalar>>(VecLHS::ref(a),VecRHS::ref(b),_MulOp<Scalar>()));
+    return(_Outer<typename VecLHS::type,typename VecRHS::type,_MulOp<ScalarLHS,ScalarRHS>>(VecLHS::ref(a),VecRHS::ref(b),_MulOp<ScalarLHS,ScalarRHS>()));
 
 
 }

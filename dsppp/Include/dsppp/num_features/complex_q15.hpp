@@ -5,38 +5,38 @@
 /** \addtogroup GenericNumber 
  *  \ingroup NUMBER
  *  @{
- *  \addtogroup GenericQ15Number Q15
+ *  \addtogroup GenericComplexQ15Number Complex Q15
  *  \ingroup GenericNumber
  *  @{
  */
 
 /**
- * @brief      Q15 features
+ * @brief     Features for complex Q15
  */
 template<>
-struct number_traits<Q15>
+struct number_traits<std::complex<Q15>>
 {
    //! Is not float
    static constexpr bool is_float = false;
    //! Is fixed point
    static constexpr bool is_fixed = true;
    //! Accumulator datatype
-   typedef Q<33,30> accumulator;
+   typedef std::complex<Q<33,30>> accumulator;
    /**
     * @brief      One value
     *
-    * @return     One value in Q15
+    * @return     One value in std::complex<Q15>
     */
-   static constexpr Q15 one() {return Q15::one();};
+   static constexpr std::complex<Q15> one() {return std::complex<Q15>(Q15::one(),Q15{});};
    //! Compute type
-   typedef Q15 compute_type;
+   typedef std::complex<Q15> compute_type;
 
    //! Display type for printf 
-   typedef Q15 display_type;
+   typedef std::complex<Q15> display_type;
 };
 
 template<>
-struct number_traits<Q<33,30>>
+struct number_traits<std::complex<Q<33,30>>>
 {
    static constexpr bool is_float = false;
    static constexpr bool is_fixed = true;
@@ -48,12 +48,11 @@ struct number_traits<Q<33,30>>
  * @tparam     arch  Current architecture
  */
 template<typename arch>
-struct vector_traits<Q15,arch,
+struct vector_traits<std::complex<Q15>,arch,
     typename std::enable_if<!std::is_base_of<Helium,arch>::value &&
-                            !std::is_base_of<Neon,arch>::value &&
-                            !std::is_base_of<DSP,arch>::value>::type> {
+                            !std::is_base_of<Neon,arch>::value>::type> {
   //! Compute type
-  typedef Q15 type;
+  typedef std::complex<Q15> type;
 
   //! Storage datatype (int16_t)
   typedef type::value_type storage_type;
@@ -84,7 +83,7 @@ struct vector_traits<Q15,arch,
 
 /**
  * Inner implementation of generic intrinsics
- * \ingroup GenericQ15Number
+ * \ingroup GenericComplexQ15Number
  */
 namespace inner {
 #if defined(ARM_MATH_MVEI)
@@ -95,10 +94,12 @@ namespace inner {
      *
      * @return     The converted value (with saturation)
      */
-    __STATIC_FORCEINLINE Q15 from_accumulator(const Q<33,30> a)
+    __STATIC_FORCEINLINE std::complex<Q15> from_accumulator(const std::complex<Q<33,30>> &a)
     {
-      //return(saturate(toFrac<15>(a)));
-        return(Q15((sqrshrl_sat48(a.v, -(32-15)) >> 32) & 0xffffffff));
+        return(std::complex<Q15>(
+            (sqrshrl_sat48(a.real().v, -(32-15)) >> 32) & 0xffffffff,
+            (sqrshrl_sat48(a.imag().v, -(32-15)) >> 32) & 0xffffffff
+        ));
     };
 #else 
     /**
@@ -108,7 +109,7 @@ namespace inner {
      *
      * @return     The converted value (with saturation)
      */
-     __STATIC_FORCEINLINE Q15 from_accumulator(const Q<33,30> a)
+     __STATIC_FORCEINLINE std::complex<Q15> from_accumulator(const std::complex<Q<33,30>>& a)
     {
        return(saturate(toFrac<15>(a)));
     };
@@ -123,7 +124,9 @@ namespace inner {
      *
      * @return     acc + a*b
      */
-    __STATIC_FORCEINLINE Q<33,30> mac(const Q<33,30> acc,const Q15 a,const Q15 b)
+    __STATIC_FORCEINLINE std::complex<Q<33,30>> mac(const std::complex<Q<33,30>>& acc,
+                                                    const std::complex<Q15> a,
+                                                    const std::complex<Q15> b)
     {
       return(accumulate(acc , mult(a,b)));
     };

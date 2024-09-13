@@ -9,7 +9,7 @@ def read_stdout(target):
     print("Waiting for serial")
     lines = []
 
-    with serial.Serial('COM6', 115200, timeout=1,parity=serial.PARITY_NONE) as ser:
+    with serial.Serial('COM11', 115200, timeout=1,parity=serial.PARITY_NONE) as ser:
         sio = io.TextIOWrapper(ser)
         DONE = False
         target.reset()

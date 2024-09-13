@@ -6,7 +6,6 @@
 #include <memory>
 #include <cstring>
 #include <algorithm>
-#include <iostream>
 #include "common.hpp"
 #include "arch.hpp"
 #include <type_traits>
@@ -243,11 +242,12 @@ struct MatrixView
     * 
     */
   friend std::ostream& operator<< (std::ostream& stream, const MatrixView& other) {
+        using DT = typename number_traits<T>::display_type;
         for(index_t row=0;row<other.rows();row++)
         {
            for(index_t col=0;col<other.columns();col++)
            {
-                stream << other(row,col)<< " , ";
+                stream << (DT)other(row,col)<< " , ";
            }
            stream << "\r\n";
         }
@@ -445,7 +445,7 @@ struct MatrixView
     */
     template<typename VA,
             typename std::enable_if<IsVector<VA>::value && 
-            SameElementType<VA,T>::value,bool>::type = true>
+            compatible_element<VA,T>(),bool>::type = true>
     void fill_diagonal(const VA& a)
     {
        _fill_diagonal(*this,a,this->length());
@@ -724,11 +724,12 @@ struct MatrixView<T,DYNAMIC>
     * 
     */
   friend std::ostream& operator<< (std::ostream& stream, const MatrixView& other) {
+        using DT = typename number_traits<T>::display_type;
         for(index_t row=0;row<other.rows();row++)
         {
            for(index_t col=0;col<other.columns();col++)
            {
-                stream << other(row,col)<< " , ";
+                stream << (DT)other(row,col)<< " , ";
            }
            stream << "\r\n";
         }
@@ -929,7 +930,7 @@ struct MatrixView<T,DYNAMIC>
     */
     template<typename VA,
             typename std::enable_if<IsVector<VA>::value && 
-            SameElementType<VA,T>::value,bool>::type = true>
+            compatible_element<VA,T>(),bool>::type = true>
     void fill_diagonal(const VA& a)
     {
        _fill_diagonal(*this,a,this->length());
@@ -1213,11 +1214,12 @@ struct MatrixView<T,CONSTRAINED_DYNAMIC>:VectorView<T,1>
     * 
     */
   friend std::ostream& operator<< (std::ostream& stream, const MatrixView& other) {
+        using DT = typename number_traits<T>::display_type;
         for(index_t row=0;row<other.rows();row++)
         {
            for(index_t col=0;col<other.columns();col++)
            {
-                stream << other(row,col)<< " , ";
+                stream << (DT)other(row,col)<< " , ";
            }
            stream << "\r\n";
         }
@@ -1415,7 +1417,7 @@ struct MatrixView<T,CONSTRAINED_DYNAMIC>:VectorView<T,1>
     */
     template<typename VA,
             typename std::enable_if<IsVector<VA>::value && 
-            SameElementType<VA,T>::value,bool>::type = true>
+            compatible_element<VA,T>(),bool>::type = true>
     void fill_diagonal(const VA& a)
     {
        _fill_diagonal(*this,a,this->length());

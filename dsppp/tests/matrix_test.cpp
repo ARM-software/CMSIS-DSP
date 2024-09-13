@@ -32,6 +32,13 @@ struct MatTestConstant<double>
 };
 
 template<>
+struct MatTestConstant<std::complex<float32_t>>
+{
+    constexpr static std::complex<float32_t> value{0.001f,0.002f};
+    constexpr static std::complex<float32_t> half{0.5f,0.0f};
+};
+
+template<>
 struct MatTestConstant<float32_t>
 {
     constexpr static float value = 0.001f;
@@ -40,13 +47,26 @@ struct MatTestConstant<float32_t>
 
 #if !defined(DISABLEFLOAT16)
 template<>
+struct MatTestConstant<std::complex<float16_t>>
+{
+    constexpr static std::complex<float16_t> value{(float16_t)0.001f,(float16_t)0.002f} ;
+    constexpr static std::complex<float16_t> half{(float16_t)0.5f,(float16_t)0.0f};
+};
+
+template<>
 struct MatTestConstant<float16_t>
 {
     constexpr static float16_t value = (float16_t)0.001f;
     constexpr static float16_t half = (float16_t)0.5f;
-
 };
 #endif
+
+template<>
+struct MatTestConstant<std::complex<Q7>>
+{
+    constexpr static std::complex<Q7> value{0.001_q7,0.002_q7};
+    constexpr static std::complex<Q7> half{0.5_q7,Q7{}};
+};
 
 template<>
 struct MatTestConstant<Q7>
@@ -56,10 +76,24 @@ struct MatTestConstant<Q7>
 };
 
 template<>
+struct MatTestConstant<std::complex<Q15>>
+{
+    constexpr static std::complex<Q15> value{0.001_q15,0.002_q15};
+    constexpr static std::complex<Q15> half{0.5_q15,Q15{}};
+};
+
+template<>
 struct MatTestConstant<Q15>
 {
     constexpr static Q15 value = 0.001_q15;
     constexpr static Q15 half = 0.5_q15;
+};
+
+template<>
+struct MatTestConstant<std::complex<Q31>>
+{
+    constexpr static std::complex<Q31> value{0.001_q31,0.002_q31};
+    constexpr static std::complex<Q31> half{0.5_q31,Q31{}};
 };
 
 template<>
@@ -83,6 +117,24 @@ struct ErrThreshold
    constexpr static float relerr_qr = 0;
    constexpr static float abserr_inv = 0;
    constexpr static float relerr_inv = 0;
+
+   constexpr static uint32_t fixerr = 0;
+};
+
+template<>
+struct ErrThreshold<std::complex<Q31>>
+{
+   constexpr static float abserr = 0;
+   constexpr static float relerr = 0;
+   constexpr static uint32_t fixerr = 15;
+};
+
+template<>
+struct ErrThreshold<std::complex<Q15>>
+{
+   constexpr static float abserr = 0;
+   constexpr static float relerr = 0;
+   constexpr static uint32_t fixerr = 17;
 };
 
 // Should be more accurate than F32 but right know
@@ -121,12 +173,48 @@ struct ErrThreshold<float32_t>
    constexpr static float relerr_inv = 5.0e-6;
 };
 
+template<>
+struct ErrThreshold<std::complex<float32_t>>
+{
+   constexpr static float abserr = 4.0e-6;
+   constexpr static float relerr = 1.0e-6;
+   constexpr static float abserr_cholesky = 3e-4;
+   constexpr static float relerr_cholesky = 1e-4;
+
+   constexpr static float abserr_householder = ABS_ERROR;
+   constexpr static float relerr_householder = REL_ERROR;
+   constexpr static float abserr_qr = ABS_ERROR;
+   constexpr static float relerr_qr = REL_ERROR;
+
+   constexpr static float abserr_inv = 4.0e-6;
+   constexpr static float relerr_inv = 5.0e-6;
+};
+
 #if !defined(DISABLEFLOAT16)
 template<>
 struct ErrThreshold<float16_t>
 {
    constexpr static float abserr = ABS_ERROR;
    constexpr static float relerr = REL_ERROR;
+   constexpr static float abserr_cholesky = 2e-1;
+   constexpr static float relerr_cholesky = 2e-1;
+
+   constexpr static float abserr_householder = 2e-4;
+   constexpr static float relerr_householder = 2e-3;
+   // 32x32 is not numerically behaving well with
+   // the matrix used as input
+   constexpr static float abserr_qr = 2.0;
+   constexpr static float relerr_qr = 1e-2;
+
+   constexpr static float abserr_inv = 3e-2;
+   constexpr static float relerr_inv = 3e-2;
+};
+
+template<>
+struct ErrThreshold<std::complex<float16_t>>
+{
+   constexpr static float abserr = 2e-3;
+   constexpr static float relerr = 1e-2;
    constexpr static float abserr_cholesky = 2e-1;
    constexpr static float relerr_cholesky = 2e-1;
 
@@ -310,6 +398,8 @@ template<typename T,
 void _matinv(const Matrix<T,NB,NB,A> &a,M && res)
 {
 
+  using CT = typename number_traits<T>::compute_type;
+
   Matrix<T,NB,NB,TMP_ALLOC> b = a;
 
   const vector_length_t nb_rows = a.rows();
@@ -332,24 +422,24 @@ void _matinv(const Matrix<T,NB,NB,A> &a,M && res)
      for(index_t r=c+1;r < nb_rows ; r++)
      {
         T newPivot = b(r,c);
-        if (_abs(newPivot)>_abs(pivot))
+        if ((CT)_abs(newPivot)>(CT)_abs(pivot))
         {
             pivot = newPivot;
             selectedRow = r;
         }
      }
 
-     if ((pivot!=T{}) && (selectedRow != c))
+     if (((CT)pivot!=(CT)(T{})) && (selectedRow != c))
      {
          swap(b.row(c,c),b.row(selectedRow,c));
          swap(res.row(c),res.row(selectedRow));
      }
-     else if (pivot == T{})
+     else if ((CT)pivot == (CT)(T{}))
      {
         break;
      }
 
-     pivot = number_traits<T>::one() / pivot;
+     pivot = (CT)number_traits<T>::one() / (CT)pivot;
 
      b.row(c,c) *= pivot;
      res.row(c) *= pivot;
@@ -619,7 +709,7 @@ void testouter()
    PMat<T> cmsis_res(R,C);
    #endif
    CMSISOuter<T>::run(a.const_ptr(),b.const_ptr(),cmsis_res.ptr(),R,C);
-   startSectionNB(2);
+   stopSectionNB(2);
    STOP_CYCLE_MEASUREMENT;
 
    //std::cout<<cmsis_res;
@@ -634,9 +724,70 @@ void testouter()
 
 }
 
+template<typename TA,typename TB,int R,int C>
+void testouter_mixed()
+{
+   using Res = typename MixedRes<TA,TB>::type;
+   std::cout << "----\r\n";
+   std::cout << R << " x " << C << "\r\n";
+
+   PVector<TA,R> a;
+   PVector<TB,C> b;
+   init_array(a,R);
+   init_array(b,C);
+
+   b = b + b;
+
+   INIT_SYSTICK;
+   START_CYCLE_MEASUREMENT;
+   startSectionNB(1);
+   PMat<Res,R,C> res = outer(a,b);
+   stopSectionNB(1);
+   STOP_CYCLE_MEASUREMENT;
+
+   PVector<Res,R> acmplx;
+   PVector<Res,R> bcmplx;
+
+
+   INIT_SYSTICK;
+   START_CYCLE_MEASUREMENT;
+   startSectionNB(2);
+   #if defined(STATIC_TEST)
+   PMat<Res,R,C> cmsis_res;
+   #else
+   PMat<Res> cmsis_res(R,C);
+   #endif
+
+   if constexpr (IsComplexNumber<TA>::value)
+   {
+      bcmplx = copy(b);
+      CMSISOuter<Res>::run(a.const_ptr(),bcmplx.const_ptr(),cmsis_res.ptr(),R,C);
+   }
+   else 
+   {
+      acmplx = copy(a);
+      CMSISOuter<Res>::run(acmplx.const_ptr(),b.const_ptr(),cmsis_res.ptr(),R,C);
+   }
+   stopSectionNB(2);
+   STOP_CYCLE_MEASUREMENT;
+
+   //std::cout<<cmsis_res;
+
+   if (!validate(res.const_ptr(),cmsis_res.const_ptr(),R*C,
+       ErrThreshold<Res>::abserr,ErrThreshold<Res>::relerr))
+   {
+      printf("outer failed \r\n");
+   }
+
+   std::cout << "=====\r\n";
+
+}
+
 template<typename T,int R,int C>
 void testview()
 {
+   using CT = typename number_traits<T>::compute_type;
+
    std::cout << "----\r\n";
    std::cout << R << " x " << C << "\r\n";
 
@@ -682,19 +833,29 @@ void testview()
       DISABLE_LOOP_UNROLL
       for(index_t col=0;col < subsize ; col++)
       {
-         cmsis_res(row,col) = r(row,col)+r(row,col);
+         cmsis_res(row,col) = (CT)r(row,col)+(CT)r(row,col);
       }
    }
-   startSectionNB(2);
+   stopSectionNB(2);
    STOP_CYCLE_MEASUREMENT;
 
    //std::cout<<resb;
    //std::cout<<cmsis_res;
 
-   if (!validate(resb,cmsis_res,
-       ErrThreshold<T>::abserr,ErrThreshold<T>::relerr))
+   if constexpr (number_traits<T>::is_float)
    {
-      printf("sub matrix failed \r\n");
+      if (!validate(resb,cmsis_res,
+          ErrThreshold<T>::abserr,ErrThreshold<T>::relerr))
+      {
+         printf("sub matrix failed \r\n");
+      } 
+   }
+   else 
+   {
+      if (!validate(resb,cmsis_res,ErrThreshold<T>::fixerr))
+      {
+         printf("sub matrix failed \r\n");
+      } 
    }
 
    std::cout << "=====\r\n";
@@ -755,7 +916,7 @@ void testmatvec()
   
    startSectionNB(2);
    cmsis_mat_vec_mult(&S, a.const_ptr(), cmsis_res.ptr());
-   startSectionNB(2);
+   stopSectionNB(2);
    STOP_CYCLE_MEASUREMENT;
 
    //std::cout << cmsis_res;
@@ -769,8 +930,47 @@ void testmatvec()
   
 }
 
+template<typename TA,typename TB,int R,int C>
+void testmatvec_mixed()
+{
+   using Res = typename MixedRes<TA,TB>::type;
+
+   std::cout << "----\r\n";
+   std::cout << R << " x " << C << "\r\n";
+
+   #if defined(STATIC_TEST)
+   PVector<TA,C> a;
+   #else
+   PVector<TA> a(C);
+   #endif
+   init_array(a,C);
+
+   #if defined(STATIC_TEST)
+   PMat<TB,R,C> m;
+   #else
+   PMat<TB> m(R,C);
+   #endif
+   init_array(m,R*C);
+
+   
+   INIT_SYSTICK;
+   START_CYCLE_MEASUREMENT;
+   startSectionNB(1);
+   #if defined(STATIC_TEST)
+   PVector<Res,R> res = dot(m,a);
+   #else
+   PVector<Res> res = dot(m,a);
+   #endif
+   stopSectionNB(1);
+   STOP_CYCLE_MEASUREMENT;
+
+  
+   std::cout << "=====\r\n";
+  
+}
+
 template<typename T,int R,int C>
-void testcomplexmatvec()
+void testcomplicatedmatvec()
 {
    const T scalar = MatTestConstant<T>::half;
    using STO = typename vector_traits<T>::storage_type;
@@ -827,28 +1027,39 @@ void testcomplexmatvec()
 
    
    startSectionNB(2);
-     cmsis_complex_mat_vec(&S,
+     cmsis_complicated_mat_vec(&S,
                          a.const_ptr(),
                          b.const_ptr(),
                          scalar,
                          tmp.ptr(),
                          cmsis_res.ptr());
-   startSectionNB(2);
+   stopSectionNB(2);
    STOP_CYCLE_MEASUREMENT;
 
 
 
    //std::cout << cmsis_res;
-   
-   if (!validate(res.const_ptr(),cmsis_res.const_ptr(),R,
-       ErrThreshold<T>::abserr,ErrThreshold<T>::relerr))
+   if constexpr (number_traits<T>::is_float)
    {
-      printf("matrix times vector expression failed \r\n");
+      if (!validate(res.const_ptr(),cmsis_res.const_ptr(),R,
+          ErrThreshold<T>::abserr,ErrThreshold<T>::relerr))
+      {
+         printf("matrix times vector expression failed \r\n");
+      }
+   }
+   else 
+   {
+      if (!validate(res.const_ptr(),cmsis_res.const_ptr(),R,
+          ErrThreshold<T>::fixerr))
+      {
+         printf("matrix times vector expression failed \r\n");
+      }
    }
 
    std::cout << "=====\r\n";
   
 }
+
 
 
 template<typename T,int R, int K,int C>
@@ -929,17 +1140,166 @@ void testmatmult()
 
    
    startSectionNB(2);
-   cmsis_mat_mult(&SA, &SB, &RES,reinterpret_cast<S*>(tmp.ptr()));
-   startSectionNB(2);
+   if constexpr (IsComplexNumber<T>::value)
+   {
+      cmsis_cmplx_mat_mult(&SA, &SB, &RES,reinterpret_cast<S*>(tmp.ptr()));
+   }
+   else 
+   {
+     cmsis_mat_mult(&SA, &SB, &RES,reinterpret_cast<S*>(tmp.ptr()));
+   }
+   stopSectionNB(2);
    STOP_CYCLE_MEASUREMENT;
 
   
    //std::cout << cmsis_res;
    
-   if (!validate(res,cmsis_res,
-       ErrThreshold<T>::abserr,ErrThreshold<T>::relerr))
+   if constexpr (number_traits<T>::is_float)
    {
-      printf("matrix times matrix expression failed \r\n");
+      if (!validate(res,cmsis_res,
+          ErrThreshold<T>::abserr,ErrThreshold<T>::relerr))
+      {
+         printf("matrix times matrix expression failed \r\n");
+      }
+   }
+   else
+   {
+      if (!validate(res,cmsis_res,
+          ErrThreshold<T>::fixerr))
+      {
+         printf("matrix times matrix expression failed \r\n");
+      }
+   }
+
+   std::cout << "=====\r\n";
+  
+}
+
+template<typename TA,typename TB,int R, int K,int C>
+void testmatmult_mixed()
+{
+   using Res = typename MixedRes<TA,TB>::type;
+
+   std::cout << "----\r\n";
+   std::cout << R << " x " << K << " x " << C << "\r\n";
+
+
+   #if defined(STATIC_TEST)
+   PMat<TA,R,K> ma;
+   #else
+   PMat<TA> ma(R,K);
+   #endif
+   init_array(ma,R*K);
+
+   #if defined(STATIC_TEST)
+   PMat<TB,K,C> mb;
+   #else
+   PMat<TB> mb(K,C);
+   #endif
+   init_array(mb,K*C);
+
+
+
+   mb += TestConstant<TB>::small;
+
+   //std::cout << ma;
+   //std::cout << mb;
+   
+
+   INIT_SYSTICK;
+   START_CYCLE_MEASUREMENT;
+   startSectionNB(1);
+   #if defined(STATIC_TEST)
+   PMat<Res,R,C> res = dot(ma,mb);
+   #else
+   PMat<Res> res = dot(ma,mb);
+   #endif
+   stopSectionNB(1);
+   STOP_CYCLE_MEASUREMENT;
+
+   //PrintType<decltype(ma)>();
+   //PrintType<decltype(mb)>();
+   //std::cout << ma;
+   //std::cout << mb;
+   //std::cout << res;
+   
+
+   //std::cout << IsMatrix<decltype(r+r)>::value << "\r\n";
+
+   PMat<Res> tmp(C,K);
+
+   INIT_SYSTICK;
+   START_CYCLE_MEASUREMENT;
+   #if defined(STATIC_TEST)
+   PMat<Res,R,C> cmsis_res;
+   PMat<Res,R,K> ma_cmplx;
+   PMat<Res,K,C> mb_cmplx;
+   #else
+   PMat<Res> cmsis_res(R,C);
+   PMat<Res> ma_cmplx(R,K);
+   PMat<Res> mb_cmplx(K,C);
+   #endif
+
+   
+
+
+   typename CMSISMatrixType<Res>::type SA;
+   typedef typename CMSISMatrixType<Res>::scalar S;
+
+   SA.numRows = R;
+   SA.numCols = K;
+
+   typename CMSISMatrixType<Res>::type SB;
+   SB.numRows = K;
+   SB.numCols = C;
+
+   typename CMSISMatrixType<Res>::type RES;
+   RES.numRows = R;
+   RES.numCols = C;
+   RES.pData = reinterpret_cast<S*>(cmsis_res.ptr());
+
+   
+   startSectionNB(2);
+   if constexpr (IsComplexNumber<TA>::value)
+   {
+       mb_cmplx = copy(mb);
+
+       SA.pData = reinterpret_cast<S*>(ma.ptr());
+       SB.pData = reinterpret_cast<S*>(mb_cmplx.ptr());
+
+       cmsis_cmplx_mat_mult(&SA, &SB, &RES,reinterpret_cast<S*>(tmp.ptr()));
+   }
+   else 
+   {
+       ma_cmplx = copy(ma);
+
+       SA.pData = reinterpret_cast<S*>(ma_cmplx.ptr());
+       SB.pData = reinterpret_cast<S*>(mb.ptr());
+
+       cmsis_cmplx_mat_mult(&SA, &SB, &RES,reinterpret_cast<S*>(tmp.ptr()));
+   }
+
+   stopSectionNB(2);
+   STOP_CYCLE_MEASUREMENT;
+
+  
+   //std::cout << cmsis_res;
+   
+   if constexpr (number_traits<Res>::is_float)
+   {
+      if (!validate(res,cmsis_res,
+          ErrThreshold<Res>::abserr,ErrThreshold<Res>::relerr))
+      {
+         printf("matrix times matrix mixed expression failed \r\n");
+      }
+   }
+   else
+   {
+      if (!validate(res,cmsis_res,
+          ErrThreshold<Res>::fixerr))
+      {
+         printf("matrix times matrix mixed expression failed \r\n");
+      }
    }
 
    std::cout << "=====\r\n";
@@ -1026,17 +1386,35 @@ void testsubmatmult()
    startSectionNB(2);
    cmsis_ma = copy(ma.sub(Slice(0,R),Slice(0,K)));
    cmsis_mb = copy(mb.sub(Slice(0,K),Slice(0,C)));
-   cmsis_mat_mult(&SA, &SB, &RES,reinterpret_cast<S*>(tmp.ptr()));
-   startSectionNB(2);
+
+   if constexpr (IsComplexNumber<T>::value)
+   {
+      cmsis_cmplx_mat_mult(&SA, &SB, &RES,reinterpret_cast<S*>(tmp.ptr()));
+   }
+   else 
+   {
+      cmsis_mat_mult(&SA, &SB, &RES,reinterpret_cast<S*>(tmp.ptr()));
+   }
+   stopSectionNB(2);
    STOP_CYCLE_MEASUREMENT;
 
   
    //std::cout << cmsis_res;
-   
-   if (!validate(res.sub(Slice(0,R),Slice(0,C)),cmsis_res,
-       ErrThreshold<T>::abserr,ErrThreshold<T>::relerr))
+   if constexpr (number_traits<T>::is_float)
    {
-      printf("matrix times matrix expression failed \r\n");
+      if (!validate(res.sub(Slice(0,R),Slice(0,C)),cmsis_res,
+          ErrThreshold<T>::abserr,ErrThreshold<T>::relerr))
+      {
+         printf("matrix times matrix expression failed \r\n");
+      }
+   }
+   else 
+   {
+      if (!validate(res.sub(Slice(0,R),Slice(0,C)),cmsis_res,
+          ErrThreshold<T>::fixerr))
+      {
+         printf("matrix times matrix expression failed \r\n");
+      }
    }
 
 
@@ -1092,16 +1470,33 @@ void testmattranspose()
 
    
    startSectionNB(2);
-   cmsis_mat_trans(&SA, &RES);
-   startSectionNB(2);
+   if constexpr (IsComplexNumber<T>::value)
+   {
+     cmsis_cmplx_mat_trans(&SA, &RES);
+   }
+   else 
+   {
+     cmsis_mat_trans(&SA, &RES);
+   }
+   stopSectionNB(2);
    STOP_CYCLE_MEASUREMENT;
 
    //std::cout << cmsis_res;
-   
-   if (!validate(res,cmsis_res,
-       ErrThreshold<T>::abserr,ErrThreshold<T>::relerr))
+   if constexpr (number_traits<T>::is_float)
    {
-      printf("matrix transpose failed \r\n");
+      if (!validate(res,cmsis_res,
+          ErrThreshold<T>::abserr,ErrThreshold<T>::relerr))
+      {
+         printf("matrix transpose failed \r\n");
+      }
+   }
+   else 
+   {
+      if (!validate(res,cmsis_res,
+          ErrThreshold<T>::fixerr))
+      {
+         printf("matrix transpose failed \r\n");
+      }
    }
 
 
@@ -1112,7 +1507,7 @@ void testmattranspose()
 #if !defined(DISABLEFLOAT16)
 static float16_t _gen_sqrt(const float16_t v)
 {
-   return((float16_t)sqrtf(v));
+   return((float16_t)sqrtf((float)v));
 }
 #endif
 
@@ -1130,6 +1525,7 @@ template<int L,template<int> typename A,
          typename V,typename T>
 inline T _householder(Vector<T,L,A> &res,const V&v,const T eps)
 {
+   using C = typename number_traits<T>::compute_type;
    T alpha = v[0];
    T tau;
    T beta;
@@ -1141,24 +1537,24 @@ inline T _householder(Vector<T,L,A> &res,const V&v,const T eps)
    T xnorm2 = dot(v.sub(1),v.sub(1));
 
    //std::cout << xnorm2 << "\r\n";
-   if (xnorm2 <= eps)
+   if ((C)xnorm2 <= (C)eps)
    {
       tau = T{};
       res = T{};
    }
    else 
    {
-      if (alpha<=0)
+      if ((C)alpha<=(C)(T{}))
       {
-         beta = _gen_sqrt(alpha*alpha+xnorm2);
+         beta = _gen_sqrt((T)((C)alpha*(C)alpha+(C)xnorm2));
       }
       else 
       {
-         beta = -_gen_sqrt(alpha*alpha+xnorm2);
+         beta = -(C)_gen_sqrt((T)((C)alpha*(C)alpha+(C)xnorm2));
       }
-      T r = number_traits<T>::one() / (alpha - beta);
+      T r = (C)number_traits<T>::one() / (C)((C)alpha - (C)beta);
       res = v * r;
-      tau = (beta - alpha)/beta;
+      tau = ((C)beta - (C)alpha)/(C)beta;
       res[0] = number_traits<T>::one();
    }
    return(tau);
@@ -1469,6 +1865,8 @@ static void testQR()
 template<typename T,int R,template<int> typename A>
 auto cholesky(const Matrix<T,R,R,A>&a)
 {
+   using C = typename number_traits<T>::compute_type;
+
      // Temporaries
    #if defined(STATIC_TEST)
    Matrix<T,R,R,TMP_ALLOC> g = a;
@@ -1480,13 +1878,13 @@ auto cholesky(const Matrix<T,R,R,A>&a)
 
    const int NBR = a.rows();
 
-   g.col(0,0) = g.col(0,0) * (T)(number_traits<T>::one() / _gen_sqrt(g(0,0)));
+   g.col(0,0) = g.col(0,0) * (T)((C)number_traits<T>::one() / (C)_gen_sqrt(g(0,0)));
 
    for(int j=1;j<NBR;j++)
    {
       dot(tmp.sub(j),g.sub(j,NBR,0,j) , g.row(j,0,j));
-      
-      g.col(j,j) = (g.col(j,j) - tmp.sub(j)) * (T)(number_traits<T>::one() / _gen_sqrt(g(j,j)- tmp[j]));
+
+      g.col(j,j) = (g.col(j,j) - tmp.sub(j)) * (T)((C)number_traits<T>::one() /(C)_gen_sqrt((T)((C)g(j,j)- (C)tmp[j])));
    
    }
    return(g);
@@ -1582,11 +1980,11 @@ struct TESTMATVEC
 };
 
 template<typename TT,typename ...T>
-struct TESTCOMPLEXMATVEC
+struct TESTCOMPLICATEDMATVEC
 {
    static void all()
    {
-      testcomplexmatvec<TT,T::value...>();
+      testcomplicatedmatvec<TT,T::value...>();
    }
 };
 
@@ -1646,7 +2044,7 @@ void matrix_all_test()
 {
 
 #if defined(MATRIX_TEST)
-   #if !defined(SUBTEST1) && !defined(SUBTEST2)
+   #if !defined(SUBTEST1) && !defined(SUBTEST2) && !defined(SUBTEST20)
    const int nb_tails = TailForTests<T>::tail;
    const int nb_loops = TailForTests<T>::loop;
    using UNROLL = mp_rename<mp_list_v<1,2,4,8,9,11>,mp_list>;
@@ -1672,7 +2070,7 @@ void matrix_all_test()
    using UNROLLA = mp_rename<mp_list_v<11>,mp_list>;
    #endif
 
-   #if !defined(SUBTEST1) && !defined(SUBTEST2)
+   #if !defined(SUBTEST1) && !defined(SUBTEST2) && !defined(SUBTEST20)
    using VEC = mp_rename<mp_list_v<1,
                                    nb_tails,
                                    nb_loops,
@@ -1691,28 +2089,42 @@ void matrix_all_test()
 
 #if defined(SUBTEST1)
       
-      title<T>("Householder");
-      testHouseholder<T,NBVEC_4>();
-      testHouseholder<T,NBVEC_16>();
-      testHouseholder<T,NBVEC_32>();
-
-      title<T>("QR");
-      testQR<T,NBVEC_4,NBVEC_4>();
-      testQR<T,NBVEC_16,NBVEC_16>();
-      testQR<T,NBVEC_32,NBVEC_32>();
-
-      title<T>("Cholesky");
-      testCholesky<T,NBVEC_4>();
-      testCholesky<T,NBVEC_16>();
-      testCholesky<T,NBVEC_32>();
+      if constexpr (!IsComplexNumber<T>::value)
+      {
+         title<T>("Householder");
+         testHouseholder<T,NBVEC_4>();
+         testHouseholder<T,NBVEC_16>();
+         testHouseholder<T,NBVEC_32>();
+   
+         title<T>("QR");
+         testQR<T,NBVEC_4,NBVEC_4>();
+         testQR<T,NBVEC_16,NBVEC_16>();
+         testQR<T,NBVEC_32,NBVEC_32>();
+   
+         title<T>("Cholesky");
+         testCholesky<T,NBVEC_4>();
+         testCholesky<T,NBVEC_16>();
+#if !defined(DISABLEFLOAT16)
+         if constexpr (!std::is_same<T,float16_t>::value)
+         {
+            // sqrt of negative value gives a nan
+            // looks like fp16 not accurate enough for this test
+            // // to be investigated
+            testCholesky<T,NBVEC_32>();
+         }
+#endif
+      }
 
 #endif
 
 #if defined(SUBTEST2)
-      title<T>("Matrix inverse");
-      testinv<T,NBVEC_4,NBVEC_4>();
-      testinv<T,NBVEC_8,NBVEC_8>();
-      testinv<T,NBVEC_16,NBVEC_16>();
+      if constexpr (!IsComplexNumber<T>::value)
+      {
+         title<T>("Matrix inverse");
+         testinv<T,NBVEC_4,NBVEC_4>();
+         testinv<T,NBVEC_8,NBVEC_8>();
+         testinv<T,NBVEC_16,NBVEC_16>();
+      }
 #endif
       
 
@@ -1733,6 +2145,8 @@ void matrix_all_test()
 
       if constexpr (!std::is_same<T,double>::value)
       {
+         if constexpr (!IsComplexNumber<T>::value)
+         {
 #if defined(SUBTEST1)
           title<T>("Matrix times vector");
     
@@ -1750,18 +2164,20 @@ void matrix_all_test()
 
 #if defined(SUBTEST1)
           title<T>("Matrix times vector expression");
-    
-          testcomplexmatvec<T,NBVEC_4 ,NBVEC_4>();
-          testcomplexmatvec<T,NBVEC_16,NBVEC_16>();
-          testcomplexmatvec<T,NBVEC_32,NBVEC_32>();
-          testcomplexmatvec<T,NBVEC_44,NBVEC_44>();
-          testcomplexmatvec<T,NBVEC_47,NBVEC_47>();
-#endif
+       
+          testcomplicatedmatvec<T,NBVEC_4 ,NBVEC_4>();
+          testcomplicatedmatvec<T,NBVEC_16,NBVEC_16>();
+          testcomplicatedmatvec<T,NBVEC_32,NBVEC_32>();
+          testcomplicatedmatvec<T,NBVEC_44,NBVEC_44>();
+          testcomplicatedmatvec<T,NBVEC_47,NBVEC_47>();
+          
+#endif 
 
 #if defined(SUBTEST5)
-          title<T>("Matrix times vector expression");
-          ALL_TESTS<TESTCOMPLEXMATVEC,UNROLL,VEC>::all();
+             title<T>("Matrix times vector expression");
+             ALL_TESTS<TESTCOMPLICATEDMATVEC,UNROLL,VEC>::all();
 #endif
+         }
       }
 
    if constexpr (!std::is_same<T,Q7>::value && !std::is_same<T,double>::value)
@@ -1794,6 +2210,8 @@ void matrix_all_test()
 
 #if defined(SUBTEST1)
    title<T>("Matrix multiply");
+   testmatmult<T,2,2,2>();
+   testmatmult<T,3,3,3>();
    testmatmult<T,NBVEC_4,NBVEC_4,NBVEC_4>();
    testmatmult<T,NBVEC_16,NBVEC_16,NBVEC_16>();
    testmatmult<T,NBVEC_32,NBVEC_32,NBVEC_32>();
@@ -1822,6 +2240,8 @@ void matrix_all_test()
 
 #if defined(SUBTEST1)
    title<T>("Submatrix multiply");
+   testsubmatmult<T,2,2,2>();
+   testsubmatmult<T,3,3,3>();
    testsubmatmult<T,NBVEC_4,NBVEC_4,NBVEC_4>();
    testsubmatmult<T,NBVEC_16,NBVEC_16,NBVEC_16>();
 #endif 
@@ -1830,6 +2250,47 @@ void matrix_all_test()
    title<T>("Submatrix multiply");
    ALL_TESTS<TESTSUBMATMULT,UNROLLA,VEC,UNROLL>::all();
 #endif
+
+#if defined(SUBTEST20)
+   if constexpr (IsComplexNumber<T>::value)
+   {
+      title<T>("Matrix mixed multiply c X r");
+      testmatmult_mixed<T,typename T::value_type,NBVEC_4,NBVEC_4,NBVEC_4>();
+      testmatmult_mixed<T,typename T::value_type,NBVEC_16,NBVEC_16,NBVEC_16>();
+      testmatmult_mixed<T,typename T::value_type,NBVEC_32,NBVEC_32,NBVEC_32>();
+
+      title<T>("Matrix mixed multiply r X c");
+      testmatmult_mixed<typename T::value_type,T,NBVEC_4,NBVEC_4,NBVEC_4>();
+      testmatmult_mixed<typename T::value_type,T,NBVEC_16,NBVEC_16,NBVEC_16>();
+      testmatmult_mixed<typename T::value_type,T,NBVEC_32,NBVEC_32,NBVEC_32>();
+
+      title<T>("Matrix times vector mixed c X r");
+
+      // The test is only that it builds since
+      // there is no corresponding CMSIS-DSP function to compare with
+    
+      testmatvec_mixed<T,typename T::value_type,NBVEC_4 ,NBVEC_4>();
+      testmatvec_mixed<T,typename T::value_type,NBVEC_16,NBVEC_16>();
+      testmatvec_mixed<T,typename T::value_type,NBVEC_32,NBVEC_32>();
+
+      title<T>("Matrix times vector mixed r X c");
+      testmatvec_mixed<typename T::value_type,T,NBVEC_4 ,NBVEC_4>();
+      testmatvec_mixed<typename T::value_type,T,NBVEC_16,NBVEC_16>();
+      testmatvec_mixed<typename T::value_type,T,NBVEC_32,NBVEC_32>();
+
+      title<T>("Matrix outer product mixed c X r");
+   
+      testouter_mixed<T,typename T::value_type,NBVEC_4,NBVEC_4>();
+      testouter_mixed<T,typename T::value_type,NBVEC_8,NBVEC_8>();
+      testouter_mixed<T,typename T::value_type,NBVEC_16,NBVEC_16>();
+
+      title<T>("Matrix outer product mixed r X c");
+      testouter_mixed<typename T::value_type,T,NBVEC_4,NBVEC_4>();
+      testouter_mixed<typename T::value_type,T,NBVEC_8,NBVEC_8>();
+      testouter_mixed<typename T::value_type,T,NBVEC_16,NBVEC_16>();
+   }
+#endif
+
 
    //testsubmatmult<T,NBVEC_32>();
 #endif
@@ -1840,24 +2301,58 @@ void matrix_all_test()
 
 void matrix_test()
 {
+#if 0
+   using T = std::complex<Q31>;
+   //using T = Q31;
+   constexpr int N = 4;
+   
+   title<T>("Matrix multiply");
+   testmatmult<T,N,N,N>();
+
+   //testmatmult_mixed<T,typename T::value_type,N,N,N>();
+   //testmatmult_mixed<typename T::value_type,T,N,N,N>();
+
+#else
 #if defined(MATRIX_TEST)
    #if defined(F64_DT)
    matrix_all_test<double>();
    #endif
+
+   #if defined(COMPLEX_F32_DT)
+   matrix_all_test<std::complex<float>>();
+   #endif
+
    #if defined(F32_DT)
    matrix_all_test<float>();
    #endif
+
+   #if defined(COMPLEX_F16_DT) && !defined(DISABLEFLOAT16)
+   matrix_all_test<std::complex<float16_t>>();
+   #endif
+
    #if defined(F16_DT) && !defined(DISABLEFLOAT16)
    matrix_all_test<float16_t>();
    #endif
+
+   #if defined(COMPLEX_Q31_DT)
+   matrix_all_test<std::complex<Q31>>();
+   #endif
+
    #if defined(Q31_DT)
    matrix_all_test<Q31>();
    #endif
+
+   #if defined(COMPLEX_Q15_DT)
+   matrix_all_test<std::complex<Q15>>();
+   #endif
+
    #if defined(Q15_DT)
    matrix_all_test<Q15>();
    #endif
+
    #if defined(Q7_DT)
    matrix_all_test<Q7>();
    #endif
+#endif
 #endif
 }

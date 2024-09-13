@@ -48,19 +48,23 @@ inline void _dot_m_v(RES &res,
                      const M&m,const V&v,
                      const Scalar* = nullptr)
 {
-    using T = typename traits<M>::Scalar;
+    using TM = typename traits<M>::Scalar;
+    using TV = typename traits<V>::Scalar;
+    using T = typename MixedRes<TM,TV>::type;
+
     using Acc = typename number_traits<T>::accumulator;
     uint32_t numRows = m.rows();
     uint32_t numCols = m.columns();
-    const T *pSrcA = m.ptr();
-    const T *pInA1;      /* input data matrix pointer A of Q31 type */
-    const T *pInA2;      /* input data matrix pointer A of Q31 type */
-    const T *pInA3;      /* input data matrix pointer A of Q31 type */
-    const T *pInA4;      /* input data matrix pointer A of Q31 type */
+    const TM *pSrcA = m.ptr();
+    const TM *pInA1;      /* input data matrix pointer A of Q31 type */
+    const TM *pInA2;      /* input data matrix pointer A of Q31 type */
+    const TM *pInA3;      /* input data matrix pointer A of Q31 type */
+    const TM *pInA4;      /* input data matrix pointer A of Q31 type */
     T *px;               /* Temporary output data matrix pointer */
     uint32_t i;
     uint16_t row, colCnt; /* loop counters */
-    T matData, matData2, vecData, vecData2;
+    TM matData, matData2;
+    TV vecData, vecData2;
 
 
     /* Process 4 rows at a time */

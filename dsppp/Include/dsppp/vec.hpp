@@ -5,7 +5,6 @@
 #include <memory>
 #include <cstring>
 #include <algorithm>
-#include <iostream>
 #include "common.hpp"
 #include "arch.hpp"
 #include <type_traits>
@@ -27,6 +26,8 @@ namespace arm_cmsis_dsp {
 template<typename T,bool = true>
 struct VecRef;
 
+
+
 template<typename T>
 struct VecRef<Vector_Base<T>>
 {
@@ -35,6 +36,7 @@ struct VecRef<Vector_Base<T>>
       return(type(a));
    };
 };
+
 
 template<typename T,int S>
 struct VecRef<VectorView<T,S>>
@@ -79,6 +81,7 @@ struct VecRef<_Binary<LHS,RHS,OP>>
    };
 };
 
+
 template<typename LHS,typename OP>
 struct VecRef<_Unary<LHS,OP>>
 {
@@ -115,6 +118,17 @@ struct VecRef<float>
    };
 };
 
+
+template<>
+struct VecRef<std::complex<float>>
+{
+   typedef std::complex<float> type;
+   static type ref(const std::complex<float> a){
+      return(a);
+   };
+};
+
+
 #if defined(ARM_FLOAT16_SUPPORTED)
 template<>
 struct VecRef<float16_t>
@@ -124,6 +138,16 @@ struct VecRef<float16_t>
       return(a);
    };
 };
+
+template<>
+struct VecRef<std::complex<float16_t>>
+{
+   typedef std::complex<float16_t> type;
+   static type ref(const std::complex<float16_t> a){
+      return(a);
+   };
+};
+
 #endif
 
 template<>
@@ -131,6 +155,15 @@ struct VecRef<Q7>
 {
    typedef Q7 type;
    static type ref(const Q7 a){
+      return(a);
+   };
+};
+
+template<>
+struct VecRef<std::complex<Q7>>
+{
+   typedef std::complex<Q7> type;
+   static type ref(const std::complex<Q7> a){
       return(a);
    };
 };
@@ -145,10 +178,30 @@ struct VecRef<Q15>
 };
 
 template<>
+struct VecRef<std::complex<Q15>>
+{
+   typedef std::complex<Q15> type;
+   static type ref(const std::complex<Q15> a){
+      return(a);
+   };
+};
+
+
+template<>
 struct VecRef<Q31>
 {
    typedef Q31 type;
    static type ref(const Q31 a){
+      return(a);
+   };
+};
+
+
+template<>
+struct VecRef<std::complex<Q31>>
+{
+   typedef std::complex<Q31> type;
+   static type ref(const std::complex<Q31> a){
       return(a);
    };
 };
@@ -331,15 +384,16 @@ using StaticType=typename std::conditional<IsDynamic<VA>::value,VB,VA>::type;
 template<typename LHS,typename RHS,
 typename std::enable_if<(!is_scalar<LHS>() || 
                         !is_scalar<RHS>()) && 
-                        SameElementType<LHS,RHS>::value && 
+                        compatible_element<LHS,RHS>() && 
                         same_static_length<LHS,RHS>(),bool>::type = true>
 inline auto operator+(const LHS &a,const RHS &b)
 { 
-    using Scalar = typename traits<LHS>::Scalar;
+    using ScalarLHS = typename traits<LHS>::Scalar;
+    using ScalarRHS = typename traits<RHS>::Scalar;
     using VecLHS = VecRef<LHS>;
     using VecRHS = VecRef<RHS>;
 
-    return(_Binary<typename VecLHS::type,typename VecRHS::type,_AddOp<Scalar>>(VecLHS::ref(a),VecRHS::ref(b),_AddOp<Scalar>()));
+    return(_Binary<typename VecLHS::type,typename VecRHS::type,_AddOp<ScalarLHS,ScalarRHS>>(VecLHS::ref(a),VecRHS::ref(b),_AddOp<ScalarLHS,ScalarRHS>()));
 };
 
 
@@ -429,16 +483,17 @@ inline auto copy(const LHS &a)
 template<typename LHS,typename RHS,
 typename std::enable_if<(!is_scalar<LHS>() || 
                         !is_scalar<RHS>()) && 
-                        SameElementType<LHS,RHS>::value && 
+                        compatible_element<LHS,RHS>() && 
                         same_static_length<LHS,RHS>(),bool>::type = true>
 inline auto operator-(const LHS &a,const RHS &b)
 { 
-    using Scalar = typename traits<LHS>::Scalar;
+    using ScalarLHS = typename traits<LHS>::Scalar;
+    using ScalarRHS = typename traits<RHS>::Scalar;
     using VecLHS = VecRef<LHS>;
     using VecRHS = VecRef<RHS>;
 
-    return(_Binary<typename VecLHS::type,typename VecRHS::type,_SubOp<Scalar>>(
-        VecLHS::ref(a),VecRHS::ref(b),_SubOp<Scalar>()));
+    return(_Binary<typename VecLHS::type,typename VecRHS::type,_SubOp<ScalarLHS,ScalarRHS>>(
+        VecLHS::ref(a),VecRHS::ref(b),_SubOp<ScalarLHS,ScalarRHS>()));
 };
 
 
@@ -461,6 +516,26 @@ inline auto operator-(const LHS &a)
     return(_Unary<typename VecLHS::type,_NegOp<Scalar>>(VecLHS::ref(a),_NegOp<Scalar>()));
 };
 
+/**
+ * @brief  - operator for expressions
+ *
+ * @tparam LHS Left hand side datatype
+ * @param a Left hand side expression tree
+ * @return Expression representing the - vector
+ * 
+ * -vector (including matrix)
+ */
+
+template<typename LHS,
+typename std::enable_if<!is_scalar<LHS>(),bool>::type = true>
+inline auto conjugate(const LHS &a)
+{ 
+    using Scalar = typename traits<LHS>::Scalar;
+    using VecLHS = VecRef<LHS>;
+
+    return(_Unary<typename VecLHS::type,_ConjugateOp<Scalar>>(VecLHS::ref(a),_ConjugateOp<Scalar>()));
+};
+
 
 /**
  * @brief  Element wise multiplication operator for expressions
@@ -476,16 +551,17 @@ inline auto operator-(const LHS &a)
 template<typename LHS,typename RHS,
 typename std::enable_if<(!is_scalar<LHS>() || 
                         !is_scalar<RHS>())  && 
-                        SameElementType<LHS,RHS>::value && 
+                        compatible_element<LHS,RHS>() && 
                         same_static_length<LHS,RHS>(),bool>::type = true>
 inline auto operator*(const LHS &a,const RHS &b)
 { 
-    using Scalar = typename traits<LHS>::Scalar;
+    using ScalarLHS = typename traits<LHS>::Scalar;
+    using ScalarRHS = typename traits<RHS>::Scalar;
     using VecLHS = VecRef<LHS>;
     using VecRHS = VecRef<RHS>;
 
-    return(_Binary<typename VecLHS::type,typename VecRHS::type,_MulOp<Scalar>>(
-        VecLHS::ref(a),VecRHS::ref(b),_MulOp<Scalar>()));
+    return(_Binary<typename VecLHS::type,typename VecRHS::type,_MulOp<ScalarLHS,ScalarRHS>>(
+        VecLHS::ref(a),VecRHS::ref(b),_MulOp<ScalarLHS,ScalarRHS>()));
 };
 
 

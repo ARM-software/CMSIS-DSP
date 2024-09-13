@@ -38,6 +38,9 @@ struct number_traits<float16_t>
 
    //! Compute datatype
    typedef _Float16 compute_type;
+
+   //! Display type for printf 
+   typedef float display_type;
 };
 
 
@@ -55,6 +58,7 @@ struct vector_traits<float16_t> {
   // No vector type but must still be defined
   //! Dummy type when no vector instruction is supported
   typedef bool vector;
+  typedef bool real_vector;
   //! Dummy type when no vector instruction is supported
   typedef bool temp_accumulator;
   //! Dummy type when no vector instruction is supported
@@ -68,12 +72,15 @@ struct vector_traits<float16_t> {
   static constexpr bool is_fixed = false;
   //! Has predicated loop
   static constexpr bool has_predicate = false;
+
+  //! Number of lanes
+  static constexpr int nb_lanes = 1;
 };
 #endif 
 
 /**
  * Inner implementation of generic intrinsics
- * \ingroup GenericNumber
+ * \ingroup GenericHalfNumber
  */
 namespace inner {
    /**

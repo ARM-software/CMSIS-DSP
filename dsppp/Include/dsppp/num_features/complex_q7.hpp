@@ -5,16 +5,16 @@
 /** \addtogroup GenericNumber 
  *  \ingroup NUMBER
  *  @{
- *  \addtogroup GenericQ7Number Q7
+ *  \addtogroup GenericComplexQ7Number Complex Q7
  *  \ingroup GenericNumber
  *  @{
  */
 
 /**
- * @brief      Q7 features
+ * @brief      Features for Complex Q7
  */
 template<>
-struct number_traits<Q7>
+struct number_traits<std::complex<Q7>>
 {
    //! Is not float
    static constexpr bool is_float = false;
@@ -23,25 +23,25 @@ struct number_traits<Q7>
    static constexpr bool is_fixed = true;
 
    //! Accumulator datatype
-   typedef Q<17,14> accumulator;
+   typedef std::complex<Q<17,14>> accumulator;
 
    /**
     * @brief      One value
     *
-    * @return     One value in Q7
+    * @return     One value in std::complex<Q7>
     */
-   static constexpr Q7 one() {return Q7::one();};
+   static constexpr std::complex<Q7> one() {return std::complex<Q7>(Q7::one(),Q7{});};
 
 
    //! Compute type
-   typedef Q7 compute_type;
+   typedef std::complex<Q7> compute_type;
 
    //! Display type for printf 
-   typedef Q7 display_type;
+   typedef std::complex<Q7> display_type;
 };
 
 template<>
-struct number_traits<Q<17,14>>
+struct number_traits<std::complex<Q<17,14>>>
 {
    static constexpr bool is_float = false;
    static constexpr bool is_fixed = true;
@@ -53,12 +53,9 @@ struct number_traits<Q<17,14>>
  * @tparam     arch  Current architecture
  */
 template<typename arch>
-struct vector_traits<Q7,arch,
-    typename std::enable_if<!std::is_base_of<Helium,arch>::value &&
-                            !std::is_base_of<Neon,arch>::value &&
-                            !std::is_base_of<DSP,arch>::value>::type> {
+struct vector_traits<std::complex<Q7>,arch,void> {
   //! Current datatype
-  typedef Q7 type;
+  typedef std::complex<Q7> type;
 
   //! Storage datatype (int8_t)
   typedef type::value_type storage_type;
@@ -88,7 +85,7 @@ struct vector_traits<Q7,arch,
 
 /**
  * Inner implementation of generic intrinsics
- * \ingroup GenericQ7Number
+ * \ingroup GenericComplexQ7Number
  */
 namespace inner {
     /**
@@ -96,11 +93,13 @@ namespace inner {
      *
      * @param[in]  a     Accumulator value
      *
-     * @return     Q7 value
+     * @return     std::complex<Q7> value
      */
-    __STATIC_FORCEINLINE Q7 from_accumulator(const Q<17,14> a)
+    __STATIC_FORCEINLINE std::complex<Q7> from_accumulator(const std::complex<Q<17,14>>& a)
     {
-        return(Q7(__SSAT(a.v >> 7, 8)));
+        return(std::complex<Q7>(
+            __SSAT(a.real().v >> 7, 8),__SSAT(a.imag().v >> 7, 8)
+            ));
     };
 
 /**
@@ -112,7 +111,9 @@ namespace inner {
  *
  * @return     acc + a*b
  */
-    __STATIC_FORCEINLINE Q<17,14> mac(const Q<17,14> acc,const Q7 a,const Q7 b)
+    __STATIC_FORCEINLINE std::complex<Q<17,14>> mac(const std::complex<Q<17,14>> acc,
+                                                    const std::complex<Q7> a,
+                                                    const std::complex<Q7> b)
     {
       return(accumulate(acc , mult(a,b)));
     };

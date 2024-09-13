@@ -5,6 +5,7 @@
 
 namespace arm_cmsis_dsp {
 
+
 /** \addtogroup ARCH Architecture detection
  *  \ingroup DSPPP
  *  @{
@@ -36,6 +37,7 @@ class Helium82:public Helium {};
 class Neon:public Scalar {};
 
 /*! @} */
+
 
 }
 

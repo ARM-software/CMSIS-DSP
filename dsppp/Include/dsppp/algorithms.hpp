@@ -44,8 +44,7 @@ template<typename MA,
          typename MB,
          typename std::enable_if<
          HasMatrixIndexing<MA>::value &&
-         HasMatrixIndexing<MB>::value /*&& 
-         SameElementType<MA,Q15>::value*/,bool>::type = true>
+         HasMatrixIndexing<MB>::value,bool>::type = true>
 inline void transposeTo(MA &dst,
                         const MB& src)
 {
@@ -63,7 +62,7 @@ template<typename P,int R,
          template<int> typename A,
          typename VB,
 typename std::enable_if<IsVector<VB>::value &&
-         SameElementType<VB,P>::value,bool>::type = true>
+         compatible_element<VB,P>(),bool>::type = true>
 inline void _diagonal(Matrix<P,R,R,A> &v,
                       const VB& other,
                       const vector_length_t rows)
@@ -87,7 +86,7 @@ template<typename P,int R,
          template<int> typename A,
          typename VB,
 typename std::enable_if<IsVector<VB>::value &&
-         SameElementType<VB,P>::value,bool>::type = true>
+         compatible_element<VB,P>(),bool>::type = true>
 inline void _fill_diagonal(Matrix<P,R,R,A> &v,
                            const VB& other,
                            const vector_length_t rows)
@@ -174,7 +173,6 @@ inline typename OutputMatrix<MA,MB>::type dot(const MA&ma,const MB&mb)
    typename OutputMatrix<MA,MB>::type res;
    auto BT = mb.transpose();
 
-   //using M = MatMult<typename ElementType<MA>::type,MA,MB,typename OutputMatrix<MA,MB>::type,decltype(BT)>;
    _dot_m_m(ma,mb,res,BT,CURRENT_ARCH);
    return(res);
 }
@@ -188,7 +186,6 @@ inline typename OutputMatrix<MA,MB>::type dot(const MA&ma,const MB&mb)
    
    typename OutputMatrix<MA,MB>::type res;
 
-   //using M = MatMult<typename ElementType<MA>::type,MA,MB,typename OutputMatrix<MA,MB>::type,decltype(BT)>;
    _dot_m_m(ma,mb,res,CURRENT_ARCH);
    return(res);
 }
@@ -202,7 +199,6 @@ inline typename OutputMatrix<MA,MB>::type dot(const MA&ma,const MB&mb)
    typename OutputMatrix<MA,MB>::type res(ma.rows(),mb.columns());
    auto BT = mb.transpose();
 
-   //using M = MatMult<typename ElementType<MA>::type,MA,MB,typename OutputMatrix<MA,MB>::type,decltype(BT)>;
    _dot_m_m(ma,mb,res,BT,CURRENT_ARCH);
    return(res);
 }
@@ -215,7 +211,6 @@ inline typename OutputMatrix<MA,MB>::type dot(const MA&ma,const MB&mb)
 {
    typename OutputMatrix<MA,MB>::type res(ma.rows(),mb.columns());
 
-   //using M = MatMult<typename ElementType<MA>::type,MA,MB,typename OutputMatrix<MA,MB>::type,decltype(BT)>;
    _dot_m_m(ma,mb,res,CURRENT_ARCH);
    return(res);
 }
@@ -242,9 +237,6 @@ template<typename MA,
                                  number_traits<typename traits<MA>::Scalar>::is_float,bool>::type = true>
 inline void dot(RES &&res,const MA&ma,const MB&mb)
 {
-   //typename OutputMatrix<MA,MB>::type res(ma.rows(),mb.columns());
-
-   //using M = MatMult<typename ElementType<MA>::type,MA,MB,typename OutputMatrix<MA,MB>::type,decltype(BT)>;
    _dot_m_m(ma,mb,std::forward<RES>(res),CURRENT_ARCH);
 }
 
@@ -257,7 +249,6 @@ inline typename OutputMatrix<MA,MB>::type dot(const MA&ma,const MB&mb)
 {
    typename OutputMatrix<MA,MB>::type res(ma.rows(),mb.columns());
 
-   //using M = MatMult<typename ElementType<MA>::type,MA,MB,typename OutputMatrix<MA,MB>::type,decltype(mbt)>;
    _dot_m_m(ma,mb,res,CURRENT_ARCH);
    return(res);
 }
@@ -271,7 +262,6 @@ inline typename OutputMatrix<MA,MB>::type dot(const MA&ma,const MB&mb,const TMP 
 {
    typename OutputMatrix<MA,MB>::type res(ma.rows(),mb.columns());
 
-   //using M = MatMult<typename ElementType<MA>::type,MA,MB,typename OutputMatrix<MA,MB>::type,decltype(mbt)>;
    _dot_m_m(ma,mb,res,mbt,CURRENT_ARCH);
    return(res);
 }

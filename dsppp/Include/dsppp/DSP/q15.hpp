@@ -126,7 +126,7 @@ struct vector_traits<Q15,DSP,typename std::enable_if<true>::type>
 
 
 /**
- * \ingroup DSPNumber
+ * \ingroup DSPQ15Number
  */
 namespace inner {
 
@@ -155,6 +155,11 @@ namespace inner {
     __STATIC_FORCEINLINE Q15DSPVector vneg(const Q15DSPVector a)
     {
        return(Q15DSPVector(__QSUB16(0, a.v)));
+    };
+
+    __STATIC_FORCEINLINE Q15DSPVector vconjugate(const Q15DSPVector a)
+    {
+       return(a);
     };
 
     __STATIC_FORCEINLINE Q15DSPVector vadd(const Q15DSPVector a,

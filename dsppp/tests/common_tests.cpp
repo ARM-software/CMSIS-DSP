@@ -25,7 +25,8 @@ bool validate(const float32_t* a,
               const float32_t* b, 
               std::size_t nb,
               float abser, 
-              float reler)
+              float reler,
+              uint32_t)
 {
    for(std::size_t i=0;i<nb;i++)
    {

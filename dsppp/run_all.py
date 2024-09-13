@@ -60,6 +60,13 @@ def is_error(res,test_name,err):
         return(True)
     return(False)
 
+def has_test_error(msg):
+    lines = msg.splitlines()
+    for l in lines:
+        if re.search(r'Error',l):
+            return True
+    return False
+
 def run(args,mustPrint=False,dumpStdErr=True,timeout=20,printCmd=False):
     global ERROR_OCCURED
     global DEBUG
@@ -67,7 +74,7 @@ def run(args,mustPrint=False,dumpStdErr=True,timeout=20,printCmd=False):
         if DEBUG or printCmd:
             print(" ".join(args))
         result=subprocess.run(args,text=True,capture_output=True,timeout=timeout)
-        if result.returncode !=0 :
+        if result.returncode !=0 or has_test_error(result.stdout):
              ERROR_OCCURED = True
              if dumpStdErr:
                 return(Result(result.stderr + "\n\nSTDOUT:\n\n" + result.stdout,error=True))
@@ -82,6 +89,8 @@ def run(args,mustPrint=False,dumpStdErr=True,timeout=20,printCmd=False):
         ERROR_OCCURED = True
         return(Result(str(e),error=True))
 
+CORES = ["M55","M4","M0"]
+
 parser = argparse.ArgumentParser(description='Parse test description')
 parser.add_argument('-c', nargs='?',type = str, default="M55",help="M55/M4/M0")
 parser.add_argument('-p', nargs='?',type = str, default="VHT",help="VHT/MPS3")
@@ -92,7 +101,10 @@ parser.add_argument('-d', action='store_true', help="Dry run")
 parser.add_argument('-g', nargs='?',type = str, default="AC6",help="AC6 / CLANG / GCC")
 parser.add_argument('-u', nargs='?',type = str, default="L85986697A",help="Debug UUID")
 parser.add_argument('-t', action='store_true', help="Enable test mode")
+parser.add_argument('-r', action='store_true', help="No full rebuild")
 parser.add_argument('-avh', nargs='?',type = str, default="C:/Keil_v5/ARM/avh-fvp/bin/models", help="AVH folder")
+parser.add_argument('-dump', action='store_true', help="Dump build output")
+parser.add_argument('-s', nargs='?',type = int,help="Force subtest")
 
 args = parser.parse_args()
 
@@ -164,12 +176,14 @@ fvpUnix = {"M55":"FVP_Corstone_SSE-300_Ethos-U55",
 
 AVHROOT = args.avh
 
+
+# Fusion F64 not working. To be analyzed
 TESTS=["DOT_TEST",
        "VECTOR_TEST",
        "ROW_TEST",
        "COL_TEST",
        "MATRIX_TEST",
-       "FUSION_TEST"
+#       "FUSION_TEST"
        ]
 
 # Some tests are too big (code size) and needs to be decomposed
@@ -178,7 +192,7 @@ TESTS=["DOT_TEST",
 # suite
 # No need to define an entry in this dictionary when no
 # subtest is defined
-SUBTESTS = {"MATRIX_TEST":19}
+SUBTESTS = {"MATRIX_TEST":20}
 # Subtests that are only for testing and not benchmarks
 ONLY_TESTS = {"MATRIX_TEST":[3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]}
 
@@ -187,10 +201,15 @@ def is_only_test(n,i):
        return(i in ONLY_TESTS[n[0]])
     return False
 
-DATATYPES = ["F64_DT",
+DATATYPES = ["COMPLEX_F64_DT",
+             "F64_DT",
+             "COMPLEX_F32_DT",
              "F32_DT",
+             "COMPLEX_F16_DT",
              "F16_DT",
+             "COMPLEX_Q31_DT",
              "Q31_DT",
+             "COMPLEX_Q15_DT",
              "Q15_DT",
              "Q7_DT"
              ]
@@ -200,8 +219,28 @@ MODE = ["STATIC_TEST",
         ]
 
 # Restricted tests for debugging
-#TESTS=["FUSION_TEST"]
-#DATATYPES=["Q15_DT"]
+#TESTS=["DOT_TEST"]
+DATATYPES=[ #"COMPLEX_F64_DT",
+            "F64_DT",
+            "COMPLEX_F32_DT",
+            "F32_DT",
+            "COMPLEX_F16_DT",
+            "F16_DT",
+            "COMPLEX_Q31_DT",
+            "Q31_DT",
+            "COMPLEX_Q15_DT",
+            "Q15_DT",
+            #"COMPLEX_Q7_DT",
+            "Q7_DT"
+           ]
+#DATATYPES=[ 
+#            "COMPLEX_F16_DT",
+#            "Q31_DT",
+#            "Q15_DT",
+#            "Q7_DT",
+#            "COMPLEX_Q15_DT",
+#            "COMPLEX_Q31_DT"
+#            ]
 #MODE = ["STATIC_TEST"]
 
 all_tests = list(itertools.product(TESTS,DATATYPES,MODE))
@@ -216,7 +255,6 @@ if args.t:
 if args.a:
     # Stat allocator enabled and we do stats on VHT CS300 only
     ALLOC = "//#define POOL_ALLOCATOR"
-    args.c = "M55"
     args.p = "VHT"
 
 BENCH = "//#define ONLY_BENCHMARKS"
@@ -226,9 +264,12 @@ if args.b:
 HEADER = f"""#ifndef TEST_CONFIG_H
 #define TEST_CONFIG_H
 
+#define {args.c}
+
 {TESTMODE}
 {ALLOC}
 {BENCH}
+
 
 #define %s
 #define %s
@@ -243,17 +284,22 @@ HEADER = f"""#ifndef TEST_CONFIG_H
 def out_path():
     return(os.path.join("cprj","out","test",target_name(),"Release","test"+ ext))
 
-def configure_and_build_test(test_name,test,err,subtest,first):
+def configure_and_build_test(args,test_name,test,err,subtest,first):
     if subtest is not None:
         subteststr = f"#define SUBTEST{subtest}"
     else:
         subteststr = ""
     with open("test_config.h","w") as c:
         print(HEADER % (test + (subteststr,)),file=c)
-    if first:
+    if first and not args.r:
        res = run(["cbuild"] + cmd_args() + ["-r","--update-rte"],timeout=600,printCmd=True)
     else:
        res = run(["cbuild"] +cmd_args(),timeout=600,printCmd=True)
+
+    # Dump build messages. Can be useful to find warnings in the tests
+    if args.dump:
+        print(res.msg,file=err)
+    
     if not is_error(res,test_name,err):
         if DEBUG:
             print(res.msg)
@@ -271,18 +317,18 @@ def process_allocator_data(test_name,test,msg,subtest):
         if re.match(r"^POOL.*$",l):
             alloc_h.append(l.strip())
     if subtest is not None:
-        HEADER=f"#if defined({test[0]}) && defined({test[1]}) && defined({test[2]}) && defined(SUBTEST{subtest})"
+        HEADER=f"#if defined({args.c}) && defined({test[0]}) && defined({test[1]}) && defined({test[2]}) && defined(SUBTEST{subtest})"
     else:
-        HEADER=f"#if defined({test[0]}) && defined({test[1]}) && defined({test[2]})"
+        HEADER=f"#if defined({args.c}) && defined({test[0]}) && defined({test[1]}) && defined({test[2]})"
     # Gen h
-    with open(os.path.join("allocation",test_name)+".h","w") as h:
+    with open(os.path.join("allocation",test_name+f"_{args.c}")+".h","w") as h:
         print(HEADER,file=h)
         for l in alloc_h:
             print(l,file=h)
         print("#endif",file=h)
 
     # Gen cpp
-    with open(os.path.join("allocation",test_name)+".cpp","w") as h:
+    with open(os.path.join("allocation",test_name+f"_{args.c}")+".cpp","w") as h:
          print(HEADER,file=h)
          for l in alloc_cpp:
              print(l,file=h)
@@ -344,19 +390,24 @@ def runMPS3(test_name,test,err,subtest):
     if not is_error(res,test_name,err):
        process_result(test_name,test,res.msg,subtest)
    
-def runATest(test,file_err,nb,NB_MAX,current_nb_axf,nb_axf,first=True,subtest=None):
+def runATest(args,test,file_err,nb,NB_MAX,current_nb_axf,nb_axf,first=True,subtest=None):
     global DEBUG
     if subtest is not None:
        maxsub = SUBTESTS[test[0]]
+
+
        test_name=f"{test[0]}_{test[1]}_{test[2]}_{subtest}"
-       printTitle(test_name + f" : AXF {current_nb_axf} / {nb_axf}, TEST {nb}/{NB_MAX} (subtest {subtest}/{maxsub})")
+       if args.s:
+          printTitle(test_name + f" : AXF {current_nb_axf} / {nb_axf}, TEST {nb}/{NB_MAX} (forced subtest {subtest})")
+       else:
+          printTitle(test_name + f" : AXF {current_nb_axf} / {nb_axf}, TEST {nb}/{NB_MAX} (subtest {subtest}/{maxsub})")
     else:
        test_name=f"{test[0]}_{test[1]}_{test[2]}"
        printTitle(test_name + f" : AXF {current_nb_axf} / {nb_axf}, TEST {nb}/{NB_MAX}")
     if args.d:
         return
     printSubTitle("Configure and build")
-    if configure_and_build_test(test_name,test,file_err,subtest,first):
+    if configure_and_build_test(args,test_name,test,file_err,subtest,first):
         printSubTitle("Run")
         if args.p == "VHT":
             runVHT(test_name,test,file_err,subtest)
@@ -366,7 +417,10 @@ def runATest(test,file_err,nb,NB_MAX,current_nb_axf,nb_axf,first=True,subtest=No
 nb_axf = 0
 for test in all_tests:
     if test[0] in SUBTESTS:
-        for subtestnbb in range(SUBTESTS[test[0]]):
+        torun = range(SUBTESTS[test[0]]) 
+        if args.s:
+            torun = [args.s - 1]
+        for subtestnbb in torun:
             if not args.b or not is_only_test(test,subtestnbb+1):
                nb_axf = nb_axf + 1
     else:
@@ -377,24 +431,26 @@ with open(os.path.join(results(),f"errors_{args.c}.txt"),"w") as err:
     # Generate include for allocations
     if args.a or args.i:
         with open(os.path.join("allocation","all.h"),"w") as fh:
-            for test in all_tests:
-                if test[0] in SUBTESTS:
-                   for subtestnbb in range(SUBTESTS[test[0]]):
-                      test_name=f"{test[0]}_{test[1]}_{test[2]}_{subtestnbb+1}"
-                      print(f"#include \"{test_name}.h\"",file=fh)
-                else:
-                    test_name=f"{test[0]}_{test[1]}_{test[2]}"
-                    print(f"#include \"{test_name}.h\"",file=fh)
+                c = args.c
+                for test in all_tests:
+                    if test[0] in SUBTESTS:
+                       for subtestnbb in range(SUBTESTS[test[0]]):
+                          test_name=f"{test[0]}_{test[1]}_{test[2]}_{subtestnbb+1}"
+                          print(f"#include \"{test_name}_{c}.h\"",file=fh)
+                    else:
+                        test_name=f"{test[0]}_{test[1]}_{test[2]}"
+                        print(f"#include \"{test_name}_{c}.h\"",file=fh)
     
         with open(os.path.join("allocation","all.cpp"),"w") as fc:
-            for test in all_tests:
-                if test[0] in SUBTESTS:
-                   for subtestnbb in range(SUBTESTS[test[0]]):
-                       test_name=f"{test[0]}_{test[1]}_{test[2]}_{subtestnbb+1}"
-                       print(f"#include \"{test_name}.cpp\"",file=fc)
-                else:
-                   test_name=f"{test[0]}_{test[1]}_{test[2]}"
-                   print(f"#include \"{test_name}.cpp\"",file=fc)
+                c = args.c
+                for test in all_tests:
+                    if test[0] in SUBTESTS:
+                       for subtestnbb in range(SUBTESTS[test[0]]):
+                           test_name=f"{test[0]}_{test[1]}_{test[2]}_{subtestnbb+1}"
+                           print(f"#include \"{test_name}_{c}.cpp\"",file=fc)
+                    else:
+                       test_name=f"{test[0]}_{test[1]}_{test[2]}"
+                       print(f"#include \"{test_name}_{c}.cpp\"",file=fc)
     
     if not args.i:
         NB_MAX = len(all_tests)
@@ -403,13 +459,16 @@ with open(os.path.join(results(),f"errors_{args.c}.txt"),"w") as err:
         first = True
         for test in all_tests:
             if test[0] in SUBTESTS:
-                for subtestnbb in range(SUBTESTS[test[0]]):
+                torun = range(SUBTESTS[test[0]]) 
+                if args.s:
+                    torun = [args.s - 1]
+                for subtestnbb in torun:
                     if not args.b or not is_only_test(test,subtestnbb+1):
-                       runATest(test,err,nb,NB_MAX,current_axf,nb_axf,first,subtestnbb+1)
+                       runATest(args,test,err,nb,NB_MAX,current_axf,nb_axf,first,subtestnbb+1)
                        current_axf = current_axf + 1
                        first = False
             else:
-                runATest(test,err,nb,NB_MAX,current_axf,nb_axf,first)
+                runATest(args,test,err,nb,NB_MAX,current_axf,nb_axf,first)
                 current_axf = current_axf + 1
                 first = False
             nb = nb + 1

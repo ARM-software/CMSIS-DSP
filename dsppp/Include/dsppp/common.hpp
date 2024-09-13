@@ -14,6 +14,10 @@
 #define MEMORY_POOL_ALIGNMENT 128
 //#define MEMORY_ALLOCATION_DEBUG
 
+// Define to use scatter loading to convert real vector to complex vector
+#define SCATTER_CONST
+
+
 // TMP_ALLOC must be defined to use the library
 // It is generally defined in an external header not
 // part of the library.
@@ -28,7 +32,7 @@
 #if defined(ARM_COMPUTE_DISABLE_UNROLL)
 #define UNROLL_LOOP _Pragma ("clang loop unroll(disable)")
 #else
-#define UNROLL_LOOP _Pragma("clang loop unroll_count(4)")
+#define UNROLL_LOOP _Pragma("clang loop unroll_count(2)")
 #endif
 
 #define DISABLE_LOOP_UNROLL _Pragma("clang loop unroll(disable)")

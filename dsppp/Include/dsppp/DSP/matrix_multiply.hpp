@@ -19,6 +19,8 @@
 template<typename MA,
          typename MB,
          typename std::enable_if<
+         !is_complex<MA>() &&
+         !is_complex<MB>() &&
          std::is_same<typename traits<MA>::Scalar,Q15>::value &&
          number_traits<typename traits<MA>::Scalar>::is_fixed,bool>::type = true>
 __STATIC_INLINE void _arm_mat_trans(
@@ -115,6 +117,9 @@ template<typename M,
          typename V,
          typename RES,
          typename std::enable_if<
+         !is_complex<M>() &&
+         !is_complex<V>() &&
+         !is_complex<RES>() &&
          !std::is_same<typename traits<M>::Scalar,Q31>::value &&
          number_traits<typename traits<M>::Scalar>::is_fixed,bool>::type = true>
 inline void _dot_m_v(RES &res,
@@ -253,6 +258,10 @@ template<typename MA,
          typename RES,
          typename TMP,
          typename std::enable_if<
+         !is_complex<MA>() &&
+         !is_complex<MB>() &&
+         !is_complex<RES>() &&
+         !is_complex<TMP>() &&
          !std::is_same<typename traits<MA>::Scalar,Q31>::value &&
          number_traits<typename traits<MA>::Scalar>::is_fixed,bool>::type = true>
 __STATIC_INLINE void _dot_m_m(const MA&pSrcA,const MB&pSrcB,

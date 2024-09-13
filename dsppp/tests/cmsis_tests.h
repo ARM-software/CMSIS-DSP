@@ -10,6 +10,60 @@ extern "C" {
 
 }
 
+#include <complex>
+
+
+
+template<typename T>
+struct ErrT
+{
+    constexpr static float rel_error = 1.0e-6;
+    constexpr static float abs_error = 1.0e-6;
+    constexpr static int32_t fixed_error = 0;
+};
+
+template<>
+struct ErrT<std::complex<float32_t>>
+{
+    constexpr static float rel_error = 2.0e-6;
+    constexpr static float abs_error = 1.0e-6;
+    constexpr static int32_t fixed_error = 0;
+};
+
+#if !defined(DISABLEFLOAT16)
+template<>
+struct ErrT<float16_t>
+{
+    constexpr static float rel_error = 1.0e-3;
+    constexpr static float abs_error = 1.0e-3;
+};
+
+template<>
+struct ErrT<std::complex<float16_t>>
+{
+    constexpr static float rel_error = 1.0e-3;
+    constexpr static float abs_error = 1.0e-3;
+};
+
+#endif 
+
+template<>
+struct ErrT<Q31>
+{
+    constexpr static float rel_error = 1.0e-6;
+    constexpr static float abs_error = 1.0e-6;
+    constexpr static int32_t fixed_error = 1;
+};
+
+template<>
+struct ErrT<std::complex<Q31>>
+{
+    constexpr static float rel_error = 1.0e-6;
+    constexpr static float abs_error = 1.0e-6;
+    constexpr static int32_t fixed_error = 1;
+};
+
+
 template<typename T>
 struct NameOfType;
 
@@ -17,10 +71,25 @@ template<typename T>
 struct TailForTests;
 
 template<>
+struct NameOfType<std::complex<float64_t>>
+{
+    constexpr static const char* v="std::complex<float64_t>";
+    constexpr static const char* xls="complex_f64";
+};
+
+
+template<>
 struct NameOfType<float64_t>
 {
     constexpr static const char* v="float64_t";
     constexpr static const char* xls="f64";
+};
+
+template<>
+struct NameOfType<std::complex<float32_t>>
+{
+    constexpr static const char* v="std::complex<float32_t>";
+    constexpr static const char* xls="complex_f32";
 };
 
 template<>
@@ -32,6 +101,15 @@ struct NameOfType<float32_t>
 };
 
 #if !defined(DISABLEFLOAT16)
+
+template<>
+struct NameOfType<std::complex<float16_t>>
+{
+    constexpr static const char* v="std::complex<float16_t>";
+    constexpr static const char* xls="complex_f16";
+
+};
+
 template<>
 struct NameOfType<float16_t>
 {
@@ -42,10 +120,26 @@ struct NameOfType<float16_t>
 #endif
 
 template<>
+struct NameOfType<std::complex<Q31>>
+{
+    constexpr static const char* v="std::complex<q31>";
+    constexpr static const char* xls="complex_q31";
+
+};
+
+template<>
 struct NameOfType<Q31>
 {
     constexpr static const char* v="q31";
     constexpr static const char* xls="q31";
+
+};
+
+template<>
+struct NameOfType<std::complex<Q15>>
+{
+    constexpr static const char* v="std:complex<q15>";
+    constexpr static const char* xls="complex_q15";
 
 };
 
@@ -58,10 +152,26 @@ struct NameOfType<Q15>
 };
 
 template<>
+struct NameOfType<std::complex<Q7>>
+{
+    constexpr static const char* v="std:complex<q7>";
+    constexpr static const char* xls="complex_q7";
+
+};
+
+template<>
 struct NameOfType<Q7>
 {
     constexpr static const char* v="q7";
     constexpr static const char* xls="q7";
+
+};
+
+template<>
+struct TailForTests<std::complex<double>>
+{
+    constexpr static const int tail = 1;
+    constexpr static const int loop = 2;
 
 };
 
@@ -74,6 +184,13 @@ struct TailForTests<double>
 };
 
 template<>
+struct TailForTests<std::complex<float>>
+{
+    constexpr static const int tail = 3;
+    constexpr static const int loop = 2*4;
+};
+
+template<>
 struct TailForTests<float>
 {
     constexpr static const int tail = 3;
@@ -81,6 +198,16 @@ struct TailForTests<float>
 };
 
 #if !defined(DISABLEFLOAT16)
+
+template<>
+struct TailForTests<std::complex<float16_t>>
+{
+    constexpr static const int tail = 7;
+    constexpr static const int loop = 2*8;
+
+};
+
+
 template<>
 struct TailForTests<float16_t>
 {
@@ -91,6 +218,13 @@ struct TailForTests<float16_t>
 #endif
 
 template<>
+struct TailForTests<std::complex<Q31>>
+{
+    constexpr static const int tail = 3;
+    constexpr static const int loop = 2*4;
+};
+
+template<>
 struct TailForTests<Q31>
 {
     constexpr static const int tail = 3;
@@ -98,10 +232,24 @@ struct TailForTests<Q31>
 };
 
 template<>
+struct TailForTests<std::complex<Q15>>
+{
+    constexpr static const int tail = 7;
+    constexpr static const int loop = 2*8;
+};
+
+template<>
 struct TailForTests<Q15>
 {
     constexpr static const int tail = 7;
     constexpr static const int loop = 2*8;
+};
+
+template<>
+struct TailForTests<std::complex<Q7>>
+{
+    constexpr static const int tail = 15;
+    constexpr static const int loop = 2*16;
 };
 
 template<>
@@ -114,20 +262,41 @@ struct TailForTests<Q7>
 #include "common_tests.h"
 
 #if !defined(DISABLEFLOAT16)
+
+extern void cmsisdsp_add(const std::complex<float16_t>* a, 
+              const std::complex<float16_t>* b, 
+                    std::complex<float16_t>* c, 
+              uint32_t l);
+
 extern void cmsisdsp_add(const float16_t* a, 
               const float16_t* b, 
                     float16_t* c, 
               uint32_t l);
 #endif
 
+extern void cmsisdsp_add(const std::complex<float64_t>* a, 
+              const std::complex<float64_t>* b, 
+                    std::complex<float64_t>* c, 
+              uint32_t l);
+
 extern void cmsisdsp_add(const float64_t* a, 
               const float64_t* b, 
                     float64_t* c, 
               uint32_t l);
 
+extern void cmsisdsp_add(const std::complex<float32_t>* a, 
+              const std::complex<float32_t>* b, 
+                    std::complex<float32_t>* c, 
+              uint32_t l);
+
 extern void cmsisdsp_add(const float32_t* a, 
               const float32_t* b, 
                     float32_t* c, 
+              uint32_t l);
+
+extern void cmsisdsp_add(const std::complex<Q31>* a, 
+              const std::complex<Q31>* b, 
+                    std::complex<Q31>* c, 
               uint32_t l);
 
 extern void cmsisdsp_add(const Q31* a, 
@@ -140,7 +309,96 @@ extern void cmsisdsp_add(const Q15* a,
                     Q15* c, 
               uint32_t l);
 
+extern void cmsisdsp_add(const std::complex<Q15>* a, 
+              const std::complex<Q15>* b, 
+                    std::complex<Q15>* c, 
+              uint32_t l);
+
+extern void cmsisdsp_add(const std::complex<Q7>* a, 
+              const std::complex<Q7>* b, 
+                    std::complex<Q7>* c, 
+              uint32_t l);
+
 extern void cmsisdsp_add(const Q7* a, 
+              const Q7* b, 
+                    Q7* c, 
+              uint32_t l);
+
+#if !defined(DISABLEFLOAT16)
+
+extern void cmsisdsp_mult(const std::complex<float16_t>* a, 
+              const std::complex<float16_t>* b, 
+                    std::complex<float16_t>* c, 
+              uint32_t l);
+
+extern void cmsisdsp_mult(const std::complex<float16_t>* a, 
+              const float16_t* b, 
+                    std::complex<float16_t>* c, 
+              uint32_t l);
+
+extern void cmsisdsp_mult(const float16_t* a, 
+              const float16_t* b, 
+                    float16_t* c, 
+              uint32_t l);
+#endif
+
+extern void cmsisdsp_mult(const std::complex<float64_t>* a, 
+              const std::complex<float64_t>* b, 
+                    std::complex<float64_t>* c, 
+              uint32_t l);
+
+extern void cmsisdsp_mult(const float64_t* a, 
+              const float64_t* b, 
+                    float64_t* c, 
+              uint32_t l);
+
+extern void cmsisdsp_mult(const std::complex<float32_t>* a, 
+              const std::complex<float32_t>* b, 
+                    std::complex<float32_t>* c, 
+              uint32_t l);
+
+extern void cmsisdsp_mult(const std::complex<float32_t>* a, 
+              const float32_t* b, 
+                    std::complex<float32_t>* c, 
+              uint32_t l);
+
+extern void cmsisdsp_mult(const float32_t* a, 
+              const float32_t* b, 
+                    float32_t* c, 
+              uint32_t l);
+
+extern void cmsisdsp_mult(const std::complex<Q31>* a, 
+              const std::complex<Q31>* b, 
+                    std::complex<Q31>* c, 
+              uint32_t l);
+
+extern void cmsisdsp_mult(const std::complex<Q31>* a, 
+              const Q31* b, 
+                    std::complex<Q31>* c, 
+              uint32_t l);
+
+extern void cmsisdsp_mult(const Q31* a, 
+              const Q31* b, 
+                    Q31* c, 
+              uint32_t l);
+
+extern void cmsisdsp_mult(const std::complex<Q15>* a, 
+              const std::complex<Q15>* b, 
+                    std::complex<Q15>* c, 
+              uint32_t l);
+
+extern void cmsisdsp_mult(const std::complex<Q15>* a, 
+              const Q15* b, 
+                    std::complex<Q15>* c, 
+              uint32_t l);
+
+extern void cmsisdsp_mult(const Q15* a, 
+              const Q15* b, 
+                    Q15* c, 
+              uint32_t l);
+
+
+extern void cmsisdsp_mult(const Q7* a, 
               const Q7* b, 
                     Q7* c, 
               uint32_t l);
@@ -150,22 +408,47 @@ extern void cmsisdsp_mat_add(const float32_t* a,
                     float32_t* c, 
               uint32_t row,uint32_t col);
 
+extern void cmsisdsp_mat_add(const std::complex<float32_t>* a, 
+              const std::complex<float32_t>* b, 
+                    std::complex<float32_t>* c, 
+              uint32_t row,uint32_t col);
+
 #if !defined(DISABLEFLOAT16)
 extern void cmsisdsp_mat_add(const float16_t* a, 
               const float16_t* b, 
                     float16_t* c, 
               uint32_t row,uint32_t col);
+
+extern void cmsisdsp_mat_add(const std::complex<float16_t>* a, 
+              const std::complex<float16_t>* b, 
+                    std::complex<float16_t>* c, 
+              uint32_t row,uint32_t col);
 #endif 
+
+extern void cmsisdsp_mat_add(const std::complex<Q31>* a, 
+              const std::complex<Q31>* b, 
+                    std::complex<Q31>* c, 
+              uint32_t row,uint32_t col);
 
 extern void cmsisdsp_mat_add(const Q31* a, 
               const Q31* b, 
                     Q31* c, 
               uint32_t row,uint32_t col);
 
+extern void cmsisdsp_mat_add(const std::complex<Q15>* a, 
+              const std::complex<Q15>* b, 
+                    std::complex<Q15>* c, 
+              uint32_t row,uint32_t col);
+
 extern void cmsisdsp_mat_add(const Q15* a, 
               const Q15* b, 
                     Q15* c, 
               uint32_t row,uint32_t col);
+
+extern void cmsisdsp_mat_add(const std::complex<Q7>* a, 
+              const std::complex<Q7>* b, 
+                    std::complex<Q7>* c, 
+             uint32_t row,uint32_t col);
 
 extern void cmsisdsp_mat_add(const Q7* a, 
               const Q7* b, 
@@ -177,6 +460,22 @@ extern void cmsisdsp_dot(const float16_t* a,
               const float16_t* b, 
                     float16_t &c, 
               uint32_t l);
+
+extern void cmsisdsp_hermitian(const float16_t* a, 
+              float16_t* b, 
+                    float16_t &c, 
+              uint32_t l);
+
+extern void cmsisdsp_dot(const std::complex<float16_t>* a, 
+              const std::complex<float16_t>* b, 
+                    std::complex<float16_t> &c, 
+              uint32_t l);
+
+extern void cmsisdsp_hermitian(const std::complex<float16_t>* a, 
+              std::complex<float16_t>* b, 
+                    std::complex<float16_t> &c, 
+              uint32_t l);
+
 #endif
 
 extern void cmsisdsp_dot(const float64_t* a, 
@@ -184,9 +483,39 @@ extern void cmsisdsp_dot(const float64_t* a,
                     float64_t &c, 
               uint32_t l);
 
+extern void cmsisdsp_hermitian(const float64_t* a, 
+              float64_t* b, 
+                    float64_t &c, 
+              uint32_t l);
+
+extern void cmsisdsp_dot(const std::complex<float32_t>* a, 
+              const std::complex<float32_t>* b, 
+                    std::complex<float32_t> &c, 
+              uint32_t l);
+
 extern void cmsisdsp_dot(const float32_t* a, 
               const float32_t* b, 
                     float32_t &c, 
+              uint32_t l);
+
+extern void cmsisdsp_hermitian(const std::complex<float32_t>* a, 
+              std::complex<float32_t>* b, 
+              std::complex<float32_t> &c, 
+              uint32_t l);
+
+extern void cmsisdsp_hermitian(const float32_t* a, 
+              float32_t* b, 
+                    float32_t &c, 
+              uint32_t l);
+
+extern void cmsisdsp_dot(const std::complex<Q31>* a, 
+              const std::complex<Q31>* b, 
+                    std::complex<Q<15,48>> &c, 
+              uint32_t l);
+
+extern void cmsisdsp_hermitian(const std::complex<Q31>* a, 
+              std::complex<Q31>* b, 
+                    std::complex<Q<15,48>> &c, 
               uint32_t l);
 
 extern void cmsisdsp_dot(const Q31* a, 
@@ -194,9 +523,44 @@ extern void cmsisdsp_dot(const Q31* a,
                     Q<15,48> &c, 
               uint32_t l);
 
+extern void cmsisdsp_hermitian(const Q31* a, 
+              Q31* b, 
+                    Q<15,48> &c, 
+              uint32_t l);
+
+extern void cmsisdsp_dot(const std::complex<Q15>* a, 
+              const std::complex<Q15>* b, 
+                    std::complex<Q<33,30>> &c, 
+              uint32_t l);
+
+extern void cmsisdsp_hermitian(const std::complex<Q15>* a, 
+              std::complex<Q15>* b, 
+                    std::complex<Q<33,30>> &c, 
+              uint32_t l);
+
 extern void cmsisdsp_dot(const Q15* a, 
               const Q15* b, 
                     Q<33,30> &c, 
+              uint32_t l);
+
+extern void cmsisdsp_hermitian(const Q15* a, 
+              Q15* b, 
+                    Q<33,30> &c, 
+              uint32_t l);
+
+extern void cmsisdsp_hermitian(const std::complex<Q7>* a, 
+              std::complex<Q7>* b, 
+                    std::complex<Q<17,14>> &c, 
+              uint32_t l);
+
+extern void cmsisdsp_dot(const std::complex<Q7>* a, 
+              const std::complex<Q7>* b, 
+                    std::complex<Q<17,14>> &c, 
+              uint32_t l);
+
+extern void cmsisdsp_hermitian(const Q7* a, 
+              Q7* b, 
+                    Q<17,14> &c, 
               uint32_t l);
 
 extern void cmsisdsp_dot(const Q7* a, 
@@ -224,6 +588,16 @@ extern void cmsisdsp_dot_expr(const float32_t* a,
                               float32_t &r, 
                               uint32_t l);
 
+extern void cmsisdsp_dot_expr(const std::complex<float32_t>* a, 
+                              const std::complex<float32_t>* b, 
+                              const std::complex<float32_t>* c, 
+                              const std::complex<float32_t>* d, 
+                              std::complex<float32_t>* tmp1, 
+                              std::complex<float32_t>* tmp2, 
+                              const float32_t scale,
+                              std::complex<float32_t> &r, 
+                              uint32_t l);
+
 #if !defined(DISABLEFLOAT16)
 extern void cmsisdsp_dot_expr(const float16_t* a, 
                               const float16_t* b, 
@@ -233,6 +607,16 @@ extern void cmsisdsp_dot_expr(const float16_t* a,
                               float16_t* tmp2, 
                               const float16_t scale,
                               float16_t &r, 
+                              uint32_t l);
+
+extern void cmsisdsp_dot_expr(const std::complex<float16_t>* a, 
+                              const std::complex<float16_t>* b, 
+                              const std::complex<float16_t>* c, 
+                              const std::complex<float16_t>* d, 
+                              std::complex<float16_t>* tmp1, 
+                              std::complex<float16_t>* tmp2, 
+                              const float16_t scale,
+                              std::complex<float16_t> &r, 
                               uint32_t l);
 #endif
 
@@ -246,6 +630,7 @@ extern void cmsisdsp_dot_expr(const Q7* a,
                               Q<17,14> &r, 
                               uint32_t l);
 
+
 extern void cmsisdsp_dot_expr(const Q15* a, 
                               const Q15* b, 
                               const Q15* c, 
@@ -256,6 +641,16 @@ extern void cmsisdsp_dot_expr(const Q15* a,
                               Q<33,30> &r, 
                               uint32_t l);
 
+extern void cmsisdsp_dot_expr(const std::complex<Q15>* a, 
+                              const std::complex<Q15>* b, 
+                              const std::complex<Q15>* c, 
+                              const std::complex<Q15>* d, 
+                              std::complex<Q15>* tmp1, 
+                              std::complex<Q15>* tmp2,
+                              const Q15 scale, 
+                              std::complex<Q<33,30>> &r, 
+                              uint32_t l);
+
 extern void cmsisdsp_dot_expr(const Q31* a, 
                               const Q31* b, 
                               const Q31* c, 
@@ -264,6 +659,16 @@ extern void cmsisdsp_dot_expr(const Q31* a,
                               Q31* tmp2,
                               const Q31 scale, 
                               Q<15,48> &r, 
+                              uint32_t l);
+
+extern void cmsisdsp_dot_expr(const std::complex<Q31>* a, 
+                              const std::complex<Q31>* b, 
+                              const std::complex<Q31>* c, 
+                              const std::complex<Q31>* d, 
+                              std::complex<Q31>* tmp1, 
+                              std::complex<Q31>* tmp2,
+                              const Q31 scale, 
+                              std::complex<Q<15,48>> &r, 
                               uint32_t l);
 
 extern void cmsisdsp_fir(const arm_fir_instance_f32 * S,
@@ -421,8 +826,17 @@ extern void cmsis_mat_mult(const arm_matrix_instance_f32* a,
                            const arm_matrix_instance_f32* b, 
                                  arm_matrix_instance_f32 *c,
                                  float32_t *pState);
+
+extern void cmsis_cmplx_mat_mult(const arm_matrix_instance_f32* a, 
+                           const arm_matrix_instance_f32* b, 
+                                 arm_matrix_instance_f32 *c,
+                                 float32_t *pState);
 #if !defined(DISABLEFLOAT16)
 extern void cmsis_mat_mult(const arm_matrix_instance_f16* a, 
+                           const arm_matrix_instance_f16* b, 
+                                 arm_matrix_instance_f16 *c,
+                                 float16_t *pState);
+extern void cmsis_cmplx_mat_mult(const arm_matrix_instance_f16* a, 
                            const arm_matrix_instance_f16* b, 
                                  arm_matrix_instance_f16 *c,
                                  float16_t *pState);
@@ -438,7 +852,17 @@ extern void cmsis_mat_mult(const arm_matrix_instance_q15* a,
                                  arm_matrix_instance_q15 *c,
                                  q15_t *pState);
 
+extern void cmsis_cmplx_mat_mult(const arm_matrix_instance_q15* a, 
+                           const arm_matrix_instance_q15* b, 
+                                 arm_matrix_instance_q15 *c,
+                                 q15_t *pState);
+
 extern void cmsis_mat_mult(const arm_matrix_instance_q31* a, 
+                           const arm_matrix_instance_q31* b, 
+                                 arm_matrix_instance_q31 *c,
+                                 q31_t *pState);
+
+extern void cmsis_cmplx_mat_mult(const arm_matrix_instance_q31* a, 
                            const arm_matrix_instance_q31* b, 
                                  arm_matrix_instance_q31 *c,
                                  q31_t *pState);
@@ -449,16 +873,27 @@ extern void cmsis_mat_trans(const arm_matrix_instance_q7* a,
 extern void cmsis_mat_trans(const arm_matrix_instance_q15* a, 
                             arm_matrix_instance_q15* b);
 
+extern void cmsis_cmplx_mat_trans(const arm_matrix_instance_q15* a, 
+                            arm_matrix_instance_q15* b);
+
 extern void cmsis_mat_trans(const arm_matrix_instance_q31* a, 
+                            arm_matrix_instance_q31* b);
+
+extern void cmsis_cmplx_mat_trans(const arm_matrix_instance_q31* a, 
                             arm_matrix_instance_q31* b);
 
 #if !defined(DISABLEFLOAT16)
 extern void cmsis_mat_trans(const arm_matrix_instance_f16* a, 
                             arm_matrix_instance_f16* b);
+extern void cmsis_cmplx_mat_trans(const arm_matrix_instance_f16* a, 
+                            arm_matrix_instance_f16* b);
 #endif
 
 extern void cmsis_mat_trans(const arm_matrix_instance_f64* a, 
                             arm_matrix_instance_f64* b);
+
+extern void cmsis_cmplx_mat_trans(const arm_matrix_instance_f32* a, 
+                            arm_matrix_instance_f32* b);
 
 extern void cmsis_mat_trans(const arm_matrix_instance_f32* a, 
                             arm_matrix_instance_f32* b);
@@ -549,7 +984,7 @@ extern arm_status cmsis_cholesky(
   arm_matrix_instance_f16 * dst);
 #endif
 
-extern void cmsis_complex_mat_vec(
+extern void cmsis_complicated_mat_vec(
   const arm_matrix_instance_f64 * src,
   const double * a,
   const double * b,
@@ -557,7 +992,7 @@ extern void cmsis_complex_mat_vec(
   double * tmp,
   double * dst);
 
-extern void cmsis_complex_mat_vec(
+extern void cmsis_complicated_mat_vec(
   const arm_matrix_instance_f32 * src,
   const float32_t * a,
   const float32_t * b,
@@ -566,7 +1001,7 @@ extern void cmsis_complex_mat_vec(
   float32_t * dst);
 
 #if !defined(DISABLEFLOAT16)
-extern void cmsis_complex_mat_vec(
+extern void cmsis_complicated_mat_vec(
   const arm_matrix_instance_f16 * src,
   const float16_t * a,
   const float16_t * b,
@@ -575,7 +1010,7 @@ extern void cmsis_complex_mat_vec(
   float16_t * dst);
 #endif
 
-extern void cmsis_complex_mat_vec(
+extern void cmsis_complicated_mat_vec(
   const arm_matrix_instance_q31 * src,
   const Q31 * a,
   const Q31 * b,
@@ -583,7 +1018,7 @@ extern void cmsis_complex_mat_vec(
   Q31 * tmp,
   Q31 * dst);
 
-extern void cmsis_complex_mat_vec(
+extern void cmsis_complicated_mat_vec(
   const arm_matrix_instance_q15 * src,
   const Q15 * a,
   const Q15 * b,
@@ -591,7 +1026,7 @@ extern void cmsis_complex_mat_vec(
   Q15 * tmp,
   Q15 * dst);
 
-extern void cmsis_complex_mat_vec(
+extern void cmsis_complicated_mat_vec(
   const arm_matrix_instance_q7 * src,
   const Q7 * a,
   const Q7 * b,
@@ -610,6 +1045,13 @@ struct CMSISMatrixType<double>
 };
 
 template<>
+struct CMSISMatrixType<std::complex<float32_t>>
+{
+   typedef arm_matrix_instance_f32 type;
+   typedef float32_t scalar;
+};
+
+template<>
 struct CMSISMatrixType<float32_t>
 {
    typedef arm_matrix_instance_f32 type;
@@ -619,6 +1061,13 @@ struct CMSISMatrixType<float32_t>
 #if !defined(DISABLEFLOAT16)
 template<>
 struct CMSISMatrixType<float16_t>
+{
+   typedef arm_matrix_instance_f16 type;
+   typedef float16_t scalar;
+};
+
+template<>
+struct CMSISMatrixType<std::complex<float16_t>>
 {
    typedef arm_matrix_instance_f16 type;
    typedef float16_t scalar;
@@ -642,12 +1091,29 @@ struct CMSISMatrixType<Q15>
 };
 
 template<>
+struct CMSISMatrixType<std::complex<Q15>>
+{
+   typedef arm_matrix_instance_q15 type;
+   typedef q15_t scalar;
+
+};
+
+template<>
+struct CMSISMatrixType<std::complex<Q31>>
+{
+   typedef arm_matrix_instance_q31 type;
+   typedef q31_t scalar;
+
+};
+
+template<>
 struct CMSISMatrixType<Q31>
 {
    typedef arm_matrix_instance_q31 type;
    typedef q31_t scalar;
 
 };
+
 
 template<typename T>
 struct TestConstant;
@@ -666,7 +1132,22 @@ struct TestConstant<float32_t>
    constexpr static float small = 0.001f;
 };
 
+template<>
+struct TestConstant<std::complex<float32_t>>
+{
+   constexpr static std::complex<float32_t> v{0.2f,0.1f};
+   constexpr static std::complex<float32_t> small{0.001f,-0.002f};
+};
+
 #if !defined(DISABLEFLOAT16)
+template<>
+struct TestConstant<std::complex<float16_t>>
+{
+   constexpr static std::complex<float16_t> v{0.2f,0.1f};
+   constexpr static std::complex<float16_t> small{0.001f,-0.002f};
+
+};
+
 template<>
 struct TestConstant<float16_t>
 {
@@ -677,18 +1158,38 @@ struct TestConstant<float16_t>
 #endif
 
 template<>
+struct TestConstant<std::complex<Q7>>
+{
+   constexpr static std::complex<Q7> v{0.2_q7,0.1_q7};
+   constexpr static std::complex<Q7> small{0.001_q7,Q7::f(-0.002f)};
+};
+
+template<>
 struct TestConstant<Q7>
 {
    constexpr static Q7 v = 0.2_q7;
    constexpr static Q7 small = 0.001_q7;
 };
 
+template<>
+struct TestConstant<std::complex<Q15>>
+{
+   constexpr static std::complex<Q15> v{0.2_q15,0.1_q15};
+   constexpr static std::complex<Q15> small{0.001_q15,Q15::f(-0.002f)};
+};
 
 template<>
 struct TestConstant<Q15>
 {
    constexpr static Q15 v = 0.2_q15;
    constexpr static Q15 small = 0.001_q15;
+};
+
+template<>
+struct TestConstant<std::complex<Q31>>
+{
+   constexpr static std::complex<Q31> v{0.2_q31,0.1_q31};
+   constexpr static std::complex<Q31> small{0.001_q31,Q31::f(-0.002)};
 };
 
 template<>

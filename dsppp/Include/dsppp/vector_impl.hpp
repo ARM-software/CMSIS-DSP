@@ -5,7 +5,6 @@
 #include <memory>
 #include <cstring>
 #include <algorithm>
-#include <iostream>
 #include "common.hpp"
 #include "arch.hpp"
 #include <type_traits>
@@ -105,11 +104,13 @@ struct Vector_Base {
     * 
     */
     friend std::ostream& operator<< (std::ostream& stream, const Vector_Base<P>& other) {
+        using DT = typename number_traits<P>::display_type;
         constexpr int nb = 10;
         int i=0;
+
         for(index_t k=0;k<other.length();k++)
         {
-           stream << other[k] << " , ";
+           stream << (DT)other[k] << " , ";
            i++;
            if(i==nb)
            {
@@ -180,6 +181,15 @@ struct Vector_Base {
         inner::vstore1<1>((typename std::remove_cv<P>::type*)(&values_[i]),val);
     }
 
+    template<typename T=P,
+             typename std::enable_if<vector_traits<T>::has_vector
+             && IsComplexNumber<T>::value
+             && vector_traits<T>::support_mixed,bool>::type = true>
+    void vector_store(const index_t i,const typename vector_traits<T>::real_vector val) const
+    {
+        inner::vstore1<1>((typename std::remove_cv<P>::type*)(&values_[i]),val);
+    }
+
 #if defined(HAS_PREDICATED_LOOP)
     /**
     * @brief   %Vector store at index i with predicated tail
@@ -193,6 +203,8 @@ struct Vector_Base {
     * function stores a vector value at index i in this vector datatype
     * with predication
     */
+    template<typename T=P,
+    typename std::enable_if<vector_traits<T>::has_predicate,bool>::type = true>
     void vector_store_tail(const index_t i,const vector_length_t remaining,const Vector val) const
     {
         inner::vstore1_z<1>((typename std::remove_cv<P>::type*)(&values_[i]),val,remaining,inner::vctpq<P>::mk(remaining));
@@ -210,6 +222,8 @@ struct Vector_Base {
     * function execute an operation at index i with predication.
     * In the case of a vector, this operation is a load
     */
+    template<typename T=P,
+    typename std::enable_if<vector_traits<T>::has_predicate,bool>::type = true>
     Vector const vector_op_tail(const index_t i,const vector_length_t remaining) const
     {
         return(inner::vload1_z<1>((typename std::remove_cv<P>::type*)(&values_[i]),remaining,inner::vctpq<P>::mk(remaining)));
