@@ -90,7 +90,7 @@ struct vector_traits<std::complex<float>,arch,
 
 /**
  * Inner implementation of generic intrinsics
- * \ingroup GenericNumber
+ * \ingroup GenericComplexFloatNumber
  */
 namespace inner {
    /**

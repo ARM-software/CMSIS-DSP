@@ -10,7 +10,7 @@
 /** \addtogroup HeliumNumber Helium specific number definitions
  *  \ingroup NUMBER
  *  @{
- *  \addtogroup HeliumFloatNumber Float
+ *  \addtogroup HeliumComplexFloatNumber Complex Float
  *  \ingroup HeliumNumber
  *  @{
  */
@@ -84,7 +84,7 @@ typename std::enable_if<std::is_base_of<Helium,arch>::value>::type >
 
 
 /**
- * \ingroup HeliumNumber
+ * \ingroup HeliumComplexFloatNumber
  * @{
  */
 

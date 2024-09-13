@@ -95,7 +95,7 @@ struct vector_traits<std::complex<double>,arch,void> {
 
 /**
  * Inner implementation of generic intrinsics
- * \ingroup GenericNumber
+ * \ingroup GenericComplexDoubleNumber
  */
 namespace inner {
    /**

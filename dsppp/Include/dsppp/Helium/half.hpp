@@ -83,7 +83,7 @@ struct vector_traits<float16_t,arch,typename std::enable_if<std::is_base_of<Heli
 
 
 /**
- * \ingroup HeliumNumber
+ * \ingroup HeliumHalfNumber
  */
 namespace inner {
 

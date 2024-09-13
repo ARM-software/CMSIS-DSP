@@ -9,7 +9,7 @@
 /** \addtogroup GenericNumber 
  *  \ingroup NUMBER
  *  @{
- *  \addtogroup GenericHalfNumber Half
+ *  \addtogroup GenericComplexHalfNumber Complex Half
  *  \ingroup GenericNumber
  *  @{
  */
@@ -17,7 +17,7 @@
 #if defined(ARM_FLOAT16_SUPPORTED)
 
 /**
- * @brief      Feature of float16 datatype
+ * @brief      Feature for complex float16
  */
 template<>
 struct number_traits<std::complex<float16_t>>
@@ -79,7 +79,7 @@ struct vector_traits<std::complex<float16_t>,arch,
 
 /**
  * Inner implementation of generic intrinsics
- * \ingroup GenericNumber
+ * \ingroup GenericComplexHalfNumber
  */
 namespace inner {
    /**

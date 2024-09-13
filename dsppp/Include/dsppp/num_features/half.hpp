@@ -80,7 +80,7 @@ struct vector_traits<float16_t> {
 
 /**
  * Inner implementation of generic intrinsics
- * \ingroup GenericNumber
+ * \ingroup GenericHalfNumber
  */
 namespace inner {
    /**

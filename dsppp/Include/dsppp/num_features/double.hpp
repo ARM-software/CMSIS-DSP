@@ -97,7 +97,7 @@ struct vector_traits<double,arch,void> {
 
 /**
  * Inner implementation of generic intrinsics
- * \ingroup GenericNumber
+ * \ingroup GenericDoubleNumber
  */
 namespace inner {
    /**

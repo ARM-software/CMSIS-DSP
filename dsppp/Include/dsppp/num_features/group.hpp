@@ -109,7 +109,7 @@ struct vector_traits<std::tuple<E...>,arch> {
 
 /**
  * Inner implementation of generic intrinsics
- * \ingroup GenericNumber
+ * \ingroup GenericTUPLENumber
  */
 namespace inner {
 

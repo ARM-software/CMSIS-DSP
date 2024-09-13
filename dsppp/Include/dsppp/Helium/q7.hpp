@@ -57,7 +57,7 @@ typename std::enable_if<std::is_base_of<Helium,arch>::value>::type >
 
 /**
  * Inner implementation of Helium intrinsics
- * \ingroup HeliumNumber
+ * \ingroup HeliumQ7Number
  */
 namespace inner {
 

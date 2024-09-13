@@ -923,6 +923,7 @@ INPUT                  = ./src/mainpage.md   \
                          ./src/introduction.md   \
                          ./src/template.md   \
                          ./src/guidelines.md \
+                         ./src/cpp_complex.md \
                          ./src/vectorop.md   \
                          ./src/memory_allocator.md   \
                          ./src/memory_static_dynamic.md   \

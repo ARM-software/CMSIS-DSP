@@ -88,7 +88,7 @@ struct vector_traits<Q7,arch,
 
 /**
  * Inner implementation of generic intrinsics
- * \ingroup GenericNumber
+ * \ingroup GenericQ7Number
  */
 namespace inner {
     /**

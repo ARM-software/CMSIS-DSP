@@ -4,14 +4,14 @@
 #define M55
 
 
-//#define POOL_ALLOCATOR
+#define POOL_ALLOCATOR
 //#define ONLY_BENCHMARKS
 
 
-#define DOT_TEST
-#define COMPLEX_F16_DT
+#define MATRIX_TEST
+#define Q7_DT
 #define DYNAMIC_TEST
-
+#define SUBTEST20
 
 #endif
 

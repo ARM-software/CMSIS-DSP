@@ -126,7 +126,7 @@ struct vector_traits<Q15,DSP,typename std::enable_if<true>::type>
 
 
 /**
- * \ingroup DSPNumber
+ * \ingroup DSPQ15Number
  */
 namespace inner {
 

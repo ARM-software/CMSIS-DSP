@@ -11,7 +11,7 @@
 /** \addtogroup HeliumNumber Helium specific number definitions
  *  \ingroup NUMBER
  *  @{
- *  \addtogroup HeliumQ15Number Q15
+ *  \addtogroup HeliumComplexQ15Number Complex Q15
  *  \ingroup HeliumNumber
  *  @{
  */
@@ -63,7 +63,7 @@ typename std::enable_if<std::is_base_of<Helium,arch>::value>::type >
 
 /**
  * Inner implementation of Helium intrinsics
- * \ingroup HeliumNumber
+ * \ingroup HeliumComplexQ15Number
  */
 namespace inner {
 

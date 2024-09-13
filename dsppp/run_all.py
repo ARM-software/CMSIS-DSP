@@ -431,7 +431,7 @@ with open(os.path.join(results(),f"errors_{args.c}.txt"),"w") as err:
     # Generate include for allocations
     if args.a or args.i:
         with open(os.path.join("allocation","all.h"),"w") as fh:
-            for c in CORES:
+                c = args.c
                 for test in all_tests:
                     if test[0] in SUBTESTS:
                        for subtestnbb in range(SUBTESTS[test[0]]):
@@ -442,7 +442,7 @@ with open(os.path.join(results(),f"errors_{args.c}.txt"),"w") as err:
                         print(f"#include \"{test_name}_{c}.h\"",file=fh)
     
         with open(os.path.join("allocation","all.cpp"),"w") as fc:
-            for c in CORES:
+                c = args.c
                 for test in all_tests:
                     if test[0] in SUBTESTS:
                        for subtestnbb in range(SUBTESTS[test[0]]):

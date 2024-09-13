@@ -5,13 +5,13 @@
 /** \addtogroup GenericNumber 
  *  \ingroup NUMBER
  *  @{
- *  \addtogroup GenericQ15ComplexNumber Complex Q15
+ *  \addtogroup GenericComplexQ15Number Complex Q15
  *  \ingroup GenericNumber
  *  @{
  */
 
 /**
- * @brief     Complex Q15 features
+ * @brief     Features for complex Q15
  */
 template<>
 struct number_traits<std::complex<Q15>>
@@ -83,7 +83,7 @@ struct vector_traits<std::complex<Q15>,arch,
 
 /**
  * Inner implementation of generic intrinsics
- * \ingroup GenericNumber
+ * \ingroup GenericComplexQ15Number
  */
 namespace inner {
 #if defined(ARM_MATH_MVEI)

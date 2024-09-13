@@ -15,4 +15,5 @@ The headers are not yet part of the CMSIS-DSP pack since they are experimental. 
 * @subpage dsppp_matrix "Matrix operators"
 * @subpage dsppp_building "Building and running examples"
 * @subpage dsppp_guidelines "Usage guidelines"
+* @subpage dsppp_complex "Complex numbers"
 

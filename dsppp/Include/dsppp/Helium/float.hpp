@@ -93,7 +93,7 @@ typename std::enable_if<std::is_base_of<Helium,arch>::value>::type >
 
 
 /**
- * \ingroup HeliumNumber
+ * \ingroup HeliumFloatNumber
  * @{
  */
 namespace inner {

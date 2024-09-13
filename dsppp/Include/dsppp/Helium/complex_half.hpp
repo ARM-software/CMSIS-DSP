@@ -5,12 +5,13 @@
 #ifdef DOXYGEN
 #define ARM_MATH_MVEI
 #define ARM_MATH_MVEF
+#define ARM_MATH_MVE_FLOAT16
 #endif
 
 /** \addtogroup HeliumNumber Helium specific number definitions
  *  \ingroup NUMBER
  *  @{
- *  \addtogroup HeliumFloatNumber Float
+ *  \addtogroup HeliumComplexHalfNumber Complex Half
  *  \ingroup HeliumNumber
  *  @{
  */
@@ -84,7 +85,7 @@ typename std::enable_if<std::is_base_of<Helium,arch>::value>::type >
 
 
 /**
- * \ingroup HeliumNumber
+ * \ingroup HeliumComplexHalfNumber
  * @{
  */
 

@@ -6,6 +6,85 @@
   <th>Description</th>
 </tr>
 <tr>
+  <td>v1.16.2</td>
+  <td>
+    * Improvements to documentation
+    * Added arm_fir_decimate_f64
+    * Removed some gcc workarounds that are no more needed for Helium
+    * Removed redundant test in arm_atan2_q15 and arm_atan2_q31
+    * Replaced INFINITY by maximum positive float
+    * Replaced hex constants with 2's complement equivalents
+    * Added C++ template extension (outside of pack - headers available from github repository)
+    * Added new compilation defines (ARM_DSP_ATTRIBUTE, ARM_DSP_TABLE_ATTRIBUTE and ARM_DSP_CUSTOM_CONFIG)
+    * Solved several github issues
+    * Corrected wrong version number in pack for v1.16.0
+    * Corrected issue #201 in v1.16.1 (related to new ARM_DSP_ATTRIBUTE)
+  </td>
+</tr>
+<tr>
+  <td>v1.16.1</td>
+  <td>
+    * Improvements to documentation
+    * Added arm_fir_decimate_f64
+    * Removed some gcc workarounds that are no more needed for Helium
+    * Removed redundant test in arm_atan2_q15 and arm_atan2_q31
+    * Replaced INFINITY by maximum positive float
+    * Replaced hex constants with 2's complement equivalents
+    * Added C++ template extension (outside of pack - headers can be got from github * repository)
+    * Added new compilation defines (ARM_DSP_ATTRIBUTE, ARM_DSP_TABLE_ATTRIBUTE and ARM_DSP_CUSTOM_CONFIG)
+    * Solved several github issues
+  </td>
+</tr>
+<tr>
+  <td>v1.16.0</td>
+  <td>
+    v1.16.0 release
+    
+    * Improvements to documentation
+    * Added arm_fir_decimate_f64
+    * Removed some gcc workarounds that are no more needed for Helium
+    * Removed redundant test in atan2_q15 and q31
+    * Replaced INFINITY by maximum positive float
+    * Replaced hex constants with 2's complement equivalents
+    * Added C++ template extension (outside of pack - headers can be got from github * repository)
+    * Solved issue #198
+    * Solved issue #197
+    * Solved issue #197
+    * Solved issue #98
+    * Solved issue #195
+    * Solved issue #180
+    * Solved issue #191
+    * Solved issue #189
+    * Solved issue #188
+    * Solved issue #187
+    * Solved issue #178
+    * Solved issue #184
+    * Solved issue #183
+    * Solved issue #172
+    * Solved issue #170
+    * Solved issue #165
+    * Solved issue #156
+    * Solved issue #164
+    * Solved issue #163
+    * Solved issue #160
+    * Solved issue #159
+    * Solved issue #146
+    * Solved issue #145
+    * Solved issue #133
+    * Solved issue #144
+    * Solved issue #142
+    * Solved issue #141
+    * Solved issue #140
+    * Solved issue #139
+    * Solved issue #138
+    * Solved issue #135
+    * Solved issue #131
+    * Solved issue #118
+    * Solved issue #124
+    * Solved issue #99
+  </td>
+</tr>
+<tr>
   <td>v1.15.0</td>
   <td>
     v1.15.0

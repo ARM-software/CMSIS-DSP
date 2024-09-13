@@ -83,7 +83,7 @@ struct vector_traits<Q31,arch,
 
 /**
  * Inner implementation of generic intrinsics
- * \ingroup GenericNumber
+ * \ingroup GenericQ31Number
  */
 namespace inner {
 #if defined(ARM_MATH_MVEI)

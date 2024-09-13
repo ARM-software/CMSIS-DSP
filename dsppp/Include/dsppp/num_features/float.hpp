@@ -91,7 +91,7 @@ struct vector_traits<float,arch,
 
 /**
  * Inner implementation of generic intrinsics
- * \ingroup GenericNumber
+ * \ingroup GenericFloatNumber
  */
 namespace inner {
    /**
