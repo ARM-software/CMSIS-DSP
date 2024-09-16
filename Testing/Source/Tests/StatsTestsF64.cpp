@@ -323,7 +323,7 @@ a double precision computation.
       deviation.
 
       */
-      float64_t in[4]={4.0f, 7.0f, 13.0f, 16.0f};
+      float64_t in[4]={4.0, 7.0, 13.0, 16.0};
       float64_t result;
       int i;
 
@@ -334,7 +334,7 @@ a double precision computation.
       */
       for(i=0 ; i < 4; i++)
       {
-        in[i] += 3.0e4f;
+        in[i] += 3.0e4;
       }
 
       arm_std_f64(in,4,&result);
@@ -349,7 +349,7 @@ a double precision computation.
 
       */
 
-      ASSERT_TRUE(fabs(5.47723f - result) < 1.0e-4f);
+      ASSERT_TRUE(fabs(5.47723 - result) < 1.0e-4);
 
     }
 

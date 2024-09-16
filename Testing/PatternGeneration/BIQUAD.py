@@ -183,7 +183,12 @@ def generatePatterns():
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
     #configq7=Tools.Config(PATTERNDIR,PARAMDIR,"q7")
     
-    
+    configf64.setOverwrite(False)
+    configf32.setOverwrite(False)
+    configf16.setOverwrite(False)
+    configq31.setOverwrite(False)
+    configq15.setOverwrite(False)
+
     
     writeBenchmarks(configf32)
     writeBenchmarks(configf16)
@@ -191,7 +196,9 @@ def generatePatterns():
     writeBenchmarks(configq15)
     writeBenchmarks(configf64)
 
+    #configf32.setOverwrite(True)
     writeTests(configf32,0)
+
     writeTests(configf16,16)
     writeTests(configq31,31)
     writeTests(configq15,15)

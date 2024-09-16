@@ -1,8 +1,10 @@
 #ifndef _TIMING_H_
 #define _TIMING_H_
 
+#if !defined(__GNUC_PYTHON__)
 #include "RTE_Components.h"
 #include  CMSIS_device_header
+#endif 
 
 #include "Test.h"
 #include "arm_math_types.h"
@@ -13,6 +15,7 @@ void cycleMeasurementStart();
 void cycleMeasurementStop();
 
 Testing::cycles_t getCycles();
+
 
 #if defined(EXTBENCH)  || defined(CACHEANALYSIS)
 extern unsigned long sectionCounter;

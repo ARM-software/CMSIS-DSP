@@ -455,7 +455,7 @@ a double precision computation.
 
         ASSERT_SNR(result,refp[this->refOffset],(float32_t)SNR_THRESHOLD);
 
-        ASSERT_REL_ERROR(result,refp[this->refOffset],(float32_t)REL_ERROR);
+        ASSERT_REL_ERROR(result,refp[this->refOffset],REL_ERROR);
 
     }
 

@@ -47,6 +47,17 @@ void assert_not_empty_generic(unsigned long nb, AnyPattern<T> &p)
    }
 };
 
+#if defined(ARM_FLOAT16_SUPPORTED)
+template<>
+void assert_equal(unsigned long nb,float16_t pa, float16_t pb)
+{
+    if ((float)pa != (float)pb)
+    {
+         throw (Error(EQUAL_ERROR,nb));
+    }
+   
+};
+#endif 
 
 template <> 
 void assert_near_equal(unsigned long nb,double pa, double pb, double threshold)
@@ -54,7 +65,7 @@ void assert_near_equal(unsigned long nb,double pa, double pb, double threshold)
     if (fabs(pa - pb) > threshold)
     {
          char details[200];
-         sprintf(details,"diff %g > %g (%g,%g)",fabs(pa - pb) , threshold,pa,pb);
+         snprintf(details,200,"diff %g > %g (%g,%g)",fabs(pa - pb) , threshold,pa,pb);
          throw (Error(EQUAL_ERROR,nb,details));
     }
 };
@@ -65,7 +76,7 @@ void assert_near_equal(unsigned long nb,float32_t pa, float32_t pb, float32_t th
     if (fabs(pa - pb) > threshold)
     {
          char details[200];
-         sprintf(details,"diff %g > %g (%g,%g)",fabs(pa - pb) , threshold, pa, pb);
+         snprintf(details,200,"diff %g > %g (%g,%g)",(double)fabs(pa - pb) , (double)threshold, (double)pa, (double)pb);
          throw (Error(EQUAL_ERROR,nb,details));
     }
 };
@@ -74,10 +85,10 @@ void assert_near_equal(unsigned long nb,float32_t pa, float32_t pb, float32_t th
 template <> 
 void assert_near_equal(unsigned long nb,float16_t pa, float16_t pb, float16_t threshold)
 {
-    if (fabs(pa - pb) > threshold)
+    if (fabs((float)pa - (float)pb) > (float)threshold)
     {
          char details[200];
-         sprintf(details,"diff %g > %g (%g,%g)",fabs(pa - pb) , threshold, pa, pb);
+         snprintf(details,200,"diff %g > %g (%g,%g)",(double)fabs((float)pa - (float)pb) , (double)threshold, (double)pa, (double)pb);
          throw (Error(EQUAL_ERROR,nb,details));
     }
 };
@@ -90,9 +101,9 @@ void assert_near_equal(unsigned long nb,q63_t pa, q63_t pb, q63_t threshold)
     {
          char details[200];
          #if __sizeof_long == 8
-         sprintf(details,"diff %ld > %ld (0x%016lX,0x%016lX)",abs(pa - pb) , threshold,pa,pb);
+         snprintf(details,200,"diff %ld > %ld (0x%016lX,0x%016lX)",abs(pa - pb) , threshold,pa,pb);
          #else 
-         sprintf(details,"diff %lld > %lld (0x%016llX,0x%016llX)",abs(pa - pb) , threshold,pa,pb);
+         snprintf(details,200,"diff %lld > %lld (0x%016llX,0x%016llX)",abs(pa - pb) , threshold,pa,pb);
          #endif
          throw (Error(EQUAL_ERROR,nb,details));
     }
@@ -104,7 +115,7 @@ void assert_near_equal(unsigned long nb,q31_t pa, q31_t pb, q31_t threshold)
     if (abs(pa - pb) > threshold)
     {
          char details[200];
-         sprintf(details,"diff %d > %d (0x%08X,0x%08X)",abs(pa - pb) , threshold,pa,pb);
+         snprintf(details,200,"diff %d > %d (0x%08X,0x%08X)",abs(pa - pb) , threshold,pa,pb);
          throw (Error(EQUAL_ERROR,nb,details));
     }
 };
@@ -115,7 +126,7 @@ void assert_near_equal(unsigned long nb,q15_t pa, q15_t pb, q15_t threshold)
     if (abs(pa - pb) > threshold)
     {
          char details[200];
-         sprintf(details,"diff %d > %d (0x%04X,0x%04X)",abs(pa - pb) , threshold,pa,pb);
+         snprintf(details,200,"diff %d > %d (0x%04X,0x%04X)",abs(pa - pb) , threshold,pa,pb);
          throw (Error(EQUAL_ERROR,nb,details));
     }
 };
@@ -126,7 +137,7 @@ void assert_near_equal(unsigned long nb,q7_t pa, q7_t pb, q7_t threshold)
     if (abs(pa - pb) > threshold)
     {
          char details[200];
-         sprintf(details,"diff %d > %d (0x%02X,0x%02X)",abs(pa - pb) , threshold,pa,pb);
+         snprintf(details,200,"diff %d > %d (0x%02X,0x%02X)",abs(pa - pb) , threshold,pa,pb);
          throw (Error(EQUAL_ERROR,nb,details));
     }
 };
@@ -188,7 +199,7 @@ void assert_relative_error(unsigned long nb,float64_t &a, float64_t &b, double t
     float64_t rel,delta,average;
 
     delta=abs(a-b);
-    average = (abs(a) + abs(b)) / 2.0f;
+    average = (abs(a) + abs(b)) / 2.0;
     if (average !=0)
     {
         rel = delta / average;
@@ -197,7 +208,7 @@ void assert_relative_error(unsigned long nb,float64_t &a, float64_t &b, double t
         {
             //printf("rel = %g, threshold %g \n",rel,threshold);
             char details[200];
-            sprintf(details,"diff (%g,%g), %g > %g",a,b,rel , threshold);
+            snprintf(details,200,"diff (%g,%g), %g > %g",a,b,rel , threshold);
             throw (Error(RELATIVE_ERROR,nb,details));
         }
     }
@@ -207,8 +218,8 @@ void assert_relative_error(unsigned long nb,float32_t &a, float32_t &b, double t
 {
     double rel,delta,average;
 
-    delta=abs(a-b);
-    average = (abs((float)a) + abs((float)b)) / 2.0f;
+    delta=(double)abs(a-b);
+    average = (double)((abs((float)a) + abs((float)b)) / 2.0f);
     if (average !=0)
     {
         rel = delta / average;
@@ -217,7 +228,7 @@ void assert_relative_error(unsigned long nb,float32_t &a, float32_t &b, double t
         {
             //printf("rel = %g, threshold %g \n",rel,threshold);
             char details[200];
-            sprintf(details,"diff (%g,%g), %g > %g",a,b,rel , threshold);
+            snprintf(details,200,"diff (%g,%g), %g > %g",(double)a,(double)b,rel , threshold);
             throw (Error(RELATIVE_ERROR,nb,details));
         }
     }
@@ -228,8 +239,8 @@ void assert_relative_error(unsigned long nb,float16_t &a, float16_t &b, double t
 {
     double rel,delta,average;
 
-    delta=abs(a-b);
-    average = (abs(a) + abs(b)) / 2.0f;
+    delta=(double)abs((float)a-(float)b);
+    average = (double)((abs((float)a) + abs((float)b)) / 2.0f);
     if (average !=0)
     {
         rel = delta / average;
@@ -238,7 +249,7 @@ void assert_relative_error(unsigned long nb,float16_t &a, float16_t &b, double t
         {
             //printf("rel = %g, threshold %g \n",rel,threshold);
             char details[200];
-            sprintf(details,"diff (%g,%g), %g > %g",a,b,rel , threshold);
+            snprintf(details,200,"diff (%g,%g), %g > %g",(double)a,(double)b,rel , threshold);
             throw (Error(RELATIVE_ERROR,nb,details));
         }
     }
@@ -269,7 +280,7 @@ void assert_relative_error(unsigned long nb,AnyPattern<float64_t> &pa, AnyPatter
        }
        catch(Error &err)
        {          
-          sprintf(id," (nb=%lu)",i);
+          snprintf(id,40," (nb=%lu)",i);
           strcat(err.details,id);
           throw(err);
        }
@@ -300,7 +311,7 @@ void assert_relative_error(unsigned long nb,AnyPattern<float32_t> &pa, AnyPatter
        }
        catch(Error &err)
        {          
-          sprintf(id," (nb=%lu)",i);
+          snprintf(id,40," (nb=%lu)",i);
           strcat(err.details,id);
           throw(err);
        }
@@ -332,7 +343,7 @@ void assert_relative_error(unsigned long nb,AnyPattern<float16_t> &pa, AnyPatter
        }
        catch(Error &err)
        {          
-          sprintf(id," (nb=%lu)",i);
+          snprintf(id,40," (nb=%lu)",i);
           strcat(err.details,id);
           throw(err);
        }
@@ -346,7 +357,7 @@ void assert_close_error(unsigned long nb,float64_t &ref, float64_t &val, double 
     if (abs(val - ref) > (absthreshold + relthreshold * abs(ref)))
     {
         char details[200];
-        sprintf(details,"close error %g > %g: (val = %g, ref = %g)",abs(val - ref) , absthreshold + relthreshold * abs(ref),val,ref);
+        snprintf(details,200,"close error %g > %g: (val = %g, ref = %g)",abs(val - ref) , absthreshold + relthreshold * abs(ref),val,ref);
         throw (Error(CLOSE_ERROR,nb,details));
     }
 };
@@ -375,7 +386,7 @@ void assert_close_error(unsigned long nb,AnyPattern<float64_t> &pref, AnyPattern
        }
        catch(Error &err)
        {          
-          sprintf(id," (nb=%lu)",i);
+          snprintf(id,40," (nb=%lu)",i);
           strcat(err.details,id);
           throw(err);
        }
@@ -386,10 +397,10 @@ void assert_close_error(unsigned long nb,AnyPattern<float64_t> &pref, AnyPattern
 void assert_close_error(unsigned long nb,float32_t &ref, float32_t &val, double absthreshold,double relthreshold)
 {
     
-    if (abs(val - ref) > (absthreshold + relthreshold * abs(ref)))
+    if ((double)abs(val - ref) > (absthreshold + relthreshold * (double)abs(ref)))
     {
         char details[200];
-        sprintf(details,"close error %g > %g: (val = %g, ref = %g)",abs(val - ref) , absthreshold + relthreshold * abs(ref),val,ref);
+        snprintf(details,200,"close error %g > %g: (val = %g, ref = %g)",(double)abs(val - ref) , absthreshold + relthreshold * (double)abs(ref),(double)val,(double)ref);
         throw (Error(CLOSE_ERROR,nb,details));
     }
 };
@@ -418,7 +429,7 @@ void assert_close_error(unsigned long nb,AnyPattern<float32_t> &pref, AnyPattern
        }
        catch(Error &err)
        {          
-          sprintf(id," (nb=%lu)",i);
+          snprintf(id,40," (nb=%lu)",i);
           strcat(err.details,id);
           throw(err);
        }
@@ -430,10 +441,10 @@ void assert_close_error(unsigned long nb,AnyPattern<float32_t> &pref, AnyPattern
 void assert_close_error(unsigned long nb,float16_t &ref, float16_t &val, double absthreshold,double relthreshold)
 {
     
-    if (abs((float)val - (float)ref) > (absthreshold + relthreshold * abs((float)ref)))
+    if ((double)abs((float)val - (float)ref) > (absthreshold + relthreshold * (double)abs((float)ref)))
     {
         char details[200];
-        sprintf(details,"close error %g > %g: (val = %g, ref = %g)",abs(val - ref) , absthreshold + relthreshold * abs(ref),val,ref);
+        snprintf(details,200,"close error %g > %g: (val = %g, ref = %g)",(double)abs((float)val - (float)ref) , absthreshold + relthreshold * (double)abs((float)ref),(double)val,(double)ref);
         throw (Error(CLOSE_ERROR,nb,details));
     }
 };
@@ -462,7 +473,7 @@ void assert_close_error(unsigned long nb,AnyPattern<float16_t> &pref, AnyPattern
        }
        catch(Error &err)
        {          
-          sprintf(id," (nb=%lu)",i);
+          snprintf(id,40," (nb=%lu)",i);
           strcat(err.details,id);
           throw(err);
        }
@@ -549,8 +560,8 @@ float arm_snr_f16(float16_t *pRef, float16_t *pTest, uint32_t buffSize)
       /* Checking for a NAN value in pTest array */
       IFNANRETURNZERO((float)pTest[i]);
 
-      EnergySignal += pRef[i] * pRef[i];
-      EnergyError += (pRef[i] - pTest[i]) * (pRef[i] - pTest[i]);
+      EnergySignal += (float)pRef[i] * (float)pRef[i];
+      EnergyError += ((float)pRef[i] - (float)pTest[i]) * ((float)pRef[i] - (float)pTest[i]);
     }
 
     /* Checking for a NAN value in EnergyError */
@@ -746,7 +757,7 @@ void assert_snr_error(unsigned long nb,AnyPattern<float32_t> &pa,AnyPattern<floa
    if (snr < threshold)
    {
      char details[200];
-     sprintf(details,"SNR %g < %g",snr,threshold);
+     snprintf(details,200,"SNR %g < %g",(double)snr,(double)threshold);
      throw (Error(SNR_ERROR,nb,details));
    }
 }
@@ -762,7 +773,7 @@ void assert_snr_error(unsigned long nb,float32_t a,float32_t b, float32_t thresh
    if (snr < threshold)
    {
      char details[200];
-     sprintf(details,"SNR %g < %g",snr,threshold);
+     snprintf(details,200,"SNR %g < %g",(double)snr,(double)threshold);
      throw (Error(SNR_ERROR,nb,details));
    }
 }
@@ -790,7 +801,7 @@ void assert_snr_error(unsigned long nb,AnyPattern<float16_t> &pa,AnyPattern<floa
    if (snr < threshold)
    {
      char details[200];
-     sprintf(details,"SNR %g < %g",snr,threshold);
+     snprintf(details,200,"SNR %g < %g",(double)snr,(double)threshold);
      throw (Error(SNR_ERROR,nb,details));
    }
 }
@@ -808,7 +819,7 @@ void assert_snr_error(unsigned long nb,float16_t a,float16_t b, float32_t thresh
    if (snr < threshold)
    {
      char details[200];
-     sprintf(details,"SNR %g < %g",snr,threshold);
+     snprintf(details,200,"SNR %g < %g",(double)snr,(double)threshold);
      throw (Error(SNR_ERROR,nb,details));
    }
 }
@@ -836,7 +847,7 @@ void assert_snr_error(unsigned long nb,AnyPattern<float64_t> &pa,AnyPattern<floa
    if (snr < threshold)
    {
      char details[200];
-     sprintf(details,"SNR %g < %g",snr,threshold);
+     snprintf(details,200,"SNR %g < %g",snr,threshold);
      throw (Error(SNR_ERROR,nb,details));
    }
 }
@@ -852,7 +863,7 @@ void assert_snr_error(unsigned long nb,float64_t a,float64_t b, float64_t thresh
    if (snr < threshold)
    {
      char details[200];
-     sprintf(details,"SNR %g < %g",snr,threshold);
+     snprintf(details,200,"SNR %g < %g",snr,threshold);
      throw (Error(SNR_ERROR,nb,details));
    }
 }
@@ -880,7 +891,7 @@ void assert_snr_error(unsigned long nb,AnyPattern<q63_t> &pa,AnyPattern<q63_t> &
    if (snr < threshold)
    {
      char details[200];
-     sprintf(details,"SNR %g < %g",snr,threshold);
+     snprintf(details,200,"SNR %g < %g",(double)snr,(double)threshold);
      throw (Error(SNR_ERROR,nb,details));
    }
 
@@ -897,7 +908,7 @@ void assert_snr_error(unsigned long nb,q63_t a,q63_t b, float32_t threshold)
    if (snr < threshold)
    {
      char details[200];
-     sprintf(details,"SNR %g < %g",snr,threshold);
+     snprintf(details,200,"SNR %g < %g",(double)snr,(double)threshold);
      throw (Error(SNR_ERROR,nb,details));
    }
 
@@ -926,7 +937,7 @@ void assert_snr_error(unsigned long nb,AnyPattern<q31_t> &pa,AnyPattern<q31_t> &
    if (snr < threshold)
    {
      char details[200];
-     sprintf(details,"SNR %g < %g",snr,threshold);
+     snprintf(details,200,"SNR %g < %g",(double)snr,(double)threshold);
      throw (Error(SNR_ERROR,nb,details));
    }
 
@@ -942,7 +953,7 @@ void assert_snr_error(unsigned long nb,q31_t a,q31_t b, float32_t threshold)
    if (snr < threshold)
    {
      char details[200];
-     sprintf(details,"SNR %g < %g",snr,threshold);
+     snprintf(details,200,"SNR %g < %g",(double)snr,(double)threshold);
      throw (Error(SNR_ERROR,nb,details));
    }
 
@@ -970,7 +981,7 @@ void assert_snr_error(unsigned long nb,AnyPattern<q15_t> &pa,AnyPattern<q15_t> &
    if (snr < threshold)
    {
      char details[200];
-     sprintf(details,"SNR %g < %g",snr,threshold);
+     snprintf(details,200,"SNR %g < %g",(double)snr,(double)threshold);
      throw (Error(SNR_ERROR,nb,details));
    }
 
@@ -987,7 +998,7 @@ void assert_snr_error(unsigned long nb,q15_t a,q15_t b, float32_t threshold)
    if (snr < threshold)
    {
      char details[200];
-     sprintf(details,"SNR %g < %g",snr,threshold);
+     snprintf(details,200,"SNR %g < %g",(double)snr,(double)threshold);
      throw (Error(SNR_ERROR,nb,details));
    }
 
@@ -1015,7 +1026,7 @@ void assert_snr_error(unsigned long nb,AnyPattern<q7_t> &pa,AnyPattern<q7_t> &pb
    if (snr < threshold)
    {
      char details[200];
-     sprintf(details,"SNR %g < %g",snr,threshold);
+     snprintf(details,200,"SNR %g < %g",(double)snr,(double)threshold);
      throw (Error(SNR_ERROR,nb,details));
    }
 
@@ -1032,7 +1043,7 @@ void assert_snr_error(unsigned long nb,q7_t a,q7_t b, float32_t threshold)
    if (snr < threshold)
    {
      char details[200];
-     sprintf(details,"SNR %g < %g",snr,threshold);
+     snprintf(details,200,"SNR %g < %g",(double)snr,(double)threshold);
      throw (Error(SNR_ERROR,nb,details));
    }
 

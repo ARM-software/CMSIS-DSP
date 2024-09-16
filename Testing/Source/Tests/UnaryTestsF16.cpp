@@ -165,14 +165,14 @@ Comparison for Cholesky
 
 static void checkInnerTailOverflow(float16_t *b)
 {
-    ASSERT_TRUE(b[0] == 0);
-    ASSERT_TRUE(b[1] == 0);
-    ASSERT_TRUE(b[2] == 0);
-    ASSERT_TRUE(b[3] == 0);
-    ASSERT_TRUE(b[4] == 0);
-    ASSERT_TRUE(b[5] == 0);
-    ASSERT_TRUE(b[6] == 0);
-    ASSERT_TRUE(b[7] == 0);
+    ASSERT_TRUE((float)b[0] == 0);
+    ASSERT_TRUE((float)b[1] == 0);
+    ASSERT_TRUE((float)b[2] == 0);
+    ASSERT_TRUE((float)b[3] == 0);
+    ASSERT_TRUE((float)b[4] == 0);
+    ASSERT_TRUE((float)b[5] == 0);
+    ASSERT_TRUE((float)b[6] == 0);
+    ASSERT_TRUE((float)b[7] == 0);
 }
 
 
@@ -205,8 +205,8 @@ void UnaryTestsF16::test_householder_f16()
    ASSERT_EMPTY_TAIL(output);
    ASSERT_EMPTY_TAIL(outputBeta);
 
-   ASSERT_SNR(output,ref,(float16_t)SNR_THRESHOLD);
-   ASSERT_SNR(outputBeta,refBeta,(float16_t)SNR_THRESHOLD);
+   ASSERT_SNR(output,ref,SNR_THRESHOLD);
+   ASSERT_SNR(outputBeta,refBeta,SNR_THRESHOLD);
 
    ASSERT_CLOSE_ERROR(output,ref,ABS_ERROR,REL_ERROR);
    ASSERT_CLOSE_ERROR(outputBeta,refBeta,ABS_ERROR,REL_ERROR);
@@ -299,7 +299,7 @@ void UnaryTestsF16::test_mat_vec_mult_f16()
 
       ASSERT_EMPTY_TAIL(output);
 
-      ASSERT_SNR(output,ref,(float16_t)SNR_THRESHOLD);
+      ASSERT_SNR(output,ref,SNR_THRESHOLD);
 
       ASSERT_CLOSE_ERROR(output,ref,ABS_ERROR,REL_ERROR);
 
@@ -326,7 +326,7 @@ void UnaryTestsF16::test_mat_vec_mult_f16()
 
       ASSERT_EMPTY_TAIL(output);
 
-      ASSERT_SNR(output,ref,(float16_t)SNR_THRESHOLD);
+      ASSERT_SNR(output,ref,SNR_THRESHOLD);
 
       ASSERT_CLOSE_ERROR(output,ref,ABS_ERROR,REL_ERROR);
 
@@ -353,7 +353,7 @@ void UnaryTestsF16::test_mat_sub_f16()
 
       ASSERT_EMPTY_TAIL(output);
 
-      ASSERT_SNR(output,ref,(float16_t)SNR_THRESHOLD);
+      ASSERT_SNR(output,ref,SNR_THRESHOLD);
 
       ASSERT_CLOSE_ERROR(output,ref,ABS_ERROR,REL_ERROR);
 
@@ -380,7 +380,7 @@ void UnaryTestsF16::test_mat_scale_f16()
 
       ASSERT_EMPTY_TAIL(output);
 
-      ASSERT_SNR(output,ref,(float16_t)SNR_THRESHOLD);
+      ASSERT_SNR(output,ref,SNR_THRESHOLD);
 
       ASSERT_CLOSE_ERROR(output,ref,ABS_ERROR,REL_ERROR);
 
@@ -407,7 +407,7 @@ void UnaryTestsF16::test_mat_trans_f16()
 
       ASSERT_EMPTY_TAIL(output);
 
-      ASSERT_SNR(output,ref,(float16_t)SNR_THRESHOLD);
+      ASSERT_SNR(output,ref,SNR_THRESHOLD);
 
       ASSERT_CLOSE_ERROR(output,ref,ABS_ERROR,REL_ERROR);
 
@@ -434,7 +434,7 @@ void UnaryTestsF16::test_mat_cmplx_trans_f16()
 
       ASSERT_EMPTY_TAIL(output);
 
-      ASSERT_SNR(output,ref,(float16_t)SNR_THRESHOLD);
+      ASSERT_SNR(output,ref,SNR_THRESHOLD);
 
       ASSERT_CLOSE_ERROR(output,ref,ABS_ERROR,REL_ERROR);
 
@@ -450,10 +450,10 @@ static void refInnerTail(float16_t *b)
 
 static void checkInnerTail(float16_t *b)
 {
-    ASSERT_TRUE(b[0] == 1.0f);
-    ASSERT_TRUE(b[1] == -2.0f);
-    ASSERT_TRUE(b[2] == 3.0f);
-    ASSERT_TRUE(b[3] == -4.0f);
+    ASSERT_TRUE((float)b[0] == 1.0f);
+    ASSERT_TRUE((float)b[1] == -2.0f);
+    ASSERT_TRUE((float)b[2] == 3.0f);
+    ASSERT_TRUE((float)b[3] == -4.0f);
 }
 
 void UnaryTestsF16::test_mat_inverse_f16()
@@ -507,7 +507,7 @@ void UnaryTestsF16::test_mat_inverse_f16()
       /**********************/
 
 
-      ASSERT_SNR(output,ref,(float16_t)SNR_THRESHOLD_INV);
+      ASSERT_SNR(output,ref,SNR_THRESHOLD_INV);
 
       ASSERT_CLOSE_ERROR(output,ref,ABS_ERROR_INV,REL_ERROR_INV);
 
@@ -544,7 +544,7 @@ void UnaryTestsF16::test_mat_inverse_f16()
 
       ASSERT_EMPTY_TAIL(output);
 
-      ASSERT_SNR(output,ref,(float16_t)SNR_THRESHOLD_CHOL);
+      ASSERT_SNR(output,ref,SNR_THRESHOLD_CHOL);
 
       ASSERT_CLOSE_ERROR(ref,output,ABS_ERROR_CHOL,REL_ERROR_CHOL);
     }
@@ -585,7 +585,7 @@ void UnaryTestsF16::test_mat_inverse_f16()
 
       ASSERT_EMPTY_TAIL(output);
 
-      ASSERT_SNR(output,ref,(float16_t)SNR_THRESHOLD);
+      ASSERT_SNR(output,ref,SNR_THRESHOLD);
 
       ASSERT_CLOSE_ERROR(ref,output,ABS_ERROR_SOLVE,REL_ERROR_SOLVE);
     }
@@ -625,7 +625,7 @@ void UnaryTestsF16::test_mat_inverse_f16()
 
       ASSERT_EMPTY_TAIL(output);
 
-      ASSERT_SNR(output,ref,(float16_t)SNR_THRESHOLD);
+      ASSERT_SNR(output,ref,SNR_THRESHOLD);
 
       ASSERT_CLOSE_ERROR(ref,output,ABS_ERROR_SOLVE,REL_ERROR_SOLVE);
     }

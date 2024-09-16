@@ -23,7 +23,7 @@
        
 
           
-        ASSERT_SNR(outputfft,ref,(float16_t)SNR_THRESHOLD);
+        ASSERT_SNR(outputfft,ref,SNR_THRESHOLD);
         ASSERT_EMPTY_TAIL(outputfft);
 
 

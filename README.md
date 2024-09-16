@@ -15,7 +15,6 @@ This repository contains the CMSIS-DSP library and several other projects:
 
 * Test framework for bare metal Cortex-M or Cortex-A
 * Examples for bare metal Cortex-M
-* ComputeGraph
 * PythonWrapper
 
 You don't need any of the other projects to build and use CMSIS-DSP library. Building the other projects may require installation of other libraries (CMSIS), other tools (Arm Virtual Hardware) or CMSIS build tools.

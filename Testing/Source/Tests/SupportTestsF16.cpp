@@ -62,7 +62,7 @@ void SupportTestsF16::test_fill_f16()
  
  for(i=0 ; i < this->nbSamples; i++)
  {
-  ASSERT_EQ(val,outp[i]);
+  ASSERT_EQ((float)val,(float)outp[i]);
 }
 ASSERT_EMPTY_TAIL(output);
 

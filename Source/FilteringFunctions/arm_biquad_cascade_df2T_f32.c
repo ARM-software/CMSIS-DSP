@@ -179,7 +179,9 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_f32(
     while (stage > 0U);
 }
 #else
-#if defined(ARM_MATH_NEON) 
+/* The Neon version is not passing the test so is disabled
+until the problem is corrected. Issue #186 */
+#if 0 //defined(ARM_MATH_NEON) 
 
 ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_f32(
   const arm_biquad_cascade_df2T_instance_f32 * S,

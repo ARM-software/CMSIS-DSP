@@ -21,7 +21,7 @@
           outp ++;
        }
 
-        ASSERT_REL_ERROR(output,ref,(float32_t)ERROR_THRESHOLD);
+        ASSERT_REL_ERROR(output,ref,ERROR_THRESHOLD);
     } 
 
     void DistanceTestsU32::test_hamming_distance()

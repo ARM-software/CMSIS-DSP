@@ -54,7 +54,7 @@ namespace Client
         int dimensions;
     };
 
-    FPGA::FPGA(const char *testDesc,const char *patterns)
+    FPGA::FPGA(const unsigned char *testDesc,const char *patterns)
     {
       this->m_testDesc=testDesc;
       this->m_patterns=patterns;
@@ -147,7 +147,7 @@ namespace Client
 
         std::string tmp;
         tmp += this->testDir;
-        sprintf(fmt,"/%s_%ld.txt",(*this->outputNames)[id].c_str(),this->currentId);
+        snprintf(fmt,256,"/%s_%ld.txt",(*this->outputNames)[id].c_str(),this->currentId);
         tmp += std::string(fmt);
         //printf("%s\n",tmp.c_str());
         

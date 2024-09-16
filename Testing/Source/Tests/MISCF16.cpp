@@ -34,7 +34,7 @@ For tests of the error value of the Levinson Durbin algorithm
         arm_levinson_durbin_f16(inpA,outp,&err,this->nba);
 
         ASSERT_EMPTY_TAIL(output);
-        ASSERT_SNR(ref,output,(float16_t)SNR_LD_THRESHOLD);
+        ASSERT_SNR(ref,output,SNR_LD_THRESHOLD);
         ASSERT_CLOSE_ERROR(ref,output,ABS_LD_ERROR,REL_LD_ERROR);
 
         
@@ -52,7 +52,7 @@ For tests of the error value of the Levinson Durbin algorithm
           inpB, inputB.nbSamples(),
           outp);
 
-        ASSERT_SNR(ref,output,(float16_t)SNR_THRESHOLD);
+        ASSERT_SNR(ref,output,SNR_THRESHOLD);
         ASSERT_CLOSE_ERROR(ref,output,ABS_ERROR,REL_ERROR);
 
     }

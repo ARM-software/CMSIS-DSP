@@ -47,7 +47,7 @@ FPGA driver. Used to read a C array describing how to drive the test.
  class FPGA:public IO
   {
      public:
-      FPGA(const char *testDesc,const char *patterns);
+      FPGA(const unsigned char *testDesc,const char *patterns);
       ~FPGA();
       virtual void ReadIdentification();
       virtual void ReadTestIdentification();
@@ -110,7 +110,7 @@ FPGA driver. Used to read a C array describing how to drive the test.
       void readChar(char *);
 
       // Driver array
-      const char *m_testDesc;
+      const unsigned char *m_testDesc;
 
       // Pattern array
       const char *m_patterns;
@@ -119,7 +119,7 @@ FPGA driver. Used to read a C array describing how to drive the test.
       //char *m_parameters;
 
       // Current position in the driver array
-      const char *currentDesc;
+      const unsigned char *currentDesc;
       int currentKind;
       Testing::testID_t currentId;
       // Current param ID for the node
