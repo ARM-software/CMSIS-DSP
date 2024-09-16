@@ -162,4 +162,26 @@ target_compile_options(test PUBLIC -Wsign-compare
         -Wno-reserved-identifier
         -ffunction-sections)
 
+target_compile_options(CMSISDSP PUBLIC -Wsign-compare 
+        -Wdouble-promotion 
+        -DNDEBUG 
+        -Wall 
+        -Wextra  
+        -Werror
+        -Ofast 
+        -ffast-math
+        -Wno-packed 
+        -Wno-missing-variable-declarations 
+        -Wno-missing-prototypes 
+        -Wno-missing-noreturn 
+        -Wno-sign-conversion 
+        -Wno-nonportable-include-path 
+        -Wno-reserved-id-macro 
+        -Wno-unused-macros 
+        -Wno-documentation-unknown-command 
+        -Wno-documentation 
+        -Wno-parentheses-equality 
+        -Wno-reserved-identifier
+        -ffunction-sections)
+
 target_link_libraries(test PUBLIC CMSISDSP)

@@ -4,7 +4,7 @@
 
 #define SNR_THRESHOLD 310
 
-#define REL_ERROR (3.0e-15)
+#define REL_ERROR (6.0e-15)
 
 /*
     void ComplexTestsF64::test_cmplx_conj_f64()
