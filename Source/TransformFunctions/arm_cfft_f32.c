@@ -774,7 +774,6 @@ static void arm_cfft_radix8by2_f32 (arm_cfft_instance_f32 * S,
   float32_t m0, m1, m2, m3;
   uint32_t l;
 
-  printf("8x2---\n");
 
   pCol1 = p1;
   pCol2 = p2;
@@ -787,7 +786,8 @@ static void arm_cfft_radix8by2_f32 (arm_cfft_instance_f32 * S,
   pMid2 = p2 + L;
 
   /* do two dot Fourier transform */
-  for (l = L >> 2; l > 0; l-- )
+  //for (l = L >> 2; l > 0; l-- )
+  for (l=0;l < (L>>2) ; l++ )
   {
     t1[0] = p1[0];
     t1[1] = p1[1];
@@ -829,7 +829,6 @@ static void arm_cfft_radix8by2_f32 (arm_cfft_instance_f32 * S,
     t4[2] = t4[2] - t3[2];
     t4[3] = t4[3] - t3[3];    /* for col 2 */
 
-    TW(tw);
     twR = *tw++;
     twI = *tw++;
 
@@ -854,7 +853,6 @@ static void arm_cfft_radix8by2_f32 (arm_cfft_instance_f32 * S,
     *pMid2++ = m0 - m1;
     *pMid2++ = m2 + m3;
 
-    TW(tw);
     twR = *tw++;
     twI = *tw++;
 
@@ -876,10 +874,10 @@ static void arm_cfft_radix8by2_f32 (arm_cfft_instance_f32 * S,
   }
 
   /* first col */
-  arm_radix8_butterfly_f32 (pCol1, L, (float32_t *) S->pTwiddle, 2U);
+  arm_radix8_butterfly_f32 (pCol1, L, tw, 2U);
 
   /* second col */
-  arm_radix8_butterfly_f32 (pCol2, L, (float32_t *) S->pTwiddle, 2U);
+  arm_radix8_butterfly_f32 (pCol2, L, tw, 2U);
 }
 
 static void arm_cfft_radix8by4_f32 (arm_cfft_instance_f32 * S, 
@@ -887,16 +885,15 @@ static void arm_cfft_radix8by4_f32 (arm_cfft_instance_f32 * S,
 {
     uint32_t    L  = S->fftLen >> 1;
     float32_t * pCol1, *pCol2, *pCol3, *pCol4, *pEnd1, *pEnd2, *pEnd3, *pEnd4;
-    const float32_t *tw2, *tw3, *tw4;
+    const float32_t *tw;
     float32_t * p2 = p1 + L;
     float32_t * p3 = p2 + L;
     float32_t * p4 = p3 + L;
     float32_t t2[4], t3[4], t4[4], twR, twI;
     float32_t p1ap3_0, p1sp3_0, p1ap3_1, p1sp3_1;
     float32_t m0, m1, m2, m3;
-    uint32_t l, twMod2, twMod3, twMod4;
+    uint32_t l;
 
-    printf("8x4---\n");
 
     pCol1 = p1;         /* points to real values by default */
     pCol2 = p2;
@@ -907,15 +904,11 @@ static void arm_cfft_radix8by4_f32 (arm_cfft_instance_f32 * S,
     pEnd3 = p4 - 1;
     pEnd4 = pEnd3 + L;
 
-    tw2 = tw3 = tw4 = (float32_t *) S->pTwiddle;
+    tw  = (float32_t *) S->pTwiddle;
 
     L >>= 1;
 
     /* do four dot Fourier transform */
-
-    twMod2 = 2;
-    twMod3 = 4;
-    twMod4 = 6;
 
     /* TOP */
     p1ap3_0 = p1[0] + p3[0];
@@ -944,15 +937,13 @@ static void arm_cfft_radix8by4_f32 (arm_cfft_instance_f32 * S,
     *p4++ = t4[0];
     *p4++ = t4[1];
 
-    tw2 += twMod2;
-    tw3 += twMod3;
-    tw4 += twMod4;
+    //tw2 += twMod2;
+    //tw3 += twMod3;
+    //tw4 += twMod4;
 
-    printf("L=%d, (L-2) >> 1 : %d\n\r",L,(L-2)>>1);
 
     for (l = (L - 2) >> 1; l > 0; l-- )
     {
-      printf("-\n\r");
       /* TOP */
       p1ap3_0 = p1[0] + p3[0];
       p1sp3_0 = p1[0] - p3[0];
@@ -991,9 +982,8 @@ static void arm_cfft_radix8by4_f32 (arm_cfft_instance_f32 * S,
 
       /* COL 2 */
       /* read twiddle factors */
-      TW(tw2);
-      twR = *tw2++;
-      twI = *tw2++;
+      twR = *tw++;
+      twI = *tw++;
       /* multiply by twiddle factors */
       /*  let    Z1 = a + i(b),   Z2 = c + i(d) */
       /*   =>  Z1 * Z2  =  (a*c - b*d) + i(b*c + a*d) */
@@ -1018,10 +1008,9 @@ static void arm_cfft_radix8by4_f32 (arm_cfft_instance_f32 * S,
       *pEnd2-- = m2 + m3;
 
       /* COL 3 */
-      TW(tw3);
-      twR = tw3[0];
-      twI = tw3[1];
-      tw3 += twMod3;
+      twR = *tw++;
+      twI = *tw++;
+
       /* Top */
       m0 = t3[0] * twR;
       m1 = t3[1] * twI;
@@ -1042,10 +1031,9 @@ static void arm_cfft_radix8by4_f32 (arm_cfft_instance_f32 * S,
       *pEnd3-- = m3 - m2;
 
       /* COL 4 */
-      TW(tw4);
-      twR = tw4[0];
-      twI = tw4[1];
-      tw4 += twMod4;
+      twR = *tw++;
+      twI = *tw++;
+
       /* Top */
       m0 = t4[0] * twR;
       m1 = t4[1] * twI;
@@ -1066,7 +1054,6 @@ static void arm_cfft_radix8by4_f32 (arm_cfft_instance_f32 * S,
       *pEnd4-- = m2 + m3;
     }
 
-    printf("--\n\r");
     /* MIDDLE */
     /* Twiddle factors are */
     /*  1.0000  0.7071-0.7071i  -1.0000i  -0.7071-0.7071i */
@@ -1089,9 +1076,8 @@ static void arm_cfft_radix8by4_f32 (arm_cfft_instance_f32 * S,
     *p1++ = p1ap3_1 + p2[1] + p4[1];
 
     /* COL 2 */
-    TW(tw2);
-    twR = tw2[0];
-    twI = tw2[1];
+    twR = *tw++;
+    twI = *tw++;
 
     m0 = t2[0] * twR;
     m1 = t2[1] * twI;
@@ -1101,9 +1087,8 @@ static void arm_cfft_radix8by4_f32 (arm_cfft_instance_f32 * S,
     *p2++ = m0 + m1;
     *p2++ = m2 - m3;
     /* COL 3 */
-    TW(tw3);
-    twR = tw3[0];
-    twI = tw3[1];
+    twR = *tw++;
+    twI = *tw++;
 
     m0 = t3[0] * twR;
     m1 = t3[1] * twI;
@@ -1113,9 +1098,8 @@ static void arm_cfft_radix8by4_f32 (arm_cfft_instance_f32 * S,
     *p3++ = m0 + m1;
     *p3++ = m2 - m3;
     /* COL 4 */
-    TW(tw4);
-    twR = tw4[0];
-    twI = tw4[1];
+    twR = *tw++;
+    twI = *tw++;
 
     m0 = t4[0] * twR;
     m1 = t4[1] * twI;
@@ -1126,16 +1110,16 @@ static void arm_cfft_radix8by4_f32 (arm_cfft_instance_f32 * S,
     *p4++ = m2 - m3;
 
     /* first col */
-    arm_radix8_butterfly_f32 (pCol1, L, (float32_t *) S->pTwiddle, 4U);
+    arm_radix8_butterfly_f32 (pCol1, L, tw, 4U);
 
     /* second col */
-    arm_radix8_butterfly_f32 (pCol2, L, (float32_t *) S->pTwiddle, 4U);
+    arm_radix8_butterfly_f32 (pCol2, L, tw, 4U);
 
     /* third col */
-    arm_radix8_butterfly_f32 (pCol3, L, (float32_t *) S->pTwiddle, 4U);
+    arm_radix8_butterfly_f32 (pCol3, L, tw, 4U);
 
     /* fourth col */
-    arm_radix8_butterfly_f32 (pCol4, L, (float32_t *) S->pTwiddle, 4U);
+    arm_radix8_butterfly_f32 (pCol4, L, tw, 4U);
 }
 #else
 extern void arm_radix8_butterfly_f32(
