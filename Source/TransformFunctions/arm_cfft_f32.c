@@ -770,9 +770,9 @@ static void arm_cfft_radix8by2_f32 (arm_cfft_instance_f32 * S,
   float32_t * pCol1, * pCol2, * pMid1, * pMid2;
   float32_t * p2 = p1 + L;
   const float32_t * tw = (float32_t *) S->pTwiddle;
-  float32_t t1[4], t2[4], t3[4], t4[4], twR, twI;
-  float32_t m0, m1, m2, m3;
-  uint32_t l;
+  float32x4x2_t vt1, vt2, vt3, vt4, vtw;
+  float32x4x2_t vm,vtmp;
+  int32_t l;
 
 
   pCol1 = p1;
@@ -787,90 +787,130 @@ static void arm_cfft_radix8by2_f32 (arm_cfft_instance_f32 * S,
 
   /* do two dot Fourier transform */
   //for (l = L >> 2; l > 0; l-- )
-  for (l=0;l < (L>>2) ; l++ )
+  for (l=0;l <= (L>>2) - 2 ; l+=2 )
   {
-    t1[0] = p1[0];
-    t1[1] = p1[1];
-    t1[2] = p1[2];
-    t1[3] = p1[3];
+    //t1[0] = p1[0];
+    //t1[1] = p1[1];
+    //t1[2] = p1[2];
+    //t1[3] = p1[3];
+    vt1 = vld2q_f32(p1);
 
-    t2[0] = p2[0];
-    t2[1] = p2[1];
-    t2[2] = p2[2];
-    t2[3] = p2[3];
+    //t2[0] = p2[0];
+    //t2[1] = p2[1];
+    //t2[2] = p2[2];
+    //t2[3] = p2[3];
+    vt2 = vld2q_f32(p2);
 
-    t3[0] = pMid1[0];
-    t3[1] = pMid1[1];
-    t3[2] = pMid1[2];
-    t3[3] = pMid1[3];
 
-    t4[0] = pMid2[0];
-    t4[1] = pMid2[1];
-    t4[2] = pMid2[2];
-    t4[3] = pMid2[3];
+    //t3[0] = pMid1[0];
+    //t3[1] = pMid1[1];
+    //t3[2] = pMid1[2];
+    //t3[3] = pMid1[3];
+    vt3 = vld2q_f32(pMid1);
 
-    *p1++ = t1[0] + t2[0];
-    *p1++ = t1[1] + t2[1];
-    *p1++ = t1[2] + t2[2];
-    *p1++ = t1[3] + t2[3];    /* col 1 */
 
-    t2[0] = t1[0] - t2[0];
-    t2[1] = t1[1] - t2[1];
-    t2[2] = t1[2] - t2[2];
-    t2[3] = t1[3] - t2[3];    /* for col 2 */
+    //t4[0] = pMid2[0];
+    //t4[1] = pMid2[1];
+    //t4[2] = pMid2[2];
+    //t4[3] = pMid2[3];
+    vt4 = vld2q_f32(pMid2);
 
-    *pMid1++ = t3[0] + t4[0];
-    *pMid1++ = t3[1] + t4[1];
-    *pMid1++ = t3[2] + t4[2];
-    *pMid1++ = t3[3] + t4[3]; /* col 1 */
+    
+    //*p1++ = t1[0] + t2[0];
+    //*p1++ = t1[1] + t2[1];
+    //*p1++ = t1[2] + t2[2];
+    //*p1++ = t1[3] + t2[3];    /* col 1 */
+    vtmp.val[0] = vaddq_f32(vt1.val[0],vt2.val[0]);
+    vtmp.val[1] = vaddq_f32(vt1.val[1],vt2.val[1]);
+    vst2q_f32(p1,vtmp);
+    p1 += 8;
 
-    t4[0] = t4[0] - t3[0];
-    t4[1] = t4[1] - t3[1];
-    t4[2] = t4[2] - t3[2];
-    t4[3] = t4[3] - t3[3];    /* for col 2 */
+    //t2[0] = t1[0] - t2[0];
+    //t2[1] = t1[1] - t2[1];
+    //t2[2] = t1[2] - t2[2];
+    //t2[3] = t1[3] - t2[3];    /* for col 2 */
+    vt2.val[0] = vsubq_f32(vt1.val[0],vt2.val[0]);
+    vt2.val[1] = vsubq_f32(vt1.val[1],vt2.val[1]);
 
-    twR = *tw++;
-    twI = *tw++;
+
+    //*pMid1++ = t3[0] + t4[0];
+    //*pMid1++ = t3[1] + t4[1];
+    //*pMid1++ = t3[2] + t4[2];
+    //*pMid1++ = t3[3] + t4[3]; /* col 1 */
+    vtmp.val[0] = vaddq_f32(vt3.val[0],vt4.val[0]);
+    vtmp.val[1] = vaddq_f32(vt3.val[1],vt4.val[1]);
+    vst2q_f32(pMid1,vtmp);
+    pMid1 += 8;
+
+    //t4[0] = t4[0] - t3[0];
+    //t4[1] = t4[1] - t3[1];
+    //t4[2] = t4[2] - t3[2];
+    //t4[3] = t4[3] - t3[3];    /* for col 2 */
+    vt4.val[0] = vsubq_f32(vt4.val[0],vt3.val[0]);
+    vt4.val[1] = vsubq_f32(vt4.val[1],vt3.val[1]);
+
+    //twR = *tw++;
+    //twI = *tw++;
+    vtw = vld2q_f32(tw);
+    tw += 8;
+    
 
     /* multiply by twiddle factors */
-    m0 = t2[0] * twR;
-    m1 = t2[1] * twI;
-    m2 = t2[1] * twR;
-    m3 = t2[0] * twI;
+    //m0 = t2[0] * twR;
+    //m1 = t2[1] * twI;
+    //m2 = t2[1] * twR;
+    //m3 = t2[0] * twI;
+
+    vtmp.val[0] = vmulq_f32(vt2.val[0],vtw.val[0]);
+    vtmp.val[0] = vmlaq_f32(vtmp.val[0],vt2.val[1],vtw.val[1]);
 
     /* R  =  R  *  Tr - I * Ti */
-    *p2++ = m0 + m1;
+    //*p2++ = m0 + m1;
     /* I  =  I  *  Tr + R * Ti */
-    *p2++ = m2 - m3;
+    //*p2++ = m2 - m3;
+
+    //twR = *tw++;
+    //twI = *tw++;
+    //
+    //m0 = t2[2] * twR;
+    //m1 = t2[3] * twI;
+    //m2 = t2[3] * twR;
+    //m3 = t2[2] * twI;
+    //
+    //*p2++ = m0 + m1;
+    //*p2++ = m2 - m3;
+
+    vtmp.val[1] = vmulq_f32(vt2.val[1],vtw.val[0]);
+    vtmp.val[1] = vmlsq_f32(vtmp.val[1],vt2.val[0],vtw.val[1]);
+    vst2q_f32(p2,vtmp);
+    p2 += 8;
 
     /* use vertical symmetry */
     /*  0.9988 - 0.0491i <==> -0.0491 - 0.9988i */
-    m0 = t4[0] * twI;
-    m1 = t4[1] * twR;
-    m2 = t4[1] * twI;
-    m3 = t4[0] * twR;
+    //m0 = t4[0] * twI;
+    //m1 = t4[1] * twR;
+    //m2 = t4[1] * twI;
+    //m3 = t4[0] * twR;
 
-    *pMid2++ = m0 - m1;
-    *pMid2++ = m2 + m3;
+    //*pMid2++ = m0 - m1;
+    //*pMid2++ = m2 + m3;
 
-    twR = *tw++;
-    twI = *tw++;
+    vtmp.val[0] = vmulq_f32(vt4.val[0],vtw.val[1]);
+    vtmp.val[0] = vmlsq_f32(vtmp.val[0],vt4.val[1],vtw.val[0]);
 
-    m0 = t2[2] * twR;
-    m1 = t2[3] * twI;
-    m2 = t2[3] * twR;
-    m3 = t2[2] * twI;
+    vtmp.val[1] = vmulq_f32(vt4.val[1],vtw.val[1]);
+    vtmp.val[1] = vmlaq_f32(vtmp.val[1],vt4.val[0],vtw.val[0]);
+    vst2q_f32(pMid2,vtmp);
+    pMid2 += 8;
+    
 
-    *p2++ = m0 + m1;
-    *p2++ = m2 - m3;
+    //m0 = t4[2] * twI;
+    //m1 = t4[3] * twR;
+    //m2 = t4[3] * twI;
+    //m3 = t4[2] * twR;
 
-    m0 = t4[2] * twI;
-    m1 = t4[3] * twR;
-    m2 = t4[3] * twI;
-    m3 = t4[2] * twR;
-
-    *pMid2++ = m0 - m1;
-    *pMid2++ = m2 + m3;
+    //*pMid2++ = m0 - m1;
+    //*pMid2++ = m2 + m3;
   }
 
   /* first col */
