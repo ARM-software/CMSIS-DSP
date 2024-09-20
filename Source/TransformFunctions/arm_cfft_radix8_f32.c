@@ -74,6 +74,14 @@ ARM_DSP_ATTRIBUTE void arm_radix8_butterfly_f32(
    float32_t p1, p2, p3, p4;
    float32_t co;
    float32_t si;
+
+   float32x4x2_t v1,v2,v3,v4,v5,v6,v7,v8;
+   float32x4_t vp1, vp2, vp3, vp4;
+   float32x4x2_t expi;
+   float32x4x2_t vt,vtmp;
+   float32x4_t tmp;
+
+  
    const float32_t C81 = 0.70710678118f;
 
    n2 = fftLen;
@@ -190,14 +198,314 @@ ARM_DSP_ATTRIBUTE void arm_radix8_butterfly_f32(
          pi7 = pi7 + 2;
          pi8 = pi8 + 2;
 
-         //j = 1;
-         
-
-         //do
          int j;
          pia2 = pia1;
 
-         for(int j=1;j<n2;j++)
+         for(j=0;j<=n2-1-4;j+=4)
+         {
+            /*  index calculation for the coefficients */
+            
+            //r1 = *pi1 + *pi5;
+            //s1 = pi1[1] + pi5[1];
+            //r5 = *pi1 - *pi5;
+            //s5 = pi1[1] - pi5[1];
+            v1 = vld2q_f32(pi1);
+            v5 = vld2q_f32(pi5);
+            tmp       = vaddq_f32(v1.val[0],v5.val[0]);
+            v5.val[0] = vsubq_f32(v1.val[0],v5.val[0]);
+            v1.val[0] = tmp;
+
+            tmp       = vaddq_f32(v1.val[1],v5.val[1]);
+            v5.val[1] = vsubq_f32(v1.val[1],v5.val[1]);
+            v1.val[1] = tmp;
+
+            //r2 = *pi2 + *pi6;
+            //s2 = pi2[1] + pi6[1];
+            //r6 = *pi2 - *pi6;
+            //s6 = pi2[1] - pi6[1];
+
+            v2 = vld2q_f32(pi2);
+            v6 = vld2q_f32(pi6);
+            tmp       = vaddq_f32(v2.val[0],v6.val[0]);
+            v6.val[0] = vsubq_f32(v2.val[0],v6.val[0]);
+            v2.val[0] = tmp;
+
+            tmp       = vaddq_f32(v2.val[1],v6.val[1]);
+            v6.val[1] = vsubq_f32(v2.val[1],v6.val[1]);
+            v2.val[1] = tmp;
+
+            //r3 = *pi3 + *pi7;
+            //s3 = pi3[1] + pi7[1];
+            //r7 = *pi3 - *pi7;
+            //s7 = pi3[1] - pi7[1];
+
+            v3 = vld2q_f32(pi3);
+            v7 = vld2q_f32(pi7);
+            tmp       = vaddq_f32(v3.val[0],v7.val[0]);
+            v7.val[0] = vsubq_f32(v3.val[0],v7.val[0]);
+            v3.val[0] = tmp;
+
+            tmp       = vaddq_f32(v3.val[1],v7.val[1]);
+            v7.val[1] = vsubq_f32(v3.val[1],v7.val[1]);
+            v3.val[1] = tmp;
+
+
+            //r4 = *pi4 + *pi8;
+            //s4 = pi4[1] + pi8[1];
+            //r8 = *pi4 - *pi8;
+            //s8 = pi4[1] - pi8[1];
+            v4 = vld2q_f32(pi4);
+            v8 = vld2q_f32(pi8);
+            tmp       = vaddq_f32(v4.val[0],v8.val[0]);
+            v8.val[0] = vsubq_f32(v4.val[0],v8.val[0]);
+            v4.val[0] = tmp;
+
+            tmp       = vaddq_f32(v4.val[1],v8.val[1]);
+            v8.val[1] = vsubq_f32(v4.val[1],v8.val[1]);
+            v4.val[1] = tmp;
+
+            //t1 = r1 - r3;
+            //t2 = s1 - s3;
+
+            vt.val[0] = vsubq_f32(v1.val[0] , v3.val[0]);
+            vt.val[1] = vsubq_f32(v1.val[1] , v3.val[1]);
+
+            //r1 = r1 + r3;
+            //s1 = s1 + s3;
+
+            v1.val[0] = vaddq_f32(v1.val[0] , v3.val[0]);
+            v1.val[1] = vaddq_f32(v1.val[1] , v3.val[1]);
+
+            //r3 = r2 - r4;
+            //s3 = s2 - s4;
+            v3.val[0] = vsubq_f32(v2.val[0] , v4.val[0]);
+            v3.val[1] = vsubq_f32(v2.val[1] , v4.val[1]);
+
+            //r2 = r2 + r4;
+            //s2 = s2 + s4;
+            v2.val[0] = vaddq_f32(v2.val[0] , v4.val[0]);
+            v2.val[1] = vaddq_f32(v2.val[1] , v4.val[1]);
+
+            //*pi1++ = r1 + r2;
+            //*pi1++ = s1 + s2;
+            vtmp.val[0] = vaddq_f32(v1.val[0],v2.val[0]);
+            vtmp.val[1] = vaddq_f32(v1.val[1],v2.val[1]);
+            vst2q_f32(pi1,vtmp);
+            pi1 += 8;
+            
+
+            //r2 = r1 - r2;
+            //s2 = s1 - s2;
+            v2.val[0] = vsubq_f32(v1.val[0] , v2.val[0]);
+            v2.val[1] = vsubq_f32(v1.val[1] , v2.val[1]);
+
+            //r1 = t1 + s3;
+            //s1 = t2 - r3;
+            v1.val[0]= vaddq_f32(vt.val[0] , v3.val[1]);
+            v1.val[1]= vsubq_f32(vt.val[1] , v3.val[0]);
+
+            //t1 = t1 - s3;
+            //t2 = t2 + r3;
+
+            vt.val[0] = vsubq_f32(vt.val[0] , v3.val[1]);
+            vt.val[1] = vaddq_f32(vt.val[1] , v3.val[0]);
+
+            //co = *pia2++;
+            //si = *pia2++;
+            //p1 = co * r2;
+            //p2 = si * s2;
+            //p3 = co * s2;
+            //p4 = si * r2;
+            //*pi5++ = p1 + p2;
+            //*pi5++ = p3 - p4;
+            expi = vld2q_f32(pia2);
+            pia2 += 8;
+            vp1 = vmulq_f32(expi.val[0] , v2.val[0]);
+            vp2 = vmulq_f32(expi.val[1] , v2.val[1]);
+            vp3 = vmulq_f32(expi.val[0] , v2.val[1]);
+            vp4 = vmulq_f32(expi.val[1] , v2.val[0]);
+            vtmp.val[0] = vaddq_f32(vp1,vp2);
+            vtmp.val[1] = vsubq_f32(vp3,vp4);
+            vst2q_f32(pi5,vtmp);
+            pi5 += 8;
+           
+
+            //co = *pia2++;
+            //si = *pia2++;
+            //p1 = co * r1;
+            //p2 = si * s1;
+            //p3 = co * s1;
+            //p4 = si * r1;
+            //*pi3++ = p1 + p2;
+            //*pi3++ = p3 - p4;
+            expi = vld2q_f32(pia2);
+            pia2 += 8;
+            vp1 = vmulq_f32(expi.val[0] , v1.val[0]);
+            vp2 = vmulq_f32(expi.val[1] , v1.val[1]);
+            vp3 = vmulq_f32(expi.val[0] , v1.val[1]);
+            vp4 = vmulq_f32(expi.val[1] , v1.val[0]);
+            vtmp.val[0] = vaddq_f32(vp1,vp2);
+            vtmp.val[1] = vsubq_f32(vp3,vp4);
+            vst2q_f32(pi3,vtmp);
+            pi3 += 8;
+
+
+            //co = *pia2++;
+            //si = *pia2++;
+            //p1 = co * t1;
+            //p2 = si * t2;
+            //p3 = co * t2;
+            //p4 = si * t1;
+            //*pi7++ = p1 + p2;
+            //*pi7++ = p3 - p4;
+            expi = vld2q_f32(pia2);
+            pia2 += 8;
+            vp1 = vmulq_f32(expi.val[0] , vt.val[0]);
+            vp2 = vmulq_f32(expi.val[1] , vt.val[1]);
+            vp3 = vmulq_f32(expi.val[0] , vt.val[1]);
+            vp4 = vmulq_f32(expi.val[1] , vt.val[0]);
+            vtmp.val[0] = vaddq_f32(vp1,vp2);
+            vtmp.val[1] = vsubq_f32(vp3,vp4);
+            vst2q_f32(pi7,vtmp);
+            pi7 += 8;
+
+            //r1 = (r6 - r8) * C81;
+            //s1 = (s6 - s8) * C81;
+
+            v1.val[0] = vmulq_n_f32(vsubq_f32(v6.val[0] , v8.val[0]) , C81);
+            v1.val[1] = vmulq_n_f32(vsubq_f32(v6.val[1] , v8.val[1]) , C81);
+
+            //r6 = (r6 + r8) * C81;
+            //s6 = (s6 + s8) * C81;
+            v6.val[0] = vmulq_n_f32(vaddq_f32(v6.val[0] , v8.val[0]) , C81);
+            v6.val[1] = vmulq_n_f32(vaddq_f32(v6.val[1] , v8.val[1]) , C81);
+
+
+            //t1 = r5 - r1;
+            //t2 = s5 - s1;
+            
+            vt.val[0] = vsubq_f32(v5.val[0] , v1.val[0]);
+            vt.val[1] = vsubq_f32(v5.val[1] , v1.val[1]);
+
+            //r5 = r5 + r1;
+            //s5 = s5 + s1;
+            v5.val[0] = vaddq_f32(v5.val[0] , v1.val[0]);
+            v5.val[1] = vaddq_f32(v5.val[1] , v1.val[1]);
+
+            //r8 = r7 - r6;
+            //s8 = s7 - s6;
+            v8.val[0] = vsubq_f32(v7.val[0] , v6.val[0]);
+            v8.val[1] = vsubq_f32(v7.val[1] , v6.val[1]);
+
+            //r7 = r7 + r6;
+            //s7 = s7 + s6;
+            v7.val[0] = vaddq_f32(v7.val[0] , v6.val[0]);
+            v7.val[1] = vaddq_f32(v7.val[1] , v6.val[1]);
+
+
+            //r1 = r5 + s7;
+            //s1 = s5 - r7;
+            v1.val[0] = vaddq_f32(v5.val[0] , v7.val[1]);
+            v1.val[1] = vsubq_f32(v5.val[1] , v7.val[0]);
+
+
+            //r5 = r5 - s7;
+            //s5 = s5 + r7;
+            v5.val[0] = vsubq_f32(v5.val[0] , v7.val[1]);
+            v5.val[1] = vaddq_f32(v5.val[1] , v7.val[0]);
+
+
+            //r6 = t1 + s8;
+            //s6 = t2 - r8;
+            v6.val[0] = vaddq_f32(vt.val[0] , v8.val[1]);
+            v6.val[1] = vsubq_f32(vt.val[1] , v8.val[0]);
+
+
+            //t1 = t1 - s8;
+            //t2 = t2 + r8;
+            vt.val[0] = vsubq_f32(vt.val[0] , v8.val[1]);
+            vt.val[1] = vaddq_f32(vt.val[1] , v8.val[0]);
+
+
+            //co = *pia2++;
+            //si = *pia2++;
+            //p1 = co * r1;
+            //p2 = si * s1;
+            //p3 = co * s1;
+            //p4 = si * r1;
+            //*pi2++ = p1 + p2;
+            //*pi2++ = p3 - p4;
+            expi = vld2q_f32(pia2);
+            pia2 += 8;
+            vp1 = vmulq_f32(expi.val[0] , v1.val[0]);
+            vp2 = vmulq_f32(expi.val[1] , v1.val[1]);
+            vp3 = vmulq_f32(expi.val[0] , v1.val[1]);
+            vp4 = vmulq_f32(expi.val[1] , v1.val[0]);
+            vtmp.val[0] = vaddq_f32(vp1,vp2);
+            vtmp.val[1] = vsubq_f32(vp3,vp4);
+            vst2q_f32(pi2,vtmp);
+            pi2 += 8;
+
+            //co = *pia2++;
+            //si = *pia2++;
+            //p1 = co * r5;
+            //p2 = si * s5;
+            //p3 = co * s5;
+            //p4 = si * r5;
+            //*pi8++ = p1 + p2;
+            //*pi8++ = p3 - p4;
+            expi = vld2q_f32(pia2);
+            pia2 += 8;
+            vp1 = vmulq_f32(expi.val[0] , v5.val[0]);
+            vp2 = vmulq_f32(expi.val[1] , v5.val[1]);
+            vp3 = vmulq_f32(expi.val[0] , v5.val[1]);
+            vp4 = vmulq_f32(expi.val[1] , v5.val[0]);
+            vtmp.val[0] = vaddq_f32(vp1,vp2);
+            vtmp.val[1] = vsubq_f32(vp3,vp4);
+            vst2q_f32(pi8,vtmp);
+            pi8 += 8;
+
+            //co = *pia2++;
+            //si = *pia2++;
+            //p1 = co * r6;
+            //p2 = si * s6;
+            //p3 = co * s6;
+            //p4 = si * r6;
+            //*pi6++ = p1 + p2;
+            //*pi6++ = p3 - p4;
+            expi = vld2q_f32(pia2);
+            pia2 += 8;
+            vp1 = vmulq_f32(expi.val[0] , v6.val[0]);
+            vp2 = vmulq_f32(expi.val[1] , v6.val[1]);
+            vp3 = vmulq_f32(expi.val[0] , v6.val[1]);
+            vp4 = vmulq_f32(expi.val[1] , v6.val[0]);
+            vtmp.val[0] = vaddq_f32(vp1,vp2);
+            vtmp.val[1] = vsubq_f32(vp3,vp4);
+            vst2q_f32(pi6,vtmp);
+            pi6 += 8;
+
+            //co = *pia2++;
+            //si = *pia2++;
+            //p1 = co * t1;
+            //p2 = si * t2;
+            //p3 = co * t2;
+            //p4 = si * t1;
+            //*pi4++ = p1 + p2;
+            //*pi4++ = p3 - p4;
+
+            expi = vld2q_f32(pia2);
+            pia2 += 8;
+            vp1 = vmulq_f32(expi.val[0] , vt.val[0]);
+            vp2 = vmulq_f32(expi.val[1] , vt.val[1]);
+            vp3 = vmulq_f32(expi.val[0] , vt.val[1]);
+            vp4 = vmulq_f32(expi.val[1] , vt.val[0]);
+            vtmp.val[0] = vaddq_f32(vp1,vp2);
+            vtmp.val[1] = vsubq_f32(vp3,vp4);
+            vst2q_f32(pi4,vtmp);
+            pi4 += 8;
+         }
+
+         for(;j<n2-1;j++)
          {
             /*  index calculation for the coefficients */
             
@@ -335,10 +643,6 @@ ARM_DSP_ATTRIBUTE void arm_radix8_butterfly_f32(
             p4 = si * t1;
             *pi4++ = p1 + p2;
             *pi4++ = p3 - p4;
-
-            //j++;
-            
-         //} while (j < n2);
          }
 
          
