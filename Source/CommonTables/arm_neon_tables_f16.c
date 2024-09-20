@@ -1,15 +1,15 @@
 /* ----------------------------------------------------------------------
  * Project:      CMSIS DSP Library
- * Title:        CommonTables.c
- * Description:  Combination of all common table source files.
+ * Title:        arm_neon_tables_f16.c
+ * Description:  common tables like fft twiddle factors, Bitreverse, reciprocal etc
+ *               used for Neon implementation only
  *
- * $Date:        08. January 2020
- * $Revision:    V1.1.0
+ * @date     18 September 2024
  *
- * Target Processor: Cortex-M cores
+ * Target Processor: Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2019-2020 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2024 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -26,7 +26,17 @@
  * limitations under the License.
  */
 
-#include "arm_common_tables.c"
-#include "arm_const_structs.c"
-#include "arm_mve_tables.c"
-#include "arm_neon_tables.c"
+ #include "arm_math_types_f16.h"
+
+ 
+
+
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+
+#if defined(ARM_FLOAT16_SUPPORTED)
+#endif /* if defined(ARM_FLOAT16_SUPPORTED) */
+
+
+#endif /* defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE) */
+

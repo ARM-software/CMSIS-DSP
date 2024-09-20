@@ -147,31 +147,70 @@ def twiddle(n):
     r[1::2] = s
     return(r)
 
+def radix8_group(i,mod,n):
+   yield ((i))
+   yield ((i+n*mod))
+   yield ((i+n*mod*2))
+   yield ((i+n*mod*3))
+   return (i + n*mod * 3)
+   
 def radix8_butterfly_f32(fftLength,mod):
    n2 = fftLength >> 3
    while (n2 > 7):
     #yield "S"
     
     ia1 = 0
+    ia2 = 0
+    ia3 = 0
+    ia4 = 0
+    ia5 = 0
+    ia6 = 0
+    ia7 = 0
 
-    for _ in range(n2-1):
-       #yield "E"
-       ia1 = ia1 + mod 
-       ia2 = ia1 + ia1 
-       ia3 = ia2 + ia1 
-       ia4 = ia3 + ia1 
-       ia5 = ia4 + ia1 
-       ia6 = ia5 + ia1 
-       ia7 = ia6 + ia1 
-       yield (2*ia1)
-       yield (2*ia2)
-       yield (2*ia3)
-       yield (2*ia4)
-       yield (2*ia5)
-       yield (2*ia6)
-       yield (2*ia7)
-
+    block = (n2-1)>>2 
+    remaining = (n2-1)&3
+    print(f"(n2-1) = {n2-1}, block = {block}, remaining = {remaining}")
+    #block = 0 
+    #remaining = n2-1
+    for _ in range(block):
+       #yield "B"
+       ia1 = ia1 + 1*mod 
+       ia2 = ia2 + 2*mod 
+       ia3 = ia3 + 3*mod 
+       ia4 = ia4 + 4*mod 
+       ia5 = ia5 + 5*mod 
+       ia6 = ia6 + 6*mod 
+       ia7 = ia7 + 7*mod 
        
+       ia4 = yield from radix8_group(ia4,mod,4)
+       ia2 = yield from radix8_group(ia2,mod,2)
+       ia6 = yield from radix8_group(ia6,mod,6)
+       ia1 = yield from radix8_group(ia1,mod,1)
+       ia7 = yield from radix8_group(ia7,mod,7)
+       ia5 = yield from radix8_group(ia5,mod,5)
+       ia3 = yield from radix8_group(ia3,mod,3)
+
+      
+
+    for _ in range(remaining):
+       #yield "E"
+       ia1 = ia1 + 1*mod 
+       ia2 = ia2 + 2*mod 
+       ia3 = ia3 + 3*mod 
+       ia4 = ia4 + 4*mod 
+       ia5 = ia5 + 5*mod 
+       ia6 = ia6 + 6*mod 
+       ia7 = ia7 + 7*mod 
+       # With this order we do not need to load all
+       # twidle but only when they are needed
+       yield (ia4)
+       yield (ia2)
+       yield (ia6)
+       yield (ia1)
+       yield (ia7)
+       yield (ia5)
+       yield (ia3)
+   
     mod = mod << 3
     n2 = n2 >> 3 
 
@@ -180,21 +219,20 @@ def radix8by2_f32(fftLength):
    tw = 0
    for _ in range(fftLength>>3):
       yield tw 
-      tw = tw + 2
+      tw = tw + 1
       yield tw 
-      tw = tw + 2
+      tw = tw + 1
 
    yield from radix8_butterfly_f32(L,2)
 
 def radix8by4_f32(fftLength):
    L = fftLength >> 2
-   mod2 = 2
-   mod3 = 4 
-   mod4 = 6
+   mod2 = 1
+   mod3 = 2 
+   mod4 = 3
    tw2 = mod2
    tw3 = mod3
    tw4 = mod4
-   print((fftLength>>3)-1)
 
    for _ in range((fftLength>>3) - 1):
       yield tw2 
@@ -218,21 +256,37 @@ def radix8by4_f32(fftLength):
 def reorderTwiddle(theType,conjugate,f,h,n):
     numStages = 6
     coefs= twiddle(n)
+    indices = np.array([])
     if theType == F32:
        if n in [32,256,2048]:
-          indices = list(radix8by4_f32(n)) 
+          indices = np.array(list(radix8by4_f32(n)) )
        elif n in [64,512,4096]:
-          indices = list(radix8_butterfly_f32(n))
+          indices = np.array(list(radix8_butterfly_f32(n,1)))
        elif n in [16,128,1024]:
-          indices = list(radix8by2_f32(n))
+          indices = np.array(list(radix8by2_f32(n)))
        else:
           print(f"n= {n} not supported")
           exit(1)
 
        #print(indices)
-       print(np.array(indices) / 2)
-       printCFloat32Array(f,"twiddle_neon_%d_f32" % n,list(coefs))
-       printHFloat32Array(h,"twiddle_neon_%d_f32" % n,list(coefs)) 
+       cplx_indices = np.zeros(len(indices)*2,dtype=np.int32)
+       cplx_indices[0::2] = 2*indices
+       cplx_indices[1::2] = 2*indices+1
+       res=coefs[cplx_indices]
+       printCFloat32Array(f,"twiddle_neon_%d_f32" % n,res)
+       printHFloat32Array(h,"twiddle_neon_%d_f32" % n,res) 
+    #else:
+    #   if theType == F16:
+    #      printCFloat16Array(f,"twiddle_neon_%d_f16" % n,[])
+    #      printHFloat16Array(h,"twiddle_neon_%d_f16" % n,[]) 
+    #
+    #   if theType == Q31:
+    #      printCQ31Array(f,"twiddle_neon_%d_q31" % n,[])
+    #      printHQ31Array(h,"twiddle_neon_%d_q31" % n,[]) 
+    #
+    #   if theType == Q15:
+    #      printCQ15Array(f,"twiddle_neon_%d_q15" % n,[])
+    #      printHQ15Array(h,"twiddle_neon_%d_q15" % n,[]) 
    
 
 
@@ -361,11 +415,15 @@ with open(args.f16,'w') as f:
      print("#if defined(ARM_FLOAT16_SUPPORTED)",file=f)
      print("#if defined(ARM_FLOAT16_SUPPORTED)",file=h)
 
-     #reorderTwiddle(F16,False,f,h,16)
-     #reorderTwiddle(F16,False,f,h,64)
-     #reorderTwiddle(F16,False,f,h,256)
-     #reorderTwiddle(F16,False,f,h,1024)
-     #reorderTwiddle(F16,False,f,h,4096)
+     reorderTwiddle(F16,False,f,h,16)
+     reorderTwiddle(F16,False,f,h,32)
+     reorderTwiddle(F16,False,f,h,64)
+     reorderTwiddle(F16,False,f,h,128)
+     reorderTwiddle(F16,False,f,h,256)
+     reorderTwiddle(F16,False,f,h,512)
+     reorderTwiddle(F16,False,f,h,1024)
+     reorderTwiddle(F16,False,f,h,2048)
+     reorderTwiddle(F16,False,f,h,4096)
 
      print("#endif /* if defined(ARM_FLOAT16_SUPPORTED) */",file=f)
      print("#endif /* if defined(ARM_FLOAT16_SUPPORTED) */",file=h)
@@ -384,25 +442,35 @@ with open(args.f,'w') as f:
     
      print(cifdeNEON ,file=f)
      print(hifdefNEON ,file=h)
-     #reorderTwiddle(F32,False,f,h,16)
-     #reorderTwiddle(F32,False,f,h,32)
-     #reorderTwiddle(F32,False,f,h,64)
+     reorderTwiddle(F32,False,f,h,16)
+     reorderTwiddle(F32,False,f,h,32)
+     reorderTwiddle(F32,False,f,h,64)
      reorderTwiddle(F32,False,f,h,128)
-     #reorderTwiddle(F32,False,f,h,256)
-     #reorderTwiddle(F32,False,f,h,1024)
-     #reorderTwiddle(F32,False,f,h,4096)
+     reorderTwiddle(F32,False,f,h,256)
+     reorderTwiddle(F32,False,f,h,512)
+     reorderTwiddle(F32,False,f,h,1024)
+     reorderTwiddle(F32,False,f,h,2048)
+     reorderTwiddle(F32,False,f,h,4096)
 
-     #reorderTwiddle(Q31,True,f,h,16)
-     #reorderTwiddle(Q31,True,f,h,64)
-     #reorderTwiddle(Q31,True,f,h,256)
-     #reorderTwiddle(Q31,True,f,h,1024)
-     #reorderTwiddle(Q31,True,f,h,4096)
+     reorderTwiddle(Q31,False,f,h,16)
+     reorderTwiddle(Q31,False,f,h,32)
+     reorderTwiddle(Q31,False,f,h,64)
+     reorderTwiddle(Q31,False,f,h,128)
+     reorderTwiddle(Q31,False,f,h,256)
+     reorderTwiddle(Q31,False,f,h,512)
+     reorderTwiddle(Q31,False,f,h,1024)
+     reorderTwiddle(Q31,False,f,h,2048)
+     reorderTwiddle(Q31,False,f,h,4096)
 
-     #reorderTwiddle(Q15,True,f,h,16)
-     #reorderTwiddle(Q15,True,f,h,64)
-     #reorderTwiddle(Q15,True,f,h,256)
-     #reorderTwiddle(Q15,True,f,h,1024)
-     #reorderTwiddle(Q15,True,f,h,4096)
+     reorderTwiddle(Q15,False,f,h,16)
+     reorderTwiddle(Q15,False,f,h,32)
+     reorderTwiddle(Q15,False,f,h,64)
+     reorderTwiddle(Q15,False,f,h,128)
+     reorderTwiddle(Q15,False,f,h,256)
+     reorderTwiddle(Q15,False,f,h,512)
+     reorderTwiddle(Q15,False,f,h,1024)
+     reorderTwiddle(Q15,False,f,h,2048)
+     reorderTwiddle(Q15,False,f,h,4096)
  
 
      print(cfooterNEON ,file=f)

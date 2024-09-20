@@ -47,6 +47,10 @@
 #include "arm_common_tables.h"
 #include "arm_const_structs.h"
 
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#include "arm_neon_tables.h"
+#endif
+
 
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
 
@@ -98,11 +102,22 @@ ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_##LEN##_f32(                         
 }
 
 #else
+//#undef ARM_MATH_NEON
 
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#define FFTINIT(EXT,SIZE)                                           \
+  S->bitRevLength = arm_cfft_sR_##EXT##_len##SIZE.bitRevLength;        \
+  S->pBitRevTable = arm_cfft_sR_##EXT##_len##SIZE.pBitRevTable;         \
+  S->pTwiddle = twiddle_neon_##SIZE##_f32;
+
+#else
 #define FFTINIT(EXT,SIZE)                                           \
   S->bitRevLength = arm_cfft_sR_##EXT##_len##SIZE.bitRevLength;        \
   S->pBitRevTable = arm_cfft_sR_##EXT##_len##SIZE.pBitRevTable;         \
   S->pTwiddle = arm_cfft_sR_##EXT##_len##SIZE.pTwiddle;
+
+
+#endif /* defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)*/
 
 #define CFFTINIT_F32(LEN,LENTWIDDLE)                                          \
 ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_##LEN##_f32(arm_cfft_instance_f32 * S)\
@@ -120,7 +135,6 @@ ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_##LEN##_f32(arm_cfft_instance_f32 * S
                                                                \
         return (status);                                       \
 }
-
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
