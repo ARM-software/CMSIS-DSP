@@ -202,37 +202,53 @@ ARM_DSP_ATTRIBUTE void arm_radix8_butterfly_f32(
             /*  index calculation for the coefficients */
             
             r1 = *pi1 + *pi5;
+            s1 = pi1[1] + pi5[1];
+
             r5 = *pi1 - *pi5;
+            s5 = pi1[1] - pi5[1];
+
             r2 = *pi2 + *pi6;
-            r6 = *pi2 - *pi6;
-            r3 = *pi3 + *pi7;
-            r7 = *pi3 - *pi7;
-            r4 = *pi4 + *pi8;
-            r8 = *pi4 - *pi8;
-            t1 = r1 - r3;
-            r1 = r1 + r3;
-            r3 = r2 - r4;
-            r2 = r2 + r4;
-            *pi1++ = r1 + r2;
-            r2 = r1 - r2;
-            s1 = *pi1 + pi5[1];
-            s5 = *pi1 - pi5[1];
             s2 = pi2[1] + pi6[1];
+
+            r6 = *pi2 - *pi6;
             s6 = pi2[1] - pi6[1];
+
+            r3 = *pi3 + *pi7;
             s3 = pi3[1] + pi7[1];
+
+            r7 = *pi3 - *pi7;
             s7 = pi3[1] - pi7[1];
+
+            r4 = *pi4 + *pi8;
             s4 = pi4[1] + pi8[1];
+
+            r8 = *pi4 - *pi8;
             s8 = pi4[1] - pi8[1];
+
+            t1 = r1 - r3;
             t2 = s1 - s3;
+
+            r1 = r1 + r3;
             s1 = s1 + s3;
+
+            r3 = r2 - r4;
             s3 = s2 - s4;
+
+            r2 = r2 + r4;
             s2 = s2 + s4;
-            r1 = t1 + s3;
-            t1 = t1 - s3;
+
+            *pi1++ = r1 + r2;
             *pi1++ = s1 + s2;
+
+            r2 = r1 - r2;
             s2 = s1 - s2;
+
+            r1 = t1 + s3;
             s1 = t2 - r3;
+
+            t1 = t1 - s3;
             t2 = t2 + r3;
+
             co = *pia2++;
             si = *pia2++;
 
@@ -240,7 +256,7 @@ ARM_DSP_ATTRIBUTE void arm_radix8_butterfly_f32(
             p2 = si * s2;
             p3 = co * s2;
             p4 = si * r2;
-            *pi5++      = p1 + p2;
+            *pi5++ = p1 + p2;
             *pi5++ = p3 - p4;
             co = *pia2++;
             si = *pia2++;
@@ -259,24 +275,33 @@ ARM_DSP_ATTRIBUTE void arm_radix8_butterfly_f32(
             *pi7++ = p1 + p2;
             *pi7++ = p3 - p4;
             r1 = (r6 - r8) * C81;
-            r6 = (r6 + r8) * C81;
             s1 = (s6 - s8) * C81;
+
+            r6 = (r6 + r8) * C81;
             s6 = (s6 + s8) * C81;
+
             t1 = r5 - r1;
-            r5 = r5 + r1;
-            r8 = r7 - r6;
-            r7 = r7 + r6;
             t2 = s5 - s1;
+
+            r5 = r5 + r1;
             s5 = s5 + s1;
+
+            r8 = r7 - r6;
             s8 = s7 - s6;
+
+            r7 = r7 + r6;
             s7 = s7 + s6;
+
             r1 = r5 + s7;
-            r5 = r5 - s7;
-            r6 = t1 + s8;
-            t1 = t1 - s8;
             s1 = s5 - r7;
+
+            r5 = r5 - s7;
             s5 = s5 + r7;
+
+            r6 = t1 + s8;
             s6 = t2 - r8;
+
+            t1 = t1 - s8;
             t2 = t2 + r8;
             co = *pia2++;
             si = *pia2++;
