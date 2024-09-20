@@ -61,7 +61,7 @@ ARM_DSP_ATTRIBUTE void arm_radix8_butterfly_f32(
   const float32_t * pCoef,
   uint16_t twidCoefModifier)
 {
-   const float32_t *pia1, *pia2, *pia3, *pia4, *pia5, *pia6, *pia7;
+   const float32_t *pia1, *pia2;
    float32_t *pi1, *pi2, *pi3, *pi4, *pi5, *pi6, *pi7, *pi8;
    uint32_t i1;
    uint32_t id;
@@ -72,8 +72,8 @@ ARM_DSP_ATTRIBUTE void arm_radix8_butterfly_f32(
    float32_t t1, t2;
    float32_t s1, s2, s3, s4, s5, s6, s7, s8;
    float32_t p1, p2, p3, p4;
-   float32_t co2, co3, co4, co5, co6, co7, co8;
-   float32_t si2, si3, si4, si5, si6, si7, si8;
+   float32_t co;
+   float32_t si;
    const float32_t C81 = 0.70710678118f;
 
    n2 = fftLen;
@@ -200,28 +200,6 @@ ARM_DSP_ATTRIBUTE void arm_radix8_butterfly_f32(
          for(int j=1;j<n2;j++)
          {
             /*  index calculation for the coefficients */
-            //pia1 += 2*1*twidCoefModifier;
-            //pia2 += 2*2*twidCoefModifier;
-            //pia3 += 2*3*twidCoefModifier;
-            //pia4 += 2*4*twidCoefModifier;
-            //pia5 += 2*5*twidCoefModifier;
-            //pia6 += 2*6*twidCoefModifier;
-            //pia7 += 2*7*twidCoefModifier;
-   
-            co2 = *pia2++;
-            si2 = *pia2++;
-            co3 = *pia2++;
-            si3 = *pia2++;
-            co4 = *pia2++;
-            si4 = *pia2++;
-            co5 = *pia2++;
-            si5 = *pia2++;
-            co6 = *pia2++;
-            si6 = *pia2++;
-            co7 = *pia2++;
-            si7 = *pia2++;
-            co8 = *pia2++;
-            si8 = *pia2++;
             
             r1 = *pi1 + *pi5;
             r5 = *pi1 - *pi5;
@@ -255,22 +233,29 @@ ARM_DSP_ATTRIBUTE void arm_radix8_butterfly_f32(
             s2 = s1 - s2;
             s1 = t2 - r3;
             t2 = t2 + r3;
-            p1 = co5 * r2;
-            p2 = si5 * s2;
-            p3 = co5 * s2;
-            p4 = si5 * r2;
+            co = *pia2++;
+            si = *pia2++;
+
+            p1 = co * r2;
+            p2 = si * s2;
+            p3 = co * s2;
+            p4 = si * r2;
             *pi5++      = p1 + p2;
             *pi5++ = p3 - p4;
-            p1 = co3 * r1;
-            p2 = si3 * s1;
-            p3 = co3 * s1;
-            p4 = si3 * r1;
+            co = *pia2++;
+            si = *pia2++;
+            p1 = co * r1;
+            p2 = si * s1;
+            p3 = co * s1;
+            p4 = si * r1;
             *pi3++ = p1 + p2;
             *pi3++ = p3 - p4;
-            p1 = co7 * t1;
-            p2 = si7 * t2;
-            p3 = co7 * t2;
-            p4 = si7 * t1;
+            co = *pia2++;
+            si = *pia2++;
+            p1 = co * t1;
+            p2 = si * t2;
+            p3 = co * t2;
+            p4 = si * t1;
             *pi7++ = p1 + p2;
             *pi7++ = p3 - p4;
             r1 = (r6 - r8) * C81;
@@ -293,28 +278,36 @@ ARM_DSP_ATTRIBUTE void arm_radix8_butterfly_f32(
             s5 = s5 + r7;
             s6 = t2 - r8;
             t2 = t2 + r8;
-            p1 = co2 * r1;
-            p2 = si2 * s1;
-            p3 = co2 * s1;
-            p4 = si2 * r1;
+            co = *pia2++;
+            si = *pia2++;
+            p1 = co * r1;
+            p2 = si * s1;
+            p3 = co * s1;
+            p4 = si * r1;
             *pi2++ = p1 + p2;
             *pi2++ = p3 - p4;
-            p1 = co8 * r5;
-            p2 = si8 * s5;
-            p3 = co8 * s5;
-            p4 = si8 * r5;
+            co = *pia2++;
+            si = *pia2++;
+            p1 = co * r5;
+            p2 = si * s5;
+            p3 = co * s5;
+            p4 = si * r5;
             *pi8++ = p1 + p2;
             *pi8++ = p3 - p4;
-            p1 = co6 * r6;
-            p2 = si6 * s6;
-            p3 = co6 * s6;
-            p4 = si6 * r6;
+            co = *pia2++;
+            si = *pia2++;
+            p1 = co * r6;
+            p2 = si * s6;
+            p3 = co * s6;
+            p4 = si * r6;
             *pi6++ = p1 + p2;
             *pi6++ = p3 - p4;
-            p1 = co4 * t1;
-            p2 = si4 * t2;
-            p3 = co4 * t2;
-            p4 = si4 * t1;
+            co = *pia2++;
+            si = *pia2++;
+            p1 = co * t1;
+            p2 = si * t2;
+            p3 = co * t2;
+            p4 = si * t1;
             *pi4++ = p1 + p2;
             *pi4++ = p3 - p4;
 
