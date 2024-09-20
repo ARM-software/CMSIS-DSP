@@ -61,11 +61,12 @@ ARM_DSP_ATTRIBUTE void arm_radix8_butterfly_f32(
   const float32_t * pCoef,
   uint16_t twidCoefModifier)
 {
-   uint32_t ia1, ia2, ia3, ia4, ia5, ia6, ia7;
+   const float32_t *pia1, *pia2, *pia3, *pia4, *pia5, *pia6, *pia7;
    float32_t *pi1, *pi2, *pi3, *pi4, *pi5, *pi6, *pi7, *pi8;
    uint32_t i1;
    uint32_t id;
-   uint32_t n1, n2, j;
+   uint32_t n1, n2 ;
+   //uint32_t j;
 
    float32_t r1, r2, r3, r4, r5, r6, r7, r8;
    float32_t t1, t2;
@@ -76,6 +77,7 @@ ARM_DSP_ATTRIBUTE void arm_radix8_butterfly_f32(
    const float32_t C81 = 0.70710678118f;
 
    n2 = fftLen;
+   pia1 = pCoef;
 
    do
    {
@@ -94,22 +96,22 @@ ARM_DSP_ATTRIBUTE void arm_radix8_butterfly_f32(
 
       do
       {
-         r1 = *pi1 + *pi5;
-         r5 = *pi1 - *pi5;
-         r2 = *pi2 + *pi6;
-         r6 = *pi2 - *pi6;
-         r3 = *pi3 + *pi7;
-         r7 = *pi3 - *pi7;
-         r4 = *pi4 + *pi8;
-         r8 = *pi4 - *pi8;
+         r1 = pi1[0] + pi5[0];
+         r5 = pi1[0] - pi5[0];
+         r2 = pi2[0] + pi6[0];
+         r6 = pi2[0] - pi6[0];
+         r3 = pi3[0] + pi7[0];
+         r7 = pi3[0] - pi7[0];
+         r4 = pi4[0] + pi8[0];
+         r8 = pi4[0] - pi8[0];
          t1 = r1 - r3;
          r1 = r1 + r3;
          r3 = r2 - r4;
          r2 = r2 + r4;
-         *pi1++ = r1 + r2;
-         *pi5++ = r1 - r2;
-         r1 = *pi1 + *pi5;
-         s5 = *pi1 - *pi5;
+         pi1[0] = r1 + r2;
+         pi5[0] = r1 - r2;
+         r1 = pi1[1] + pi5[1];
+         s5 = pi1[1] - pi5[1];
          r2 = pi2[1] + pi6[1];
          s6 = pi2[1] - pi6[1];
          s3 = pi3[1] + pi7[1];
@@ -120,12 +122,12 @@ ARM_DSP_ATTRIBUTE void arm_radix8_butterfly_f32(
          r1 = r1 + s3;
          s3 = r2 - r4;
          r2 = r2 + r4;
-         *pi1++ = r1 + r2;
-         *pi5++ = r1 - r2;
-         *pi3++     = t1 + s3;
-         *pi7++     = t1 - s3;
-         *pi3++ = t2 - r3;
-         *pi7++ = t2 + r3;
+         pi1[1] = r1 + r2;
+         pi5[1] = r1 - r2;
+         pi3[0]     = t1 + s3;
+         pi7[0]     = t1 - s3;
+         pi3[1] = t2 - r3;
+         pi7[1] = t2 + r3;
          r1 = (r6 - r8) * C81;
          r6 = (r6 + r8) * C81;
          r2 = (s6 - s8) * C81;
@@ -138,23 +140,23 @@ ARM_DSP_ATTRIBUTE void arm_radix8_butterfly_f32(
          s5 = s5 + r2;
          s8 = s7 - s6;
          s7 = s7 + s6;
-         *pi2++    = r5 + s7;
-         *pi8++    = r5 - s7;
-         *pi6++    = t1 + s8;
-         *pi4++    = t1 - s8;
-         *pi2++ = s5 - r7;
-         *pi8++ = s5 + r7;
-         *pi6++ = t2 - r8;
-         *pi4++ = t2 + r8;
+         pi2[0]   = r5 + s7;
+         pi8[0]   = r5 - s7;
+         pi6[0]   = t1 + s8;
+         pi4[0]   = t1 - s8;
+         pi2[1] = s5 - r7;
+         pi8[1] = s5 + r7;
+         pi6[1] = t2 - r8;
+         pi4[1] = t2 + r8;
 
-         pi1 += (2*n1-2);
-         pi2 += (2*n1-2);
-         pi3 += (2*n1-2);
-         pi4 += (2*n1-2);
-         pi5 += (2*n1-2);
-         pi6 += (2*n1-2);
-         pi7 += (2*n1-2);
-         pi8 += (2*n1-2);
+         pi1 += (2*n1);
+         pi2 += (2*n1);
+         pi3 += (2*n1);
+         pi4 += (2*n1);
+         pi5 += (2*n1);
+         pi6 += (2*n1);
+         pi7 += (2*n1);
+         pi8 += (2*n1);
 
          i1 += n1;
       } while (i1 < fftLen);
@@ -188,34 +190,38 @@ ARM_DSP_ATTRIBUTE void arm_radix8_butterfly_f32(
          pi7 = pi7 + 2;
          pi8 = pi8 + 2;
 
-         j = 1;
-         ia1 = 0;
-         do
+         //j = 1;
+         
+
+         //do
+         int j;
+         pia2 = pia1;
+
+         for(int j=1;j<n2;j++)
          {
             /*  index calculation for the coefficients */
-            id  = ia1 + twidCoefModifier;
-            ia1 = id;
-            ia2 = ia1 + id;
-            ia3 = ia2 + id;
-            ia4 = ia3 + id;
-            ia5 = ia4 + id;
-            ia6 = ia5 + id;
-            ia7 = ia6 + id;
+            //pia1 += 2*1*twidCoefModifier;
+            //pia2 += 2*2*twidCoefModifier;
+            //pia3 += 2*3*twidCoefModifier;
+            //pia4 += 2*4*twidCoefModifier;
+            //pia5 += 2*5*twidCoefModifier;
+            //pia6 += 2*6*twidCoefModifier;
+            //pia7 += 2*7*twidCoefModifier;
    
-            co2 = pCoef[2 * ia1];
-            co3 = pCoef[2 * ia2];
-            co4 = pCoef[2 * ia3];
-            co5 = pCoef[2 * ia4];
-            co6 = pCoef[2 * ia5];
-            co7 = pCoef[2 * ia6];
-            co8 = pCoef[2 * ia7];
-            si2 = pCoef[2 * ia1 + 1];
-            si3 = pCoef[2 * ia2 + 1];
-            si4 = pCoef[2 * ia3 + 1];
-            si5 = pCoef[2 * ia4 + 1];
-            si6 = pCoef[2 * ia5 + 1];
-            si7 = pCoef[2 * ia6 + 1];
-            si8 = pCoef[2 * ia7 + 1];
+            co2 = *pia2++;
+            si2 = *pia2++;
+            co3 = *pia2++;
+            si3 = *pia2++;
+            co4 = *pia2++;
+            si4 = *pia2++;
+            co5 = *pia2++;
+            si5 = *pia2++;
+            co6 = *pia2++;
+            si6 = *pia2++;
+            co7 = *pia2++;
+            si7 = *pia2++;
+            co8 = *pia2++;
+            si8 = *pia2++;
             
             r1 = *pi1 + *pi5;
             r5 = *pi1 - *pi5;
@@ -312,10 +318,12 @@ ARM_DSP_ATTRIBUTE void arm_radix8_butterfly_f32(
             *pi4++ = p1 + p2;
             *pi4++ = p3 - p4;
 
-            j++;
+            //j++;
             
-         } while (j < n2);
+         //} while (j < n2);
+         }
 
+         
          pi1 = pi1 + 2*(n1-n2);
          pi2 = pi2 + 2*(n1-n2);
          pi3 = pi3 + 2*(n1-n2);
@@ -328,6 +336,7 @@ ARM_DSP_ATTRIBUTE void arm_radix8_butterfly_f32(
          i1 += n1;
       } while (i1 < fftLen) ;
 
+      pia1 = pia2;
       twidCoefModifier <<= 3;
    } while (n2 > 7);
 }
