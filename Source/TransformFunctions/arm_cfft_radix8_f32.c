@@ -76,7 +76,6 @@ ARM_DSP_ATTRIBUTE void arm_radix8_butterfly_f32(
    float32_t si;
 
    float32x4x2_t v1,v2,v3,v4,v5,v6,v7,v8;
-   float32x4_t vp1, vp2, vp3, vp4;
    float32x4x2_t expi;
    float32x4x2_t vt,vtmp;
    float32x4_t tmp;
@@ -320,12 +319,10 @@ ARM_DSP_ATTRIBUTE void arm_radix8_butterfly_f32(
             //*pi5++ = p3 - p4;
             expi = vld2q_f32(pia2);
             pia2 += 8;
-            vp1 = vmulq_f32(expi.val[0] , v2.val[0]);
-            vp2 = vmulq_f32(expi.val[1] , v2.val[1]);
-            vp3 = vmulq_f32(expi.val[0] , v2.val[1]);
-            vp4 = vmulq_f32(expi.val[1] , v2.val[0]);
-            vtmp.val[0] = vaddq_f32(vp1,vp2);
-            vtmp.val[1] = vsubq_f32(vp3,vp4);
+            vtmp.val[0] = vmulq_f32(expi.val[0] , v2.val[0]);
+            vtmp.val[0] = vmlaq_f32(vtmp.val[0],expi.val[1] , v2.val[1]);
+            vtmp.val[1] = vmulq_f32(expi.val[0] , v2.val[1]);
+            vtmp.val[1] = vmlsq_f32(vtmp.val[1],expi.val[1] , v2.val[0]);
             vst2q_f32(pi5,vtmp);
             pi5 += 8;
            
@@ -340,12 +337,10 @@ ARM_DSP_ATTRIBUTE void arm_radix8_butterfly_f32(
             //*pi3++ = p3 - p4;
             expi = vld2q_f32(pia2);
             pia2 += 8;
-            vp1 = vmulq_f32(expi.val[0] , v1.val[0]);
-            vp2 = vmulq_f32(expi.val[1] , v1.val[1]);
-            vp3 = vmulq_f32(expi.val[0] , v1.val[1]);
-            vp4 = vmulq_f32(expi.val[1] , v1.val[0]);
-            vtmp.val[0] = vaddq_f32(vp1,vp2);
-            vtmp.val[1] = vsubq_f32(vp3,vp4);
+            vtmp.val[0] = vmulq_f32(expi.val[0] , v1.val[0]);
+            vtmp.val[0] = vmlaq_f32(vtmp.val[0],expi.val[1] , v1.val[1]);
+            vtmp.val[1] = vmulq_f32(expi.val[0] , v1.val[1]);
+            vtmp.val[1] = vmlsq_f32(vtmp.val[1],expi.val[1] , v1.val[0]);
             vst2q_f32(pi3,vtmp);
             pi3 += 8;
 
@@ -360,12 +355,10 @@ ARM_DSP_ATTRIBUTE void arm_radix8_butterfly_f32(
             //*pi7++ = p3 - p4;
             expi = vld2q_f32(pia2);
             pia2 += 8;
-            vp1 = vmulq_f32(expi.val[0] , vt.val[0]);
-            vp2 = vmulq_f32(expi.val[1] , vt.val[1]);
-            vp3 = vmulq_f32(expi.val[0] , vt.val[1]);
-            vp4 = vmulq_f32(expi.val[1] , vt.val[0]);
-            vtmp.val[0] = vaddq_f32(vp1,vp2);
-            vtmp.val[1] = vsubq_f32(vp3,vp4);
+            vtmp.val[0] = vmulq_f32(expi.val[0] , vt.val[0]);
+            vtmp.val[0] = vmlaq_f32(vtmp.val[0],expi.val[1] , vt.val[1]);
+            vtmp.val[1] = vmulq_f32(expi.val[0] , vt.val[1]);
+            vtmp.val[1] = vmlsq_f32(vtmp.val[1],expi.val[1] , vt.val[0]);
             vst2q_f32(pi7,vtmp);
             pi7 += 8;
 
@@ -437,12 +430,10 @@ ARM_DSP_ATTRIBUTE void arm_radix8_butterfly_f32(
             //*pi2++ = p3 - p4;
             expi = vld2q_f32(pia2);
             pia2 += 8;
-            vp1 = vmulq_f32(expi.val[0] , v1.val[0]);
-            vp2 = vmulq_f32(expi.val[1] , v1.val[1]);
-            vp3 = vmulq_f32(expi.val[0] , v1.val[1]);
-            vp4 = vmulq_f32(expi.val[1] , v1.val[0]);
-            vtmp.val[0] = vaddq_f32(vp1,vp2);
-            vtmp.val[1] = vsubq_f32(vp3,vp4);
+            vtmp.val[0] = vmulq_f32(expi.val[0] , v1.val[0]);
+            vtmp.val[0] = vmlaq_f32(vtmp.val[0],expi.val[1] , v1.val[1]);
+            vtmp.val[1] = vmulq_f32(expi.val[0] , v1.val[1]);
+            vtmp.val[1] = vmlsq_f32(vtmp.val[1],expi.val[1] , v1.val[0]);
             vst2q_f32(pi2,vtmp);
             pi2 += 8;
 
@@ -456,12 +447,10 @@ ARM_DSP_ATTRIBUTE void arm_radix8_butterfly_f32(
             //*pi8++ = p3 - p4;
             expi = vld2q_f32(pia2);
             pia2 += 8;
-            vp1 = vmulq_f32(expi.val[0] , v5.val[0]);
-            vp2 = vmulq_f32(expi.val[1] , v5.val[1]);
-            vp3 = vmulq_f32(expi.val[0] , v5.val[1]);
-            vp4 = vmulq_f32(expi.val[1] , v5.val[0]);
-            vtmp.val[0] = vaddq_f32(vp1,vp2);
-            vtmp.val[1] = vsubq_f32(vp3,vp4);
+            vtmp.val[0] = vmulq_f32(expi.val[0] , v5.val[0]);
+            vtmp.val[0] = vmlaq_f32(vtmp.val[0],expi.val[1] , v5.val[1]);
+            vtmp.val[1] = vmulq_f32(expi.val[0] , v5.val[1]);
+            vtmp.val[1] = vmlsq_f32(vtmp.val[1],expi.val[1] , v5.val[0]);
             vst2q_f32(pi8,vtmp);
             pi8 += 8;
 
@@ -475,12 +464,10 @@ ARM_DSP_ATTRIBUTE void arm_radix8_butterfly_f32(
             //*pi6++ = p3 - p4;
             expi = vld2q_f32(pia2);
             pia2 += 8;
-            vp1 = vmulq_f32(expi.val[0] , v6.val[0]);
-            vp2 = vmulq_f32(expi.val[1] , v6.val[1]);
-            vp3 = vmulq_f32(expi.val[0] , v6.val[1]);
-            vp4 = vmulq_f32(expi.val[1] , v6.val[0]);
-            vtmp.val[0] = vaddq_f32(vp1,vp2);
-            vtmp.val[1] = vsubq_f32(vp3,vp4);
+            vtmp.val[0] = vmulq_f32(expi.val[0] , v6.val[0]);
+            vtmp.val[0] = vmlaq_f32(vtmp.val[0],expi.val[1] , v6.val[1]);
+            vtmp.val[1] = vmulq_f32(expi.val[0] , v6.val[1]);
+            vtmp.val[1] = vmlsq_f32(vtmp.val[1],expi.val[1] , v6.val[0]);
             vst2q_f32(pi6,vtmp);
             pi6 += 8;
 
@@ -495,12 +482,11 @@ ARM_DSP_ATTRIBUTE void arm_radix8_butterfly_f32(
 
             expi = vld2q_f32(pia2);
             pia2 += 8;
-            vp1 = vmulq_f32(expi.val[0] , vt.val[0]);
-            vp2 = vmulq_f32(expi.val[1] , vt.val[1]);
-            vp3 = vmulq_f32(expi.val[0] , vt.val[1]);
-            vp4 = vmulq_f32(expi.val[1] , vt.val[0]);
-            vtmp.val[0] = vaddq_f32(vp1,vp2);
-            vtmp.val[1] = vsubq_f32(vp3,vp4);
+            vtmp.val[0] = vmulq_f32(expi.val[0] , vt.val[0]);
+            vtmp.val[0] = vmlaq_f32(vtmp.val[0],expi.val[1] , vt.val[1]);
+            vtmp.val[1] = vmulq_f32(expi.val[0] , vt.val[1]);
+            vtmp.val[1] = vmlsq_f32(vtmp.val[1],expi.val[1] , vt.val[0]);
+           
             vst2q_f32(pi4,vtmp);
             pi4 += 8;
          }
