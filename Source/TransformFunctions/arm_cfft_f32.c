@@ -977,12 +977,7 @@ static void arm_cfft_radix8by4_f32 (arm_cfft_instance_f32 * S,
     *p4++ = t4[0];
     *p4++ = t4[1];
 
-    //tw2 += twMod2;
-    //tw3 += twMod3;
-    //tw4 += twMod4;
-
-
-    for (l = (L - 2) >> 1; l > 0; l-- )
+    for (l=0 ; l < (L-2) >> 1; l++ )
     {
       /* TOP */
       p1ap3_0 = p1[0] + p3[0];
