@@ -1,4 +1,5 @@
 #include <cstdio>
+#include <cstdlib>
 #include "arm_math_types.h"
 extern int testmain(const char *);
 
