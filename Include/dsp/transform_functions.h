@@ -36,9 +36,6 @@
 #include "dsp/basic_math_functions.h"
 #include "dsp/complex_math_functions.h"
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
-#include "NE10_types.h"
-#endif
 
 #ifdef   __cplusplus
 extern "C"
@@ -295,7 +292,7 @@ void arm_cfft_q31(
 typedef struct
 {
           uint16_t fftLen;                   /**< length of the FFT. */
-    const ne10_fft_cpx_float32_t *pTwiddle;         /**< points to the Twiddle factor table. */
+    const float32_t *pTwiddle;         /**< points to the Twiddle factor table. */
     const uint32_t *factors;
 } arm_cfft_instance_f32;
 #else
