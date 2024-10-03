@@ -99,7 +99,6 @@ ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_##LEN##_f32(                         
 
 #elif defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-#include "NE10_types.h"
 #include "arm_neon_tables.h"
 
 #define CFFTINIT_F32(LEN,LENTWIDDLE)                                             \
@@ -107,7 +106,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_##LEN##_f32(arm_cfft_instance_f32 * S
 {                                                                                \
   /*  Initialise the default arm status */                                       \
   arm_status status = ARM_MATH_SUCCESS;                                          \
-  S->pTwiddle = (ne10_fft_cpx_float32_t*)arm_neon_twiddles_##LEN##_f32;                                   \
+  S->pTwiddle = arm_neon_twiddles_##LEN##_f32;                                   \
   S->factors=arm_neon_factors_##LEN##_f32;                                       \
   return status;                                                                 \
 }

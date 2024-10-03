@@ -583,7 +583,7 @@ ARM_DSP_ATTRIBUTE void arm_cfft_f32(
 
 
 #elif defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
-#include "NE10_types.h"
+#include "CMSIS_NE10_types.h"
 
 extern void arm_ne10_mixed_radix_fft_forward_float32_neon (const arm_cfft_instance_f32 *S,ne10_fft_cpx_float32_t *in,
         ne10_fft_cpx_float32_t *out);

@@ -31,7 +31,7 @@
 
 #include <arm_neon.h>
 
-#include "NE10_types.h"
+#include "CMSIS_NE10_types.h"
 #include "dsp/transform_functions.h"
 
 #if 0
@@ -39,7 +39,7 @@
 #include "NE10_fft.h"
 #include "NE10_dsp.h"
 
-static inline void ne10_fft4_forward_float32 (ne10_fft_cpx_float32_t *out,
+__STATIC_INLINE void ne10_fft4_forward_float32 (ne10_fft_cpx_float32_t *out,
         ne10_fft_cpx_float32_t *in)
 {
     ne10_float32_t s0_r, s0_i, s1_r, s1_i, s2_r, s2_i;
@@ -69,7 +69,7 @@ static inline void ne10_fft4_forward_float32 (ne10_fft_cpx_float32_t *out,
     out[3].i = s2_i + s1_r;
 }
 
-static inline void ne10_fft4_backward_float32 (ne10_fft_cpx_float32_t *out,
+__STATIC_INLINE void ne10_fft4_backward_float32 (ne10_fft_cpx_float32_t *out,
         ne10_fft_cpx_float32_t *in)
 {
     ne10_float32_t s0_r, s0_i, s1_r, s1_i, s2_r, s2_i;
@@ -100,7 +100,7 @@ static inline void ne10_fft4_backward_float32 (ne10_fft_cpx_float32_t *out,
 }
 
 
-static inline void ne10_fft8_forward_float32 (ne10_fft_cpx_float32_t *out,
+__STATIC_INLINE void ne10_fft8_forward_float32 (ne10_fft_cpx_float32_t *out,
         ne10_fft_cpx_float32_t *in)
 {
     ne10_float32_t s0_r, s0_i, s1_r, s1_i, s2_r, s2_i, s3_r, s3_i, s4_r, s4_i, s5_r, s5_i, s6_r, s6_i, s7_r, s7_i;
@@ -167,7 +167,7 @@ static inline void ne10_fft8_forward_float32 (ne10_fft_cpx_float32_t *out,
     out[7].i = t0_i + t3_r;
 }
 
-static inline void ne10_fft8_backward_float32 (ne10_fft_cpx_float32_t *out,
+__STATIC_INLINE void ne10_fft8_backward_float32 (ne10_fft_cpx_float32_t *out,
         ne10_fft_cpx_float32_t *in)
 {
     ne10_float32_t s0_r, s0_i, s1_r, s1_i, s2_r, s2_i, s3_r, s3_i, s4_r, s4_i, s5_r, s5_i, s6_r, s6_i, s7_r, s7_i;
@@ -478,7 +478,7 @@ static void ne10_fft16_backward_float32_neon (ne10_fft_cpx_float32_t * Fout,
 }
 #endif 
 
-static inline void ne10_radix8x4_neon (ne10_fft_cpx_float32_t *out,
+__STATIC_INLINE void ne10_radix8x4_neon (ne10_fft_cpx_float32_t *out,
                                        ne10_fft_cpx_float32_t *in,
                                        ne10_int32_t stride)
 {
@@ -655,7 +655,7 @@ static inline void ne10_radix8x4_neon (ne10_fft_cpx_float32_t *out,
 
 
 
-static inline void ne10_radix4x4_without_twiddles_neon (ne10_fft_cpx_float32_t *out,
+__STATIC_INLINE void ne10_radix4x4_without_twiddles_neon (ne10_fft_cpx_float32_t *out,
         ne10_fft_cpx_float32_t *in,
         ne10_int32_t stride)
 {
@@ -734,7 +734,7 @@ static inline void ne10_radix4x4_without_twiddles_neon (ne10_fft_cpx_float32_t *
     } // f_count
 }
 
-static inline void ne10_radix4x4_with_twiddles_neon (ne10_fft_cpx_float32_t *out,
+__STATIC_INLINE void ne10_radix4x4_with_twiddles_neon (ne10_fft_cpx_float32_t *out,
         ne10_fft_cpx_float32_t *in,
         const ne10_fft_cpx_float32_t *tw,
         ne10_int32_t src_stride,
@@ -830,7 +830,7 @@ static inline void ne10_radix4x4_with_twiddles_neon (ne10_fft_cpx_float32_t *out
 }
 
 
-static inline void ne10_radix8x4_inverse_neon (ne10_fft_cpx_float32_t *out,
+__STATIC_INLINE void ne10_radix8x4_inverse_neon (ne10_fft_cpx_float32_t *out,
         ne10_fft_cpx_float32_t *in,
         ne10_int32_t stride)
 {
@@ -995,7 +995,7 @@ static inline void ne10_radix8x4_inverse_neon (ne10_fft_cpx_float32_t *out,
     } // f_count
 }
 
-static inline void ne10_radix4x4_inverse_without_twiddles_neon (ne10_fft_cpx_float32_t *out,
+__STATIC_INLINE void ne10_radix4x4_inverse_without_twiddles_neon (ne10_fft_cpx_float32_t *out,
         ne10_fft_cpx_float32_t *in,
         ne10_int32_t stride)
 {
@@ -1074,7 +1074,7 @@ static inline void ne10_radix4x4_inverse_without_twiddles_neon (ne10_fft_cpx_flo
     } // f_count
 }
 
-static inline void ne10_radix4x4_inverse_with_twiddles_neon (ne10_fft_cpx_float32_t *out,
+__STATIC_INLINE void ne10_radix4x4_inverse_with_twiddles_neon (ne10_fft_cpx_float32_t *out,
         ne10_fft_cpx_float32_t *in,
         const ne10_fft_cpx_float32_t *tw,
         ne10_int32_t src_stride,
@@ -1168,7 +1168,7 @@ static inline void ne10_radix4x4_inverse_with_twiddles_neon (ne10_fft_cpx_float3
     } // m_count
 }
 
-static inline void ne10_radix4x4_inverse_with_twiddles_last_stage_neon (ne10_fft_cpx_float32_t *out,
+__STATIC_INLINE void ne10_radix4x4_inverse_with_twiddles_last_stage_neon (ne10_fft_cpx_float32_t *out,
         ne10_fft_cpx_float32_t *in,
         const ne10_fft_cpx_float32_t *tw,
         ne10_int32_t src_stride,
@@ -1288,7 +1288,10 @@ static inline void ne10_radix4x4_inverse_with_twiddles_last_stage_neon (ne10_fft
 
 //static ne10_fft_cpx_float32_t buffer[256];
 
-#include <stdio.h>
+extern void arm_ne10_mixed_radix_fft_forward_float32_neon (
+    const arm_cfft_instance_f32 *S,
+          ne10_fft_cpx_float32_t *in,
+          ne10_fft_cpx_float32_t *out);
 
 // Use arm_ to be able to use Ne10 with this library
 // since Ne10 cover radix-3 and 5 that are not provided by CMSIS-DSP.
@@ -1309,7 +1312,7 @@ void arm_ne10_mixed_radix_fft_forward_float32_neon (
     const ne10_fft_cpx_float32_t *tw; 
     ne10_fft_cpx_float32_t *tmp;
 
-    const ne10_fft_cpx_float32_t *twiddles = S->pTwiddle;
+    const ne10_fft_cpx_float32_t *twiddles = (const ne10_fft_cpx_float32_t *)S->pTwiddle;
 
     //printf("CMSIS : stage_count %d\n",stage_count);
     //printf("CMSIS : fstride %d\n",fstride);
@@ -1397,7 +1400,13 @@ void arm_ne10_mixed_radix_fft_forward_float32_neon (
 //        ne10_int32_t *factors,
 //        ne10_fft_cpx_float32_t *twiddles,
 //        ne10_fft_cpx_float32_t *buffer)
-//        
+//     
+
+extern void arm_ne10_mixed_radix_fft_backward_float32_neon (
+    const arm_cfft_instance_f32 *S,
+          ne10_fft_cpx_float32_t *in,
+          ne10_fft_cpx_float32_t *out);
+             
 void arm_ne10_mixed_radix_fft_backward_float32_neon (
     const arm_cfft_instance_f32 *S,
           ne10_fft_cpx_float32_t *in,
@@ -1407,7 +1416,7 @@ void arm_ne10_mixed_radix_fft_backward_float32_neon (
     ne10_int32_t fstride = S->factors[1];
     ne10_int32_t mstride = S->factors[3];
     ne10_int32_t first_radix = S->factors[2];
-    ne10_float32_t nfft = fstride * first_radix;
+    ne10_int32_t nfft = fstride * first_radix;
     ne10_int32_t step, f_count;
     ne10_fft_cpx_float32_t *src = in;
     ne10_fft_cpx_float32_t *dst = out;
@@ -1416,7 +1425,7 @@ void arm_ne10_mixed_radix_fft_backward_float32_neon (
 
     ne10_fft_cpx_float32_t *tmp;
 
-    const ne10_fft_cpx_float32_t *twiddles = S->pTwiddle;
+    const ne10_fft_cpx_float32_t *twiddles = (const ne10_fft_cpx_float32_t *)S->pTwiddle;
 
 
     // The first stage (using hardcoded twiddles)

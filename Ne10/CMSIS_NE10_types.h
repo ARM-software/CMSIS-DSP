@@ -26,15 +26,24 @@
  */
 
 /*
- * NE10 Library : inc/NE10_types.h
+ * NE10 Library : CMSIS_NE10_types.h
+ */
+
+/*
+ * Renamed to CMSIS_NE10_types.h to avoid any conflict
+ * with original Ne10 library that could be needed for other
+ * features not provided by CMSIS-DSP.
+ * 
+ * CMSIS-DSP is only using a subset of NE10_types.h
+ *
  */
 
 /** NE10 defines a number of types for use in its function signatures.
  *  The types are defined within this header file.
  */
 
-#ifndef NE10_TYPES_H
-#define NE10_TYPES_H
+#ifndef CMSIS_NE10_TYPES_H
+#define CMSIS_NE10_TYPES_H
 
 #include <assert.h>
 #include <stdint.h>
@@ -77,6 +86,7 @@ typedef float    ne10_float32_t;
 typedef double   ne10_float64_t;
 typedef int      ne10_result_t;     // resulting [error-]code
 
+#if 0
 /**
  * @brief A 2-tuple of ne10_float32_t values.
  */
@@ -214,6 +224,7 @@ static inline void createColumnMajorMatrix4x4 (ne10_mat4x4f_t * outMat, ne10_flo
     outMat->c4.r3 = m34;
     outMat->c4.r4 = m44;
 }
+#endif
 
 /////////////////////////////////////////////////////////
 // definitions for fft
@@ -229,6 +240,7 @@ typedef struct
     ne10_float32_t i;
 } ne10_fft_cpx_float32_t;
 
+#if 0
 /**
  * @brief Structure for the floating point FFT state
  */
@@ -283,6 +295,7 @@ typedef struct
 } ne10_fft_r2c_state_float32_t;
 
 typedef ne10_fft_r2c_state_float32_t* ne10_fft_r2c_cfg_float32_t;
+#endif 
 
 /**
  * @brief Structure for the 16-bit fixed point FFT function.
@@ -293,6 +306,7 @@ typedef struct
     ne10_int16_t i;
 } ne10_fft_cpx_int16_t;
 
+#if 0
 typedef struct
 {
     ne10_int32_t nfft;
@@ -314,6 +328,7 @@ typedef struct
 } ne10_fft_r2c_state_int16_t;
 
 typedef ne10_fft_r2c_state_int16_t* ne10_fft_r2c_cfg_int16_t;
+#endif 
 
 /**
  * @brief Structure for the 32-bit fixed point FFT function.
@@ -324,6 +339,7 @@ typedef struct
     ne10_int32_t i;
 } ne10_fft_cpx_int32_t;
 
+#if 0
 typedef struct
 {
     ne10_int32_t nfft;
@@ -442,5 +458,7 @@ typedef enum
     ANDROID_DEMO,
     IOS_DEMO
 } ne10_print_target_t;
+
+#endif 
 
 #endif

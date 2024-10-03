@@ -600,7 +600,14 @@ ARM_DSP_ATTRIBUTE void arm_rfft_fast_f32(
   float32_t * pOut,
   uint8_t ifftFlag)
 {
+   (void)S;
+   (void)p;
+   (void)pOut;
+   (void)ifftFlag;
+
+   #if !defined(ARM_MATH_NEON) || defined(ARM_MATH_AUTOVECTORIZE)
    const arm_cfft_instance_f32 * Sint = &(S->Sint);
+   #endif
 
    /* Calculation of Real FFT */
    if (ifftFlag)
