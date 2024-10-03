@@ -582,6 +582,35 @@ ARM_DSP_ATTRIBUTE void arm_cfft_f32(
 }
 
 
+#elif defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#include "NE10_types.h"
+
+extern void arm_ne10_mixed_radix_fft_forward_float32_neon (const arm_cfft_instance_f32 *S,ne10_fft_cpx_float32_t *in,
+        ne10_fft_cpx_float32_t *out);
+
+extern void arm_ne10_mixed_radix_fft_backward_float32_neon (const arm_cfft_instance_f32 *S,ne10_fft_cpx_float32_t *in,
+        ne10_fft_cpx_float32_t *out);
+
+ARM_DSP_ATTRIBUTE void arm_cfft_f32(
+  const arm_cfft_instance_f32 * S,
+        float32_t * pIn,
+        float32_t * pOut,
+        uint8_t ifftFlag)
+{
+    
+    if (ifftFlag == 0)
+    {
+        arm_ne10_mixed_radix_fft_forward_float32_neon (S,
+            (ne10_fft_cpx_float32_t *)pIn,
+            (ne10_fft_cpx_float32_t *)pOut);
+    }
+    else 
+    {
+        arm_ne10_mixed_radix_fft_backward_float32_neon (S,
+            (ne10_fft_cpx_float32_t *)pIn,
+            (ne10_fft_cpx_float32_t *)pOut);
+    }
+}
 #else
 extern void arm_radix8_butterfly_f32(
         float32_t * pSrc,

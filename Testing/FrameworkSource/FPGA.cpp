@@ -147,7 +147,7 @@ namespace Client
 
         std::string tmp;
         tmp += this->testDir;
-        sprintf(fmt,"/%s_%ld.txt",(*this->outputNames)[id].c_str(),this->currentId);
+        snprintf(fmt,256,"/%s_%ld.txt",(*this->outputNames)[id].c_str(),this->currentId);
         tmp += std::string(fmt);
         //printf("%s\n",tmp.c_str());
         
@@ -737,7 +737,7 @@ namespace Client
            {
               v = data[i];
               t = TOINT64(v);
-              #if __sizeof_long == 8
+              #if __SIZEOF_LONG__ == 8
               printf("D: 0x%016lx\n",t);
               #else
               printf("D: 0x%016llx\n",t);
@@ -800,7 +800,7 @@ namespace Client
            {
               v = data[i];
               t = (uint64_t)v;
-              #if __sizeof_long == 8
+              #if __SIZEOF_LONG__ == 8
               printf("D: 0x%016lx\n",t);
               #else
               printf("D: 0x%016llx\n",t);
@@ -880,7 +880,7 @@ namespace Client
            {
               v = data[i];
               t = (uint64_t)v;
-              #if __sizeof_long == 8
+              #if __SIZEOF_LONG__ == 8
               printf("D: 0x%016lx\n",t);
               #else
               printf("D: 0x%016llx\n",t);
@@ -954,4 +954,3 @@ namespace Client
     }
     
 }
-

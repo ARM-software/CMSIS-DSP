@@ -146,7 +146,6 @@ target_compile_options(test PUBLIC -Wsign-compare
         -Wall 
         -Wextra  
         -O3 
-        -ffast-math
         -Wno-packed 
         -Wno-missing-variable-declarations  
         -Wno-missing-noreturn 
@@ -160,7 +159,7 @@ target_compile_options(test PUBLIC -Wsign-compare
         -Wno-reserved-identifier
         -ffunction-sections)
 
-target_compile_options(CMSISDSP PUBLIC -Wsign-compare 
+target_compile_options(CMSISDSP PRIVATE -Wsign-compare 
         -Wdouble-promotion 
         -DNDEBUG 
         -Wall 

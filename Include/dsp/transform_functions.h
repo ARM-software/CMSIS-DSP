@@ -36,6 +36,10 @@
 #include "dsp/basic_math_functions.h"
 #include "dsp/complex_math_functions.h"
 
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#include "NE10_types.h"
+#endif
+
 #ifdef   __cplusplus
 extern "C"
 {
@@ -287,6 +291,14 @@ void arm_cfft_q31(
           uint8_t ifftFlag,
           uint8_t bitReverseFlag);
 
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+typedef struct
+{
+          uint16_t fftLen;                   /**< length of the FFT. */
+    const ne10_fft_cpx_float32_t *pTwiddle;         /**< points to the Twiddle factor table. */
+    const uint32_t *factors;
+} arm_cfft_instance_f32;
+#else
   /**
    * @brief Instance structure for the floating-point CFFT/CIFFT function.
    */
@@ -305,6 +317,7 @@ void arm_cfft_q31(
    const float32_t *rearranged_twiddle_stride3;
 #endif
   } arm_cfft_instance_f32;
+#endif
 
 
 arm_status arm_cfft_init_4096_f32(arm_cfft_instance_f32 * S);
@@ -321,11 +334,22 @@ arm_status arm_cfft_init_16_f32(arm_cfft_instance_f32 * S);
   arm_cfft_instance_f32 * S,
   uint16_t fftLen);
 
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+/* `pIn` content is modified by the function.
+   `pIn` array must be different from `pOut` one
+*/
+void arm_cfft_f32(
+  const arm_cfft_instance_f32 * S,
+        float32_t * pIn,
+        float32_t * pOut,
+        uint8_t ifftFlag);
+#else
   void arm_cfft_f32(
   const arm_cfft_instance_f32 * S,
         float32_t * p1,
         uint8_t ifftFlag,
         uint8_t bitReverseFlag);
+#endif
 
 
   /**
@@ -586,7 +610,6 @@ arm_status arm_rfft_fast_init_4096_f32( arm_rfft_fast_instance_f32 * S );
 arm_status arm_rfft_fast_init_f32 (
          arm_rfft_fast_instance_f32 * S,
          uint16_t fftLen);
-
 
   void arm_rfft_fast_f32(
         const arm_rfft_fast_instance_f32 * S,

@@ -9,17 +9,19 @@
     {
        const float32_t *inp = input.ptr();
 
+       float32_t *infftp = inputfft.ptr();
+
        float32_t *outfftp = outputfft.ptr();
 
-        memcpy(outfftp,inp,sizeof(float32_t)*input.nbSamples());
+        memcpy(infftp,inp,sizeof(float32_t)*input.nbSamples());
 
         ASSERT_TRUE(status == ARM_MATH_SUCCESS);
    
         arm_cfft_f32(
              &(this->varInstCfftF32),
+             infftp,
              outfftp,
-             this->ifft,
-             1);
+             this->ifft);
        
 
           
@@ -468,6 +470,8 @@
 
 
        }
+       inputfft.create(ref.nbSamples(),TransformCF32::OUTPUT_CFFT_F32_ID,mgr);
+
        outputfft.create(ref.nbSamples(),TransformCF32::OUTPUT_CFFT_F32_ID,mgr);
        
 
