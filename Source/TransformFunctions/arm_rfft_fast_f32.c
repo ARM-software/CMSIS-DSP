@@ -593,6 +593,7 @@ static void merge_rfft_f32(
                    - value = 1: RIFFT
 */
 
+
 ARM_DSP_ATTRIBUTE void arm_rfft_fast_f32(
   const arm_rfft_fast_instance_f32 * S,
   float32_t * p,
@@ -607,15 +608,23 @@ ARM_DSP_ATTRIBUTE void arm_rfft_fast_f32(
       /*  Real FFT compression */
       merge_rfft_f32(S, p, pOut);
       /* Complex radix-4 IFFT process */
+      #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+      //arm_cfft_f32( Sint, pOut, p,ifftFlag);
+      #else
       arm_cfft_f32( Sint, pOut, ifftFlag, 1);
+      #endif
    }
    else
    {
       /* Calculation of RFFT of input */
+      #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+      //arm_cfft_f32( Sint, p, pOut,ifftFlag);
+      #else
       arm_cfft_f32( Sint, p, ifftFlag, 1);
+      #endif
 
       /*  Real FFT extraction */
-      stage_rfft_f32(S, p, pOut);
+      stage_rfft_f32(S, pOut, p);
    }
 }
 

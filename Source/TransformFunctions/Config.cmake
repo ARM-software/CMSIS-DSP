@@ -137,5 +137,8 @@ target_sources(CMSISDSP PRIVATE TransformFunctions/arm_mfcc_f16.c)
 endif()
 
 
+if (NEON OR NEONEXPERIMENTAL)
+    target_sources(CMSISDSP PRIVATE "${DSP}/Ne10/NE10_fft_float32.neonintrinsic.c")
+endif()
 
 
