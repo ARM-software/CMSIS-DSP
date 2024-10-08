@@ -139,6 +139,14 @@ endif()
 
 if (NEON OR NEONEXPERIMENTAL)
     target_sources(CMSISDSP PRIVATE "${DSP}/Ne10/NE10_fft_float32.neonintrinsic.c")
+    target_sources(CMSISDSP PRIVATE "${DSP}/Ne10/NE10_rfft_float32.neonintrinsic.c")
+    if (NEON_RIFFT_SCALING)
+        target_compile_definitions(CMSISDSP PRIVATE CMSIS_NE10_DSP_RIFFT_SCALING)  
+    endif()
+
+    if (NEON_ARM_FFT_INLINE_ASM)
+        target_compile_definitions(CMSISDSP PRIVATE CMSIS_NE10_INLINE_ASM_OPT)  
+    endif()
 endif()
 
 

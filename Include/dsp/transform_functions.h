@@ -339,6 +339,7 @@ void arm_cfft_f32(
   const arm_cfft_instance_f32 * S,
         float32_t * pIn,
         float32_t * pOut,
+        float32_t * pBuffer, /* When used, `in` is not modified */
         uint8_t ifftFlag);
 #else
   void arm_cfft_f32(
@@ -588,12 +589,26 @@ void arm_rfft_fast_f64(
   /**
    * @brief Instance structure for the floating-point RFFT/RIFFT function.
    */
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+  typedef struct
+  {
+    uint16_t nfft;
+    const float32_t *r_twiddles;
+    const uint32_t *r_factors;
+    const float32_t *r_twiddles_backward;
+    const float32_t *r_twiddles_neon;
+    const float32_t *r_twiddles_neon_backward;
+    const uint32_t *r_factors_neon;
+    const float32_t *r_super_twiddles_neon;
+  } arm_rfft_fast_instance_f32 ;
+#else
 typedef struct
   {
           arm_cfft_instance_f32 Sint;      /**< Internal CFFT structure. */
           uint16_t fftLenRFFT;             /**< length of the real sequence */
     const float32_t * pTwiddleRFFT;        /**< Twiddle factors real stage  */
   } arm_rfft_fast_instance_f32 ;
+#endif 
 
 arm_status arm_rfft_fast_init_32_f32( arm_rfft_fast_instance_f32 * S );
 arm_status arm_rfft_fast_init_64_f32( arm_rfft_fast_instance_f32 * S );
@@ -604,14 +619,24 @@ arm_status arm_rfft_fast_init_1024_f32( arm_rfft_fast_instance_f32 * S );
 arm_status arm_rfft_fast_init_2048_f32( arm_rfft_fast_instance_f32 * S );
 arm_status arm_rfft_fast_init_4096_f32( arm_rfft_fast_instance_f32 * S );
 
+                       
 arm_status arm_rfft_fast_init_f32 (
          arm_rfft_fast_instance_f32 * S,
          uint16_t fftLen);
 
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+void arm_rfft_fast_f32(
+        const arm_rfft_fast_instance_f32 * S,
+        float32_t * p, 
+        float32_t * pOut,
+        float32_t *tmpbuf,
+        uint8_t ifftFlag);
+#else
   void arm_rfft_fast_f32(
         const arm_rfft_fast_instance_f32 * S,
         float32_t * p, float32_t * pOut,
         uint8_t ifftFlag);
+#endif
 
   /**
    * @brief Instance structure for the floating-point DCT4/IDCT4 function.

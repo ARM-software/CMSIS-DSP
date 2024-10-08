@@ -306,6 +306,12 @@ static void merge_rfft_f32(
    }
 
 }
+#elif defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+/*
+
+No stage merge functins defined here for Neon.
+
+*/
 #else
 static void stage_rfft_f32(
   const arm_rfft_fast_instance_f32 * S,
@@ -593,21 +599,36 @@ static void merge_rfft_f32(
                    - value = 1: RIFFT
 */
 
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 
+#include "CMSIS_NE10_types.h"
+#include "CMSIS_NE10_fft.h"
+
+ARM_DSP_ATTRIBUTE void arm_rfft_fast_f32(
+  const arm_rfft_fast_instance_f32 * S,
+  float32_t * p,
+  float32_t * pOut,
+  float32_t *tmpbuf,
+  uint8_t ifftFlag)
+{
+/* Calculation of Real FFT */
+   if (ifftFlag)
+   {
+     arm_ne10_fft_r2c_1d_float32_neon (S,p,pOut,tmpbuf);
+   }
+   else 
+   {
+     arm_ne10_fft_c2r_1d_float32_neon (S,p,pOut,tmpbuf);
+   }
+}
+#else
 ARM_DSP_ATTRIBUTE void arm_rfft_fast_f32(
   const arm_rfft_fast_instance_f32 * S,
   float32_t * p,
   float32_t * pOut,
   uint8_t ifftFlag)
 {
-   (void)S;
-   (void)p;
-   (void)pOut;
-   (void)ifftFlag;
-
-   #if !defined(ARM_MATH_NEON) || defined(ARM_MATH_AUTOVECTORIZE)
    const arm_cfft_instance_f32 * Sint = &(S->Sint);
-   #endif
 
    /* Calculation of Real FFT */
    if (ifftFlag)
@@ -615,26 +636,18 @@ ARM_DSP_ATTRIBUTE void arm_rfft_fast_f32(
       /*  Real FFT compression */
       merge_rfft_f32(S, p, pOut);
       /* Complex radix-4 IFFT process */
-      #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
-      //arm_cfft_f32( Sint, pOut, p,ifftFlag);
-      #else
       arm_cfft_f32( Sint, pOut, ifftFlag, 1);
-      #endif
    }
    else
    {
       /* Calculation of RFFT of input */
-      #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
-      //arm_cfft_f32( Sint, p, pOut,ifftFlag);
-      #else
       arm_cfft_f32( Sint, p, ifftFlag, 1);
-      #endif
 
       /*  Real FFT extraction */
-      stage_rfft_f32(S, pOut, p);
+      stage_rfft_f32(S, p, pOut);
    }
 }
-
+#endif
 /**
 * @} end of RRealFFTF16ealFFT group
 */

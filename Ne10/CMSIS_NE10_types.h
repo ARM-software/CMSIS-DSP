@@ -54,15 +54,15 @@
  * When NE10_UNROLL_LEVEL == 0, complex FFT performs radix-4 x2 per loop.
  * When NE10_UNROLL_LEVEL == 1, complex FFT performs radix-4 x4 per loop.
  */
-#if !defined(NE10_UNROLL_LEVEL)
-#if defined(__arm__)
-#define NE10_UNROLL_LEVEL 0
-#elif defined(__aarch64__)
-#define NE10_UNROLL_LEVEL 1
-#else
-#define NE10_UNROLL_LEVEL 0
-#endif
-#endif
+//#if !defined(NE10_UNROLL_LEVEL)
+//#if defined(__arm__)
+//#define NE10_UNROLL_LEVEL 0
+//#elif defined(__aarch64__)
+//#define NE10_UNROLL_LEVEL 1
+//#else
+//#define NE10_UNROLL_LEVEL 0
+//#endif
+//#endif
 
 /////////////////////////////////////////////////////////
 // constant values that are used across the library
