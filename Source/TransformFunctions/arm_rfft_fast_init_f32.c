@@ -47,6 +47,14 @@
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_32_f32( arm_rfft_fast_instance_f32 * S )
+{
+
+  if( !S ) return ARM_MATH_ARGUMENT_ERROR;
+  return ARM_MATH_SUCCESS;
+}
+#else
 ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_32_f32( arm_rfft_fast_instance_f32 * S ) {
 
   arm_status status;
@@ -64,7 +72,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_32_f32( arm_rfft_fast_instance_f
 
   return ARM_MATH_SUCCESS;
 }
-
+#endif
 /**
   @brief         Initialization function for the 64pt floating-point real FFT.
   @param[in,out] S  points to an arm_rfft_fast_instance_f32 structure
@@ -72,7 +80,14 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_32_f32( arm_rfft_fast_instance_f
                    - \ref ARM_MATH_SUCCESS        : Operation successful
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_64_f32( arm_rfft_fast_instance_f32 * S )
+{
 
+  if( !S ) return ARM_MATH_ARGUMENT_ERROR;
+  return ARM_MATH_SUCCESS;
+}
+#else
 ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_64_f32( arm_rfft_fast_instance_f32 * S ) {
 
   arm_status status;
@@ -90,6 +105,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_64_f32( arm_rfft_fast_instance_f
 
   return ARM_MATH_SUCCESS;
 }
+#endif
 
 /**
   @brief         Initialization function for the 128pt floating-point real FFT.
@@ -99,6 +115,14 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_64_f32( arm_rfft_fast_instance_f
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_128_f32( arm_rfft_fast_instance_f32 * S )
+{
+
+  if( !S ) return ARM_MATH_ARGUMENT_ERROR;
+  return ARM_MATH_SUCCESS;
+}
+#else
 ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_128_f32( arm_rfft_fast_instance_f32 * S ) {
 
   arm_status status;
@@ -116,7 +140,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_128_f32( arm_rfft_fast_instance_
 
   return ARM_MATH_SUCCESS;
 }
-
+#endif
 /**
   @brief         Initialization function for the 256pt floating-point real FFT.
   @param[in,out] S  points to an arm_rfft_fast_instance_f32 structure
@@ -125,6 +149,14 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_128_f32( arm_rfft_fast_instance_
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
 */
 
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_256_f32( arm_rfft_fast_instance_f32 * S )
+{
+
+  if( !S ) return ARM_MATH_ARGUMENT_ERROR;
+  return ARM_MATH_SUCCESS;
+}
+#else
 ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_256_f32( arm_rfft_fast_instance_f32 * S ) {
 
   arm_status status;
@@ -142,7 +174,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_256_f32( arm_rfft_fast_instance_
 
   return ARM_MATH_SUCCESS;
 }
-
+#endif
 /**
   @brief         Initialization function for the 512pt floating-point real FFT.
   @param[in,out] S  points to an arm_rfft_fast_instance_f32 structure
@@ -151,6 +183,14 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_256_f32( arm_rfft_fast_instance_
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_512_f32( arm_rfft_fast_instance_f32 * S )
+{
+
+  if( !S ) return ARM_MATH_ARGUMENT_ERROR;
+  return ARM_MATH_SUCCESS;
+}
+#else
 ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_512_f32( arm_rfft_fast_instance_f32 * S ) {
 
   arm_status status;
@@ -168,7 +208,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_512_f32( arm_rfft_fast_instance_
 
   return ARM_MATH_SUCCESS;
 }
-
+#endif
 /**
   @brief         Initialization function for the 1024pt floating-point real FFT.
   @param[in,out] S  points to an arm_rfft_fast_instance_f32 structure
@@ -177,6 +217,14 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_512_f32( arm_rfft_fast_instance_
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_1024_f32( arm_rfft_fast_instance_f32 * S )
+{
+
+  if( !S ) return ARM_MATH_ARGUMENT_ERROR;
+  return ARM_MATH_SUCCESS;
+}
+#else
 ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_1024_f32( arm_rfft_fast_instance_f32 * S ) {
 
   arm_status status;
@@ -194,7 +242,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_1024_f32( arm_rfft_fast_instance
 
   return ARM_MATH_SUCCESS;
 }
-
+#endif
 /**
   @brief         Initialization function for the 2048pt floating-point real FFT.
   @param[in,out] S  points to an arm_rfft_fast_instance_f32 structure
@@ -202,6 +250,14 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_1024_f32( arm_rfft_fast_instance
                    - \ref ARM_MATH_SUCCESS        : Operation successful
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_2048_f32( arm_rfft_fast_instance_f32 * S )
+{
+
+  if( !S ) return ARM_MATH_ARGUMENT_ERROR;
+  return ARM_MATH_SUCCESS;
+}
+#else
 ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_2048_f32( arm_rfft_fast_instance_f32 * S ) {
 
   arm_status status;
@@ -219,7 +275,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_2048_f32( arm_rfft_fast_instance
 
   return ARM_MATH_SUCCESS;
 }
-
+#endif
 /**
 * @brief         Initialization function for the 4096pt floating-point real FFT.
 * @param[in,out] S  points to an arm_rfft_fast_instance_f32 structure
@@ -228,6 +284,14 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_2048_f32( arm_rfft_fast_instance
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_4096_f32( arm_rfft_fast_instance_f32 * S )
+{
+
+  if( !S ) return ARM_MATH_ARGUMENT_ERROR;
+  return ARM_MATH_SUCCESS;
+}
+#else
 ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_4096_f32( arm_rfft_fast_instance_f32 * S ) {
 
   arm_status status;
@@ -245,7 +309,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_4096_f32( arm_rfft_fast_instance
 
   return ARM_MATH_SUCCESS;
 }
-
+#endif
 /**
   @brief         Generic initialization function for the floating-point real FFT.
   @param[in,out] S       points to an arm_rfft_fast_instance_f32 structure

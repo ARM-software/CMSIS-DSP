@@ -3,13 +3,11 @@
  * Title:        arm_cfft_init_f32.c
  * Description:  Initialization function for cfft f32 instance
  *
- * $Date:        23 April 2021
- * $Revision:    V1.9.0
  *
  * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2023 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2024 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -108,6 +106,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_##LEN##_f32(arm_cfft_instance_f32 * S
   arm_status status = ARM_MATH_SUCCESS;                                          \
   S->pTwiddle = arm_neon_twiddles_##LEN##_f32;                                   \
   S->factors=arm_neon_factors_##LEN##_f32;                                       \
+  S->fftLen = LEN;                                                               \
   return status;                                                                 \
 }
 #else 

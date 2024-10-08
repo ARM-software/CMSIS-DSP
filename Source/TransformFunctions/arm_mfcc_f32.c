@@ -106,10 +106,19 @@ ARM_DSP_ATTRIBUTE void arm_mfcc_f32(
     pTmp[2*i] = pSrc[i];
     pTmp[2*i+1] = 0.0f;
   }
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+  //arm_cfft_f32(&(S->cfft),pTmp,0,1);
+  #error("MFCC with Neon CFFT not yet implemented")
+#else
   arm_cfft_f32(&(S->cfft),pTmp,0,1);
+#endif
 #else
   /* Default RFFT based implementation */
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+  arm_rfft_fast_f32(&(S->rfft),pSrc,pTmp,NULL,0);
+#else
   arm_rfft_fast_f32(&(S->rfft),pSrc,pTmp,0);
+#endif
   /* Unpack real values */
   pTmp[S->fftLen]=pTmp[1];
   pTmp[S->fftLen+1]=0.0f;

@@ -3,13 +3,11 @@
  * Title:        arm_cfft_f32.c
  * Description:  Combined Radix Decimation in Frequency CFFT Floating point processing function
  *
- * $Date:        23 April 2021
- * $Revision:    V1.9.0
  *
  * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2024 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -584,31 +582,50 @@ ARM_DSP_ATTRIBUTE void arm_cfft_f32(
 
 #elif defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 #include "CMSIS_NE10_types.h"
+#include "CMSIS_NE10_fft.h"
 
-extern void arm_ne10_mixed_radix_fft_forward_float32_neon (const arm_cfft_instance_f32 *S,ne10_fft_cpx_float32_t *in,
-        ne10_fft_cpx_float32_t *out);
 
-extern void arm_ne10_mixed_radix_fft_backward_float32_neon (const arm_cfft_instance_f32 *S,ne10_fft_cpx_float32_t *in,
-        ne10_fft_cpx_float32_t *out);
 
 ARM_DSP_ATTRIBUTE void arm_cfft_f32(
   const arm_cfft_instance_f32 * S,
         float32_t * pIn,
         float32_t * pOut,
+        float32_t * pBuffer, /* When used, in is not modified */
         uint8_t ifftFlag)
 {
     
     if (ifftFlag == 0)
     {
-        arm_ne10_mixed_radix_fft_forward_float32_neon (S,
-            (ne10_fft_cpx_float32_t *)pIn,
-            (ne10_fft_cpx_float32_t *)pOut);
+        if (S->fftLen==16)
+        {
+            arm_ne10_fft16_forward_float32_neon (S,
+               (ne10_fft_cpx_float32_t *)pIn,
+               (ne10_fft_cpx_float32_t *)pOut
+               );
+        }
+        else 
+        {
+           arm_ne10_mixed_radix_fft_forward_float32_neon (S,
+               (ne10_fft_cpx_float32_t *)pIn,
+               (ne10_fft_cpx_float32_t *)pOut,
+               (ne10_fft_cpx_float32_t *)pBuffer);
+        }
     }
     else 
     {
-        arm_ne10_mixed_radix_fft_backward_float32_neon (S,
-            (ne10_fft_cpx_float32_t *)pIn,
-            (ne10_fft_cpx_float32_t *)pOut);
+        if (S->fftLen==16)
+        {
+            arm_ne10_fft16_backward_float32_neon(S,
+               (ne10_fft_cpx_float32_t *)pIn,
+               (ne10_fft_cpx_float32_t *)pOut);
+        }
+        else 
+        {
+            arm_ne10_mixed_radix_fft_backward_float32_neon (S,
+                (ne10_fft_cpx_float32_t *)pIn,
+                (ne10_fft_cpx_float32_t *)pOut,
+                (ne10_fft_cpx_float32_t *)pBuffer);
+        }
     }
 }
 #else
