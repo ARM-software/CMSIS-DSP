@@ -62,18 +62,23 @@
                                                                                                     \
   S->r_super_twiddles_neon = arm_neon_rfft_super_twiddles_neon_##LEN##_f32;
 
+#define FAST_INIT_FUNC(LEN)                                                                  \
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_##LEN##_f32( arm_rfft_fast_instance_f32 * S )\
+{                                                                                            \
+                                                                                             \
+  if( !S ) return ARM_MATH_ARGUMENT_ERROR;                                                   \
+                                                                                             \
+  RFFT_INIT(LEN);                                                                            \
+                                                                                             \
+  return ARM_MATH_SUCCESS;                                                                   \
+}
+
 #endif 
 
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
-ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_32_f32( arm_rfft_fast_instance_f32 * S )
-{
 
-  if( !S ) return ARM_MATH_ARGUMENT_ERROR;
+FAST_INIT_FUNC(32)
 
-  RFFT_INIT(32);
-
-  return ARM_MATH_SUCCESS;
-}
 #else
 ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_32_f32( arm_rfft_fast_instance_f32 * S ) {
 
@@ -101,12 +106,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_32_f32( arm_rfft_fast_instance_f
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
-ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_64_f32( arm_rfft_fast_instance_f32 * S )
-{
-
-  if( !S ) return ARM_MATH_ARGUMENT_ERROR;
-  return ARM_MATH_SUCCESS;
-}
+FAST_INIT_FUNC(64)
 #else
 ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_64_f32( arm_rfft_fast_instance_f32 * S ) {
 
@@ -136,12 +136,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_64_f32( arm_rfft_fast_instance_f
  */
 
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
-ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_128_f32( arm_rfft_fast_instance_f32 * S )
-{
-
-  if( !S ) return ARM_MATH_ARGUMENT_ERROR;
-  return ARM_MATH_SUCCESS;
-}
+FAST_INIT_FUNC(128)
 #else
 ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_128_f32( arm_rfft_fast_instance_f32 * S ) {
 
@@ -170,12 +165,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_128_f32( arm_rfft_fast_instance_
 */
 
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
-ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_256_f32( arm_rfft_fast_instance_f32 * S )
-{
-
-  if( !S ) return ARM_MATH_ARGUMENT_ERROR;
-  return ARM_MATH_SUCCESS;
-}
+FAST_INIT_FUNC(256)
 #else
 ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_256_f32( arm_rfft_fast_instance_f32 * S ) {
 
@@ -204,12 +194,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_256_f32( arm_rfft_fast_instance_
  */
 
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
-ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_512_f32( arm_rfft_fast_instance_f32 * S )
-{
-
-  if( !S ) return ARM_MATH_ARGUMENT_ERROR;
-  return ARM_MATH_SUCCESS;
-}
+FAST_INIT_FUNC(512)
 #else
 ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_512_f32( arm_rfft_fast_instance_f32 * S ) {
 
@@ -238,12 +223,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_512_f32( arm_rfft_fast_instance_
  */
 
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
-ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_1024_f32( arm_rfft_fast_instance_f32 * S )
-{
-
-  if( !S ) return ARM_MATH_ARGUMENT_ERROR;
-  return ARM_MATH_SUCCESS;
-}
+FAST_INIT_FUNC(1024)
 #else
 ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_1024_f32( arm_rfft_fast_instance_f32 * S ) {
 
@@ -271,12 +251,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_1024_f32( arm_rfft_fast_instance
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
-ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_2048_f32( arm_rfft_fast_instance_f32 * S )
-{
-
-  if( !S ) return ARM_MATH_ARGUMENT_ERROR;
-  return ARM_MATH_SUCCESS;
-}
+FAST_INIT_FUNC(2048)
 #else
 ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_2048_f32( arm_rfft_fast_instance_f32 * S ) {
 
@@ -305,12 +280,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_2048_f32( arm_rfft_fast_instance
  */
 
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
-ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_4096_f32( arm_rfft_fast_instance_f32 * S )
-{
-
-  if( !S ) return ARM_MATH_ARGUMENT_ERROR;
-  return ARM_MATH_SUCCESS;
-}
+FAST_INIT_FUNC(4096)
 #else
 ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_4096_f32( arm_rfft_fast_instance_f32 * S ) {
 

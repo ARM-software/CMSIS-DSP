@@ -552,8 +552,8 @@ with open(args.f,'w') as f:
      print(hifdefNEON % "ARM_MATH_NEON",file=h)
      print('#include "arm_neon_tables.h"',file=f)
 
-     neonRFFTTwiddle(F32,f,h,32)
-     neonRFFTTwiddle(F32,f,h,64)
+     for s in SIZES:
+         neonRFFTTwiddle(F32,f,h,s)
 
      for s in SIZES:
          neonCFFTTwiddle(F32,False,f,h,s)

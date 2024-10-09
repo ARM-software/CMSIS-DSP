@@ -1751,7 +1751,6 @@ void arm_ne10_fft_r2c_1d_float32_neon (
 {
 (void)S;
 (void)out;
-
     ne10_fft_cpx_float32_t *fout=(ne10_fft_cpx_float32_t*)out;
 
     typedef ne10_fft_cpx_float32_t CPLX;
@@ -1759,9 +1758,9 @@ void arm_ne10_fft_r2c_1d_float32_neon (
 
     arm_ne10_mixed_radix_r2c_butterfly_float32_neon (S,(CPLX*) fin, (CPLX*)fout,(CPLX*)tmpbuf);
     arm_ne10_radix4_r2c_with_twiddles_last_stage(S,(const CPLX*)tmpbuf,(CPLX*)out);
-    fout[S->nfft / 2].r = fout[0].i;
+    //fout[S->nfft / 2].r = fout[0].i;
 
-    fout[0].i = fout[S->nfft / 2].i = 0.0f;
+    //fout[0].i = fout[S->nfft / 2].i = 0.0f;
 
 }
 
