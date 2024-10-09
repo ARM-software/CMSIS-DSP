@@ -55,7 +55,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 #include "dsp/transform_functions.h"
 
-
 static void arm_ne10_radix8x4_r2c_neon (
     ne10_fft_cpx_float32_t *Fout,
     const ne10_fft_cpx_float32_t *Fin,
@@ -613,9 +612,9 @@ static void arm_ne10_mixed_radix_r2c_butterfly_float32_neon (
     fstride = S->r_factors_neon[1];
     mstride = S->r_factors_neon[3];
     radix = S->r_factors_neon[2];
-
+//
     nfft        = radix * fstride; // not the real nfft
-
+    
     // PRINT_STAGE_INFO;
 
     if (stage_count % 2 == 1) // since there is another stage outside
@@ -1755,35 +1754,13 @@ void arm_ne10_fft_r2c_1d_float32_neon (
 
     ne10_fft_cpx_float32_t *fout=(ne10_fft_cpx_float32_t*)out;
 
-    //typedef         ne10_float32_t REAL;
     typedef ne10_fft_cpx_float32_t CPLX;
 
-    //ne10_float32_t *fout_r = (ne10_float32_t*) fout;
-#if 0
-    switch (cfg->nfft)
-    {
 
-        case 2:
-            ne10_radix2_r2c_c ( (CPLX*) fout_r, (const CPLX*) fin);
-            fout[0].r = fout[0].i;
-            break;
-        case 4:
-            ne10_radix4_r2c_c ( (CPLX*) fout_r, (const CPLX*) fin, 1, 1, 4);
-            fout[0].r = fout[0].i;
-            break;
-        case 8:
-            ne10_radix8_r2c_c ( (CPLX*) fout_r, (const CPLX*) fin, 1, 1, 8);
-            fout[0].r = fout[0].i;
-            break;
-        default:
-#endif
-            arm_ne10_mixed_radix_r2c_butterfly_float32_neon (S,(CPLX*) fin, (CPLX*)fout,(CPLX*)tmpbuf);
-            arm_ne10_radix4_r2c_with_twiddles_last_stage(S,(const CPLX*)tmpbuf,(CPLX*)out);
-            fout[S->nfft / 2].r = fout[0].i;
-#if 0
-            break;
-    }
-#endif
+    arm_ne10_mixed_radix_r2c_butterfly_float32_neon (S,(CPLX*) fin, (CPLX*)fout,(CPLX*)tmpbuf);
+    arm_ne10_radix4_r2c_with_twiddles_last_stage(S,(const CPLX*)tmpbuf,(CPLX*)out);
+    fout[S->nfft / 2].r = fout[0].i;
+
     fout[0].i = fout[S->nfft / 2].i = 0.0f;
 
 }

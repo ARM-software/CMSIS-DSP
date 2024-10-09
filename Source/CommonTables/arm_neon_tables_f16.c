@@ -36,7 +36,7 @@
 
 
 #include "arm_neon_tables_f16.h"
-const float16_t arm_neon_twiddles_16_f16[32]={
+const float16_t arm_neon_twiddles_16_f16[ARM_NEON_TWIDDLES_16_F16_LEN]={
 (float16_t)1.0000000000000f,(float16_t)-0.0000000000000f,
 (float16_t)0.9238281250000f,(float16_t)-0.3825683593750f,
 (float16_t)0.7070312500000f,(float16_t)-0.7070312500000f,
@@ -48,16 +48,12 @@ const float16_t arm_neon_twiddles_16_f16[32]={
 (float16_t)1.0000000000000f,(float16_t)-0.0000000000000f,
 (float16_t)0.3825683593750f,(float16_t)-0.9238281250000f,
 (float16_t)-0.7070312500000f,(float16_t)-0.7070312500000f,
-(float16_t)-0.9238281250000f,(float16_t)0.3825683593750f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,};
+(float16_t)-0.9238281250000f,(float16_t)0.3825683593750f,};
 
-const uint32_t arm_neon_factors_16_f16[4]={
+const uint32_t arm_neon_factors_16_f16[ARM_NEON_FACTORS_16_F16_LEN]={
 2,4,4,4,};
 
-const float16_t arm_neon_twiddles_32_f16[64]={
+const float16_t arm_neon_twiddles_32_f16[ARM_NEON_TWIDDLES_32_F16_LEN]={
 (float16_t)1.0000000000000f,(float16_t)-0.0000000000000f,
 (float16_t)0.9809570312500f,(float16_t)-0.1950683593750f,
 (float16_t)0.9238281250000f,(float16_t)-0.3825683593750f,
@@ -81,20 +77,12 @@ const float16_t arm_neon_twiddles_32_f16[64]={
 (float16_t)-0.7070312500000f,(float16_t)-0.7070312500000f,
 (float16_t)-0.9809570312500f,(float16_t)-0.1950683593750f,
 (float16_t)-0.9238281250000f,(float16_t)0.3825683593750f,
-(float16_t)-0.5556640625000f,(float16_t)0.8315429687500f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,};
+(float16_t)-0.5556640625000f,(float16_t)0.8315429687500f,};
 
-const uint32_t arm_neon_factors_32_f16[4]={
+const uint32_t arm_neon_factors_32_f16[ARM_NEON_FACTORS_32_F16_LEN]={
 2,4,8,8,};
 
-const float16_t arm_neon_twiddles_64_f16[128]={
+const float16_t arm_neon_twiddles_64_f16[ARM_NEON_TWIDDLES_64_F16_LEN]={
 (float16_t)1.0000000000000f,(float16_t)-0.0000000000000f,
 (float16_t)0.9238281250000f,(float16_t)-0.3825683593750f,
 (float16_t)0.7070312500000f,(float16_t)-0.7070312500000f,
@@ -154,16 +142,12 @@ const float16_t arm_neon_twiddles_64_f16[128]={
 (float16_t)-0.9238281250000f,(float16_t)0.3825683593750f,
 (float16_t)-0.7729492187500f,(float16_t)0.6342773437500f,
 (float16_t)-0.5556640625000f,(float16_t)0.8315429687500f,
-(float16_t)-0.2902832031250f,(float16_t)0.9570312500000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,};
+(float16_t)-0.2902832031250f,(float16_t)0.9570312500000f,};
 
-const uint32_t arm_neon_factors_64_f16[4]={
+const uint32_t arm_neon_factors_64_f16[ARM_NEON_FACTORS_64_F16_LEN]={
 3,16,4,4,};
 
-const float16_t arm_neon_twiddles_128_f16[256]={
+const float16_t arm_neon_twiddles_128_f16[ARM_NEON_TWIDDLES_128_F16_LEN]={
 (float16_t)1.0000000000000f,(float16_t)-0.0000000000000f,
 (float16_t)0.9809570312500f,(float16_t)-0.1950683593750f,
 (float16_t)0.9238281250000f,(float16_t)-0.3825683593750f,
@@ -283,20 +267,12 @@ const float16_t arm_neon_twiddles_128_f16[256]={
 (float16_t)-0.5556640625000f,(float16_t)0.8315429687500f,
 (float16_t)-0.4274902343750f,(float16_t)0.9038085937500f,
 (float16_t)-0.2902832031250f,(float16_t)0.9570312500000f,
-(float16_t)-0.1467285156250f,(float16_t)0.9892578125000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,};
+(float16_t)-0.1467285156250f,(float16_t)0.9892578125000f,};
 
-const uint32_t arm_neon_factors_128_f16[4]={
+const uint32_t arm_neon_factors_128_f16[ARM_NEON_FACTORS_128_F16_LEN]={
 3,16,8,8,};
 
-const float16_t arm_neon_twiddles_256_f16[512]={
+const float16_t arm_neon_twiddles_256_f16[ARM_NEON_TWIDDLES_256_F16_LEN]={
 (float16_t)1.0000000000000f,(float16_t)-0.0000000000000f,
 (float16_t)0.9238281250000f,(float16_t)-0.3825683593750f,
 (float16_t)0.7070312500000f,(float16_t)-0.7070312500000f,
@@ -548,16 +524,12 @@ const float16_t arm_neon_twiddles_256_f16[512]={
 (float16_t)-0.2902832031250f,(float16_t)0.9570312500000f,
 (float16_t)-0.2191162109375f,(float16_t)0.9755859375000f,
 (float16_t)-0.1467285156250f,(float16_t)0.9892578125000f,
-(float16_t)-0.0735473632812f,(float16_t)0.9970703125000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,};
+(float16_t)-0.0735473632812f,(float16_t)0.9970703125000f,};
 
-const uint32_t arm_neon_factors_256_f16[4]={
+const uint32_t arm_neon_factors_256_f16[ARM_NEON_FACTORS_256_F16_LEN]={
 4,64,4,4,};
 
-const float16_t arm_neon_twiddles_512_f16[1024]={
+const float16_t arm_neon_twiddles_512_f16[ARM_NEON_TWIDDLES_512_F16_LEN]={
 (float16_t)1.0000000000000f,(float16_t)-0.0000000000000f,
 (float16_t)0.9809570312500f,(float16_t)-0.1950683593750f,
 (float16_t)0.9238281250000f,(float16_t)-0.3825683593750f,
@@ -1061,20 +1033,12 @@ const float16_t arm_neon_twiddles_512_f16[1024]={
 (float16_t)-0.1467285156250f,(float16_t)0.9892578125000f,
 (float16_t)-0.1102294921875f,(float16_t)0.9941406250000f,
 (float16_t)-0.0735473632812f,(float16_t)0.9970703125000f,
-(float16_t)-0.0368041992188f,(float16_t)0.9995117187500f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,};
+(float16_t)-0.0368041992188f,(float16_t)0.9995117187500f,};
 
-const uint32_t arm_neon_factors_512_f16[4]={
+const uint32_t arm_neon_factors_512_f16[ARM_NEON_FACTORS_512_F16_LEN]={
 4,64,8,8,};
 
-const float16_t arm_neon_twiddles_1024_f16[2048]={
+const float16_t arm_neon_twiddles_1024_f16[ARM_NEON_TWIDDLES_1024_F16_LEN]={
 (float16_t)1.0000000000000f,(float16_t)-0.0000000000000f,
 (float16_t)0.9238281250000f,(float16_t)-0.3825683593750f,
 (float16_t)0.7070312500000f,(float16_t)-0.7070312500000f,
@@ -2094,16 +2058,12 @@ const float16_t arm_neon_twiddles_1024_f16[2048]={
 (float16_t)-0.0735473632812f,(float16_t)0.9970703125000f,
 (float16_t)-0.0552062988281f,(float16_t)0.9985351562500f,
 (float16_t)-0.0368041992188f,(float16_t)0.9995117187500f,
-(float16_t)-0.0184020996094f,(float16_t)1.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,};
+(float16_t)-0.0184020996094f,(float16_t)1.0000000000000f,};
 
-const uint32_t arm_neon_factors_1024_f16[4]={
+const uint32_t arm_neon_factors_1024_f16[ARM_NEON_FACTORS_1024_F16_LEN]={
 5,256,4,4,};
 
-const float16_t arm_neon_twiddles_2048_f16[4096]={
+const float16_t arm_neon_twiddles_2048_f16[ARM_NEON_TWIDDLES_2048_F16_LEN]={
 (float16_t)1.0000000000000f,(float16_t)-0.0000000000000f,
 (float16_t)0.9809570312500f,(float16_t)-0.1950683593750f,
 (float16_t)0.9238281250000f,(float16_t)-0.3825683593750f,
@@ -4143,20 +4103,12 @@ const float16_t arm_neon_twiddles_2048_f16[4096]={
 (float16_t)-0.0368041992188f,(float16_t)0.9995117187500f,
 (float16_t)-0.0276031494141f,(float16_t)0.9995117187500f,
 (float16_t)-0.0184020996094f,(float16_t)1.0000000000000f,
-(float16_t)-0.0092010498047f,(float16_t)1.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,};
+(float16_t)-0.0092010498047f,(float16_t)1.0000000000000f,};
 
-const uint32_t arm_neon_factors_2048_f16[4]={
+const uint32_t arm_neon_factors_2048_f16[ARM_NEON_FACTORS_2048_F16_LEN]={
 5,256,8,8,};
 
-const float16_t arm_neon_twiddles_4096_f16[8192]={
+const float16_t arm_neon_twiddles_4096_f16[ARM_NEON_TWIDDLES_4096_F16_LEN]={
 (float16_t)1.0000000000000f,(float16_t)-0.0000000000000f,
 (float16_t)0.9238281250000f,(float16_t)-0.3825683593750f,
 (float16_t)0.7070312500000f,(float16_t)-0.7070312500000f,
@@ -8248,13 +8200,9 @@ const float16_t arm_neon_twiddles_4096_f16[8192]={
 (float16_t)-0.0184020996094f,(float16_t)1.0000000000000f,
 (float16_t)-0.0138092041016f,(float16_t)1.0000000000000f,
 (float16_t)-0.0092010498047f,(float16_t)1.0000000000000f,
-(float16_t)-0.0046005249023f,(float16_t)1.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,
-(float16_t)0.0000000000000f,(float16_t)0.0000000000000f,};
+(float16_t)-0.0046005249023f,(float16_t)1.0000000000000f,};
 
-const uint32_t arm_neon_factors_4096_f16[4]={
+const uint32_t arm_neon_factors_4096_f16[ARM_NEON_FACTORS_4096_F16_LEN]={
 6,1024,4,4,};
 
 

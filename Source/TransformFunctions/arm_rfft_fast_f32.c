@@ -612,7 +612,7 @@ ARM_DSP_ATTRIBUTE void arm_rfft_fast_f32(
   uint8_t ifftFlag)
 {
 /* Calculation of Real FFT */
-   if (ifftFlag)
+   if (!ifftFlag)
    {
      arm_ne10_fft_r2c_1d_float32_neon (S,p,pOut,tmpbuf);
    }

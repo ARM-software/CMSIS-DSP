@@ -48,10 +48,30 @@
  */
 
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#include "arm_neon_tables.h"
+#define RFFT_INIT(LEN)                                                                              \
+  S->nfft = LEN;                                                                                    \
+  S->r_twiddles = arm_neon_rfft_twiddles_##LEN##_f32;                                               \
+  S->r_factors = arm_neon_rfft_factors_##LEN##_f32;                                                 \
+                                                                                                    \
+  S->r_twiddles_neon = arm_neon_rfft_twiddles_neon_##LEN##_f32;                                     \
+  S->r_factors_neon = arm_neon_rfft_factors_neon_##LEN##_f32;                                       \
+                                                                                                    \
+  S->r_twiddles_backward = S->r_twiddles + ARM_NE10_OFFSET_BACKWARD_TWID_##LEN##_F32;               \
+  S->r_twiddles_neon_backward = S->r_twiddles_neon + ARM_NE10_OFFSET_BACKWARD_TWID_NEON_##LEN##_F32;\
+                                                                                                    \
+  S->r_super_twiddles_neon = arm_neon_rfft_super_twiddles_neon_##LEN##_f32;
+
+#endif 
+
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_32_f32( arm_rfft_fast_instance_f32 * S )
 {
 
   if( !S ) return ARM_MATH_ARGUMENT_ERROR;
+
+  RFFT_INIT(32);
+
   return ARM_MATH_SUCCESS;
 }
 #else
