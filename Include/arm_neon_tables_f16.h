@@ -42,24 +42,42 @@ extern "C"
 #if defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 
-extern const float16_t arm_neon_twiddles_16_f16[32];
-extern const uint32_t arm_neon_factors_16_f16[4];
-extern const float16_t arm_neon_twiddles_32_f16[64];
-extern const uint32_t arm_neon_factors_32_f16[4];
-extern const float16_t arm_neon_twiddles_64_f16[128];
-extern const uint32_t arm_neon_factors_64_f16[4];
-extern const float16_t arm_neon_twiddles_128_f16[256];
-extern const uint32_t arm_neon_factors_128_f16[4];
-extern const float16_t arm_neon_twiddles_256_f16[512];
-extern const uint32_t arm_neon_factors_256_f16[4];
-extern const float16_t arm_neon_twiddles_512_f16[1024];
-extern const uint32_t arm_neon_factors_512_f16[4];
-extern const float16_t arm_neon_twiddles_1024_f16[2048];
-extern const uint32_t arm_neon_factors_1024_f16[4];
-extern const float16_t arm_neon_twiddles_2048_f16[4096];
-extern const uint32_t arm_neon_factors_2048_f16[4];
-extern const float16_t arm_neon_twiddles_4096_f16[8192];
-extern const uint32_t arm_neon_factors_4096_f16[4];
+#define ARM_NEON_TWIDDLES_16_F16_LEN 24
+extern const float16_t arm_neon_twiddles_16_f16[ARM_NEON_TWIDDLES_16_F16_LEN];
+#define ARM_NEON_FACTORS_16_F16_LEN 4
+extern const uint32_t arm_neon_factors_16_f16[ARM_NEON_FACTORS_16_F16_LEN];
+#define ARM_NEON_TWIDDLES_32_F16_LEN 48
+extern const float16_t arm_neon_twiddles_32_f16[ARM_NEON_TWIDDLES_32_F16_LEN];
+#define ARM_NEON_FACTORS_32_F16_LEN 4
+extern const uint32_t arm_neon_factors_32_f16[ARM_NEON_FACTORS_32_F16_LEN];
+#define ARM_NEON_TWIDDLES_64_F16_LEN 120
+extern const float16_t arm_neon_twiddles_64_f16[ARM_NEON_TWIDDLES_64_F16_LEN];
+#define ARM_NEON_FACTORS_64_F16_LEN 4
+extern const uint32_t arm_neon_factors_64_f16[ARM_NEON_FACTORS_64_F16_LEN];
+#define ARM_NEON_TWIDDLES_128_F16_LEN 240
+extern const float16_t arm_neon_twiddles_128_f16[ARM_NEON_TWIDDLES_128_F16_LEN];
+#define ARM_NEON_FACTORS_128_F16_LEN 4
+extern const uint32_t arm_neon_factors_128_f16[ARM_NEON_FACTORS_128_F16_LEN];
+#define ARM_NEON_TWIDDLES_256_F16_LEN 504
+extern const float16_t arm_neon_twiddles_256_f16[ARM_NEON_TWIDDLES_256_F16_LEN];
+#define ARM_NEON_FACTORS_256_F16_LEN 4
+extern const uint32_t arm_neon_factors_256_f16[ARM_NEON_FACTORS_256_F16_LEN];
+#define ARM_NEON_TWIDDLES_512_F16_LEN 1008
+extern const float16_t arm_neon_twiddles_512_f16[ARM_NEON_TWIDDLES_512_F16_LEN];
+#define ARM_NEON_FACTORS_512_F16_LEN 4
+extern const uint32_t arm_neon_factors_512_f16[ARM_NEON_FACTORS_512_F16_LEN];
+#define ARM_NEON_TWIDDLES_1024_F16_LEN 2040
+extern const float16_t arm_neon_twiddles_1024_f16[ARM_NEON_TWIDDLES_1024_F16_LEN];
+#define ARM_NEON_FACTORS_1024_F16_LEN 4
+extern const uint32_t arm_neon_factors_1024_f16[ARM_NEON_FACTORS_1024_F16_LEN];
+#define ARM_NEON_TWIDDLES_2048_F16_LEN 4080
+extern const float16_t arm_neon_twiddles_2048_f16[ARM_NEON_TWIDDLES_2048_F16_LEN];
+#define ARM_NEON_FACTORS_2048_F16_LEN 4
+extern const uint32_t arm_neon_factors_2048_f16[ARM_NEON_FACTORS_2048_F16_LEN];
+#define ARM_NEON_TWIDDLES_4096_F16_LEN 8184
+extern const float16_t arm_neon_twiddles_4096_f16[ARM_NEON_TWIDDLES_4096_F16_LEN];
+#define ARM_NEON_FACTORS_4096_F16_LEN 4
+extern const uint32_t arm_neon_factors_4096_f16[ARM_NEON_FACTORS_4096_F16_LEN];
 
 
 #endif /* defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE) */

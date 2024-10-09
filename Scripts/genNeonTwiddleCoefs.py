@@ -48,7 +48,7 @@ def float_to_hex(f):
 
 def printCUInt32Array(f,name,arr):
     nb = 0
-    print("const uint32_t %s[%d]={" % (name,len(arr)),file=f)
+    print(f"const uint32_t {name}[{name.upper()}_LEN]={{",file=f)
 
     for d in arr:
         val = "%d," % d
@@ -62,7 +62,7 @@ def printCUInt32Array(f,name,arr):
 
 def printCFloat32Array(f,name,arr):
     nb = 0
-    print("__ALIGNED(16) const float32_t %s[%d]={" % (name,len(arr)),file=f)
+    print(f"__ALIGNED(16) const float32_t {name}[{name.upper()}_LEN]={{",file=f)
 
     for d in arr:
         val = "%.20ff," % f32(d)
@@ -79,7 +79,7 @@ def printCFloat32Array(f,name,arr):
 
 def printCFloat16Array(f,name,arr):
     nb = 0
-    print("const float16_t %s[%d]={" % (name,len(arr)),file=f)
+    print(f"const float16_t {name}[{name.upper()}_LEN]={{",file=f)
 
     for d in arr:
         val = "(float16_t)%.13ff," % f16(d)
@@ -93,7 +93,7 @@ def printCFloat16Array(f,name,arr):
 
 def printCQ31Array(f,name,arr):
     nb = 0
-    print("const q31_t %s[%d]={" % (name,len(arr)),file=f)
+    print(f"const q31_t {name}[{name.upper()}_LEN]={{",file=f)
 
     for d in arr:
         val = "%s," % Tools.to_q31(d)
@@ -107,7 +107,7 @@ def printCQ31Array(f,name,arr):
 
 def printCQ15Array(f,name,arr):
     nb = 0
-    print("const q15_t %s[%d]={" % (name,len(arr)),file=f)
+    print(f"const q15_t {name}[{name.upper()}_LEN]={{",file=f)
 
     for d in arr:
         val = "%s," % Tools.to_q15(d)
@@ -121,7 +121,7 @@ def printCQ15Array(f,name,arr):
 
 def printCQ7Array(f,name,arr):
     nb = 0
-    print("const q7_t %s[%d]={" % (name,len(arr)),file=f)
+    print(f"const q7_t {name}[{name.upper()}_LEN]={{",file=f)
 
     for d in arr:
         val = "%s," % Tools.to_q7(d)
@@ -133,23 +133,44 @@ def printCQ7Array(f,name,arr):
 
     print("};\n",file=f)
 
+def type_to_ext(theType):
+    if theType == F32:
+        ext="f32"
+    if theType == F16:
+        ext="f16"
+    if theType == Q31:
+        ext="q31"
+    if theType == Q15:
+        ext="q15"
+    return ext
+
+def write_const(theType,h,n,name,val):
+    ext = type_to_ext(theType)
+    print(f"#define {name}_{n}_{ext.upper()} {val}",file=h)
+
 def printHUInt32Array(f,name,arr):
- print("extern const uint32_t %s[%d];" % (name,len(arr)),file=f)
+    print(f"#define {name.upper()}_LEN {len(arr)}",file=h)
+    print(f"extern const uint32_t {name}[{name.upper()}_LEN];",file=f)
 
 def printHFloat32Array(f,name,arr):
- print("extern const float32_t %s[%d];" % (name,len(arr)),file=f)
+    print(f"#define {name.upper()}_LEN {len(arr)}",file=h)
+    print(f"extern const float32_t {name}[{name.upper()}_LEN];",file=f)
 
 def printHFloat16Array(f,name,arr):
- print("extern const float16_t %s[%d];" % (name,len(arr)),file=f)
+    print(f"#define {name.upper()}_LEN {len(arr)}",file=h)
+    print(f"extern const float16_t {name}[{name.upper()}_LEN];",file=f)
 
 def printHQ31Array(f,name,arr):
- print("extern const q31_t %s[%d];" % (name,len(arr)),file=f)
+    print(f"#define {name.upper()}_LEN {len(arr)}",file=h)
+    print(f"extern const q31_t {name}[{name.upper()}_LEN];",file=f)
 
 def printHQ15Array(f,name,arr):
- print("extern const q15_t %s[%d];" % (name,len(arr)),file=f)
+    print(f"#define {name.upper()}_LEN {len(arr)}",file=h)
+    print(f"extern const q15_t {name}[{name.upper()}_LEN];",file=f)
 
 def printHQ7Array(f,name,arr):
- print("extern const q7_t %s[%d];" % (name,len(arr)),file=f)
+    print(f"#define {name.upper()}_LEN {len(arr)}",file=h)
+    print(f"extern const q7_t {name}[{name.upper()}_LEN];",file=f)
 
 
 NE10_FFT_PARA_LEVEL = 4
@@ -202,25 +223,19 @@ def gen_coefs(twiddles,idx,mstride,fstride,radix,nfft):
             phase = f32(-2.0 * math.pi * fstride * k * j / nfft);
             twiddles[idx + mstride * (k - 1) + j]= complex(f32(math.cos(phase)) , f32(math.sin(phase)))
 
-def computeTwiddle(nfft):
-    f = factors(nfft // NE10_FFT_PARA_LEVEL)
-    f["stage_count"] = f["stage_count"] + 1 
-    f["f_stride"] = 4*f["f_stride"]
-    f["factors"] = [{"f":4,"n":nfft// NE10_FFT_PARA_LEVEL}] + f["factors"]
+def gen_transposed_coefs(twiddles,idx,mstride,fstride,radix,nfft):
+    #print(f"{mstride} {fstride} {radix} {nfft}")
+    for j in range(mstride):
+        for k in range(1,radix):
+            phase = f32(-2.0 * math.pi * fstride * k * j / nfft);
+            twiddles[idx + (radix - 1) * j + k - 1]= complex(f32(math.cos(phase)) , f32(math.sin(phase)))
 
-    facts = f["factors"]
-    stage_count = f["stage_count"]
-    fstride = f["f_stride"]
-    first_radix = facts[-1]["f"]
-    mstride = facts[-1]["n"]
-    factor_desc = {
-        "stage_count" : stage_count,
-        "fstride" : fstride,
-        "first_radix" :facts[-1]["f"],
-        "mstride": facts[-2]["n"]
-    }
 
-    #print(f)
+def genTwiddles(f,nfft,transposed=False):
+    if transposed:
+        gen = gen_transposed_coefs
+    else:
+        gen = gen_coefs
     cur_radix = f["factors"][-1]["f"]
     twiddles = np.zeros(nfft,dtype=complex)
 
@@ -229,7 +244,7 @@ def computeTwiddle(nfft):
     if cur_radix % 2 != 0:
         twiddles[0] = 1
         idx = idx + 1
-        gen_coefs(twiddles,idx,1, fstride, cur_radix, nfft)
+        gen(twiddles,idx,1, fstride, cur_radix, nfft)
         idx = idx + (cur_radix - 1)
 
     #print(f"cur={cur_radix}")
@@ -237,12 +252,88 @@ def computeTwiddle(nfft):
         cur_radix = stage["f"]
         fstride = fstride // cur_radix;
         mstride = stage["n"]
-        gen_coefs (twiddles, idx,mstride, fstride, cur_radix, nfft)
+        gen (twiddles, idx,mstride, fstride, cur_radix, nfft)
         idx = idx +  mstride * (cur_radix - 1)
-        #print(f"cur={cur_radix}")
 
-    #print(twiddles)
-    return(factor_desc,twiddles)
+    return idx,twiddles[:idx]
+
+def superTwiddle(nfft):
+    maxidx = 0
+    twiddles = np.zeros((nfft//32)*3*4+12,dtype=complex)
+    for i in range(1,4):
+        for j in range(4):
+            phase = f32(-2.0 * math.pi * i * j / nfft);
+            twiddles[4*i-4+j]= complex(f32(math.cos(phase)) , f32(math.sin(phase)))
+            if (4*i-4+j)>maxidx:
+                maxidx = 4*i-4+j
+            
+
+    for k in range(1,nfft//32):
+        for s in range(1,4):
+            for j in range(4):
+                phase = f32(-2.0 * math.pi * (k*4+j) * s / nfft);
+                twiddles[12*k+j+4*(s-1)]= complex(f32(math.cos(phase)) , f32(math.sin(phase)))
+                if (12*k+j+4*(s-1))>maxidx:
+                   maxidx = 12*k+j+4*(s-1)
+                
+
+    return twiddles[:(maxidx+1)]
+
+
+def factor_desc(f):
+    facts = f["factors"]
+    stage_count = f["stage_count"]
+    fstride = f["f_stride"]
+    first_radix = facts[-1]["f"]
+    if len(facts)>1:
+       mstride = facts[-2]["n"]
+    else:
+       mstride = facts[-1]["n"]
+    return {
+        "stage_count" : stage_count,
+        "fstride" : fstride,
+        "first_radix" :first_radix,
+        "mstride": mstride
+    }
+
+def c_to_r(t):
+    twiddles = np.zeros(2*len(t),dtype=float)
+    twiddles[0::2] = t.real
+    twiddles[1::2] = t.imag
+    return list(twiddles)
+
+def computeRFFTArrays(nfft):
+    r_factors = factors(nfft)
+    offset_twid,r_twiddles = genTwiddles(r_factors,nfft)
+    #print(r_factors)
+
+    r_factors_neon = factors(nfft//4)
+    offset_twid_neon,r_twiddles_neon = genTwiddles(r_factors_neon,nfft//4,transposed=True)
+    #print(r_twiddles_neon)
+    #print(r_factors_neon)
+    r_super_twiddles_neon = superTwiddle(nfft)
+    #print(r_super_twiddles_neon)
+    return {
+       "r_factors":factor_desc(r_factors),
+       "r_twiddles":c_to_r(r_twiddles),
+       "r_factors_neon":factor_desc(r_factors_neon),
+       "r_twiddles_neon":c_to_r(r_twiddles_neon),
+       "r_super_twiddles_neon":c_to_r(r_super_twiddles_neon),
+       "offset_twid":offset_twid,
+       "offset_twid_neon":offset_twid_neon
+    }
+    
+    
+
+def computeCFFTArrays(nfft):
+    f = factors(nfft // NE10_FFT_PARA_LEVEL)
+    f["stage_count"] = f["stage_count"] + 1 
+    f["f_stride"] = 4*f["f_stride"]
+    f["factors"] = [{"f":4,"n":nfft// NE10_FFT_PARA_LEVEL}] + f["factors"]
+
+    offset,c_twiddles = genTwiddles(f,nfft)
+
+    return(factor_desc(f),c_to_r(c_twiddles))
 
 #def test(nfft):
 #    f = factors(nfft // NE10_FFT_PARA_LEVEL)
@@ -263,60 +354,63 @@ def computeTwiddle(nfft):
 #
 #exit(0)
 
+def write_twiddles(theType,name,n,f,h,twiddles):
+    if theType == F32:
+       printCFloat32Array(f,f"arm_neon_{name}_{n}_f32",twiddles)
+       printHFloat32Array(h,f"arm_neon_{name}_{n}_f32",twiddles)
 
-def neonTwiddle(theType,conjugate,f,h,n):
-    
-    factors, complex_twiddles = computeTwiddle(n)
-    twiddles = np.zeros(2*n,dtype=float)
-    twiddles[0::2] = complex_twiddles.real
-    twiddles[1::2] = complex_twiddles.imag
+    if theType == F16:
+       printCFloat16Array(f,f"arm_neon_{name}_{n}_f16",twiddles)
+       printHFloat16Array(h,f"arm_neon_{name}_{n}_f16",twiddles)
 
+    if theType == Q31:
+       printCQ31Array(f,f"arm_neon_{name}_{n}_q31",twiddles)
+       printHQ31Array(h,f"arm_neon_{name}_{n}_q31",twiddles)
+
+    if theType == Q15:
+       printCQ15Array(f,f"arm_neon_{name}_{n}_q15",twiddles)
+       printHQ15Array(h,f"arm_neon_{name}_{n}_q15",twiddles)
+
+def write_factors(theType,name,n,f,h,factors):
     factors_list = [factors["stage_count"], 
                     factors["fstride"],
                     factors["first_radix"],
                     factors["mstride"]
                     ]
 
-    # F32 SECTION FOR THIS FFT LENGTH
-    if theType == F32:
-       printCFloat32Array(f,"arm_neon_twiddles_%d_f32" % n,list(twiddles))
-       printHFloat32Array(h,"arm_neon_twiddles_%d_f32" % n,list(twiddles))
+    ext = type_to_ext(theType)
+    
+    printCUInt32Array(f,f"arm_neon_{name}_{n}_{ext}",factors_list)
+    printHUInt32Array(h,f"arm_neon_{name}_{n}_{ext}",factors_list)
 
-       printCUInt32Array(f,"arm_neon_factors_%d_f32" % n,factors_list)
-       printHUInt32Array(h,"arm_neon_factors_%d_f32" % n,factors_list)
+def neonRFFTTwiddle(theType,f,h,n):
+    
+    rfft = computeRFFTArrays(n)
+
+    
+    write_twiddles(theType,"rfft_twiddles",n,f,h,rfft["r_twiddles"])
+    write_factors(theType,"rfft_factors",n,f,h,rfft["r_factors"])
+
+    write_twiddles(theType,"rfft_twiddles_neon",n,f,h,rfft["r_twiddles_neon"])
+    write_factors(theType,"rfft_factors_neon",n,f,h,rfft["r_factors_neon"])
+
+    write_twiddles(theType,"rfft_super_twiddles_neon",n,f,h,rfft["r_super_twiddles_neon"])
+
+    write_const(theType,h,n,"ARM_NE10_OFFSET_BACKWARD_TWID",rfft["offset_twid"])
+    write_const(theType,h,n,"ARM_NE10_OFFSET_BACKWARD_TWID_NEON",rfft["offset_twid_neon"])
+    print("",file=h)
+
+def neonCFFTTwiddle(theType,conjugate,f,h,n):
+    
+    factors, twiddles = computeCFFTArrays(n)
+
+    
+
+    
+    write_twiddles(theType,"twiddles",n,f,h,twiddles)
+    write_factors(theType,"factors",n,f,h,factors)
    
-    # F16 SECTION FOR THIS FFT LENGTH
-    if theType == F16:
-       
-       printCFloat16Array(f,"arm_neon_twiddles_%d_f16" % n,list(twiddles))
-       printHFloat16Array(h,"arm_neon_twiddles_%d_f16" % n,list(twiddles))
-
-       printCUInt32Array(f,"arm_neon_factors_%d_f16" % n,factors_list)
-       printHUInt32Array(h,"arm_neon_factors_%d_f16" % n,factors_list)
-
-
-    # Q31 SECTION FOR THIS FFT LENGTH
-    if theType == Q31:
-
-       printCQ31Array(f,"arm_neon_twiddles_%d_q31" % n,list(twiddles))
-       printHQ31Array(h,"arm_neon_twiddles_%d_q31" % n,list(twiddles))
-
-       printCUInt32Array(f,"arm_neon_factors_%d_q31" % n,factors_list)
-       printHUInt32Array(h,"arm_neon_factors_%d_q31" % n,factors_list)
    
-
-    # Q15 SECTION FOR THIS FFT LENGTH
-    if theType == Q15:
-       
-       printCQ15Array(f,"arm_neon_twiddles_%d_q15" % n,list(twiddles))
-       printHQ15Array(h,"arm_neon_twiddles_%d_q15" % n,list(twiddles))
-
-       printCUInt32Array(f,"arm_neon_factors_%d_q15" % n,factors_list)
-       printHUInt32Array(h,"arm_neon_factors_%d_q15" % n,factors_list)
-   
-
-
-
 #test = twiddle(16)
 #printCFloat32Array("Test",list(test))
 
@@ -439,7 +533,7 @@ with open(args.f16,'w') as f:
      print(hifdefNEON % "ARM_MATH_NEON_FLOAT16",file=h)
      print('#include "arm_neon_tables_f16.h"',file=f)
      for s in SIZES:
-         neonTwiddle(F16,False,f,h,s)
+         neonCFFTTwiddle(F16,False,f,h,s)
      
      print(cfooterNEON % ("ARM_MATH_NEON_FLOAT16"),file=f)
      print(hfooterNEON % "ARM_MATH_NEON_FLOAT16",file=h)
@@ -457,14 +551,18 @@ with open(args.f,'w') as f:
      print(cifdeNEON % ("ARM_MATH_NEON",),file=f)
      print(hifdefNEON % "ARM_MATH_NEON",file=h)
      print('#include "arm_neon_tables.h"',file=f)
-     for s in SIZES:
-         neonTwiddle(F32,False,f,h,s)
-     
-     for s in SIZES:
-         neonTwiddle(Q31,True,f,h,s)
+
+     neonRFFTTwiddle(F32,f,h,32)
+     neonRFFTTwiddle(F32,f,h,64)
 
      for s in SIZES:
-         neonTwiddle(Q15,True,f,h,s)
+         neonCFFTTwiddle(F32,False,f,h,s)
+     
+     for s in SIZES:
+         neonCFFTTwiddle(Q31,True,f,h,s)
+
+     for s in SIZES:
+         neonCFFTTwiddle(Q15,True,f,h,s)
 
     
 
