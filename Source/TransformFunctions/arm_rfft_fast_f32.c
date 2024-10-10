@@ -604,6 +604,13 @@ static void merge_rfft_f32(
 #include "CMSIS_NE10_types.h"
 #include "CMSIS_NE10_fft.h"
 
+/*
+
+p size      : nfft   reals
+pOut size   : nfft   reals (nfft/2 complex)
+tmpBuf size : 2*nfft reals (nfft   complex)
+
+*/
 ARM_DSP_ATTRIBUTE void arm_rfft_fast_f32(
   const arm_rfft_fast_instance_f32 * S,
   float32_t * p,

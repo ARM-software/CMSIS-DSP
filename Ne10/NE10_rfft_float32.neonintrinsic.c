@@ -291,7 +291,6 @@ static void arm_ne10_radix4x4_r2c_with_twiddles_other_butterfly_neon (
 
     for (m_count = loop_count; m_count > 0; m_count -- )
     {
-#ifndef CMSIS_NE10_INLINE_ASM_OPT
         // load
         q2_in0.val[0] = vld1q_f32( (ne10_float32_t*) (Fin_neon + 0*in_step    ) );
         q2_in0.val[1] = vld1q_f32( (ne10_float32_t*) (Fin_neon + 0*in_step + 1) );
@@ -316,51 +315,6 @@ static void arm_ne10_radix4x4_r2c_with_twiddles_other_butterfly_neon (
 
         // R2C TW KERNEL
         NE10_RADIX4x4_R2C_TW_MUL_NEON (q2_out, q2_in, q2_tw);
-#else // CMSIS_NE10_INLINE_ASM_OPT
-#ifndef __aarch64__
-#error Currently, inline assembly optimizations are only available on AArch64.
-#else // __aarch64__
-        const ne10_float32_t *ptr_inr = ((const ne10_float32_t *) Fin_neon);
-        const ne10_float32_t *ptr_ini = ((const ne10_float32_t *) Fin_neon) + 4;
-        asm volatile (
-            "ld1 {%[q2_out0r].4s}, [%[ptr_inr]], %[offset_in] \n\t"
-            "ld1 {%[q2_out0i].4s}, [%[ptr_ini]] \n\t"
-            "ld1 {v10.4s, v11.4s}, [%[ptr_inr]], %[offset_in] \n\t"
-            "ld1 {v12.4s, v13.4s}, [%[ptr_inr]], %[offset_in] \n\t"
-            "ld1 {v14.4s, v15.4s}, [%[ptr_inr]] \n\t"
-            "ld1 {v0.1d, v1.1d, v2.1d},  [%[ptr_tw]] \n\t"
-
-            "fmul %[q2_out1r].4s, v10.4s, v0.4s[0] \n\t" // RR
-            "fmul %[q2_out1i].4s, v10.4s, v0.4s[1] \n\t" // RI
-            "fmls %[q2_out1r].4s, v11.4s, v0.4s[1] \n\t" // RR - II
-            "fmla %[q2_out1i].4s, v11.4s, v0.4s[0] \n\t" // RI + IR
-
-            "fmul %[q2_out2r].4s, v12.4s, v1.4s[0] \n\t" // RR
-            "fmul %[q2_out2i].4s, v12.4s, v1.4s[1] \n\t" // RI
-            "fmls %[q2_out2r].4s, v13.4s, v1.4s[1] \n\t" // RR - II
-            "fmla %[q2_out2i].4s, v13.4s, v1.4s[0] \n\t" // RI + IR
-
-            "fmul %[q2_out3r].4s, v14.4s, v2.4s[0] \n\t" // RR
-            "fmul %[q2_out3i].4s, v14.4s, v2.4s[1] \n\t" // RI
-            "fmls %[q2_out3r].4s, v15.4s, v2.4s[1] \n\t" // RR - II
-            "fmla %[q2_out3i].4s, v15.4s, v2.4s[0] \n\t" // RI + IR
-        : [q2_out0r]"+w"(q2_out0.val[0]),
-          [q2_out0i]"+w"(q2_out0.val[1]),
-          [q2_out1r]"+w"(q2_out1.val[0]),
-          [q2_out1i]"+w"(q2_out1.val[1]),
-          [q2_out2r]"+w"(q2_out2.val[0]),
-          [q2_out2i]"+w"(q2_out2.val[1]),
-          [q2_out3r]"+w"(q2_out3.val[0]),
-          [q2_out3i]"+w"(q2_out3.val[1]),
-          [ptr_inr]"+r"(ptr_inr),
-          [ptr_ini]"+r"(ptr_ini)
-        : [offset_in]"r"(in_step * 16),
-          [ptr_tw]"r"(twiddles)
-        : "memory", "v0", "v1", "v2",
-          "v10", "v11", "v12", "v13", "v14", "v15"
-        );
-#endif // __aarch64__
-#endif // CMSIS_NE10_INLINE_ASM_OPT
 
         NE10_RADIX4x4_R2C_TW_NEON_KERNEL_S1 (q2_in, q2_out);
         NE10_RADIX4x4_R2C_TW_NEON_KERNEL_S2 (q2_out, q2_in);
@@ -645,11 +599,11 @@ static void arm_ne10_mixed_radix_r2c_butterfly_float32_neon (
     } // other stage
 }
 
-
 static void arm_ne10_mixed_radix_c2r_butterfly_float32_neon (
-    const arm_rfft_fast_instance_f32 *S,
-    const ne10_fft_cpx_float32_t * Fin,
     ne10_fft_cpx_float32_t * Fout,
+    const ne10_fft_cpx_float32_t * Fin,
+    const ne10_uint32_t * factors,
+    const ne10_fft_cpx_float32_t * twiddles,
     ne10_fft_cpx_float32_t * buffer)
 {
     (void)Fin;
@@ -660,13 +614,10 @@ static void arm_ne10_mixed_radix_c2r_butterfly_float32_neon (
     // PRINT_STAGE_INFO;
 
     // init fstride, mstride, radix, nfft
-    stage_count = S->r_factors_neon[0];
-    fstride = S->r_factors_neon[1];
-    mstride = S->r_factors_neon[3];
-    radix = S->r_factors_neon[2];
-
-    const ne10_fft_cpx_float32_t *twiddles = (const ne10_fft_cpx_float32_t *)S->r_twiddles_neon_backward;
-
+    stage_count = factors[0];
+    fstride = factors[1];
+    mstride = factors[3];
+    radix = factors[2];
 
     nfft        = radix * fstride; // not the real nfft
 
@@ -1359,7 +1310,6 @@ static void arm_ne10_radix4_r2c_with_twiddles_last_stage_other_butterfly (
          *  3I  7I  bI  fI      Q7
          */
 
-#ifndef CMSIS_NE10_INLINE_ASM_OPT
         q2_out0.val[0] = vld1q_f32 (fin_r);
         fin_r += 4;
         q2_out0.val[1] = vld1q_f32 (fin_r);
@@ -1378,57 +1328,8 @@ static void arm_ne10_radix4_r2c_with_twiddles_last_stage_other_butterfly (
         fin_r += 4;
 
         NE10_RADIX4X4C_TRANSPOSE_NEON (q2_in, q2_out);
-#else // CMSIS_NE10_INLINE_ASM_OPT
-#ifndef __aarch64__
-#error Currently, inline assembly optimizations are only available on AArch64.
-#else // __aarch64__
-        asm volatile (
-            "ld1 {v0.4s}, [%[fin_r]], 16 \n\t" // q2_in0.val[0]
-            "ld1 {v4.4s}, [%[fin_r]], 16 \n\t" // q2_in0.val[1]
-            "ld1 {v1.4s}, [%[fin_r]], 16 \n\t" // q2_in1.val[0]
-            "ld1 {v5.4s}, [%[fin_r]], 16 \n\t" // q2_in1.val[1]
-            "ld1 {v2.4s}, [%[fin_r]], 16 \n\t" // q2_in2.val[0]
-            "ld1 {v6.4s}, [%[fin_r]], 16 \n\t" // q2_in2.val[1]
-            "ld1 {v3.4s}, [%[fin_r]], 16 \n\t" // q2_in3.val[0]
-            "ld1 {v7.4s}, [%[fin_r]], 16 \n\t" // q2_in3.val[1]
-            // NE10_RADIX4X4C_TRANSPOSE_NEON (q2_in,q2_out);
-            "trn1 v8.4s, v0.4s, v1.4s \n\t"
-            "trn2 v9.4s, v0.4s, v1.4s \n\t"
-            "trn1 v10.4s, v2.4s, v3.4s \n\t"
-            "trn2 v11.4s, v2.4s, v3.4s \n\t"
 
-            "trn1 %[q2_in0r].2d, v8.2d, v10.2d \n\t"
-            "trn1 %[q2_in1r].2d, v9.2d, v11.2d \n\t"
-            "trn2 %[q2_in2r].2d, v8.2d, v10.2d \n\t"
-            "trn2 %[q2_in3r].2d, v9.2d, v11.2d \n\t"
 
-            "trn1 v8.4s, v4.4s, v5.4s \n\t"
-            "trn2 v9.4s, v4.4s, v5.4s \n\t"
-            "trn1 v10.4s, v6.4s, v7.4s \n\t"
-            "trn2 v11.4s, v6.4s, v7.4s \n\t"
-
-            "trn1 %[q2_in0i].2d, v8.2d, v10.2d \n\t"
-            "trn1 %[q2_in1i].2d, v9.2d, v11.2d \n\t"
-            "trn2 %[q2_in2i].2d, v8.2d, v10.2d \n\t"
-            "trn2 %[q2_in3i].2d, v9.2d, v11.2d \n\t"
-
-        : [q2_in0r]"+w"(q2_in0.val[0]),
-          [q2_in0i]"+w"(q2_in0.val[1]),
-          [q2_in1r]"+w"(q2_in1.val[0]),
-          [q2_in1i]"+w"(q2_in1.val[1]),
-          [q2_in2r]"+w"(q2_in2.val[0]),
-          [q2_in2i]"+w"(q2_in2.val[1]),
-          [q2_in3r]"+w"(q2_in3.val[0]),
-          [q2_in3i]"+w"(q2_in3.val[1]),
-          [fin_r]"+r"(fin_r)
-        :
-        : "memory", "v0", "v1", "v2", "v3", "v4", "v5", "v6", "v7",
-          "v8", "v9", "v10", "v11"
-        );
-#endif // __aarch64__
-#endif // CMSIS_NE10_INLINE_ASM_OPT
-
-#ifndef CMSIS_NE10_INLINE_ASM_OPT
         // Load twiddles
         q2_tw0 = vld2q_f32 (tw);
         tw += 8;
@@ -1443,53 +1344,6 @@ static void arm_ne10_radix4_r2c_with_twiddles_last_stage_other_butterfly (
         NE10_CPX_MUL_NEON_F32 (q2_out1, q2_in1, q2_tw0);
         NE10_CPX_MUL_NEON_F32 (q2_out2, q2_in2, q2_tw1);
         NE10_CPX_MUL_NEON_F32 (q2_out3, q2_in3, q2_tw2);
-#else // CMSIS_NE10_INLINE_ASM_OPT
-#ifndef __aarch64__
-#error Currently, inline assembly optimizations are only available on AArch64.
-#else // __aarch64__
-        asm volatile (
-            // Load twiddles
-            "ld2 {v0.4s, v1.4s}, [%[tw0]] \n\t" // q2_tw0
-            "ld2 {v2.4s, v3.4s}, [%[tw1]] \n\t" // q2_tw1
-            "ld2 {v4.4s, v5.4s}, [%[tw2]] \n\t" // q2_tw2
-            // tw
-            // q2_in -> q2_out
-            // NE10_CPX_MUL_NEON_F32(q2_out1,q2_in1,q2_tw0);
-            "fmul %[q2_out1r].4s, v0.4s, %[q2_in1r].4s \n\t" // RR
-            "fmul %[q2_out1i].4s, v0.4s, %[q2_in1i].4s \n\t" // RI
-            "fmls %[q2_out1r].4s, v1.4s, %[q2_in1i].4s \n\t" // RR - II
-            "fmla %[q2_out1i].4s, v1.4s, %[q2_in1r].4s \n\t" // RI + IR
-            // NE10_CPX_MUL_NEON_F32(q2_out2,q2_in2,q2_tw1);
-            "fmul %[q2_out2r].4s, v2.4s, %[q2_in2r].4s \n\t" // RR
-            "fmul %[q2_out2i].4s, v2.4s, %[q2_in2i].4s \n\t" // RI
-            "fmls %[q2_out2r].4s, v3.4s, %[q2_in2i].4s \n\t" // RR - II
-            "fmla %[q2_out2i].4s, v3.4s, %[q2_in2r].4s \n\t" // RI + IR
-            // NE10_CPX_MUL_NEON_F32(q2_out3,q2_in3,q2_tw2);
-            "fmul %[q2_out3r].4s, v4.4s, %[q2_in3r].4s \n\t" // RR
-            "fmul %[q2_out3i].4s, v4.4s, %[q2_in3i].4s \n\t" // RI
-            "fmls %[q2_out3r].4s, v5.4s, %[q2_in3i].4s \n\t" // RR - II
-            "fmla %[q2_out3i].4s, v5.4s, %[q2_in3r].4s \n\t" // RI + IR
-        : [q2_out1r]"+w"(q2_out1.val[0]),
-          [q2_out1i]"+w"(q2_out1.val[1]),
-          [q2_out2r]"+w"(q2_out2.val[0]),
-          [q2_out2i]"+w"(q2_out2.val[1]),
-          [q2_out3r]"+w"(q2_out3.val[0]),
-          [q2_out3i]"+w"(q2_out3.val[1])
-        : [tw0]"r"(tw),
-          [tw1]"r"(tw + 8),
-          [tw2]"r"(tw + 16),
-          [q2_in1r]"w"(q2_in1.val[0]),
-          [q2_in1i]"w"(q2_in1.val[1]),
-          [q2_in2r]"w"(q2_in2.val[0]),
-          [q2_in2i]"w"(q2_in2.val[1]),
-          [q2_in3r]"w"(q2_in3.val[0]),
-          [q2_in3i]"w"(q2_in3.val[1])
-        : "memory", "v0", "v1", "v2", "v3", "v4", "v5"
-        );
-        q2_out0 = q2_in0;
-        tw += 24;
-#endif // __aarch64__
-#endif // CMSIS_NE10_INLINE_ASM_OPT
 
         // butterfly
         // out -> in
@@ -1511,7 +1365,6 @@ static void arm_ne10_radix4_r2c_with_twiddles_last_stage_other_butterfly (
         q2_out3.val[1] = vnegq_f32 (q2_out3.val[1]);
         q2_out2.val[1] = vnegq_f32 (q2_out2.val[1]);
 
-#ifndef CMSIS_NE10_INLINE_ASM_OPT
         q2_out0.val[0] = vaddq_f32 (q2_in0.val[0], q2_in2.val[0]);
         q2_out0.val[1] = vaddq_f32 (q2_in0.val[1], q2_in2.val[1]);
 
@@ -1529,50 +1382,6 @@ static void arm_ne10_radix4_r2c_with_twiddles_last_stage_other_butterfly (
         vst2q_f32 (fout_r + (nfft >> 1), q2_out1);
         vst2q_f32 (fout_b + (nfft >> 1), q2_out3);
         vst2q_f32 (fout_b + nfft, q2_out2);
-#else // CMSIS_NE10_INLINE_ASM_OPT
-#ifndef __aarch64__
-#error Currently, inline assembly optimizations are only available on AArch64.
-#else // __aarch64__
-        asm volatile (
-            "fadd v0.4s, %[q2_in0r].4s, %[q2_in2r].4s \n\t"
-            "fadd v1.4s, %[q2_in0i].4s, %[q2_in2i].4s \n\t"
-            "fadd v2.4s, %[q2_in1r].4s, %[q2_in3i].4s \n\t"
-            "fsub v3.4s, %[q2_in1i].4s, %[q2_in3r].4s \n\t"
-            // reverse -- CONJ
-            "rev64 %[q2_in2r].4s, %[q2_out2r].4s \n\t"
-            "rev64 %[q2_in2i].4s, %[q2_out2i].4s \n\t"
-            "rev64 %[q2_in3r].4s, %[q2_out3r].4s \n\t"
-            "rev64 %[q2_in3i].4s, %[q2_out3i].4s \n\t"
-            "ext v4.16b, %[q2_in2r].16b, %[q2_in2r].16b, #8 \n\t"
-            "ext v5.16b, %[q2_in2i].16b, %[q2_in2i].16b, #8 \n\t"
-            "ext v6.16b, %[q2_in3r].16b, %[q2_in3r].16b, #8 \n\t"
-            "ext v7.16b, %[q2_in3i].16b, %[q2_in3i].16b, #8 \n\t"
-            // store
-            "st2 {v0.4s, v1.4s}, [%[fout0]] \n\t"
-            "st2 {v2.4s, v3.4s}, [%[fout1]] \n\t"
-            "st2 {v4.4s, v5.4s}, [%[fout2]] \n\t"
-            "st2 {v6.4s, v7.4s}, [%[fout3]] \n\t"
-        :
-        : [fout0]"r"(fout_r),
-          [fout1]"r"(fout_r + (nfft>>1)),
-          [fout2]"r"(fout_b + nfft),
-          [fout3]"r"(fout_b + (nfft>>1)),
-          [q2_out2r]"w"(q2_out2.val[0]),
-          [q2_out2i]"w"(q2_out2.val[1]),
-          [q2_out3r]"w"(q2_out3.val[0]),
-          [q2_out3i]"w"(q2_out3.val[1]),
-          [q2_in0r]"w"(q2_in0.val[0]),
-          [q2_in0i]"w"(q2_in0.val[1]),
-          [q2_in1r]"w"(q2_in1.val[0]),
-          [q2_in1i]"w"(q2_in1.val[1]),
-          [q2_in2r]"w"(q2_in2.val[0]),
-          [q2_in2i]"w"(q2_in2.val[1]),
-          [q2_in3r]"w"(q2_in3.val[0]),
-          [q2_in3i]"w"(q2_in3.val[1])
-        : "memory", "v0", "v1", "v2", "v3", "v4", "v5", "v6", "v7"
-        );
-#endif // __aarch64__
-#endif // CMSIS_NE10_INLINE_ASM_OPT
 
         fout_r += 8;
         fout_b -= 8;
@@ -1764,7 +1573,6 @@ void arm_ne10_fft_r2c_1d_float32_neon (
 
 }
 
-
 /**
  * @ingroup R2C_FFT_IFFT
  * Specific implementation of @ref ne10_fft_c2r_1d_float32 using NEON SIMD capabilities.
@@ -1784,43 +1592,18 @@ void arm_ne10_fft_c2r_1d_float32_neon (
     ne10_int32_t stage_count;
     ne10_int32_t radix;
 
-#if 0
-    switch (cfg->nfft)
+
+    stage_count = S->r_factors_neon[0];
+    radix       = S->r_factors_neon[  stage_count << 1 ];
+    if (radix==2)
     {
-        case 2:
-            fin[0].i = fin[0].r;
-            fin[0].r = 0.0f;
-            ne10_radix2_c2r_c  ( (CPLX*) fout, (const CPLX*) &fin[0].i);
-            fin[0].r = fin[0].i;
-            break;
-        case 4:
-            fin[0].i = fin[0].r;
-            fin[0].r = 0.0f;
-            ne10_radix4_c2r_c  ( (CPLX*) fout, (const CPLX*) &fin[0].i, 1, 1, 4);
-            fin[0].r = fin[0].i;
-            break;
-        case 8:
-            fin[0].i = fin[0].r;
-            fin[0].r = 0.0f;
-            ne10_radix8_c2r_c  ( (CPLX*) fout, (const CPLX*) &fin[0].i, 1, 1, 8);
-            fin[0].r = fin[0].i;
-            break;
-        default:
-#endif
-            stage_count = S->r_factors_neon[0];
-            radix       = S->r_factors_neon[  stage_count << 1 ];
-            if (radix==2)
-            {
-                stage_count --;
-            }
-            fin[0].i = fin[S->nfft>>1].r;
-            fout_c = (stage_count % 2==1) ? tmpbuf : (CPLX*)fout;
-            arm_ne10_radix4_c2r_with_twiddles_first_stage( (CPLX*) fout_c, fin, (const CPLX*)S->r_super_twiddles_neon, S->nfft);
-            arm_ne10_mixed_radix_c2r_butterfly_float32_neon (S, (CPLX*) NULL, (CPLX*) fout,(CPLX*)tmpbuf);
-#if 0
-            break;
+        stage_count --;
     }
-#endif
-    fin[0].i = 0.0f;
+    //fin[0].i = fin[S->nfft>>1].r;
+    fout_c = (stage_count % 2==1) ? tmpbuf : (CPLX*)fout;
+    arm_ne10_radix4_c2r_with_twiddles_first_stage( (CPLX*) fout_c, fin, (const CPLX*)S->r_super_twiddles_neon, S->nfft);
+    arm_ne10_mixed_radix_c2r_butterfly_float32_neon ((CPLX*) fout,(CPLX*) NULL, S->r_factors_neon, (const CPLX*)S->r_twiddles_neon_backward,(CPLX*)tmpbuf);
+
+    //fin[0].i = 0.0f;
 }
 
