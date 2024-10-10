@@ -143,10 +143,6 @@ if (NEON OR NEONEXPERIMENTAL)
     if (NEON_RIFFT_SCALING)
         target_compile_definitions(CMSISDSP PRIVATE CMSIS_NE10_DSP_RIFFT_SCALING)  
     endif()
-
-    if (NEON_ARM_FFT_INLINE_ASM)
-        target_compile_definitions(CMSISDSP PRIVATE CMSIS_NE10_INLINE_ASM_OPT)  
-    endif()
 endif()
 
 

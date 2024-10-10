@@ -57,8 +57,8 @@
   S->r_twiddles_neon = arm_neon_rfft_twiddles_neon_##LEN##_f32;                                     \
   S->r_factors_neon = arm_neon_rfft_factors_neon_##LEN##_f32;                                       \
                                                                                                     \
-  S->r_twiddles_backward = S->r_twiddles + ARM_NE10_OFFSET_BACKWARD_TWID_##LEN##_F32;               \
-  S->r_twiddles_neon_backward = S->r_twiddles_neon + ARM_NE10_OFFSET_BACKWARD_TWID_NEON_##LEN##_F32;\
+  S->r_twiddles_backward = S->r_twiddles + 2*ARM_NE10_OFFSET_BACKWARD_TWID_##LEN##_F32;               \
+  S->r_twiddles_neon_backward = S->r_twiddles_neon + 2*ARM_NE10_OFFSET_BACKWARD_TWID_NEON_##LEN##_F32;\
                                                                                                     \
   S->r_super_twiddles_neon = arm_neon_rfft_super_twiddles_neon_##LEN##_f32;
 
