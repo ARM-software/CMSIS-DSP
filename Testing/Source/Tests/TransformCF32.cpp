@@ -12,17 +12,26 @@
        float32_t *infftp = inputfft.ptr();
 
        float32_t *outfftp = outputfft.ptr();
+       float32_t *bufferp = bufferfft.ptr();
 
         memcpy(infftp,inp,sizeof(float32_t)*input.nbSamples());
 
         ASSERT_TRUE(status == ARM_MATH_SUCCESS);
    
+#if defined(ARM_MATH_NEON)
+        arm_cfft_f32(
+             &(this->varInstCfftF32),
+             infftp,
+             outfftp,
+             bufferp,
+             this->ifft);
+#else
         arm_cfft_f32(
              &(this->varInstCfftF32),
              infftp,
              outfftp,
              this->ifft);
-       
+#endif
 
           
         ASSERT_SNR(outputfft,ref,(float32_t)SNR_THRESHOLD);
@@ -473,7 +482,8 @@
        inputfft.create(ref.nbSamples(),TransformCF32::OUTPUT_CFFT_F32_ID,mgr);
 
        outputfft.create(ref.nbSamples(),TransformCF32::OUTPUT_CFFT_F32_ID,mgr);
-       
+       bufferfft.create(ref.nbSamples(),TransformCF32::OUTPUT_CFFT_F32_ID,mgr);
+
 
     }
 

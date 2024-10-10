@@ -15,14 +15,24 @@
        float32_t *tmp = inputchanged.ptr();
 
        float32_t *outp = outputfft.ptr();
+       float32_t *bufp = bufferfft.ptr();
 
        memcpy(tmp,inp,sizeof(float32_t)*input.nbSamples());
    
+#if defined(ARM_MATH_NEON)
+        arm_rfft_fast_f32(
+             &this->instRfftF32,
+             tmp,
+             outp,
+             bufp,
+             this->ifft);
+#else
         arm_rfft_fast_f32(
              &this->instRfftF32,
              tmp,
              outp,
              this->ifft);
+#endif
           
         ASSERT_SNR(outputfft,ref,(float32_t)SNR_THRESHOLD);
         ASSERT_EMPTY_TAIL(outputfft);
@@ -462,7 +472,8 @@
 
        
       outputfft.create(ref.nbSamples(),TransformRF32::OUTPUT_RFFT_F32_ID,mgr);
-       
+      bufferfft.create(ref.nbSamples(),TransformRF32::OUTPUT_RFFT_F32_ID,mgr);
+
 
     }
 
