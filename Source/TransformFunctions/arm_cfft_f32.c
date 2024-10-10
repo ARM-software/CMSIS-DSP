@@ -798,6 +798,26 @@ extern void arm_bitreversal_32(
                      }
   @endcode
 
+  @par Neon version
+                     The neon version has a different API.
+                     The input and output buffers must be
+                     different.
+                     There is an optional temporary buffer.
+                     If the temporary buffer is not used, the
+                     input buffer is modified.
+                     The temporary buffer has same size as
+                     input or output buffer.
+                     The bit reverse flag is not more 
+                     available in Neon version.
+
+  @code
+        void arm_cfft_f32(
+                const arm_cfft_instance_f32 * S,
+                      float32_t * pIn,
+                      float32_t * pOut,
+                      float32_t * pBuffer, 
+                      uint8_t ifftFlag);
+  @endcode
  */
 
 static void arm_cfft_radix8by2_f32 (arm_cfft_instance_f32 * S, float32_t * p1)

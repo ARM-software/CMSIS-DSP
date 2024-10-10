@@ -575,6 +575,27 @@ static void merge_rfft_f32(
 @par
                    Note that with MVE versions you can't initialize instance structures directly and **must
                    use the initialization function**.
+
+ @par Neon version
+                     The neon version has a different API.
+                     The input and output buffers must be
+                     different.
+                     There is a temporary buffer that is not optional.
+                     
+                     The bit reverse flag is not more 
+                     available in Neon version.
+
+                     The size of the temporary buffer is
+                     fftSize float.
+
+  @code
+        void arm_rfft_fast_f32(
+                const arm_rfft_fast_instance_f32 * S,
+                float32_t * p, 
+                float32_t * pOut,
+                float32_t *tmpbuf,
+                uint8_t ifftFlag);
+  @endcode
  */
 
 /**
