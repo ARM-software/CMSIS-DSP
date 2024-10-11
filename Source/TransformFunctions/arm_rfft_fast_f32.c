@@ -618,6 +618,29 @@ static void merge_rfft_f32(
   @param[in]     ifftFlag
                    - value = 0: RFFT
                    - value = 1: RIFFT
+
+  @par Neon version
+                     The neon version has a different API.
+                     The input and output buffers must be
+                     different.
+                     There is a temporary buffer that is not optional.
+  @par
+                     The bit reverse flag is not more 
+                     available in Neon version.
+
+  @par
+                     The size of the temporary buffer is
+                     fftSize float.
+
+  @par
+   @code
+        void arm_rfft_fast_f32(
+                const arm_rfft_fast_instance_f32 * S,
+                float32_t * p, 
+                float32_t * pOut,
+                float32_t *tmpbuf,
+                uint8_t ifftFlag);
+  @endcode
 */
 
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)

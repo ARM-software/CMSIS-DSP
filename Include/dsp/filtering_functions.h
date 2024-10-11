@@ -1255,7 +1255,7 @@ arm_status arm_fir_decimate_init_f32(
         uint32_t blockSize);
 
 
-#if defined(ARM_MATH_NEON) 
+#if defined(ARM_MATH_NEON) || defined(DOXYGEN)
 /**
   @brief         Compute new coefficient arrays for use in vectorized filter (Neon only).
   @param[in]     numStages         number of 2nd order stages in the filter.
