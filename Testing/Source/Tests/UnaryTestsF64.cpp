@@ -337,7 +337,7 @@ void UnaryTestsF64::test_mat_trans_f64()
 
       ASSERT_EMPTY_TAIL(output);
 
-      ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
+      ASSERT_SNR(output,ref,SNR_THRESHOLD);
 
       ASSERT_CLOSE_ERROR(output,ref,ABS_ERROR,REL_ERROR);
 

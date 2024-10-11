@@ -905,12 +905,22 @@ arm_status arm_mfcc_init_f32(
   @param[out]     pDst  points to the output MFCC values
   @param[inout]     pTmp  points to a temporary buffer of complex
  */
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+void arm_mfcc_f32(
+  const arm_mfcc_instance_f32 * S,
+  float32_t *pSrc,
+  float32_t *pDst,
+  float32_t *pTmp,
+  float32_t *pTmp2
+  );
+#else
   void arm_mfcc_f32(
   const arm_mfcc_instance_f32 * S,
   float32_t *pSrc,
   float32_t *pDst,
   float32_t *pTmp
   );
+#endif
 
  /**
    * @brief Instance structure for the Q31 MFCC function.

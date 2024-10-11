@@ -190,6 +190,7 @@ You need the following folders:
 * Include
 * PrivateInclude
 * ComputeLibrary (only if you target Neon)
+* Ne10 (only if you target Neon)
 
 In `Source` subfolders, you may either build all of the source file with a datatype suffix (like `_f32.c`), or just compile the files without a datatype suffix. For instance for `BasicMathFunctions`, you can build all the C files except `BasicMathFunctions.c` and `BasicMathFunctionsF16.c`, or you can just build those two files (they are including all of the other C files of the folder).
 
@@ -226,6 +227,9 @@ Some APIs are a different on Neon:
 
 * Biquad f32 initialization is done differently
 * CFFT and RFFT F32 have different APIs. They are no more in-place and require use of an additional temporary buffer
+* MFCC F32 requires the use of a second temporary buffer
+
+See the Doxygen documentation for the size of those additional buffers. You can also look at the tests in `Testing/Source/Tests` to see how to use the functions.
 
 ## Code size
 
