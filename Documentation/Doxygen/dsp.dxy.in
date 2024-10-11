@@ -2431,7 +2431,7 @@ INCLUDE_FILE_PATTERNS  =
 # recursively expanded use the := operator instead of the = operator.
 # This tag requires that the tag ENABLE_PREPROCESSING is set to YES.
 
-PREDEFINED             = DOXYGEN ARM_DSP_ATTRIBUTE= ARM_DSP_TABLE_ATTRIBUTE= HAS_VECTOR HAS_PREDICATED_LOOP ARM_MATH_NEON=1 ARM_FLOAT16_SUPPORTED=1 __STATIC_FORCEINLINE= __ALIGNED(x)=
+PREDEFINED             = DOXYGEN ARM_DSP_ATTRIBUTE= ARM_DSP_TABLE_ATTRIBUTE= HAS_VECTOR HAS_PREDICATED_LOOP  ARM_FLOAT16_SUPPORTED=1 __STATIC_FORCEINLINE= __ALIGNED(x)=
 
 # If the MACRO_EXPANSION and EXPAND_ONLY_PREDEF tags are set to YES then this
 # tag can be used to specify a list of macro names that should be expanded. The

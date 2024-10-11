@@ -1192,6 +1192,28 @@ static void arm_cfft_radix8by4_f32 (arm_cfft_instance_f32 * S, float32_t * p1)
   @param[in]     bitReverseFlag flag that enables / disables bit reversal of output
                    - value = 0: disables bit reversal of output
                    - value = 1: enables bit reversal of output
+  @par Neon version
+                     The neon version has a different API.
+                     The input and output buffers must be
+                     different.
+                     There is an optional temporary buffer.
+                     If the temporary buffer is not used, the
+                     input buffer is modified.
+                     The temporary buffer has same size as
+                     input or output buffer.
+                     The bit reverse flag is not more 
+                     available in Neon version.
+
+  @par
+   @code
+        void arm_cfft_f32(
+                const arm_cfft_instance_f32 * S,
+                      float32_t * pIn,
+                      float32_t * pOut,
+                      float32_t * pBuffer, 
+                      uint8_t ifftFlag);
+  @endcode
+
  */
 
 ARM_DSP_ATTRIBUTE void arm_cfft_f32(
