@@ -252,6 +252,14 @@ void arm_cfft_q15(
   /**
    * @brief Instance structure for the fixed-point CFFT/CIFFT function.
    */
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+typedef struct
+{
+          uint16_t fftLen;                   /**< length of the FFT. */
+    const q31_t *pTwiddle;         /**< points to the Twiddle factor table. */
+    const uint32_t *factors;
+} arm_cfft_instance_q31;
+#else
   typedef struct
   {
           uint16_t fftLen;                   /**< length of the FFT. */
@@ -267,6 +275,7 @@ void arm_cfft_q15(
    const q31_t *rearranged_twiddle_stride3;
 #endif
   } arm_cfft_instance_q31;
+#endif 
 
 arm_status arm_cfft_init_4096_q31(arm_cfft_instance_q31 * S);
 arm_status arm_cfft_init_2048_q31(arm_cfft_instance_q31 * S);
@@ -282,11 +291,20 @@ arm_status arm_cfft_init_q31(
   arm_cfft_instance_q31 * S,
   uint16_t fftLen);
 
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+void arm_cfft_q31(
+    const arm_cfft_instance_q31 * S,
+          q31_t * src,
+          q31_t * dst,
+          uint8_t ifftFlag,
+          q31_t * buffer);
+#else
 void arm_cfft_q31(
     const arm_cfft_instance_q31 * S,
           q31_t * p1,
           uint8_t ifftFlag,
           uint8_t bitReverseFlag);
+#endif
 
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 typedef struct
@@ -458,6 +476,16 @@ arm_status arm_rfft_init_8192_q15(
   /**
    * @brief Instance structure for the Q31 RFFT/RIFFT function.
    */
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+  typedef struct
+  {
+    uint16_t nfft;
+    uint16_t ncfft;
+    uint32_t *factors;
+    const q31_t *twiddles;
+    const q31_t *super_twiddles;
+  } arm_rfft_instance_q31;
+#else
   typedef struct
   {
           uint32_t fftLenReal;                        /**< length of the real FFT. */
@@ -472,6 +500,7 @@ arm_status arm_rfft_init_8192_q15(
     const arm_cfft_instance_q31 *pCfft;         /**< points to the complex FFT instance. */
 #endif
   } arm_rfft_instance_q31;
+#endif 
 
   arm_status arm_rfft_init_32_q31(
         arm_rfft_instance_q31 * S,

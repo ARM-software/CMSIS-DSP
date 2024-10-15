@@ -93,7 +93,7 @@ def printCFloat16Array(f,name,arr):
 
 def printCQ31Array(f,name,arr):
     nb = 0
-    print(f"const q31_t {name}[{name.upper()}_LEN]={{",file=f)
+    print(f"__ALIGNED(16) const q31_t {name}[{name.upper()}_LEN]={{",file=f)
 
     for d in arr:
         val = "%s," % Tools.to_q31(d)
@@ -231,7 +231,7 @@ def gen_transposed_coefs(twiddles,idx,mstride,fstride,radix,nfft):
             twiddles[idx + (radix - 1) * j + k - 1]= complex(f32(math.cos(phase)) , f32(math.sin(phase)))
 
 
-def genTwiddles(f,nfft,transposed=False):
+def genTwiddles(theType,f,nfft,transposed=False):
     if transposed:
         gen = gen_transposed_coefs
     else:
@@ -242,7 +242,8 @@ def genTwiddles(f,nfft,transposed=False):
     idx = 0;
     fstride = f["f_stride"]
     if cur_radix % 2 != 0:
-        twiddles[0] = 1
+        if theType == F32:
+           twiddles[0] = 1
         idx = idx + 1
         gen(twiddles,idx,1, fstride, cur_radix, nfft)
         idx = idx + (cur_radix - 1)
@@ -257,7 +258,7 @@ def genTwiddles(f,nfft,transposed=False):
 
     return idx,twiddles[:idx]
 
-def superTwiddle(nfft):
+def superTwiddle(theType,nfft):
     maxidx = 0
     twiddles = np.zeros((nfft//32)*3*4+12,dtype=complex)
     for i in range(1,4):
@@ -302,16 +303,16 @@ def c_to_r(t):
     twiddles[1::2] = t.imag
     return list(twiddles)
 
-def computeRFFTArrays(nfft):
+def computeRFFTArrays(theType,nfft):
     r_factors = factors(nfft)
-    offset_twid,r_twiddles = genTwiddles(r_factors,nfft)
+    offset_twid,r_twiddles = genTwiddles(theType,r_factors,nfft)
     #print(r_factors)
 
     r_factors_neon = factors(nfft//4)
-    offset_twid_neon,r_twiddles_neon = genTwiddles(r_factors_neon,nfft//4,transposed=True)
+    offset_twid_neon,r_twiddles_neon = genTwiddles(theType,r_factors_neon,nfft//4,transposed=True)
     #print(r_twiddles_neon)
     #print(r_factors_neon)
-    r_super_twiddles_neon = superTwiddle(nfft)
+    r_super_twiddles_neon = superTwiddle(theType,nfft)
     #print(r_super_twiddles_neon)
     return {
        "r_factors":factor_desc(r_factors),
@@ -325,15 +326,19 @@ def computeRFFTArrays(nfft):
     
     
 
-def computeCFFTArrays(nfft):
+def computeCFFTArrays(theType,nfft):
     f = factors(nfft // NE10_FFT_PARA_LEVEL)
     f["stage_count"] = f["stage_count"] + 1 
     f["f_stride"] = 4*f["f_stride"]
     f["factors"] = [{"f":4,"n":nfft// NE10_FFT_PARA_LEVEL}] + f["factors"]
 
-    offset,c_twiddles = genTwiddles(f,nfft)
+    offset,c_twiddles = genTwiddles(theType,f,nfft)
 
-    return(factor_desc(f),c_to_r(c_twiddles))
+    return{
+      "factors":factor_desc(f),
+      "twiddles":c_to_r(c_twiddles),
+      "offset":offset
+    }
 
 #def test(nfft):
 #    f = factors(nfft // NE10_FFT_PARA_LEVEL)
@@ -385,7 +390,7 @@ def write_factors(theType,name,n,f,h,factors):
 
 def neonRFFTTwiddle(theType,f,h,n):
     
-    rfft = computeRFFTArrays(n)
+    rfft = computeRFFTArrays(theType,n)
 
     
     write_twiddles(theType,"rfft_twiddles",n,f,h,rfft["r_twiddles"])
@@ -402,13 +407,15 @@ def neonRFFTTwiddle(theType,f,h,n):
 
 def neonCFFTTwiddle(theType,conjugate,f,h,n):
     
-    factors, twiddles = computeCFFTArrays(n)
+    r = computeCFFTArrays(theType,n)
 
-    
-
+    factors = r["factors"]
+    twiddles = r["twiddles"]
+    offset = r["offset"]
     
     write_twiddles(theType,"twiddles",n,f,h,twiddles)
     write_factors(theType,"factors",n,f,h,factors)
+    write_const(theType,h,n,"ARM_NE10_OFFSET_BACKWARD_TWID",offset)
    
    
 #test = twiddle(16)

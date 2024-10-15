@@ -46,38 +46,47 @@ extern "C"
 extern const float16_t arm_neon_twiddles_16_f16[ARM_NEON_TWIDDLES_16_F16_LEN];
 #define ARM_NEON_FACTORS_16_F16_LEN 4
 extern const uint32_t arm_neon_factors_16_f16[ARM_NEON_FACTORS_16_F16_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_16_F16 12
 #define ARM_NEON_TWIDDLES_32_F16_LEN 48
 extern const float16_t arm_neon_twiddles_32_f16[ARM_NEON_TWIDDLES_32_F16_LEN];
 #define ARM_NEON_FACTORS_32_F16_LEN 4
 extern const uint32_t arm_neon_factors_32_f16[ARM_NEON_FACTORS_32_F16_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_32_F16 24
 #define ARM_NEON_TWIDDLES_64_F16_LEN 120
 extern const float16_t arm_neon_twiddles_64_f16[ARM_NEON_TWIDDLES_64_F16_LEN];
 #define ARM_NEON_FACTORS_64_F16_LEN 4
 extern const uint32_t arm_neon_factors_64_f16[ARM_NEON_FACTORS_64_F16_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_64_F16 60
 #define ARM_NEON_TWIDDLES_128_F16_LEN 240
 extern const float16_t arm_neon_twiddles_128_f16[ARM_NEON_TWIDDLES_128_F16_LEN];
 #define ARM_NEON_FACTORS_128_F16_LEN 4
 extern const uint32_t arm_neon_factors_128_f16[ARM_NEON_FACTORS_128_F16_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_128_F16 120
 #define ARM_NEON_TWIDDLES_256_F16_LEN 504
 extern const float16_t arm_neon_twiddles_256_f16[ARM_NEON_TWIDDLES_256_F16_LEN];
 #define ARM_NEON_FACTORS_256_F16_LEN 4
 extern const uint32_t arm_neon_factors_256_f16[ARM_NEON_FACTORS_256_F16_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_256_F16 252
 #define ARM_NEON_TWIDDLES_512_F16_LEN 1008
 extern const float16_t arm_neon_twiddles_512_f16[ARM_NEON_TWIDDLES_512_F16_LEN];
 #define ARM_NEON_FACTORS_512_F16_LEN 4
 extern const uint32_t arm_neon_factors_512_f16[ARM_NEON_FACTORS_512_F16_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_512_F16 504
 #define ARM_NEON_TWIDDLES_1024_F16_LEN 2040
 extern const float16_t arm_neon_twiddles_1024_f16[ARM_NEON_TWIDDLES_1024_F16_LEN];
 #define ARM_NEON_FACTORS_1024_F16_LEN 4
 extern const uint32_t arm_neon_factors_1024_f16[ARM_NEON_FACTORS_1024_F16_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_1024_F16 1020
 #define ARM_NEON_TWIDDLES_2048_F16_LEN 4080
 extern const float16_t arm_neon_twiddles_2048_f16[ARM_NEON_TWIDDLES_2048_F16_LEN];
 #define ARM_NEON_FACTORS_2048_F16_LEN 4
 extern const uint32_t arm_neon_factors_2048_f16[ARM_NEON_FACTORS_2048_F16_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_2048_F16 2040
 #define ARM_NEON_TWIDDLES_4096_F16_LEN 8184
 extern const float16_t arm_neon_twiddles_4096_f16[ARM_NEON_TWIDDLES_4096_F16_LEN];
 #define ARM_NEON_FACTORS_4096_F16_LEN 4
 extern const uint32_t arm_neon_factors_4096_f16[ARM_NEON_FACTORS_4096_F16_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_4096_F16 4092
 
 
 #endif /* defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE) */

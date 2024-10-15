@@ -97,7 +97,20 @@ ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_##LEN##_q31(                         
     return (status);                                                 \
 }
 
+#elif defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 
+#include "arm_neon_tables.h"
+
+#define CFFTINIT_Q31(LEN,LENTWIDDLE)                   \
+ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_##LEN##_q31(\
+  arm_cfft_instance_q31 * S)                           \
+{                                                      \
+     arm_status status = ARM_MATH_SUCCESS;             \
+     S->pTwiddle = arm_neon_twiddles_##LEN##_q31;      \
+     S->factors=arm_neon_factors_##LEN##_q31;          \
+     S->fftLen = LEN;                                  \
+    return (status);                                   \
+}
 
 #else
 
