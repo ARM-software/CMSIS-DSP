@@ -75,6 +75,24 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_##LEN##_q31( arm_rfft_instance_q31 * 
     /* return the status of RFFT Init function */                 \
     return (status);                                              \
 }
+#elif defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#define RFFTINIT_Q31(LEN,CFFTLEN,TWIDMOD)                         \
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_##LEN##_q31( arm_rfft_instance_q31 * S,\
+    uint32_t ifftFlagR,                                                           \
+    uint32_t bitReverseFlag )                                                     \
+{                                                                                 \
+    /*  Initialise the default arm status */                                      \
+    arm_status status = ARM_MATH_ARGUMENT_ERROR;                                  \
+    (void)S;                                                                      \
+    (void)ifftFlagR;                                                               \
+    (void)bitReverseFlag;                                                         \
+                                                                                  \
+    /* return the status of RFFT Init function */                                 \
+    return (status);                                                              \
+}
+#include "arm_neon_tables.h"
+
+
 #else
 #define RFFTINIT_Q31(LEN,CFFTLEN,TWIDMOD)                         \
 ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_##LEN##_q31( arm_rfft_instance_q31 * S,  \

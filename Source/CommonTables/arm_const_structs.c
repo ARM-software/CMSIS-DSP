@@ -117,7 +117,7 @@ const arm_cfft_instance_f32 arm_cfft_sR_f32_len4096 ARM_DSP_TABLE_ATTRIBUTE = {
 
 /* Fixed-point structs */
 
-#if !defined(ARM_MATH_MVEI) || defined(ARM_MATH_AUTOVECTORIZE)
+#if (!defined(ARM_MATH_MVEI) && !defined(ARM_MATH_NEON)) || defined(ARM_MATH_AUTOVECTORIZE)
 
 /* 
 
@@ -312,7 +312,7 @@ const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len4096 ARM_DSP_TABLE_ATTR
 /* Fixed-point structs */
 /* q31_t */
 
-#if !defined(ARM_MATH_MVEI) || defined(ARM_MATH_AUTOVECTORIZE)
+#if (!defined(ARM_MATH_MVEI) && !defined(ARM_MATH_NEON)) || defined(ARM_MATH_AUTOVECTORIZE)
 
 /* 
 

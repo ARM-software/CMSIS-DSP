@@ -615,6 +615,7 @@ ARM_DSP_ATTRIBUTE void arm_cfft_q31(
 }
 #else
 
+#if !defined(ARM_MATH_NEON) || defined(ARM_MATH_AUTOVECTORIZE)
 extern void arm_radix4_butterfly_q31(
         q31_t * pSrc,
         uint32_t fftLen,
@@ -641,7 +642,7 @@ ARM_DSP_ATTRIBUTE void arm_cfft_radix4by2_inverse_q31(
         q31_t * pSrc,
         uint32_t fftLen,
   const q31_t * pCoef);
-
+#endif
 
 /**
   @addtogroup ComplexFFTQ31
@@ -659,6 +660,21 @@ ARM_DSP_ATTRIBUTE void arm_cfft_radix4by2_inverse_q31(
                    - value = 0: disables bit reversal of output
                    - value = 1: enables bit reversal of output
  */
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#include "CMSIS_NE10_types.h"
+#include "CMSIS_NE10_fft.h"
+
+ARM_DSP_ATTRIBUTE void arm_cfft_q31(
+  const arm_cfft_instance_q31 * S,
+        q31_t * src,
+        q31_t * dst,
+        uint8_t ifftFlag,
+        q31_t *buffer)
+{
+   arm_ne10_fft_c2c_1d_int32_neon (dst,src,S,ifftFlag,1,buffer);
+}
+
+#else
 ARM_DSP_ATTRIBUTE void arm_cfft_q31(
   const arm_cfft_instance_q31 * S,
         q31_t * p1,
@@ -711,11 +727,13 @@ ARM_DSP_ATTRIBUTE void arm_cfft_q31(
   if ( bitReverseFlag )
     arm_bitreversal_32 ((uint32_t*) p1, S->bitRevLength, S->pBitRevTable);
 }
+#endif
 
 /**
   @} end of ComplexFFTQ31 group
  */
 
+#if !defined(ARM_MATH_NEON) || defined(ARM_MATH_AUTOVECTORIZE)
 ARM_DSP_ATTRIBUTE void arm_cfft_radix4by2_q31(
         q31_t * pSrc,
         uint32_t fftLen,
@@ -835,4 +853,5 @@ ARM_DSP_ATTRIBUTE void arm_cfft_radix4by2_inverse_q31(
      pSrc[4 * i + 3] = yt;
   }
 }
+#endif /* defined NEON */
 #endif /* defined(ARM_MATH_MVEI) */

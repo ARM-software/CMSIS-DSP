@@ -32,6 +32,7 @@
  * Internal functions prototypes
  * -------------------------------------------------------------------- */
 
+#if !defined(ARM_MATH_NEON) || defined(ARM_MATH_AUTOVECTORIZE)
 ARM_DSP_ATTRIBUTE void arm_split_rfft_q31(
         q31_t * pSrc,
         uint32_t fftLen,
@@ -47,7 +48,7 @@ ARM_DSP_ATTRIBUTE void arm_split_rifft_q31(
   const q31_t * pBTable,
         q31_t * pDst,
         uint32_t modifier);
-
+#endif
 /**
   @addtogroup RealFFTQ31
   @{
@@ -102,6 +103,17 @@ ARM_DSP_ATTRIBUTE void arm_split_rifft_q31(
                    
  */
 
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+ARM_DSP_ATTRIBUTE void arm_rfft_q31(
+  const arm_rfft_instance_q31 * S,
+        q31_t * pSrc,
+        q31_t * pDst)
+{
+    (void)S;
+    (void)pSrc;
+    (void)pDst;
+}
+#else
 ARM_DSP_ATTRIBUTE void arm_rfft_q31(
   const arm_rfft_instance_q31 * S,
         q31_t * pSrc,
@@ -138,6 +150,7 @@ ARM_DSP_ATTRIBUTE void arm_rfft_q31(
 
 }
 
+#endif
 /**
   @} end of RealFFTQ31 group
  */
@@ -212,7 +225,7 @@ ARM_DSP_ATTRIBUTE void arm_split_rfft_q31(
     pDst[0] = (pSrc[0] + pSrc[1]) >> 1U;
     pDst[1] = 0;
 }
-#else
+#elif !defined(ARM_MATH_NEON) || defined(ARM_MATH_AUTOVECTORIZE)
 ARM_DSP_ATTRIBUTE void arm_split_rfft_q31(
         q31_t * pSrc,
         uint32_t fftLen,
@@ -361,7 +374,7 @@ ARM_DSP_ATTRIBUTE void arm_split_rifft_q31(
         i -= 1;
     }
 }
-#else
+#elif !defined(ARM_MATH_NEON) || defined(ARM_MATH_AUTOVECTORIZE)
 ARM_DSP_ATTRIBUTE void arm_split_rifft_q31(
         q31_t * pSrc,
         uint32_t fftLen,
