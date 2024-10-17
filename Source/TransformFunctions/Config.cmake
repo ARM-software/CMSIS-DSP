@@ -41,16 +41,9 @@ target_sources(CMSISDSP PRIVATE TransformFunctions/arm_cfft_q31.c)
 target_sources(CMSISDSP PRIVATE TransformFunctions/arm_cfft_init_q31.c)
 
 
-target_sources(CMSISDSP PRIVATE TransformFunctions/arm_dct4_f32.c)
-target_sources(CMSISDSP PRIVATE TransformFunctions/arm_dct4_init_f32.c)
 
-target_sources(CMSISDSP PRIVATE TransformFunctions/arm_rfft_init_f32.c)
-target_sources(CMSISDSP PRIVATE TransformFunctions/arm_rfft_f32.c)
 target_sources(CMSISDSP PRIVATE TransformFunctions/arm_cfft_radix4_init_f32.c)
 target_sources(CMSISDSP PRIVATE TransformFunctions/arm_cfft_radix4_f32.c)
-
-target_sources(CMSISDSP PRIVATE TransformFunctions/arm_dct4_q31.c)
-target_sources(CMSISDSP PRIVATE TransformFunctions/arm_dct4_init_q31.c)
 
 target_sources(CMSISDSP PRIVATE TransformFunctions/arm_rfft_init_q31.c)
 target_sources(CMSISDSP PRIVATE TransformFunctions/arm_rfft_q31.c)
@@ -58,9 +51,6 @@ target_sources(CMSISDSP PRIVATE TransformFunctions/arm_cfft_q31.c)
 target_sources(CMSISDSP PRIVATE TransformFunctions/arm_cfft_init_q31.c)
 target_sources(CMSISDSP PRIVATE TransformFunctions/arm_cfft_radix4_init_q31.c)
 target_sources(CMSISDSP PRIVATE TransformFunctions/arm_cfft_radix4_q31.c)
-
-target_sources(CMSISDSP PRIVATE TransformFunctions/arm_dct4_init_q15.c)
-target_sources(CMSISDSP PRIVATE TransformFunctions/arm_dct4_q15.c)
 
 target_sources(CMSISDSP PRIVATE TransformFunctions/arm_rfft_init_q15.c)
 target_sources(CMSISDSP PRIVATE TransformFunctions/arm_rfft_q15.c)
@@ -86,8 +76,6 @@ target_sources(CMSISDSP PRIVATE TransformFunctions/arm_cfft_init_f16.c)
 target_sources(CMSISDSP PRIVATE TransformFunctions/arm_cfft_radix8_f16.c)
 endif()
 
-target_sources(CMSISDSP PRIVATE TransformFunctions/arm_rfft_init_f32.c)
-target_sources(CMSISDSP PRIVATE TransformFunctions/arm_rfft_f32.c)
 target_sources(CMSISDSP PRIVATE TransformFunctions/arm_cfft_radix4_init_f32.c)
 target_sources(CMSISDSP PRIVATE TransformFunctions/arm_cfft_radix4_f32.c)
 

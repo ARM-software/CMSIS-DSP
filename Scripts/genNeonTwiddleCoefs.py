@@ -180,6 +180,7 @@ NE10_FACTOR_EIGHT=2
 
 SIZES=[16,32,64,128,256,512,1024,2048,4096]
 
+SIZES_RFFT_Q31=[16,32,64,128,256,512,1024,2048,4096,8192]
 
 def factors(nfft,factor_height_first_stage=True):
     n = nfft
@@ -231,7 +232,7 @@ def gen_transposed_coefs(twiddles,idx,mstride,fstride,radix,nfft):
             twiddles[idx + (radix - 1) * j + k - 1]= complex(f32(math.cos(phase)) , f32(math.sin(phase)))
 
 
-def genTwiddles(theType,f,nfft,transposed=False):
+def genTwiddles(theType,f,nfft,transposed=False,firstStage=True):
     if transposed:
         gen = gen_transposed_coefs
     else:
@@ -241,7 +242,7 @@ def genTwiddles(theType,f,nfft,transposed=False):
 
     idx = 0;
     fstride = f["f_stride"]
-    if cur_radix % 2 != 0:
+    if firstStage and cur_radix % 2 != 0:
         if theType == F32:
            twiddles[0] = 1
         idx = idx + 1
@@ -280,6 +281,15 @@ def superTwiddle(theType,nfft):
 
     return twiddles[:(maxidx+1)]
 
+def superTwiddle_int32(theType,nfft):
+    maxidx = 0
+    twiddles = np.zeros(nfft//2,dtype=complex)
+    for i in range(nfft//2):
+        phase = f32(-1.0 * math.pi * ((i+1) / nfft+0.5));
+        twiddles[i]= complex(f32(math.cos(phase)) , f32(math.sin(phase)))
+        if i>maxidx:
+            maxidx = i
+    return twiddles
 
 def factor_desc(f):
     facts = f["factors"]
@@ -305,6 +315,7 @@ def c_to_r(t):
 
 def computeRFFTArrays(theType,nfft):
     r_factors = factors(nfft)
+    
     offset_twid,r_twiddles = genTwiddles(theType,r_factors,nfft)
     #print(r_factors)
 
@@ -324,6 +335,22 @@ def computeRFFTArrays(theType,nfft):
        "offset_twid_neon":offset_twid_neon
     }
     
+    
+def computeRFFTArrays_int32(theType,nfft):
+    
+    ncfft = nfft // 2
+    r_factors = factors(ncfft)
+    offset_twid,r_twiddles = genTwiddles(theType,r_factors,ncfft,firstStage=False)
+    #print(r_factors)
+    
+    r_super_twiddles_neon = superTwiddle_int32(theType,ncfft)
+    #print(r_super_twiddles_neon)
+    return {
+       "r_factors":factor_desc(r_factors),
+       "r_twiddles":c_to_r(r_twiddles),
+       "r_super_twiddles_neon":c_to_r(r_super_twiddles_neon),
+       "offset_twid":offset_twid,
+    }
     
 
 def computeCFFTArrays(theType,nfft):
@@ -390,20 +417,32 @@ def write_factors(theType,name,n,f,h,factors):
 
 def neonRFFTTwiddle(theType,f,h,n):
     
-    rfft = computeRFFTArrays(theType,n)
+    if theType == Q31: 
+        rfft = computeRFFTArrays_int32(theType,n)
 
-    
-    write_twiddles(theType,"rfft_twiddles",n,f,h,rfft["r_twiddles"])
-    write_factors(theType,"rfft_factors",n,f,h,rfft["r_factors"])
+        write_twiddles(theType,"rfft_twiddles",n,f,h,rfft["r_twiddles"])
+        write_factors(theType,"rfft_factors",n,f,h,rfft["r_factors"])
+   
+        write_twiddles(theType,"rfft_super_twiddles_neon",n,f,h,rfft["r_super_twiddles_neon"])
 
-    write_twiddles(theType,"rfft_twiddles_neon",n,f,h,rfft["r_twiddles_neon"])
-    write_factors(theType,"rfft_factors_neon",n,f,h,rfft["r_factors_neon"])
+        write_const(theType,h,n,"ARM_NE10_OFFSET_BACKWARD_TWID_RFFT",rfft["offset_twid"])
+        print("",file=h)
 
-    write_twiddles(theType,"rfft_super_twiddles_neon",n,f,h,rfft["r_super_twiddles_neon"])
-
-    write_const(theType,h,n,"ARM_NE10_OFFSET_BACKWARD_TWID",rfft["offset_twid"])
-    write_const(theType,h,n,"ARM_NE10_OFFSET_BACKWARD_TWID_NEON",rfft["offset_twid_neon"])
-    print("",file=h)
+    else:
+       rfft = computeRFFTArrays(theType,n)
+   
+       
+       write_twiddles(theType,"rfft_twiddles",n,f,h,rfft["r_twiddles"])
+       write_factors(theType,"rfft_factors",n,f,h,rfft["r_factors"])
+   
+       write_twiddles(theType,"rfft_twiddles_neon",n,f,h,rfft["r_twiddles_neon"])
+       write_factors(theType,"rfft_factors_neon",n,f,h,rfft["r_factors_neon"])
+   
+       write_twiddles(theType,"rfft_super_twiddles_neon",n,f,h,rfft["r_super_twiddles_neon"])
+   
+       write_const(theType,h,n,"ARM_NE10_OFFSET_BACKWARD_TWID_RFFT",rfft["offset_twid"])
+       write_const(theType,h,n,"ARM_NE10_OFFSET_BACKWARD_TWID_NEON",rfft["offset_twid_neon"])
+       print("",file=h)
 
 def neonCFFTTwiddle(theType,conjugate,f,h,n):
     
@@ -561,6 +600,9 @@ with open(args.f,'w') as f:
 
      for s in SIZES:
          neonRFFTTwiddle(F32,f,h,s)
+
+     for s in SIZES_RFFT_Q31:
+         neonRFFTTwiddle(Q31,f,h,s)
 
      for s in SIZES:
          neonCFFTTwiddle(F32,False,f,h,s)
