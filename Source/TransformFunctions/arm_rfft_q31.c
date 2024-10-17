@@ -101,23 +101,19 @@ ARM_DSP_ATTRIBUTE void arm_split_rifft_q31(
                    is needed but conjugate part is ignored. 
                    It is not using the packing trick of the float version.
                    
+  @par Neon implementation
+       The temporary buffer has size fftLength * 2
+       THe output buffer has size fftLen + 2
  */
 
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
-extern void arm_ne10_fft_r2c_1d_int32_neon (q31_t *fout,
-                                 q31_t *fin,
-                                 const arm_rfft_instance_q31* S,
-                                 int32_t scaled_flag,
-                                 q31_t *buffer);
-extern void arm_ne10_fft_c2r_1d_int32_neon (q31_t *fout,
-                                 q31_t *fin,
-                                 const arm_rfft_instance_q31* S,
-                                 int32_t scaled_flag,
-                                 q31_t *buffer);
+#include "CMSIS_NE10_types.h"
+#include "CMSIS_NE10_fft.h"
+
 
 ARM_DSP_ATTRIBUTE void arm_rfft_q31(
   const arm_rfft_instance_q31 * S,
-        q31_t * pSrc,
+        const q31_t * pSrc,
         q31_t * pDst,
         q31_t *tmp,
         uint8_t ifftFlag
@@ -128,7 +124,7 @@ ARM_DSP_ATTRIBUTE void arm_rfft_q31(
         arm_ne10_fft_c2r_1d_int32_neon (pDst,
                                  pSrc,
                                  S,
-                                 0,
+                                 1,
                                  tmp);
     }
     else 

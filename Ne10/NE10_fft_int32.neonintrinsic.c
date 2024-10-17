@@ -529,7 +529,7 @@ static void arm_ne10_fft16_forward_int32_scaled_neon (ne10_fft_cpx_int32_t * Fou
 }
 
 static void arm_ne10_fft16_backward_int32_scaled_neon (ne10_fft_cpx_int32_t * Fout,
-        ne10_fft_cpx_int32_t * Fin,
+        const ne10_fft_cpx_int32_t * Fin,
         const ne10_fft_cpx_int32_t * twiddles)
 {
     // the first stage
@@ -561,7 +561,8 @@ static void arm_ne10_fft16_backward_int32_scaled_neon (ne10_fft_cpx_int32_t * Fo
     ne10_int32_t src_step = stride << 1; \
     const ne10_int32_t TW_81 = 1518500249; \
     const ne10_int32_t TW_81N = -1518500249; \
-    int32_t *p_src, *p_dst; \
+    const int32_t *p_src; \
+    int32_t *p_dst; \
     int32x4x2_t q2_in0, q2_in1, q2_in2, q2_in3, q2_in4, q2_in5, q2_in6, q2_in7; \
     int32x4_t q_sin0_r, q_sin0_i, q_sin1_r, q_sin1_i, q_sin2_r, q_sin2_i, q_sin3_r, q_sin3_i; \
     int32x4_t q_sin4_r, q_sin4_i, q_sin5_r, q_sin5_i, q_sin6_r, q_sin6_i, q_sin7_r, q_sin7_i; \
@@ -573,7 +574,7 @@ static void arm_ne10_fft16_backward_int32_scaled_neon (ne10_fft_cpx_int32_t * Fo
     int32x4x2_t q2_tmp0, q2_tmp1, q2_tmp2, q2_tmp3, q2_tmp4, q2_tmp5, q2_tmp6, q2_tmp7; \
     int32x4x2_t q2_out0, q2_out1, q2_out2, q2_out3, q2_out4, q2_out5, q2_out6, q2_out7; \
     int32x4_t q_tw_81, q_tw_81n; \
-    p_src = (int32_t *) Fin; \
+    p_src = (const int32_t *) Fin; \
     p_dst = (int32_t *) Fout;
 
 
@@ -756,7 +757,7 @@ static void arm_ne10_fft16_backward_int32_scaled_neon (ne10_fft_cpx_int32_t * Fo
 
 
 __STATIC_INLINE void arm_ne10_radix8x4_forward_unscaled_neon (ne10_fft_cpx_int32_t * Fout,
-        ne10_fft_cpx_int32_t * Fin,
+        const ne10_fft_cpx_int32_t * Fin,
         ne10_int32_t stride)
 {
     RADIX8x4_START
@@ -785,7 +786,7 @@ __STATIC_INLINE void arm_ne10_radix8x4_forward_unscaled_neon (ne10_fft_cpx_int32
 }
 
 __STATIC_INLINE void arm_ne10_radix8x4_backward_unscaled_neon (ne10_fft_cpx_int32_t * Fout,
-        ne10_fft_cpx_int32_t * Fin,
+        const ne10_fft_cpx_int32_t * Fin,
         ne10_int32_t stride)
 {
     RADIX8x4_START
@@ -812,7 +813,7 @@ __STATIC_INLINE void arm_ne10_radix8x4_backward_unscaled_neon (ne10_fft_cpx_int3
     } // f_count
 }
 __STATIC_INLINE void arm_ne10_radix8x4_forward_scaled_neon (ne10_fft_cpx_int32_t * Fout,
-        ne10_fft_cpx_int32_t * Fin,
+        const ne10_fft_cpx_int32_t * Fin,
         ne10_int32_t stride)
 {
     RADIX8x4_START
@@ -840,7 +841,7 @@ __STATIC_INLINE void arm_ne10_radix8x4_forward_scaled_neon (ne10_fft_cpx_int32_t
 }
 
 __STATIC_INLINE void arm_ne10_radix8x4_backward_scaled_neon (ne10_fft_cpx_int32_t * Fout,
-        ne10_fft_cpx_int32_t * Fin,
+        const ne10_fft_cpx_int32_t * Fin,
         ne10_int32_t stride)
 {
     RADIX8x4_START
@@ -870,13 +871,14 @@ __STATIC_INLINE void arm_ne10_radix8x4_backward_scaled_neon (ne10_fft_cpx_int32_
 #define RADIX4x4_WITHOUT_TW_START \
     ne10_int32_t f_count; \
     ne10_int32_t src_step = stride << 1; \
-    int32_t *p_src, *p_dst; \
+    const int32_t *p_src; \
+    int32_t *p_dst; \
     int32x4x2_t q2_in0, q2_in1, q2_in2, q2_in3; \
     int32x4_t q_s0_r, q_s0_i, q_s1_r, q_s1_i, q_s2_r, q_s2_i, q_s3_r, q_s3_i; \
     int32x4_t q_out0_r, q_out0_i, q_out1_r, q_out1_i, q_out2_r, q_out2_i, q_out3_r, q_out3_i; \
     int32x4x2_t q2_tmp0, q2_tmp1, q2_tmp2, q2_tmp3; \
     int32x4x2_t q2_out0, q2_out1, q2_out2, q2_out3; \
-    p_src = (int32_t *) Fin; \
+    p_src = (const int32_t *) Fin; \
     p_dst = (int32_t *) Fout;
 
 #define RADIX4x4_WITHOUT_TW_LOAD \
@@ -942,7 +944,7 @@ __STATIC_INLINE void arm_ne10_radix8x4_backward_scaled_neon (ne10_fft_cpx_int32_
 
 
 __STATIC_INLINE void arm_ne10_radix4x4_without_twiddles_forward_unscaled_neon (ne10_fft_cpx_int32_t * Fout,
-        ne10_fft_cpx_int32_t * Fin,
+        const ne10_fft_cpx_int32_t * Fin,
         ne10_int32_t stride)
 {
     RADIX4x4_WITHOUT_TW_START
@@ -965,7 +967,7 @@ __STATIC_INLINE void arm_ne10_radix4x4_without_twiddles_forward_unscaled_neon (n
 }
 
 __STATIC_INLINE void arm_ne10_radix4x4_without_twiddles_backward_unscaled_neon (ne10_fft_cpx_int32_t * Fout,
-        ne10_fft_cpx_int32_t * Fin,
+        const ne10_fft_cpx_int32_t * Fin,
         ne10_int32_t stride)
 {
     RADIX4x4_WITHOUT_TW_START
@@ -988,7 +990,7 @@ __STATIC_INLINE void arm_ne10_radix4x4_without_twiddles_backward_unscaled_neon (
 }
 
 __STATIC_INLINE void arm_ne10_radix4x4_without_twiddles_forward_scaled_neon (ne10_fft_cpx_int32_t * Fout,
-        ne10_fft_cpx_int32_t * Fin,
+        const ne10_fft_cpx_int32_t * Fin,
         ne10_int32_t stride)
 {
     RADIX4x4_WITHOUT_TW_START
@@ -1011,7 +1013,7 @@ __STATIC_INLINE void arm_ne10_radix4x4_without_twiddles_forward_scaled_neon (ne1
 }
 
 __STATIC_INLINE void arm_ne10_radix4x4_without_twiddles_backward_scaled_neon (ne10_fft_cpx_int32_t * Fout,
-        ne10_fft_cpx_int32_t * Fin,
+        const ne10_fft_cpx_int32_t * Fin,
         ne10_int32_t stride)
 {
     RADIX4x4_WITHOUT_TW_START
@@ -1038,16 +1040,18 @@ __STATIC_INLINE void arm_ne10_radix4x4_without_twiddles_backward_scaled_neon (ne
     ne10_int32_t src_step = src_stride << 1; \
     ne10_int32_t dst_step = dst_stride << 1; \
     ne10_int32_t tw_step = mstride << 1; \
-    int32_t *p_src, *p_dst, *p_tw; \
+    const int32_t *p_src; \
+    const int32_t *p_tw; \
+    int32_t *p_dst; \
     int32x4x2_t q2_in0, q2_in1, q2_in2, q2_in3; \
     int32x4x2_t q2_tw0, q2_tw1, q2_tw2; \
     int32x4_t q_s1_r, q_s1_i, q_s2_r, q_s2_i, q_s3_r, q_s3_i; \
     int32x4_t q_tmp0, q_tmp1, q_tmp2, q_tmp3, q_tmp4, q_tmp5; \
     int32x4_t q_s4_r, q_s4_i, q_s5_r, q_s5_i, q_s6_r, q_s6_i, q_s7_r, q_s7_i; \
     int32x4x2_t q2_out0, q2_out1, q2_out2, q2_out3; \
-    p_src = (int32_t *) Fin; \
+    p_src = (const int32_t *) Fin; \
     p_dst = (int32_t *) Fout; \
-    p_tw = (int32_t *) tw;
+    p_tw = (const int32_t *) tw;
 
 #define RADIX4x4_WITH_TW_LOAD \
     q2_in0 = vld2q_s32 (p_src); \
@@ -1136,7 +1140,7 @@ __STATIC_INLINE void arm_ne10_radix4x4_without_twiddles_backward_scaled_neon (ne
 
 
 __STATIC_INLINE void arm_ne10_radix4x4_with_twiddles_forward_unscaled_neon (ne10_fft_cpx_int32_t * Fout,
-        ne10_fft_cpx_int32_t * Fin,
+        const ne10_fft_cpx_int32_t * Fin,
         const ne10_fft_cpx_int32_t * tw,
         ne10_int32_t src_stride,
         ne10_int32_t dst_stride,
@@ -1164,7 +1168,7 @@ __STATIC_INLINE void arm_ne10_radix4x4_with_twiddles_forward_unscaled_neon (ne10
 
 
 __STATIC_INLINE void arm_ne10_radix4x4_with_twiddles_backward_unscaled_neon (ne10_fft_cpx_int32_t * Fout,
-        ne10_fft_cpx_int32_t * Fin,
+        const ne10_fft_cpx_int32_t * Fin,
         const ne10_fft_cpx_int32_t * tw,
         ne10_int32_t src_stride,
         ne10_int32_t dst_stride,
@@ -1193,7 +1197,7 @@ __STATIC_INLINE void arm_ne10_radix4x4_with_twiddles_backward_unscaled_neon (ne1
 
 
 __STATIC_INLINE void arm_ne10_radix4x4_with_twiddles_forward_scaled_neon (ne10_fft_cpx_int32_t * Fout,
-        ne10_fft_cpx_int32_t * Fin,
+        const ne10_fft_cpx_int32_t * Fin,
         const ne10_fft_cpx_int32_t * tw,
         ne10_int32_t src_stride,
         ne10_int32_t dst_stride,
@@ -1220,7 +1224,7 @@ __STATIC_INLINE void arm_ne10_radix4x4_with_twiddles_forward_scaled_neon (ne10_f
 }
 
 __STATIC_INLINE void arm_ne10_radix4x4_with_twiddles_backward_scaled_neon (ne10_fft_cpx_int32_t * Fout,
-        ne10_fft_cpx_int32_t * Fin,
+        const ne10_fft_cpx_int32_t * Fin,
         const ne10_fft_cpx_int32_t * tw,
         ne10_int32_t src_stride,
         ne10_int32_t dst_stride,
@@ -1248,7 +1252,7 @@ __STATIC_INLINE void arm_ne10_radix4x4_with_twiddles_backward_scaled_neon (ne10_
 
 #define arm_ne10_mixed_radix_fft_forward_int32_neon(scaled) \
 static void arm_ne10_mixed_radix_fft_forward_int32_##scaled##_neon (ne10_fft_cpx_int32_t * Fout, \
-        ne10_fft_cpx_int32_t * Fin, \
+        const ne10_fft_cpx_int32_t * Fin, \
         const arm_cfft_instance_q31 * S, \
         const ne10_fft_cpx_int32_t * twiddles, \
         ne10_fft_cpx_int32_t * buffer) \
@@ -1258,7 +1262,8 @@ static void arm_ne10_mixed_radix_fft_forward_int32_##scaled##_neon (ne10_fft_cpx
     ne10_int32_t f_count; \
     ne10_int32_t stage_count; \
  \
-    ne10_fft_cpx_int32_t   *Fin1, *Fout1; \
+    const ne10_fft_cpx_int32_t   *Fin1; \
+    ne10_fft_cpx_int32_t *Fout1; \
     ne10_fft_cpx_int32_t   *Fout_ls = Fout; \
     ne10_fft_cpx_int32_t   *Ftmp; \
     const ne10_fft_cpx_int32_t   *tw;\
@@ -1333,7 +1338,7 @@ static void arm_ne10_mixed_radix_fft_forward_int32_##scaled##_neon (ne10_fft_cpx
 
 #define arm_ne10_mixed_radix_fft_backward_int32_neon(scaled) \
 static void arm_ne10_mixed_radix_fft_backward_int32_##scaled##_neon (ne10_fft_cpx_int32_t * Fout, \
-        ne10_fft_cpx_int32_t * Fin, \
+        const ne10_fft_cpx_int32_t * Fin, \
         const arm_cfft_instance_q31 * S, \
         const ne10_fft_cpx_int32_t * twiddles, \
         ne10_fft_cpx_int32_t * buffer) \
@@ -1343,7 +1348,8 @@ static void arm_ne10_mixed_radix_fft_backward_int32_##scaled##_neon (ne10_fft_cp
     ne10_int32_t f_count; \
     ne10_int32_t stage_count; \
  \
-    ne10_fft_cpx_int32_t   *Fin1, *Fout1; \
+    const ne10_fft_cpx_int32_t   *Fin1; \
+    ne10_fft_cpx_int32_t   *Fout1; \
     ne10_fft_cpx_int32_t   *Fout_ls = Fout; \
     ne10_fft_cpx_int32_t   *Ftmp; \
     const ne10_fft_cpx_int32_t   *tw; \
@@ -1437,7 +1443,9 @@ static void arm_ne10_fft_split_r2c_1d_int32_neon (ne10_fft_cpx_int32_t *dst,
     int32x4_t q_tw_r, q_tw_i;
     int32x4_t q_tmp0, q_tmp1, q_tmp2, q_tmp3;
     int32x4_t q_dst2_r, q_dst2_i;
-    int32_t *p_src, *p_src2, *p_dst, *p_dst2;
+    const int32_t *p_src;
+    const int32_t *p_src2;
+    int32_t *p_dst, *p_dst2;
     const int32_t *p_twiddles;
 
     tdc.r = src[0].r;
@@ -1456,8 +1464,8 @@ static void arm_ne10_fft_split_r2c_1d_int32_neon (ne10_fft_cpx_int32_t *dst,
         {
             for (k = 1; k <= count ; k += 4)
             {
-                p_src  = (int32_t*) (& (src[k]));
-                p_src2  = (int32_t*) (& (src[ncfft - k - 3]));
+                p_src  = (const int32_t*) (& (src[k]));
+                p_src2  = (const int32_t*) (& (src[ncfft - k - 3]));
                 p_twiddles  = (const int32_t*) (& (twiddles[k - 1]));
                 p_dst  = (int32_t*) (& (dst[k]));
                 p_dst2  = (int32_t*) (& (dst[ncfft - k - 3]));
@@ -1502,8 +1510,8 @@ static void arm_ne10_fft_split_r2c_1d_int32_neon (ne10_fft_cpx_int32_t *dst,
         {
             for (k = 1; k <= count ; k += 4)
             {
-                p_src  = (int32_t*) (& (src[k]));
-                p_src2  = (int32_t*) (& (src[ncfft - k - 3]));
+                p_src  = (const int32_t*) (& (src[k]));
+                p_src2  = (const int32_t*) (& (src[ncfft - k - 3]));
                 p_twiddles  = (const int32_t*) (& (twiddles[k - 1]));
                 p_dst  = (int32_t*) (& (dst[k]));
                 p_dst2  = (int32_t*) (& (dst[ncfft - k - 3]));
@@ -1591,7 +1599,9 @@ static void arm_ne10_fft_split_c2r_1d_int32_neon (ne10_fft_cpx_int32_t *dst,
     int32x4_t q_fek_r, q_fek_i, q_fok_r, q_fok_i;
     int32x4_t q_tmp0, q_tmp1, q_tmp2, q_tmp3;
     int32x4_t q_dst2_r, q_dst2_i;
-    int32_t *p_src, *p_src2, *p_dst, *p_dst2;
+    const int32_t *p_src; 
+    const int32_t *p_src2;
+    int32_t *p_dst, *p_dst2;
     const int32_t *p_twiddles;
 
 
@@ -1605,8 +1615,8 @@ static void arm_ne10_fft_split_c2r_1d_int32_neon (ne10_fft_cpx_int32_t *dst,
         {
             for (k = 1; k <= count ; k += 4)
             {
-                p_src  = (int32_t*) (& (src[k]));
-                p_src2  = (int32_t*) (& (src[ncfft - k - 3]));
+                p_src  = (const int32_t*) (& (src[k]));
+                p_src2  = (const int32_t*) (& (src[ncfft - k - 3]));
                 p_twiddles  = (const int32_t*) (& (twiddles[k - 1]));
                 p_dst  = (int32_t*) (& (dst[k]));
                 p_dst2  = (int32_t*) (& (dst[ncfft - k - 3]));
@@ -1650,8 +1660,8 @@ static void arm_ne10_fft_split_c2r_1d_int32_neon (ne10_fft_cpx_int32_t *dst,
         {
             for (k = 1; k <= count ; k += 4)
             {
-                p_src  = (int32_t*) (& (src[k]));
-                p_src2  = (int32_t*) (& (src[ncfft - k - 3]));
+                p_src  = (const int32_t*) (& (src[k]));
+                p_src2  = (const int32_t*) (& (src[ncfft - k - 3]));
                 p_twiddles  = (const int32_t*) (& (twiddles[k - 1]));
                 p_dst  = (int32_t*) (& (dst[k]));
                 p_dst2  = (int32_t*) (& (dst[ncfft - k - 3]));
@@ -1729,7 +1739,7 @@ static void arm_ne10_fft_split_c2r_1d_int32_neon (ne10_fft_cpx_int32_t *dst,
  * Specific implementation of @ref ne10_fft_c2c_1d_int32 using NEON SIMD capabilities.
  */
 void arm_ne10_fft_c2c_1d_int32_neon (q31_t *fout,
-                                 q31_t *fin,
+                                 const q31_t *fin,
                                  const arm_cfft_instance_q31* S,
                                  ne10_int32_t inverse_fft,
                                  ne10_int32_t scaled_flag,
@@ -1799,7 +1809,7 @@ void arm_ne10_fft_c2c_1d_int32_neon (q31_t *fout,
  * Specific implementation of @ref ne10_fft_r2c_1d_int32 using NEON SIMD capabilities.
  */
 void arm_ne10_fft_r2c_1d_int32_neon (q31_t *fout,
-                                 q31_t *fin,
+                                 const q31_t *fin,
                                  const arm_rfft_instance_q31* S,
                                  ne10_int32_t scaled_flag,
                                  q31_t *buffer)
@@ -1821,7 +1831,7 @@ void arm_ne10_fft_r2c_1d_int32_neon (q31_t *fout,
  * Specific implementation of @ref ne10_fft_c2r_1d_int32 using NEON SIMD capabilities.
  */
 void arm_ne10_fft_c2r_1d_int32_neon (q31_t *fout,
-                                 q31_t *fin,
+                                 const q31_t *fin,
                                  const arm_rfft_instance_q31* S,
                                  ne10_int32_t scaled_flag,
                                  q31_t *buffer)

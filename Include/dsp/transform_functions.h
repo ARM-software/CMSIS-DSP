@@ -294,7 +294,7 @@ arm_status arm_cfft_init_q31(
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 void arm_cfft_q31(
     const arm_cfft_instance_q31 * S,
-          q31_t * src,
+          const q31_t * src,
           q31_t * dst,
           uint8_t ifftFlag,
           q31_t * buffer);
@@ -537,7 +537,7 @@ arm_status arm_rfft_init_8192_q15(
 
   void arm_rfft_q31(
   const arm_rfft_instance_q31 * S,
-        q31_t * pSrc,
+  const q31_t * pSrc,
         q31_t * pDst,
         q31_t * tmp,
         uint8_t ifftFlag);

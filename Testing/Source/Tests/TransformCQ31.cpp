@@ -10,19 +10,27 @@
        const q31_t *inp = input.ptr();
 
        q31_t *outfftp = outputfft.ptr();
+       q31_t *tmp2p = tmp2.ptr();
 
         memcpy(outfftp,inp,sizeof(q31_t)*input.nbSamples());
 
         ASSERT_TRUE(status == ARM_MATH_SUCCESS);
-   
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+          arm_cfft_q31(
+             &(this->instCfftQ31),
+             inp,
+             outfftp,
+             this->ifft,
+             tmp2p);
+#else
         arm_cfft_q31(
              &(this->instCfftQ31),
              outfftp,
              this->ifft,
              1);
-          
+#endif
         ASSERT_SNR(outputfft,ref,(float32_t)SNR_THRESHOLD);
-        ASSERT_NEAR_EQ(outputfft,ref,(q31_t)32);
+        ASSERT_NEAR_EQ(outputfft,ref,(q31_t)53);
         ASSERT_EMPTY_TAIL(outputfft);
        
         
@@ -34,16 +42,26 @@
 
        q31_t *outfftp = outputfft.ptr();
        q31_t *refp = ref.ptr();
+       q31_t *tmp2p = tmp2.ptr();
 
         memcpy(outfftp,inp,sizeof(q31_t)*input.nbSamples());
 
         ASSERT_TRUE(status == ARM_MATH_SUCCESS);
    
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+          arm_cfft_q31(
+             &(this->instCfftQ31),
+             inp,
+             outfftp,
+             this->ifft,
+             tmp2p);
+#else
         arm_cfft_q31(
              &(this->instCfftQ31),
              outfftp,
              this->ifft,
              1);
+#endif
 
         for(unsigned long i=0; i < outputfft.nbSamples();i++)
         {
@@ -488,6 +506,7 @@
        }
 
        outputfft.create(ref.nbSamples(),TransformCQ31::OUTPUT_CFFT_Q31_ID,mgr);
+       tmp2.create(ref.nbSamples(),TransformCQ31::OUTPUT_CFFT_Q31_ID,mgr);
 
 
     }

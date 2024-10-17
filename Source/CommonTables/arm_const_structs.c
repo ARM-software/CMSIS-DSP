@@ -164,6 +164,9 @@ const arm_cfft_instance_q31 arm_cfft_sR_q31_len2048 ARM_DSP_TABLE_ATTRIBUTE = {
 const arm_cfft_instance_q31 arm_cfft_sR_q31_len4096 ARM_DSP_TABLE_ATTRIBUTE = {
   4096, twiddleCoef_4096_q31, armBitRevIndexTable_fixed_4096, ARMBITREVINDEXTABLE_FIXED_4096_TABLE_LENGTH
 };
+#endif 
+
+#if (!defined(ARM_MATH_MVEI)) || defined(ARM_MATH_AUTOVECTORIZE)
 
 
 const arm_cfft_instance_q15 arm_cfft_sR_q15_len16 ARM_DSP_TABLE_ATTRIBUTE = {
@@ -413,6 +416,11 @@ const arm_rfft_instance_q31 arm_rfft_sR_q31_len8192 ARM_DSP_TABLE_ATTRIBUTE = {
   (q31_t*)realCoefBQ31,
   &arm_cfft_sR_q31_len4096
 };
+
+#endif 
+
+#if (!defined(ARM_MATH_MVEI)) || defined(ARM_MATH_AUTOVECTORIZE)
+
 
 /* q15_t */
 const arm_rfft_instance_q15 arm_rfft_sR_q15_len32 ARM_DSP_TABLE_ATTRIBUTE = {

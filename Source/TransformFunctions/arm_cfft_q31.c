@@ -666,7 +666,7 @@ ARM_DSP_ATTRIBUTE void arm_cfft_radix4by2_inverse_q31(
 
 ARM_DSP_ATTRIBUTE void arm_cfft_q31(
   const arm_cfft_instance_q31 * S,
-        q31_t * src,
+        const q31_t * src,
         q31_t * dst,
         uint8_t ifftFlag,
         q31_t *buffer)
