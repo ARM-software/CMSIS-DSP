@@ -57,23 +57,15 @@
 #include "arm_mfcc_init_q15.c"
 #include "arm_mfcc_q15.c"
 
-/* Deprecated */
 
-#include "arm_dct4_f32.c"
-#include "arm_dct4_init_f32.c"
-#include "arm_dct4_init_q15.c"
-#include "arm_dct4_init_q31.c"
-#include "arm_dct4_q15.c"
-#include "arm_dct4_q31.c"
 
-#include "arm_rfft_f32.c"
 #include "arm_rfft_q15.c"
 #include "arm_rfft_q31.c"
 
-#include "arm_rfft_init_f32.c"
 #include "arm_rfft_init_q15.c"
 #include "arm_rfft_init_q31.c"
 
+/* Deprecated */
 #include "arm_cfft_radix4_init_f32.c"
 #include "arm_cfft_radix4_init_q15.c"
 #include "arm_cfft_radix4_init_q31.c"
