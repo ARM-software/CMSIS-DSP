@@ -1,4 +1,4 @@
-name: Compile and Run
+name: C Tests
 on:
   workflow_dispatch:
   pull_request:

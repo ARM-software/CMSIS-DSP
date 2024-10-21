@@ -1,7 +1,8 @@
 # CMSIS-DSP
 
-![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/ARM-software/CMSIS-DSP?include_prereleases) ![GitHub](https://img.shields.io/github/license/ARM-software/CMSIS-DSP)
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/ARM-software/CMSIS-DSP?include_prereleases) ![GitHub](https://img.shields.io/github/license/ARM-software/CMSIS-DSP) 
 
+![C test status](https://github.com/ARM-software/CMSIS-DSP/actions/workflows/runtest.yaml/badge.svg) ![CPP test status](https://github.com/ARM-software/CMSIS-DSP/actions/workflows/runcpptest.yaml/badge.svg)
 
 ## About
 
