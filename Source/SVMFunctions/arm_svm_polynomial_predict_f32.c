@@ -301,7 +301,7 @@ ARM_DSP_ATTRIBUTE void arm_svm_polynomial_predict_f32(
 }
 
 #else
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 ARM_DSP_ATTRIBUTE void arm_svm_polynomial_predict_f32(
     const arm_svm_polynomial_instance_f32 *S,
     const float32_t * in,
