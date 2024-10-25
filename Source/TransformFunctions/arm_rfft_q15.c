@@ -102,6 +102,11 @@ ARM_DSP_ATTRIBUTE void arm_split_rifft_q15(
                    For the RIFFT, the source buffer must have length N+2 since the Nyquist frequency value
                    is needed but conjugate part is ignored. 
                    It is not using the packing trick of the float version.
+  
+  @par Neon implementation
+       The temporary buffer has size fftLength * 2
+       The RFFT output buffer has size fftLen + 2
+       The RIFFT output buffer has size fftLen
  */
 
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)

@@ -103,7 +103,8 @@ ARM_DSP_ATTRIBUTE void arm_split_rifft_q31(
                    
   @par Neon implementation
        The temporary buffer has size fftLength * 2
-       THe output buffer has size fftLen + 2
+       The RFFT output buffer has size fftLen + 2
+       The RIFFT output buffer has size fftLen
  */
 
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
