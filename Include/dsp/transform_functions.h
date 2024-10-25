@@ -373,7 +373,7 @@ arm_status arm_cfft_init_16_f32(arm_cfft_instance_f32 * S);
 */
 void arm_cfft_f32(
   const arm_cfft_instance_f32 * S,
-        float32_t * pIn,
+        const float32_t * pIn,
         float32_t * pOut,
         float32_t * pBuffer, /* When used, `in` is not modified */
         uint8_t ifftFlag);
@@ -755,7 +755,7 @@ arm_status arm_rfft_fast_init_f32 (
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 void arm_rfft_fast_f32(
         const arm_rfft_fast_instance_f32 * S,
-        float32_t * p, 
+        const float32_t * p, 
         float32_t * pOut,
         float32_t *tmpbuf,
         uint8_t ifftFlag);

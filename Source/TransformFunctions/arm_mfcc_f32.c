@@ -70,7 +70,7 @@
                  size FFT Length and only the RFFT based
                  implementation is supported (it is the default
                  one on Cortex-M).
-                 The source buffer is no more modified.
+                 The source buffer is  modified.
  @code
         void arm_mfcc_f32(
              const arm_mfcc_instance_f32 * S,

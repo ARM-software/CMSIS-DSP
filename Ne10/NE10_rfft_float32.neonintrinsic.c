@@ -1554,12 +1554,10 @@ static void arm_ne10_radix4_c2r_with_twiddles_first_stage(
  */
 void arm_ne10_fft_r2c_1d_float32_neon (
     const arm_rfft_fast_instance_f32 * S,
-    float32_t *fin,
+    const float32_t *fin,
     float32_t *out,
     float32_t *tmpbuf)
 {
-(void)S;
-(void)out;
     ne10_fft_cpx_float32_t *fout=(ne10_fft_cpx_float32_t*)out;
 
     typedef ne10_fft_cpx_float32_t CPLX;
@@ -1579,7 +1577,7 @@ void arm_ne10_fft_r2c_1d_float32_neon (
  */
 void arm_ne10_fft_c2r_1d_float32_neon (
     const arm_rfft_fast_instance_f32 * S,
-    float32_t *in,
+    const float32_t *in,
     float32_t *fout,
     float32_t *buffer)
 {

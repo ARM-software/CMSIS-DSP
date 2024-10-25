@@ -623,7 +623,7 @@ static void merge_rfft_f32(
                      The neon version has a different API.
                      The input and output buffers must be
                      different.
-                     There is a temporary buffer that is not optional.
+                     There is a temporary buffer.
   @par
                      The bit reverse flag is not more 
                      available in Neon version.
@@ -636,7 +636,7 @@ static void merge_rfft_f32(
    @code
         void arm_rfft_fast_f32(
                 const arm_rfft_fast_instance_f32 * S,
-                float32_t * p, 
+                const float32_t * p, 
                 float32_t * pOut,
                 float32_t *tmpbuf,
                 uint8_t ifftFlag);
@@ -657,7 +657,7 @@ tmpBuf size : 2*nfft reals (nfft   complex)
 */
 ARM_DSP_ATTRIBUTE void arm_rfft_fast_f32(
   const arm_rfft_fast_instance_f32 * S,
-  float32_t * p,
+  const float32_t * p,
   float32_t * pOut,
   float32_t *tmpbuf,
   uint8_t ifftFlag)

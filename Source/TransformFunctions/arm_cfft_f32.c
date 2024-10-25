@@ -588,7 +588,7 @@ ARM_DSP_ATTRIBUTE void arm_cfft_f32(
 
 ARM_DSP_ATTRIBUTE void arm_cfft_f32(
   const arm_cfft_instance_f32 * S,
-        float32_t * pIn,
+        const float32_t * pIn,
         float32_t * pOut,
         float32_t * pBuffer, /* When used, in is not modified */
         uint8_t ifftFlag)
@@ -802,9 +802,7 @@ extern void arm_bitreversal_32(
                      The neon version has a different API.
                      The input and output buffers must be
                      different.
-                     There is an optional temporary buffer.
-                     If the temporary buffer is not used, the
-                     input buffer is modified.
+                     There is a temporary buffer.
                      The temporary buffer has same size as
                      input or output buffer.
                      The bit reverse flag is not more 
@@ -813,7 +811,7 @@ extern void arm_bitreversal_32(
   @code
         void arm_cfft_f32(
                 const arm_cfft_instance_f32 * S,
-                      float32_t * pIn,
+                      const float32_t * pIn,
                       float32_t * pOut,
                       float32_t * pBuffer, 
                       uint8_t ifftFlag);

@@ -34,31 +34,31 @@
 #include "dsp/transform_functions.h"
 
 extern void arm_ne10_fft16_forward_float32_neon (const arm_cfft_instance_f32 *S,
-          ne10_fft_cpx_float32_t *Fin,
+          const ne10_fft_cpx_float32_t *Fin,
           ne10_fft_cpx_float32_t *Fout);
 
 extern void arm_ne10_fft16_backward_float32_neon (const arm_cfft_instance_f32 *S,
-          ne10_fft_cpx_float32_t *Fin,
+          const ne10_fft_cpx_float32_t *Fin,
           ne10_fft_cpx_float32_t *Fout);
 
 extern void arm_ne10_mixed_radix_fft_forward_float32_neon (const arm_cfft_instance_f32 *S,
-        ne10_fft_cpx_float32_t *in,
+        const ne10_fft_cpx_float32_t *in,
         ne10_fft_cpx_float32_t *out,
         ne10_fft_cpx_float32_t *buffer);
 
 extern void arm_ne10_mixed_radix_fft_backward_float32_neon (const arm_cfft_instance_f32 *S,
-        ne10_fft_cpx_float32_t *in,
+        const ne10_fft_cpx_float32_t *in,
         ne10_fft_cpx_float32_t *out,
         ne10_fft_cpx_float32_t *buffer);
 
 extern void arm_ne10_fft_r2c_1d_float32_neon (const arm_rfft_fast_instance_f32 * S,
-                                              float32_t *in,
+                                              const float32_t *in,
                                               float32_t *out,
                                               float32_t *buffer);
 
 
 extern void arm_ne10_fft_c2r_1d_float32_neon (const arm_rfft_fast_instance_f32 * S,
-                                              float32_t *in,
+                                              const float32_t *in,
                                               float32_t *out,
                                               float32_t *buffer);
 
