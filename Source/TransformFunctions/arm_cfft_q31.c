@@ -544,40 +544,6 @@ static void arm_cfft_radix4by2_inverse_q31_mve(const arm_cfft_instance_q31 *S, q
 }
 
 
-/**
-  @addtogroup ComplexFFTQ31
-  @{
- */
-
-/**
-  @brief         Processing function for the Q31 complex FFT.
-  @param[in]     S               points to an instance of the fixed-point CFFT structure
-  @param[in,out] p1              points to the complex data buffer of size <code>2*fftLen</code>. Processing occurs in-place
-  @param[in]     ifftFlag       flag that selects transform direction
-                   - value = 0: forward transform
-                   - value = 1: inverse transform
-  @param[in]     bitReverseFlag flag that enables / disables bit reversal of output
-                   - value = 0: disables bit reversal of output
-                   - value = 1: enables bit reversal of output
- @par Neon version
-                     The neon version has a different API.
-                     The input and output buffers must be
-                     different.
-                     There is a temporary buffer.
-                     The temporary buffer has same size as
-                     input or output buffer.
-                     The bit reverse flag is not more 
-                     available in Neon version.
-
-  @code
-        void arm_cfft_q31(
-  const arm_cfft_instance_q31 * S,
-        const q31_t * src,
-        q31_t * dst,
-        uint8_t ifftFlag,
-        q31_t *buffer)
-  @endcode
- */
 ARM_DSP_ATTRIBUTE void arm_cfft_q31(
   const arm_cfft_instance_q31 * S,
         q31_t * pSrc,
@@ -678,7 +644,24 @@ ARM_DSP_ATTRIBUTE void arm_cfft_radix4by2_inverse_q31(
                    - value = 0: disables bit reversal of output
                    - value = 1: enables bit reversal of output
 
+  @par Neon version
+                     The neon version has a different API.
+                     The input and output buffers must be
+                     different.
+                     There is a temporary buffer.
+                     The temporary buffer has same size as
+                     input or output buffer.
+                     The bit reverse flag is not more 
+                     available in Neon version.
 
+  @code
+        void arm_cfft_q31(
+  const arm_cfft_instance_q31 * S,
+        const q31_t * src,
+        q31_t * dst,
+        uint8_t ifftFlag,
+        q31_t *buffer)
+  @endcode
   
  */
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
