@@ -13,6 +13,7 @@ MatrixFunctions/arm_mat_sub_f64.c
 MatrixFunctions/arm_mat_trans_f64.c
 MatrixFunctions/arm_mat_qr_f64.c
 MatrixFunctions/arm_householder_f64.c
+MatrixFunctions/arm_mat_init_f64.c
 )
 
 set(SRCF32 MatrixFunctions/arm_mat_add_f32.c
