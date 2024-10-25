@@ -559,6 +559,24 @@ static void arm_cfft_radix4by2_inverse_q31_mve(const arm_cfft_instance_q31 *S, q
   @param[in]     bitReverseFlag flag that enables / disables bit reversal of output
                    - value = 0: disables bit reversal of output
                    - value = 1: enables bit reversal of output
+ @par Neon version
+                     The neon version has a different API.
+                     The input and output buffers must be
+                     different.
+                     There is a temporary buffer.
+                     The temporary buffer has same size as
+                     input or output buffer.
+                     The bit reverse flag is not more 
+                     available in Neon version.
+
+  @code
+        void arm_cfft_q31(
+  const arm_cfft_instance_q31 * S,
+        const q31_t * src,
+        q31_t * dst,
+        uint8_t ifftFlag,
+        q31_t *buffer)
+  @endcode
  */
 ARM_DSP_ATTRIBUTE void arm_cfft_q31(
   const arm_cfft_instance_q31 * S,
@@ -659,6 +677,9 @@ ARM_DSP_ATTRIBUTE void arm_cfft_radix4by2_inverse_q31(
   @param[in]     bitReverseFlag flag that enables / disables bit reversal of output
                    - value = 0: disables bit reversal of output
                    - value = 1: enables bit reversal of output
+
+
+  
  */
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 #include "CMSIS_NE10_types.h"
