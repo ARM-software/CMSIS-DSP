@@ -70,6 +70,21 @@
                    big and the number of MEL filters too small then the fixed
                    point computations may saturate.
 
+  @par Neon implementation
+       There is an additional temporary buffer used for the RFFT.
+       It has 2*fftLength size.
+
+
+  @code 
+      arm_status arm_mfcc_q15(
+  const arm_mfcc_instance_q15 * S,
+  q15_t *pSrc,
+  q15_t *pDst,
+  q31_t *pTmp,
+  q15_t *pTmp_rfft
+  )
+  @endcode
+
  */
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 ARM_DSP_ATTRIBUTE arm_status arm_mfcc_q15(

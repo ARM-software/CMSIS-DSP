@@ -498,8 +498,7 @@ static void merge_rfft_f32(
                    and we describe each algorithm in turn.
   @par           Floating-point
                    The main functions are \ref arm_rfft_fast_f32() and \ref arm_rfft_fast_init_f32().
-                   The older functions \ref arm_rfft_f32() and \ref arm_rfft_init_f32() have been deprecated
-                   but are still documented.
+                   
                    For f16, the functions are \ref arm_rfft_fast_f16() and \ref arm_rfft_fast_init_f16().
                    For f64, the functions are \ref arm_rfft_fast_f64() and \ref arm_rfft_fast_init_f64().
   @par
@@ -596,6 +595,14 @@ static void merge_rfft_f32(
                 float32_t *tmpbuf,
                 uint8_t ifftFlag);
   @endcode
+
+  @par RFFT Output buffer sizes
+       They are also the input sizes for the RIFFT
+
+| Scalar     | Helium        | Neon           |
+| ---------: | ------------: | -------------: | 
+| fftSize    | fftSize       | fftSize        |  
+
  */
 
 /**

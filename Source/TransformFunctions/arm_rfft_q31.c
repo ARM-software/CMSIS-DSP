@@ -105,6 +105,24 @@ ARM_DSP_ATTRIBUTE void arm_split_rifft_q31(
        The temporary buffer has size fftLength * 2
        The RFFT output buffer has size fftLen + 2
        The RIFFT output buffer has size fftLen
+
+  @code 
+       void arm_rfft_q31(
+  const arm_rfft_instance_q31 * S,
+        const q31_t * pSrc,
+        q31_t * pDst,
+        q31_t *tmp,
+        uint8_t ifftFlag
+        )
+  @endcode
+
+  @par RFFT Output buffer sizes
+       They are also the input sizes for the RIFFT
+
+| Scalar     | Helium        | Neon           |
+| ---------: | ------------: | -------------: | 
+| 2*fftSize  | fftSize + 2   | fftSize + 2    |  
+
  */
 
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
