@@ -12,7 +12,7 @@ Reference patterns are generated with
 a double precision computation.
 
 */
-#define ABS_ERROR ((q31_t)49000)
+#define ABS_ERROR_Q31 ((q31_t)49000)
 
 
 
@@ -37,7 +37,7 @@ a double precision computation.
 
         ASSERT_SNR(output,ref,(q31_t)SNR_THRESHOLD);
 
-        ASSERT_NEAR_EQ(output,ref,ABS_ERROR);
+        ASSERT_NEAR_EQ(output,ref,ABS_ERROR_Q31);
 
     } 
 

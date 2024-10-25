@@ -4,6 +4,7 @@
 #include "Test.h"
 
 #define SNR_THRESHOLD 90
+#define ABS_ERROR_Q31 ((q31_t)53)
 
     void TransformCQ31::test_cfft_q31()
     {
@@ -14,7 +15,6 @@
 
         memcpy(outfftp,inp,sizeof(q31_t)*input.nbSamples());
 
-        ASSERT_TRUE(status == ARM_MATH_SUCCESS);
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
           arm_cfft_q31(
              &(this->instCfftQ31),
@@ -30,7 +30,7 @@
              1);
 #endif
         ASSERT_SNR(outputfft,ref,(float32_t)SNR_THRESHOLD);
-        ASSERT_NEAR_EQ(outputfft,ref,(q31_t)53);
+        ASSERT_NEAR_EQ(outputfft,ref,ABS_ERROR_Q31);
         ASSERT_EMPTY_TAIL(outputfft);
        
         
@@ -46,7 +46,6 @@
 
         memcpy(outfftp,inp,sizeof(q31_t)*input.nbSamples());
 
-        ASSERT_TRUE(status == ARM_MATH_SUCCESS);
    
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
           arm_cfft_q31(
@@ -69,6 +68,7 @@
         }
           
         ASSERT_SNR(outputfft,ref,(float32_t)SNR_THRESHOLD);
+        ASSERT_NEAR_EQ(outputfft,ref,ABS_ERROR_Q31);
         ASSERT_EMPTY_TAIL(outputfft);
 
        

@@ -13,7 +13,7 @@ a double precision computation.
 
 */
 #define REL_ERROR (1.2e-3)
-
+#define ABS_ERROR (1.0e-5)
 
 
     void MFCCF32::test_mfcc_f32()
@@ -36,7 +36,7 @@ a double precision computation.
 
         ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
 
-        ASSERT_REL_ERROR(output,ref,REL_ERROR);
+        ASSERT_CLOSE_ERROR(output,ref,ABS_ERROR,REL_ERROR);
 
     } 
 

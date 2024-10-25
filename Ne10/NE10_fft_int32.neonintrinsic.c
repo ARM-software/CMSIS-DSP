@@ -1814,7 +1814,7 @@ void arm_ne10_fft_r2c_1d_int32_neon (q31_t *fout,
                                  ne10_int32_t scaled_flag,
                                  q31_t *buffer)
 {
-    ne10_fft_cpx_int32_t * tmpbuf1 = (ne10_fft_cpx_int32_t*)buffer;
+    q31_t * tmpbuf1 = buffer;
     q31_t * tmpbuf2 = buffer + 2*S->ncfft;
     arm_cfft_instance_q31 c2c_state;
 
@@ -1822,8 +1822,14 @@ void arm_ne10_fft_r2c_1d_int32_neon (q31_t *fout,
     c2c_state.factors = S->factors;
     c2c_state.pTwiddle = S->twiddles;
 
-    arm_ne10_fft_c2c_1d_int32_neon ((q31_t *)tmpbuf1, (q31_t*) fin, &c2c_state, 0, scaled_flag,tmpbuf2);
-    arm_ne10_fft_split_r2c_1d_int32_neon ((ne10_fft_cpx_int32_t*)fout, tmpbuf1,  (ne10_fft_cpx_int32_t*)S->super_twiddles, S->ncfft, scaled_flag);
+    arm_ne10_fft_c2c_1d_int32_neon (tmpbuf1, 
+                                   (q31_t*) fin, 
+                                   &c2c_state, 0, 
+                                   scaled_flag,tmpbuf2);
+    arm_ne10_fft_split_r2c_1d_int32_neon ((ne10_fft_cpx_int32_t*)fout, 
+                                           (ne10_fft_cpx_int32_t*)tmpbuf1,  
+                                           (ne10_fft_cpx_int32_t*)S->super_twiddles, 
+                                           S->ncfft, scaled_flag);
 }
 
 /**
@@ -1836,7 +1842,7 @@ void arm_ne10_fft_c2r_1d_int32_neon (q31_t *fout,
                                  ne10_int32_t scaled_flag,
                                  q31_t *buffer)
 {
-    ne10_fft_cpx_int32_t * tmpbuf1 = (ne10_fft_cpx_int32_t*)buffer;
+    q31_t * tmpbuf1 = buffer;
     q31_t * tmpbuf2 = buffer + 2*S->ncfft;
     arm_cfft_instance_q31 c2c_state;
 
@@ -1844,6 +1850,11 @@ void arm_ne10_fft_c2r_1d_int32_neon (q31_t *fout,
     c2c_state.factors = S->factors;
     c2c_state.pTwiddle = S->twiddles;
 
-    arm_ne10_fft_split_c2r_1d_int32_neon (tmpbuf1, (ne10_fft_cpx_int32_t*)fin, (ne10_fft_cpx_int32_t*)S->super_twiddles, S->ncfft, scaled_flag);
-    arm_ne10_fft_c2c_1d_int32_neon ( (q31_t*) fout, (q31_t *)tmpbuf1, &c2c_state, 1, scaled_flag,tmpbuf2);
+    arm_ne10_fft_split_c2r_1d_int32_neon ((ne10_fft_cpx_int32_t*)tmpbuf1, 
+                                         (ne10_fft_cpx_int32_t*)fin, 
+                                         (ne10_fft_cpx_int32_t*)S->super_twiddles, 
+                                         S->ncfft, scaled_flag);
+    arm_ne10_fft_c2c_1d_int32_neon ( (q31_t*) fout, 
+                                     tmpbuf1, 
+                                     &c2c_state, 1, scaled_flag,tmpbuf2);
 }

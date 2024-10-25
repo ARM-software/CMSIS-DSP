@@ -80,5 +80,23 @@ extern void arm_ne10_fft_c2r_1d_int32_neon (q31_t *fout,
                                  int32_t scaled_flag,
                                  q31_t *buffer);
 
+extern void arm_ne10_fft_c2c_1d_int16_neon (q15_t *fout,
+                                 const q15_t *fin,
+                                 const arm_cfft_instance_q15* cfg,
+                                 ne10_int32_t inverse_fft,
+                                 ne10_int32_t scaled_flag,
+                                 q15_t *buffer);
+
+extern void arm_ne10_fft_r2c_1d_int16_neon (q15_t *fout,
+                                 const q15_t *fin,
+                                 const arm_rfft_instance_q15* cfg,
+                                 ne10_int32_t scaled_flag,
+                                 q15_t *buffer);
+
+extern void arm_ne10_fft_c2r_1d_int16_neon (q15_t *fout,
+                                 const q15_t *fin,
+                                 const arm_rfft_instance_q15* cfg,
+                                 ne10_int32_t scaled_flag,
+                                 q15_t *buffer);
 
 #endif

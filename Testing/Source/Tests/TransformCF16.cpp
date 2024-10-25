@@ -4,6 +4,8 @@
 #include "Test.h"
 
 #define SNR_THRESHOLD 58
+#define REL_ERROR (1.0e-4)
+#define ABS_ERROR (1.0e-3)
 
     void TransformCF16::test_cfft_f16()
     {
@@ -24,6 +26,7 @@
 
           
         ASSERT_SNR(outputfft,ref,(float16_t)SNR_THRESHOLD);
+        ASSERT_CLOSE_ERROR(outputfft,ref,ABS_ERROR,REL_ERROR);
         ASSERT_EMPTY_TAIL(outputfft);
 
 

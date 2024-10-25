@@ -312,7 +312,6 @@ typedef struct
     ne10_int32_t nfft;
     ne10_int32_t *factors;
     ne10_fft_cpx_int16_t *twiddles;
-    ne10_fft_cpx_int16_t *buffer;
 } ne10_fft_state_int16_t;
 
 typedef ne10_fft_state_int16_t* ne10_fft_cfg_int16_t;
@@ -324,11 +323,10 @@ typedef struct
     ne10_int32_t *factors;
     ne10_fft_cpx_int16_t *twiddles;
     ne10_fft_cpx_int16_t *super_twiddles;
-    ne10_fft_cpx_int16_t *buffer;
 } ne10_fft_r2c_state_int16_t;
 
 typedef ne10_fft_r2c_state_int16_t* ne10_fft_r2c_cfg_int16_t;
-#endif 
+#endif
 
 /**
  * @brief Structure for the 32-bit fixed point FFT function.

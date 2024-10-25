@@ -26,6 +26,18 @@
  * limitations under the License.
  */
 
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#define RFFT_INIT(L) \
+  status=arm_rfft_init_q15(&(S->rfft),L);
+#define RFFT_INIT_WITH_LEN(L) \
+  status=arm_rfft_init_##L##_q15(&(S->rfft));
+#else
+#define RFFT_INIT(L) \
+  status=arm_rfft_init_q15(&(S->rfft),L,0,1);
+#define RFFT_INIT_WITH_LEN(L) \
+  status=arm_rfft_init_##L##_q15(&(S->rfft),0,1);
+#endif 
+
 /**
  * @defgroup MFCCQ15 MFCC Q15
  */
@@ -112,7 +124,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_q15(
  #if defined(ARM_MFCC_CFFT_BASED)
  status=arm_cfft_init_q15(&(S->cfft),fftLen);
  #else
- status=arm_rfft_init_q15(&(S->rfft),fftLen,0,1);
+ RFFT_INIT(fftLen);
  #endif
  
  return(status);
@@ -170,7 +182,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_##LEN##_q15(             \
  S->filterCoefs=filterCoefs;                      \
  S->windowCoefs=windowCoefs;                      \
                                                   \
- status=arm_rfft_init_##LEN##_q15(&(S->rfft),0,1);\
+ RFFT_INIT_WITH_LEN(LEN);                         \
                                                   \
  return(status);                                  \
 }

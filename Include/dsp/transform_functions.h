@@ -213,6 +213,14 @@ extern "C"
   /**
    * @brief Instance structure for the fixed-point CFFT/CIFFT function.
    */
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+typedef struct
+{
+          uint16_t fftLen;                   /**< length of the FFT. */
+    const q15_t *pTwiddle;         /**< points to the Twiddle factor table. */
+    const uint32_t *factors;
+} arm_cfft_instance_q15;
+#else
   typedef struct
   {
           uint16_t fftLen;                   /**< length of the FFT. */
@@ -228,6 +236,7 @@ extern "C"
    const q15_t *rearranged_twiddle_stride3;
 #endif
   } arm_cfft_instance_q15;
+#endif 
 
 arm_status arm_cfft_init_4096_q15(arm_cfft_instance_q15 * S);
 arm_status arm_cfft_init_2048_q15(arm_cfft_instance_q15 * S);
@@ -243,11 +252,20 @@ arm_status arm_cfft_init_q15(
   arm_cfft_instance_q15 * S,
   uint16_t fftLen);
 
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+void arm_cfft_q15(
+    const arm_cfft_instance_q15 * S,
+          const q15_t * src,
+          q15_t * dst,
+          uint8_t ifftFlag,
+          q15_t * buffer);
+#else
 void arm_cfft_q15(
     const arm_cfft_instance_q15 * S,
           q15_t * p1,
           uint8_t ifftFlag,
           uint8_t bitReverseFlag);
+#endif 
 
   /**
    * @brief Instance structure for the fixed-point CFFT/CIFFT function.
@@ -402,6 +420,16 @@ arm_status arm_cfft_init_16_f64(arm_cfft_instance_f64 * S);
   /**
    * @brief Instance structure for the Q15 RFFT/RIFFT function.
    */
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+  typedef struct
+  {
+    uint16_t nfft;
+    uint16_t ncfft;
+    const uint32_t *factors;
+    const q15_t *twiddles;
+    const q15_t *super_twiddles;
+  } arm_rfft_instance_q15;
+#else
   typedef struct
   {
           uint32_t fftLenReal;                      /**< length of the real FFT. */
@@ -416,7 +444,48 @@ arm_status arm_cfft_init_16_f64(arm_cfft_instance_f64 * S);
     const arm_cfft_instance_q15 *pCfft;       /**< points to the complex FFT instance. */
 #endif
   } arm_rfft_instance_q15;
+#endif 
+  
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 
+arm_status arm_rfft_init_32_q15(
+        arm_rfft_instance_q15 * S);
+
+arm_status arm_rfft_init_64_q15(
+        arm_rfft_instance_q15 * S);
+
+arm_status arm_rfft_init_128_q15(
+        arm_rfft_instance_q15 * S);
+
+arm_status arm_rfft_init_256_q15(
+        arm_rfft_instance_q15 * S);
+
+arm_status arm_rfft_init_512_q15(
+        arm_rfft_instance_q15 * S);
+
+arm_status arm_rfft_init_1024_q15(
+        arm_rfft_instance_q15 * S);
+
+arm_status arm_rfft_init_2048_q15(
+        arm_rfft_instance_q15 * S);
+
+arm_status arm_rfft_init_4096_q15(
+        arm_rfft_instance_q15 * S);
+
+arm_status arm_rfft_init_8192_q15(
+        arm_rfft_instance_q15 * S);
+
+  arm_status arm_rfft_init_q15(
+        arm_rfft_instance_q15 * S,
+        uint32_t fftLenReal);
+
+void arm_rfft_q15(
+  const arm_rfft_instance_q15 * S,
+  const q15_t * pSrc,
+        q15_t * pDst,
+        q15_t * tmp,
+        uint8_t ifftFlag);
+#else
 arm_status arm_rfft_init_32_q15(
         arm_rfft_instance_q15 * S,
         uint32_t ifftFlagR,
@@ -472,6 +541,7 @@ arm_status arm_rfft_init_8192_q15(
   const arm_rfft_instance_q15 * S,
         q15_t * pSrc,
         q15_t * pDst);
+#endif 
 
   /**
    * @brief Instance structure for the Q31 RFFT/RIFFT function.
@@ -1123,13 +1193,22 @@ arm_status arm_mfcc_init_q15(
   @param[inout]     pTmp  points to a temporary buffer of complex
   @return        error status
  */
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+  arm_status arm_mfcc_q15(
+  const arm_mfcc_instance_q15 * S,
+  q15_t *pSrc,
+  q15_t *pDst,
+  q31_t *pTmp,
+  q15_t *pTmp2
+  );
+#else
   arm_status arm_mfcc_q15(
   const arm_mfcc_instance_q15 * S,
   q15_t *pSrc,
   q15_t *pDst,
   q31_t *pTmp
   );
-
+#endif
 
 #ifdef   __cplusplus
 }

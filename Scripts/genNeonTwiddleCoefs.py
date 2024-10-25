@@ -107,7 +107,7 @@ def printCQ31Array(f,name,arr):
 
 def printCQ15Array(f,name,arr):
     nb = 0
-    print(f"const q15_t {name}[{name.upper()}_LEN]={{",file=f)
+    print(f"__ALIGNED(16) const q15_t {name}[{name.upper()}_LEN]={{",file=f)
 
     for d in arr:
         val = "%s," % Tools.to_q15(d)
@@ -121,7 +121,7 @@ def printCQ15Array(f,name,arr):
 
 def printCQ7Array(f,name,arr):
     nb = 0
-    print(f"const q7_t {name}[{name.upper()}_LEN]={{",file=f)
+    print(f"__ALIGNED(16) const q7_t {name}[{name.upper()}_LEN]={{",file=f)
 
     for d in arr:
         val = "%s," % Tools.to_q7(d)
@@ -181,6 +181,7 @@ NE10_FACTOR_EIGHT=2
 SIZES=[16,32,64,128,256,512,1024,2048,4096]
 
 SIZES_RFFT_Q31=[16,32,64,128,256,512,1024,2048,4096,8192]
+SIZES_RFFT_Q15=[16,32,64,128,256,512,1024,2048,4096,8192]
 
 def factors(nfft,factor_height_first_stage=True):
     n = nfft
@@ -281,7 +282,7 @@ def superTwiddle(theType,nfft):
 
     return twiddles[:(maxidx+1)]
 
-def superTwiddle_int32(theType,nfft):
+def superTwiddle_int(theType,nfft):
     maxidx = 0
     twiddles = np.zeros(nfft//2,dtype=complex)
     for i in range(nfft//2):
@@ -336,14 +337,14 @@ def computeRFFTArrays(theType,nfft):
     }
     
     
-def computeRFFTArrays_int32(theType,nfft):
+def computeRFFTArrays_int(theType,nfft):
     
     ncfft = nfft // 2
     r_factors = factors(ncfft)
     offset_twid,r_twiddles = genTwiddles(theType,r_factors,ncfft,firstStage=False)
     #print(r_factors)
     
-    r_super_twiddles_neon = superTwiddle_int32(theType,ncfft)
+    r_super_twiddles_neon = superTwiddle_int(theType,ncfft)
     #print(r_super_twiddles_neon)
     return {
        "r_factors":factor_desc(r_factors),
@@ -359,7 +360,10 @@ def computeCFFTArrays(theType,nfft):
     f["f_stride"] = 4*f["f_stride"]
     f["factors"] = [{"f":4,"n":nfft// NE10_FFT_PARA_LEVEL}] + f["factors"]
 
-    offset,c_twiddles = genTwiddles(theType,f,nfft)
+    firstStage=True
+    if theType == Q15:
+        firstStage = False
+    offset,c_twiddles = genTwiddles(theType,f,nfft,firstStage=firstStage)
 
     return{
       "factors":factor_desc(f),
@@ -417,8 +421,8 @@ def write_factors(theType,name,n,f,h,factors):
 
 def neonRFFTTwiddle(theType,f,h,n):
     
-    if theType == Q31: 
-        rfft = computeRFFTArrays_int32(theType,n)
+    if theType == Q31 or theType == Q15: 
+        rfft = computeRFFTArrays_int(theType,n)
 
         write_twiddles(theType,"rfft_twiddles",n,f,h,rfft["r_twiddles"])
         write_factors(theType,"rfft_factors",n,f,h,rfft["r_factors"])
@@ -603,6 +607,9 @@ with open(args.f,'w') as f:
 
      for s in SIZES_RFFT_Q31:
          neonRFFTTwiddle(Q31,f,h,s)
+
+     for s in SIZES_RFFT_Q15:
+         neonRFFTTwiddle(Q15,f,h,s)
 
      for s in SIZES:
          neonCFFTTwiddle(F32,False,f,h,s)

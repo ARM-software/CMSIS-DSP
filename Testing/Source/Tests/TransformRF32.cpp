@@ -5,7 +5,8 @@
 
 
 #define SNR_THRESHOLD 120
-
+#define REL_ERROR (1.0e-5)
+#define ABS_ERROR (5.0e-5)
 
 
     void TransformRF32::test_rfft_f32()
@@ -35,6 +36,7 @@
 #endif
           
         ASSERT_SNR(outputfft,ref,(float32_t)SNR_THRESHOLD);
+        ASSERT_CLOSE_ERROR(outputfft,ref,ABS_ERROR,REL_ERROR);
         ASSERT_EMPTY_TAIL(outputfft);
         
     } 

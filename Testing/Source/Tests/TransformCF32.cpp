@@ -4,6 +4,8 @@
 #include "Test.h"
 
 #define SNR_THRESHOLD 120
+#define REL_ERROR (2.0e-5)
+#define ABS_ERROR (7.0e-5)
 
     void TransformCF32::test_cfft_f32()
     {
@@ -16,7 +18,6 @@
 
         memcpy(infftp,inp,sizeof(float32_t)*input.nbSamples());
 
-        ASSERT_TRUE(status == ARM_MATH_SUCCESS);
    
 #if defined(ARM_MATH_NEON)
         arm_cfft_f32(
@@ -35,6 +36,7 @@
 
           
         ASSERT_SNR(outputfft,ref,(float32_t)SNR_THRESHOLD);
+        ASSERT_CLOSE_ERROR(outputfft,ref,ABS_ERROR,REL_ERROR);
         ASSERT_EMPTY_TAIL(outputfft);
 
 

@@ -71,12 +71,22 @@
                    point computations may saturate.
 
  */
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+ARM_DSP_ATTRIBUTE arm_status arm_mfcc_q15(
+  const arm_mfcc_instance_q15 * S,
+  q15_t *pSrc,
+  q15_t *pDst,
+  q31_t *pTmp,
+  q15_t *pTmp_rfft
+  )
+#else
 ARM_DSP_ATTRIBUTE arm_status arm_mfcc_q15(
   const arm_mfcc_instance_q15 * S,
   q15_t *pSrc,
   q15_t *pDst,
   q31_t *pTmp
   )
+#endif
 {
     q15_t m;
     uint32_t index;
@@ -116,6 +126,10 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_q15(
     /* Compute spectrum magnitude 
     */
     fftShift = 31 - __CLZ(S->fftLen);
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+    /* Default RFFT based implementation */
+    arm_rfft_q15(&(S->rfft),pSrc,pTmp2,pTmp_rfft,0);
+#else
 #if defined(ARM_MFCC_CFFT_BASED)
     /* some HW accelerator for CMSIS-DSP used in some boards
        are only providing acceleration for CFFT.
@@ -134,6 +148,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_q15(
 #else
     /* Default RFFT based implementation */
     arm_rfft_q15(&(S->rfft),pSrc,pTmp2);
+#endif
 #endif
     filterLimit = 1 + (S->fftLen >> 1);
 
