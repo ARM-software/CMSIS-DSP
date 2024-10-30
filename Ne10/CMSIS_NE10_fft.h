@@ -33,6 +33,10 @@
 #include "CMSIS_NE10_types.h"
 #include "dsp/transform_functions.h"
 
+#if defined(ARM_MATH_NEON_FLOAT16)
+#include "dsp/transform_functions_f16.h"
+#endif
+
 extern void arm_ne10_fft16_forward_float32_neon (const arm_cfft_instance_f32 *S,
           const ne10_fft_cpx_float32_t *Fin,
           ne10_fft_cpx_float32_t *Fout);
@@ -61,6 +65,30 @@ extern void arm_ne10_fft_c2r_1d_float32_neon (const arm_rfft_fast_instance_f32 *
                                               const float32_t *in,
                                               float32_t *out,
                                               float32_t *buffer);
+
+#if defined(ARM_MATH_NEON_FLOAT16)
+
+extern void arm_ne10_mixed_radix_fft_forward_float16_neon (const arm_cfft_instance_f16 *S,
+        const ne10_fft_cpx_float16_t *in,
+        ne10_fft_cpx_float16_t *out,
+        ne10_fft_cpx_float16_t *buffer);
+
+extern void arm_ne10_mixed_radix_fft_backward_float16_neon (const arm_cfft_instance_f16 *S,
+        const ne10_fft_cpx_float16_t *in,
+        ne10_fft_cpx_float16_t *out,
+        ne10_fft_cpx_float16_t *buffer);
+
+extern void arm_ne10_fft_r2c_1d_float16_neon (const arm_rfft_fast_instance_f16 * S,
+                                              const float16_t *in,
+                                              float16_t *out,
+                                              float16_t *buffer);
+
+
+extern void arm_ne10_fft_c2r_1d_float16_neon (const arm_rfft_fast_instance_f16 * S,
+                                              const float16_t *in,
+                                              float16_t *out,
+                                              float16_t *buffer);
+#endif 
 
 extern void arm_ne10_fft_c2c_1d_int32_neon (q31_t *fout,
                                  const q31_t *fin,

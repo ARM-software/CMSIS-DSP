@@ -133,6 +133,11 @@ if (NEON OR NEONEXPERIMENTAL)
     if (NEON_RIFFT_SCALING)
         target_compile_definitions(CMSISDSP PRIVATE CMSIS_NE10_DSP_RIFFT_SCALING)  
     endif()
+
+    if ((NOT ARMAC5) AND (NOT DISABLEFLOAT16))
+        target_sources(CMSISDSP PRIVATE "${DSP}/Ne10/NE10_fft_float16.neonintrinsic.c")
+        target_sources(CMSISDSP PRIVATE "${DSP}/Ne10/NE10_rfft_float16.neonintrinsic.c")
+    endif()
 endif()
 
 

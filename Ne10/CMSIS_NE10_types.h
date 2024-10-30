@@ -48,6 +48,8 @@
 #include <assert.h>
 #include <stdint.h>
 
+#include "arm_math_types_f16.h"
+
 /**
  * @TODO Move the definition of NE10_UNROLL_LEVEL to cmake configuration files.
  * Macro NE10_UNROLL_LEVEL controls algorithm of FFT funtions.
@@ -82,149 +84,14 @@ typedef int32_t  ne10_int32_t;
 typedef uint32_t ne10_uint32_t;
 typedef int64_t  ne10_int64_t;
 typedef uint64_t ne10_uint64_t;
+#if defined(ARM_FLOAT16_SUPPORTED)
+typedef float16_t    ne10_float16_t;
+#endif
 typedef float    ne10_float32_t;
 typedef double   ne10_float64_t;
 typedef int      ne10_result_t;     // resulting [error-]code
 
-#if 0
-/**
- * @brief A 2-tuple of ne10_float32_t values.
- */
-typedef struct
-{
-    ne10_float32_t x;
-    ne10_float32_t y;
-} ne10_vec2f_t;
 
-/**
- * @brief A 3-tuple of ne10_float32_t values.
- */
-typedef struct
-{
-    ne10_float32_t x;
-    ne10_float32_t y;
-    ne10_float32_t z;
-} ne10_vec3f_t;
-
-/**
- * @brief A 4-tuple of ne10_float32_t values.
- */
-typedef struct
-{
-    ne10_float32_t x;
-    ne10_float32_t y;
-    ne10_float32_t z;
-    ne10_float32_t w;
-} ne10_vec4f_t;
-
-/////////////////////////////////////////////////////////
-// definitions for matrix
-/////////////////////////////////////////////////////////
-
-typedef struct
-{
-    ne10_float32_t r1;
-    ne10_float32_t r2;
-} __attribute__ ( (packed)) ne10_mat_row2f;
-
-typedef struct
-{
-    ne10_mat_row2f c1;
-    ne10_mat_row2f c2;
-
-} __attribute__ ( (packed)) ne10_mat2x2f_t;   // a 2x2 matrix
-
-static inline void createColumnMajorMatrix2x2 (ne10_mat2x2f_t * outMat, ne10_float32_t m11, ne10_float32_t m21, ne10_float32_t m12, ne10_float32_t m22)
-{
-    assert (0 != outMat);
-
-    outMat->c1.r1 = m11;
-    outMat->c1.r2 = m21;
-    outMat->c2.r1 = m12;
-    outMat->c2.r2 = m22;
-}
-
-
-typedef struct
-{
-    ne10_float32_t r1;
-    ne10_float32_t r2;
-    ne10_float32_t r3;
-} __attribute__ ( (packed)) ne10_mat_row3f;
-
-typedef struct
-{
-    ne10_mat_row3f c1;
-    ne10_mat_row3f c2;
-    ne10_mat_row3f c3;
-
-} __attribute__ ( (packed)) ne10_mat3x3f_t;   // a 3x3 matrix
-
-static inline void createColumnMajorMatrix3x3 (ne10_mat3x3f_t * outMat, ne10_float32_t m11, ne10_float32_t m21, ne10_float32_t m31,
-        ne10_float32_t m12, ne10_float32_t m22, ne10_float32_t m32,
-        ne10_float32_t m13, ne10_float32_t m23, ne10_float32_t m33)
-{
-    assert (0 != outMat);
-
-    outMat->c1.r1 = m11;
-    outMat->c1.r2 = m21;
-    outMat->c1.r3 = m31;
-
-    outMat->c2.r1 = m12;
-    outMat->c2.r2 = m22;
-    outMat->c2.r3 = m32;
-
-    outMat->c3.r1 = m13;
-    outMat->c3.r2 = m23;
-    outMat->c3.r3 = m33;
-}
-
-
-typedef struct
-{
-    ne10_float32_t r1;
-    ne10_float32_t r2;
-    ne10_float32_t r3;
-    ne10_float32_t r4;
-} __attribute__ ( (packed)) ne10_mat_row4f;
-
-typedef struct
-{
-    ne10_mat_row4f c1;
-    ne10_mat_row4f c2;
-    ne10_mat_row4f c3;
-    ne10_mat_row4f c4;
-
-} __attribute__ ( (packed)) ne10_mat4x4f_t;   // a 4x4 matrix
-
-static inline void createColumnMajorMatrix4x4 (ne10_mat4x4f_t * outMat, ne10_float32_t m11, ne10_float32_t m21, ne10_float32_t m31, ne10_float32_t m41,
-        ne10_float32_t m12, ne10_float32_t m22, ne10_float32_t m32, ne10_float32_t m42,
-        ne10_float32_t m13, ne10_float32_t m23, ne10_float32_t m33, ne10_float32_t m43,
-        ne10_float32_t m14, ne10_float32_t m24, ne10_float32_t m34, ne10_float32_t m44)
-{
-    assert (0 != outMat);
-
-    outMat->c1.r1 = m11;
-    outMat->c1.r2 = m21;
-    outMat->c1.r3 = m31;
-    outMat->c1.r4 = m41;
-
-    outMat->c2.r1 = m12;
-    outMat->c2.r2 = m22;
-    outMat->c2.r3 = m32;
-    outMat->c2.r4 = m42;
-
-    outMat->c3.r1 = m13;
-    outMat->c3.r2 = m23;
-    outMat->c3.r3 = m33;
-    outMat->c3.r4 = m43;
-
-    outMat->c4.r1 = m14;
-    outMat->c4.r2 = m24;
-    outMat->c4.r3 = m34;
-    outMat->c4.r4 = m44;
-}
-#endif
 
 /////////////////////////////////////////////////////////
 // definitions for fft
@@ -240,62 +107,15 @@ typedef struct
     ne10_float32_t i;
 } ne10_fft_cpx_float32_t;
 
-#if 0
-/**
- * @brief Structure for the floating point FFT state
- */
+#if defined(ARM_FLOAT16_SUPPORTED)
 typedef struct
 {
-    ne10_int32_t nfft;
-    ne10_int32_t *factors;
-    ne10_fft_cpx_float32_t *twiddles;
-    ne10_fft_cpx_float32_t *buffer;
-    ne10_fft_cpx_float32_t *last_twiddles;
-    /**
-     *  @brief Flag to control scaling behaviour in forward floating point complex FFT.
-     *  @note If is_forward_scaled is set 0, Ne10 will not scale output of forward floating
-     *  point complex FFT. Otherwise, Ne10 will scale output of forward floating
-     *  point complex FFT.
-     *  @warning Only non-power-of-two FFTs are affected by this flag.
-     */
-    ne10_int32_t is_forward_scaled;
-    /**
-     *  @brief Flag to control scaling behaviour in backward floating point complex FFT.
-     *  @note If is_backward_scaled is set 0, Ne10 will not scale output of backward floating
-     *  point complex FFT. Otherwise, Ne10 will scale output of backward floating
-     *  point complex FFT.
-     *  @warning Only non-power-of-two FFTs are affected by this flag.
-     */
-    ne10_int32_t is_backward_scaled;
-} ne10_fft_state_float32_t;
-
-/**
- * @brief Configuration structure for floating point FFT.
- */
-typedef ne10_fft_state_float32_t* ne10_fft_cfg_float32_t;
-
-typedef struct
-{
-    ne10_fft_cpx_float32_t *buffer;
-#if (NE10_UNROLL_LEVEL == 0)
-    ne10_int32_t ncfft;
-    ne10_int32_t *factors;
-    ne10_fft_cpx_float32_t *twiddles;
-    ne10_fft_cpx_float32_t *super_twiddles;
-#elif (NE10_UNROLL_LEVEL > 0)
-    ne10_int32_t nfft;
-    ne10_fft_cpx_float32_t *r_twiddles;
-    ne10_int32_t *r_factors;
-    ne10_fft_cpx_float32_t *r_twiddles_backward;
-    ne10_fft_cpx_float32_t *r_twiddles_neon;
-    ne10_fft_cpx_float32_t *r_twiddles_neon_backward;
-    ne10_int32_t *r_factors_neon;
-    ne10_fft_cpx_float32_t *r_super_twiddles_neon;
-#endif
-} ne10_fft_r2c_state_float32_t;
-
-typedef ne10_fft_r2c_state_float32_t* ne10_fft_r2c_cfg_float32_t;
+    ne10_float16_t r;
+    ne10_float16_t i;
+} ne10_fft_cpx_float16_t;
 #endif 
+
+ 
 
 /**
  * @brief Structure for the 16-bit fixed point FFT function.
@@ -306,27 +126,7 @@ typedef struct
     ne10_int16_t i;
 } ne10_fft_cpx_int16_t;
 
-#if 0
-typedef struct
-{
-    ne10_int32_t nfft;
-    ne10_int32_t *factors;
-    ne10_fft_cpx_int16_t *twiddles;
-} ne10_fft_state_int16_t;
 
-typedef ne10_fft_state_int16_t* ne10_fft_cfg_int16_t;
-
-typedef struct
-{
-    ne10_int32_t nfft;
-    ne10_int32_t ncfft;
-    ne10_int32_t *factors;
-    ne10_fft_cpx_int16_t *twiddles;
-    ne10_fft_cpx_int16_t *super_twiddles;
-} ne10_fft_r2c_state_int16_t;
-
-typedef ne10_fft_r2c_state_int16_t* ne10_fft_r2c_cfg_int16_t;
-#endif
 
 /**
  * @brief Structure for the 32-bit fixed point FFT function.
@@ -336,127 +136,5 @@ typedef struct
     ne10_int32_t r;
     ne10_int32_t i;
 } ne10_fft_cpx_int32_t;
-
-#if 0
-typedef struct
-{
-    ne10_int32_t nfft;
-    ne10_int32_t *factors;
-    ne10_fft_cpx_int32_t *twiddles;
-    ne10_fft_cpx_int32_t *buffer;
-    ne10_fft_cpx_int32_t *last_twiddles;
-} ne10_fft_state_int32_t;
-
-typedef ne10_fft_state_int32_t* ne10_fft_cfg_int32_t;
-
-typedef struct
-{
-    ne10_int32_t nfft;
-    ne10_int32_t ncfft;
-    ne10_int32_t *factors;
-    ne10_fft_cpx_int32_t *twiddles;
-    ne10_fft_cpx_int32_t *super_twiddles;
-    ne10_fft_cpx_int32_t *buffer;
-} ne10_fft_r2c_state_int32_t;
-
-typedef ne10_fft_r2c_state_int32_t* ne10_fft_r2c_cfg_int32_t;
-
-/////////////////////////////////////////////////////////
-// definitions for fir
-/////////////////////////////////////////////////////////
-
-/**
- * @brief Instance structure for the floating-point FIR filter.
- */
-typedef struct
-{
-    ne10_uint16_t numTaps;    /**< Length of the filter. */
-    ne10_float32_t *pState;    /**< Points to the state variable array. The array is of length numTaps+maxBlockSize-1. */
-    ne10_float32_t *pCoeffs;   /**< Points to the coefficient array. The array is of length numTaps. */
-} ne10_fir_instance_f32_t;
-
-/**
- * @brief Instance structure for the floating point FIR Lattice filter.
- */
-typedef struct
-{
-    ne10_uint16_t numStages;    /**< numStages of the of lattice filter. */
-    ne10_float32_t *pState;      /**< Points to the state variable array. The array is of length numStages. */
-    ne10_float32_t *pCoeffs;     /**< Points to the coefficient array. The array is of length numStages. */
-} ne10_fir_lattice_instance_f32_t;
-
-/**
- * @brief Instance structure for the floating-point FIR Decimation.
- */
-typedef struct
-{
-    ne10_uint8_t  M;            /**< Decimation Factor. */
-    ne10_uint16_t numTaps;      /**< Length of the filter. */
-    ne10_float32_t    *pCoeffs;      /**< Points to the coefficient array. The array is of length numTaps.*/
-    ne10_float32_t    *pState;       /**< Points to the state variable array. The array is of length numTaps+maxBlockSize-1. */
-} ne10_fir_decimate_instance_f32_t;
-
-/**
- * @brief Instance structure for the floating-point FIR Interpolation.
- */
-typedef struct
-{
-    ne10_uint8_t L;             /**< Interpolation Factor. */
-    ne10_uint16_t phaseLength;  /**< Length of each polyphase filter component. */
-    ne10_float32_t *pCoeffs;         /**< Points to the coefficient array. The array is of length numTaps.*/
-    ne10_float32_t *pState;          /**< Points to the state variable array. The array is of length numTaps+maxBlockSize-1. */
-} ne10_fir_interpolate_instance_f32_t;
-
-/**
- * @brief Instance structure for the floating-point FIR Sparse filter.
- */
-typedef struct
-{
-    ne10_uint16_t numTaps;      /**< Length of the filter. */
-    ne10_uint16_t stateIndex;   /**< Index pointer for the state buffer .*/
-    ne10_float32_t *pState;          /**< Points to the state variable array. The array is of length numTaps+maxBlockSize-1. */
-    ne10_float32_t *pCoeffs;         /**< Points to the coefficient array. The array is of length numTaps.*/
-    ne10_uint16_t  maxDelay;    /**< the largest number of delay line values .*/
-    ne10_int32_t  *pTapDelay;    /**< Pointer to the array containing positions of the non-zero tap values. */
-} ne10_fir_sparse_instance_f32_t;
-
-/**
-   * @brief Instance structure for the floating point IIR Lattice filter.
-   */
-typedef struct
-{
-    ne10_uint16_t numStages;    /**< numStages of the of lattice filter. */
-    ne10_float32_t *pState;      /**< Points to the state variable array. The array is of length numStages + blockSize -1. */
-    ne10_float32_t *pkCoeffs;    /**< Points to the reflection coefficient array. The array is of length numStages. */
-    ne10_float32_t *pvCoeffs;    /**< Points to the ladder coefficient array. The array is of length numStages+1. */
-} ne10_iir_lattice_instance_f32_t;
-
-/////////////////////////////////////////////////////////
-// definitions for imgproc module
-/////////////////////////////////////////////////////////
-
-/**
- * @brief Structure for point in image.
- */
-typedef struct
-{
-    ne10_uint32_t x;
-    ne10_uint32_t y;
-} ne10_point_t;
-
-typedef struct
-{
-    ne10_uint32_t x;
-    ne10_uint32_t y;
-} ne10_size_t;
-
-typedef enum
-{
-    UBUNTU_COMMAND_LINE,
-    ANDROID_DEMO,
-    IOS_DEMO
-} ne10_print_target_t;
-
-#endif 
 
 #endif

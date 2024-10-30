@@ -577,7 +577,35 @@ ARM_DSP_ATTRIBUTE void arm_cfft_f16(
 
         }
 }
+#elif defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
+#include "CMSIS_NE10_types.h"
+#include "CMSIS_NE10_fft.h"
 
+
+
+ARM_DSP_ATTRIBUTE void arm_cfft_f16(
+  const arm_cfft_instance_f16 * S,
+        const float16_t * pIn,
+        float16_t * pOut,
+        float16_t * pBuffer, /* When used, in is not modified */
+        uint8_t ifftFlag)
+{
+    
+    if (ifftFlag == 0)
+    {
+           arm_ne10_mixed_radix_fft_forward_float16_neon (S,
+               (ne10_fft_cpx_float16_t *)pIn,
+               (ne10_fft_cpx_float16_t *)pOut,
+               (ne10_fft_cpx_float16_t *)pBuffer);
+    }
+    else 
+    {
+            arm_ne10_mixed_radix_fft_backward_float16_neon (S,
+                (ne10_fft_cpx_float16_t *)pIn,
+                (ne10_fft_cpx_float16_t *)pOut,
+                (ne10_fft_cpx_float16_t *)pBuffer);
+    }
+}
 #else
 
 #if defined(ARM_FLOAT16_SUPPORTED)

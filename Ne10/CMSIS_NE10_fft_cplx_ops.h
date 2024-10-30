@@ -84,6 +84,26 @@ static inline void arm_ne10_swap_ptr(T *&ptr_a, T *&ptr_b)
 
 #define NE10_CPX_ADDTO(Z,X) NE10_CPX_ADD(Z,X,Z)
 
+//////////////
+
+// Multiply scalar X by scalar Y
+#define NE10_S_MUL_F16(X,Y) ((_Float16)(X) * (_Float16)(Y))
+
+#define NE10_CPX_ADD_F16(Z,A,B) \
+    do { \
+        Z.r = (_Float16)A.r + (_Float16)B.r; \
+        Z.i = (_Float16)A.i + (_Float16)B.i; \
+    } while (0)
+
+#define NE10_CPX_SUB_F16(Z,A,B) \
+    do { \
+        Z.r = (_Float16)A.r - (_Float16)B.r; \
+        Z.i = (_Float16)A.i - (_Float16)B.i; \
+    } while (0)
+
+#define NE10_CPX_ADDTO_F16(Z,X) NE10_CPX_ADD_F16(Z,X,Z)
+
+/////
 #define NE10_CPX_MUL_F32(Z,A,B) \
     do { \
         ne10_float32_t ARBR = A.r * B.r; \
@@ -114,6 +134,41 @@ static inline void arm_ne10_swap_ptr(T *&ptr_a, T *&ptr_b)
 #define NE10_CPX_MUL_INV_TW_F32(Z,TW) \
     do { \
         ne10_fft_cpx_float32_t tmp; \
+        NE10_CPX_CONJ_MUL(tmp,Z,TW); \
+        Z = tmp; \
+    } while (0)
+
+
+#define NE10_CPX_MUL_F16(Z,A,B) \
+    do { \
+        ne10_float16_t ARBR =(_Float16)A.r * (_Float16)B.r; \
+        ne10_float16_t AIBI =(_Float16)A.i * (_Float16)B.i; \
+        ne10_float16_t ARBI =(_Float16)A.r * (_Float16)B.i; \
+        ne10_float16_t AIBR =(_Float16)A.i * (_Float16)B.r; \
+        Z.r = (_Float16)ARBR - (_Float16)AIBI; \
+        Z.i = (_Float16)AIBR + (_Float16)ARBI; \
+    } while (0)
+
+#define NE10_CPX_CONJ_MUL_F16(Z,A,B) \
+    do { \
+        ne10_float16_t ARBR = (_Float16)A.r * (_Float16)B.r; \
+        ne10_float16_t AIBI = (_Float16)A.i * (_Float16)B.i; \
+        ne10_float16_t ARBI = (_Float16)A.r * (_Float16)B.i; \
+        ne10_float16_t AIBR = (_Float16)A.i * (_Float16)B.r; \
+        Z.r = (_Float16)ARBR + (_Float16)AIBI; \
+        Z.i = (_Float16)AIBR - (_Float16)ARBI; \
+    } while (0)
+
+#define NE10_CPX_MUL_TW_F16(Z,TW) \
+    do { \
+        ne10_fft_cpx_float16_t tmp; \
+        NE10_CPX_MUL(tmp,Z,TW); \
+        Z = tmp; \
+    } while (0)
+
+#define NE10_CPX_MUL_INV_TW_F16(Z,TW) \
+    do { \
+        ne10_fft_cpx_float16_t tmp; \
         NE10_CPX_CONJ_MUL(tmp,Z,TW); \
         Z = tmp; \
     } while (0)

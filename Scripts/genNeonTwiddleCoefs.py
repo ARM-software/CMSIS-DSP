@@ -244,7 +244,7 @@ def genTwiddles(theType,f,nfft,transposed=False,firstStage=True):
     idx = 0;
     fstride = f["f_stride"]
     if firstStage and cur_radix % 2 != 0:
-        if theType == F32:
+        if theType == F32 or theType == F16:
            twiddles[0] = 1
         idx = idx + 1
         gen(twiddles,idx,1, fstride, cur_radix, nfft)
@@ -582,8 +582,12 @@ with open(args.f16,'w') as f:
      print(cifdeNEON % ("ARM_MATH_NEON_FLOAT16",),file=f)
      print(hifdefNEON % "ARM_MATH_NEON_FLOAT16",file=h)
      print('#include "arm_neon_tables_f16.h"',file=f)
+     
      for s in SIZES:
          neonCFFTTwiddle(F16,False,f,h,s)
+
+     for s in SIZES:
+         neonRFFTTwiddle(F16,f,h,s)
      
      print(cfooterNEON % ("ARM_MATH_NEON_FLOAT16"),file=f)
      print(hfooterNEON % "ARM_MATH_NEON_FLOAT16",file=h)

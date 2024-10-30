@@ -72,4 +72,28 @@ const static ne10_float32_t TW_3IN_F32 = - 0.866025403784439; // - TW_3IN_F32
 const static ne10_int32_t TW_3I_S32 = 1859775393; // round (TW_3I_F32 * 2^31)
 const static ne10_int32_t TW_3IN_S32 = -1859775393; // round (TW_3IN_F32 * 2^31)
 
+#if defined(ARM_MATH_NEON_FLOAT16)
+
+/* Twiddles used in Radix-8 FFT */
+const static ne10_float16_t TW_81_F16  =  0.70710678f16; // sqrt (2) / 2
+const static ne10_float16_t TW_81N_F16 = -0.70710678f16; // - TW_81_F32
+
+/* Twiddles used in Radix-5 FFT */
+const static ne10_fft_cpx_float16_t TW_5A_F16 =
+        {
+             0.309016994374947f16, //   cos (2 * pi / 5)
+            -0.951056516295154f16  // - sin (2 * pi / 5)
+        };
+
+const static ne10_fft_cpx_float16_t TW_5B_F16 =
+        {
+            -0.809016994374947f16, //   cos (4 * pi / 5)
+            -0.587785252292473f16  // - sin (4 * pi / 5)
+        };
+
+/* Twiddles used in Radix-3 FFT */
+const static ne10_float16_t TW_3I_F16  =   0.866025403784439f16; // sqrt (3) / 2
+const static ne10_float16_t TW_3IN_F16 = - 0.866025403784439f16; // - TW_3IN_F32
+#endif 
+
 #endif // NE10_FFT_COMMON_VARIBLES_H
