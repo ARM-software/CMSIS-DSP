@@ -72,7 +72,7 @@ const static ne10_float32_t TW_3IN_F32 = - 0.866025403784439; // - TW_3IN_F32
 const static ne10_int32_t TW_3I_S32 = 1859775393; // round (TW_3I_F32 * 2^31)
 const static ne10_int32_t TW_3IN_S32 = -1859775393; // round (TW_3IN_F32 * 2^31)
 
-#if defined(ARM_MATH_NEON_FLOAT16)
+#if defined(ARM_MATH_NEON_FLOAT16) && defined(ARM_FLOAT16_SUPPORTED)
 
 /* Twiddles used in Radix-8 FFT */
 const static ne10_float16_t TW_81_F16  =  0.70710678f16; // sqrt (2) / 2

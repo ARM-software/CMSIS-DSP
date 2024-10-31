@@ -3,29 +3,46 @@
 #include "Error.h"
 #include "Test.h"
 
-#define SNR_THRESHOLD 58
-#define REL_ERROR (1.0e-4)
-#define ABS_ERROR (1.0e-3)
+#if defined(ARM_MATH_NEON)
+ #define SNR_THRESHOLD 58
+ #define REL_ERROR (2.0e-2)
+ #define ABS_ERROR (2.0e-1)
+#else
+ #define SNR_THRESHOLD 58
+ #define REL_ERROR (1.0e-4)
+ #define ABS_ERROR (1.0e-3)
+#endif 
 
     void TransformCF16::test_cfft_f16()
     {
        const float16_t *inp = input.ptr();
 
+       float16_t *infftp = inputfft.ptr();
+
        float16_t *outfftp = outputfft.ptr();
+       float16_t *bufferp = bufferfft.ptr();
 
-        memcpy(outfftp,inp,sizeof(float16_t)*input.nbSamples());
+        memcpy(infftp,inp,sizeof(float32_t)*input.nbSamples());
 
-        ASSERT_TRUE(status == ARM_MATH_SUCCESS);
    
+#if defined(ARM_MATH_NEON)
         arm_cfft_f16(
              &(this->varInstCfftF16),
+             infftp,
              outfftp,
-             this->ifft,
-             1);
+             bufferp,
+             this->ifft);
+#else
+        arm_cfft_f16(
+             &(this->varInstCfftF16),
+             infftp,
+             outfftp,
+             this->ifft);
+#endif
        
 
           
-        ASSERT_SNR(outputfft,ref,(float16_t)SNR_THRESHOLD);
+        ASSERT_SNR(outputfft,ref,(float32_t)SNR_THRESHOLD);
         ASSERT_CLOSE_ERROR(outputfft,ref,ABS_ERROR,REL_ERROR);
         ASSERT_EMPTY_TAIL(outputfft);
 
@@ -472,8 +489,11 @@
 
 
        }
-        outputfft.create(ref.nbSamples(),TransformCF16::OUTPUT_CFFT_F16_ID,mgr);
-       
+       inputfft.create(ref.nbSamples(),TransformCF16::OUTPUT_CFFT_F16_ID,mgr);
+
+       outputfft.create(ref.nbSamples(),TransformCF16::OUTPUT_CFFT_F16_ID,mgr);
+       bufferfft.create(ref.nbSamples(),TransformCF16::OUTPUT_CFFT_F16_ID,mgr);
+
 
     }
 

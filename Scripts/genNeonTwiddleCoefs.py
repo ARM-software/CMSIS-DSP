@@ -11,11 +11,11 @@ import Tools
 
 # Force to f16 value
 def f16(x):
-    return struct.unpack('<e', struct.pack('<e', x))[0]
+    return struct.unpack('<e', struct.pack('<e', np.half(x)))[0]
 
 # Force to f32 value
 def f32(x):
-    return struct.unpack('<f', struct.pack('<f', x))[0]
+    return struct.unpack('<f', struct.pack('<f', np.float32(x)))[0]
 
 parser = argparse.ArgumentParser(description='Generate C arrays')
 parser.add_argument('-f', nargs='?',type = str, default="../Source/CommonTables/arm_neon_tables.c", help="C File path")
@@ -83,6 +83,7 @@ def printCFloat16Array(f,name,arr):
 
     for d in arr:
         val = "(float16_t)%.13ff," % f16(d)
+        #val = f"(float16_t){f16(d).hex()},"
         nb = nb + len(val)
         if nb > COLLIM:
             print("",file=f)
@@ -222,15 +223,15 @@ def gen_coefs(twiddles,idx,mstride,fstride,radix,nfft):
     #print(f"{mstride} {fstride} {radix} {nfft}")
     for j in range(mstride):
         for k in range(1,radix):
-            phase = f32(-2.0 * math.pi * fstride * k * j / nfft);
-            twiddles[idx + mstride * (k - 1) + j]= complex(f32(math.cos(phase)) , f32(math.sin(phase)))
+            phase = (-2.0 * math.pi * fstride * k * j / nfft);
+            twiddles[idx + mstride * (k - 1) + j]= complex((math.cos(phase)) , (math.sin(phase)))
 
 def gen_transposed_coefs(twiddles,idx,mstride,fstride,radix,nfft):
     #print(f"{mstride} {fstride} {radix} {nfft}")
     for j in range(mstride):
         for k in range(1,radix):
-            phase = f32(-2.0 * math.pi * fstride * k * j / nfft);
-            twiddles[idx + (radix - 1) * j + k - 1]= complex(f32(math.cos(phase)) , f32(math.sin(phase)))
+            phase = (-2.0 * math.pi * fstride * k * j / nfft);
+            twiddles[idx + (radix - 1) * j + k - 1]= complex((math.cos(phase)) , (math.sin(phase)))
 
 
 def genTwiddles(theType,f,nfft,transposed=False,firstStage=True):
@@ -265,8 +266,8 @@ def superTwiddle(theType,nfft):
     twiddles = np.zeros((nfft//32)*3*4+12,dtype=complex)
     for i in range(1,4):
         for j in range(4):
-            phase = f32(-2.0 * math.pi * i * j / nfft);
-            twiddles[4*i-4+j]= complex(f32(math.cos(phase)) , f32(math.sin(phase)))
+            phase = (-2.0 * math.pi * i * j / nfft);
+            twiddles[4*i-4+j]= complex((math.cos(phase)) , (math.sin(phase)))
             if (4*i-4+j)>maxidx:
                 maxidx = 4*i-4+j
             
@@ -275,7 +276,7 @@ def superTwiddle(theType,nfft):
         for s in range(1,4):
             for j in range(4):
                 phase = f32(-2.0 * math.pi * (k*4+j) * s / nfft);
-                twiddles[12*k+j+4*(s-1)]= complex(f32(math.cos(phase)) , f32(math.sin(phase)))
+                twiddles[12*k+j+4*(s-1)]= complex((math.cos(phase)) , (math.sin(phase)))
                 if (12*k+j+4*(s-1))>maxidx:
                    maxidx = 12*k+j+4*(s-1)
                 
@@ -286,8 +287,8 @@ def superTwiddle_int(theType,nfft):
     maxidx = 0
     twiddles = np.zeros(nfft//2,dtype=complex)
     for i in range(nfft//2):
-        phase = f32(-1.0 * math.pi * ((i+1) / nfft+0.5));
-        twiddles[i]= complex(f32(math.cos(phase)) , f32(math.sin(phase)))
+        phase = (-1.0 * math.pi * ((i+1) / nfft+0.5));
+        twiddles[i]= complex((math.cos(phase)) , (math.sin(phase)))
         if i>maxidx:
             maxidx = i
     return twiddles

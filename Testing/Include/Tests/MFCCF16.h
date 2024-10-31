@@ -16,6 +16,7 @@ class MFCCF16:public Client::Suite
             Client::Pattern<float16_t> input2;
             Client::LocalPattern<float16_t> output;
             Client::LocalPattern<float16_t> tmp;
+            Client::LocalPattern<float16_t> tmp2;
             Client::LocalPattern<float16_t> tmpin;
 
             // Reference patterns are not loaded when we are in dump mode
