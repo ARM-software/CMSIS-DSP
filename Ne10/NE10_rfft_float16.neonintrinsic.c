@@ -55,6 +55,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 #include "dsp/transform_functions_f16.h"
 
+
 static void arm_ne10_radix8x4_r2c_neon (
     ne10_fft_cpx_float16_t *Fout,
     const ne10_fft_cpx_float16_t *Fin,
@@ -66,15 +67,15 @@ static void arm_ne10_radix8x4_r2c_neon (
     (void)nfft;
     ne10_int32_t f_count;
 
-    NE10_DECLARE_8(float16x8_t,q_in);
-    NE10_DECLARE_8(float16x8_t,q_out);
+    NE10_DECLARE_8(float16x4_t,q_in);
+    NE10_DECLARE_8(float16x4_t,q_out);
 
-    const float16x8_t *Fin_neon  = (float16x8_t*) Fin;  // 8 x fstride
-          float16x8_t *Fout_neon = (float16x8_t*) Fout; // fstride x 8
+    const float16x4_t *Fin_neon  = (float16x4_t*) Fin;  // 8 x fstride
+          float16x4_t *Fout_neon = (float16x4_t*) Fout; // fstride x 8
 
     for (f_count = fstride; f_count > 0; f_count --)
     {
-        // from Fin_neon load 8 float16x8_t into q_in0 ~ q_in7, by step = fstride
+        // from Fin_neon load 8 float16x4_t into q_in0 ~ q_in7, by step = fstride
         NE10_RADIX8x4_R2C_NEON_LOAD(Fin_neon,q_in,fstride);
 
         // print q_in0 ~ q_in7
@@ -105,20 +106,20 @@ static void arm_ne10_radix8x4_c2r_neon (
     (void)nfft;
     ne10_int32_t f_count;
 
-    NE10_DECLARE_8(float16x8_t,q_in);
-    NE10_DECLARE_8(float16x8_t,q_out);
+    NE10_DECLARE_8(float16x4_t,q_in);
+    NE10_DECLARE_8(float16x4_t,q_out);
 
 #if defined(CMSIS_NE10_DSP_RIFFT_SCALING)
-    const ne10_float16_t one_by_N = 0.25 / nfft;
-    const float16x8_t one_by_N_neon = vdupq_n_f16(one_by_N);
+    const ne10_float16_t one_by_N = 0.25f16 / nfft;
+    const float16x4_t one_by_N_neon = vdup_n_f16(one_by_N);
 #endif 
 
-    const float16x8_t *Fin_neon  = (float16x8_t*) Fin;
-          float16x8_t *Fout_neon = (float16x8_t*) Fout;
+    const float16x4_t *Fin_neon  = (float16x4_t*) Fin;
+          float16x4_t *Fout_neon = (float16x4_t*) Fout;
 
     for (f_count = fstride; f_count > 0; f_count --)
     {
-        // from Fin_neon load 8 float16x8_t into q_in0 ~ q_in7, by step = 1
+        // from Fin_neon load 8 float16x4_t into q_in0 ~ q_in7, by step = 1
         NE10_RADIX8x4_R2C_NEON_LOAD(Fin_neon,q_in,1);
 
         // NE10_PRINT_Qx8_VECTOR(q_in);
@@ -128,14 +129,14 @@ static void arm_ne10_radix8x4_c2r_neon (
         // NE10_PRINT_Qx8_VECTOR(q_out);
 
 #ifdef CMSIS_NE10_DSP_RIFFT_SCALING
-        q_out0 = vmulq_f16(q_out0,one_by_N_neon);
-        q_out1 = vmulq_f16(q_out1,one_by_N_neon);
-        q_out2 = vmulq_f16(q_out2,one_by_N_neon);
-        q_out3 = vmulq_f16(q_out3,one_by_N_neon);
-        q_out4 = vmulq_f16(q_out4,one_by_N_neon);
-        q_out5 = vmulq_f16(q_out5,one_by_N_neon);
-        q_out6 = vmulq_f16(q_out6,one_by_N_neon);
-        q_out7 = vmulq_f16(q_out7,one_by_N_neon);
+        q_out0 = vmul_f16(q_out0,one_by_N_neon);
+        q_out1 = vmul_f16(q_out1,one_by_N_neon);
+        q_out2 = vmul_f16(q_out2,one_by_N_neon);
+        q_out3 = vmul_f16(q_out3,one_by_N_neon);
+        q_out4 = vmul_f16(q_out4,one_by_N_neon);
+        q_out5 = vmul_f16(q_out5,one_by_N_neon);
+        q_out6 = vmul_f16(q_out6,one_by_N_neon);
+        q_out7 = vmul_f16(q_out7,one_by_N_neon);
 #endif
 
         // store
@@ -157,13 +158,13 @@ static void arm_ne10_radix4x4_r2c_neon (
     (void)nfft;
     ne10_int32_t f_count;
 
-    const float16x8_t *Fin_neon  = (float16x8_t*) Fin;
-          float16x8_t *Fout_neon = (float16x8_t*) Fout;
+    const float16x4_t *Fin_neon  = (float16x4_t*) Fin;
+          float16x4_t *Fout_neon = (float16x4_t*) Fout;
 
     for (f_count = 0; f_count < fstride; f_count ++)
     {
-        NE10_DECLARE_4(float16x8_t,q_in);
-        NE10_DECLARE_4(float16x8_t,q_out);
+        NE10_DECLARE_4(float16x4_t,q_in);
+        NE10_DECLARE_4(float16x4_t,q_out);
 
         // load
         NE10_RADIX4x4_R2C_NEON_LOAD(Fin_neon,q_in,fstride);
@@ -189,17 +190,17 @@ static void arm_ne10_radix4x4_c2r_neon (
     (void)nfft;
     ne10_int32_t f_count;
 
-    const float16x8_t *Fin_neon  = (float16x8_t*) Fin;
-          float16x8_t *Fout_neon = (float16x8_t*) Fout;
+    const float16x4_t *Fin_neon  = (float16x4_t*) Fin;
+          float16x4_t *Fout_neon = (float16x4_t*) Fout;
 
 #if defined(CMSIS_NE10_DSP_RIFFT_SCALING)
-    const ne10_float16_t one_by_N = 0.25 / nfft;
-    const float16x8_t one_by_N_neon = vdupq_n_f16(one_by_N);
+    const ne10_float16_t one_by_N = 0.25f16 / nfft;
+    const float16x4_t one_by_N_neon = vdup_n_f16(one_by_N);
 #endif
     for (f_count = 0; f_count < fstride; f_count ++)
     {
-        NE10_DECLARE_4(float16x8_t,q_in);
-        NE10_DECLARE_4(float16x8_t,q_out);
+        NE10_DECLARE_4(float16x4_t,q_in);
+        NE10_DECLARE_4(float16x4_t,q_out);
 
         // load
         NE10_RADIX4x4_R2C_NEON_LOAD(Fin_neon,q_in,1);
@@ -211,10 +212,10 @@ static void arm_ne10_radix4x4_c2r_neon (
         // NE10_PRINT_Qx4_VECTOR(q_out);
 
 #ifdef CMSIS_NE10_DSP_RIFFT_SCALING
-        q_out0 = vmulq_f16(q_out0,one_by_N_neon);
-        q_out1 = vmulq_f16(q_out1,one_by_N_neon);
-        q_out2 = vmulq_f16(q_out2,one_by_N_neon);
-        q_out3 = vmulq_f16(q_out3,one_by_N_neon);
+        q_out0 = vmul_f16(q_out0,one_by_N_neon);
+        q_out1 = vmul_f16(q_out1,one_by_N_neon);
+        q_out2 = vmul_f16(q_out2,one_by_N_neon);
+        q_out3 = vmul_f16(q_out3,one_by_N_neon);
 #endif
 
         // store
@@ -225,15 +226,15 @@ static void arm_ne10_radix4x4_c2r_neon (
 }
 
 static void arm_ne10_radix4x4_r2c_with_twiddles_first_butterfly_neon (
-    float16x8_t *Fout_neon,
-    const float16x8_t *Fin_neon,
+    float16x4_t *Fout_neon,
+    const float16x4_t *Fin_neon,
     const ne10_int32_t out_step,
     const ne10_int32_t in_step,
     const ne10_fft_cpx_float16_t *twiddles)
 {
     (void)twiddles;
-    NE10_DECLARE_4(float16x8_t,q_in);
-    NE10_DECLARE_4(float16x8_t,q_out);
+    NE10_DECLARE_4(float16x4_t,q_in);
+    NE10_DECLARE_4(float16x4_t,q_out);
 
     // load
     NE10_RADIX4x4_R2C_NEON_LOAD(Fin_neon,q_in,in_step);
@@ -241,28 +242,28 @@ static void arm_ne10_radix4x4_r2c_with_twiddles_first_butterfly_neon (
     NE10_RADIX4x4_R2C_NEON_KERNEL(q_out,q_in);
 
     // store
-    vst1q_f16( (ne10_float16_t*) (Fout_neon                          ), q_out0);
-    vst1q_f16( (ne10_float16_t*) (Fout_neon +     (out_step << 1) - 1), q_out1);
-    vst1q_f16( (ne10_float16_t*) (Fout_neon +     (out_step << 1)    ), q_out2);
-    vst1q_f16( (ne10_float16_t*) (Fout_neon + 2 * (out_step << 1) - 1), q_out3);
+    vst1_f16( (ne10_float16_t*) (Fout_neon                          ), q_out0);
+    vst1_f16( (ne10_float16_t*) (Fout_neon +     (out_step << 1) - 1), q_out1);
+    vst1_f16( (ne10_float16_t*) (Fout_neon +     (out_step << 1)    ), q_out2);
+    vst1_f16( (ne10_float16_t*) (Fout_neon + 2 * (out_step << 1) - 1), q_out3);
 }
 
 static void arm_ne10_radix4x4_c2r_with_twiddles_first_butterfly_neon (
-    float16x8_t *Fout_neon,
-    const float16x8_t *Fin_neon,
+    float16x4_t *Fout_neon,
+    const float16x4_t *Fin_neon,
     const ne10_int32_t out_step,
     const ne10_int32_t in_step,
     const ne10_fft_cpx_float16_t *twiddles)
 {
     (void)twiddles;
-    NE10_DECLARE_4(float16x8_t,q_in);
-    NE10_DECLARE_4(float16x8_t,q_out);
+    NE10_DECLARE_4(float16x4_t,q_in);
+    NE10_DECLARE_4(float16x4_t,q_out);
 
     // load
-    q_in0 = vld1q_f16( (ne10_float16_t*) (Fin_neon                          ) );
-    q_in1 = vld1q_f16( (ne10_float16_t*) (Fin_neon +     (out_step << 1) - 1) );
-    q_in2 = vld1q_f16( (ne10_float16_t*) (Fin_neon +     (out_step << 1)    ) );
-    q_in3 = vld1q_f16( (ne10_float16_t*) (Fin_neon + 2 * (out_step << 1) - 1) );
+    q_in0 = vld1_f16( (ne10_float16_t*) (Fin_neon                          ) );
+    q_in1 = vld1_f16( (ne10_float16_t*) (Fin_neon +     (out_step << 1) - 1) );
+    q_in2 = vld1_f16( (ne10_float16_t*) (Fin_neon +     (out_step << 1)    ) );
+    q_in3 = vld1_f16( (ne10_float16_t*) (Fin_neon + 2 * (out_step << 1) - 1) );
 
     // NE10_PRINT_Qx4_VECTOR(q_in);
 
@@ -275,43 +276,43 @@ static void arm_ne10_radix4x4_c2r_with_twiddles_first_butterfly_neon (
 }
 
 static void arm_ne10_radix4x4_r2c_with_twiddles_other_butterfly_neon (
-    float16x8_t *Fout_neon,
-    const float16x8_t *Fin_neon,
+    float16x4_t *Fout_neon,
+    const float16x4_t *Fin_neon,
     const ne10_int32_t out_step,
     const ne10_int32_t in_step,
     const ne10_fft_cpx_float16_t *twiddles)
 {
     ne10_int32_t m_count;
     ne10_int32_t loop_count = (out_step>>1) -1;
-    float16x8_t *Fout_b = Fout_neon + (((out_step<<1)-1)<<1) - 2; // reversed
+    float16x4_t *Fout_b = Fout_neon + (((out_step<<1)-1)<<1) - 2; // reversed
 
-    NE10_DECLARE_3(float16x8x2_t,q2_tw);
-    NE10_DECLARE_4(float16x8x2_t,q2_in);
-    NE10_DECLARE_4(float16x8x2_t,q2_out);
+    NE10_DECLARE_3(float16x4x2_t,q2_tw);
+    NE10_DECLARE_4(float16x4x2_t,q2_in);
+    NE10_DECLARE_4(float16x4x2_t,q2_out);
 
     for (m_count = loop_count; m_count > 0; m_count -- )
     {
         // load
-        q2_in0.val[0] = vld1q_f16( (ne10_float16_t*) (Fin_neon + 0*in_step    ) );
-        q2_in0.val[1] = vld1q_f16( (ne10_float16_t*) (Fin_neon + 0*in_step + 1) );
+        q2_in0.val[0] = vld1_f16( (ne10_float16_t*) (Fin_neon + 0*in_step    ) );
+        q2_in0.val[1] = vld1_f16( (ne10_float16_t*) (Fin_neon + 0*in_step + 1) );
 
-        q2_in1.val[0] = vld1q_f16( (ne10_float16_t*) (Fin_neon + 1*in_step    ) );
-        q2_in1.val[1] = vld1q_f16( (ne10_float16_t*) (Fin_neon + 1*in_step + 1) );
+        q2_in1.val[0] = vld1_f16( (ne10_float16_t*) (Fin_neon + 1*in_step    ) );
+        q2_in1.val[1] = vld1_f16( (ne10_float16_t*) (Fin_neon + 1*in_step + 1) );
 
-        q2_in2.val[0] = vld1q_f16( (ne10_float16_t*) (Fin_neon + 2*in_step    ) );
-        q2_in2.val[1] = vld1q_f16( (ne10_float16_t*) (Fin_neon + 2*in_step + 1) );
+        q2_in2.val[0] = vld1_f16( (ne10_float16_t*) (Fin_neon + 2*in_step    ) );
+        q2_in2.val[1] = vld1_f16( (ne10_float16_t*) (Fin_neon + 2*in_step + 1) );
 
-        q2_in3.val[0] = vld1q_f16( (ne10_float16_t*) (Fin_neon + 3*in_step    ) );
-        q2_in3.val[1] = vld1q_f16( (ne10_float16_t*) (Fin_neon + 3*in_step + 1) );
+        q2_in3.val[0] = vld1_f16( (ne10_float16_t*) (Fin_neon + 3*in_step    ) );
+        q2_in3.val[1] = vld1_f16( (ne10_float16_t*) (Fin_neon + 3*in_step + 1) );
 
-        q2_tw0.val[0] = vdupq_n_f16(twiddles[0].r);
-        q2_tw0.val[1] = vdupq_n_f16(twiddles[0].i);
+        q2_tw0.val[0] = vdup_n_f16(twiddles[0].r);
+        q2_tw0.val[1] = vdup_n_f16(twiddles[0].i);
 
-        q2_tw1.val[0] = vdupq_n_f16(twiddles[1].r);
-        q2_tw1.val[1] = vdupq_n_f16(twiddles[1].i);
+        q2_tw1.val[0] = vdup_n_f16(twiddles[1].r);
+        q2_tw1.val[1] = vdup_n_f16(twiddles[1].i);
 
-        q2_tw2.val[0] = vdupq_n_f16(twiddles[2].r);
-        q2_tw2.val[1] = vdupq_n_f16(twiddles[2].i);
+        q2_tw2.val[0] = vdup_n_f16(twiddles[2].r);
+        q2_tw2.val[1] = vdup_n_f16(twiddles[2].i);
 
         // R2C TW KERNEL
         NE10_RADIX4x4_R2C_TW_MUL_NEON (q2_out, q2_in, q2_tw);
@@ -320,17 +321,17 @@ static void arm_ne10_radix4x4_r2c_with_twiddles_other_butterfly_neon (
         NE10_RADIX4x4_R2C_TW_NEON_KERNEL_S2 (q2_out, q2_in);
 
         // store
-        vst1q_f16( (ne10_float16_t*) ( Fout_neon                      ), q2_out0.val[0] );
-        vst1q_f16( (ne10_float16_t*) ( Fout_neon                   + 1), q2_out0.val[1] );
+        vst1_f16( (ne10_float16_t*) ( Fout_neon                      ), q2_out0.val[0] );
+        vst1_f16( (ne10_float16_t*) ( Fout_neon                   + 1), q2_out0.val[1] );
 
-        vst1q_f16( (ne10_float16_t*) ( Fout_neon + (out_step << 1)    ), q2_out1.val[0] );
-        vst1q_f16( (ne10_float16_t*) ( Fout_neon + (out_step << 1) + 1), q2_out1.val[1] );
+        vst1_f16( (ne10_float16_t*) ( Fout_neon + (out_step << 1)    ), q2_out1.val[0] );
+        vst1_f16( (ne10_float16_t*) ( Fout_neon + (out_step << 1) + 1), q2_out1.val[1] );
 
-        vst1q_f16( (ne10_float16_t*) ( Fout_b                         ), q2_out2.val[0] );
-        vst1q_f16( (ne10_float16_t*) ( Fout_b                      + 1), q2_out2.val[1] );
+        vst1_f16( (ne10_float16_t*) ( Fout_b                         ), q2_out2.val[0] );
+        vst1_f16( (ne10_float16_t*) ( Fout_b                      + 1), q2_out2.val[1] );
 
-        vst1q_f16( (ne10_float16_t*) ( Fout_b    - (out_step << 1)    ), q2_out3.val[0] );
-        vst1q_f16( (ne10_float16_t*) ( Fout_b    - (out_step << 1) + 1), q2_out3.val[1] );
+        vst1_f16( (ne10_float16_t*) ( Fout_b    - (out_step << 1)    ), q2_out3.val[0] );
+        vst1_f16( (ne10_float16_t*) ( Fout_b    - (out_step << 1) + 1), q2_out3.val[1] );
 
         // update pointers
         Fin_neon  += 2;
@@ -341,43 +342,43 @@ static void arm_ne10_radix4x4_r2c_with_twiddles_other_butterfly_neon (
 }
 
 static void arm_ne10_radix4x4_c2r_with_twiddles_other_butterfly_neon (
-    float16x8_t *Fout_neon,
-    const float16x8_t *Fin_neon,
+    float16x4_t *Fout_neon,
+    const float16x4_t *Fin_neon,
     const ne10_int32_t out_step,
     const ne10_int32_t in_step,
     const ne10_fft_cpx_float16_t *twiddles)
 {
     ne10_int32_t m_count;
     ne10_int32_t loop_count = (out_step>>1) -1;
-    const float16x8_t *Fin_b = Fin_neon + (((out_step<<1)-1)<<1) - 2; // reversed
+    const float16x4_t *Fin_b = Fin_neon + (((out_step<<1)-1)<<1) - 2; // reversed
 
-    NE10_DECLARE_3(float16x8x2_t,q2_tw);
-    NE10_DECLARE_4(float16x8x2_t,q2_in);
-    NE10_DECLARE_4(float16x8x2_t,q2_out);
+    NE10_DECLARE_3(float16x4x2_t,q2_tw);
+    NE10_DECLARE_4(float16x4x2_t,q2_in);
+    NE10_DECLARE_4(float16x4x2_t,q2_out);
 
     for (m_count = loop_count; m_count > 0; m_count -- )
     {
         // load
-        q2_in0.val[0] = vld1q_f16( (ne10_float16_t*) ( Fin_neon                      ) );
-        q2_in0.val[1] = vld1q_f16( (ne10_float16_t*) ( Fin_neon                   + 1) );
+        q2_in0.val[0] = vld1_f16( (ne10_float16_t*) ( Fin_neon                      ) );
+        q2_in0.val[1] = vld1_f16( (ne10_float16_t*) ( Fin_neon                   + 1) );
 
-        q2_in1.val[0] = vld1q_f16( (ne10_float16_t*) ( Fin_neon + (out_step << 1)    ) );
-        q2_in1.val[1] = vld1q_f16( (ne10_float16_t*) ( Fin_neon + (out_step << 1) + 1) );
+        q2_in1.val[0] = vld1_f16( (ne10_float16_t*) ( Fin_neon + (out_step << 1)    ) );
+        q2_in1.val[1] = vld1_f16( (ne10_float16_t*) ( Fin_neon + (out_step << 1) + 1) );
 
-        q2_in2.val[0] = vld1q_f16( (ne10_float16_t*) ( Fin_b                         ) );
-        q2_in2.val[1] = vld1q_f16( (ne10_float16_t*) ( Fin_b                      + 1) );
+        q2_in2.val[0] = vld1_f16( (ne10_float16_t*) ( Fin_b                         ) );
+        q2_in2.val[1] = vld1_f16( (ne10_float16_t*) ( Fin_b                      + 1) );
 
-        q2_in3.val[0] = vld1q_f16( (ne10_float16_t*) ( Fin_b    - (out_step << 1)    ) );
-        q2_in3.val[1] = vld1q_f16( (ne10_float16_t*) ( Fin_b    - (out_step << 1) + 1) );
+        q2_in3.val[0] = vld1_f16( (ne10_float16_t*) ( Fin_b    - (out_step << 1)    ) );
+        q2_in3.val[1] = vld1_f16( (ne10_float16_t*) ( Fin_b    - (out_step << 1) + 1) );
 
-        q2_tw0.val[0] = vdupq_n_f16(twiddles[0].r);
-        q2_tw0.val[1] = vdupq_n_f16(twiddles[0].i);
+        q2_tw0.val[0] = vdup_n_f16(twiddles[0].r);
+        q2_tw0.val[1] = vdup_n_f16(twiddles[0].i);
 
-        q2_tw1.val[0] = vdupq_n_f16(twiddles[1].r);
-        q2_tw1.val[1] = vdupq_n_f16(twiddles[1].i);
+        q2_tw1.val[0] = vdup_n_f16(twiddles[1].r);
+        q2_tw1.val[1] = vdup_n_f16(twiddles[1].i);
 
-        q2_tw2.val[0] = vdupq_n_f16(twiddles[2].r);
-        q2_tw2.val[1] = vdupq_n_f16(twiddles[2].i);
+        q2_tw2.val[0] = vdup_n_f16(twiddles[2].r);
+        q2_tw2.val[1] = vdup_n_f16(twiddles[2].i);
 
         // NE10_PRINT_Q2x4_VECTOR(q2_in);
 
@@ -387,17 +388,17 @@ static void arm_ne10_radix4x4_c2r_with_twiddles_other_butterfly_neon (
         // NE10_PRINT_Q2x4_VECTOR(q2_out);
 
         // store
-        vst1q_f16( (ne10_float16_t*) (Fout_neon + 0*in_step    ), q2_out0.val[0] );
-        vst1q_f16( (ne10_float16_t*) (Fout_neon + 0*in_step + 1), q2_out0.val[1] );
+        vst1_f16( (ne10_float16_t*) (Fout_neon + 0*in_step    ), q2_out0.val[0] );
+        vst1_f16( (ne10_float16_t*) (Fout_neon + 0*in_step + 1), q2_out0.val[1] );
 
-        vst1q_f16( (ne10_float16_t*) (Fout_neon + 1*in_step    ), q2_out1.val[0] );
-        vst1q_f16( (ne10_float16_t*) (Fout_neon + 1*in_step + 1), q2_out1.val[1] );
+        vst1_f16( (ne10_float16_t*) (Fout_neon + 1*in_step    ), q2_out1.val[0] );
+        vst1_f16( (ne10_float16_t*) (Fout_neon + 1*in_step + 1), q2_out1.val[1] );
 
-        vst1q_f16( (ne10_float16_t*) (Fout_neon + 2*in_step    ), q2_out2.val[0] );
-        vst1q_f16( (ne10_float16_t*) (Fout_neon + 2*in_step + 1), q2_out2.val[1] );
+        vst1_f16( (ne10_float16_t*) (Fout_neon + 2*in_step    ), q2_out2.val[0] );
+        vst1_f16( (ne10_float16_t*) (Fout_neon + 2*in_step + 1), q2_out2.val[1] );
 
-        vst1q_f16( (ne10_float16_t*) (Fout_neon + 3*in_step    ), q2_out3.val[0] );
-        vst1q_f16( (ne10_float16_t*) (Fout_neon + 3*in_step + 1), q2_out3.val[1] );
+        vst1_f16( (ne10_float16_t*) (Fout_neon + 3*in_step    ), q2_out3.val[0] );
+        vst1_f16( (ne10_float16_t*) (Fout_neon + 3*in_step + 1), q2_out3.val[1] );
 
         // update pointers
         Fin_neon  += 2;
@@ -408,15 +409,15 @@ static void arm_ne10_radix4x4_c2r_with_twiddles_other_butterfly_neon (
 }
 
 static void arm_ne10_radix4x4_r2c_with_twiddles_last_butterfly_neon (
-    float16x8_t *Fout_neon,
-    const float16x8_t *Fin_neon,
+    float16x4_t *Fout_neon,
+    const float16x4_t *Fin_neon,
     const ne10_int32_t out_step,
     const ne10_int32_t in_step,
     const ne10_fft_cpx_float16_t *twiddles)
 {
     (void)twiddles;
-    NE10_DECLARE_4(float16x8_t,q_in);
-    NE10_DECLARE_4(float16x8_t,q_out);
+    NE10_DECLARE_4(float16x4_t,q_in);
+    NE10_DECLARE_4(float16x4_t,q_out);
 
     // load
     NE10_RADIX4x4_R2C_NEON_LOAD(Fin_neon,q_in,in_step);
@@ -424,28 +425,28 @@ static void arm_ne10_radix4x4_r2c_with_twiddles_last_butterfly_neon (
     NE10_RADIX4x4_R2C_TW_NEON_KERNEL_LAST(q_out,q_in);
 
     // store
-    vst1q_f16( (ne10_float16_t*) (Fout_neon    ), q_out0);
-    vst1q_f16( (ne10_float16_t*) (Fout_neon + 1), q_out1);
-    vst1q_f16( (ne10_float16_t*) (Fout_neon + (out_step << 1)    ), q_out2);
-    vst1q_f16( (ne10_float16_t*) (Fout_neon + (out_step << 1) + 1), q_out3);
+    vst1_f16( (ne10_float16_t*) (Fout_neon    ), q_out0);
+    vst1_f16( (ne10_float16_t*) (Fout_neon + 1), q_out1);
+    vst1_f16( (ne10_float16_t*) (Fout_neon + (out_step << 1)    ), q_out2);
+    vst1_f16( (ne10_float16_t*) (Fout_neon + (out_step << 1) + 1), q_out3);
 }
 
 static void arm_ne10_radix4x4_c2r_with_twiddles_last_butterfly_neon (
-    float16x8_t *Fout_neon,
-    const float16x8_t *Fin_neon,
+    float16x4_t *Fout_neon,
+    const float16x4_t *Fin_neon,
     const ne10_int32_t out_step,
     const ne10_int32_t in_step,
     const ne10_fft_cpx_float16_t *twiddles)
 {
     (void)twiddles;
-    NE10_DECLARE_4(float16x8_t,q_in);
-    NE10_DECLARE_4(float16x8_t,q_out);
+    NE10_DECLARE_4(float16x4_t,q_in);
+    NE10_DECLARE_4(float16x4_t,q_out);
 
     // load
-    q_in0 = vld1q_f16( (ne10_float16_t*) (Fin_neon    ) );
-    q_in1 = vld1q_f16( (ne10_float16_t*) (Fin_neon + 1) );
-    q_in2 = vld1q_f16( (ne10_float16_t*) (Fin_neon + (out_step << 1)    ) );
-    q_in3 = vld1q_f16( (ne10_float16_t*) (Fin_neon + (out_step << 1) + 1) );
+    q_in0 = vld1_f16( (ne10_float16_t*) (Fin_neon    ) );
+    q_in1 = vld1_f16( (ne10_float16_t*) (Fin_neon + 1) );
+    q_in2 = vld1_f16( (ne10_float16_t*) (Fin_neon + (out_step << 1)    ) );
+    q_in3 = vld1_f16( (ne10_float16_t*) (Fin_neon + (out_step << 1) + 1) );
 
     // NE10_PRINT_Qx4_VECTOR(q_in);
 
@@ -470,8 +471,8 @@ static void arm_ne10_radix4x4_r2c_with_twiddles_neon (
     const ne10_int32_t in_step = nfft >> 2;
     const ne10_int32_t out_step = mstride;
 
-    const float16x8_t *Fin_neon  = (float16x8_t*) Fin;
-          float16x8_t *Fout_neon = (float16x8_t*) Fout;
+    const float16x4_t *Fin_neon  = (float16x4_t*) Fin;
+          float16x4_t *Fout_neon = (float16x4_t*) Fout;
     const ne10_fft_cpx_float16_t *tw;
 
     for (f_count = fstride; f_count; f_count --)
@@ -513,8 +514,8 @@ static void arm_ne10_radix4x4_c2r_with_twiddles_neon (
     const ne10_int32_t in_step = nfft >> 2;
     const ne10_int32_t out_step = mstride;
 
-    const float16x8_t *Fin_neon  = (float16x8_t*) Fin;
-          float16x8_t *Fout_neon = (float16x8_t*) Fout;
+    const float16x4_t *Fin_neon  = (float16x4_t*) Fin;
+          float16x4_t *Fout_neon = (float16x4_t*) Fout;
     const ne10_fft_cpx_float16_t *tw;
 
     for (f_count = fstride; f_count; f_count --)
@@ -543,7 +544,6 @@ static void arm_ne10_radix4x4_c2r_with_twiddles_neon (
         Fin_neon = Fin_neon + 3 * out_step;
     } // f_count
 }
-
 
 static void arm_ne10_mixed_radix_r2c_butterfly_float16_neon (
     const arm_rfft_fast_instance_f16 *S,
@@ -771,7 +771,7 @@ static void arm_ne10_radix4_c2r_with_twiddles_first_stage_first_butterfly (
 
     // b2
     {
-        // float16x8_t q_in;
+        // float16x4_t q_in;
         ne10_float16_t *p_dst_r = (ne10_float16_t*) (dst);
         p_dst_r  += nfft;
         p_dst_r  -= 4;
@@ -1279,9 +1279,9 @@ static void arm_ne10_radix4_r2c_with_twiddles_last_stage_other_butterfly (
 
     for (; loop_count > 0; loop_count--)
     {
-        NE10_DECLARE_4 (float16x8x2_t, q2_in);    // 8Q
-        NE10_DECLARE_3 (float16x8x2_t, q2_tw);    // 6Q
-        NE10_DECLARE_4 (float16x8x2_t, q2_out);   // 8Q
+        NE10_DECLARE_4 (float16x4x2_t, q2_in);    // 8Q
+        NE10_DECLARE_3 (float16x4x2_t, q2_tw);    // 6Q
+        NE10_DECLARE_4 (float16x4x2_t, q2_out);   // 8Q
 
         /*  INPUT
          *  0R  1R  2R  3R      Q0
@@ -1310,32 +1310,32 @@ static void arm_ne10_radix4_r2c_with_twiddles_last_stage_other_butterfly (
          *  3I  7I  bI  fI      Q7
          */
 
-        q2_out0.val[0] = vld1q_f16 (fin_r);
+        q2_out0.val[0] = vld1_f16 (fin_r);
         fin_r += 4;
-        q2_out0.val[1] = vld1q_f16 (fin_r);
+        q2_out0.val[1] = vld1_f16 (fin_r);
         fin_r += 4;
-        q2_out1.val[0] = vld1q_f16 (fin_r);
+        q2_out1.val[0] = vld1_f16 (fin_r);
         fin_r += 4;
-        q2_out1.val[1] = vld1q_f16 (fin_r);
+        q2_out1.val[1] = vld1_f16 (fin_r);
         fin_r += 4;
-        q2_out2.val[0] = vld1q_f16 (fin_r);
+        q2_out2.val[0] = vld1_f16 (fin_r);
         fin_r += 4;
-        q2_out2.val[1] = vld1q_f16 (fin_r);
+        q2_out2.val[1] = vld1_f16 (fin_r);
         fin_r += 4;
-        q2_out3.val[0] = vld1q_f16 (fin_r);
+        q2_out3.val[0] = vld1_f16 (fin_r);
         fin_r += 4;
-        q2_out3.val[1] = vld1q_f16 (fin_r);
+        q2_out3.val[1] = vld1_f16 (fin_r);
         fin_r += 4;
 
         NE10_RADIX4X4C_TRANSPOSE_NEON (q2_in, q2_out);
 
 
         // Load twiddles
-        q2_tw0 = vld2q_f16 (tw);
+        q2_tw0 = vld2_f16 (tw);
         tw += 8;
-        q2_tw1 = vld2q_f16 (tw);
+        q2_tw1 = vld2_f16 (tw);
         tw += 8;
-        q2_tw2 = vld2q_f16 (tw);
+        q2_tw2 = vld2_f16 (tw);
         tw += 8;
 
         // tw
@@ -1347,41 +1347,41 @@ static void arm_ne10_radix4_r2c_with_twiddles_last_stage_other_butterfly (
 
         // butterfly
         // out -> in
-        q2_in0.val[0] = vaddq_f16 (q2_out0.val[0], q2_out2.val[0]);
-        q2_in0.val[1] = vaddq_f16 (q2_out0.val[1], q2_out2.val[1]);
-        q2_in1.val[0] = vsubq_f16 (q2_out0.val[0], q2_out2.val[0]);
-        q2_in1.val[1] = vsubq_f16 (q2_out0.val[1], q2_out2.val[1]);
-        q2_in2.val[0] = vaddq_f16 (q2_out1.val[0], q2_out3.val[0]);
-        q2_in2.val[1] = vaddq_f16 (q2_out1.val[1], q2_out3.val[1]);
-        q2_in3.val[0] = vsubq_f16 (q2_out1.val[0], q2_out3.val[0]);
-        q2_in3.val[1] = vsubq_f16 (q2_out1.val[1], q2_out3.val[1]);
+        q2_in0.val[0] = vadd_f16 (q2_out0.val[0], q2_out2.val[0]);
+        q2_in0.val[1] = vadd_f16 (q2_out0.val[1], q2_out2.val[1]);
+        q2_in1.val[0] = vsub_f16 (q2_out0.val[0], q2_out2.val[0]);
+        q2_in1.val[1] = vsub_f16 (q2_out0.val[1], q2_out2.val[1]);
+        q2_in2.val[0] = vadd_f16 (q2_out1.val[0], q2_out3.val[0]);
+        q2_in2.val[1] = vadd_f16 (q2_out1.val[1], q2_out3.val[1]);
+        q2_in3.val[0] = vsub_f16 (q2_out1.val[0], q2_out3.val[0]);
+        q2_in3.val[1] = vsub_f16 (q2_out1.val[1], q2_out3.val[1]);
 
         // in -> out
-        q2_out2.val[0] = vsubq_f16 (q2_in0.val[0], q2_in2.val[0]);
-        q2_out2.val[1] = vsubq_f16 (q2_in0.val[1], q2_in2.val[1]);
-        q2_out3.val[0] = vsubq_f16 (q2_in1.val[0], q2_in3.val[1]);
-        q2_out3.val[1] = vaddq_f16 (q2_in1.val[1], q2_in3.val[0]);
+        q2_out2.val[0] = vsub_f16 (q2_in0.val[0], q2_in2.val[0]);
+        q2_out2.val[1] = vsub_f16 (q2_in0.val[1], q2_in2.val[1]);
+        q2_out3.val[0] = vsub_f16 (q2_in1.val[0], q2_in3.val[1]);
+        q2_out3.val[1] = vadd_f16 (q2_in1.val[1], q2_in3.val[0]);
 
-        q2_out3.val[1] = vnegq_f16 (q2_out3.val[1]);
-        q2_out2.val[1] = vnegq_f16 (q2_out2.val[1]);
+        q2_out3.val[1] = vneg_f16 (q2_out3.val[1]);
+        q2_out2.val[1] = vneg_f16 (q2_out2.val[1]);
 
-        q2_out0.val[0] = vaddq_f16 (q2_in0.val[0], q2_in2.val[0]);
-        q2_out0.val[1] = vaddq_f16 (q2_in0.val[1], q2_in2.val[1]);
+        q2_out0.val[0] = vadd_f16 (q2_in0.val[0], q2_in2.val[0]);
+        q2_out0.val[1] = vadd_f16 (q2_in0.val[1], q2_in2.val[1]);
 
-        q2_out1.val[0] = vaddq_f16 (q2_in1.val[0], q2_in3.val[1]);
-        q2_out1.val[1] = vsubq_f16 (q2_in1.val[1], q2_in3.val[0]);
+        q2_out1.val[0] = vadd_f16 (q2_in1.val[0], q2_in3.val[1]);
+        q2_out1.val[1] = vsub_f16 (q2_in1.val[1], q2_in3.val[0]);
 
         // reverse -- CONJ
-        NE10_REVERSE_FLOAT32X4 (q2_out2.val[0]);
-        NE10_REVERSE_FLOAT32X4 (q2_out2.val[1]);
-        NE10_REVERSE_FLOAT32X4 (q2_out3.val[0]);
-        NE10_REVERSE_FLOAT32X4 (q2_out3.val[1]);
+        NE10_REVERSE_FLOAT16X4 (q2_out2.val[0]);
+        NE10_REVERSE_FLOAT16X4 (q2_out2.val[1]);
+        NE10_REVERSE_FLOAT16X4 (q2_out3.val[0]);
+        NE10_REVERSE_FLOAT16X4 (q2_out3.val[1]);
 
         // store
-        vst2q_f16 (fout_r, q2_out0);
-        vst2q_f16 (fout_r + (nfft >> 1), q2_out1);
-        vst2q_f16 (fout_b + (nfft >> 1), q2_out3);
-        vst2q_f16 (fout_b + nfft, q2_out2);
+        vst2_f16 (fout_r, q2_out0);
+        vst2_f16 (fout_r + (nfft >> 1), q2_out1);
+        vst2_f16 (fout_b + (nfft >> 1), q2_out3);
+        vst2_f16 (fout_b + nfft, q2_out2);
 
         fout_r += 8;
         fout_b -= 8;
@@ -1402,9 +1402,9 @@ static void arm_ne10_radix4_c2r_with_twiddles_first_stage_other_butterfly (
 
     for ( ; loop_count>0; loop_count -- )
     {
-        NE10_DECLARE_4(float16x8x2_t,q2_in);    // 8Q
-        NE10_DECLARE_3(float16x8x2_t,q2_tw);    // 6Q
-        NE10_DECLARE_4(float16x8x2_t,q2_out);   // 8Q
+        NE10_DECLARE_4(float16x4x2_t,q2_in);    // 8Q
+        NE10_DECLARE_3(float16x4x2_t,q2_tw);    // 6Q
+        NE10_DECLARE_4(float16x4x2_t,q2_out);   // 8Q
 
         /*  INPUT
          *  0R  1R  2R  3R      Q0
@@ -1417,55 +1417,55 @@ static void arm_ne10_radix4_c2r_with_twiddles_first_stage_other_butterfly (
          *  cI  dI  eI  fI      Q7
          */
 
-        q2_in0 = vld2q_f16(fin_r            );
-        q2_in1 = vld2q_f16(fin_r + (nfft>>1));
+        q2_in0 = vld2_f16(fin_r            );
+        q2_in1 = vld2_f16(fin_r + (nfft>>1));
         fin_r += 8;
 
-        q2_in3 = vld2q_f16(fin_b + (nfft>>1));
-        q2_in2 = vld2q_f16(fin_b + nfft     );
+        q2_in3 = vld2_f16(fin_b + (nfft>>1));
+        q2_in2 = vld2_f16(fin_b + nfft     );
         fin_b -= 8;
 
-        q2_tw0 = vld2q_f16(tw);
+        q2_tw0 = vld2_f16(tw);
         tw += 8;
-        q2_tw1 = vld2q_f16(tw);
+        q2_tw1 = vld2_f16(tw);
         tw += 8;
-        q2_tw2 = vld2q_f16(tw);
+        q2_tw2 = vld2_f16(tw);
         tw += 8;
 
         // reverse -- CONJ
-        NE10_REVERSE_FLOAT32X4( q2_in3.val[0] );
-        NE10_REVERSE_FLOAT32X4( q2_in3.val[1] );
-        NE10_REVERSE_FLOAT32X4( q2_in2.val[0] );
-        NE10_REVERSE_FLOAT32X4( q2_in2.val[1] );
+        NE10_REVERSE_FLOAT16X4( q2_in3.val[0] );
+        NE10_REVERSE_FLOAT16X4( q2_in3.val[1] );
+        NE10_REVERSE_FLOAT16X4( q2_in2.val[0] );
+        NE10_REVERSE_FLOAT16X4( q2_in2.val[1] );
 
-        q2_in2.val[1] = vnegq_f16( q2_in2.val[1] );
-        q2_in3.val[1] = vnegq_f16( q2_in3.val[1] );
+        q2_in2.val[1] = vneg_f16( q2_in2.val[1] );
+        q2_in3.val[1] = vneg_f16( q2_in3.val[1] );
 
         // in -> out
-        q2_out0.val[0] = vaddq_f16 (q2_in0.val[0], q2_in2.val[0]);
-        q2_out2.val[0] = vsubq_f16 (q2_in0.val[0], q2_in2.val[0]);
+        q2_out0.val[0] = vadd_f16 (q2_in0.val[0], q2_in2.val[0]);
+        q2_out2.val[0] = vsub_f16 (q2_in0.val[0], q2_in2.val[0]);
 
-        q2_out0.val[1] = vaddq_f16 (q2_in0.val[1], q2_in2.val[1]);
-        q2_out2.val[1] = vsubq_f16 (q2_in0.val[1], q2_in2.val[1]);
+        q2_out0.val[1] = vadd_f16 (q2_in0.val[1], q2_in2.val[1]);
+        q2_out2.val[1] = vsub_f16 (q2_in0.val[1], q2_in2.val[1]);
 
-        q2_out1.val[0] = vaddq_f16 (q2_in1.val[0], q2_in3.val[0]);
-        q2_out3.val[1] = vsubq_f16 (q2_in1.val[0], q2_in3.val[0]);
+        q2_out1.val[0] = vadd_f16 (q2_in1.val[0], q2_in3.val[0]);
+        q2_out3.val[1] = vsub_f16 (q2_in1.val[0], q2_in3.val[0]);
 
-        q2_out1.val[1] = vaddq_f16 (q2_in3.val[1], q2_in1.val[1]);
-        q2_out3.val[0] = vsubq_f16 (q2_in3.val[1], q2_in1.val[1]);
+        q2_out1.val[1] = vadd_f16 (q2_in3.val[1], q2_in1.val[1]);
+        q2_out3.val[0] = vsub_f16 (q2_in3.val[1], q2_in1.val[1]);
 
         // out -> in
-        q2_in0.val[0] = vaddq_f16 (q2_out0.val[0], q2_out1.val[0]);
-        q2_in2.val[0] = vsubq_f16 (q2_out0.val[0], q2_out1.val[0]);
+        q2_in0.val[0] = vadd_f16 (q2_out0.val[0], q2_out1.val[0]);
+        q2_in2.val[0] = vsub_f16 (q2_out0.val[0], q2_out1.val[0]);
 
-        q2_in0.val[1] = vaddq_f16 (q2_out0.val[1], q2_out1.val[1]);
-        q2_in2.val[1] = vsubq_f16 (q2_out0.val[1], q2_out1.val[1]);
+        q2_in0.val[1] = vadd_f16 (q2_out0.val[1], q2_out1.val[1]);
+        q2_in2.val[1] = vsub_f16 (q2_out0.val[1], q2_out1.val[1]);
 
-        q2_in1.val[0] = vaddq_f16 (q2_out2.val[0], q2_out3.val[0]);
-        q2_in3.val[0] = vsubq_f16 (q2_out2.val[0], q2_out3.val[0]);
+        q2_in1.val[0] = vadd_f16 (q2_out2.val[0], q2_out3.val[0]);
+        q2_in3.val[0] = vsub_f16 (q2_out2.val[0], q2_out3.val[0]);
 
-        q2_in1.val[1] = vaddq_f16 (q2_out2.val[1], q2_out3.val[1]);
-        q2_in3.val[1] = vsubq_f16 (q2_out2.val[1], q2_out3.val[1]);
+        q2_in1.val[1] = vadd_f16 (q2_out2.val[1], q2_out3.val[1]);
+        q2_in3.val[1] = vsub_f16 (q2_out2.val[1], q2_out3.val[1]);
 
         // tw
         // q2_in -> q2_out
@@ -1479,21 +1479,21 @@ static void arm_ne10_radix4_c2r_with_twiddles_first_stage_other_butterfly (
         NE10_RADIX4X4C_TRANSPOSE_NEON (q2_in,q2_out);
 
         // store
-        vst1q_f16(fout_r, q2_in0.val[0]);
+        vst1_f16(fout_r, q2_in0.val[0]);
         fout_r += 4;
-        vst1q_f16(fout_r, q2_in0.val[1]);
+        vst1_f16(fout_r, q2_in0.val[1]);
         fout_r += 4;
-        vst1q_f16(fout_r, q2_in1.val[0]);
+        vst1_f16(fout_r, q2_in1.val[0]);
         fout_r += 4;
-        vst1q_f16(fout_r, q2_in1.val[1]);
+        vst1_f16(fout_r, q2_in1.val[1]);
         fout_r += 4;
-        vst1q_f16(fout_r, q2_in2.val[0]);
+        vst1_f16(fout_r, q2_in2.val[0]);
         fout_r += 4;
-        vst1q_f16(fout_r, q2_in2.val[1]);
+        vst1_f16(fout_r, q2_in2.val[1]);
         fout_r += 4;
-        vst1q_f16(fout_r, q2_in3.val[0]);
+        vst1_f16(fout_r, q2_in3.val[0]);
         fout_r += 4;
-        vst1q_f16(fout_r, q2_in3.val[1]);
+        vst1_f16(fout_r, q2_in3.val[1]);
         fout_r += 4;
     }
 }
@@ -1562,9 +1562,11 @@ void arm_ne10_fft_r2c_1d_float16_neon (
 
     typedef ne10_fft_cpx_float16_t CPLX;
 
+    memset(out,0,sizeof(float16_t)*S->nfft);
 
     arm_ne10_mixed_radix_r2c_butterfly_float16_neon (S,(CPLX*) fin, (CPLX*)fout,(CPLX*)tmpbuf);
     arm_ne10_radix4_r2c_with_twiddles_last_stage(S,(const CPLX*)tmpbuf,(CPLX*)out);
+    
     //fout[S->nfft / 2].r = fout[0].i;
 
     //fout[0].i = fout[S->nfft / 2].i = 0.0f;
