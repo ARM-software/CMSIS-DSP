@@ -57,8 +57,8 @@ ARM_DSP_ATTRIBUTE void arm_absmin_no_idx_q31(
     int32_t  blkCnt;           /* loop counters */
     q31x4_t       vecSrc;
     q31_t   const *pSrcVec;
-    uint32x4_t    curExtremValVec = vdupq_n_s32(Q31_ABSMAX);
-    q31_t           minValue = Q31_ABSMAX;
+    uint32x4_t    curExtremValVec = vdupq_n_u32(Q31_ABSMAX);
+    uint32_t           minValue = Q31_ABSMAX;
     mve_pred16_t    p0;
 
 
@@ -96,8 +96,8 @@ ARM_DSP_ATTRIBUTE void arm_absmin_no_idx_q31(
     /*
      * Get min value across the vector
      */
-    minValue = vminavq(minValue, (q31x4_t)curExtremValVec);
-    *pResult = minValue;
+    minValue = vminvq(minValue, curExtremValVec);
+    *pResult = clip_q63_to_q31((q63_t)minValue);
 }
 
 #else

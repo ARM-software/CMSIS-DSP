@@ -56,8 +56,8 @@ ARM_DSP_ATTRIBUTE void arm_absmin_no_idx_q15(
     uint16_t        blkCnt;           /* loop counters */
     q15x8_t       vecSrc;
     q15_t   const *pSrcVec;
-    uint16x8_t    curExtremValVec = vdupq_n_s16(Q15_ABSMAX);
-    q15_t           minValue = Q15_ABSMAX;
+    uint16x8_t    curExtremValVec = vdupq_n_u16(Q15_ABSMAX);
+    uint16_t           minValue = Q15_ABSMAX;
     mve_pred16_t    p0;
 
 
@@ -95,8 +95,8 @@ ARM_DSP_ATTRIBUTE void arm_absmin_no_idx_q15(
     /*
      * Get min value across the vector
      */
-    minValue = vminavq(minValue, (q15x8_t)curExtremValVec);
-    *pResult = minValue;
+    minValue = vminvq(minValue, curExtremValVec);
+    *pResult = __USAT(minValue, 15);
 }
 
 #else
