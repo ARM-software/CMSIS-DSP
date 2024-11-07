@@ -248,6 +248,11 @@ void assert_equal(unsigned long nb,AnyPattern<T> &pa, AnyPattern<T> &pb)
     }
 };
 
+#if defined(ARM_FLOAT16_SUPPORTED)
+template<>
+void assert_equal(unsigned long nb,float16_t pa, float16_t pb);
+#endif 
+
 template <typename T> 
 void assert_near_equal(unsigned long nb,T pa, T pb, T threshold)
 {
@@ -269,6 +274,11 @@ template <>
 void assert_near_equal(unsigned long nb,q15_t pa, q15_t pb, q15_t threshold);
 template <> 
 void assert_near_equal(unsigned long nb,q7_t pa, q7_t pb, q7_t threshold);
+
+#if !defined (__CC_ARM) && defined(ARM_FLOAT16_SUPPORTED)
+template <> 
+void assert_near_equal(unsigned long nb,float16_t pa, float16_t pb, float16_t threshold);
+#endif 
 
 template <typename T> 
 void assert_near_equal(unsigned long nb,AnyPattern<T> &pa, AnyPattern<T> &pb, T threshold)

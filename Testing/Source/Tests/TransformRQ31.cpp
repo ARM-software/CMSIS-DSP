@@ -31,12 +31,13 @@
 
        q31_t *outp = outputfft.ptr();
        q31_t *overoutp = overheadoutputfft.ptr();
-       q31_t *tmp2p = tmp2.ptr();
+       
 
 
        memcpy(tmp,inp,sizeof(q31_t)*input.nbSamples());
 
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+      q31_t *tmp2p = tmp2.ptr();
       arm_rfft_q31(
              &this->instRfftQ31,
              tmp,

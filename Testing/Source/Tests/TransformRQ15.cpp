@@ -32,12 +32,11 @@
 
        q15_t *outp = outputfft.ptr();
        q15_t *overoutp = overheadoutputfft.ptr();
-       q15_t *tmp2p = tmp2.ptr();
-
-
+       
        memcpy(tmp,inp,sizeof(q15_t)*input.nbSamples());
 
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+      q15_t *tmp2p = tmp2.ptr();
       arm_rfft_q15(
              &this->instRfftQ15,
              tmp,

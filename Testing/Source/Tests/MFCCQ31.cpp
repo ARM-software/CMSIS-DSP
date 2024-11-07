@@ -23,11 +23,11 @@ a double precision computation.
         q31_t *tmpinp=tmpin.ptr(); 
         q31_t *outp=output.ptr();
         q31_t *tmpp=tmp.ptr();
-        q31_t *tmp2p=tmp2.ptr();
 
 
         memcpy((void*)tmpinp,(void*)inp1,sizeof(q31_t)*this->fftLen);
         #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+        q31_t *tmp2p=tmp2.ptr();
         arm_mfcc_q31(&mfcc,tmpinp,outp,tmpp,tmp2p);
         #else
         arm_mfcc_q31(&mfcc,tmpinp,outp,tmpp);

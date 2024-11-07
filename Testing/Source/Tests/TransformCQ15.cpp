@@ -12,11 +12,12 @@
        const q15_t *inp = input.ptr();
 
        q15_t *outfftp = outputfft.ptr();
-       q15_t *tmp2p = tmp2.ptr();
 
        memcpy(outfftp,inp,sizeof(q15_t)*input.nbSamples());
    
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+          q15_t *tmp2p = tmp2.ptr();
+
           arm_cfft_q15(
              &(this->instCfftQ15),
              inp,
@@ -44,11 +45,11 @@
 
        q15_t *outfftp = outputfft.ptr();
        q15_t *refp = ref.ptr();
-       q15_t *tmp2p = tmp2.ptr();
 
         memcpy(outfftp,inp,sizeof(q15_t)*input.nbSamples());
    
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+        q15_t *tmp2p = tmp2.ptr();
         arm_cfft_q15(
              &(this->instCfftQ15),
              inp,

@@ -22,11 +22,11 @@ a double precision computation.
         float32_t *tmpinp=tmpin.ptr(); 
         float32_t *outp=output.ptr();
         float32_t *tmpp=tmp.ptr();
-        float32_t *tmp2p=tmp2.ptr();
 
 
         memcpy((void*)tmpinp,(void*)inp1,sizeof(float32_t)*this->fftLen);
         #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+        float32_t *tmp2p=tmp2.ptr();
         arm_mfcc_f32(&mfcc,tmpinp,outp,tmpp,tmp2p);
         #else
         arm_mfcc_f32(&mfcc,tmpinp,outp,tmpp);

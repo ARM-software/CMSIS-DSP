@@ -14,12 +14,12 @@
        float32_t *infftp = inputfft.ptr();
 
        float32_t *outfftp = outputfft.ptr();
-       float32_t *bufferp = bufferfft.ptr();
 
         memcpy(infftp,inp,sizeof(float32_t)*input.nbSamples());
 
    
 #if defined(ARM_MATH_NEON)
+        float32_t *bufferp = bufferfft.ptr();
         arm_cfft_f32(
              &(this->varInstCfftF32),
              infftp,
@@ -27,11 +27,13 @@
              bufferp,
              this->ifft);
 #else
+        memcpy(outfftp,inp,sizeof(float32_t)*input.nbSamples());
+
         arm_cfft_f32(
              &(this->varInstCfftF32),
-             infftp,
              outfftp,
-             this->ifft);
+             this->ifft,
+             1);
 #endif
 
           

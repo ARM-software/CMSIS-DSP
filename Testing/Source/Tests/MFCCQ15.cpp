@@ -16,11 +16,11 @@
         q15_t *tmpinp=tmpin.ptr(); 
         q15_t *outp=output.ptr();
         q31_t *tmpp=tmp.ptr();
-        q15_t *tmp2p=tmp2.ptr();
 
 
         memcpy((void*)tmpinp,(void*)inp1,sizeof(q15_t)*this->fftLen);
         #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+        q15_t *tmp2p=tmp2.ptr();
         arm_mfcc_q15(&mfcc,tmpinp,outp,tmpp,tmp2p);
         #else
         arm_mfcc_q15(&mfcc,tmpinp,outp,tmpp);
