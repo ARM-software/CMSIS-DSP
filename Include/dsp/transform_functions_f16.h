@@ -116,6 +116,10 @@ arm_status arm_cfft_init_16_f16(arm_cfft_instance_f16 * S);
   arm_cfft_instance_f16 * S,
   uint16_t fftLen);
 
+//#if defined(DOXYGEN)
+  extern arm_cfft_instance_f16 *arm_cfft_init_dynamic_f16(uint32_t fftLen);
+//#endif 
+
 #if defined(ARM_MATH_NEON_FLOAT16)  && !defined(ARM_MATH_AUTOVECTORIZE)
 
 extern arm_cfft_instance_f16 *arm_cfft_init_dynamic_f16(uint32_t fftLen);
