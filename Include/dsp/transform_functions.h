@@ -368,6 +368,9 @@ arm_status arm_cfft_init_16_f32(arm_cfft_instance_f32 * S);
   uint16_t fftLen);
 
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+extern arm_cfft_instance_f32 *arm_cfft_init_dynamic_f32(uint16_t fftLen);
+
 /* `pIn` content is modified by the function.
    `pIn` array must be different from `pOut` one
 */
