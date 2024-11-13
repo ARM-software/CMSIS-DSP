@@ -252,9 +252,7 @@ arm_status arm_cfft_init_q15(
   arm_cfft_instance_q15 * S,
   uint16_t fftLen);
 
-#if defined(DOXYGEN)
-extern arm_cfft_instance_q15 *arm_cfft_init_dynamic_q15(uint32_t fftLen);
-#endif 
+
 
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 
@@ -316,10 +314,6 @@ arm_status arm_cfft_init_q31(
   arm_cfft_instance_q31 * S,
   uint16_t fftLen);
 
-#if defined(DOXYGEN)
-extern arm_cfft_instance_q31 *arm_cfft_init_dynamic_q31(uint32_t fftLen);
-#endif 
-
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 extern arm_cfft_instance_q31 *arm_cfft_init_dynamic_q31(uint32_t fftLen);
@@ -380,10 +374,6 @@ arm_status arm_cfft_init_16_f32(arm_cfft_instance_f32 * S);
   arm_status arm_cfft_init_f32(
   arm_cfft_instance_f32 * S,
   uint16_t fftLen);
-
-#if defined(DOXYGEN)
-extern arm_cfft_instance_f32 *arm_cfft_init_dynamic_f32(uint32_t fftLen);
-#endif 
 
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 

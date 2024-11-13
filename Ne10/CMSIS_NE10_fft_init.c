@@ -444,6 +444,11 @@ arm_cfft_instance_f32 *arm_cfft_init_dynamic_f32(uint32_t fftLen)
  */
 
 /**
+  @addtogroup ComplexFFTQ31
+  @{
+ */
+
+/**
  * @brief      Initialize data structure for a FFT
  *
  * @param[in]  fftLen  The fft length
@@ -497,6 +502,14 @@ arm_cfft_instance_q31 *arm_cfft_init_dynamic_q31(uint32_t fftLen)
     return st;
 }
 
+/**
+  @} end of ComplexFFTQ31 group
+ */
+
+/**
+  @addtogroup ComplexFFTQ15
+  @{
+ */
 /**
  * @brief      Initialize data structure for a FFT
  *
@@ -578,6 +591,9 @@ arm_cfft_instance_q15 *arm_cfft_init_dynamic_q15(uint32_t fftLen)
 
     return st;
 }
+/**
+  @} end of ComplexFFTQ15 group
+ */
 
 
 #if defined(ARM_MATH_NEON_FLOAT16) || defined(DOXYGEN)
@@ -664,6 +680,11 @@ static ne10_fft_cpx_float16_t* ne10_fft_generate_twiddles_float16 (ne10_fft_cpx_
     return twiddles;
 }
 
+
+/**
+  @addtogroup ComplexFFTF16
+  @{
+ */
 /**
  * @brief      Initialize data structure for a FFT
  *
@@ -757,4 +778,7 @@ arm_cfft_instance_f16 *arm_cfft_init_dynamic_f16(uint32_t fftLen)
 
     return st;
 }
+/**
+  @} end of ComplexFFTF16 group
+ */
 #endif
