@@ -79,7 +79,7 @@ extern "C"
 #if defined(ARM_MATH_NEON_FLOAT16)  && !defined(ARM_MATH_AUTOVECTORIZE)
 typedef struct
 {
-          uint16_t fftLen;                   /**< length of the FFT. */
+          uint32_t fftLen;                   /**< length of the FFT. */
     const float16_t *pTwiddle;         /**< points to the Twiddle factor table. */
     const uint32_t *factors;
 } arm_cfft_instance_f16;
@@ -117,6 +117,9 @@ arm_status arm_cfft_init_16_f16(arm_cfft_instance_f16 * S);
   uint16_t fftLen);
 
 #if defined(ARM_MATH_NEON_FLOAT16)  && !defined(ARM_MATH_AUTOVECTORIZE)
+
+extern arm_cfft_instance_f16 *arm_cfft_init_dynamic_f16(uint32_t fftLen);
+
 void arm_cfft_f16(
   const arm_cfft_instance_f16 * S,
         const float16_t * pIn,

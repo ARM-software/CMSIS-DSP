@@ -45,7 +45,7 @@ extern "C" {
 // constant values that are used across the library
 /////////////////////////////////////////////////////////
 
-#define NE10_PI (ne10_float32_t)(3.1415926535897932384626433832795)
+#define NE10_PI (double)(3.1415926535897932384626433832795)
 
 /////////////////////////////////////////////////////////
 // some external macro definitions to be exposed to the users
@@ -82,6 +82,50 @@ extern "C" {
 #define NE10_F2I32_FIXDIV(c,div) \
     do {    ((c).r) = ( ( ((c).r)/div) );  \
         ((c).i) = ( ( ((c).i)/div) ); }while (0)
+
+/*
+ * FFT Algorithm Flags
+ *
+ * These are used within Ne10 to decide, after factoring an FFT into stages, what
+ * FFT algorithm should be used.
+ *
+ * - NE10_FFT_ALG_DEFAULT is a mixed radix 2/4 algorithm.
+ * Non power of 2 are not supported by CMSIS-DSP
+ */
+#define NE10_FFT_ALG_DEFAULT  0
+#define NE10_FFT_ALG_ANY      1
+
+/*
+ * FFT Factor Flags
+ *
+ * These are used within Ne10 to decide how an input FFT size should be factored into
+ * stages (i.e. what radices should be used).
+ *
+ * - NE10_FACTOR_DEFAULT factors into 2, 3, 4, 5.
+ * - NE10_FACTOR_EIGHT_FIRST_STAGE is NE10_FACTOR_DEFAULT with the extended ability to
+ *   have a radix-8 initial stage.
+ * - NE10_FACTOR_EIGHT factors into 2, 3, 4, 5, 8.
+ */
+#define NE10_FACTOR_DEFAULT             0
+#define NE10_FACTOR_EIGHT_FIRST_STAGE   1
+#define NE10_FACTOR_EIGHT               2
+
+#define NE10_MALLOC malloc
+#define NE10_FREE(p) \
+    do { \
+        free(p); \
+        p = 0; \
+    }while(0)
+
+#define NE10_FFT_PARA_LEVEL 4
+
+#define NE10_FFT_BYTE_ALIGNMENT 8
+
+#define NE10_BYTE_ALIGNMENT(address, alignment) \
+    do { \
+        (address) = (((address) + ((alignment) - 1)) & ~ ((alignment) - 1)); \
+    }while (0)
+
 
 #ifdef __cplusplus
 }

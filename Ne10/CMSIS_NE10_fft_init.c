@@ -33,61 +33,17 @@
 
 #include "CMSIS_NE10_types.h"
 #include "CMSIS_NE10_fft.h"
+#include "CMSIS_NE10_macros.h"
 
 #include "dsp/transform_functions.h"
+#include "dsp/transform_functions_f16.h"
 
 #include <stdlib.h>
 //#include <stdio.h>
 
-/*
- * FFT Algorithm Flags
- *
- * These are used within Ne10 to decide, after factoring an FFT into stages, what
- * FFT algorithm should be used.
- *
- * - NE10_FFT_ALG_DEFAULT is a mixed radix 2/4 algorithm.
- * Non power of 2 are not supported by CMSIS-DSP
- */
-#define NE10_FFT_ALG_DEFAULT  0
-#define NE10_FFT_ALG_ANY      1
-
-/*
- * FFT Factor Flags
- *
- * These are used within Ne10 to decide how an input FFT size should be factored into
- * stages (i.e. what radices should be used).
- *
- * - NE10_FACTOR_DEFAULT factors into 2, 3, 4, 5.
- * - NE10_FACTOR_EIGHT_FIRST_STAGE is NE10_FACTOR_DEFAULT with the extended ability to
- *   have a radix-8 initial stage.
- * - NE10_FACTOR_EIGHT factors into 2, 3, 4, 5, 8.
- */
-#define NE10_FACTOR_DEFAULT             0
-#define NE10_FACTOR_EIGHT_FIRST_STAGE   1
-#define NE10_FACTOR_EIGHT               2
-
-#define NE10_PI (double)(3.1415926535897932384626433832795)
-#define NE10_F2I32_MAX         2147483647
-
-#define NE10_MALLOC malloc
-#define NE10_FREE(p) \
-    do { \
-        free(p); \
-        p = 0; \
-    }while(0)
-
-#define NE10_FFT_PARA_LEVEL 4
-
-#define NE10_FFT_BYTE_ALIGNMENT 8
-
-#define NE10_BYTE_ALIGNMENT(address, alignment) \
-    do { \
-        (address) = (((address) + ((alignment) - 1)) & ~ ((alignment) - 1)); \
-    }while (0)
 
 
-#if defined(ARM_MATH_NEON_FLOAT16)
-#endif
+
 /*
  * This function outputs a factor buffer ('facbuf') that decomposes an FFT of input size
  * n into a number of radix-r butterfly calculations (for r in some set of radix values).
@@ -518,3 +474,239 @@ arm_cfft_instance_q31 *arm_cfft_init_dynamic_q31(uint32_t fftLen)
 
     return st;
 }
+
+arm_cfft_instance_q15 *arm_cfft_init_dynamic_q15(uint32_t fftLen)
+{
+    arm_cfft_instance_q15* st = NULL;
+    ne10_uint32_t memneeded = sizeof (arm_cfft_instance_q15)
+                              + sizeof (ne10_int32_t) * (NE10_MAXFACTORS * 2) /* factors */
+                              + sizeof (ne10_fft_cpx_int16_t) * (fftLen)       /* twiddles */
+                              + NE10_FFT_BYTE_ALIGNMENT;             /* 64-bit alignment */
+
+    st = (arm_cfft_instance_q15*) NE10_MALLOC (memneeded);
+
+    if (st)
+    {
+        uintptr_t address = (uintptr_t) st + sizeof (arm_cfft_instance_q15);
+        NE10_BYTE_ALIGNMENT (address, NE10_FFT_BYTE_ALIGNMENT);
+        ne10_uint32_t *factors = (ne10_uint32_t*) address;
+        st->factors = factors;
+
+        ne10_fft_cpx_int16_t *twiddles = (ne10_fft_cpx_int16_t*) (st->factors + (NE10_MAXFACTORS * 2));
+        st->pTwiddle = (q15_t*)twiddles;
+        st->fftLen = fftLen;
+
+        ne10_int32_t result = ne10_factor (fftLen, factors, NE10_FACTOR_EIGHT_FIRST_STAGE);
+        if (result == NE10_ERR)
+        {
+            NE10_FREE (st);
+            return NULL;
+        }
+
+        ne10_int32_t j, k;
+        ne10_int32_t stage_count = factors[0];
+        ne10_int32_t fstride = factors[1];
+        ne10_int32_t mstride;
+        ne10_int32_t cur_radix;
+        ne10_float64_t phase;
+        const ne10_float64_t pi = NE10_PI;
+
+        // Don't generate any twiddles for the first stage
+        stage_count --;
+
+        // Generate twiddles for the other stages
+        for (; stage_count > 0; stage_count --)
+        {
+            cur_radix = factors[2 * stage_count];
+            fstride /= cur_radix;
+            mstride = factors[2 * stage_count + 1];
+            for (j = 0; j < mstride; j++)
+            {
+                for (k = 1; k < cur_radix; k++) // phase = 1 when k = 0
+                {
+                    phase = -2 * pi * fstride * k * j / fftLen;
+                    twiddles[mstride * (k - 1) + j].r = (ne10_int16_t) floor (0.5 + NE10_F2I16_MAX * cos (phase));
+                    twiddles[mstride * (k - 1) + j].i = (ne10_int16_t) floor (0.5 + NE10_F2I16_MAX * sin (phase));
+                }
+            }
+            twiddles += mstride * (cur_radix - 1);
+        }
+
+        stage_count = factors[0];
+        factors[2] = st->factors[2 * stage_count];        // first radix
+        factors[3] = st->factors[2 * stage_count]; // mstride
+
+        //printf("%d %d %d %d\n",factors[0],factors[1],factors[2],factors[3]);
+    }
+
+    
+
+    return st;
+}
+
+
+#if defined(ARM_MATH_NEON_FLOAT16)
+
+// First column (k == 0) is ignored because phase == 1, and
+// twiddle = (1.0, 0.0).
+static void ne10_fft_generate_twiddles_line_float16 (ne10_fft_cpx_float16_t * twiddles,
+        const ne10_int16_t mstride,
+        const ne10_int16_t fstride,
+        const ne10_int16_t radix,
+        const ne10_int16_t nfft)
+{
+    ne10_int16_t j, k;
+    ne10_float64_t phase;
+    const ne10_float64_t pi = NE10_PI;
+    //printf("%d %d %d %d\n",mstride,fstride,radix,nfft);
+
+    for (j = 0; j < mstride; j++)
+    {
+        for (k = 1; k < radix; k++) // phase = 1 when k = 0
+        {
+            phase = -2 * pi * fstride * k * j / nfft;
+            twiddles[mstride * (k - 1) + j].r = (ne10_float16_t) cos ((double)phase);
+            twiddles[mstride * (k - 1) + j].i = (ne10_float16_t) sin ((double)phase);
+        } // radix
+    } // mstride
+}
+
+typedef void (*line_generator_float16)(ne10_fft_cpx_float16_t*,
+      const ne10_int16_t,
+      const ne10_int16_t,
+      const ne10_int16_t,
+      const ne10_int16_t);
+
+static ne10_fft_cpx_float16_t* ne10_fft_generate_twiddles_impl_float16 (
+      line_generator_float16 generator,
+      ne10_fft_cpx_float16_t * twiddles,
+      const ne10_uint32_t * factors,
+      const ne10_int16_t nfft)
+{
+    ne10_uint32_t stage_count = factors[0];
+    ne10_uint32_t fstride = factors[1];
+    ne10_uint32_t mstride;
+    ne10_uint32_t cur_radix; // current radix
+
+    //printf("stage count = %d, fstride = %d\n",stage_count,fstride);
+
+    // for first stage
+    cur_radix = factors[2 * stage_count];
+    //printf("cur radix = %d\n",cur_radix);
+
+    if (cur_radix % 2) // current radix is not 4 or 2
+    {
+        //printf("Gen cur radix\n");
+        twiddles[0].r = 1.0;
+        twiddles[0].i = 0.0;
+        twiddles += 1;
+        generator (twiddles, 1, fstride, cur_radix, nfft);
+        twiddles += cur_radix - 1;
+    }
+    stage_count --;
+
+    // for other stage
+    for (; stage_count > 0; stage_count --)
+    {
+        cur_radix = factors[2 * stage_count];
+        //printf("state=%d, cur radix = %d\n",stage_count,cur_radix);
+        fstride /= cur_radix;
+        mstride = factors[2 * stage_count + 1];
+        generator (twiddles, mstride, fstride, cur_radix, nfft);
+        twiddles += mstride * (cur_radix - 1);
+    } // stage_count
+
+    return twiddles;
+}
+
+static ne10_fft_cpx_float16_t* ne10_fft_generate_twiddles_float16 (ne10_fft_cpx_float16_t * twiddles,
+        const ne10_uint32_t * factors,
+        const ne10_int16_t nfft )
+{
+    line_generator_float16 generator = ne10_fft_generate_twiddles_line_float16;
+    twiddles = ne10_fft_generate_twiddles_impl_float16(generator,
+        twiddles, factors, nfft);
+    return twiddles;
+}
+
+arm_cfft_instance_f16 *arm_cfft_init_dynamic_f16(uint32_t fftLen)
+{
+    arm_cfft_instance_f16* st = NULL;
+    ne10_uint32_t memneeded = sizeof (arm_cfft_instance_f16)
+                              + sizeof (ne10_uint32_t) * (NE10_MAXFACTORS * 2) /* factors */
+                              + sizeof (ne10_fft_cpx_float16_t) * fftLen       /* twiddles */
+                              + NE10_FFT_BYTE_ALIGNMENT;             /* 64-bit alignment */
+
+    st = (arm_cfft_instance_f16*) NE10_MALLOC (memneeded);
+
+    // Bad allocation.
+    if (st == NULL)
+    {
+        return NULL;
+    }
+
+    // Only backward FFT is scaled by default.
+    //st->is_forward_scaled = 0;
+    //st->is_backward_scaled = 1;
+
+    uintptr_t address = (uintptr_t) st + sizeof (arm_cfft_instance_f16);
+    NE10_BYTE_ALIGNMENT (address, NE10_FFT_BYTE_ALIGNMENT);
+    
+    ne10_uint32_t *factors = (ne10_uint32_t*) address;
+
+    st->factors = factors;
+    ne10_fft_cpx_float16_t *pTwiddle =  (ne10_fft_cpx_float16_t*)(st->factors + (NE10_MAXFACTORS * 2));
+    st -> pTwiddle = (const float16_t*)pTwiddle;
+    // st->last_twiddles is default NULL.
+    // Calling fft_c or fft_neon is decided by this pointers.
+    //st->last_twiddles = NULL;
+
+    st->fftLen = fftLen;
+    st->fftLen /= NE10_FFT_PARA_LEVEL;
+        
+    ne10_int16_t result = ne10_factor (st->fftLen, factors, NE10_FACTOR_EIGHT_FIRST_STAGE);
+
+    // Cannot factor
+    if (result == NE10_ERR)
+    {
+        NE10_FREE (st);
+        return NULL;
+    }
+
+    ne10_int16_t stage_count    = st->factors[0];
+    //ne10_int16_t algorithm_flag = st->factors[2 * (stage_count + 1)];
+
+    
+    if (fftLen % NE10_FFT_PARA_LEVEL == 0)
+    {
+        st->fftLen = fftLen;
+
+        // Adjust the factoring for a size "nfft / 4" FFT to work for size "nfft"
+        if (stage_count > NE10_MAXFACTORS - 4)
+        {
+            NE10_FREE (st);
+            return NULL;
+        }
+        factors[0]++;          // Bump the stage count
+        factors[1] *= 4;       // Quadruple the first stage stride
+        memmove(&factors[4], &factors[2], ((2 * (stage_count + 1)) - 1) * sizeof(factors[0]));
+        factors[2] = 4;        // Add a new radix-4 stage
+        factors[3] = fftLen / 4;
+    }
+    else
+    {
+        NE10_FREE (st);
+        return NULL;
+    }
+
+
+    ne10_fft_generate_twiddles_float16 (pTwiddle, factors, st->fftLen);
+    
+    factors[2] = st->factors[2 * (stage_count+1)];        // first radix
+    factors[3] = st->factors[2 * (stage_count+1)]; // mstride
+
+    //printf("%d %d %d %d\n",factors[0],factors[1],factors[2],factors[3]);
+
+    return st;
+}
+#endif
