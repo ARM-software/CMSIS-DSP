@@ -248,7 +248,7 @@ static void ne10_fft_generate_twiddles_line_transposed_float32 (
 }
 #endif 
 
-#if 0
+
 // Twiddles matrix [mstride][radix-1]
 // First column (k == 0)is ignored because phase == 1, and
 // twiddle = (1.0, 0.0).
@@ -275,9 +275,9 @@ static void ne10_fft_generate_twiddles_line_int32 (ne10_fft_cpx_int32_t * twiddl
         } // radix
     } // mstride
 }
-#endif 
 
-#if 0
+
+
 static ne10_fft_cpx_int32_t* ne10_fft_generate_twiddles_int32 (ne10_fft_cpx_int32_t * twiddles,
         const ne10_uint32_t * factors,
         const ne10_int32_t nfft )
@@ -309,7 +309,7 @@ static ne10_fft_cpx_int32_t* ne10_fft_generate_twiddles_int32 (ne10_fft_cpx_int3
 
     return twiddles;
 }
-#endif 
+
 
 typedef void (*line_generator_float32)(ne10_fft_cpx_float32_t*,
       const ne10_int32_t,
@@ -397,7 +397,7 @@ static ne10_fft_cpx_float32_t* ne10_fft_generate_twiddles_transposed_float32 (
  *            This function can be used with FFT lengths
  *            longer than the ones supported on Cortex-M
  */
-arm_cfft_instance_f32 *arm_cfft_init_dynamic_f32(uint16_t fftLen)
+arm_cfft_instance_f32 *arm_cfft_init_dynamic_f32(uint32_t fftLen)
 {
     arm_cfft_instance_f32* st = NULL;
     ne10_uint32_t memneeded = sizeof (arm_cfft_instance_f32)
@@ -474,6 +474,47 @@ arm_cfft_instance_f32 *arm_cfft_init_dynamic_f32(uint16_t fftLen)
     factors[3] = st->factors[2 * (stage_count+1)]; // mstride
 
     //printf("%d %d %d %d\n",factors[0],factors[1],factors[2],factors[3]);
+
+    return st;
+}
+
+arm_cfft_instance_q31 *arm_cfft_init_dynamic_q31(uint32_t fftLen)
+{
+    arm_cfft_instance_q31* st = NULL;
+    ne10_uint32_t memneeded = sizeof (arm_cfft_instance_q31)
+                              + sizeof (ne10_int32_t) * (NE10_MAXFACTORS * 2) /* factors */
+                              + sizeof (ne10_fft_cpx_int32_t) * fftLen         /* twiddles */
+                              + NE10_FFT_BYTE_ALIGNMENT;             /* 64-bit alignment */
+
+    st = (arm_cfft_instance_q31*) NE10_MALLOC (memneeded);
+    if (st)
+    {
+        uintptr_t address = (uintptr_t) st + sizeof (arm_cfft_instance_q31);
+        NE10_BYTE_ALIGNMENT (address, NE10_FFT_BYTE_ALIGNMENT);
+        uint32_t *factors = (ne10_uint32_t*) address;
+        st->factors = factors;
+
+        ne10_fft_cpx_int32_t* twiddles = (ne10_fft_cpx_int32_t*) (st->factors + (NE10_MAXFACTORS * 2));
+        st->pTwiddle = (q31_t*)twiddles;
+        st->fftLen = fftLen;
+
+        ne10_int32_t result = ne10_factor (fftLen, factors, NE10_FACTOR_EIGHT_FIRST_STAGE);
+        if (result == NE10_ERR)
+        {
+            NE10_FREE (st);
+            return NULL;
+        }
+        
+        ne10_int32_t stage_count    = st->factors[0];
+
+        ne10_fft_generate_twiddles_int32 (twiddles, factors, fftLen);
+    
+        factors[2] = st->factors[2 * stage_count];        // first radix
+        factors[3] = st->factors[2 * stage_count]; // mstride
+
+        //printf("%d %d %d %d\n",factors[0],factors[1],factors[2],factors[3]);
+
+    }
 
     return st;
 }

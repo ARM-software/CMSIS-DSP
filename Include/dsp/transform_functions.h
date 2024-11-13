@@ -273,7 +273,7 @@ void arm_cfft_q15(
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 typedef struct
 {
-          uint16_t fftLen;                   /**< length of the FFT. */
+          uint32_t fftLen;                   /**< length of the FFT. */
     const q31_t *pTwiddle;         /**< points to the Twiddle factor table. */
     const uint32_t *factors;
 } arm_cfft_instance_q31;
@@ -310,6 +310,9 @@ arm_status arm_cfft_init_q31(
   uint16_t fftLen);
 
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+extern arm_cfft_instance_q31 *arm_cfft_init_dynamic_q31(uint32_t fftLen);
+
 void arm_cfft_q31(
     const arm_cfft_instance_q31 * S,
           const q31_t * src,
@@ -327,7 +330,7 @@ void arm_cfft_q31(
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 typedef struct
 {
-          uint16_t fftLen;                   /**< length of the FFT. */
+          uint32_t fftLen;                   /**< length of the FFT. */
     const float32_t *pTwiddle;         /**< points to the Twiddle factor table. */
     const uint32_t *factors;
 } arm_cfft_instance_f32;
@@ -369,7 +372,7 @@ arm_status arm_cfft_init_16_f32(arm_cfft_instance_f32 * S);
 
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-extern arm_cfft_instance_f32 *arm_cfft_init_dynamic_f32(uint16_t fftLen);
+extern arm_cfft_instance_f32 *arm_cfft_init_dynamic_f32(uint32_t fftLen);
 
 /* `pIn` content is modified by the function.
    `pIn` array must be different from `pOut` one
