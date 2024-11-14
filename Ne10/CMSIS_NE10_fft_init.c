@@ -158,7 +158,7 @@ static void ne10_fft_generate_twiddles_line_float32 (ne10_fft_cpx_float32_t * tw
         const ne10_int32_t nfft)
 {
     ne10_int32_t j, k;
-    ne10_float32_t phase;
+    ne10_float64_t phase;
     const ne10_float64_t pi = NE10_PI;
     //printf("%d %d %d %d\n",mstride,fstride,radix,nfft);
 
@@ -173,7 +173,7 @@ static void ne10_fft_generate_twiddles_line_float32 (ne10_fft_cpx_float32_t * tw
     } // mstride
 }
 
-#if 0
+
 // Transposed twiddles matrix [mstride][radix-1]
 // First row (k == 0) is ignored because phase == 1, and
 // twiddle = (1.0, 0.0).
@@ -189,7 +189,7 @@ static void ne10_fft_generate_twiddles_line_transposed_float32 (
     //printf("Transposed\n");
 
     ne10_int32_t j, k;
-    ne10_float32_t phase;
+    ne10_float64_t phase;
     const ne10_float64_t pi = NE10_PI;
 
     for (j = 0; j < mstride; j++)
@@ -202,7 +202,7 @@ static void ne10_fft_generate_twiddles_line_transposed_float32 (
         } // radix
     } // mstride
 }
-#endif 
+
 
 
 // Twiddles matrix [mstride][radix-1]
@@ -215,7 +215,7 @@ static void ne10_fft_generate_twiddles_line_int32 (ne10_fft_cpx_int32_t * twiddl
         const ne10_int32_t nfft)
 {
     ne10_int32_t j, k;
-    ne10_float32_t phase;
+    ne10_float64_t phase;
     const ne10_float64_t pi = NE10_PI;
 
     for (j = 0; j < mstride; j++)
@@ -325,7 +325,7 @@ static ne10_fft_cpx_float32_t* ne10_fft_generate_twiddles_float32 (ne10_fft_cpx_
     return twiddles;
 }
 
-#if 0
+
 static ne10_fft_cpx_float32_t* ne10_fft_generate_twiddles_transposed_float32 (
       ne10_fft_cpx_float32_t * twiddles,
       const ne10_uint32_t * factors,
@@ -338,7 +338,7 @@ static ne10_fft_cpx_float32_t* ne10_fft_generate_twiddles_transposed_float32 (
         twiddles, factors, nfft);
     return twiddles;
 }
-#endif
+
 
 /**
   @addtogroup ComplexFFTF32
@@ -782,3 +782,180 @@ arm_cfft_instance_f16 *arm_cfft_init_dynamic_f16(uint32_t fftLen)
   @} end of ComplexFFTF16 group
  */
 #endif
+
+/**
+  @addtogroup RealFFTF32
+  @{
+ */
+/**
+ * @brief      Initialize data structure for a RFFT
+ *
+ * @param[in]  fftLen  The rfft length
+ *
+ * @return     Pointer to the new structure
+ * 
+ * @par       This function is only available for Neon
+ *            This function is allocating memory. The
+ *            memory must be released when no more used.
+ *            This function can be used with RFFT lengths
+ *            longer than the ones supported on Cortex-M
+ */
+arm_rfft_fast_instance_f32 *arm_rfft_fast_init_dynamic_f32 (uint32_t nfft)
+{
+     //printf("Alloc r2c\n");
+    arm_rfft_fast_instance_f32* st = NULL;
+    ne10_int32_t result;
+
+    ne10_uint32_t memneeded =   sizeof (arm_rfft_fast_instance_f32)
+                              + sizeof (ne10_int32_t) * (NE10_MAXFACTORS * 2)       /* r_factors */
+                              + sizeof (ne10_int32_t) * (NE10_MAXFACTORS * 2)       /* r_factors_neon */
+                              + sizeof (ne10_fft_cpx_float32_t) * nfft              /* r_twiddles */
+                              + sizeof (ne10_fft_cpx_float32_t) * nfft/4            /* r_twiddles_neon */
+                              + sizeof (ne10_fft_cpx_float32_t) * (12 + nfft/32*12) /* r_super_twiddles_neon */
+                              + NE10_FFT_BYTE_ALIGNMENT;     /* 64-bit alignment*/
+
+    st = (arm_rfft_fast_instance_f32*) NE10_MALLOC (memneeded);
+
+    if (!st)
+    {
+        return st;
+    }
+
+    ne10_int32_t i,j;
+    ne10_fft_cpx_float32_t *tw;
+    const ne10_float64_t pi = NE10_PI;
+    ne10_float64_t phase1;
+
+    st->nfft = nfft;
+
+    ne10_fft_cpx_float32_t *r_twiddles;
+    uint32_t *r_factors;
+    ne10_fft_cpx_float32_t *r_twiddles_backward;
+    ne10_fft_cpx_float32_t *r_twiddles_neon;
+    ne10_fft_cpx_float32_t *r_twiddles_neon_backward;
+    uint32_t *r_factors_neon;
+    ne10_fft_cpx_float32_t *r_super_twiddles_neon;
+
+    
+    uintptr_t address = (uintptr_t) st + sizeof (arm_rfft_fast_instance_f32);
+    NE10_BYTE_ALIGNMENT (address, NE10_FFT_BYTE_ALIGNMENT);
+
+    r_twiddles = (ne10_fft_cpx_float32_t*) address;
+    r_factors = (ne10_uint32_t*) (r_twiddles + nfft);
+    r_twiddles_neon = (ne10_fft_cpx_float32_t*) (r_factors + (NE10_MAXFACTORS * 2));
+    r_factors_neon = (ne10_uint32_t*) (r_twiddles_neon + nfft/4);
+    r_super_twiddles_neon = (ne10_fft_cpx_float32_t*) (r_factors_neon + (NE10_MAXFACTORS * 2));
+
+
+    
+    if (nfft<32)
+    {
+        return st;
+    }
+
+    // factors and twiddles for rfft C
+    ne10_factor (nfft, r_factors, NE10_FACTOR_EIGHT_FIRST_STAGE);
+
+    // backward twiddles pointers
+    r_twiddles_backward = ne10_fft_generate_twiddles_float32 (r_twiddles, r_factors, nfft);
+
+    //for(unsigned int i=0;i<nfft;i++)
+    //{
+    //    printf("%f %f\n",(double)r_twiddles[i].r,(double)r_twiddles[i].i);
+    //}
+    //printf("---\n");
+
+    // factors and twiddles for rfft neon
+    result = ne10_factor (nfft/4, r_factors_neon, NE10_FACTOR_EIGHT_FIRST_STAGE);
+    if (result == NE10_ERR)
+    {
+        return st;
+    }
+
+    // Twiddle table is transposed here to improve cache access performance.
+    r_twiddles_neon_backward = ne10_fft_generate_twiddles_transposed_float32 (
+        r_twiddles_neon,
+        r_factors_neon,
+        nfft/4);
+
+    //for(unsigned int i=0;i<nfft/4;i++)
+    //{
+    //    printf("%f %f\n",(double)r_twiddles_neon[i].r,(double)r_twiddles_neon[i].i);
+    //}
+
+    // nfft/4 x 4
+    tw = r_super_twiddles_neon;
+    for (i = 1; i < 4; i ++)
+    {
+        for (j = 0; j < 4; j++)
+        {
+            phase1 = - 2 * pi * ( (1.0*i * j) / nfft);
+            tw[4*i-4+j].r = (ne10_float32_t) cos (phase1);
+            tw[4*i-4+j].i = (ne10_float32_t) sin (phase1);
+        }
+    }
+
+    ne10_uint32_t k,s;
+    // [nfft/32] x [3] x [4]
+    //     k        s     j
+    for (k=1; k<nfft/32; k++)
+    {
+        // transposed
+        for (s = 1; s < 4; s++)
+        {
+            for (j = 0; j < 4; j++)
+            {
+                phase1 = - 2 * pi * (  1.0*((k*4+j) * s) / nfft);
+                //printf("%d %d %d %f\n",k,j,s,phase1);
+                tw[12*k+j+4*(s-1)].r = (ne10_float32_t) cos (phase1);
+                tw[12*k+j+4*(s-1)].i = (ne10_float32_t) sin (phase1);
+            }
+        }
+    }
+
+    //printf("---\n");
+    //for(unsigned int i=0;i<nfft/32*12;i++)
+    //{
+    //    printf("%f %f\n",(double)r_super_twiddles_neon[i].r,(double)r_super_twiddles_neon[i].i);
+    //}
+
+    ne10_int32_t stage_count = r_factors_neon[0];
+    //printf("stage %d\n",stage_count);
+    r_factors_neon[2] = r_factors_neon[2 * (stage_count)];        // first radix
+    if (stage_count > 1)
+    {
+      r_factors_neon[3] = r_factors_neon[2 * (stage_count-1)+1]; // mstride
+    }
+    else
+    {
+      r_factors_neon[3] = r_factors_neon[2 * (stage_count)+1]; // mstride
+    }
+
+    stage_count = r_factors[0];
+    //printf("stage %d\n",stage_count);
+    r_factors[2] = r_factors[2 * (stage_count)];        // first radix
+    if (stage_count > 1)
+    {
+      r_factors[3] = r_factors[2 * (stage_count-1)+1]; // mstride
+    }
+    else
+    {
+      r_factors[3] = r_factors[2 * (stage_count)+1]; // mstride
+    }
+    
+    st->r_twiddles=(float32_t*)r_twiddles;
+    st->r_factors=r_factors;
+    st->r_twiddles_backward=(float32_t*)r_twiddles_backward;
+    st->r_twiddles_neon=(float32_t*)r_twiddles_neon;
+    st->r_twiddles_neon_backward=(float32_t*)r_twiddles_neon_backward;
+    st->r_factors_neon=r_factors_neon;
+    st->r_super_twiddles_neon=(float32_t*)r_super_twiddles_neon;
+
+    //printf("%d %d %d %d\n",r_factors[0],r_factors[1],r_factors[2],r_factors[3]);
+    //printf("%d %d %d %d\n",r_factors_neon[0],r_factors_neon[1],r_factors_neon[2],r_factors_neon[3]);
+
+    return st;
+}
+/**
+  @} end of RealFFTF32 group
+ */
