@@ -139,7 +139,7 @@ void arm_cfft_f16(
 #if defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
   typedef struct
   {
-    uint16_t nfft;
+    uint32_t nfft;
     const float16_t *r_twiddles;
     const uint32_t *r_factors;
     const float16_t *r_twiddles_backward;
@@ -171,6 +171,9 @@ arm_status arm_rfft_fast_init_f16 (
          uint16_t fftLen);
 
 #if defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+extern arm_rfft_fast_instance_f16 *arm_rfft_fast_init_dynamic_f16 (uint32_t fftLen);
+
 void arm_rfft_fast_f16(
         const arm_rfft_fast_instance_f16 * S,
         const float16_t * p, 
