@@ -959,3 +959,194 @@ arm_rfft_fast_instance_f32 *arm_rfft_fast_init_dynamic_f32 (uint32_t nfft)
 /**
   @} end of RealFFTF32 group
  */
+
+/**
+  @addtogroup RealFFTQ31
+  @{
+ */
+  arm_rfft_instance_q31 *arm_rfft_init_dynamic_q31(uint32_t nfft)
+  {
+    arm_rfft_instance_q31 *st = NULL;
+    ne10_int32_t ncfft = nfft >> 1;
+
+    ne10_uint32_t memneeded = sizeof (arm_rfft_instance_q31)
+                              + sizeof (ne10_int32_t) * (NE10_MAXFACTORS * 2)    /* factors */
+                              + sizeof (ne10_fft_cpx_int32_t) * ncfft           /* twiddles */
+                              + sizeof (ne10_fft_cpx_int32_t) * ncfft / 2 /* super twiddles */
+                              + NE10_FFT_BYTE_ALIGNMENT;                /* 64-bit alignment */
+
+    st = (arm_rfft_instance_q31*) NE10_MALLOC (memneeded);
+
+    if (st)
+    {
+        uintptr_t address = (uintptr_t) st + sizeof (arm_rfft_instance_q31);
+        NE10_BYTE_ALIGNMENT (address, NE10_FFT_BYTE_ALIGNMENT);
+        ne10_uint32_t* factors = (ne10_uint32_t*) address;
+        ne10_fft_cpx_int32_t *twiddles = (ne10_fft_cpx_int32_t*) (factors + (NE10_MAXFACTORS * 2));
+        ne10_fft_cpx_int32_t* super_twiddles = twiddles + ncfft;
+
+        st->nfft = nfft;
+        st->ncfft = ncfft;
+        st->factors= factors;
+        st->twiddles = (q31_t*)twiddles;
+        st->super_twiddles=(q31_t*)super_twiddles;
+
+        ne10_int32_t result = ne10_factor (ncfft, factors, NE10_FACTOR_EIGHT_FIRST_STAGE);
+        if (result == NE10_ERR)
+        {
+            NE10_FREE (st);
+            return NULL;
+        }
+
+        ne10_int32_t j, k;
+        ne10_int32_t stage_count = factors[0];
+        ne10_int32_t fstride = factors[1];
+        ne10_int32_t mstride;
+        ne10_int32_t cur_radix;
+        ne10_float64_t phase;
+        const ne10_float64_t pi = NE10_PI;
+
+        // Don't generate any twiddles for the first stage
+        stage_count --;
+
+        // Generate twiddles for the other stages
+        for (; stage_count > 0; stage_count --)
+        {
+            cur_radix = factors[2 * stage_count];
+            fstride /= cur_radix;
+            mstride = factors[2 * stage_count + 1];
+            for (j = 0; j < mstride; j++)
+            {
+                for (k = 1; k < cur_radix; k++) // phase = 1 when k = 0
+                {
+                    phase = -2 * pi * fstride * k * j / ncfft;
+                    twiddles[mstride * (k - 1) + j].r = (ne10_int32_t) floor (0.5 + NE10_F2I32_MAX * cos (phase));
+                    twiddles[mstride * (k - 1) + j].i = (ne10_int32_t) floor (0.5 + NE10_F2I32_MAX * sin (phase));
+                }
+            }
+            twiddles += mstride * (cur_radix - 1);
+        }
+
+        twiddles = (ne10_fft_cpx_int32_t*)st->super_twiddles;
+        for (j = 0; j < ncfft / 2; j++)
+        {
+            phase = -pi * ( (ne10_float64_t) (j + 1) / ncfft + 0.5);
+            twiddles->r = (ne10_int32_t) floor (0.5 + NE10_F2I32_MAX * cos (phase));
+            twiddles->i = (ne10_int32_t) floor (0.5 + NE10_F2I32_MAX * sin (phase));
+            twiddles++;
+        }
+
+        stage_count = factors[0];
+        factors[2] = factors[2 * (stage_count)]; // mstride
+        if (stage_count > 1)
+        {
+          factors[3] = factors[2 * (stage_count-1)+1]; // mstride
+        }
+        else
+        {
+          factors[3] = factors[2 * (stage_count)+1]; // mstride
+        }
+       
+        //printf("%d: %d %d %d %d\n",stage_count,factors[0],factors[1],factors[2],factors[3]);
+
+    }
+
+    return st;
+  }
+  /**
+  @} end of RealFFTQ31 group
+ */
+
+  /**
+  @addtogroup RealFFTQ15
+  @{
+ */
+  arm_rfft_instance_q15 *arm_rfft_init_dynamic_q15(uint32_t nfft)
+  {
+    arm_rfft_instance_q15* st = NULL;
+    ne10_int32_t ncfft = nfft >> 1;
+
+    ne10_uint32_t memneeded = sizeof (arm_rfft_instance_q15)
+                              + sizeof (ne10_int32_t) * (NE10_MAXFACTORS * 2)    /* factors */
+                              + sizeof (ne10_fft_cpx_int16_t) * ncfft           /* twiddles */
+                              + sizeof (ne10_fft_cpx_int16_t) * ncfft / 2 /* super twiddles */
+                              + NE10_FFT_BYTE_ALIGNMENT;                /* 64-bit alignment */
+
+    st = (arm_rfft_instance_q15*) NE10_MALLOC (memneeded);
+
+    if (st)
+    {
+        uintptr_t address = (uintptr_t) st + sizeof (arm_rfft_instance_q15);
+        NE10_BYTE_ALIGNMENT (address, NE10_FFT_BYTE_ALIGNMENT);
+        ne10_uint32_t* factors = (ne10_uint32_t*) address;
+        ne10_fft_cpx_int16_t* twiddles = (ne10_fft_cpx_int16_t*) (factors + (NE10_MAXFACTORS * 2));
+        ne10_fft_cpx_int16_t* super_twiddles = twiddles + ncfft;
+        
+        st->nfft = nfft;
+        st->ncfft = ncfft;
+        st->factors= factors;
+        st->twiddles = (q15_t*)twiddles;
+        st->super_twiddles=(q15_t*)super_twiddles;
+
+        ne10_int32_t result = ne10_factor (ncfft, factors, NE10_FACTOR_EIGHT_FIRST_STAGE);
+        if (result == NE10_ERR)
+        {
+            NE10_FREE (st);
+            return NULL;
+        }
+
+        ne10_int32_t j, k;
+        ne10_int32_t stage_count = factors[0];
+        ne10_int32_t fstride = factors[1];
+        ne10_int32_t mstride;
+        ne10_int32_t cur_radix;
+        ne10_float64_t phase;
+        const ne10_float64_t pi = NE10_PI;
+
+        // Don't generate any twiddles for the first stage
+        stage_count --;
+
+        // Generate twiddles for the other stages
+        for (; stage_count > 0; stage_count --)
+        {
+            cur_radix = factors[2 * stage_count];
+            fstride /= cur_radix;
+            mstride = factors[2 * stage_count + 1];
+            for (j = 0; j < mstride; j++)
+            {
+                for (k = 1; k < cur_radix; k++) // phase = 1 when k = 0
+                {
+                    phase = -2 * pi * fstride * k * j / ncfft;
+                    twiddles[mstride * (k - 1) + j].r = (ne10_int16_t) floor (0.5 + NE10_F2I16_MAX * cos (phase));
+                    twiddles[mstride * (k - 1) + j].i = (ne10_int16_t) floor (0.5 + NE10_F2I16_MAX * sin (phase));
+                }
+            }
+            twiddles += mstride * (cur_radix - 1);
+        }
+
+        twiddles = (ne10_fft_cpx_int16_t*)st->super_twiddles;
+        for (j = 0; j < ncfft / 2; j++)
+        {
+            phase = -pi * ( (ne10_float64_t) (j + 1) / ncfft + 0.5);
+            twiddles->r = (ne10_int16_t) floor (0.5 + NE10_F2I16_MAX * cos (phase));
+            twiddles->i = (ne10_int16_t) floor (0.5 + NE10_F2I16_MAX * sin (phase));
+            twiddles++;
+        }
+
+        stage_count = factors[0];
+        factors[2] = factors[2 * (stage_count)]; // mstride
+        if (stage_count > 1)
+        {
+          factors[3] = factors[2 * (stage_count-1)+1]; // mstride
+        }
+        else
+        {
+          factors[3] = factors[2 * (stage_count)+1]; // mstride
+        }
+    }
+
+    return st;
+  }
+  /**
+  @} end of RealFFTQ15 group
+ */

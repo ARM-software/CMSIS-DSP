@@ -434,8 +434,8 @@ arm_status arm_cfft_init_16_f64(arm_cfft_instance_f64 * S);
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
   typedef struct
   {
-    uint16_t nfft;
-    uint16_t ncfft;
+    uint32_t nfft;
+    uint32_t ncfft;
     const uint32_t *factors;
     const q15_t *twiddles;
     const q15_t *super_twiddles;
@@ -458,6 +458,8 @@ arm_status arm_cfft_init_16_f64(arm_cfft_instance_f64 * S);
 #endif 
   
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+extern arm_rfft_instance_q15 *arm_rfft_init_dynamic_q15(uint32_t fftLenReal);
 
 arm_status arm_rfft_init_32_q15(
         arm_rfft_instance_q15 * S);
@@ -560,8 +562,8 @@ arm_status arm_rfft_init_8192_q15(
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
   typedef struct
   {
-    uint16_t nfft;
-    uint16_t ncfft;
+    uint32_t nfft;
+    uint32_t ncfft;
     const uint32_t *factors;
     const q31_t *twiddles;
     const q31_t *super_twiddles;
@@ -585,6 +587,9 @@ arm_status arm_rfft_init_8192_q15(
 
 
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+extern arm_rfft_instance_q31 *arm_rfft_init_dynamic_q31(uint32_t fftLenReal);
+
     arm_status arm_rfft_init_32_q31(
         arm_rfft_instance_q31 * S);
 
