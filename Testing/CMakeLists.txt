@@ -10,6 +10,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 project(Tests)
 
+option(NOAUTOVEC "Disable auto-vectorization" OFF)
+
+
 option(HOST "" ON)
 option(NEON "" OFF)
 option(NEONEXPERIMENTAL "" OFF)
@@ -188,3 +191,9 @@ target_compile_options(CMSISDSP PRIVATE -Wsign-compare
         -march=armv8.2-a+fp16fml)
 
 target_link_libraries(test PUBLIC CMSISDSP)
+
+
+if(NOAUTOVEC)
+    target_compile_options(CMSISDSP PRIVATE -fno-slp-vectorize -fno-vectorize)
+    target_compile_options(test PRIVATE -fno-slp-vectorize -fno-vectorize )
+endif()
