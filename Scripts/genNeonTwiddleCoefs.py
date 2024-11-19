@@ -79,7 +79,7 @@ def printCFloat32Array(f,name,arr):
 
 def printCFloat16Array(f,name,arr):
     nb = 0
-    print(f"const float16_t {name}[{name.upper()}_LEN]={{",file=f)
+    print(f"__ALIGNED(16) const float16_t {name}[{name.upper()}_LEN]={{",file=f)
 
     for d in arr:
         val = "(float16_t)%.13ff," % f16(d)

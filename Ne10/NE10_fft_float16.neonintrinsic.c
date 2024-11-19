@@ -314,84 +314,166 @@ __STATIC_INLINE void ne10_radix4x4_with_twiddles_neon (ne10_fft_cpx_float16_t *o
     float16_t *p_dst = (float16_t *) out;
     const float16_t *p_tw  = (const float16_t *) tw;
 
-    float16x4x2_t q2_in0, q2_in1, q2_in2, q2_in3;
-    float16x4x2_t q2_tw0, q2_tw1, q2_tw2;
-    float16x4_t q_s1_r, q_s1_i, q_s2_r, q_s2_i, q_s3_r, q_s3_i;
-    float16x4_t q_s4_r, q_s4_i, q_s5_r, q_s5_i, q_s6_r, q_s6_i, q_s7_r, q_s7_i;
-    float16x4x2_t q2_out0, q2_out1, q2_out2, q2_out3;
+    float16x8x2_t q2_in0, q2_in1, q2_in2, q2_in3;
+    float16x8x2_t q2_tw0, q2_tw1, q2_tw2;
+    float16x8_t q_s1_r, q_s1_i, q_s2_r, q_s2_i, q_s3_r, q_s3_i;
+    float16x8_t q_s4_r, q_s4_i, q_s5_r, q_s5_i, q_s6_r, q_s6_i, q_s7_r, q_s7_i;
+    float16x8x2_t q2_out0, q2_out1, q2_out2, q2_out3;
+
+    float16x4x2_t q2_in0_s, q2_in1_s, q2_in2_s, q2_in3_s;
+    float16x4x2_t q2_tw0_s, q2_tw1_s, q2_tw2_s;
+    float16x4_t q_s1_r_s, q_s1_i_s, q_s2_r_s, q_s2_i_s, q_s3_r_s, q_s3_i_s;
+    float16x4_t q_s4_r_s, q_s4_i_s, q_s5_r_s, q_s5_i_s, q_s6_r_s, q_s6_i_s, q_s7_r_s, q_s7_i_s;
+    float16x4x2_t q2_out0_s, q2_out1_s, q2_out2_s, q2_out3_s;
 
     // This loop is unrolled four times, taking 8 NEON quadword registers of input to
     // process four radix-4 butterflies per loop iteration.
-    for (m_count = 0; m_count < mstride; m_count += 4)
+    if (mstride<8)
     {
-        // Load the input values
-        q2_in0 = vld2_f16 (p_src);
-        p_src += src_step;
-        q2_in1 = vld2_f16 (p_src);
-        p_src += src_step;
-        q2_in2 = vld2_f16 (p_src);
-        p_src += src_step;
-        q2_in3 = vld2_f16 (p_src);
-        p_src += src_step;
-
-        // Load the twiddles
-        q2_tw0 = vld2_f16 (p_tw);
-        p_tw += tw_step;
-        q2_tw1 = vld2_f16 (p_tw);
-        p_tw += tw_step;
-        q2_tw2 = vld2_f16 (p_tw);
-
-        // Multiply input elements by their associated twiddles
-        q_s1_r = vmul_f16 (q2_in1.val[0], q2_tw0.val[0]);
-        q_s1_i = vmul_f16 (q2_in1.val[1], q2_tw0.val[0]);
-        q_s2_r = vmul_f16 (q2_in2.val[0], q2_tw1.val[0]);
-        q_s2_i = vmul_f16 (q2_in2.val[1], q2_tw1.val[0]);
-        q_s3_r = vmul_f16 (q2_in3.val[0], q2_tw2.val[0]);
-        q_s3_i = vmul_f16 (q2_in3.val[1], q2_tw2.val[0]);
-        q_s1_r = vfms_f16 (q_s1_r, q2_in1.val[1], q2_tw0.val[1]);
-        q_s1_i = vfma_f16 (q_s1_i, q2_in1.val[0], q2_tw0.val[1]);
-        q_s2_r = vfms_f16 (q_s2_r, q2_in2.val[1], q2_tw1.val[1]);
-        q_s2_i = vfma_f16 (q_s2_i, q2_in2.val[0], q2_tw1.val[1]);
-        q_s3_r = vfms_f16 (q_s3_r, q2_in3.val[1], q2_tw2.val[1]);
-        q_s3_i = vfma_f16 (q_s3_i, q2_in3.val[0], q2_tw2.val[1]);
-
-        // Calculate sums for the butterfly calculations between the <X[0], X[2N/4]> and
-        // <X[N/4], X[3N/4]> components.
-        q_s4_r = vadd_f16 (q2_in0.val[0], q_s2_r);
-        q_s4_i = vadd_f16 (q2_in0.val[1], q_s2_i);
-        q_s5_r = vsub_f16 (q2_in0.val[0], q_s2_r);
-        q_s5_i = vsub_f16 (q2_in0.val[1], q_s2_i);
-        q_s6_r = vadd_f16 (q_s1_r, q_s3_r);
-        q_s6_i = vadd_f16 (q_s1_i, q_s3_i);
-        q_s7_r = vsub_f16 (q_s1_r, q_s3_r);
-        q_s7_i = vsub_f16 (q_s1_i, q_s3_i);
-
-        // Combine these sums (for the full radix-4 butterfly)
-        q2_out2.val[0] = vsub_f16 (q_s4_r, q_s6_r);
-        q2_out2.val[1] = vsub_f16 (q_s4_i, q_s6_i);
-        q2_out0.val[0] = vadd_f16 (q_s4_r, q_s6_r);
-        q2_out0.val[1] = vadd_f16 (q_s4_i, q_s6_i);
-        q2_out1.val[0] = vadd_f16 (q_s5_r, q_s7_i);
-        q2_out1.val[1] = vsub_f16 (q_s5_i, q_s7_r);
-        q2_out3.val[0] = vsub_f16 (q_s5_r, q_s7_i);
-        q2_out3.val[1] = vadd_f16 (q_s5_i, q_s7_r);
-
-        // Store the results
-        vst2_f16 (p_dst, q2_out0);
-        p_dst += dst_step;
-        vst2_f16 (p_dst, q2_out1);
-        p_dst += dst_step;
-        vst2_f16 (p_dst, q2_out2);
-        p_dst += dst_step;
-        vst2_f16 (p_dst, q2_out3);
-        p_dst += dst_step;
-
-        // Undo the arithmetic we did to these variables earlier in the loop, and add
-        // eight to skip past the float16 values processed within this loop iteration.
-        p_src = p_src - src_step * 4 + 8;
-        p_dst = p_dst - dst_step * 4 + 8;
-        p_tw  = p_tw - tw_step * 2 + 8;
-    } // m_count
+        for (m_count = 0; m_count < mstride; m_count += 4)
+        {
+            // Load the input values
+            q2_in0_s = vld2_f16 (p_src);
+            p_src += src_step;
+            q2_in1_s = vld2_f16 (p_src);
+            p_src += src_step;
+            q2_in2_s = vld2_f16 (p_src);
+            p_src += src_step;
+            q2_in3_s = vld2_f16 (p_src);
+            p_src += src_step;
+    
+            // Load the twiddles
+            q2_tw0_s = vld2_f16 (p_tw);
+            p_tw += tw_step;
+            q2_tw1_s = vld2_f16 (p_tw);
+            p_tw += tw_step;
+            q2_tw2_s = vld2_f16 (p_tw);
+    
+            // Multiply input elements by their associated twiddles
+            q_s1_r_s = vmul_f16 (q2_in1_s.val[0], q2_tw0_s.val[0]);
+            q_s1_i_s = vmul_f16 (q2_in1_s.val[1], q2_tw0_s.val[0]);
+            q_s2_r_s = vmul_f16 (q2_in2_s.val[0], q2_tw1_s.val[0]);
+            q_s2_i_s = vmul_f16 (q2_in2_s.val[1], q2_tw1_s.val[0]);
+            q_s3_r_s = vmul_f16 (q2_in3_s.val[0], q2_tw2_s.val[0]);
+            q_s3_i_s = vmul_f16 (q2_in3_s.val[1], q2_tw2_s.val[0]);
+            q_s1_r_s = vfms_f16 (q_s1_r_s, q2_in1_s.val[1], q2_tw0_s.val[1]);
+            q_s1_i_s = vfma_f16 (q_s1_i_s, q2_in1_s.val[0], q2_tw0_s.val[1]);
+            q_s2_r_s = vfms_f16 (q_s2_r_s, q2_in2_s.val[1], q2_tw1_s.val[1]);
+            q_s2_i_s = vfma_f16 (q_s2_i_s, q2_in2_s.val[0], q2_tw1_s.val[1]);
+            q_s3_r_s = vfms_f16 (q_s3_r_s, q2_in3_s.val[1], q2_tw2_s.val[1]);
+            q_s3_i_s = vfma_f16 (q_s3_i_s, q2_in3_s.val[0], q2_tw2_s.val[1]);
+    
+            // Calculate sums for the butterfly calculations between the <X[0], X[2N/4]> and
+            // <X[N/4], X[3N/4]> components.
+            q_s4_r_s = vadd_f16 (q2_in0_s.val[0], q_s2_r_s);
+            q_s4_i_s = vadd_f16 (q2_in0_s.val[1], q_s2_i_s);
+            q_s5_r_s = vsub_f16 (q2_in0_s.val[0], q_s2_r_s);
+            q_s5_i_s = vsub_f16 (q2_in0_s.val[1], q_s2_i_s);
+            q_s6_r_s = vadd_f16 (q_s1_r_s, q_s3_r_s);
+            q_s6_i_s = vadd_f16 (q_s1_i_s, q_s3_i_s);
+            q_s7_r_s = vsub_f16 (q_s1_r_s, q_s3_r_s);
+            q_s7_i_s = vsub_f16 (q_s1_i_s, q_s3_i_s);
+    
+            // Combine these sums (for the full radix-4 butterfly)
+            q2_out2_s.val[0] = vsub_f16 (q_s4_r_s, q_s6_r_s);
+            q2_out2_s.val[1] = vsub_f16 (q_s4_i_s, q_s6_i_s);
+            q2_out0_s.val[0] = vadd_f16 (q_s4_r_s, q_s6_r_s);
+            q2_out0_s.val[1] = vadd_f16 (q_s4_i_s, q_s6_i_s);
+            q2_out1_s.val[0] = vadd_f16 (q_s5_r_s, q_s7_i_s);
+            q2_out1_s.val[1] = vsub_f16 (q_s5_i_s, q_s7_r_s);
+            q2_out3_s.val[0] = vsub_f16 (q_s5_r_s, q_s7_i_s);
+            q2_out3_s.val[1] = vadd_f16 (q_s5_i_s, q_s7_r_s);
+    
+            // Store the results
+            vst2_f16 (p_dst, q2_out0_s);
+            p_dst += dst_step;
+            vst2_f16 (p_dst, q2_out1_s);
+            p_dst += dst_step;
+            vst2_f16 (p_dst, q2_out2_s);
+            p_dst += dst_step;
+            vst2_f16 (p_dst, q2_out3_s);
+            p_dst += dst_step;
+    
+            // Undo the arithmetic we did to these variables earlier in the loop, and add
+            // eight to skip past the float16 values processed within this loop iteration.
+            p_src = p_src - src_step * 4 + 8;
+            p_dst = p_dst - dst_step * 4 + 8;
+            p_tw  = p_tw - tw_step * 2 + 8;
+        } // m_count
+    }
+    else
+    {
+        for (m_count = 0; m_count < mstride; m_count += 8)
+        {
+            // Load the input values
+            q2_in0 = vld2q_f16 (p_src);
+            p_src += src_step;
+            q2_in1 = vld2q_f16 (p_src);
+            p_src += src_step;
+            q2_in2 = vld2q_f16 (p_src);
+            p_src += src_step;
+            q2_in3 = vld2q_f16 (p_src);
+            p_src += src_step;
+    
+            // Load the twiddles
+            q2_tw0 = vld2q_f16 (p_tw);
+            p_tw += tw_step;
+            q2_tw1 = vld2q_f16 (p_tw);
+            p_tw += tw_step;
+            q2_tw2 = vld2q_f16 (p_tw);
+    
+            // Multiply input elements by their associated twiddles
+            q_s1_r = vmulq_f16 (q2_in1.val[0], q2_tw0.val[0]);
+            q_s1_i = vmulq_f16 (q2_in1.val[1], q2_tw0.val[0]);
+            q_s2_r = vmulq_f16 (q2_in2.val[0], q2_tw1.val[0]);
+            q_s2_i = vmulq_f16 (q2_in2.val[1], q2_tw1.val[0]);
+            q_s3_r = vmulq_f16 (q2_in3.val[0], q2_tw2.val[0]);
+            q_s3_i = vmulq_f16 (q2_in3.val[1], q2_tw2.val[0]);
+            q_s1_r = vfmsq_f16 (q_s1_r, q2_in1.val[1], q2_tw0.val[1]);
+            q_s1_i = vfmaq_f16 (q_s1_i, q2_in1.val[0], q2_tw0.val[1]);
+            q_s2_r = vfmsq_f16 (q_s2_r, q2_in2.val[1], q2_tw1.val[1]);
+            q_s2_i = vfmaq_f16 (q_s2_i, q2_in2.val[0], q2_tw1.val[1]);
+            q_s3_r = vfmsq_f16 (q_s3_r, q2_in3.val[1], q2_tw2.val[1]);
+            q_s3_i = vfmaq_f16 (q_s3_i, q2_in3.val[0], q2_tw2.val[1]);
+    
+            // Calculate sums for the butterfly calculations between the <X[0], X[2N/4]> and
+            // <X[N/4], X[3N/4]> components.
+            q_s4_r = vaddq_f16 (q2_in0.val[0], q_s2_r);
+            q_s4_i = vaddq_f16 (q2_in0.val[1], q_s2_i);
+            q_s5_r = vsubq_f16 (q2_in0.val[0], q_s2_r);
+            q_s5_i = vsubq_f16 (q2_in0.val[1], q_s2_i);
+            q_s6_r = vaddq_f16 (q_s1_r, q_s3_r);
+            q_s6_i = vaddq_f16 (q_s1_i, q_s3_i);
+            q_s7_r = vsubq_f16 (q_s1_r, q_s3_r);
+            q_s7_i = vsubq_f16 (q_s1_i, q_s3_i);
+    
+            // Combine these sums (for the full radix-4 butterfly)
+            q2_out2.val[0] = vsubq_f16 (q_s4_r, q_s6_r);
+            q2_out2.val[1] = vsubq_f16 (q_s4_i, q_s6_i);
+            q2_out0.val[0] = vaddq_f16 (q_s4_r, q_s6_r);
+            q2_out0.val[1] = vaddq_f16 (q_s4_i, q_s6_i);
+            q2_out1.val[0] = vaddq_f16 (q_s5_r, q_s7_i);
+            q2_out1.val[1] = vsubq_f16 (q_s5_i, q_s7_r);
+            q2_out3.val[0] = vsubq_f16 (q_s5_r, q_s7_i);
+            q2_out3.val[1] = vaddq_f16 (q_s5_i, q_s7_r);
+    
+            // Store the results
+            vst2q_f16 (p_dst, q2_out0);
+            p_dst += dst_step;
+            vst2q_f16 (p_dst, q2_out1);
+            p_dst += dst_step;
+            vst2q_f16 (p_dst, q2_out2);
+            p_dst += dst_step;
+            vst2q_f16 (p_dst, q2_out3);
+            p_dst += dst_step;
+    
+            // Undo the arithmetic we did to these variables earlier in the loop, and add
+            // eight to skip past the float16 values processed within this loop iteration.
+            p_src = p_src - src_step * 4 + 16;
+            p_dst = p_dst - dst_step * 4 + 16;
+            p_tw  = p_tw - tw_step * 2 + 16;
+        } // m_count
+    }
 }
 
 
@@ -656,83 +738,164 @@ __STATIC_INLINE void ne10_radix4x4_inverse_with_twiddles_neon (ne10_fft_cpx_floa
     float16_t *p_dst = (float16_t *) out;
     const float16_t *p_tw  = (const float16_t *) tw;
 
-    float16x4x2_t q2_in0, q2_in1, q2_in2, q2_in3;
-    float16x4x2_t q2_tw0, q2_tw1, q2_tw2;
-    float16x4_t q_s1_r, q_s1_i, q_s2_r, q_s2_i, q_s3_r, q_s3_i;
-    float16x4_t q_s4_r, q_s4_i, q_s5_r, q_s5_i, q_s6_r, q_s6_i, q_s7_r, q_s7_i;
-    float16x4x2_t q2_out0, q2_out1, q2_out2, q2_out3;
+    float16x8x2_t q2_in0, q2_in1, q2_in2, q2_in3;
+    float16x8x2_t q2_tw0, q2_tw1, q2_tw2;
+    float16x8_t q_s1_r, q_s1_i, q_s2_r, q_s2_i, q_s3_r, q_s3_i;
+    float16x8_t q_s4_r, q_s4_i, q_s5_r, q_s5_i, q_s6_r, q_s6_i, q_s7_r, q_s7_i;
+    float16x8x2_t q2_out0, q2_out1, q2_out2, q2_out3;
+
+    float16x4x2_t q2_in0_s, q2_in1_s, q2_in2_s, q2_in3_s;
+    float16x4x2_t q2_tw0_s, q2_tw1_s, q2_tw2_s;
+    float16x4_t q_s1_r_s, q_s1_i_s, q_s2_r_s, q_s2_i_s, q_s3_r_s, q_s3_i_s;
+    float16x4_t q_s4_r_s, q_s4_i_s, q_s5_r_s, q_s5_i_s, q_s6_r_s, q_s6_i_s, q_s7_r_s, q_s7_i_s;
+    float16x4x2_t q2_out0_s, q2_out1_s, q2_out2_s, q2_out3_s;
 
     // This loop is unrolled four times, taking 8 NEON quadword registers of input to
     // process four radix-4 butterflies per loop iteration.
-    for (m_count = 0; m_count < mstride; m_count += 4)
+    if (mstride < 8)
     {
-        // Load the input values
-        q2_in0 = vld2_f16 (p_src);
-        p_src += src_step;
-        q2_in1 = vld2_f16 (p_src);
-        p_src += src_step;
-        q2_in2 = vld2_f16 (p_src);
-        p_src += src_step;
-        q2_in3 = vld2_f16 (p_src);
-        p_src += src_step;
-
-        // Load the twiddles
-        q2_tw0 = vld2_f16 (p_tw);
-        p_tw += tw_step;
-        q2_tw1 = vld2_f16 (p_tw);
-        p_tw += tw_step;
-        q2_tw2 = vld2_f16 (p_tw);
-
-        // Multiply input elements by their associated twiddles
-        q_s1_r = vmul_f16 (q2_in1.val[0], q2_tw0.val[0]);
-        q_s1_i = vmul_f16 (q2_in1.val[1], q2_tw0.val[0]);
-        q_s2_r = vmul_f16 (q2_in2.val[0], q2_tw1.val[0]);
-        q_s2_i = vmul_f16 (q2_in2.val[1], q2_tw1.val[0]);
-        q_s3_r = vmul_f16 (q2_in3.val[0], q2_tw2.val[0]);
-        q_s3_i = vmul_f16 (q2_in3.val[1], q2_tw2.val[0]);
-        q_s1_r = vfma_f16 (q_s1_r, q2_in1.val[1], q2_tw0.val[1]);
-        q_s1_i = vfms_f16 (q_s1_i, q2_in1.val[0], q2_tw0.val[1]);
-        q_s2_r = vfma_f16 (q_s2_r, q2_in2.val[1], q2_tw1.val[1]);
-        q_s2_i = vfms_f16 (q_s2_i, q2_in2.val[0], q2_tw1.val[1]);
-        q_s3_r = vfma_f16 (q_s3_r, q2_in3.val[1], q2_tw2.val[1]);
-        q_s3_i = vfms_f16 (q_s3_i, q2_in3.val[0], q2_tw2.val[1]);
-
-        // Calculate sums for the butterfly calculations between the <X[0], X[2N/4]> and
-        // <X[N/4], X[3N/4]> components.
-        q_s4_r = vadd_f16 (q2_in0.val[0], q_s2_r);
-        q_s4_i = vadd_f16 (q2_in0.val[1], q_s2_i);
-        q_s5_r = vsub_f16 (q2_in0.val[0], q_s2_r);
-        q_s5_i = vsub_f16 (q2_in0.val[1], q_s2_i);
-        q_s6_r = vadd_f16 (q_s1_r, q_s3_r);
-        q_s6_i = vadd_f16 (q_s1_i, q_s3_i);
-        q_s7_r = vsub_f16 (q_s1_r, q_s3_r);
-        q_s7_i = vsub_f16 (q_s1_i, q_s3_i);
-
-        // Combine these sums (for the full radix-4 butterfly)
-        q2_out2.val[0] = vsub_f16 (q_s4_r, q_s6_r);
-        q2_out2.val[1] = vsub_f16 (q_s4_i, q_s6_i);
-        q2_out0.val[0] = vadd_f16 (q_s4_r, q_s6_r);
-        q2_out0.val[1] = vadd_f16 (q_s4_i, q_s6_i);
-        q2_out1.val[0] = vsub_f16 (q_s5_r, q_s7_i);
-        q2_out1.val[1] = vadd_f16 (q_s5_i, q_s7_r);
-        q2_out3.val[0] = vadd_f16 (q_s5_r, q_s7_i);
-        q2_out3.val[1] = vsub_f16 (q_s5_i, q_s7_r);
-
-        // Store the results
-        vst2_f16 (p_dst, q2_out0);
-        p_dst += dst_step;
-        vst2_f16 (p_dst, q2_out1);
-        p_dst += dst_step;
-        vst2_f16 (p_dst, q2_out2);
-        p_dst += dst_step;
-        vst2_f16 (p_dst, q2_out3);
-        p_dst += dst_step;
-
-        // Adjust p_src, p_dst, p_tw for the next loop iteration
-        p_src = p_src - src_step * 4 + 8;
-        p_dst = p_dst - dst_step * 4 + 8;
-        p_tw = p_tw - tw_step * 2 + 8;
-    } // m_count
+        for (m_count = 0; m_count < mstride; m_count += 4)
+        {
+            // Load the input values
+            q2_in0_s = vld2_f16 (p_src);
+            p_src += src_step;
+            q2_in1_s = vld2_f16 (p_src);
+            p_src += src_step;
+            q2_in2_s = vld2_f16 (p_src);
+            p_src += src_step;
+            q2_in3_s = vld2_f16 (p_src);
+            p_src += src_step;
+    
+            // Load the twiddles
+            q2_tw0_s = vld2_f16 (p_tw);
+            p_tw += tw_step;
+            q2_tw1_s = vld2_f16 (p_tw);
+            p_tw += tw_step;
+            q2_tw2_s = vld2_f16 (p_tw);
+    
+            // Multiply input elements by their associated twiddles
+            q_s1_r_s = vmul_f16 (q2_in1_s.val[0], q2_tw0_s.val[0]);
+            q_s1_i_s = vmul_f16 (q2_in1_s.val[1], q2_tw0_s.val[0]);
+            q_s2_r_s = vmul_f16 (q2_in2_s.val[0], q2_tw1_s.val[0]);
+            q_s2_i_s = vmul_f16 (q2_in2_s.val[1], q2_tw1_s.val[0]);
+            q_s3_r_s = vmul_f16 (q2_in3_s.val[0], q2_tw2_s.val[0]);
+            q_s3_i_s = vmul_f16 (q2_in3_s.val[1], q2_tw2_s.val[0]);
+            q_s1_r_s = vfma_f16 (q_s1_r_s, q2_in1_s.val[1], q2_tw0_s.val[1]);
+            q_s1_i_s = vfms_f16 (q_s1_i_s, q2_in1_s.val[0], q2_tw0_s.val[1]);
+            q_s2_r_s = vfma_f16 (q_s2_r_s, q2_in2_s.val[1], q2_tw1_s.val[1]);
+            q_s2_i_s = vfms_f16 (q_s2_i_s, q2_in2_s.val[0], q2_tw1_s.val[1]);
+            q_s3_r_s = vfma_f16 (q_s3_r_s, q2_in3_s.val[1], q2_tw2_s.val[1]);
+            q_s3_i_s = vfms_f16 (q_s3_i_s, q2_in3_s.val[0], q2_tw2_s.val[1]);
+    
+            // Calculate sums for the butterfly calculations between the <X[0], X[2N/4]> and
+            // <X[N/4], X[3N/4]> components.
+            q_s4_r_s = vadd_f16 (q2_in0_s.val[0], q_s2_r_s);
+            q_s4_i_s = vadd_f16 (q2_in0_s.val[1], q_s2_i_s);
+            q_s5_r_s = vsub_f16 (q2_in0_s.val[0], q_s2_r_s);
+            q_s5_i_s = vsub_f16 (q2_in0_s.val[1], q_s2_i_s);
+            q_s6_r_s = vadd_f16 (q_s1_r_s, q_s3_r_s);
+            q_s6_i_s = vadd_f16 (q_s1_i_s, q_s3_i_s);
+            q_s7_r_s = vsub_f16 (q_s1_r_s, q_s3_r_s);
+            q_s7_i_s = vsub_f16 (q_s1_i_s, q_s3_i_s);
+    
+            // Combine these sums (for the full radix-4 butterfly)
+            q2_out2_s.val[0] = vsub_f16 (q_s4_r_s, q_s6_r_s);
+            q2_out2_s.val[1] = vsub_f16 (q_s4_i_s, q_s6_i_s);
+            q2_out0_s.val[0] = vadd_f16 (q_s4_r_s, q_s6_r_s);
+            q2_out0_s.val[1] = vadd_f16 (q_s4_i_s, q_s6_i_s);
+            q2_out1_s.val[0] = vsub_f16 (q_s5_r_s, q_s7_i_s);
+            q2_out1_s.val[1] = vadd_f16 (q_s5_i_s, q_s7_r_s);
+            q2_out3_s.val[0] = vadd_f16 (q_s5_r_s, q_s7_i_s);
+            q2_out3_s.val[1] = vsub_f16 (q_s5_i_s, q_s7_r_s);
+    
+            // Store the results
+            vst2_f16 (p_dst, q2_out0_s);
+            p_dst += dst_step;
+            vst2_f16 (p_dst, q2_out1_s);
+            p_dst += dst_step;
+            vst2_f16 (p_dst, q2_out2_s);
+            p_dst += dst_step;
+            vst2_f16 (p_dst, q2_out3_s);
+            p_dst += dst_step;
+    
+            // Adjust p_src, p_dst, p_tw for the next loop iteration
+            p_src = p_src - src_step * 4 + 8;
+            p_dst = p_dst - dst_step * 4 + 8;
+            p_tw = p_tw - tw_step * 2 + 8;
+        } // m_count
+    }
+    else
+    {
+        for (m_count = 0; m_count < mstride; m_count += 8)
+        {
+            // Load the input values
+            q2_in0 = vld2q_f16 (p_src);
+            p_src += src_step;
+            q2_in1 = vld2q_f16 (p_src);
+            p_src += src_step;
+            q2_in2 = vld2q_f16 (p_src);
+            p_src += src_step;
+            q2_in3 = vld2q_f16 (p_src);
+            p_src += src_step;
+    
+            // Load the twiddles
+            q2_tw0 = vld2q_f16 (p_tw);
+            p_tw += tw_step;
+            q2_tw1 = vld2q_f16 (p_tw);
+            p_tw += tw_step;
+            q2_tw2 = vld2q_f16 (p_tw);
+    
+            // Multiply input elements by their associated twiddles
+            q_s1_r = vmulq_f16 (q2_in1.val[0], q2_tw0.val[0]);
+            q_s1_i = vmulq_f16 (q2_in1.val[1], q2_tw0.val[0]);
+            q_s2_r = vmulq_f16 (q2_in2.val[0], q2_tw1.val[0]);
+            q_s2_i = vmulq_f16 (q2_in2.val[1], q2_tw1.val[0]);
+            q_s3_r = vmulq_f16 (q2_in3.val[0], q2_tw2.val[0]);
+            q_s3_i = vmulq_f16 (q2_in3.val[1], q2_tw2.val[0]);
+            q_s1_r = vfmaq_f16 (q_s1_r, q2_in1.val[1], q2_tw0.val[1]);
+            q_s1_i = vfmsq_f16 (q_s1_i, q2_in1.val[0], q2_tw0.val[1]);
+            q_s2_r = vfmaq_f16 (q_s2_r, q2_in2.val[1], q2_tw1.val[1]);
+            q_s2_i = vfmsq_f16 (q_s2_i, q2_in2.val[0], q2_tw1.val[1]);
+            q_s3_r = vfmaq_f16 (q_s3_r, q2_in3.val[1], q2_tw2.val[1]);
+            q_s3_i = vfmsq_f16 (q_s3_i, q2_in3.val[0], q2_tw2.val[1]);
+    
+            // Calculate sums for the butterfly calculations between the <X[0], X[2N/4]> and
+            // <X[N/4], X[3N/4]> components.
+            q_s4_r = vaddq_f16 (q2_in0.val[0], q_s2_r);
+            q_s4_i = vaddq_f16 (q2_in0.val[1], q_s2_i);
+            q_s5_r = vsubq_f16 (q2_in0.val[0], q_s2_r);
+            q_s5_i = vsubq_f16 (q2_in0.val[1], q_s2_i);
+            q_s6_r = vaddq_f16 (q_s1_r, q_s3_r);
+            q_s6_i = vaddq_f16 (q_s1_i, q_s3_i);
+            q_s7_r = vsubq_f16 (q_s1_r, q_s3_r);
+            q_s7_i = vsubq_f16 (q_s1_i, q_s3_i);
+    
+            // Combine these sums (for the full radix-4 butterfly)
+            q2_out2.val[0] = vsubq_f16 (q_s4_r, q_s6_r);
+            q2_out2.val[1] = vsubq_f16 (q_s4_i, q_s6_i);
+            q2_out0.val[0] = vaddq_f16 (q_s4_r, q_s6_r);
+            q2_out0.val[1] = vaddq_f16 (q_s4_i, q_s6_i);
+            q2_out1.val[0] = vsubq_f16 (q_s5_r, q_s7_i);
+            q2_out1.val[1] = vaddq_f16 (q_s5_i, q_s7_r);
+            q2_out3.val[0] = vaddq_f16 (q_s5_r, q_s7_i);
+            q2_out3.val[1] = vsubq_f16 (q_s5_i, q_s7_r);
+    
+            // Store the results
+            vst2q_f16 (p_dst, q2_out0);
+            p_dst += dst_step;
+            vst2q_f16 (p_dst, q2_out1);
+            p_dst += dst_step;
+            vst2q_f16 (p_dst, q2_out2);
+            p_dst += dst_step;
+            vst2q_f16 (p_dst, q2_out3);
+            p_dst += dst_step;
+    
+            // Adjust p_src, p_dst, p_tw for the next loop iteration
+            p_src = p_src - src_step * 4 + 16;
+            p_dst = p_dst - dst_step * 4 + 16;
+            p_tw = p_tw - tw_step * 2 + 16;
+        } // m_count
+    }
 }
 
 __STATIC_INLINE void ne10_radix4x4_inverse_with_twiddles_last_stage_neon (ne10_fft_cpx_float16_t *out,
