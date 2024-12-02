@@ -37,6 +37,136 @@
 
 #include "dsp/transform_functions.h"
 
+#include <stdio.h>
+
+#define CMPLX_VEC_F32 float32x4x2_t
+
+#if 0 //defined(__ARM_FEATURE_COMPLEX)
+
+#define CMPLX_LOAD_F32(DST,PTR)\
+DST.val[0] = vld1q_f32 (PTR);  \
+DST.val[1] = vld1q_f32 (PTR+4);
+
+#define CMPLX_LOAD_INC_F32(DST,PTR)\
+DST.val[0] = vld1q_f32 (PTR);      \
+PTR += 4;                          \
+DST.val[1] = vld1q_f32 (PTR);    \
+PTR += 4;
+
+#define CMPLX_STORE_F32(PTR,SRC)\
+vst1q_f32 (PTR, SRC.val[0]);    \
+vst1q_f32 (PTR+4, SRC.val[1]);
+
+#define CMPLX_STORE_INC_F32(PTR,SRC)\
+vst1q_f32 (PTR, SRC.val[0]);        \
+PTR += 4;                           \
+vst1q_f32 (PTR, SRC.val[1]);        \
+PTR += 4;
+
+#define CMPLX_ADD_F32(DST,SRCA,SRCB)              \
+DST.val[0] = vaddq_f32 (SRCA.val[0], SRCB.val[0]);\
+DST.val[1] = vaddq_f32 (SRCA.val[1], SRCB.val[1]);
+
+#define CMPLX_SUB_F32(DST,SRCA,SRCB)              \
+DST.val[0] = vsubq_f32 (SRCA.val[0], SRCB.val[0]);\
+DST.val[1] = vsubq_f32 (SRCA.val[1], SRCB.val[1]);
+
+// a + i b
+#define CMPLX_ADD_ROT_F32(DST,SRCA,SRCB);         \
+DST.val[0] = vcaddq_rot90_f32 (SRCA.val[0], SRCB.val[0]);\
+DST.val[1] = vcaddq_rot90_f32 (SRCA.val[1], SRCB.val[1]);
+
+// a - i b
+#define CMPLX_SUB_ROT_F32(DST,SRCA,SRCB);         \
+DST.val[0] = vcaddq_rot270_f32 (SRCA.val[0], SRCB.val[0]);\
+DST.val[1] = vcaddq_rot270_f32 (SRCA.val[1], SRCB.val[1]);
+
+#define CMPLX_MUL_F32(DST,SRCA,SRCB)                                 \
+DST.val[0] = vdupq_n_f32 (0.0);                                      \
+DST.val[1] = vdupq_n_f32 (0.0);                                      \
+DST.val[0] = vcmlaq_f32 (DST.val[0], SRCA.val[0], SRCB.val[0]);      \
+DST.val[1] = vcmlaq_f32 (DST.val[1], SRCA.val[1], SRCB.val[1]);      \
+DST.val[0] = vcmlaq_rot90_f32 (DST.val[0], SRCA.val[0], SRCB.val[0]);\
+DST.val[1] = vcmlaq_rot90_f32 (DST.val[1], SRCA.val[1], SRCB.val[1]);
+
+#define CMPLX_MAT_TRANSPOSE_4x4_F32(DST,SRC,TMP)                                                      \
+{                                                                                                     \
+    float32x4x2_t tmpb0,tmpb1,tmpb2,tmpb3;                                                            \
+    tmpb0 = vzipq_f32(SRC ## 0 .val[0],SRC ## 0 .val[1]);                                             \
+    tmpb1 = vzipq_f32(SRC ## 1 .val[0],SRC ## 1 .val[1]);                                             \
+    tmpb2 = vzipq_f32(SRC ## 2 .val[0],SRC ## 2 .val[1]);                                             \
+    tmpb3 = vzipq_f32(SRC ## 3 .val[0],SRC ## 3 .val[1]);                                             \
+                                                                                                      \
+    TMP##0 = vtrnq_f32 (tmpb0 .val[0], tmpb1 .val[0]);                                                \
+    TMP##1 = vtrnq_f32 (tmpb0 .val[1], tmpb1 .val[1]);                                                \
+    TMP##2 = vtrnq_f32 (tmpb2 .val[0], tmpb3 .val[0]);                                                \
+    TMP##3 = vtrnq_f32 (tmpb2 .val[1], tmpb3 .val[1]);                                                \
+    DST ##0 .val[0] = vcombine_f32 (vget_low_f32 (TMP ##0 .val[0]), vget_low_f32 (TMP ##2 .val[0]));  \
+    DST ##0 .val[1] = vcombine_f32 (vget_low_f32 (TMP ##1 .val[0]), vget_low_f32 (TMP ##3 .val[0]));  \
+    DST ##1 .val[0] = vcombine_f32 (vget_low_f32 (TMP ##0 .val[1]), vget_low_f32 (TMP ##2 .val[1]));  \
+    DST ##1 .val[1] = vcombine_f32 (vget_low_f32 (TMP ##1 .val[1]), vget_low_f32 (TMP ##3 .val[1]));  \
+    DST ##2 .val[0] = vcombine_f32 (vget_high_f32 (TMP ##0 .val[0]), vget_high_f32 (TMP ##2 .val[0]));\
+    DST ##2 .val[1] = vcombine_f32 (vget_high_f32 (TMP ##1 .val[0]), vget_high_f32 (TMP ##3 .val[0]));\
+    DST ##3 .val[0] = vcombine_f32 (vget_high_f32 (TMP ##0 .val[1]), vget_high_f32 (TMP ##2 .val[1]));\
+    DST ##3 .val[1] = vcombine_f32 (vget_high_f32 (TMP ##1 .val[1]), vget_high_f32 (TMP ##3 .val[1]));\
+}
+
+#else
+
+#define CMPLX_LOAD_F32(DST,PTR)\
+DST = vld2q_f32 (PTR);
+
+#define CMPLX_LOAD_INC_F32(DST,PTR)\
+DST = vld2q_f32 (PTR);             \
+PTR+=8;
+
+#define CMPLX_STORE_F32(PTR,SRC)\
+vst2q_f32 (PTR, SRC);
+
+#define CMPLX_STORE_INC_F32(PTR,SRC)\
+vst2q_f32 (PTR, SRC);           \
+PTR+=8;
+
+#define CMPLX_ADD_F32(DST,SRCA,SRCB)              \
+DST.val[0] = vaddq_f32 (SRCA.val[0], SRCB.val[0]);\
+DST.val[1] = vaddq_f32 (SRCA.val[1], SRCB.val[1]);
+
+#define CMPLX_SUB_F32(DST,SRCA,SRCB)              \
+DST.val[0] = vsubq_f32 (SRCA.val[0], SRCB.val[0]);\
+DST.val[1] = vsubq_f32 (SRCA.val[1], SRCB.val[1]);
+
+// a + i b
+#define CMPLX_ADD_ROT_F32(DST,SRCA,SRCB);         \
+DST.val[0] = vsubq_f32 (SRCA.val[0], SRCB.val[1]);\
+DST.val[1] = vaddq_f32 (SRCA.val[1], SRCB.val[0]);
+
+// a - i b
+#define CMPLX_SUB_ROT_F32(DST,SRCA,SRCB);     \
+DST.val[0] = vaddq_f32 (SRCA.val[0], SRCB.val[1]);\
+DST.val[1] = vsubq_f32 (SRCA.val[1], SRCB.val[0]);
+
+#define CMPLX_MUL_F32(DST,SRCA,SRCB)                          \
+DST.val[0] = vmulq_f32 (SRCA.val[0], SRCB.val[0]);            \
+DST.val[1] = vmulq_f32 (SRCA.val[1], SRCB.val[0]);            \
+DST.val[0] = vmlsq_f32 (DST.val[0], SRCA.val[1], SRCB.val[1]);\
+DST.val[1] = vmlaq_f32 (DST.val[1], SRCA.val[0], SRCB.val[1]);
+
+#define CMPLX_MAT_TRANSPOSE_4x4_F32(DST,SRC,TMP)                                                \
+TMP##0 = vtrnq_f32 (SRC ## 0 .val[0], SRC ## 1 .val[0]);                                        \
+TMP##1 = vtrnq_f32 (SRC ## 0 .val[1], SRC ## 1 .val[1]);                                        \
+TMP##2 = vtrnq_f32 (SRC ## 2 .val[0], SRC ## 3 .val[0]);                                        \
+TMP##3 = vtrnq_f32 (SRC ## 2 .val[1], SRC ## 3 .val[1]);                                        \
+DST ##0 .val[0] = vcombine_f32 (vget_low_f32 (TMP ##0 .val[0]), vget_low_f32 (TMP ##2 .val[0]));  \
+DST ##0 .val[1] = vcombine_f32 (vget_low_f32 (TMP ##1 .val[0]), vget_low_f32 (TMP ##3 .val[0]));  \
+DST ##1 .val[0] = vcombine_f32 (vget_low_f32 (TMP ##0 .val[1]), vget_low_f32 (TMP ##2 .val[1]));  \
+DST ##1 .val[1] = vcombine_f32 (vget_low_f32 (TMP ##1 .val[1]), vget_low_f32 (TMP ##3 .val[1]));  \
+DST ##2 .val[0] = vcombine_f32 (vget_high_f32 (TMP ##0 .val[0]), vget_high_f32 (TMP ##2 .val[0]));\
+DST ##2 .val[1] = vcombine_f32 (vget_high_f32 (TMP ##1 .val[0]), vget_high_f32 (TMP ##3 .val[0]));\
+DST ##3 .val[0] = vcombine_f32 (vget_high_f32 (TMP ##0 .val[1]), vget_high_f32 (TMP ##2 .val[1]));\
+DST ##3 .val[1] = vcombine_f32 (vget_high_f32 (TMP ##1 .val[1]), vget_high_f32 (TMP ##3 .val[1]));
+#endif
+
+
 void arm_ne10_fft16_forward_float32_neon (const arm_cfft_instance_f32 *S,
           const ne10_fft_cpx_float32_t *Fin,
           ne10_fft_cpx_float32_t *Fout)
@@ -47,7 +177,7 @@ void arm_ne10_fft16_forward_float32_neon (const arm_cfft_instance_f32 *S,
 
     // the first stage
     const float32_t *p_src0, *p_src4, *p_src8, *p_src12;
-    float32x4x2_t q2_in_0123, q2_in_4567, q2_in_89ab, q2_in_cdef;
+    CMPLX_VEC_F32 q2_in_0123, q2_in_4567, q2_in_89ab, q2_in_cdef;
     float32x4_t q_t0_r,  q_t0_i, q_t1_r,  q_t1_i, q_t2_r,  q_t2_i, q_t3_r, q_t3_i;
     float32x4_t q_out_r048c,  q_out_i048c, q_out_r159d,  q_out_i159d;
     float32x4_t q_out_r26ae,  q_out_i26ae, q_out_r37bf,  q_out_i37bf;
@@ -84,11 +214,11 @@ void arm_ne10_fft16_forward_float32_neon (const arm_cfft_instance_f32 *S,
     float32_t *p_tw1, *p_tw2, *p_tw3;
     float32x4_t q_s0_r, q_s0_i, q_s1_r, q_s1_i, q_s2_r, q_s2_i;
     float32x4_t q_s3_r, q_s3_i, q_s4_r, q_s4_i, q_s5_r, q_s5_i;
-    float32x4x2_t q2_tmp_0, q2_tmp_1, q2_tmp_2, q2_tmp_3;
+    CMPLX_VEC_F32 q2_tmp_0, q2_tmp_1, q2_tmp_2, q2_tmp_3;
     float32x4_t q_in_r0123, q_in_r4567, q_in_r89ab, q_in_rcdef;
     float32x4_t q_in_i0123, q_in_i4567, q_in_i89ab, q_in_icdef;
-    float32x4x2_t q2_tw1, q2_tw2, q2_tw3;
-    float32x4x2_t q2_out_0123, q2_out_4567, q2_out_89ab, q2_out_cdef;
+    CMPLX_VEC_F32 q2_tw1, q2_tw2, q2_tw3;
+    CMPLX_VEC_F32 q2_out_0123, q2_out_4567, q2_out_89ab, q2_out_cdef;
     tw1 = (const ne10_fft_cpx_float32_t *)S->pTwiddle;
     tw2 = (const ne10_fft_cpx_float32_t *)S->pTwiddle + 4;
     tw3 = (const ne10_fft_cpx_float32_t *)S->pTwiddle + 8;
@@ -165,7 +295,7 @@ void arm_ne10_fft16_backward_float32_neon (const arm_cfft_instance_f32 *S,
 
     // the first stage
     const float32_t *p_src0, *p_src4, *p_src8, *p_src12;
-    float32x4x2_t q2_in_0123, q2_in_4567, q2_in_89ab, q2_in_cdef;
+    CMPLX_VEC_F32 q2_in_0123, q2_in_4567, q2_in_89ab, q2_in_cdef;
     float32x4_t q_t0_r,  q_t0_i, q_t1_r,  q_t1_i, q_t2_r,  q_t2_i, q_t3_r, q_t3_i;
     float32x4_t q_out_r048c,  q_out_i048c, q_out_r159d,  q_out_i159d;
     float32x4_t q_out_r26ae,  q_out_i26ae, q_out_r37bf,  q_out_i37bf;
@@ -202,11 +332,11 @@ void arm_ne10_fft16_backward_float32_neon (const arm_cfft_instance_f32 *S,
     float32_t *p_tw1, *p_tw2, *p_tw3;
     float32x4_t q_s0_r, q_s0_i, q_s1_r, q_s1_i, q_s2_r, q_s2_i;
     float32x4_t q_s3_r, q_s3_i, q_s4_r, q_s4_i, q_s5_r, q_s5_i;
-    float32x4x2_t q2_tmp_0, q2_tmp_1, q2_tmp_2, q2_tmp_3;
+    CMPLX_VEC_F32 q2_tmp_0, q2_tmp_1, q2_tmp_2, q2_tmp_3;
     float32x4_t q_in_r0123, q_in_r4567, q_in_r89ab, q_in_rcdef;
     float32x4_t q_in_i0123, q_in_i4567, q_in_i89ab, q_in_icdef;
-    float32x4x2_t q2_tw1, q2_tw2, q2_tw3;
-    float32x4x2_t q2_out_0123, q2_out_4567, q2_out_89ab, q2_out_cdef;
+    CMPLX_VEC_F32 q2_tw1, q2_tw2, q2_tw3;
+    CMPLX_VEC_F32 q2_out_0123, q2_out_4567, q2_out_89ab, q2_out_cdef;
     float32x4_t q_one_by_nfft;
     tw1 = (const ne10_fft_cpx_float32_t *)S->pTwiddle;
     tw2 = (const ne10_fft_cpx_float32_t *)S->pTwiddle + 4;
@@ -295,7 +425,7 @@ __STATIC_INLINE void ne10_radix8x4_neon (ne10_fft_cpx_float32_t *out,
     const ne10_float32_t TW_81 = 0.70710678;
     const ne10_float32_t TW_81N = -0.70710678;
 
-    float32x4x2_t q2_in0, q2_in1, q2_in2, q2_in3, q2_in4, q2_in5, q2_in6, q2_in7;
+    CMPLX_VEC_F32 q2_in0, q2_in1, q2_in2, q2_in3, q2_in4, q2_in5, q2_in6, q2_in7;
     float32x4_t q_sin0_r, q_sin0_i, q_sin1_r, q_sin1_i, q_sin2_r, q_sin2_i, q_sin3_r, q_sin3_i;
     float32x4_t q_sin4_r, q_sin4_i, q_sin5_r, q_sin5_i, q_sin6_r, q_sin6_i, q_sin7_r, q_sin7_i;
     float32x4_t q_s3_r, q_s3_i, q_s5_r, q_s5_i, q_s7_r, q_s7_i;
@@ -303,8 +433,8 @@ __STATIC_INLINE void ne10_radix8x4_neon (ne10_fft_cpx_float32_t *out,
     float32x4_t q_s12_r, q_s12_i, q_s13_r, q_s13_i, q_s14_r, q_s14_i, q_s15_r, q_s15_i;
     float32x4_t q_out0_r, q_out0_i, q_out1_r, q_out1_i, q_out2_r, q_out2_i, q_out3_r, q_out3_i;
     float32x4_t q_out4_r, q_out4_i, q_out5_r, q_out5_i, q_out6_r, q_out6_i, q_out7_r, q_out7_i;
-    float32x4x2_t q2_tmp0, q2_tmp1, q2_tmp2, q2_tmp3, q2_tmp4, q2_tmp5, q2_tmp6, q2_tmp7;
-    float32x4x2_t q2_out0, q2_out1, q2_out2, q2_out3, q2_out4, q2_out5, q2_out6, q2_out7;
+    CMPLX_VEC_F32 q2_tmp0, q2_tmp1, q2_tmp2, q2_tmp3, q2_tmp4, q2_tmp5, q2_tmp6, q2_tmp7;
+    CMPLX_VEC_F32 q2_out0, q2_out1, q2_out2, q2_out3, q2_out4, q2_out5, q2_out6, q2_out7;
     float32x4_t q_tw_81, q_tw_81n;
 
     // This loop is unrolled four times, taking 16 NEON quadword registers of input to
@@ -459,8 +589,6 @@ __STATIC_INLINE void ne10_radix8x4_neon (ne10_fft_cpx_float32_t *out,
     } // f_count
 }
 
-
-
 __STATIC_INLINE void ne10_radix4x4_without_twiddles_neon (ne10_fft_cpx_float32_t *out,
         const ne10_fft_cpx_float32_t *in,
         ne10_int32_t stride)
@@ -555,76 +683,63 @@ __STATIC_INLINE void ne10_radix4x4_with_twiddles_neon (ne10_fft_cpx_float32_t *o
     float32_t *p_dst = (float32_t *) out;
     const float32_t *p_tw  = (const float32_t *) tw;
 
-    float32x4x2_t q2_in0, q2_in1, q2_in2, q2_in3;
-    float32x4x2_t q2_tw0, q2_tw1, q2_tw2;
-    float32x4_t q_s1_r, q_s1_i, q_s2_r, q_s2_i, q_s3_r, q_s3_i;
-    float32x4_t q_s4_r, q_s4_i, q_s5_r, q_s5_i, q_s6_r, q_s6_i, q_s7_r, q_s7_i;
-    float32x4x2_t q2_out0, q2_out1, q2_out2, q2_out3;
+    CMPLX_VEC_F32 q2_in0, q2_in1, q2_in2, q2_in3;
+    CMPLX_VEC_F32 q2_tw0, q2_tw1, q2_tw2;
+    CMPLX_VEC_F32 q_s1, q_s2, q_s3;
+    CMPLX_VEC_F32 q_s4, q_s5, q_s6, q_s7;
+    CMPLX_VEC_F32 q2_out0, q2_out1, q2_out2, q2_out3;
 
     // This loop is unrolled four times, taking 8 NEON quadword registers of input to
     // process four radix-4 butterflies per loop iteration.
     for (m_count = 0; m_count < mstride; m_count += 4)
     {
         // Load the input values
-        q2_in0 = vld2q_f32 (p_src);
+        CMPLX_LOAD_F32(q2_in0,p_src);
         p_src += src_step;
-        q2_in1 = vld2q_f32 (p_src);
+        CMPLX_LOAD_F32(q2_in1,p_src);
         p_src += src_step;
-        q2_in2 = vld2q_f32 (p_src);
+        CMPLX_LOAD_F32(q2_in2,p_src);
         p_src += src_step;
-        q2_in3 = vld2q_f32 (p_src);
+        CMPLX_LOAD_F32(q2_in3,p_src);
         p_src += src_step;
 
         // Load the twiddles
-        q2_tw0 = vld2q_f32 (p_tw);
+        CMPLX_LOAD_F32(q2_tw0,p_tw);
         p_tw += tw_step;
-        q2_tw1 = vld2q_f32 (p_tw);
+        CMPLX_LOAD_F32(q2_tw1,p_tw);
         p_tw += tw_step;
-        q2_tw2 = vld2q_f32 (p_tw);
+        CMPLX_LOAD_F32(q2_tw2,p_tw);
 
         // Multiply input elements by their associated twiddles
-        q_s1_r = vmulq_f32 (q2_in1.val[0], q2_tw0.val[0]);
-        q_s1_i = vmulq_f32 (q2_in1.val[1], q2_tw0.val[0]);
-        q_s2_r = vmulq_f32 (q2_in2.val[0], q2_tw1.val[0]);
-        q_s2_i = vmulq_f32 (q2_in2.val[1], q2_tw1.val[0]);
-        q_s3_r = vmulq_f32 (q2_in3.val[0], q2_tw2.val[0]);
-        q_s3_i = vmulq_f32 (q2_in3.val[1], q2_tw2.val[0]);
-        q_s1_r = vmlsq_f32 (q_s1_r, q2_in1.val[1], q2_tw0.val[1]);
-        q_s1_i = vmlaq_f32 (q_s1_i, q2_in1.val[0], q2_tw0.val[1]);
-        q_s2_r = vmlsq_f32 (q_s2_r, q2_in2.val[1], q2_tw1.val[1]);
-        q_s2_i = vmlaq_f32 (q_s2_i, q2_in2.val[0], q2_tw1.val[1]);
-        q_s3_r = vmlsq_f32 (q_s3_r, q2_in3.val[1], q2_tw2.val[1]);
-        q_s3_i = vmlaq_f32 (q_s3_i, q2_in3.val[0], q2_tw2.val[1]);
+        CMPLX_MUL_F32(q_s1,q2_in1,q2_tw0);
+        CMPLX_MUL_F32(q_s2,q2_in2,q2_tw1);
+        CMPLX_MUL_F32(q_s3,q2_in3,q2_tw2);
 
         // Calculate sums for the butterfly calculations between the <X[0], X[2N/4]> and
         // <X[N/4], X[3N/4]> components.
-        q_s4_r = vaddq_f32 (q2_in0.val[0], q_s2_r);
-        q_s4_i = vaddq_f32 (q2_in0.val[1], q_s2_i);
-        q_s5_r = vsubq_f32 (q2_in0.val[0], q_s2_r);
-        q_s5_i = vsubq_f32 (q2_in0.val[1], q_s2_i);
-        q_s6_r = vaddq_f32 (q_s1_r, q_s3_r);
-        q_s6_i = vaddq_f32 (q_s1_i, q_s3_i);
-        q_s7_r = vsubq_f32 (q_s1_r, q_s3_r);
-        q_s7_i = vsubq_f32 (q_s1_i, q_s3_i);
+        CMPLX_ADD_F32(q_s4,q2_in0,q_s2);
+        CMPLX_SUB_F32(q_s5,q2_in0,q_s2);
+
+        CMPLX_ADD_F32(q_s6,q_s1,q_s3);
+        CMPLX_SUB_F32(q_s7,q_s1,q_s3);
 
         // Combine these sums (for the full radix-4 butterfly)
-        q2_out2.val[0] = vsubq_f32 (q_s4_r, q_s6_r);
-        q2_out2.val[1] = vsubq_f32 (q_s4_i, q_s6_i);
-        q2_out0.val[0] = vaddq_f32 (q_s4_r, q_s6_r);
-        q2_out0.val[1] = vaddq_f32 (q_s4_i, q_s6_i);
-        q2_out1.val[0] = vaddq_f32 (q_s5_r, q_s7_i);
-        q2_out1.val[1] = vsubq_f32 (q_s5_i, q_s7_r);
-        q2_out3.val[0] = vsubq_f32 (q_s5_r, q_s7_i);
-        q2_out3.val[1] = vaddq_f32 (q_s5_i, q_s7_r);
-
+        CMPLX_SUB_F32(q2_out2,q_s4,q_s6);
+        
+        CMPLX_ADD_F32(q2_out0,q_s4,q_s6);
+        
+        CMPLX_SUB_ROT_F32(q2_out1,q_s5,q_s7);
+        
+        CMPLX_ADD_ROT_F32(q2_out3,q_s5,q_s7);
+        
         // Store the results
-        vst2q_f32 (p_dst, q2_out0);
+        CMPLX_STORE_F32(p_dst,q2_out0);
         p_dst += dst_step;
-        vst2q_f32 (p_dst, q2_out1);
+        CMPLX_STORE_F32(p_dst,q2_out1);
         p_dst += dst_step;
-        vst2q_f32 (p_dst, q2_out2);
+        CMPLX_STORE_F32(p_dst,q2_out2);
         p_dst += dst_step;
-        vst2q_f32 (p_dst, q2_out3);
+        CMPLX_STORE_F32(p_dst,q2_out3);
         p_dst += dst_step;
 
         // Undo the arithmetic we did to these variables earlier in the loop, and add
@@ -647,7 +762,7 @@ __STATIC_INLINE void ne10_radix8x4_inverse_neon (ne10_fft_cpx_float32_t *out,
     const ne10_float32_t TW_81 = 0.70710678;
     const ne10_float32_t TW_81N = -0.70710678;
 
-    float32x4x2_t q2_in0, q2_in1, q2_in2, q2_in3, q2_in4, q2_in5, q2_in6, q2_in7;
+    CMPLX_VEC_F32 q2_in0, q2_in1, q2_in2, q2_in3, q2_in4, q2_in5, q2_in6, q2_in7;
     float32x4_t q_sin0_r, q_sin0_i, q_sin1_r, q_sin1_i, q_sin2_r, q_sin2_i, q_sin3_r, q_sin3_i;
     float32x4_t q_sin4_r, q_sin4_i, q_sin5_r, q_sin5_i, q_sin6_r, q_sin6_i, q_sin7_r, q_sin7_i;
     float32x4_t q_s3_r, q_s3_i, q_s5_r, q_s5_i, q_s7_r, q_s7_i;
@@ -655,8 +770,8 @@ __STATIC_INLINE void ne10_radix8x4_inverse_neon (ne10_fft_cpx_float32_t *out,
     float32x4_t q_s12_r, q_s12_i, q_s13_r, q_s13_i, q_s14_r, q_s14_i, q_s15_r, q_s15_i;
     float32x4_t q_out0_r, q_out0_i, q_out1_r, q_out1_i, q_out2_r, q_out2_i, q_out3_r, q_out3_i;
     float32x4_t q_out4_r, q_out4_i, q_out5_r, q_out5_i, q_out6_r, q_out6_i, q_out7_r, q_out7_i;
-    float32x4x2_t q2_tmp0, q2_tmp1, q2_tmp2, q2_tmp3, q2_tmp4, q2_tmp5, q2_tmp6, q2_tmp7;
-    float32x4x2_t q2_out0, q2_out1, q2_out2, q2_out3, q2_out4, q2_out5, q2_out6, q2_out7;
+    CMPLX_VEC_F32 q2_tmp0, q2_tmp1, q2_tmp2, q2_tmp3, q2_tmp4, q2_tmp5, q2_tmp6, q2_tmp7;
+    CMPLX_VEC_F32 q2_out0, q2_out1, q2_out2, q2_out3, q2_out4, q2_out5, q2_out6, q2_out7;
     float32x4_t q_tw_81, q_tw_81n;
 
     // This loop is unrolled four times, taking 16 NEON quadword registers of input to
@@ -810,11 +925,11 @@ __STATIC_INLINE void ne10_radix4x4_inverse_without_twiddles_neon (ne10_fft_cpx_f
     const float32_t *p_src = (const float32_t *) in;
     float32_t *p_dst = (float32_t *) out;
 
-    float32x4x2_t q2_in0, q2_in1, q2_in2, q2_in3;
+    CMPLX_VEC_F32 q2_in0, q2_in1, q2_in2, q2_in3;
     float32x4_t q_s0_r, q_s0_i, q_s1_r, q_s1_i, q_s2_r, q_s2_i, q_s3_r, q_s3_i;
     float32x4_t q_out0_r, q_out0_i, q_out1_r, q_out1_i, q_out2_r, q_out2_i, q_out3_r, q_out3_i;
-    float32x4x2_t q2_tmp0, q2_tmp1, q2_tmp2, q2_tmp3;
-    float32x4x2_t q2_out0, q2_out1, q2_out2, q2_out3;
+    CMPLX_VEC_F32 q2_tmp0, q2_tmp1, q2_tmp2, q2_tmp3;
+    CMPLX_VEC_F32 q2_out0, q2_out1, q2_out2, q2_out3;
 
     // This loop is unrolled four times, taking 8 NEON quadword registers of input to
     // process four radix-4 butterflies per loop iteration.
@@ -895,11 +1010,11 @@ __STATIC_INLINE void ne10_radix4x4_inverse_with_twiddles_neon (ne10_fft_cpx_floa
     float32_t *p_dst = (float32_t *) out;
     const float32_t *p_tw  = (const float32_t *) tw;
 
-    float32x4x2_t q2_in0, q2_in1, q2_in2, q2_in3;
-    float32x4x2_t q2_tw0, q2_tw1, q2_tw2;
+    CMPLX_VEC_F32 q2_in0, q2_in1, q2_in2, q2_in3;
+    CMPLX_VEC_F32 q2_tw0, q2_tw1, q2_tw2;
     float32x4_t q_s1_r, q_s1_i, q_s2_r, q_s2_i, q_s3_r, q_s3_i;
     float32x4_t q_s4_r, q_s4_i, q_s5_r, q_s5_i, q_s6_r, q_s6_i, q_s7_r, q_s7_i;
-    float32x4x2_t q2_out0, q2_out1, q2_out2, q2_out3;
+    CMPLX_VEC_F32 q2_out0, q2_out1, q2_out2, q2_out3;
 
     // This loop is unrolled four times, taking 8 NEON quadword registers of input to
     // process four radix-4 butterflies per loop iteration.
@@ -991,11 +1106,11 @@ __STATIC_INLINE void ne10_radix4x4_inverse_with_twiddles_last_stage_neon (ne10_f
     const float32_t *p_tw  = (const float32_t *) tw;
     ne10_float32_t one_by_nfft = (1.0f / (ne10_float32_t) nfft);
 
-    float32x4x2_t q2_in0, q2_in1, q2_in2, q2_in3;
-    float32x4x2_t q2_tw0, q2_tw1, q2_tw2;
+    CMPLX_VEC_F32 q2_in0, q2_in1, q2_in2, q2_in3;
+    CMPLX_VEC_F32 q2_tw0, q2_tw1, q2_tw2;
     float32x4_t q_s1_r, q_s1_i, q_s2_r, q_s2_i, q_s3_r, q_s3_i;
     float32x4_t q_s4_r, q_s4_i, q_s5_r, q_s5_i, q_s6_r, q_s6_i, q_s7_r, q_s7_i;
-    float32x4x2_t q2_out0, q2_out1, q2_out2, q2_out3;
+    CMPLX_VEC_F32 q2_out0, q2_out1, q2_out2, q2_out3;
     float32x4_t q_one_by_nfft = vdupq_n_f32 (one_by_nfft);
 
     // This loop is unrolled four times, taking 8 NEON quadword registers of input to
