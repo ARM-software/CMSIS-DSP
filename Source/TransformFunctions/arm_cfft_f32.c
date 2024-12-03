@@ -27,6 +27,8 @@
 #include "dsp/transform_functions.h"
 #include "arm_common_tables.h"
 
+//#include <stdio.h>
+
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_helium_utils.h"
@@ -593,38 +595,57 @@ ARM_DSP_ATTRIBUTE void arm_cfft_f32(
         float32_t * pBuffer, /* When used, in is not modified */
         uint8_t ifftFlag)
 {
-    
-    if (ifftFlag == 0)
+    if (S->algorithm_flag == ARM_MIXED_RADIX_FFT)
     {
-        if (S->fftLen==16)
+        if (ifftFlag)
         {
-            arm_ne10_fft16_forward_float32_neon (S,
-               (ne10_fft_cpx_float32_t *)pIn,
-               (ne10_fft_cpx_float32_t *)pOut
-               );
+            arm_ne10_mixed_radix_generic_butterfly_inverse_float32_neon (S,
+                (ne10_fft_cpx_float32_t *)pIn, 
+                (ne10_fft_cpx_float32_t *)pOut,
+                (ne10_fft_cpx_float32_t *)pBuffer);
         }
-        else 
+        else
         {
-           arm_ne10_mixed_radix_fft_forward_float32_neon (S,
-               (ne10_fft_cpx_float32_t *)pIn,
-               (ne10_fft_cpx_float32_t *)pOut,
-               (ne10_fft_cpx_float32_t *)pBuffer);
+            arm_ne10_mixed_radix_generic_butterfly_float32_neon (S,
+                (ne10_fft_cpx_float32_t *)pIn, 
+                (ne10_fft_cpx_float32_t *)pOut,
+                (ne10_fft_cpx_float32_t *)pBuffer);
         }
     }
     else 
     {
-        if (S->fftLen==16)
+        if (ifftFlag == 0)
         {
-            arm_ne10_fft16_backward_float32_neon(S,
-               (ne10_fft_cpx_float32_t *)pIn,
-               (ne10_fft_cpx_float32_t *)pOut);
+            if (S->fftLen==16)
+            {
+                arm_ne10_fft16_forward_float32_neon (S,
+                   (ne10_fft_cpx_float32_t *)pIn,
+                   (ne10_fft_cpx_float32_t *)pOut
+                   );
+            }
+            else 
+            {
+               arm_ne10_mixed_radix_fft_forward_float32_neon (S,
+                   (ne10_fft_cpx_float32_t *)pIn,
+                   (ne10_fft_cpx_float32_t *)pOut,
+                   (ne10_fft_cpx_float32_t *)pBuffer);
+            }
         }
         else 
         {
-            arm_ne10_mixed_radix_fft_backward_float32_neon (S,
-                (ne10_fft_cpx_float32_t *)pIn,
-                (ne10_fft_cpx_float32_t *)pOut,
-                (ne10_fft_cpx_float32_t *)pBuffer);
+            if (S->fftLen==16)
+            {
+                arm_ne10_fft16_backward_float32_neon(S,
+                   (ne10_fft_cpx_float32_t *)pIn,
+                   (ne10_fft_cpx_float32_t *)pOut);
+            }
+            else 
+            {
+                arm_ne10_mixed_radix_fft_backward_float32_neon (S,
+                    (ne10_fft_cpx_float32_t *)pIn,
+                    (ne10_fft_cpx_float32_t *)pOut,
+                    (ne10_fft_cpx_float32_t *)pBuffer);
+            }
         }
     }
 }

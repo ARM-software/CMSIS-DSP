@@ -131,6 +131,8 @@ if (NEON OR NEONEXPERIMENTAL)
     target_sources(CMSISDSP PRIVATE "${DSP}/Ne10/NE10_fft_int16.neonintrinsic.c")
     target_sources(CMSISDSP PRIVATE "${DSP}/Ne10/NE10_rfft_float32.neonintrinsic.c")
     target_sources(CMSISDSP PRIVATE "${DSP}/Ne10/CMSIS_NE10_fft_init.c")
+    target_sources(CMSISDSP PRIVATE "${DSP}/Ne10/CMSIS_NE10_fft_generic_float32.neonintrisic.c")
+
 
     if (NEON_RIFFT_SCALING)
         target_compile_definitions(CMSISDSP PRIVATE CMSIS_NE10_DSP_RIFFT_SCALING)  
@@ -139,6 +141,8 @@ if (NEON OR NEONEXPERIMENTAL)
     if ((NOT ARMAC5) AND (NOT DISABLEFLOAT16))
         target_sources(CMSISDSP PRIVATE "${DSP}/Ne10/NE10_fft_float16.neonintrinsic.c")
         target_sources(CMSISDSP PRIVATE "${DSP}/Ne10/NE10_rfft_float16.neonintrinsic.c")
+        target_sources(CMSISDSP PRIVATE "${DSP}/Ne10/CMSIS_NE10_fft_generic_float16.neonintrisic.c")
+
     endif()
 endif()
 

@@ -68,6 +68,7 @@ static ne10_int32_t ne10_factor (ne10_int32_t n,
         ne10_uint32_t * facbuf,
         ne10_int32_t ne10_factor_flags)
 {
+    //printf("n=%d\n",n);
     // This is a workaround. We need to "return" some flags.
     // Otherwise, we need to modify signature of ne10_factor.
     assert (NE10_MAXFACTORS >= 32);
@@ -95,9 +96,22 @@ static ne10_int32_t ne10_factor (ne10_int32_t n,
         // a first stage of radix-8 (e.g. by combining one radix-4 and
         // one radix-2 stage into a single radix-8 stage).
         if ((ne10_factor_flags & NE10_FACTOR_EIGHT_FIRST_STAGE)
-                && (n==8))
+                && ((n==8) || (n==40) || (n==24)))
         {
-            p = 8;
+            switch (n)
+            {
+            case 8:
+                p = 8;
+                break;
+            case 24:
+                p = 3;
+                alg_flag = NE10_FFT_ALG_ANY;
+                break;
+            default: // n == 40
+                p = 5;
+                alg_flag = NE10_FFT_ALG_ANY;
+                break;
+            }
         }
         else if ((n % 4) == 0)
         {
@@ -109,16 +123,21 @@ static ne10_int32_t ne10_factor (ne10_int32_t n,
         }
         else if ((n % 5) == 0)
         {
-            return NE10_ERR;
+            p = 5;
+            alg_flag = NE10_FFT_ALG_ANY;
         }
         else if ((n % 3) == 0)
         {
-            return NE10_ERR;
+            p = 3;
+            alg_flag = NE10_FFT_ALG_ANY;
         }
         else // stop factoring
         {
-            return NE10_ERR;
+            p = n;
+            alg_flag = NE10_FFT_ALG_ANY;
         }
+
+        //printf("p = %d\n",p);
 
         n /= p;
         facbuf[2 * i] = p;
@@ -371,6 +390,7 @@ arm_cfft_instance_f32 *arm_cfft_init_dynamic_f32(uint32_t fftLen)
     // Bad allocation.
     if (st == NULL)
     {
+        //printf("Bad alloc\n");
         return NULL;
     }
 
@@ -388,52 +408,89 @@ arm_cfft_instance_f32 *arm_cfft_init_dynamic_f32(uint32_t fftLen)
     st -> pTwiddle = (const float32_t*)pTwiddle;
     // st->last_twiddles is default NULL.
     // Calling fft_c or fft_neon is decided by this pointers.
-    //st->last_twiddles = NULL;
+    st->last_twiddles = NULL;
 
+    //printf("fftLen = %d\n",fftLen);
     st->fftLen = fftLen;
-    st->fftLen /= NE10_FFT_PARA_LEVEL;
+
+    if ((fftLen % NE10_FFT_PARA_LEVEL) == 0)
+    {
+       st->fftLen /= NE10_FFT_PARA_LEVEL;
+       st->last_twiddles = (const float32_t*)(pTwiddle + fftLen / NE10_FFT_PARA_LEVEL);
+    }
         
     ne10_int32_t result = ne10_factor (st->fftLen, factors, NE10_FACTOR_EIGHT_FIRST_STAGE);
 
     // Cannot factor
     if (result == NE10_ERR)
     {
+        //printf("Cannot factor\n");
         NE10_FREE (st);
         return NULL;
     }
 
     ne10_int32_t stage_count    = st->factors[0];
-    //ne10_int32_t algorithm_flag = st->factors[2 * (stage_count + 1)];
+    st->algorithm_flag = st->factors[2 * (stage_count + 1)];
 
-    
-    if (fftLen % NE10_FFT_PARA_LEVEL == 0)
+    if (st->algorithm_flag == NE10_FFT_ALG_ANY)
     {
-        st->fftLen = fftLen;
-
-        // Adjust the factoring for a size "nfft / 4" FFT to work for size "nfft"
-        if (stage_count > NE10_MAXFACTORS - 4)
+        //printf("Any\n");
+        if (fftLen % NE10_FFT_PARA_LEVEL)
         {
+            //printf("Multiple paral level\n");
             NE10_FREE (st);
             return NULL;
         }
-        factors[0]++;          // Bump the stage count
-        factors[1] *= 4;       // Quadruple the first stage stride
-        memmove(&factors[4], &factors[2], ((2 * (stage_count + 1)) - 1) * sizeof(factors[0]));
-        factors[2] = 4;        // Add a new radix-4 stage
-        factors[3] = fftLen / 4;
+
+        //printf("Gen twiddle\n");
+        ne10_fft_generate_twiddles_float32 (pTwiddle, factors, st->fftLen);
+
+        // Generate super twiddles for the last stage.
+        ne10_fft_generate_twiddles_line_float32 ((ne10_fft_cpx_float32_t *)st->last_twiddles,
+                st->fftLen,
+                1,
+                NE10_FFT_PARA_LEVEL,
+                fftLen);
+        st->fftLen *= NE10_FFT_PARA_LEVEL;
     }
     else
     {
-        NE10_FREE (st);
-        return NULL;
+        //printf("Standard\n");
+        if ((fftLen % NE10_FFT_PARA_LEVEL) == 0)
+        {
+            st->fftLen = fftLen;
+    
+            // Adjust the factoring for a size "nfft / 4" FFT to work for size "nfft"
+            if (stage_count > NE10_MAXFACTORS - 4)
+            {
+                //printf("Too big stage count\n");
+                NE10_FREE (st);
+                return NULL;
+            }
+            factors[0]++;          // Bump the stage count
+            factors[1] *= 4;       // Quadruple the first stage stride
+            memmove(&factors[4], &factors[2], ((2 * (stage_count + 1)) - 1) * sizeof(factors[0]));
+            factors[2] = 4;        // Add a new radix-4 stage
+            factors[3] = fftLen / 4;
+        }
+        else
+        {
+            //printf("Not multiple para level\n");
+            NE10_FREE (st);
+            return NULL;
+        }
+        ne10_fft_generate_twiddles_float32 (pTwiddle, factors, st->fftLen);
+    
+        // CMSIS-DSP standard init (constant table) do not
+        // need the full factor array
+        factors[2] = st->factors[2 * (stage_count+1)];        // first radix
+        factors[3] = st->factors[2 * (stage_count+1)]; // mstride
+
     }
 
 
-    ne10_fft_generate_twiddles_float32 (pTwiddle, factors, st->fftLen);
     
-    factors[2] = st->factors[2 * (stage_count+1)];        // first radix
-    factors[3] = st->factors[2 * (stage_count+1)]; // mstride
-
+    
     //printf("%d %d %d %d\n",factors[0],factors[1],factors[2],factors[3]);
 
     return st;
@@ -772,12 +829,18 @@ arm_cfft_instance_f16 *arm_cfft_init_dynamic_f16(uint32_t fftLen)
     st->factors = factors;
     ne10_fft_cpx_float16_t *pTwiddle =  (ne10_fft_cpx_float16_t*)(st->factors + (NE10_MAXFACTORS * 2));
     st -> pTwiddle = (const float16_t*)pTwiddle;
-    // st->last_twiddles is default NULL.
-    // Calling fft_c or fft_neon is decided by this pointers.
-    //st->last_twiddles = NULL;
+    st->last_twiddles = NULL;
 
     st->fftLen = fftLen;
-    st->fftLen /= NE10_FFT_PARA_LEVEL;
+    if (fftLen % NE10_FFT_PARA_LEVEL == 0)
+    {
+        //printf("Neon %d, st->nfft %d\n",NE10_FFT_PARA_LEVEL,st->nfft);
+        // Size of FFT satisfies requirement of NEON optimization.
+        st->fftLen /= NE10_FFT_PARA_LEVEL;
+        st->last_twiddles = (const float16_t*)(pTwiddle + fftLen / NE10_FFT_PARA_LEVEL);
+        //printf("st->nfft %d\n",st->nfft);
+
+    }
         
     ne10_int16_t result = ne10_factor (st->fftLen, factors, NE10_FACTOR_EIGHT_FIRST_STAGE);
 
@@ -789,36 +852,56 @@ arm_cfft_instance_f16 *arm_cfft_init_dynamic_f16(uint32_t fftLen)
     }
 
     ne10_int32_t stage_count    = st->factors[0];
-    //ne10_int16_t algorithm_flag = st->factors[2 * (stage_count + 1)];
+    st->algorithm_flag = st->factors[2 * (stage_count + 1)];
 
-    
-    if (fftLen % NE10_FFT_PARA_LEVEL == 0)
+    if (st->algorithm_flag == NE10_FFT_ALG_ANY)
     {
-        st->fftLen = fftLen;
-
-        // Adjust the factoring for a size "nfft / 4" FFT to work for size "nfft"
-        if (stage_count > NE10_MAXFACTORS - 4)
+        if (fftLen % NE10_FFT_PARA_LEVEL)
         {
             NE10_FREE (st);
             return NULL;
         }
-        factors[0]++;          // Bump the stage count
-        factors[1] *= 4;       // Quadruple the first stage stride
-        memmove(&factors[4], &factors[2], ((2 * (stage_count + 1)) - 1) * sizeof(factors[0]));
-        factors[2] = 4;        // Add a new radix-4 stage
-        factors[3] = fftLen / 4;
+
+        ne10_fft_generate_twiddles_float16 (pTwiddle, st->factors, st->fftLen);
+
+        // Generate super twiddles for the last stage.
+        ne10_fft_generate_twiddles_line_float16 ((ne10_fft_cpx_float16_t *)st->last_twiddles,
+                st->fftLen,
+                1,
+                NE10_FFT_PARA_LEVEL,
+                fftLen);
+        st->fftLen *= NE10_FFT_PARA_LEVEL;
     }
     else
     {
-        NE10_FREE (st);
-        return NULL;
-    }
-
-
-    ne10_fft_generate_twiddles_float16 (pTwiddle, factors, st->fftLen);
+        if (fftLen % NE10_FFT_PARA_LEVEL == 0)
+        {
+            st->fftLen = fftLen;
     
-    factors[2] = st->factors[2 * (stage_count+1)];        // first radix
-    factors[3] = st->factors[2 * (stage_count+1)]; // mstride
+            // Adjust the factoring for a size "nfft / 4" FFT to work for size "nfft"
+            if (stage_count > NE10_MAXFACTORS - 4)
+            {
+                NE10_FREE (st);
+                return NULL;
+            }
+            factors[0]++;          // Bump the stage count
+            factors[1] *= 4;       // Quadruple the first stage stride
+            memmove(&factors[4], &factors[2], ((2 * (stage_count + 1)) - 1) * sizeof(factors[0]));
+            factors[2] = 4;        // Add a new radix-4 stage
+            factors[3] = fftLen / 4;
+        }
+        else
+        {
+            NE10_FREE (st);
+            return NULL;
+        }
+    
+    
+        ne10_fft_generate_twiddles_float16 (pTwiddle, factors, st->fftLen);
+        
+        factors[2] = st->factors[2 * (stage_count+1)];        // first radix
+        factors[3] = st->factors[2 * (stage_count+1)]; // mstride
+    }
 
     //printf("%d %d %d %d\n",factors[0],factors[1],factors[2],factors[3]);
 

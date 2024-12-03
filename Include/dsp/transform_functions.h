@@ -36,6 +36,12 @@
 #include "dsp/basic_math_functions.h"
 #include "dsp/complex_math_functions.h"
 
+// Only available for Neon versions of the FFTs
+// otherwise only powers of 2 are supported
+
+#if !defined(ARM_MIXED_RADIX_FFT)
+#define ARM_MIXED_RADIX_FFT 1
+#endif
 
 #ifdef   __cplusplus
 extern "C"
@@ -337,7 +343,9 @@ typedef struct
 {
           uint32_t fftLen;                   /**< length of the FFT. */
     const float32_t *pTwiddle;         /**< points to the Twiddle factor table. */
+    const float32_t *last_twiddles; /**< last stage twiddle used for mixed radix */
     const uint32_t *factors;
+    int32_t algorithm_flag;
 } arm_cfft_instance_f32;
 #else
   /**

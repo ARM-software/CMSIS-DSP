@@ -107,6 +107,8 @@ ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_##LEN##_f32(arm_cfft_instance_f32 * S
   S->pTwiddle = arm_neon_twiddles_##LEN##_f32;                                   \
   S->factors=arm_neon_factors_##LEN##_f32;                                       \
   S->fftLen = LEN;                                                               \
+  S->algorithm_flag = 0;                                                         \
+  S->last_twiddles = NULL;                                                       \
   return status;                                                                 \
 }
 #else 

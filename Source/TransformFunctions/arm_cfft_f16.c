@@ -590,20 +590,39 @@ ARM_DSP_ATTRIBUTE void arm_cfft_f16(
         float16_t * pBuffer, /* When used, in is not modified */
         uint8_t ifftFlag)
 {
-    
-    if (ifftFlag == 0)
+    if (S->algorithm_flag == ARM_MIXED_RADIX_FFT)
     {
-           arm_ne10_mixed_radix_fft_forward_float16_neon (S,
-               (ne10_fft_cpx_float16_t *)pIn,
-               (ne10_fft_cpx_float16_t *)pOut,
-               (ne10_fft_cpx_float16_t *)pBuffer);
+        if (ifftFlag)
+        {
+            arm_ne10_mixed_radix_generic_butterfly_inverse_float16_neon (S,
+                (ne10_fft_cpx_float16_t *)pIn, 
+                (ne10_fft_cpx_float16_t *)pOut,
+                (ne10_fft_cpx_float16_t *)pBuffer);
+        }
+        else
+        {
+            arm_ne10_mixed_radix_generic_butterfly_float16_neon (S,
+                (ne10_fft_cpx_float16_t *)pIn, 
+                (ne10_fft_cpx_float16_t *)pOut,
+                (ne10_fft_cpx_float16_t *)pBuffer);
+        }
     }
     else 
     {
-            arm_ne10_mixed_radix_fft_backward_float16_neon (S,
-                (ne10_fft_cpx_float16_t *)pIn,
-                (ne10_fft_cpx_float16_t *)pOut,
-                (ne10_fft_cpx_float16_t *)pBuffer);
+        if (ifftFlag == 0)
+        {
+               arm_ne10_mixed_radix_fft_forward_float16_neon (S,
+                   (ne10_fft_cpx_float16_t *)pIn,
+                   (ne10_fft_cpx_float16_t *)pOut,
+                   (ne10_fft_cpx_float16_t *)pBuffer);
+        }
+        else 
+        {
+                arm_ne10_mixed_radix_fft_backward_float16_neon (S,
+                    (ne10_fft_cpx_float16_t *)pIn,
+                    (ne10_fft_cpx_float16_t *)pOut,
+                    (ne10_fft_cpx_float16_t *)pBuffer);
+        }
     }
 }
 #else

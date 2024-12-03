@@ -33,6 +33,10 @@
 #include "dsp/none.h"
 #include "dsp/utils.h"
 
+#if !defined(ARM_MIXED_RADIX_FFT)
+#define ARM_MIXED_RADIX_FFT 1
+#endif
+
 #ifdef   __cplusplus
 extern "C"
 {
@@ -81,7 +85,9 @@ typedef struct
 {
           uint32_t fftLen;                   /**< length of the FFT. */
     const float16_t *pTwiddle;         /**< points to the Twiddle factor table. */
+    const float16_t *last_twiddles; /**< last stage twiddle used for mixed radix */
     const uint32_t *factors;
+    int32_t algorithm_flag;
 } arm_cfft_instance_f16;
 #else
   typedef struct

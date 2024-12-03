@@ -127,4 +127,32 @@ extern void arm_ne10_fft_c2r_1d_int16_neon (q15_t *fout,
                                  ne10_int32_t scaled_flag,
                                  q15_t *buffer);
 
+extern void arm_ne10_mixed_radix_generic_butterfly_inverse_float32_neon (
+        const arm_cfft_instance_f32 *S,
+        const ne10_fft_cpx_float32_t *in,
+        ne10_fft_cpx_float32_t *out,
+        ne10_fft_cpx_float32_t *buffer);
+
+extern void arm_ne10_mixed_radix_generic_butterfly_float32_neon (
+        const arm_cfft_instance_f32 *S,
+        const ne10_fft_cpx_float32_t *in,
+        ne10_fft_cpx_float32_t *out,
+        ne10_fft_cpx_float32_t *buffer);
+
+#if defined(ARM_MATH_NEON_FLOAT16) && defined(ARM_FLOAT16_SUPPORTED)
+
+extern void arm_ne10_mixed_radix_generic_butterfly_inverse_float16_neon (
+        const arm_cfft_instance_f16 *S,
+        const ne10_fft_cpx_float16_t *in,
+        ne10_fft_cpx_float16_t *out,
+        ne10_fft_cpx_float16_t *buffer);
+
+extern void arm_ne10_mixed_radix_generic_butterfly_float16_neon (
+        const arm_cfft_instance_f16 *S,
+        const ne10_fft_cpx_float16_t *in,
+        ne10_fft_cpx_float16_t *out,
+        ne10_fft_cpx_float16_t *buffer);
+
+#endif
+
 #endif

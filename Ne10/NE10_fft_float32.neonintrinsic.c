@@ -37,7 +37,7 @@
 
 #include "dsp/transform_functions.h"
 
-#include <stdio.h>
+//#include <stdio.h>
 
 #define CMPLX_VEC_F32 float32x4x2_t
 
@@ -1203,7 +1203,6 @@ __STATIC_INLINE void ne10_radix4x4_inverse_with_twiddles_last_stage_neon (ne10_f
  */
 
 // Use arm_ to be able to use Ne10 with this library
-// since Ne10 cover radix-3 and 5 that are not provided by CMSIS-DSP.
 void arm_ne10_mixed_radix_fft_forward_float32_neon (
     const arm_cfft_instance_f32 *S,
     const ne10_fft_cpx_float32_t *input,
