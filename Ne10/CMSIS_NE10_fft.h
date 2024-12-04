@@ -155,4 +155,18 @@ extern void arm_ne10_mixed_radix_generic_butterfly_float16_neon (
 
 #endif
 
+extern void arm_ne10_mixed_radix_generic_butterfly_inverse_int32_neon (
+        const arm_cfft_instance_q31 *S,
+        const ne10_fft_cpx_int32_t *in,
+        ne10_fft_cpx_int32_t *out,
+        ne10_fft_cpx_int32_t *buffer,
+        ne10_int32_t scaled_flag);
+
+extern void arm_ne10_mixed_radix_generic_butterfly_int32_neon (
+        const arm_cfft_instance_q31 *S,
+        const ne10_fft_cpx_int32_t *in,
+        ne10_fft_cpx_int32_t *out,
+        ne10_fft_cpx_int32_t *buffer,
+        ne10_int32_t scaled_flag);
+
 #endif

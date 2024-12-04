@@ -1748,6 +1748,27 @@ void arm_ne10_fft_c2c_1d_int32_neon (q31_t *fout,
     
     const ne10_fft_cpx_int32_t *twiddles = (const ne10_fft_cpx_int32_t *)S->pTwiddle;
 
+    if (S->algorithm_flag == NE10_FFT_ALG_ANY)
+    {
+        if (inverse_fft)
+        {
+            arm_ne10_mixed_radix_generic_butterfly_inverse_int32_neon (S,
+                (ne10_fft_cpx_int32_t *)fin, 
+                (ne10_fft_cpx_int32_t *)fout,
+                (ne10_fft_cpx_int32_t *)buffer,
+                scaled_flag);
+        }
+        else
+        {
+            arm_ne10_mixed_radix_generic_butterfly_int32_neon (S,
+                (ne10_fft_cpx_int32_t *)fin, 
+                (ne10_fft_cpx_int32_t *)fout,
+                (ne10_fft_cpx_int32_t *)buffer,
+                scaled_flag);
+        }
+        return;
+    }
+
     if (scaled_flag)
     {
         if (inverse_fft)

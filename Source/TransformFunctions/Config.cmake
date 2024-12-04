@@ -132,6 +132,7 @@ if (NEON OR NEONEXPERIMENTAL)
     target_sources(CMSISDSP PRIVATE "${DSP}/Ne10/NE10_rfft_float32.neonintrinsic.c")
     target_sources(CMSISDSP PRIVATE "${DSP}/Ne10/CMSIS_NE10_fft_init.c")
     target_sources(CMSISDSP PRIVATE "${DSP}/Ne10/CMSIS_NE10_fft_generic_float32.neonintrisic.c")
+    target_sources(CMSISDSP PRIVATE "${DSP}/Ne10/CMSIS_NE10_fft_generic_int32.neonintrisic.c")
 
 
     if (NEON_RIFFT_SCALING)

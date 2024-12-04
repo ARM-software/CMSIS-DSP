@@ -224,7 +224,9 @@ typedef struct
 {
           uint32_t fftLen;                   /**< length of the FFT. */
     const q15_t *pTwiddle;         /**< points to the Twiddle factor table. */
+    const q15_t *last_twiddles; /**< last stage twiddle used for mixed radix */
     const uint32_t *factors;
+    int32_t algorithm_flag;
 } arm_cfft_instance_q15;
 #else
   typedef struct
@@ -286,7 +288,9 @@ typedef struct
 {
           uint32_t fftLen;                   /**< length of the FFT. */
     const q31_t *pTwiddle;         /**< points to the Twiddle factor table. */
+    const q31_t *last_twiddles; /**< last stage twiddle used for mixed radix */
     const uint32_t *factors;
+    int32_t algorithm_flag;
 } arm_cfft_instance_q31;
 #else
   typedef struct

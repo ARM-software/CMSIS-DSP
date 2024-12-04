@@ -538,6 +538,8 @@ arm_cfft_instance_q31 *arm_cfft_init_dynamic_q31(uint32_t fftLen)
         st->pTwiddle = (q31_t*)twiddles;
         st->fftLen = fftLen;
 
+        
+
         ne10_int32_t result = ne10_factor (fftLen, factors, NE10_FACTOR_EIGHT_FIRST_STAGE);
         if (result == NE10_ERR)
         {
@@ -546,12 +548,44 @@ arm_cfft_instance_q31 *arm_cfft_init_dynamic_q31(uint32_t fftLen)
         }
         
         ne10_int32_t stage_count    = st->factors[0];
+        st->algorithm_flag = st->factors[2 * (stage_count + 1)];
+        
+        if (st->algorithm_flag == NE10_FFT_ALG_ANY)
+        {
+            if (fftLen % NE10_FFT_PARA_LEVEL == 0)
+            {
+              // Size of FFT satisfies requirement of NEON optimization.
+              st->fftLen /= NE10_FFT_PARA_LEVEL;
+              st->last_twiddles = (const q31_t*)(twiddles + fftLen / NE10_FFT_PARA_LEVEL);
+            }
 
-        ne10_fft_generate_twiddles_int32 (twiddles, factors, fftLen);
+            // Disable radix 8 for INT32 generic FFTs (it isn't supported)
+            result = ne10_factor (st->fftLen, factors, NE10_FACTOR_DEFAULT);
+            if ((result == NE10_ERR) || (fftLen % NE10_FFT_PARA_LEVEL))
+            {
+                NE10_FREE (st);
+                return NULL;
+            }
     
-        factors[2] = st->factors[2 * stage_count];        // first radix
-        factors[3] = st->factors[2 * stage_count]; // mstride
-
+            ne10_fft_generate_twiddles_int32 (twiddles, st->factors, st->fftLen);
+    
+            // Generate super twiddles for the last stage.
+            
+            ne10_fft_generate_twiddles_line_int32 ((ne10_fft_cpx_int32_t*)st->last_twiddles,
+                    st->fftLen,
+                    1,
+                    NE10_FFT_PARA_LEVEL,
+                    fftLen);
+            
+            st->fftLen *= NE10_FFT_PARA_LEVEL;
+        }
+        else
+        {
+            ne10_fft_generate_twiddles_int32 (twiddles, factors, fftLen);
+    
+            factors[2] = st->factors[2 * stage_count];        // first radix
+            factors[3] = st->factors[2 * stage_count]; // mstride
+        }
         //printf("%d %d %d %d\n",factors[0],factors[1],factors[2],factors[3]);
 
     }
