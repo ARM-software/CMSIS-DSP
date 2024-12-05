@@ -421,6 +421,8 @@ MFCC_INIT_Q31(2048)
  */
 MFCC_INIT_Q31(4096)
 
+#undef RFFT_INIT
+#undef RFFT_INIT_WITH_LEN
 /**
   @} end of MFCCQ31 group
  */

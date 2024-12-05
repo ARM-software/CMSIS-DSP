@@ -420,6 +420,8 @@ MFCC_INIT_Q15(2048)
  */
 MFCC_INIT_Q15(4096)
 
+#undef RFFT_INIT
+#undef RFFT_INIT_WITH_LEN
 /**
   @} end of MFCCQ15 group
  */

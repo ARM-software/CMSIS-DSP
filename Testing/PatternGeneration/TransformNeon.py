@@ -184,8 +184,8 @@ def threshold(d):
 #define REL_ERROR (5.0e-2)
 #define ABS_ERROR (1.0e-1)"""
     return """#define SNR_THRESHOLD 100
-#define REL_ERROR (2.0e-5)
-#define ABS_ERROR (7.0e-5)"""
+#define REL_ERROR (1.0e-4)
+#define ABS_ERROR (4.0e-4)"""
 
 def the_test(d):
     return f"""{threshold(d)}

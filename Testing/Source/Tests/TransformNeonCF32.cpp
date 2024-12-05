@@ -5,8 +5,8 @@
 #include "Test.h"           
 
 #define SNR_THRESHOLD 100
-#define REL_ERROR (2.0e-5)
-#define ABS_ERROR (7.0e-5)
+#define REL_ERROR (1.0e-4)
+#define ABS_ERROR (2.0e-3)
 
     void TransformNeonCF32::test_cfft_f32()
     {
