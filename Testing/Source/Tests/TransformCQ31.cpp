@@ -21,8 +21,8 @@
              &(this->instCfftQ31),
              inp,
              outfftp,
-             this->ifft,
-             tmp2p);
+             tmp2p,
+             this->ifft);
 #else
         arm_cfft_q31(
              &(this->instCfftQ31),
@@ -54,8 +54,8 @@
              &(this->instCfftQ31),
              inp,
              outfftp,
-             this->ifft,
-             tmp2p);
+             tmp2p,
+             this->ifft);
 #else
         arm_cfft_q31(
              &(this->instCfftQ31),

@@ -120,12 +120,15 @@ void arm_ne10_mixed_radix_generic_butterfly_int32_neon (
         ne10_fft_cpx_int32_t *buffer,
         ne10_int32_t scaled_flag)
 {
+    (void)scaled_flag;
+    // The scaling flag does not have the same meaning for the
+    // generic and the normal implementation
     ne10_mixed_radix_generic_butterfly_int32_neon_dispatch_0 (
             out, in, 
             S->factors, 
             (const ne10_fft_cpx_int32_t*)S->pTwiddle, 
             buffer, 
-            scaled_flag);
+            1);
 }
 
 void arm_ne10_mixed_radix_generic_butterfly_inverse_int32_neon (
@@ -135,10 +138,13 @@ void arm_ne10_mixed_radix_generic_butterfly_inverse_int32_neon (
         ne10_fft_cpx_int32_t *buffer,
         ne10_int32_t scaled_flag)
 {
+    (void)scaled_flag;
+    // The scaling flag does not have the same meaning for the
+    // generic and the normal implementation
     ne10_mixed_radix_generic_butterfly_int32_neon_dispatch_1 (
             out, in, 
             S->factors, 
             (const ne10_fft_cpx_int32_t*)S->pTwiddle, 
             buffer, 
-            scaled_flag);
+            1);
 }

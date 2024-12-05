@@ -117,6 +117,15 @@ add_executable(test main.cpp
     Source/Tests/WindowTestsF64.cpp
 	)
 
+if (NEON)
+    target_sources(test PUBLIC 
+        Source/Tests/TransformNeonCF32.cpp
+        Source/Tests/TransformNeonCF16.cpp
+        Source/Tests/TransformNeonCQ31.cpp
+        Source/Tests/TransformNeonCQ15.cpp
+        )
+endif()
+
 if (NOT DISABLEFLOAT16)
         target_sources(test PUBLIC
            Source/Tests/BasicTestsF16.cpp

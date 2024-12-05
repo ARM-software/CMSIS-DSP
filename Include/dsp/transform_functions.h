@@ -270,8 +270,9 @@ void arm_cfft_q15(
     const arm_cfft_instance_q15 * S,
           const q15_t * src,
           q15_t * dst,
-          uint8_t ifftFlag,
-          q15_t * buffer);
+          q15_t * buffer,
+          uint8_t ifftFlag
+          );
 #else
 void arm_cfft_q15(
     const arm_cfft_instance_q15 * S,
@@ -332,8 +333,9 @@ void arm_cfft_q31(
     const arm_cfft_instance_q31 * S,
           const q31_t * src,
           q31_t * dst,
-          uint8_t ifftFlag,
-          q31_t * buffer);
+          q31_t * buffer,
+          uint8_t ifftFlag
+          );
 #else
 void arm_cfft_q31(
     const arm_cfft_instance_q31 * S,

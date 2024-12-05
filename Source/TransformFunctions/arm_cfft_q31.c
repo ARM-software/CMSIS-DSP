@@ -672,8 +672,9 @@ ARM_DSP_ATTRIBUTE void arm_cfft_q31(
   const arm_cfft_instance_q31 * S,
         const q31_t * src,
         q31_t * dst,
-        uint8_t ifftFlag,
-        q31_t *buffer)
+        q31_t *buffer,
+        uint8_t ifftFlag
+        )
 {
    arm_ne10_fft_c2c_1d_int32_neon (dst,src,S,ifftFlag,1,buffer);
 }
