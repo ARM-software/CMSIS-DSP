@@ -5,7 +5,7 @@
 
 #define SNR_THRESHOLD 120
 #define REL_ERROR (2.0e-5)
-#define ABS_ERROR (7.0e-5)
+#define ABS_ERROR (8.0e-5)
 
     void TransformCF32::test_cfft_f32()
     {

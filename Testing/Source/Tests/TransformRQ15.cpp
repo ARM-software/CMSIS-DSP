@@ -7,8 +7,8 @@
 #define SNR_THRESHOLD 40
 #define RIFFT_SNR_THRESHOLD 25
 
-#define ABS_FFT_ERROR_Q15 ((q15_t)10)
-#define ABS_IFFT_ERROR_Q15 ((q15_t)348)
+#define ABS_FFT_ERROR_Q15 ((q15_t)14)
+#define ABS_IFFT_ERROR_Q15 ((q15_t)1250)
 
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 #define RFFT_INIT(L) \

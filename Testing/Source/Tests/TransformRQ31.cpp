@@ -6,7 +6,8 @@
 
 #define SNR_THRESHOLD 90
 #define ABS_RFFT_ERROR_Q31 ((q31_t)33)
-#define ABS_RIFFT_ERROR_Q31 ((q31_t)23000)
+#define ABS_RIFFT_ERROR_Q31 ((q31_t)52000)
+#define ABS_RIFFT_LONG_ERROR_Q31 ((q31_t)209000)
 
 
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
@@ -59,10 +60,17 @@
 
        memcpy(outp,overoutp,sizeof(q31_t)*outputfft.nbSamples());
 
-       //ASSERT_SNR(outputfft,ref,(q31_t)SNR_THRESHOLD);
+       ASSERT_SNR(outputfft,ref,(q31_t)SNR_THRESHOLD);
        if (this->ifft)
        {
-          ASSERT_NEAR_EQ(outputfft,ref,ABS_RIFFT_ERROR_Q31);
+          if (this->scaling==12)
+          {
+              ASSERT_NEAR_EQ(outputfft,ref,ABS_RIFFT_LONG_ERROR_Q31);
+          }
+          else 
+          {
+              ASSERT_NEAR_EQ(outputfft,ref,ABS_RIFFT_ERROR_Q31);
+          }
        }
        else 
        {

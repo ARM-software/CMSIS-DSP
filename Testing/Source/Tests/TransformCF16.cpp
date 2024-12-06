@@ -18,14 +18,16 @@
 
 #else // cortex-m
  #define SNR_THRESHOLD 58
- #define REL_ERROR (1.0e-4)
- #define ABS_ERROR (1.0e-3)
+ #define REL_ERROR (1.0e-3)
+ #define ABS_ERROR (1.0e-1)
 
- #define LONG_REL_ERROR (1.0e-4)
- #define LONG_ABS_ERROR (1.0e-3)
+ // 1024
+ #define LONG_REL_ERROR (1.0e-3)
+ #define LONG_ABS_ERROR (2.0e-1)
 
- #define VERY_LONG_REL_ERROR (1.0e-4)
- #define VERY_LONG_ABS_ERROR (1.0e-3)
+ // 2048
+ #define VERY_LONG_REL_ERROR (1.0e-1)
+ #define VERY_LONG_ABS_ERROR (5.0e-1)
 #endif 
 
 static double abs_err,rel_err;

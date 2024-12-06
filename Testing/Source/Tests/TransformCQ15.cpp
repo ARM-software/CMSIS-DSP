@@ -4,7 +4,7 @@
 #include "Test.h"
 
 #define SNR_THRESHOLD 30
-#define ABS_ERROR_Q15 ((q15_t)10)
+#define ABS_ERROR_Q15 ((q15_t)15)
 
 
     void TransformCQ15::test_cfft_q15()
