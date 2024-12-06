@@ -953,7 +953,7 @@ arm_cfft_instance_f16 *arm_cfft_init_dynamic_f16(uint32_t fftLen)
 /**
  * @brief      Initialize data structure for a RFFT
  *
- * @param[in]  fftLen  The rfft length
+ * @param[in]  nfft  The rfft length
  *
  * @return     Pointer to the new structure
  * 
@@ -1131,7 +1131,7 @@ arm_rfft_fast_instance_f16 *arm_rfft_fast_init_dynamic_f16 (uint32_t nfft)
 /**
  * @brief      Initialize data structure for a RFFT
  *
- * @param[in]  fftLen  The rfft length
+ * @param[in]  nfft  The rfft length
  *
  * @return     Pointer to the new structure
  * 
@@ -1305,6 +1305,19 @@ arm_rfft_fast_instance_f32 *arm_rfft_fast_init_dynamic_f32 (uint32_t nfft)
   @addtogroup RealFFTQ31
   @{
  */
+/**
+ * @brief      Initialize RFFT Q31 with memory allocation
+ *
+ * @param[in]  nfft  The nfft
+ *
+ * @return     Pointer to RFFT instance Q31
+ * 
+ * @par       This function is only available for Neon
+ *            This function is allocating memory. The
+ *            memory must be released when no more used.
+ *            This function can be used with RFFT lengths
+ *            longer than the ones supported on Cortex-M
+ */
   arm_rfft_instance_q31 *arm_rfft_init_dynamic_q31(uint32_t nfft)
   {
     arm_rfft_instance_q31 *st = NULL;
@@ -1402,6 +1415,20 @@ arm_rfft_fast_instance_f32 *arm_rfft_fast_init_dynamic_f32 (uint32_t nfft)
   @addtogroup RealFFTQ15
   @{
  */
+
+  /**
+   * @brief      Initialize RFFT Q15 with memory allocation
+   *
+   * @param[in]  nfft  The nfft
+   *
+   * @return     Pointer to an RFFT Instance Q15
+   * 
+   * @par       This function is only available for Neon
+ *            This function is allocating memory. The
+ *            memory must be released when no more used.
+ *            This function can be used with RFFT lengths
+ *            longer than the ones supported on Cortex-M
+   */
   arm_rfft_instance_q15 *arm_rfft_init_dynamic_q15(uint32_t nfft)
   {
     arm_rfft_instance_q15* st = NULL;

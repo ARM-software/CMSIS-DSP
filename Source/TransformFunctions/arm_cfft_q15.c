@@ -613,7 +613,25 @@ ARM_DSP_ATTRIBUTE void arm_cfft_radix4by2_inverse_q15(
                    - value = 0: disables bit reversal of output
                    - value = 1: enables bit reversal of output
  
-@par Neon version
+  @par             Input and Output formats for CFFT Q15
+
+| CFFT Size  | Input Format  | Output Format  | Number of bits to upscale |
+| ---------: | ------------: | -------------: | ------------------------: |
+| 16         | 1.15          | 5.11           | 4        
+| 64         | 1.15          | 7.9            | 6      
+| 256        | 1.15          | 9.7            | 8     
+| 1024       | 1.15          | 11.5           | 10      
+
+  @par             Input and Output formats for CIFFT Q15
+
+| CIFFT Size  | Input Format  | Output Format  | Number of bits to upscale |
+| ----------: | ------------: | -------------: | ------------------------: |
+| 16          | 1.15          | 5.11           | 0        
+| 64          | 1.15          | 7.9            | 0      
+| 256         | 1.15          | 9.7            | 0     
+| 1024        | 1.15          | 11.5           | 0     
+
+  @par Neon version
                      The neon version has a different API.
                      The input and output buffers must be
                      different.
@@ -628,8 +646,8 @@ ARM_DSP_ATTRIBUTE void arm_cfft_radix4by2_inverse_q15(
   const arm_cfft_instance_q15 * S,
         const q15_t * src,
         q15_t * dst,
-        uint8_t ifftFlag,
-        q15_t *buffer)
+        q15_t *buffer,
+        uint8_t ifftFlag)
   @endcode
 
  */

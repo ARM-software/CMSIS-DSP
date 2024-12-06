@@ -51,6 +51,41 @@ extern "C"
 
 /**
  * @defgroup groupTransforms Transform Functions
+ * 
+ * CMSIS-DSP provides CFFT and RFFT for different architectures.
+ * The implementation of those transforms may be different for the
+ * different architectures : different algorithms, different capabilities
+ * of the instruction set.
+ * 
+ * All those variants are not giving exactly the same results but they 
+ * are passing the same tests with same SNR checks and same threshold for 
+ * the sample errors.
+ * 
+ * The APIs for the Neon variants are different : some additional
+ * temporary buffers are required.
+ * 
+ * Float16 versions are provided but they are not very accurate and 
+ * should only be used for small FFTs.
+ * 
+ * @par Transform initializations
+ *  
+ *  There are several ways to initialize the transform functions.
+ *  Below explanations are using q15 as example but the same explanations
+ *  apply to other datatypes.
+ *  
+ *  Before Helium and Neon, you can just use a pre-initialized 
+ *  constant data structure and use it in the arm_cfft_... function.
+ *  For instance, &arm_cfft_sR_q15_len256 for a 256 Q15 CFFT.
+ *  
+ *  On Helium and Neon, you *must* use an initialization function. If you know the size of your FFT (or other transform) you can use a specific initialization function for this size only : like arm_cfft_init_256_q15 for a 256 Q15 complex FFT.
+ *  
+ *  By using a specific initialization function, you give an hint to the linker and it will be able to remove all unused initialization tables (some compilation and link flags must be used for the linker to be able to do this optimization. It is compiler dependent).
+ *  
+ *  If you don't know the size you'll need at runtime, you need to use a function like arm_cfft_init_q15. If you use such a function, all the tables for all FFT sizes (up to the CMSIS-DSP maximum of 4096) will be included in the build !
+ *  
+ *  On Neon, there is another possibility. You can use arm_cfft_init_dynamic_q15. This function will allocate a buffer at runtime and compute at runtime all the tables that are required for a specific FFT size. This initialization is also supported by RFFT.
+ *  The computation to initialize all the tables can take lot of cycles
+ *  (since several cos and sin must be computed)
  */
 
 
