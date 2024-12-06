@@ -67,6 +67,9 @@ POSSIBILITY OF SUCH DAMAGE.
 
 //#include <stdio.h>
 
+#if defined(ARM_MATH_NEON_FLOAT16)
+
+
 #define NE10_DSP_CFFT_SCALING
 
 typedef float16x4x2_t CPLX;
@@ -1238,3 +1241,5 @@ void arm_ne10_mixed_radix_generic_butterfly_inverse_float16_neon (
             nfft, // in_step == mstride == nfft
             nfft * 4); // Actual length of FFT
 }
+
+#endif
