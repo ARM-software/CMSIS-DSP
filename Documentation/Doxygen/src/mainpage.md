@@ -163,6 +163,21 @@ All algorithms are compared with a double precision reference and the different 
 
 As consequence, the small differences that may exists between the different architecture implementations should be too small to have any practical consequences.
 
+Also, when targetting Helium or Neon, some functions have  different APIs.
+
+### Different API for Helium
+* Biquad F32 and F16 : A different init function must be used
+* FIR F32, F16, Q31, Q15 and Q7 : Coefficient array must be padded with zeros
+
+### Different API for Neon
+* Biquad F32 initialization : An additional function must be used for initialization
+* MFCC F32, F16, Q31 and Q15 : Additional temporary buffer required for the functions
+* CFFT F32, F16, Q31 and Q15 : Additional temporary buffer required for the functions
+* RFFT F32, F16, Q31 and Q15 : Additional temporary buffer required for the functions. Different arguments for the init function of Q31 and Q15 RFFT
+
+For CFFT and RFFT, a new Neon specific initialization function is available to be able to use longer FFTs.
+
+For CFFT, this new Neon specific initialization allows to use FFT lengths with factor of 3 and 5 in the length (but must still be a multiple of 4 length).
 
 
 ## License {#license}

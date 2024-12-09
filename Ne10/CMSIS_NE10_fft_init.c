@@ -376,6 +376,10 @@ static ne10_fft_cpx_float32_t* ne10_fft_generate_twiddles_transposed_float32 (
  *            memory must be released when no more used.
  *            This function can be used with FFT lengths
  *            longer than the ones supported on Cortex-M
+ *            
+ *            With this function, FFT lengths can also contain
+ *            factor 3 and 5 (but must be multiple of 4)
+ *            
  */
 arm_cfft_instance_f32 *arm_cfft_init_dynamic_f32(uint32_t fftLen)
 {
@@ -517,6 +521,9 @@ arm_cfft_instance_f32 *arm_cfft_init_dynamic_f32(uint32_t fftLen)
  *            memory must be released when no more used.
  *            This function can be used with FFT lengths
  *            longer than the ones supported on Cortex-M
+ *            
+ *            With this function, FFT lengths can also contain
+ *            factor 3 and 5 (but must be multiple of 4)
  */
 arm_cfft_instance_q31 *arm_cfft_init_dynamic_q31(uint32_t fftLen)
 {
@@ -613,6 +620,9 @@ arm_cfft_instance_q31 *arm_cfft_init_dynamic_q31(uint32_t fftLen)
  *            memory must be released when no more used.
  *            This function can be used with FFT lengths
  *            longer than the ones supported on Cortex-M
+ *            
+ *            With this function, FFT lengths can also contain
+ *            factor 3 and 5 (but must be multiple of 4)
  */
 arm_cfft_instance_q15 *arm_cfft_init_dynamic_q15(uint32_t fftLen)
 {
@@ -834,6 +844,9 @@ static ne10_fft_cpx_float16_t* ne10_fft_generate_twiddles_transposed_float16 (
  *            memory must be released when no more used.
  *            This function can be used with FFT lengths
  *            longer than the ones supported on Cortex-M
+ *            
+ *            With this function, FFT lengths can also contain
+ *            factor 3 and 5 (but must be multiple of 4)
  */
 arm_cfft_instance_f16 *arm_cfft_init_dynamic_f16(uint32_t fftLen)
 {
@@ -962,6 +975,7 @@ arm_cfft_instance_f16 *arm_cfft_init_dynamic_f16(uint32_t fftLen)
  *            memory must be released when no more used.
  *            This function can be used with RFFT lengths
  *            longer than the ones supported on Cortex-M
+ *            
  */
 arm_rfft_fast_instance_f16 *arm_rfft_fast_init_dynamic_f16 (uint32_t nfft)
 {
@@ -1140,6 +1154,7 @@ arm_rfft_fast_instance_f16 *arm_rfft_fast_init_dynamic_f16 (uint32_t nfft)
  *            memory must be released when no more used.
  *            This function can be used with RFFT lengths
  *            longer than the ones supported on Cortex-M
+ *            
  */
 arm_rfft_fast_instance_f32 *arm_rfft_fast_init_dynamic_f32 (uint32_t nfft)
 {
@@ -1317,6 +1332,7 @@ arm_rfft_fast_instance_f32 *arm_rfft_fast_init_dynamic_f32 (uint32_t nfft)
  *            memory must be released when no more used.
  *            This function can be used with RFFT lengths
  *            longer than the ones supported on Cortex-M
+ *            
  */
   arm_rfft_instance_q31 *arm_rfft_init_dynamic_q31(uint32_t nfft)
   {
@@ -1428,6 +1444,7 @@ arm_rfft_fast_instance_f32 *arm_rfft_fast_init_dynamic_f32 (uint32_t nfft)
  *            memory must be released when no more used.
  *            This function can be used with RFFT lengths
  *            longer than the ones supported on Cortex-M
+   *            
    */
   arm_rfft_instance_q15 *arm_rfft_init_dynamic_q15(uint32_t nfft)
   {

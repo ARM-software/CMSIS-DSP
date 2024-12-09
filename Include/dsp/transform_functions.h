@@ -86,6 +86,10 @@ extern "C"
  *  On Neon, there is another possibility. You can use arm_cfft_init_dynamic_q15. This function will allocate a buffer at runtime and compute at runtime all the tables that are required for a specific FFT size. This initialization is also supported by RFFT.
  *  The computation to initialize all the tables can take lot of cycles
  *  (since several cos and sin must be computed)
+ *  
+ *  With this new Neon specific initialization you can use longer lengths.
+ *  With CFFT, you can also use lengths containing radix 3 and/or 5 (but
+ *  the length must still be a multiple of 4).
  */
 
 
