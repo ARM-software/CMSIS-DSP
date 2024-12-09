@@ -75,6 +75,26 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_##LEN##_q31( arm_rfft_instance_q31 * 
     /* return the status of RFFT Init function */                 \
     return (status);                                              \
 }
+#elif defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#define RFFTINIT_Q31(LEN,CFFTLEN,TWIDMOD)                                          \
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_##LEN##_q31( arm_rfft_instance_q31 * S )\
+{                                                                                  \
+    /*  Initialise the default arm status */                                       \
+    arm_status status = ARM_MATH_SUCCESS;                                          \
+    S->nfft = LEN;                                                                 \
+    S->ncfft = LEN >> 1;                                                           \
+                                                                                   \
+    S->twiddles = arm_neon_rfft_twiddles_##LEN##_q31;                              \
+    S->factors = arm_neon_rfft_factors_##LEN##_q31;                                \
+                                                                                   \
+    S->super_twiddles = arm_neon_rfft_super_twiddles_neon_##LEN##_q31;             \
+                                                                                   \
+    /* return the status of RFFT Init function */                                  \
+    return (status);                                                               \
+}
+#include "arm_neon_tables.h"
+
+
 #else
 #define RFFTINIT_Q31(LEN,CFFTLEN,TWIDMOD)                         \
 ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_##LEN##_q31( arm_rfft_instance_q31 * S,  \
@@ -359,7 +379,53 @@ RFFTINIT_Q31(32,16,256)
                    functions defined for each FFT size.
 
 */
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_q31(
+    arm_rfft_instance_q31 * S,
+    uint32_t fftLenReal)
+{
+       /*  Initialise the default arm status */
+    arm_status status = ARM_MATH_ARGUMENT_ERROR;
+    /*  Initialization of coef modifier depending on the FFT length */
+    switch (fftLenReal)
+    {
+    case 8192U:
+        status = arm_rfft_init_8192_q31( S );
+        break;
+    case 4096U:
+        status = arm_rfft_init_4096_q31( S );
+        break;
+    case 2048U:
+        status = arm_rfft_init_2048_q31( S );
+        break;
+    case 1024U:
+        status = arm_rfft_init_1024_q31( S );
+        break;
+    case 512U:
+        status = arm_rfft_init_512_q31( S );
+        break;
+    case 256U:
+        status = arm_rfft_init_256_q31( S );
+        break;
+    case 128U:
+        status = arm_rfft_init_128_q31( S );
+        break;
+    case 64U:
+        status = arm_rfft_init_64_q31( S );
+        break;
+    case 32U:
+        status = arm_rfft_init_32_q31( S );
+        break;
+    default:
+        /*  Reporting argument error if rfftSize is not valid value */
+        status = ARM_MATH_ARGUMENT_ERROR;
+        break;
+    }
 
+    /* return the status of RFFT Init function */
+    return (status);
+}
+#else
 ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_q31(
     arm_rfft_instance_q31 * S,
     uint32_t fftLenReal,
@@ -407,6 +473,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_q31(
     /* return the status of RFFT Init function */
     return (status);
 }
+#endif /* neon */
 /**
   @} end of RealFFTQ31 group
  */

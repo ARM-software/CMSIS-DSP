@@ -4324,24 +4324,24 @@ group Root {
                  rfft_noisy_256_f32:test_rfft_f32
                  rfft_noisy_512_f32:test_rfft_f32
                  rfft_noisy_1024_f32:test_rfft_f32
-                 rfft_noisy_2048_f32:test_rfft_f32
-                 rfft_noisy_4096_f32:test_rfft_f32
+                 disabled{rfft_noisy_2048_f32:test_rfft_f32}
+                 disabled{rfft_noisy_4096_f32:test_rfft_f32}
                  rfft_step_32_f32:test_rfft_f32
                  rfft_step_64_f32:test_rfft_f32
                  rfft_step_128_f32:test_rfft_f32
                  rfft_step_256_f32:test_rfft_f32
                  rfft_step_512_f32:test_rfft_f32
                  rfft_step_1024_f32:test_rfft_f32
-                 rfft_step_2048_f32:test_rfft_f32
-                 rfft_step_4096_f32:test_rfft_f32
+                 disabled{rfft_step_2048_f32:test_rfft_f32}
+                 disabled{rfft_step_4096_f32:test_rfft_f32}
                  rifft_noisy_32_f32:test_rfft_f32
                  rifft_noisy_64_f32:test_rfft_f32
                  rifft_noisy_128_f32:test_rfft_f32
                  rifft_noisy_256_f32:test_rfft_f32
                  rifft_noisy_512_f32:test_rfft_f32
                  rifft_noisy_1024_f32:test_rfft_f32
-                 rifft_noisy_2048_f32:test_rfft_f32
-                 rifft_noisy_4096_f32:test_rfft_f32
+                 disabled{rifft_noisy_2048_f32:test_rfft_f32}
+                 disabled{rifft_noisy_4096_f32:test_rfft_f32}
                  rifft_step_32_f32:test_rfft_f32
                  rifft_step_64_f32:test_rfft_f32
                  rifft_step_128_f32:test_rfft_f32

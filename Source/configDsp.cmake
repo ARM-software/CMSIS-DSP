@@ -23,14 +23,16 @@ endif()
 if (NEON)
     # Used in arm_vec_math.h
     target_include_directories(${project} PUBLIC "${DSP}/ComputeLibrary/Include")
-    target_compile_definitions(${project} PRIVATE ARM_MATH_NEON)
+    target_include_directories(${project} PRIVATE "${DSP}/Ne10")
+    target_compile_definitions(${project} PUBLIC ARM_MATH_NEON)
 
 endif()
 
 if (NEONEXPERIMENTAL)
     # Used in arm_vec_math.h
     target_include_directories(${project} PUBLIC "${DSP}/ComputeLibrary/Include")
-    target_compile_definitions(${project} PRIVATE ARM_MATH_NEON_EXPERIMENTAL)
+    target_include_directories(${project} PRIVATE "${DSP}/Ne10")
+    target_compile_definitions(${project} PUBLIC ARM_MATH_NEON_EXPERIMENTAL)
 endif()
 
 if (MVEFLOAT16)

@@ -13,7 +13,7 @@ a double precision computation.
 
 */
 #define REL_ERROR (1.2e-3)
-
+#define ABS_ERROR (1.0e-5)
 
 
     void MFCCF32::test_mfcc_f32()
@@ -25,13 +25,18 @@ a double precision computation.
 
 
         memcpy((void*)tmpinp,(void*)inp1,sizeof(float32_t)*this->fftLen);
+        #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+        float32_t *tmp2p=tmp2.ptr();
+        arm_mfcc_f32(&mfcc,tmpinp,outp,tmpp,tmp2p);
+        #else
         arm_mfcc_f32(&mfcc,tmpinp,outp,tmpp);
+        #endif
 
         ASSERT_EMPTY_TAIL(output);
 
         ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
 
-        ASSERT_REL_ERROR(output,ref,REL_ERROR);
+        ASSERT_CLOSE_ERROR(output,ref,ABS_ERROR,REL_ERROR);
 
     } 
 
@@ -57,7 +62,9 @@ a double precision computation.
                     mfcc_filter_pos_config3_f32,mfcc_filter_len_config3_f32,
                     mfcc_filter_coefs_config3_f32,
                     mfcc_window_coefs_config3_f32);
-            tmp.create(2*nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
+            tmp.create(nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
+            tmp2.create(nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
+
             tmpin.create(nb,MFCCF32::TMPIN_MFCC_F32_ID,mgr);
           }
           break;
@@ -73,7 +80,8 @@ a double precision computation.
                       mfcc_filter_pos_config2_f32,mfcc_filter_len_config2_f32,
                       mfcc_filter_coefs_config2_f32,
                       mfcc_window_coefs_config2_f32);
-            tmp.create(2*nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
+            tmp.create(nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
+            tmp2.create(nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
             tmpin.create(nb,MFCCF32::TMPIN_MFCC_F32_ID,mgr);
           }
           break;
@@ -88,7 +96,8 @@ a double precision computation.
                       mfcc_filter_pos_config1_f32,mfcc_filter_len_config1_f32,
                       mfcc_filter_coefs_config1_f32,
                       mfcc_window_coefs_config1_f32);
-            tmp.create(2*nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
+            tmp.create(nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
+            tmp2.create(nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
             tmpin.create(nb,MFCCF32::TMPIN_MFCC_F32_ID,mgr);
 
           }
@@ -105,7 +114,8 @@ a double precision computation.
                     mfcc_filter_pos_config3_f32,mfcc_filter_len_config3_f32,
                     mfcc_filter_coefs_config3_f32,
                     mfcc_window_coefs_config3_f32);
-            tmp.create(2*nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
+            tmp.create(nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
+            tmp2.create(nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
             tmpin.create(nb,MFCCF32::TMPIN_MFCC_F32_ID,mgr);
           }
           break;
@@ -121,7 +131,8 @@ a double precision computation.
                       mfcc_filter_pos_config2_f32,mfcc_filter_len_config2_f32,
                       mfcc_filter_coefs_config2_f32,
                       mfcc_window_coefs_config2_f32);
-            tmp.create(2*nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
+            tmp.create(nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
+            tmp2.create(nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
             tmpin.create(nb,MFCCF32::TMPIN_MFCC_F32_ID,mgr);
           }
           break;
@@ -136,7 +147,8 @@ a double precision computation.
                       mfcc_filter_pos_config1_f32,mfcc_filter_len_config1_f32,
                       mfcc_filter_coefs_config1_f32,
                       mfcc_window_coefs_config1_f32);
-            tmp.create(2*nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
+            tmp.create(nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
+            tmp2.create(nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
             tmpin.create(nb,MFCCF32::TMPIN_MFCC_F32_ID,mgr);
 
           }

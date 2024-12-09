@@ -29,7 +29,7 @@
           outp += vecDim;
        }
 
-        ASSERT_NEAR_EQ(output,ref,(float16_t)1e-3);
+        ASSERT_NEAR_EQ(output,ref,(float16_t)1e-3f);
         ASSERT_EMPTY_TAIL(output);
     } 
 

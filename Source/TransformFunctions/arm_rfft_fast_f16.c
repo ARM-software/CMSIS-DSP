@@ -312,6 +312,12 @@ static void merge_rfft_f16(
    }
 
 }
+#elif defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
+/*
+
+No stage merge functins defined here for Neon.
+
+*/
 #else
 static void stage_rfft_f16(
   const arm_rfft_fast_instance_f16 * S,
@@ -485,7 +491,30 @@ static void merge_rfft_f16(
                    - value = 0: RFFT
                    - value = 1: RIFFT
 */
+#if defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 
+#include "CMSIS_NE10_types.h"
+#include "CMSIS_NE10_fft.h"
+
+ARM_DSP_ATTRIBUTE void arm_rfft_fast_f16(
+  const arm_rfft_fast_instance_f16 * S,
+  const float16_t * p,
+  float16_t * pOut,
+  float16_t *tmpbuf,
+  uint8_t ifftFlag)
+{
+/* Calculation of Real FFT */
+   if (!ifftFlag)
+   {
+     arm_ne10_fft_r2c_1d_float16_neon (S,p,pOut,tmpbuf);
+   }
+   else 
+   {
+     arm_ne10_fft_c2r_1d_float16_neon (S,p,pOut,tmpbuf);
+   }
+}
+
+#else
 ARM_DSP_ATTRIBUTE void arm_rfft_fast_f16(
   const arm_rfft_fast_instance_f16 * S,
   float16_t * p,
@@ -513,7 +542,7 @@ ARM_DSP_ATTRIBUTE void arm_rfft_fast_f16(
       stage_rfft_f16(S, p, pOut);
    }
 }
-
+#endif
 /**
 * @} end of RealFFTF16 group
 */

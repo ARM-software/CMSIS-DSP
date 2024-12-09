@@ -57,20 +57,46 @@
                    The number of input samples if the FFT length used
                    when initializing the instance data structure.
 
-                   The temporary buffer has a 2*fft length size when MFCC
+                   The temporary buffer pTmp has a 2*fft length size when MFCC
                    is implemented with CFFT.
-                   It has length FFT Length + 2 when implemented with RFFT
+                   It has length FFT Length when implemented with RFFT
                    (default implementation).
 
                    The source buffer is modified by this function.
 
+ @par   Neon implementation
+                 The Neon implementation has a different API.
+                 There is an additional temporary buffer pTmp2 of
+                 size FFT Length and only the RFFT based
+                 implementation is supported (it is the default
+                 one on Cortex-M).
+                 The source buffer is  modified.
+ @code
+        void arm_mfcc_f32(
+             const arm_mfcc_instance_f32 * S,
+                   float32_t *pSrc,
+                   float32_t *pDst,
+                   float32_t *pTmp,
+                   float32_t *pTmp2
+          );
+  @endcode
  */
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+ARM_DSP_ATTRIBUTE void arm_mfcc_f32(
+  const arm_mfcc_instance_f32 * S,
+  float32_t *pSrc,
+  float32_t *pDst,
+  float32_t *pTmp,
+  float32_t *pTmp2
+  )
+#else
 ARM_DSP_ATTRIBUTE void arm_mfcc_f32(
   const arm_mfcc_instance_f32 * S,
   float32_t *pSrc,
   float32_t *pDst,
   float32_t *pTmp
   )
+#endif
 {
   float32_t maxValue;
   uint32_t  index; 
@@ -92,6 +118,10 @@ ARM_DSP_ATTRIBUTE void arm_mfcc_f32(
 
   /* Compute spectrum magnitude 
   */
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+  arm_rfft_fast_f32(&(S->rfft),pSrc,pTmp,pTmp2,0);
+  pTmp[1]=0.0f;
+#else
 #if defined(ARM_MFCC_CFFT_BASED)
   /* some HW accelerator for CMSIS-DSP used in some boards
      are only providing acceleration for CFFT.
@@ -110,11 +140,9 @@ ARM_DSP_ATTRIBUTE void arm_mfcc_f32(
 #else
   /* Default RFFT based implementation */
   arm_rfft_fast_f32(&(S->rfft),pSrc,pTmp,0);
-  /* Unpack real values */
-  pTmp[S->fftLen]=pTmp[1];
-  pTmp[S->fftLen+1]=0.0f;
   pTmp[1]=0.0f;
-#endif
+#endif /* ARM_MFCC_CFFT_BASED */
+#endif /* ARM_MATH_NEON */
   arm_cmplx_mag_f32(pTmp,pSrc,S->fftLen);
   if (maxValue != 0.0f)
   {

@@ -15,6 +15,7 @@ class TransformCQ15:public Client::Suite
             Client::Pattern<q15_t> input;
             Client::LocalPattern<q15_t> outputfft;
             Client::LocalPattern<q15_t> outputifft;
+            Client::LocalPattern<q15_t> tmp2;
 
             Client::RefPattern<q15_t> ref;
 

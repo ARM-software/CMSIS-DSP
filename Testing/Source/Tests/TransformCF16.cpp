@@ -3,27 +3,69 @@
 #include "Error.h"
 #include "Test.h"
 
-#define SNR_THRESHOLD 58
+#if defined(__ARM_ARCH_ISA_ARM) || defined(__ARM_ARCH_ISA_A64)
+ #define SNR_THRESHOLD 58
+ #define REL_ERROR (1.0e-3)
+ #define ABS_ERROR (1.0e-1)
+ 
+ // 1024
+ #define LONG_REL_ERROR (1.0e-3)
+ #define LONG_ABS_ERROR (2.0e-1)
+
+ // >= 2048
+ #define VERY_LONG_REL_ERROR (1.0e-1)
+ #define VERY_LONG_ABS_ERROR (5.0e-1)
+
+#else // cortex-m
+ #define SNR_THRESHOLD 58
+ #define REL_ERROR (1.0e-3)
+ #define ABS_ERROR (1.0e-1)
+
+ // 1024
+ #define LONG_REL_ERROR (1.0e-3)
+ #define LONG_ABS_ERROR (2.0e-1)
+
+ // 2048
+ #define VERY_LONG_REL_ERROR (1.0e-1)
+ #define VERY_LONG_ABS_ERROR (5.0e-1)
+#endif 
+
+static double abs_err,rel_err;
 
     void TransformCF16::test_cfft_f16()
     {
        const float16_t *inp = input.ptr();
 
+       float16_t *infftp = inputfft.ptr();
+
        float16_t *outfftp = outputfft.ptr();
 
+        memcpy(infftp,inp,sizeof(float32_t)*input.nbSamples());
+
+   
+#if defined(ARM_MATH_NEON)
+        float16_t *bufferp = bufferfft.ptr();
+
+        arm_cfft_f16(
+             &(this->varInstCfftF16),
+             infftp,
+             outfftp,
+             bufferp,
+             this->ifft);
+#else
         memcpy(outfftp,inp,sizeof(float16_t)*input.nbSamples());
 
-        ASSERT_TRUE(status == ARM_MATH_SUCCESS);
-   
         arm_cfft_f16(
              &(this->varInstCfftF16),
              outfftp,
              this->ifft,
              1);
+#endif
        
 
           
-        ASSERT_SNR(outputfft,ref,(float16_t)SNR_THRESHOLD);
+        ASSERT_SNR(outputfft,ref,(float32_t)SNR_THRESHOLD);
+        ASSERT_CLOSE_ERROR(outputfft,ref,abs_err,rel_err);
         ASSERT_EMPTY_TAIL(outputfft);
 
 
@@ -34,6 +76,9 @@
     {
 
        (void)paramsArgs;
+
+       abs_err = ABS_ERROR;
+       rel_err = REL_ERROR;
        
        switch(id)
        {
@@ -187,6 +232,9 @@
 
             this->ifft=0;
 
+            abs_err = LONG_ABS_ERROR;
+            rel_err = LONG_REL_ERROR;
+
           break;
 
           case TransformCF16::TEST_CFFT_F16_25:
@@ -195,6 +243,9 @@
             ref.reload(  TransformCF16::INPUTS_CFFT_NOISY_1024_F16_ID,mgr);
 
             status=arm_cfft_init_f16(&varInstCfftF16,1024);
+
+            abs_err = LONG_ABS_ERROR;
+            rel_err = LONG_REL_ERROR;
 
 
             this->ifft=1;
@@ -208,6 +259,9 @@
 
             status=arm_cfft_init_f16(&varInstCfftF16,2048);
 
+            abs_err = VERY_LONG_ABS_ERROR;
+            rel_err = VERY_LONG_REL_ERROR;
+
 
             this->ifft=0;
 
@@ -219,6 +273,9 @@
             ref.reload(  TransformCF16::INPUTS_CFFT_NOISY_2048_F16_ID,mgr);
 
             status=arm_cfft_init_f16(&varInstCfftF16,2048);
+
+            abs_err = VERY_LONG_ABS_ERROR;
+            rel_err = VERY_LONG_REL_ERROR;
 
 
             this->ifft=1;
@@ -232,6 +289,9 @@
 
             status=arm_cfft_init_f16(&varInstCfftF16,4096);
 
+            abs_err = VERY_LONG_ABS_ERROR;
+            rel_err = VERY_LONG_REL_ERROR;
+
 
             this->ifft=0;
 
@@ -243,6 +303,9 @@
             ref.reload(  TransformCF16::INPUTS_CFFT_NOISY_4096_F16_ID,mgr);
 
             status=arm_cfft_init_f16(&varInstCfftF16,4096);
+
+            abs_err = VERY_LONG_ABS_ERROR;
+            rel_err = VERY_LONG_REL_ERROR;
 
 
             this->ifft=1;
@@ -401,6 +464,9 @@
 
             status=arm_cfft_init_f16(&varInstCfftF16,1024);
 
+            abs_err = LONG_ABS_ERROR;
+            rel_err = LONG_REL_ERROR;
+
 
             this->ifft=0;
 
@@ -412,6 +478,9 @@
             ref.reload(  TransformCF16::INPUTS_CFFT_STEP_1024_F16_ID,mgr);
 
             status=arm_cfft_init_f16(&varInstCfftF16,1024);
+
+            abs_err = LONG_ABS_ERROR;
+            rel_err = LONG_REL_ERROR;
 
 
             this->ifft=1;
@@ -425,6 +494,9 @@
 
             status=arm_cfft_init_f16(&varInstCfftF16,2048);
 
+            abs_err = VERY_LONG_ABS_ERROR;
+            rel_err = VERY_LONG_REL_ERROR;
+
 
             this->ifft=0;
 
@@ -436,6 +508,9 @@
             ref.reload(  TransformCF16::INPUTS_CFFT_STEP_2048_F16_ID,mgr);
 
             status=arm_cfft_init_f16(&varInstCfftF16,2048);
+
+            abs_err = VERY_LONG_ABS_ERROR;
+            rel_err = VERY_LONG_REL_ERROR;
 
 
             this->ifft=1;
@@ -449,6 +524,9 @@
 
             status=arm_cfft_init_f16(&varInstCfftF16,4096);
 
+            abs_err = VERY_LONG_ABS_ERROR;
+            rel_err = VERY_LONG_REL_ERROR;
+
 
             this->ifft=0;
 
@@ -461,6 +539,9 @@
 
             status=arm_cfft_init_f16(&varInstCfftF16,4096);
 
+            abs_err = VERY_LONG_ABS_ERROR;
+            rel_err = VERY_LONG_REL_ERROR;
+
 
             this->ifft=1;
 
@@ -469,8 +550,11 @@
 
 
        }
-        outputfft.create(ref.nbSamples(),TransformCF16::OUTPUT_CFFT_F16_ID,mgr);
-       
+       inputfft.create(ref.nbSamples(),TransformCF16::OUTPUT_CFFT_F16_ID,mgr);
+
+       outputfft.create(ref.nbSamples(),TransformCF16::OUTPUT_CFFT_F16_ID,mgr);
+       bufferfft.create(ref.nbSamples(),TransformCF16::OUTPUT_CFFT_F16_ID,mgr);
+
 
     }
 

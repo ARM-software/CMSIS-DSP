@@ -70,14 +70,39 @@
                    big and the number of MEL filters too small then the fixed
                    point computations may saturate.
 
+  @par Neon implementation
+       There is an additional temporary buffer used for the RFFT.
+       It has 2*fftLength size.
+
+
+  @code 
+      arm_status arm_mfcc_q31(
+  const arm_mfcc_instance_q31 * S,
+  q31_t *pSrc,
+  q31_t *pDst,
+  q31_t *pTmp,
+  q31_t *pTmp_rfft
+  )
+  @endcode
+
  */
 
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+ARM_DSP_ATTRIBUTE arm_status arm_mfcc_q31(
+  const arm_mfcc_instance_q31 * S,
+  q31_t *pSrc,
+  q31_t *pDst,
+  q31_t *pTmp,
+  q31_t *pTmp_rfft
+  )
+#else
 ARM_DSP_ATTRIBUTE arm_status arm_mfcc_q31(
   const arm_mfcc_instance_q31 * S,
   q31_t *pSrc,
   q31_t *pDst,
   q31_t *pTmp
   )
+#endif
 {
     q31_t m;
     uint32_t index;
@@ -117,6 +142,10 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_q31(
     /* Compute spectrum magnitude 
     */
     fftShift = 31 - __CLZ(S->fftLen);
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+    /* Default RFFT based implementation */
+    arm_rfft_q31(&(S->rfft),pSrc,pTmp2,pTmp_rfft,0);
+#else
 #if defined(ARM_MFCC_CFFT_BASED)
     /* some HW accelerator for CMSIS-DSP used in some boards
        are only providing acceleration for CFFT.
@@ -135,6 +164,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_q31(
 #else
     /* Default RFFT based implementation */
     arm_rfft_q31(&(S->rfft),pSrc,pTmp2);
+#endif
 #endif
     filterLimit = 1 + (S->fftLen >> 1);
 

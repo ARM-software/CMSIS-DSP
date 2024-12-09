@@ -18,7 +18,6 @@ This repository contains the CMSIS-DSP library and several other projects:
 
 * Test framework for bare metal Cortex-M or Cortex-A
 * Examples for bare metal Cortex-M
-* ComputeGraph
 * PythonWrapper
 
 You don't need any of the other projects to build and use CMSIS-DSP library. Building the other projects may require installation of other libraries (CMSIS), other tools (Arm Virtual Hardware) or CMSIS build tools.
@@ -64,7 +63,7 @@ For any questions or to reach the CMSIS-DSP  team, please create a new issue in 
   * [How to build with Make](#how-to-build-with-make)
   * [How to build with cmake](#how-to-build-with-cmake)
   * [How to build with any other build system](#how-to-build-with-any-other-build-system)
-  * [How to build for aarch64](#how-to-build-for-aarch64)
+  * [How to build for Neon and aarch64](#how-to-build-for-aarch64)
 * [Code size](#code-size)
 * [Folders and files](#folders-and-files)
   * [Folders](#folders)
@@ -191,12 +190,13 @@ You need the following folders:
 * Include
 * PrivateInclude
 * ComputeLibrary (only if you target Neon)
+* Ne10 (only if you target Neon)
 
 In `Source` subfolders, you may either build all of the source file with a datatype suffix (like `_f32.c`), or just compile the files without a datatype suffix. For instance for `BasicMathFunctions`, you can build all the C files except `BasicMathFunctions.c` and `BasicMathFunctionsF16.c`, or you can just build those two files (they are including all of the other C files of the folder).
 
 `f16` files are not mandatory. You can build with `-DDISABLEFLOAT16`
 
-### How to build for aarch64
+### How to build for Neon and aarch64
 
 The intrinsics defined in `Core_A/Include` are not available on recent Cortex-A processors.
 
@@ -222,6 +222,14 @@ For cmake the equivalent options are:
 * `-DNEON=ON`
 
 cmake is automatically including the `ComputeLibrary` folder. If you are using a different build, you need to include this folder too to build with Neon support.
+
+Some APIs are a different on Neon:
+
+* Biquad f32 initialization is done differently
+* CFFT and RFFT F32 have different APIs. They are no more in-place and require use of an additional temporary buffer
+* MFCC F32 requires the use of a second temporary buffer
+
+See the Doxygen documentation for the size of those additional buffers. You can also look at the tests in `Testing/Source/Tests` to see how to use the functions.
 
 ## Code size
 

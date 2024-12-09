@@ -41,16 +41,9 @@ target_sources(CMSISDSP PRIVATE TransformFunctions/arm_cfft_q31.c)
 target_sources(CMSISDSP PRIVATE TransformFunctions/arm_cfft_init_q31.c)
 
 
-target_sources(CMSISDSP PRIVATE TransformFunctions/arm_dct4_f32.c)
-target_sources(CMSISDSP PRIVATE TransformFunctions/arm_dct4_init_f32.c)
 
-target_sources(CMSISDSP PRIVATE TransformFunctions/arm_rfft_init_f32.c)
-target_sources(CMSISDSP PRIVATE TransformFunctions/arm_rfft_f32.c)
 target_sources(CMSISDSP PRIVATE TransformFunctions/arm_cfft_radix4_init_f32.c)
 target_sources(CMSISDSP PRIVATE TransformFunctions/arm_cfft_radix4_f32.c)
-
-target_sources(CMSISDSP PRIVATE TransformFunctions/arm_dct4_q31.c)
-target_sources(CMSISDSP PRIVATE TransformFunctions/arm_dct4_init_q31.c)
 
 target_sources(CMSISDSP PRIVATE TransformFunctions/arm_rfft_init_q31.c)
 target_sources(CMSISDSP PRIVATE TransformFunctions/arm_rfft_q31.c)
@@ -58,9 +51,6 @@ target_sources(CMSISDSP PRIVATE TransformFunctions/arm_cfft_q31.c)
 target_sources(CMSISDSP PRIVATE TransformFunctions/arm_cfft_init_q31.c)
 target_sources(CMSISDSP PRIVATE TransformFunctions/arm_cfft_radix4_init_q31.c)
 target_sources(CMSISDSP PRIVATE TransformFunctions/arm_cfft_radix4_q31.c)
-
-target_sources(CMSISDSP PRIVATE TransformFunctions/arm_dct4_init_q15.c)
-target_sources(CMSISDSP PRIVATE TransformFunctions/arm_dct4_q15.c)
 
 target_sources(CMSISDSP PRIVATE TransformFunctions/arm_rfft_init_q15.c)
 target_sources(CMSISDSP PRIVATE TransformFunctions/arm_rfft_q15.c)
@@ -86,8 +76,6 @@ target_sources(CMSISDSP PRIVATE TransformFunctions/arm_cfft_init_f16.c)
 target_sources(CMSISDSP PRIVATE TransformFunctions/arm_cfft_radix8_f16.c)
 endif()
 
-target_sources(CMSISDSP PRIVATE TransformFunctions/arm_rfft_init_f32.c)
-target_sources(CMSISDSP PRIVATE TransformFunctions/arm_rfft_f32.c)
 target_sources(CMSISDSP PRIVATE TransformFunctions/arm_cfft_radix4_init_f32.c)
 target_sources(CMSISDSP PRIVATE TransformFunctions/arm_cfft_radix4_f32.c)
 
@@ -137,5 +125,26 @@ target_sources(CMSISDSP PRIVATE TransformFunctions/arm_mfcc_f16.c)
 endif()
 
 
+if (NEON OR NEONEXPERIMENTAL)
+    target_sources(CMSISDSP PRIVATE "${DSP}/Ne10/NE10_fft_float32.neonintrinsic.c")
+    target_sources(CMSISDSP PRIVATE "${DSP}/Ne10/NE10_fft_int32.neonintrinsic.c")
+    target_sources(CMSISDSP PRIVATE "${DSP}/Ne10/NE10_fft_int16.neonintrinsic.c")
+    target_sources(CMSISDSP PRIVATE "${DSP}/Ne10/NE10_rfft_float32.neonintrinsic.c")
+    target_sources(CMSISDSP PRIVATE "${DSP}/Ne10/CMSIS_NE10_fft_init.c")
+    target_sources(CMSISDSP PRIVATE "${DSP}/Ne10/CMSIS_NE10_fft_generic_float32.neonintrisic.c")
+    target_sources(CMSISDSP PRIVATE "${DSP}/Ne10/CMSIS_NE10_fft_generic_int32.neonintrisic.c")
+
+
+    if (NEON_RIFFT_SCALING)
+        target_compile_definitions(CMSISDSP PRIVATE CMSIS_NE10_DSP_RIFFT_SCALING)  
+    endif()
+
+    if ((NOT ARMAC5) AND (NOT DISABLEFLOAT16))
+        target_sources(CMSISDSP PRIVATE "${DSP}/Ne10/NE10_fft_float16.neonintrinsic.c")
+        target_sources(CMSISDSP PRIVATE "${DSP}/Ne10/NE10_rfft_float16.neonintrinsic.c")
+        target_sources(CMSISDSP PRIVATE "${DSP}/Ne10/CMSIS_NE10_fft_generic_float16.neonintrisic.c")
+
+    endif()
+endif()
 
 

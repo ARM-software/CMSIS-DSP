@@ -36,6 +36,13 @@
 #include "dsp/basic_math_functions.h"
 #include "dsp/complex_math_functions.h"
 
+// Only available for Neon versions of the FFTs
+// otherwise only powers of 2 are supported
+
+#if !defined(ARM_MIXED_RADIX_FFT)
+#define ARM_MIXED_RADIX_FFT 1
+#endif
+
 #ifdef   __cplusplus
 extern "C"
 {
@@ -44,6 +51,45 @@ extern "C"
 
 /**
  * @defgroup groupTransforms Transform Functions
+ * 
+ * CMSIS-DSP provides CFFT and RFFT for different architectures.
+ * The implementation of those transforms may be different for the
+ * different architectures : different algorithms, different capabilities
+ * of the instruction set.
+ * 
+ * All those variants are not giving exactly the same results but they 
+ * are passing the same tests with same SNR checks and same threshold for 
+ * the sample errors.
+ * 
+ * The APIs for the Neon variants are different : some additional
+ * temporary buffers are required.
+ * 
+ * Float16 versions are provided but they are not very accurate and 
+ * should only be used for small FFTs.
+ * 
+ * @par Transform initializations
+ *  
+ *  There are several ways to initialize the transform functions.
+ *  Below explanations are using q15 as example but the same explanations
+ *  apply to other datatypes.
+ *  
+ *  Before Helium and Neon, you can just use a pre-initialized 
+ *  constant data structure and use it in the arm_cfft_... function.
+ *  For instance, &arm_cfft_sR_q15_len256 for a 256 Q15 CFFT.
+ *  
+ *  On Helium and Neon, you *must* use an initialization function. If you know the size of your FFT (or other transform) you can use a specific initialization function for this size only : like arm_cfft_init_256_q15 for a 256 Q15 complex FFT.
+ *  
+ *  By using a specific initialization function, you give an hint to the linker and it will be able to remove all unused initialization tables (some compilation and link flags must be used for the linker to be able to do this optimization. It is compiler dependent).
+ *  
+ *  If you don't know the size you'll need at runtime, you need to use a function like arm_cfft_init_q15. If you use such a function, all the tables for all FFT sizes (up to the CMSIS-DSP maximum of 4096) will be included in the build !
+ *  
+ *  On Neon, there is another possibility. You can use arm_cfft_init_dynamic_q15. This function will allocate a buffer at runtime and compute at runtime all the tables that are required for a specific FFT size. This initialization is also supported by RFFT.
+ *  The computation to initialize all the tables can take lot of cycles
+ *  (since several cos and sin must be computed)
+ *  
+ *  With this new Neon specific initialization you can use longer lengths.
+ *  With CFFT, you can also use lengths containing radix 3 and/or 5 (but
+ *  the length must still be a multiple of 4).
  */
 
 
@@ -212,6 +258,16 @@ extern "C"
   /**
    * @brief Instance structure for the fixed-point CFFT/CIFFT function.
    */
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+typedef struct
+{
+          uint32_t fftLen;                   /**< length of the FFT. */
+    const q15_t *pTwiddle;         /**< points to the Twiddle factor table. */
+    const q15_t *last_twiddles; /**< last stage twiddle used for mixed radix */
+    const uint32_t *factors;
+    int32_t algorithm_flag;
+} arm_cfft_instance_q15;
+#else
   typedef struct
   {
           uint16_t fftLen;                   /**< length of the FFT. */
@@ -227,6 +283,7 @@ extern "C"
    const q15_t *rearranged_twiddle_stride3;
 #endif
   } arm_cfft_instance_q15;
+#endif 
 
 arm_status arm_cfft_init_4096_q15(arm_cfft_instance_q15 * S);
 arm_status arm_cfft_init_2048_q15(arm_cfft_instance_q15 * S);
@@ -242,15 +299,40 @@ arm_status arm_cfft_init_q15(
   arm_cfft_instance_q15 * S,
   uint16_t fftLen);
 
+
+
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+extern arm_cfft_instance_q15 *arm_cfft_init_dynamic_q15(uint32_t fftLen);
+
+void arm_cfft_q15(
+    const arm_cfft_instance_q15 * S,
+          const q15_t * src,
+          q15_t * dst,
+          q15_t * buffer,
+          uint8_t ifftFlag
+          );
+#else
 void arm_cfft_q15(
     const arm_cfft_instance_q15 * S,
           q15_t * p1,
           uint8_t ifftFlag,
           uint8_t bitReverseFlag);
+#endif 
 
   /**
    * @brief Instance structure for the fixed-point CFFT/CIFFT function.
    */
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+typedef struct
+{
+          uint32_t fftLen;                   /**< length of the FFT. */
+    const q31_t *pTwiddle;         /**< points to the Twiddle factor table. */
+    const q31_t *last_twiddles; /**< last stage twiddle used for mixed radix */
+    const uint32_t *factors;
+    int32_t algorithm_flag;
+} arm_cfft_instance_q31;
+#else
   typedef struct
   {
           uint16_t fftLen;                   /**< length of the FFT. */
@@ -266,6 +348,7 @@ void arm_cfft_q15(
    const q31_t *rearranged_twiddle_stride3;
 #endif
   } arm_cfft_instance_q31;
+#endif 
 
 arm_status arm_cfft_init_4096_q31(arm_cfft_instance_q31 * S);
 arm_status arm_cfft_init_2048_q31(arm_cfft_instance_q31 * S);
@@ -281,12 +364,35 @@ arm_status arm_cfft_init_q31(
   arm_cfft_instance_q31 * S,
   uint16_t fftLen);
 
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+extern arm_cfft_instance_q31 *arm_cfft_init_dynamic_q31(uint32_t fftLen);
+
+void arm_cfft_q31(
+    const arm_cfft_instance_q31 * S,
+          const q31_t * src,
+          q31_t * dst,
+          q31_t * buffer,
+          uint8_t ifftFlag
+          );
+#else
 void arm_cfft_q31(
     const arm_cfft_instance_q31 * S,
           q31_t * p1,
           uint8_t ifftFlag,
           uint8_t bitReverseFlag);
+#endif
 
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+typedef struct
+{
+          uint32_t fftLen;                   /**< length of the FFT. */
+    const float32_t *pTwiddle;         /**< points to the Twiddle factor table. */
+    const float32_t *last_twiddles; /**< last stage twiddle used for mixed radix */
+    const uint32_t *factors;
+    int32_t algorithm_flag;
+} arm_cfft_instance_f32;
+#else
   /**
    * @brief Instance structure for the floating-point CFFT/CIFFT function.
    */
@@ -305,6 +411,7 @@ void arm_cfft_q31(
    const float32_t *rearranged_twiddle_stride3;
 #endif
   } arm_cfft_instance_f32;
+#endif
 
 
 arm_status arm_cfft_init_4096_f32(arm_cfft_instance_f32 * S);
@@ -321,11 +428,26 @@ arm_status arm_cfft_init_16_f32(arm_cfft_instance_f32 * S);
   arm_cfft_instance_f32 * S,
   uint16_t fftLen);
 
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+extern arm_cfft_instance_f32 *arm_cfft_init_dynamic_f32(uint32_t fftLen);
+
+/* `pIn` content is modified by the function.
+   `pIn` array must be different from `pOut` one
+*/
+void arm_cfft_f32(
+  const arm_cfft_instance_f32 * S,
+        const float32_t * pIn,
+        float32_t * pOut,
+        float32_t * pBuffer, /* When used, `in` is not modified */
+        uint8_t ifftFlag);
+#else
   void arm_cfft_f32(
   const arm_cfft_instance_f32 * S,
         float32_t * p1,
         uint8_t ifftFlag,
         uint8_t bitReverseFlag);
+#endif
 
 
   /**
@@ -362,6 +484,16 @@ arm_status arm_cfft_init_16_f64(arm_cfft_instance_f64 * S);
   /**
    * @brief Instance structure for the Q15 RFFT/RIFFT function.
    */
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+  typedef struct
+  {
+    uint32_t nfft;
+    uint32_t ncfft;
+    const uint32_t *factors;
+    const q15_t *twiddles;
+    const q15_t *super_twiddles;
+  } arm_rfft_instance_q15;
+#else
   typedef struct
   {
           uint32_t fftLenReal;                      /**< length of the real FFT. */
@@ -376,7 +508,50 @@ arm_status arm_cfft_init_16_f64(arm_cfft_instance_f64 * S);
     const arm_cfft_instance_q15 *pCfft;       /**< points to the complex FFT instance. */
 #endif
   } arm_rfft_instance_q15;
+#endif 
+  
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 
+extern arm_rfft_instance_q15 *arm_rfft_init_dynamic_q15(uint32_t fftLenReal);
+
+arm_status arm_rfft_init_32_q15(
+        arm_rfft_instance_q15 * S);
+
+arm_status arm_rfft_init_64_q15(
+        arm_rfft_instance_q15 * S);
+
+arm_status arm_rfft_init_128_q15(
+        arm_rfft_instance_q15 * S);
+
+arm_status arm_rfft_init_256_q15(
+        arm_rfft_instance_q15 * S);
+
+arm_status arm_rfft_init_512_q15(
+        arm_rfft_instance_q15 * S);
+
+arm_status arm_rfft_init_1024_q15(
+        arm_rfft_instance_q15 * S);
+
+arm_status arm_rfft_init_2048_q15(
+        arm_rfft_instance_q15 * S);
+
+arm_status arm_rfft_init_4096_q15(
+        arm_rfft_instance_q15 * S);
+
+arm_status arm_rfft_init_8192_q15(
+        arm_rfft_instance_q15 * S);
+
+  arm_status arm_rfft_init_q15(
+        arm_rfft_instance_q15 * S,
+        uint32_t fftLenReal);
+
+void arm_rfft_q15(
+  const arm_rfft_instance_q15 * S,
+  const q15_t * pSrc,
+        q15_t * pDst,
+        q15_t * tmp,
+        uint8_t ifftFlag);
+#else
 arm_status arm_rfft_init_32_q15(
         arm_rfft_instance_q15 * S,
         uint32_t ifftFlagR,
@@ -432,10 +607,21 @@ arm_status arm_rfft_init_8192_q15(
   const arm_rfft_instance_q15 * S,
         q15_t * pSrc,
         q15_t * pDst);
+#endif 
 
   /**
    * @brief Instance structure for the Q31 RFFT/RIFFT function.
    */
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+  typedef struct
+  {
+    uint32_t nfft;
+    uint32_t ncfft;
+    const uint32_t *factors;
+    const q31_t *twiddles;
+    const q31_t *super_twiddles;
+  } arm_rfft_instance_q31;
+#else
   typedef struct
   {
           uint32_t fftLenReal;                        /**< length of the real FFT. */
@@ -450,8 +636,52 @@ arm_status arm_rfft_init_8192_q15(
     const arm_cfft_instance_q31 *pCfft;         /**< points to the complex FFT instance. */
 #endif
   } arm_rfft_instance_q31;
+#endif 
 
-  arm_status arm_rfft_init_32_q31(
+
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+extern arm_rfft_instance_q31 *arm_rfft_init_dynamic_q31(uint32_t fftLenReal);
+
+    arm_status arm_rfft_init_32_q31(
+        arm_rfft_instance_q31 * S);
+
+  arm_status arm_rfft_init_64_q31(
+        arm_rfft_instance_q31 * S);
+
+  arm_status arm_rfft_init_128_q31(
+        arm_rfft_instance_q31 * S);
+
+  arm_status arm_rfft_init_256_q31(
+        arm_rfft_instance_q31 * S);
+
+  arm_status arm_rfft_init_512_q31(
+        arm_rfft_instance_q31 * S);
+
+  arm_status arm_rfft_init_1024_q31(
+        arm_rfft_instance_q31 * S);
+
+  arm_status arm_rfft_init_2048_q31(
+        arm_rfft_instance_q31 * S);
+
+  arm_status arm_rfft_init_4096_q31(
+        arm_rfft_instance_q31 * S);
+
+  arm_status arm_rfft_init_8192_q31(
+        arm_rfft_instance_q31 * S);
+
+  arm_status arm_rfft_init_q31(
+        arm_rfft_instance_q31 * S,
+        uint32_t fftLenReal);
+
+  void arm_rfft_q31(
+  const arm_rfft_instance_q31 * S,
+  const q31_t * pSrc,
+        q31_t * pDst,
+        q31_t * tmp,
+        uint8_t ifftFlag);
+#else
+    arm_status arm_rfft_init_32_q31(
         arm_rfft_instance_q31 * S,
         uint32_t ifftFlagR,
         uint32_t bitReverseFlag);
@@ -506,6 +736,7 @@ arm_status arm_rfft_init_8192_q15(
   const arm_rfft_instance_q31 * S,
         q31_t * pSrc,
         q31_t * pDst);
+#endif
 
   /**
    * @brief Instance structure for the floating-point RFFT/RIFFT function.
@@ -521,18 +752,6 @@ arm_status arm_rfft_init_8192_q15(
     const float32_t *pTwiddleBReal;                   /**< points to the imag twiddle factor table. */
           arm_cfft_radix4_instance_f32 *pCfft;        /**< points to the complex FFT instance. */
   } arm_rfft_instance_f32;
-
-  arm_status arm_rfft_init_f32(
-        arm_rfft_instance_f32 * S,
-        arm_cfft_radix4_instance_f32 * S_CFFT,
-        uint32_t fftLenReal,
-        uint32_t ifftFlagR,
-        uint32_t bitReverseFlag);
-
-  void arm_rfft_f32(
-  const arm_rfft_instance_f32 * S,
-        float32_t * pSrc,
-        float32_t * pDst);
 
   /**
    * @brief Instance structure for the Double Precision Floating-point RFFT/RIFFT function.
@@ -567,12 +786,26 @@ void arm_rfft_fast_f64(
   /**
    * @brief Instance structure for the floating-point RFFT/RIFFT function.
    */
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+  typedef struct
+  {
+    uint32_t nfft;
+    const float32_t *r_twiddles;
+    const uint32_t *r_factors;
+    const float32_t *r_twiddles_backward;
+    const float32_t *r_twiddles_neon;
+    const float32_t *r_twiddles_neon_backward;
+    const uint32_t *r_factors_neon;
+    const float32_t *r_super_twiddles_neon;
+  } arm_rfft_fast_instance_f32 ;
+#else
 typedef struct
   {
           arm_cfft_instance_f32 Sint;      /**< Internal CFFT structure. */
           uint16_t fftLenRFFT;             /**< length of the real sequence */
     const float32_t * pTwiddleRFFT;        /**< Twiddle factors real stage  */
   } arm_rfft_fast_instance_f32 ;
+#endif 
 
 arm_status arm_rfft_fast_init_32_f32( arm_rfft_fast_instance_f32 * S );
 arm_status arm_rfft_fast_init_64_f32( arm_rfft_fast_instance_f32 * S );
@@ -583,152 +816,28 @@ arm_status arm_rfft_fast_init_1024_f32( arm_rfft_fast_instance_f32 * S );
 arm_status arm_rfft_fast_init_2048_f32( arm_rfft_fast_instance_f32 * S );
 arm_status arm_rfft_fast_init_4096_f32( arm_rfft_fast_instance_f32 * S );
 
+                       
 arm_status arm_rfft_fast_init_f32 (
          arm_rfft_fast_instance_f32 * S,
          uint16_t fftLen);
 
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 
+extern arm_rfft_fast_instance_f32 *arm_rfft_fast_init_dynamic_f32 (uint32_t fftLen);
+
+void arm_rfft_fast_f32(
+        const arm_rfft_fast_instance_f32 * S,
+        const float32_t * p, 
+        float32_t * pOut,
+        float32_t *tmpbuf,
+        uint8_t ifftFlag);
+#else
   void arm_rfft_fast_f32(
         const arm_rfft_fast_instance_f32 * S,
         float32_t * p, float32_t * pOut,
         uint8_t ifftFlag);
+#endif
 
-  /**
-   * @brief Instance structure for the floating-point DCT4/IDCT4 function.
-   */
-  typedef struct
-  {
-          uint16_t N;                          /**< length of the DCT4. */
-          uint16_t Nby2;                       /**< half of the length of the DCT4. */
-          float32_t normalize;                 /**< normalizing factor. */
-    const float32_t *pTwiddle;                 /**< points to the twiddle factor table. */
-    const float32_t *pCosFactor;               /**< points to the cosFactor table. */
-          arm_rfft_instance_f32 *pRfft;        /**< points to the real FFT instance. */
-          arm_cfft_radix4_instance_f32 *pCfft; /**< points to the complex FFT instance. */
-  } arm_dct4_instance_f32;
-
-
-  /**
-   * @brief  Initialization function for the floating-point DCT4/IDCT4.
-   * @param[in,out] S          points to an instance of floating-point DCT4/IDCT4 structure.
-   * @param[in]     S_RFFT     points to an instance of floating-point RFFT/RIFFT structure.
-   * @param[in]     S_CFFT     points to an instance of floating-point CFFT/CIFFT structure.
-   * @param[in]     N          length of the DCT4.
-   * @param[in]     Nby2       half of the length of the DCT4.
-   * @param[in]     normalize  normalizing factor.
-   * @return      arm_status function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_ARGUMENT_ERROR if <code>fftLenReal</code> is not a supported transform length.
-   */
-  arm_status arm_dct4_init_f32(
-        arm_dct4_instance_f32 * S,
-        arm_rfft_instance_f32 * S_RFFT,
-        arm_cfft_radix4_instance_f32 * S_CFFT,
-        uint16_t N,
-        uint16_t Nby2,
-        float32_t normalize);
-
-
-  /**
-   * @brief Processing function for the floating-point DCT4/IDCT4.
-   * @param[in]     S              points to an instance of the floating-point DCT4/IDCT4 structure.
-   * @param[in]     pState         points to state buffer.
-   * @param[in,out] pInlineBuffer  points to the in-place input and output buffer.
-   */
-  void arm_dct4_f32(
-  const arm_dct4_instance_f32 * S,
-        float32_t * pState,
-        float32_t * pInlineBuffer);
-
-
-  /**
-   * @brief Instance structure for the Q31 DCT4/IDCT4 function.
-   */
-  typedef struct
-  {
-          uint16_t N;                          /**< length of the DCT4. */
-          uint16_t Nby2;                       /**< half of the length of the DCT4. */
-          q31_t normalize;                     /**< normalizing factor. */
-    const q31_t *pTwiddle;                     /**< points to the twiddle factor table. */
-    const q31_t *pCosFactor;                   /**< points to the cosFactor table. */
-          arm_rfft_instance_q31 *pRfft;        /**< points to the real FFT instance. */
-          arm_cfft_radix4_instance_q31 *pCfft; /**< points to the complex FFT instance. */
-  } arm_dct4_instance_q31;
-
-
-  /**
-   * @brief  Initialization function for the Q31 DCT4/IDCT4.
-   * @param[in,out] S          points to an instance of Q31 DCT4/IDCT4 structure.
-   * @param[in]     S_RFFT     points to an instance of Q31 RFFT/RIFFT structure
-   * @param[in]     S_CFFT     points to an instance of Q31 CFFT/CIFFT structure
-   * @param[in]     N          length of the DCT4.
-   * @param[in]     Nby2       half of the length of the DCT4.
-   * @param[in]     normalize  normalizing factor.
-   * @return      arm_status function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_ARGUMENT_ERROR if <code>N</code> is not a supported transform length.
-   */
-  arm_status arm_dct4_init_q31(
-        arm_dct4_instance_q31 * S,
-        arm_rfft_instance_q31 * S_RFFT,
-        arm_cfft_radix4_instance_q31 * S_CFFT,
-        uint16_t N,
-        uint16_t Nby2,
-        q31_t normalize);
-
-
-  /**
-   * @brief Processing function for the Q31 DCT4/IDCT4.
-   * @param[in]     S              points to an instance of the Q31 DCT4 structure.
-   * @param[in]     pState         points to state buffer.
-   * @param[in,out] pInlineBuffer  points to the in-place input and output buffer.
-   */
-  void arm_dct4_q31(
-  const arm_dct4_instance_q31 * S,
-        q31_t * pState,
-        q31_t * pInlineBuffer);
-
-
-  /**
-   * @brief Instance structure for the Q15 DCT4/IDCT4 function.
-   */
-  typedef struct
-  {
-          uint16_t N;                          /**< length of the DCT4. */
-          uint16_t Nby2;                       /**< half of the length of the DCT4. */
-          q15_t normalize;                     /**< normalizing factor. */
-    const q15_t *pTwiddle;                     /**< points to the twiddle factor table. */
-    const q15_t *pCosFactor;                   /**< points to the cosFactor table. */
-          arm_rfft_instance_q15 *pRfft;        /**< points to the real FFT instance. */
-          arm_cfft_radix4_instance_q15 *pCfft; /**< points to the complex FFT instance. */
-  } arm_dct4_instance_q15;
-
-
-  /**
-   * @brief  Initialization function for the Q15 DCT4/IDCT4.
-   * @param[in,out] S          points to an instance of Q15 DCT4/IDCT4 structure.
-   * @param[in]     S_RFFT     points to an instance of Q15 RFFT/RIFFT structure.
-   * @param[in]     S_CFFT     points to an instance of Q15 CFFT/CIFFT structure.
-   * @param[in]     N          length of the DCT4.
-   * @param[in]     Nby2       half of the length of the DCT4.
-   * @param[in]     normalize  normalizing factor.
-   * @return      arm_status function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_ARGUMENT_ERROR if <code>N</code> is not a supported transform length.
-   */
-  arm_status arm_dct4_init_q15(
-        arm_dct4_instance_q15 * S,
-        arm_rfft_instance_q15 * S_RFFT,
-        arm_cfft_radix4_instance_q15 * S_CFFT,
-        uint16_t N,
-        uint16_t Nby2,
-        q15_t normalize);
-
-
-  /**
-   * @brief Processing function for the Q15 DCT4/IDCT4.
-   * @param[in]     S              points to an instance of the Q15 DCT4 structure.
-   * @param[in]     pState         points to state buffer.
-   * @param[in,out] pInlineBuffer  points to the in-place input and output buffer.
-   */
-  void arm_dct4_q15(
-  const arm_dct4_instance_q15 * S,
-        q15_t * pState,
-        q15_t * pInlineBuffer);
 
   /**
    * @brief Instance structure for the Floating-point MFCC function.
@@ -860,12 +969,22 @@ arm_status arm_mfcc_init_f32(
   @param[out]     pDst  points to the output MFCC values
   @param[inout]     pTmp  points to a temporary buffer of complex
  */
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+void arm_mfcc_f32(
+  const arm_mfcc_instance_f32 * S,
+  float32_t *pSrc,
+  float32_t *pDst,
+  float32_t *pTmp,
+  float32_t *pTmp2
+  );
+#else
   void arm_mfcc_f32(
   const arm_mfcc_instance_f32 * S,
   float32_t *pSrc,
   float32_t *pDst,
   float32_t *pTmp
   );
+#endif
 
  /**
    * @brief Instance structure for the Q31 MFCC function.
@@ -998,12 +1117,22 @@ arm_status arm_mfcc_init_q31(
   @param[inout]     pTmp  points to a temporary buffer of complex
   @return        error status
  */
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+  arm_status arm_mfcc_q31(
+  const arm_mfcc_instance_q31 * S,
+  q31_t *pSrc,
+  q31_t *pDst,
+  q31_t *pTmp,
+  q31_t *pTmp2
+  );
+#else
   arm_status arm_mfcc_q31(
   const arm_mfcc_instance_q31 * S,
   q31_t *pSrc,
   q31_t *pDst,
   q31_t *pTmp
   );
+#endif
 
  /**
    * @brief Instance structure for the Q15 MFCC function.
@@ -1136,13 +1265,22 @@ arm_status arm_mfcc_init_q15(
   @param[inout]     pTmp  points to a temporary buffer of complex
   @return        error status
  */
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+  arm_status arm_mfcc_q15(
+  const arm_mfcc_instance_q15 * S,
+  q15_t *pSrc,
+  q15_t *pDst,
+  q31_t *pTmp,
+  q15_t *pTmp2
+  );
+#else
   arm_status arm_mfcc_q15(
   const arm_mfcc_instance_q15 * S,
   q15_t *pSrc,
   q15_t *pDst,
   q31_t *pTmp
   );
-
+#endif
 
 #ifdef   __cplusplus
 }

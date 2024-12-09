@@ -5,14 +5,8 @@
 #include "mfccdata.h"
 
 #define SNR_THRESHOLD 34
+#define ABS_ERROR_Q15 ((q15_t)30)
 
-/* 
-
-Reference patterns are generated with
-a double precision computation.
-
-*/
-#define ABS_ERROR ((q15_t)30)
 
 
 
@@ -25,13 +19,18 @@ a double precision computation.
 
 
         memcpy((void*)tmpinp,(void*)inp1,sizeof(q15_t)*this->fftLen);
+        #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+        q15_t *tmp2p=tmp2.ptr();
+        arm_mfcc_q15(&mfcc,tmpinp,outp,tmpp,tmp2p);
+        #else
         arm_mfcc_q15(&mfcc,tmpinp,outp,tmpp);
+        #endif 
 
         ASSERT_EMPTY_TAIL(output);
 
         ASSERT_SNR(output,ref,(q15_t)SNR_THRESHOLD);
 
-        ASSERT_NEAR_EQ(output,ref,ABS_ERROR);
+        ASSERT_NEAR_EQ(output,ref,ABS_ERROR_Q15);
 
     } 
 
@@ -57,8 +56,6 @@ a double precision computation.
                     mfcc_filter_pos_config3_q15,mfcc_filter_len_config3_q15,
                     mfcc_filter_coefs_config3_q15,
                     mfcc_window_coefs_config3_q15);
-            tmp.create(2*nb,MFCCQ15::TMP_MFCC_Q15_ID,mgr);
-            tmpin.create(nb,MFCCQ15::TMPIN_MFCC_Q15_ID,mgr);
           }
           break;
 
@@ -73,8 +70,6 @@ a double precision computation.
                       mfcc_filter_pos_config2_q15,mfcc_filter_len_config2_q15,
                       mfcc_filter_coefs_config2_q15,
                       mfcc_window_coefs_config2_q15);
-            tmp.create(2*nb,MFCCQ15::TMP_MFCC_Q15_ID,mgr);
-            tmpin.create(nb,MFCCQ15::TMPIN_MFCC_Q15_ID,mgr);
           }
           break;
         case MFCCQ15::TEST_MFCC_Q15_3:
@@ -88,9 +83,6 @@ a double precision computation.
                       mfcc_filter_pos_config1_q15,mfcc_filter_len_config1_q15,
                       mfcc_filter_coefs_config1_q15,
                       mfcc_window_coefs_config1_q15);
-            tmp.create(2*nb,MFCCQ15::TMP_MFCC_Q15_ID,mgr);
-            tmpin.create(nb,MFCCQ15::TMPIN_MFCC_Q15_ID,mgr);
-
           }
           break;
 
@@ -105,8 +97,6 @@ a double precision computation.
                     mfcc_filter_pos_config3_q15,mfcc_filter_len_config3_q15,
                     mfcc_filter_coefs_config3_q15,
                     mfcc_window_coefs_config3_q15);
-            tmp.create(2*nb,MFCCQ15::TMP_MFCC_Q15_ID,mgr);
-            tmpin.create(nb,MFCCQ15::TMPIN_MFCC_Q15_ID,mgr);
           }
           break;
 
@@ -121,8 +111,6 @@ a double precision computation.
                       mfcc_filter_pos_config2_q15,mfcc_filter_len_config2_q15,
                       mfcc_filter_coefs_config2_q15,
                       mfcc_window_coefs_config2_q15);
-            tmp.create(2*nb,MFCCQ15::TMP_MFCC_Q15_ID,mgr);
-            tmpin.create(nb,MFCCQ15::TMPIN_MFCC_Q15_ID,mgr);
           }
           break;
         case MFCCQ15::TEST_MFCC_Q15_6:
@@ -136,14 +124,20 @@ a double precision computation.
                       mfcc_filter_pos_config1_q15,mfcc_filter_len_config1_q15,
                       mfcc_filter_coefs_config1_q15,
                       mfcc_window_coefs_config1_q15);
-            tmp.create(2*nb,MFCCQ15::TMP_MFCC_Q15_ID,mgr);
-            tmpin.create(nb,MFCCQ15::TMPIN_MFCC_Q15_ID,mgr);
-
+            
           }
           break;
 
        }
-      
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+            tmp.create(nb+2,MFCCQ15::TMP_MFCC_Q15_ID,mgr);
+#else
+            tmp.create(2*nb,MFCCQ15::TMP_MFCC_Q15_ID,mgr);
+#endif
+            tmp2.create(2*nb,MFCCQ15::TMP_MFCC_Q15_ID,mgr);
+
+            tmpin.create(nb,MFCCQ15::TMPIN_MFCC_Q15_ID,mgr);
+
 
        output.create(ref.nbSamples(),MFCCQ15::OUTPUT_MFCC_Q15_ID,mgr);
 

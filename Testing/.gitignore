@@ -27,3 +27,5 @@ Tmp/
 .startup_ARMCM55.c@*
 .system_ARMCM55.c@*
 .*@*
+dspenv/
+dspenv_aarch64/

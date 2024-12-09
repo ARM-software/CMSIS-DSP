@@ -1,0 +1,468 @@
+/* ----------------------------------------------------------------------
+ * Project:      CMSIS DSP Library
+ * Title:        arm_neon_tables.h
+ * Description:  common tables like fft twiddle factors, Bitreverse, reciprocal etc
+ *               used for NEON implementation only
+ *
+ * @date     02 October 2024
+ *
+ * Target Processor: Cortex-A cores
+ * -------------------------------------------------------------------- */
+/*
+ * Copyright (C) 2024 ARM Limited or its affiliates. All rights reserved.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Licensed under the Apache License, Version 2.0 (the License); you may
+ * not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+ #ifndef ARM_NEON_TABLES_H
+ #define ARM_NEON_TABLES_H
+
+#include "arm_math_types.h"
+
+#ifdef   __cplusplus
+extern "C"
+{
+#endif
+
+
+ 
+
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+
+#define ARM_NEON_RFFT_TWIDDLES_16_F32_LEN 24
+extern const float32_t arm_neon_rfft_twiddles_16_f32[ARM_NEON_RFFT_TWIDDLES_16_F32_LEN];
+#define ARM_NEON_RFFT_FACTORS_16_F32_LEN 4
+extern const uint32_t arm_neon_rfft_factors_16_f32[ARM_NEON_RFFT_FACTORS_16_F32_LEN];
+#define ARM_NEON_RFFT_TWIDDLES_NEON_16_F32_LEN 0
+extern const float32_t arm_neon_rfft_twiddles_neon_16_f32[ARM_NEON_RFFT_TWIDDLES_NEON_16_F32_LEN];
+#define ARM_NEON_RFFT_FACTORS_NEON_16_F32_LEN 4
+extern const uint32_t arm_neon_rfft_factors_neon_16_f32[ARM_NEON_RFFT_FACTORS_NEON_16_F32_LEN];
+#define ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_16_F32_LEN 24
+extern const float32_t arm_neon_rfft_super_twiddles_neon_16_f32[ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_16_F32_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_RFFT_16_F32 12
+#define ARM_NE10_OFFSET_BACKWARD_TWID_NEON_16_F32 0
+
+#define ARM_NEON_RFFT_TWIDDLES_32_F32_LEN 48
+extern const float32_t arm_neon_rfft_twiddles_32_f32[ARM_NEON_RFFT_TWIDDLES_32_F32_LEN];
+#define ARM_NEON_RFFT_FACTORS_32_F32_LEN 4
+extern const uint32_t arm_neon_rfft_factors_32_f32[ARM_NEON_RFFT_FACTORS_32_F32_LEN];
+#define ARM_NEON_RFFT_TWIDDLES_NEON_32_F32_LEN 0
+extern const float32_t arm_neon_rfft_twiddles_neon_32_f32[ARM_NEON_RFFT_TWIDDLES_NEON_32_F32_LEN];
+#define ARM_NEON_RFFT_FACTORS_NEON_32_F32_LEN 4
+extern const uint32_t arm_neon_rfft_factors_neon_32_f32[ARM_NEON_RFFT_FACTORS_NEON_32_F32_LEN];
+#define ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_32_F32_LEN 24
+extern const float32_t arm_neon_rfft_super_twiddles_neon_32_f32[ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_32_F32_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_RFFT_32_F32 24
+#define ARM_NE10_OFFSET_BACKWARD_TWID_NEON_32_F32 0
+
+#define ARM_NEON_RFFT_TWIDDLES_64_F32_LEN 120
+extern const float32_t arm_neon_rfft_twiddles_64_f32[ARM_NEON_RFFT_TWIDDLES_64_F32_LEN];
+#define ARM_NEON_RFFT_FACTORS_64_F32_LEN 4
+extern const uint32_t arm_neon_rfft_factors_64_f32[ARM_NEON_RFFT_FACTORS_64_F32_LEN];
+#define ARM_NEON_RFFT_TWIDDLES_NEON_64_F32_LEN 24
+extern const float32_t arm_neon_rfft_twiddles_neon_64_f32[ARM_NEON_RFFT_TWIDDLES_NEON_64_F32_LEN];
+#define ARM_NEON_RFFT_FACTORS_NEON_64_F32_LEN 4
+extern const uint32_t arm_neon_rfft_factors_neon_64_f32[ARM_NEON_RFFT_FACTORS_NEON_64_F32_LEN];
+#define ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_64_F32_LEN 48
+extern const float32_t arm_neon_rfft_super_twiddles_neon_64_f32[ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_64_F32_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_RFFT_64_F32 60
+#define ARM_NE10_OFFSET_BACKWARD_TWID_NEON_64_F32 12
+
+#define ARM_NEON_RFFT_TWIDDLES_128_F32_LEN 240
+extern const float32_t arm_neon_rfft_twiddles_128_f32[ARM_NEON_RFFT_TWIDDLES_128_F32_LEN];
+#define ARM_NEON_RFFT_FACTORS_128_F32_LEN 4
+extern const uint32_t arm_neon_rfft_factors_128_f32[ARM_NEON_RFFT_FACTORS_128_F32_LEN];
+#define ARM_NEON_RFFT_TWIDDLES_NEON_128_F32_LEN 48
+extern const float32_t arm_neon_rfft_twiddles_neon_128_f32[ARM_NEON_RFFT_TWIDDLES_NEON_128_F32_LEN];
+#define ARM_NEON_RFFT_FACTORS_NEON_128_F32_LEN 4
+extern const uint32_t arm_neon_rfft_factors_neon_128_f32[ARM_NEON_RFFT_FACTORS_NEON_128_F32_LEN];
+#define ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_128_F32_LEN 96
+extern const float32_t arm_neon_rfft_super_twiddles_neon_128_f32[ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_128_F32_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_RFFT_128_F32 120
+#define ARM_NE10_OFFSET_BACKWARD_TWID_NEON_128_F32 24
+
+#define ARM_NEON_RFFT_TWIDDLES_256_F32_LEN 504
+extern const float32_t arm_neon_rfft_twiddles_256_f32[ARM_NEON_RFFT_TWIDDLES_256_F32_LEN];
+#define ARM_NEON_RFFT_FACTORS_256_F32_LEN 4
+extern const uint32_t arm_neon_rfft_factors_256_f32[ARM_NEON_RFFT_FACTORS_256_F32_LEN];
+#define ARM_NEON_RFFT_TWIDDLES_NEON_256_F32_LEN 120
+extern const float32_t arm_neon_rfft_twiddles_neon_256_f32[ARM_NEON_RFFT_TWIDDLES_NEON_256_F32_LEN];
+#define ARM_NEON_RFFT_FACTORS_NEON_256_F32_LEN 4
+extern const uint32_t arm_neon_rfft_factors_neon_256_f32[ARM_NEON_RFFT_FACTORS_NEON_256_F32_LEN];
+#define ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_256_F32_LEN 192
+extern const float32_t arm_neon_rfft_super_twiddles_neon_256_f32[ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_256_F32_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_RFFT_256_F32 252
+#define ARM_NE10_OFFSET_BACKWARD_TWID_NEON_256_F32 60
+
+#define ARM_NEON_RFFT_TWIDDLES_512_F32_LEN 1008
+extern const float32_t arm_neon_rfft_twiddles_512_f32[ARM_NEON_RFFT_TWIDDLES_512_F32_LEN];
+#define ARM_NEON_RFFT_FACTORS_512_F32_LEN 4
+extern const uint32_t arm_neon_rfft_factors_512_f32[ARM_NEON_RFFT_FACTORS_512_F32_LEN];
+#define ARM_NEON_RFFT_TWIDDLES_NEON_512_F32_LEN 240
+extern const float32_t arm_neon_rfft_twiddles_neon_512_f32[ARM_NEON_RFFT_TWIDDLES_NEON_512_F32_LEN];
+#define ARM_NEON_RFFT_FACTORS_NEON_512_F32_LEN 4
+extern const uint32_t arm_neon_rfft_factors_neon_512_f32[ARM_NEON_RFFT_FACTORS_NEON_512_F32_LEN];
+#define ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_512_F32_LEN 384
+extern const float32_t arm_neon_rfft_super_twiddles_neon_512_f32[ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_512_F32_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_RFFT_512_F32 504
+#define ARM_NE10_OFFSET_BACKWARD_TWID_NEON_512_F32 120
+
+#define ARM_NEON_RFFT_TWIDDLES_1024_F32_LEN 2040
+extern const float32_t arm_neon_rfft_twiddles_1024_f32[ARM_NEON_RFFT_TWIDDLES_1024_F32_LEN];
+#define ARM_NEON_RFFT_FACTORS_1024_F32_LEN 4
+extern const uint32_t arm_neon_rfft_factors_1024_f32[ARM_NEON_RFFT_FACTORS_1024_F32_LEN];
+#define ARM_NEON_RFFT_TWIDDLES_NEON_1024_F32_LEN 504
+extern const float32_t arm_neon_rfft_twiddles_neon_1024_f32[ARM_NEON_RFFT_TWIDDLES_NEON_1024_F32_LEN];
+#define ARM_NEON_RFFT_FACTORS_NEON_1024_F32_LEN 4
+extern const uint32_t arm_neon_rfft_factors_neon_1024_f32[ARM_NEON_RFFT_FACTORS_NEON_1024_F32_LEN];
+#define ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_1024_F32_LEN 768
+extern const float32_t arm_neon_rfft_super_twiddles_neon_1024_f32[ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_1024_F32_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_RFFT_1024_F32 1020
+#define ARM_NE10_OFFSET_BACKWARD_TWID_NEON_1024_F32 252
+
+#define ARM_NEON_RFFT_TWIDDLES_2048_F32_LEN 4080
+extern const float32_t arm_neon_rfft_twiddles_2048_f32[ARM_NEON_RFFT_TWIDDLES_2048_F32_LEN];
+#define ARM_NEON_RFFT_FACTORS_2048_F32_LEN 4
+extern const uint32_t arm_neon_rfft_factors_2048_f32[ARM_NEON_RFFT_FACTORS_2048_F32_LEN];
+#define ARM_NEON_RFFT_TWIDDLES_NEON_2048_F32_LEN 1008
+extern const float32_t arm_neon_rfft_twiddles_neon_2048_f32[ARM_NEON_RFFT_TWIDDLES_NEON_2048_F32_LEN];
+#define ARM_NEON_RFFT_FACTORS_NEON_2048_F32_LEN 4
+extern const uint32_t arm_neon_rfft_factors_neon_2048_f32[ARM_NEON_RFFT_FACTORS_NEON_2048_F32_LEN];
+#define ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_2048_F32_LEN 1536
+extern const float32_t arm_neon_rfft_super_twiddles_neon_2048_f32[ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_2048_F32_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_RFFT_2048_F32 2040
+#define ARM_NE10_OFFSET_BACKWARD_TWID_NEON_2048_F32 504
+
+#define ARM_NEON_RFFT_TWIDDLES_4096_F32_LEN 8184
+extern const float32_t arm_neon_rfft_twiddles_4096_f32[ARM_NEON_RFFT_TWIDDLES_4096_F32_LEN];
+#define ARM_NEON_RFFT_FACTORS_4096_F32_LEN 4
+extern const uint32_t arm_neon_rfft_factors_4096_f32[ARM_NEON_RFFT_FACTORS_4096_F32_LEN];
+#define ARM_NEON_RFFT_TWIDDLES_NEON_4096_F32_LEN 2040
+extern const float32_t arm_neon_rfft_twiddles_neon_4096_f32[ARM_NEON_RFFT_TWIDDLES_NEON_4096_F32_LEN];
+#define ARM_NEON_RFFT_FACTORS_NEON_4096_F32_LEN 4
+extern const uint32_t arm_neon_rfft_factors_neon_4096_f32[ARM_NEON_RFFT_FACTORS_NEON_4096_F32_LEN];
+#define ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_4096_F32_LEN 3072
+extern const float32_t arm_neon_rfft_super_twiddles_neon_4096_f32[ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_4096_F32_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_RFFT_4096_F32 4092
+#define ARM_NE10_OFFSET_BACKWARD_TWID_NEON_4096_F32 1020
+
+#define ARM_NEON_RFFT_TWIDDLES_16_Q31_LEN 0
+extern const q31_t arm_neon_rfft_twiddles_16_q31[ARM_NEON_RFFT_TWIDDLES_16_Q31_LEN];
+#define ARM_NEON_RFFT_FACTORS_16_Q31_LEN 4
+extern const uint32_t arm_neon_rfft_factors_16_q31[ARM_NEON_RFFT_FACTORS_16_Q31_LEN];
+#define ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_16_Q31_LEN 8
+extern const q31_t arm_neon_rfft_super_twiddles_neon_16_q31[ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_16_Q31_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_RFFT_16_Q31 0
+
+#define ARM_NEON_RFFT_TWIDDLES_32_Q31_LEN 24
+extern const q31_t arm_neon_rfft_twiddles_32_q31[ARM_NEON_RFFT_TWIDDLES_32_Q31_LEN];
+#define ARM_NEON_RFFT_FACTORS_32_Q31_LEN 4
+extern const uint32_t arm_neon_rfft_factors_32_q31[ARM_NEON_RFFT_FACTORS_32_Q31_LEN];
+#define ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_32_Q31_LEN 16
+extern const q31_t arm_neon_rfft_super_twiddles_neon_32_q31[ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_32_Q31_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_RFFT_32_Q31 12
+
+#define ARM_NEON_RFFT_TWIDDLES_64_Q31_LEN 48
+extern const q31_t arm_neon_rfft_twiddles_64_q31[ARM_NEON_RFFT_TWIDDLES_64_Q31_LEN];
+#define ARM_NEON_RFFT_FACTORS_64_Q31_LEN 4
+extern const uint32_t arm_neon_rfft_factors_64_q31[ARM_NEON_RFFT_FACTORS_64_Q31_LEN];
+#define ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_64_Q31_LEN 32
+extern const q31_t arm_neon_rfft_super_twiddles_neon_64_q31[ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_64_Q31_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_RFFT_64_Q31 24
+
+#define ARM_NEON_RFFT_TWIDDLES_128_Q31_LEN 120
+extern const q31_t arm_neon_rfft_twiddles_128_q31[ARM_NEON_RFFT_TWIDDLES_128_Q31_LEN];
+#define ARM_NEON_RFFT_FACTORS_128_Q31_LEN 4
+extern const uint32_t arm_neon_rfft_factors_128_q31[ARM_NEON_RFFT_FACTORS_128_Q31_LEN];
+#define ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_128_Q31_LEN 64
+extern const q31_t arm_neon_rfft_super_twiddles_neon_128_q31[ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_128_Q31_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_RFFT_128_Q31 60
+
+#define ARM_NEON_RFFT_TWIDDLES_256_Q31_LEN 240
+extern const q31_t arm_neon_rfft_twiddles_256_q31[ARM_NEON_RFFT_TWIDDLES_256_Q31_LEN];
+#define ARM_NEON_RFFT_FACTORS_256_Q31_LEN 4
+extern const uint32_t arm_neon_rfft_factors_256_q31[ARM_NEON_RFFT_FACTORS_256_Q31_LEN];
+#define ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_256_Q31_LEN 128
+extern const q31_t arm_neon_rfft_super_twiddles_neon_256_q31[ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_256_Q31_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_RFFT_256_Q31 120
+
+#define ARM_NEON_RFFT_TWIDDLES_512_Q31_LEN 504
+extern const q31_t arm_neon_rfft_twiddles_512_q31[ARM_NEON_RFFT_TWIDDLES_512_Q31_LEN];
+#define ARM_NEON_RFFT_FACTORS_512_Q31_LEN 4
+extern const uint32_t arm_neon_rfft_factors_512_q31[ARM_NEON_RFFT_FACTORS_512_Q31_LEN];
+#define ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_512_Q31_LEN 256
+extern const q31_t arm_neon_rfft_super_twiddles_neon_512_q31[ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_512_Q31_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_RFFT_512_Q31 252
+
+#define ARM_NEON_RFFT_TWIDDLES_1024_Q31_LEN 1008
+extern const q31_t arm_neon_rfft_twiddles_1024_q31[ARM_NEON_RFFT_TWIDDLES_1024_Q31_LEN];
+#define ARM_NEON_RFFT_FACTORS_1024_Q31_LEN 4
+extern const uint32_t arm_neon_rfft_factors_1024_q31[ARM_NEON_RFFT_FACTORS_1024_Q31_LEN];
+#define ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_1024_Q31_LEN 512
+extern const q31_t arm_neon_rfft_super_twiddles_neon_1024_q31[ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_1024_Q31_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_RFFT_1024_Q31 504
+
+#define ARM_NEON_RFFT_TWIDDLES_2048_Q31_LEN 2040
+extern const q31_t arm_neon_rfft_twiddles_2048_q31[ARM_NEON_RFFT_TWIDDLES_2048_Q31_LEN];
+#define ARM_NEON_RFFT_FACTORS_2048_Q31_LEN 4
+extern const uint32_t arm_neon_rfft_factors_2048_q31[ARM_NEON_RFFT_FACTORS_2048_Q31_LEN];
+#define ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_2048_Q31_LEN 1024
+extern const q31_t arm_neon_rfft_super_twiddles_neon_2048_q31[ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_2048_Q31_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_RFFT_2048_Q31 1020
+
+#define ARM_NEON_RFFT_TWIDDLES_4096_Q31_LEN 4080
+extern const q31_t arm_neon_rfft_twiddles_4096_q31[ARM_NEON_RFFT_TWIDDLES_4096_Q31_LEN];
+#define ARM_NEON_RFFT_FACTORS_4096_Q31_LEN 4
+extern const uint32_t arm_neon_rfft_factors_4096_q31[ARM_NEON_RFFT_FACTORS_4096_Q31_LEN];
+#define ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_4096_Q31_LEN 2048
+extern const q31_t arm_neon_rfft_super_twiddles_neon_4096_q31[ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_4096_Q31_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_RFFT_4096_Q31 2040
+
+#define ARM_NEON_RFFT_TWIDDLES_8192_Q31_LEN 8184
+extern const q31_t arm_neon_rfft_twiddles_8192_q31[ARM_NEON_RFFT_TWIDDLES_8192_Q31_LEN];
+#define ARM_NEON_RFFT_FACTORS_8192_Q31_LEN 4
+extern const uint32_t arm_neon_rfft_factors_8192_q31[ARM_NEON_RFFT_FACTORS_8192_Q31_LEN];
+#define ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_8192_Q31_LEN 4096
+extern const q31_t arm_neon_rfft_super_twiddles_neon_8192_q31[ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_8192_Q31_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_RFFT_8192_Q31 4092
+
+#define ARM_NEON_RFFT_TWIDDLES_16_Q15_LEN 0
+extern const q15_t arm_neon_rfft_twiddles_16_q15[ARM_NEON_RFFT_TWIDDLES_16_Q15_LEN];
+#define ARM_NEON_RFFT_FACTORS_16_Q15_LEN 4
+extern const uint32_t arm_neon_rfft_factors_16_q15[ARM_NEON_RFFT_FACTORS_16_Q15_LEN];
+#define ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_16_Q15_LEN 8
+extern const q15_t arm_neon_rfft_super_twiddles_neon_16_q15[ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_16_Q15_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_RFFT_16_Q15 0
+
+#define ARM_NEON_RFFT_TWIDDLES_32_Q15_LEN 24
+extern const q15_t arm_neon_rfft_twiddles_32_q15[ARM_NEON_RFFT_TWIDDLES_32_Q15_LEN];
+#define ARM_NEON_RFFT_FACTORS_32_Q15_LEN 4
+extern const uint32_t arm_neon_rfft_factors_32_q15[ARM_NEON_RFFT_FACTORS_32_Q15_LEN];
+#define ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_32_Q15_LEN 16
+extern const q15_t arm_neon_rfft_super_twiddles_neon_32_q15[ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_32_Q15_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_RFFT_32_Q15 12
+
+#define ARM_NEON_RFFT_TWIDDLES_64_Q15_LEN 48
+extern const q15_t arm_neon_rfft_twiddles_64_q15[ARM_NEON_RFFT_TWIDDLES_64_Q15_LEN];
+#define ARM_NEON_RFFT_FACTORS_64_Q15_LEN 4
+extern const uint32_t arm_neon_rfft_factors_64_q15[ARM_NEON_RFFT_FACTORS_64_Q15_LEN];
+#define ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_64_Q15_LEN 32
+extern const q15_t arm_neon_rfft_super_twiddles_neon_64_q15[ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_64_Q15_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_RFFT_64_Q15 24
+
+#define ARM_NEON_RFFT_TWIDDLES_128_Q15_LEN 120
+extern const q15_t arm_neon_rfft_twiddles_128_q15[ARM_NEON_RFFT_TWIDDLES_128_Q15_LEN];
+#define ARM_NEON_RFFT_FACTORS_128_Q15_LEN 4
+extern const uint32_t arm_neon_rfft_factors_128_q15[ARM_NEON_RFFT_FACTORS_128_Q15_LEN];
+#define ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_128_Q15_LEN 64
+extern const q15_t arm_neon_rfft_super_twiddles_neon_128_q15[ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_128_Q15_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_RFFT_128_Q15 60
+
+#define ARM_NEON_RFFT_TWIDDLES_256_Q15_LEN 240
+extern const q15_t arm_neon_rfft_twiddles_256_q15[ARM_NEON_RFFT_TWIDDLES_256_Q15_LEN];
+#define ARM_NEON_RFFT_FACTORS_256_Q15_LEN 4
+extern const uint32_t arm_neon_rfft_factors_256_q15[ARM_NEON_RFFT_FACTORS_256_Q15_LEN];
+#define ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_256_Q15_LEN 128
+extern const q15_t arm_neon_rfft_super_twiddles_neon_256_q15[ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_256_Q15_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_RFFT_256_Q15 120
+
+#define ARM_NEON_RFFT_TWIDDLES_512_Q15_LEN 504
+extern const q15_t arm_neon_rfft_twiddles_512_q15[ARM_NEON_RFFT_TWIDDLES_512_Q15_LEN];
+#define ARM_NEON_RFFT_FACTORS_512_Q15_LEN 4
+extern const uint32_t arm_neon_rfft_factors_512_q15[ARM_NEON_RFFT_FACTORS_512_Q15_LEN];
+#define ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_512_Q15_LEN 256
+extern const q15_t arm_neon_rfft_super_twiddles_neon_512_q15[ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_512_Q15_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_RFFT_512_Q15 252
+
+#define ARM_NEON_RFFT_TWIDDLES_1024_Q15_LEN 1008
+extern const q15_t arm_neon_rfft_twiddles_1024_q15[ARM_NEON_RFFT_TWIDDLES_1024_Q15_LEN];
+#define ARM_NEON_RFFT_FACTORS_1024_Q15_LEN 4
+extern const uint32_t arm_neon_rfft_factors_1024_q15[ARM_NEON_RFFT_FACTORS_1024_Q15_LEN];
+#define ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_1024_Q15_LEN 512
+extern const q15_t arm_neon_rfft_super_twiddles_neon_1024_q15[ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_1024_Q15_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_RFFT_1024_Q15 504
+
+#define ARM_NEON_RFFT_TWIDDLES_2048_Q15_LEN 2040
+extern const q15_t arm_neon_rfft_twiddles_2048_q15[ARM_NEON_RFFT_TWIDDLES_2048_Q15_LEN];
+#define ARM_NEON_RFFT_FACTORS_2048_Q15_LEN 4
+extern const uint32_t arm_neon_rfft_factors_2048_q15[ARM_NEON_RFFT_FACTORS_2048_Q15_LEN];
+#define ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_2048_Q15_LEN 1024
+extern const q15_t arm_neon_rfft_super_twiddles_neon_2048_q15[ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_2048_Q15_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_RFFT_2048_Q15 1020
+
+#define ARM_NEON_RFFT_TWIDDLES_4096_Q15_LEN 4080
+extern const q15_t arm_neon_rfft_twiddles_4096_q15[ARM_NEON_RFFT_TWIDDLES_4096_Q15_LEN];
+#define ARM_NEON_RFFT_FACTORS_4096_Q15_LEN 4
+extern const uint32_t arm_neon_rfft_factors_4096_q15[ARM_NEON_RFFT_FACTORS_4096_Q15_LEN];
+#define ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_4096_Q15_LEN 2048
+extern const q15_t arm_neon_rfft_super_twiddles_neon_4096_q15[ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_4096_Q15_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_RFFT_4096_Q15 2040
+
+#define ARM_NEON_RFFT_TWIDDLES_8192_Q15_LEN 8184
+extern const q15_t arm_neon_rfft_twiddles_8192_q15[ARM_NEON_RFFT_TWIDDLES_8192_Q15_LEN];
+#define ARM_NEON_RFFT_FACTORS_8192_Q15_LEN 4
+extern const uint32_t arm_neon_rfft_factors_8192_q15[ARM_NEON_RFFT_FACTORS_8192_Q15_LEN];
+#define ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_8192_Q15_LEN 4096
+extern const q15_t arm_neon_rfft_super_twiddles_neon_8192_q15[ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_8192_Q15_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_RFFT_8192_Q15 4092
+
+#define ARM_NEON_TWIDDLES_16_F32_LEN 24
+extern const float32_t arm_neon_twiddles_16_f32[ARM_NEON_TWIDDLES_16_F32_LEN];
+#define ARM_NEON_FACTORS_16_F32_LEN 4
+extern const uint32_t arm_neon_factors_16_f32[ARM_NEON_FACTORS_16_F32_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_16_F32 12
+#define ARM_NEON_TWIDDLES_32_F32_LEN 48
+extern const float32_t arm_neon_twiddles_32_f32[ARM_NEON_TWIDDLES_32_F32_LEN];
+#define ARM_NEON_FACTORS_32_F32_LEN 4
+extern const uint32_t arm_neon_factors_32_f32[ARM_NEON_FACTORS_32_F32_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_32_F32 24
+#define ARM_NEON_TWIDDLES_64_F32_LEN 120
+extern const float32_t arm_neon_twiddles_64_f32[ARM_NEON_TWIDDLES_64_F32_LEN];
+#define ARM_NEON_FACTORS_64_F32_LEN 4
+extern const uint32_t arm_neon_factors_64_f32[ARM_NEON_FACTORS_64_F32_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_64_F32 60
+#define ARM_NEON_TWIDDLES_128_F32_LEN 240
+extern const float32_t arm_neon_twiddles_128_f32[ARM_NEON_TWIDDLES_128_F32_LEN];
+#define ARM_NEON_FACTORS_128_F32_LEN 4
+extern const uint32_t arm_neon_factors_128_f32[ARM_NEON_FACTORS_128_F32_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_128_F32 120
+#define ARM_NEON_TWIDDLES_256_F32_LEN 504
+extern const float32_t arm_neon_twiddles_256_f32[ARM_NEON_TWIDDLES_256_F32_LEN];
+#define ARM_NEON_FACTORS_256_F32_LEN 4
+extern const uint32_t arm_neon_factors_256_f32[ARM_NEON_FACTORS_256_F32_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_256_F32 252
+#define ARM_NEON_TWIDDLES_512_F32_LEN 1008
+extern const float32_t arm_neon_twiddles_512_f32[ARM_NEON_TWIDDLES_512_F32_LEN];
+#define ARM_NEON_FACTORS_512_F32_LEN 4
+extern const uint32_t arm_neon_factors_512_f32[ARM_NEON_FACTORS_512_F32_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_512_F32 504
+#define ARM_NEON_TWIDDLES_1024_F32_LEN 2040
+extern const float32_t arm_neon_twiddles_1024_f32[ARM_NEON_TWIDDLES_1024_F32_LEN];
+#define ARM_NEON_FACTORS_1024_F32_LEN 4
+extern const uint32_t arm_neon_factors_1024_f32[ARM_NEON_FACTORS_1024_F32_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_1024_F32 1020
+#define ARM_NEON_TWIDDLES_2048_F32_LEN 4080
+extern const float32_t arm_neon_twiddles_2048_f32[ARM_NEON_TWIDDLES_2048_F32_LEN];
+#define ARM_NEON_FACTORS_2048_F32_LEN 4
+extern const uint32_t arm_neon_factors_2048_f32[ARM_NEON_FACTORS_2048_F32_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_2048_F32 2040
+#define ARM_NEON_TWIDDLES_4096_F32_LEN 8184
+extern const float32_t arm_neon_twiddles_4096_f32[ARM_NEON_TWIDDLES_4096_F32_LEN];
+#define ARM_NEON_FACTORS_4096_F32_LEN 4
+extern const uint32_t arm_neon_factors_4096_f32[ARM_NEON_FACTORS_4096_F32_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_4096_F32 4092
+#define ARM_NEON_TWIDDLES_16_Q31_LEN 24
+extern const q31_t arm_neon_twiddles_16_q31[ARM_NEON_TWIDDLES_16_Q31_LEN];
+#define ARM_NEON_FACTORS_16_Q31_LEN 4
+extern const uint32_t arm_neon_factors_16_q31[ARM_NEON_FACTORS_16_Q31_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_16_Q31 12
+#define ARM_NEON_TWIDDLES_32_Q31_LEN 48
+extern const q31_t arm_neon_twiddles_32_q31[ARM_NEON_TWIDDLES_32_Q31_LEN];
+#define ARM_NEON_FACTORS_32_Q31_LEN 4
+extern const uint32_t arm_neon_factors_32_q31[ARM_NEON_FACTORS_32_Q31_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_32_Q31 24
+#define ARM_NEON_TWIDDLES_64_Q31_LEN 120
+extern const q31_t arm_neon_twiddles_64_q31[ARM_NEON_TWIDDLES_64_Q31_LEN];
+#define ARM_NEON_FACTORS_64_Q31_LEN 4
+extern const uint32_t arm_neon_factors_64_q31[ARM_NEON_FACTORS_64_Q31_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_64_Q31 60
+#define ARM_NEON_TWIDDLES_128_Q31_LEN 240
+extern const q31_t arm_neon_twiddles_128_q31[ARM_NEON_TWIDDLES_128_Q31_LEN];
+#define ARM_NEON_FACTORS_128_Q31_LEN 4
+extern const uint32_t arm_neon_factors_128_q31[ARM_NEON_FACTORS_128_Q31_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_128_Q31 120
+#define ARM_NEON_TWIDDLES_256_Q31_LEN 504
+extern const q31_t arm_neon_twiddles_256_q31[ARM_NEON_TWIDDLES_256_Q31_LEN];
+#define ARM_NEON_FACTORS_256_Q31_LEN 4
+extern const uint32_t arm_neon_factors_256_q31[ARM_NEON_FACTORS_256_Q31_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_256_Q31 252
+#define ARM_NEON_TWIDDLES_512_Q31_LEN 1008
+extern const q31_t arm_neon_twiddles_512_q31[ARM_NEON_TWIDDLES_512_Q31_LEN];
+#define ARM_NEON_FACTORS_512_Q31_LEN 4
+extern const uint32_t arm_neon_factors_512_q31[ARM_NEON_FACTORS_512_Q31_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_512_Q31 504
+#define ARM_NEON_TWIDDLES_1024_Q31_LEN 2040
+extern const q31_t arm_neon_twiddles_1024_q31[ARM_NEON_TWIDDLES_1024_Q31_LEN];
+#define ARM_NEON_FACTORS_1024_Q31_LEN 4
+extern const uint32_t arm_neon_factors_1024_q31[ARM_NEON_FACTORS_1024_Q31_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_1024_Q31 1020
+#define ARM_NEON_TWIDDLES_2048_Q31_LEN 4080
+extern const q31_t arm_neon_twiddles_2048_q31[ARM_NEON_TWIDDLES_2048_Q31_LEN];
+#define ARM_NEON_FACTORS_2048_Q31_LEN 4
+extern const uint32_t arm_neon_factors_2048_q31[ARM_NEON_FACTORS_2048_Q31_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_2048_Q31 2040
+#define ARM_NEON_TWIDDLES_4096_Q31_LEN 8184
+extern const q31_t arm_neon_twiddles_4096_q31[ARM_NEON_TWIDDLES_4096_Q31_LEN];
+#define ARM_NEON_FACTORS_4096_Q31_LEN 4
+extern const uint32_t arm_neon_factors_4096_q31[ARM_NEON_FACTORS_4096_Q31_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_4096_Q31 4092
+#define ARM_NEON_TWIDDLES_16_Q15_LEN 24
+extern const q15_t arm_neon_twiddles_16_q15[ARM_NEON_TWIDDLES_16_Q15_LEN];
+#define ARM_NEON_FACTORS_16_Q15_LEN 4
+extern const uint32_t arm_neon_factors_16_q15[ARM_NEON_FACTORS_16_Q15_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_16_Q15 12
+#define ARM_NEON_TWIDDLES_32_Q15_LEN 48
+extern const q15_t arm_neon_twiddles_32_q15[ARM_NEON_TWIDDLES_32_Q15_LEN];
+#define ARM_NEON_FACTORS_32_Q15_LEN 4
+extern const uint32_t arm_neon_factors_32_q15[ARM_NEON_FACTORS_32_Q15_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_32_Q15 24
+#define ARM_NEON_TWIDDLES_64_Q15_LEN 120
+extern const q15_t arm_neon_twiddles_64_q15[ARM_NEON_TWIDDLES_64_Q15_LEN];
+#define ARM_NEON_FACTORS_64_Q15_LEN 4
+extern const uint32_t arm_neon_factors_64_q15[ARM_NEON_FACTORS_64_Q15_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_64_Q15 60
+#define ARM_NEON_TWIDDLES_128_Q15_LEN 240
+extern const q15_t arm_neon_twiddles_128_q15[ARM_NEON_TWIDDLES_128_Q15_LEN];
+#define ARM_NEON_FACTORS_128_Q15_LEN 4
+extern const uint32_t arm_neon_factors_128_q15[ARM_NEON_FACTORS_128_Q15_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_128_Q15 120
+#define ARM_NEON_TWIDDLES_256_Q15_LEN 504
+extern const q15_t arm_neon_twiddles_256_q15[ARM_NEON_TWIDDLES_256_Q15_LEN];
+#define ARM_NEON_FACTORS_256_Q15_LEN 4
+extern const uint32_t arm_neon_factors_256_q15[ARM_NEON_FACTORS_256_Q15_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_256_Q15 252
+#define ARM_NEON_TWIDDLES_512_Q15_LEN 1008
+extern const q15_t arm_neon_twiddles_512_q15[ARM_NEON_TWIDDLES_512_Q15_LEN];
+#define ARM_NEON_FACTORS_512_Q15_LEN 4
+extern const uint32_t arm_neon_factors_512_q15[ARM_NEON_FACTORS_512_Q15_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_512_Q15 504
+#define ARM_NEON_TWIDDLES_1024_Q15_LEN 2040
+extern const q15_t arm_neon_twiddles_1024_q15[ARM_NEON_TWIDDLES_1024_Q15_LEN];
+#define ARM_NEON_FACTORS_1024_Q15_LEN 4
+extern const uint32_t arm_neon_factors_1024_q15[ARM_NEON_FACTORS_1024_Q15_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_1024_Q15 1020
+#define ARM_NEON_TWIDDLES_2048_Q15_LEN 4080
+extern const q15_t arm_neon_twiddles_2048_q15[ARM_NEON_TWIDDLES_2048_Q15_LEN];
+#define ARM_NEON_FACTORS_2048_Q15_LEN 4
+extern const uint32_t arm_neon_factors_2048_q15[ARM_NEON_FACTORS_2048_Q15_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_2048_Q15 2040
+#define ARM_NEON_TWIDDLES_4096_Q15_LEN 8184
+extern const q15_t arm_neon_twiddles_4096_q15[ARM_NEON_TWIDDLES_4096_Q15_LEN];
+#define ARM_NEON_FACTORS_4096_Q15_LEN 4
+extern const uint32_t arm_neon_factors_4096_q15[ARM_NEON_FACTORS_4096_Q15_LEN];
+#define ARM_NE10_OFFSET_BACKWARD_TWID_4096_Q15 4092
+
+
+#endif /* defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE) */
+
+
+
+#ifdef   __cplusplus
+}
+#endif
+
+#endif /*ARM_NEON_TABLES_H*/
+

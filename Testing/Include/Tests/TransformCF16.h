@@ -14,6 +14,9 @@ class TransformCF16:public Client::Suite
             
             Client::Pattern<float16_t> input;
             Client::LocalPattern<float16_t> outputfft;
+            Client::LocalPattern<float16_t> bufferfft;
+
+            Client::LocalPattern<float16_t> inputfft;
 
             Client::RefPattern<float16_t> ref;
 

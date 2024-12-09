@@ -16,6 +16,8 @@ class MFCCQ31:public Client::Suite
             Client::Pattern<q31_t> input2;
             Client::LocalPattern<q31_t> output;
             Client::LocalPattern<q31_t> tmp;
+            Client::LocalPattern<q31_t> tmp2;
+
             Client::LocalPattern<q31_t> tmpin;
 
             // Reference patterns are not loaded when we are in dump mode

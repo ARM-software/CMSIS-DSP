@@ -32,6 +32,8 @@
  * Internal functions prototypes
  * -------------------------------------------------------------------- */
 
+#if !defined(ARM_MATH_NEON) || defined(ARM_MATH_AUTOVECTORIZE)
+
 ARM_DSP_ATTRIBUTE void arm_split_rfft_q15(
         q15_t * pSrc,
         uint32_t fftLen,
@@ -47,6 +49,7 @@ ARM_DSP_ATTRIBUTE void arm_split_rifft_q15(
   const q15_t * pBTable,
         q15_t * pDst,
         uint32_t modifier);
+#endif
 
 /**
   @addtogroup RealFFTQ15
@@ -99,8 +102,62 @@ ARM_DSP_ATTRIBUTE void arm_split_rifft_q15(
                    For the RIFFT, the source buffer must have length N+2 since the Nyquist frequency value
                    is needed but conjugate part is ignored. 
                    It is not using the packing trick of the float version.
+  
+  @par Neon implementation
+       The temporary buffer has size fftLength * 2
+       The RFFT output buffer has size fftLen + 2
+       The RIFFT output buffer has size fftLen
+
+  @code 
+       void arm_rfft_q15(
+  const arm_rfft_instance_q15 * S,
+        const q15_t * pSrc,
+        q15_t * pDst,
+        q15_t *tmp,
+        uint8_t ifftFlag
+        )
+  @endcode
+
+  @par RFFT Output buffer sizes
+       They are also the input sizes for the RIFFT
+
+| Scalar     | Helium        | Neon           |
+| ---------: | ------------: | -------------: | 
+| 2*fftSize  | fftSize + 2   | fftSize + 2    |  
+
  */
 
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#include "CMSIS_NE10_types.h"
+#include "CMSIS_NE10_fft.h"
+
+
+ARM_DSP_ATTRIBUTE void arm_rfft_q15(
+  const arm_rfft_instance_q15 * S,
+        const q15_t * pSrc,
+        q15_t * pDst,
+        q15_t *tmp,
+        uint8_t ifftFlag
+        )
+{
+    if (ifftFlag)
+    {
+        arm_ne10_fft_c2r_1d_int16_neon (pDst,
+                                 pSrc,
+                                 S,
+                                 1,
+                                 tmp);
+    }
+    else 
+    {
+        arm_ne10_fft_r2c_1d_int16_neon (pDst,
+                                 pSrc,
+                                 S,
+                                 1,
+                                 tmp);
+    }
+}
+#else
 ARM_DSP_ATTRIBUTE void arm_rfft_q15(
   const arm_rfft_instance_q15 * S,
         q15_t * pSrc,
@@ -136,6 +193,7 @@ ARM_DSP_ATTRIBUTE void arm_rfft_q15(
   }
 
 }
+#endif
 
 /**
   @} end of RealFFTQ15 group
@@ -218,7 +276,7 @@ ARM_DSP_ATTRIBUTE void arm_split_rfft_q15(
     pDst[0] = (pSrc[0] + pSrc[1]) >> 1U;
     pDst[1] = 0;
 }
-#else
+#elif !defined(ARM_MATH_NEON) || defined(ARM_MATH_AUTOVECTORIZE)
 ARM_DSP_ATTRIBUTE void arm_split_rfft_q15(
         q15_t * pSrc,
         uint32_t fftLen,
@@ -437,7 +495,7 @@ ARM_DSP_ATTRIBUTE void arm_split_rifft_q15(
         i -= 1;
     }
 }
-#else
+#elif !defined(ARM_MATH_NEON) || defined(ARM_MATH_AUTOVECTORIZE)
 ARM_DSP_ATTRIBUTE void arm_split_rifft_q15(
         q15_t * pSrc,
         uint32_t fftLen,

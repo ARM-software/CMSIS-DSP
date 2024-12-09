@@ -26,6 +26,18 @@
  * limitations under the License.
  */
 
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#define RFFT_INIT(L) \
+  status=arm_rfft_init_q31(&(S->rfft),L);
+#define RFFT_INIT_WITH_LEN(L) \
+  status=arm_rfft_init_##L##_q31(&(S->rfft));
+#else
+#define RFFT_INIT(L) \
+  status=arm_rfft_init_q31(&(S->rfft),L,0,1);
+#define RFFT_INIT_WITH_LEN(L) \
+  status=arm_rfft_init_##L##_q31(&(S->rfft),0,1);
+#endif 
+
 /**
  * @defgroup MFCCQ31 MFCC Q31
  */
@@ -87,7 +99,6 @@
 
 
  */
-
 ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_q31(
   arm_mfcc_instance_q31 * S,
   uint32_t fftLen,
@@ -114,7 +125,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_q31(
  #if defined(ARM_MFCC_CFFT_BASED)
  status=arm_cfft_init_q31(&(S->cfft),fftLen);
  #else
- status=arm_rfft_init_q31(&(S->rfft),fftLen,0,1);
+  RFFT_INIT(fftLen);
  #endif
  
  return(status);
@@ -172,7 +183,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_##LEN##_q31(             \
  S->filterCoefs=filterCoefs;                      \
  S->windowCoefs=windowCoefs;                      \
                                                   \
- status=arm_rfft_init_##LEN##_q31(&(S->rfft),0,1);\
+ RFFT_INIT_WITH_LEN(LEN);                         \
                                                   \
  return(status);                                  \
 }
@@ -410,6 +421,8 @@ MFCC_INIT_Q31(2048)
  */
 MFCC_INIT_Q31(4096)
 
+#undef RFFT_INIT
+#undef RFFT_INIT_WITH_LEN
 /**
   @} end of MFCCQ31 group
  */

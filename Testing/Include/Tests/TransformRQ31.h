@@ -16,6 +16,7 @@ class TransformRQ31:public Client::Suite
             Client::LocalPattern<q31_t> outputfft;
             Client::LocalPattern<q31_t> overheadoutputfft;
             Client::LocalPattern<q31_t> inputchanged;
+            Client::LocalPattern<q31_t> tmp2;
 
             Client::RefPattern<q31_t> ref;
 

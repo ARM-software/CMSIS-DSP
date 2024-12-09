@@ -521,6 +521,25 @@ static void arm_cfft_radix4by2_inverse_f16_mve(const arm_cfft_instance_f16 * S,f
   @param[in]     bitReverseFlag flag that enables / disables bit reversal of output
                    - value = 0: disables bit reversal of output
                    - value = 1: enables bit reversal of output
+
+@par Neon version
+                     The neon version has a different API.
+                     The input and output buffers must be
+                     different.
+                     There is a temporary buffer.
+                     The temporary buffer has same size as
+                     input or output buffer.
+                     The bit reverse flag is not more 
+                     available in Neon version.
+
+  @code
+        void arm_cfft_f16(
+                const arm_cfft_instance_f16 * S,
+                      const float16_t * pIn,
+                      float16_t * pOut,
+                      float16_t * pBuffer, 
+                      uint8_t ifftFlag);
+  @endcode
  */
 
 
@@ -577,7 +596,54 @@ ARM_DSP_ATTRIBUTE void arm_cfft_f16(
 
         }
 }
+#elif defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
+#include "CMSIS_NE10_types.h"
+#include "CMSIS_NE10_fft.h"
 
+
+
+ARM_DSP_ATTRIBUTE void arm_cfft_f16(
+  const arm_cfft_instance_f16 * S,
+        const float16_t * pIn,
+        float16_t * pOut,
+        float16_t * pBuffer, /* When used, in is not modified */
+        uint8_t ifftFlag)
+{
+    if (S->algorithm_flag == ARM_MIXED_RADIX_FFT)
+    {
+        if (ifftFlag)
+        {
+            arm_ne10_mixed_radix_generic_butterfly_inverse_float16_neon (S,
+                (ne10_fft_cpx_float16_t *)pIn, 
+                (ne10_fft_cpx_float16_t *)pOut,
+                (ne10_fft_cpx_float16_t *)pBuffer);
+        }
+        else
+        {
+            arm_ne10_mixed_radix_generic_butterfly_float16_neon (S,
+                (ne10_fft_cpx_float16_t *)pIn, 
+                (ne10_fft_cpx_float16_t *)pOut,
+                (ne10_fft_cpx_float16_t *)pBuffer);
+        }
+    }
+    else 
+    {
+        if (ifftFlag == 0)
+        {
+               arm_ne10_mixed_radix_fft_forward_float16_neon (S,
+                   (ne10_fft_cpx_float16_t *)pIn,
+                   (ne10_fft_cpx_float16_t *)pOut,
+                   (ne10_fft_cpx_float16_t *)pBuffer);
+        }
+        else 
+        {
+                arm_ne10_mixed_radix_fft_backward_float16_neon (S,
+                    (ne10_fft_cpx_float16_t *)pIn,
+                    (ne10_fft_cpx_float16_t *)pOut,
+                    (ne10_fft_cpx_float16_t *)pBuffer);
+        }
+    }
+}
 #else
 
 #if defined(ARM_FLOAT16_SUPPORTED)

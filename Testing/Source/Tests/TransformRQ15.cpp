@@ -5,9 +5,24 @@
 
 
 #define SNR_THRESHOLD 40
-
 #define RIFFT_SNR_THRESHOLD 25
 
+#define ABS_FFT_ERROR_Q15 ((q15_t)14)
+#define ABS_IFFT_ERROR_Q15 ((q15_t)1250)
+
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#define RFFT_INIT(L) \
+  arm_rfft_init_q15(&this->instRfftQ15 ,L);
+#define RIFFT_INIT(L) \
+  arm_rfft_init_q15(&this->instRfftQ15 ,L);
+
+#else 
+#define RFFT_INIT(L) \
+  arm_rfft_init_q15(&this->instRfftQ15 ,L,0,1);
+
+#define RIFFT_INIT(L) \
+  arm_rfft_init_q15(&this->instRfftQ15 ,L,1,1);
+#endif
 
     void TransformRQ15::test_rfft_q15()
     {
@@ -17,14 +32,21 @@
 
        q15_t *outp = outputfft.ptr();
        q15_t *overoutp = overheadoutputfft.ptr();
-
-
+       
        memcpy(tmp,inp,sizeof(q15_t)*input.nbSamples());
 
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+      q15_t *tmp2p = tmp2.ptr();
+      arm_rfft_q15(
+             &this->instRfftQ15,
+             tmp,
+             overoutp,tmp2p,this->ifft);
+#else
        arm_rfft_q15(
              &this->instRfftQ15,
              tmp,
              overoutp);
+#endif 
 
        if (this->ifft)
        {
@@ -40,11 +62,14 @@
        if (this->ifft)
        {
           ASSERT_SNR(outputfft,ref,(q15_t)RIFFT_SNR_THRESHOLD);
+          ASSERT_NEAR_EQ(outputfft,ref,ABS_IFFT_ERROR_Q15);
        }
        else
        {
          ASSERT_SNR(outputfft,ref,(q15_t)SNR_THRESHOLD);
+         ASSERT_NEAR_EQ(outputfft,ref,ABS_FFT_ERROR_Q15);
        }
+
        ASSERT_EMPTY_TAIL(outputfft);
 
         
@@ -65,7 +90,7 @@
             input.reload(TransformRQ15::INPUTS_RFFT_NOISY_32_Q15_ID,mgr);
             ref.reload(  TransformRQ15::REF_RFFT_NOISY_32_Q15_ID,mgr);
 
-            arm_rfft_init_q15(&this->instRfftQ15 ,32,0,1);
+            RFFT_INIT(32);
 
             inputchanged.create(input.nbSamples(),TransformRQ15::TEMP_Q15_ID,mgr);
 
@@ -78,7 +103,7 @@
             input.reload(TransformRQ15::INPUTS_RIFFT_NOISY_32_Q15_ID,mgr);
             ref.reload(  TransformRQ15::INPUTS_RFFT_NOISY_32_Q15_ID,mgr);
 
-            arm_rfft_init_q15(&this->instRfftQ15 ,32,1,1);
+            RIFFT_INIT(32);
 
             inputchanged.create(input.nbSamples(),TransformRQ15::TEMP_Q15_ID,mgr);
 
@@ -92,7 +117,7 @@
             input.reload(TransformRQ15::INPUTS_RFFT_NOISY_64_Q15_ID,mgr);
             ref.reload(  TransformRQ15::REF_RFFT_NOISY_64_Q15_ID,mgr);
 
-            arm_rfft_init_q15(&this->instRfftQ15 ,64,0,1);
+            RFFT_INIT(64);
 
             inputchanged.create(input.nbSamples(),TransformRQ15::TEMP_Q15_ID,mgr);
 
@@ -105,7 +130,7 @@
             input.reload(TransformRQ15::INPUTS_RIFFT_NOISY_64_Q15_ID,mgr);
             ref.reload(  TransformRQ15::INPUTS_RFFT_NOISY_64_Q15_ID,mgr);
 
-            arm_rfft_init_q15(&this->instRfftQ15 ,64,1,1);
+            RIFFT_INIT(64);
 
             inputchanged.create(input.nbSamples(),TransformRQ15::TEMP_Q15_ID,mgr);
 
@@ -119,7 +144,7 @@
             input.reload(TransformRQ15::INPUTS_RFFT_NOISY_128_Q15_ID,mgr);
             ref.reload(  TransformRQ15::REF_RFFT_NOISY_128_Q15_ID,mgr);
 
-            arm_rfft_init_q15(&this->instRfftQ15 ,128,0,1);
+            RFFT_INIT(128);
 
             inputchanged.create(input.nbSamples(),TransformRQ15::TEMP_Q15_ID,mgr);
 
@@ -132,7 +157,7 @@
             input.reload(TransformRQ15::INPUTS_RIFFT_NOISY_128_Q15_ID,mgr);
             ref.reload(  TransformRQ15::INPUTS_RFFT_NOISY_128_Q15_ID,mgr);
 
-            arm_rfft_init_q15(&this->instRfftQ15 ,128,1,1);
+            RIFFT_INIT(128);
 
             inputchanged.create(input.nbSamples(),TransformRQ15::TEMP_Q15_ID,mgr);
 
@@ -146,7 +171,7 @@
             input.reload(TransformRQ15::INPUTS_RFFT_NOISY_256_Q15_ID,mgr);
             ref.reload(  TransformRQ15::REF_RFFT_NOISY_256_Q15_ID,mgr);
 
-            arm_rfft_init_q15(&this->instRfftQ15 ,256,0,1);
+            RFFT_INIT(256);
 
             inputchanged.create(input.nbSamples(),TransformRQ15::TEMP_Q15_ID,mgr);
 
@@ -159,7 +184,7 @@
             input.reload(TransformRQ15::INPUTS_RIFFT_NOISY_256_Q15_ID,mgr);
             ref.reload(  TransformRQ15::INPUTS_RFFT_NOISY_256_Q15_ID,mgr);
 
-            arm_rfft_init_q15(&this->instRfftQ15 ,256,1,1);
+            RIFFT_INIT(256);
 
             inputchanged.create(input.nbSamples(),TransformRQ15::TEMP_Q15_ID,mgr);
 
@@ -173,7 +198,7 @@
             input.reload(TransformRQ15::INPUTS_RFFT_NOISY_512_Q15_ID,mgr);
             ref.reload(  TransformRQ15::REF_RFFT_NOISY_512_Q15_ID,mgr);
 
-            arm_rfft_init_q15(&this->instRfftQ15 ,512,0,1);
+            RFFT_INIT(512);
 
             inputchanged.create(input.nbSamples(),TransformRQ15::TEMP_Q15_ID,mgr);
 
@@ -186,7 +211,7 @@
             input.reload(TransformRQ15::INPUTS_RIFFT_NOISY_512_Q15_ID,mgr);
             ref.reload(  TransformRQ15::INPUTS_RFFT_NOISY_512_Q15_ID,mgr);
 
-            arm_rfft_init_q15(&this->instRfftQ15 ,512,1,1);
+            RIFFT_INIT(512);
 
             inputchanged.create(input.nbSamples(),TransformRQ15::TEMP_Q15_ID,mgr);
 
@@ -200,7 +225,7 @@
             input.reload(TransformRQ15::INPUTS_RFFT_NOISY_1024_Q15_ID,mgr);
             ref.reload(  TransformRQ15::REF_RFFT_NOISY_1024_Q15_ID,mgr);
 
-            arm_rfft_init_q15(&this->instRfftQ15 ,1024,0,1);
+            RFFT_INIT(1024);
 
             inputchanged.create(input.nbSamples(),TransformRQ15::TEMP_Q15_ID,mgr);
 
@@ -213,7 +238,7 @@
             input.reload(TransformRQ15::INPUTS_RIFFT_NOISY_1024_Q15_ID,mgr);
             ref.reload(  TransformRQ15::INPUTS_RFFT_NOISY_1024_Q15_ID,mgr);
 
-            arm_rfft_init_q15(&this->instRfftQ15 ,1024,1,1);
+            RIFFT_INIT(1024);
 
             inputchanged.create(input.nbSamples(),TransformRQ15::TEMP_Q15_ID,mgr);
 
@@ -227,7 +252,7 @@
             input.reload(TransformRQ15::INPUTS_RFFT_NOISY_2048_Q15_ID,mgr);
             ref.reload(  TransformRQ15::REF_RFFT_NOISY_2048_Q15_ID,mgr);
 
-            arm_rfft_init_q15(&this->instRfftQ15 ,2048,0,1);
+            RFFT_INIT(2048);
 
             inputchanged.create(input.nbSamples(),TransformRQ15::TEMP_Q15_ID,mgr);
 
@@ -240,7 +265,7 @@
             input.reload(TransformRQ15::INPUTS_RIFFT_NOISY_2048_Q15_ID,mgr);
             ref.reload(  TransformRQ15::INPUTS_RFFT_NOISY_2048_Q15_ID,mgr);
 
-            arm_rfft_init_q15(&this->instRfftQ15 ,2048,1,1);
+            RIFFT_INIT(2048);
 
             inputchanged.create(input.nbSamples(),TransformRQ15::TEMP_Q15_ID,mgr);
 
@@ -254,7 +279,7 @@
             input.reload(TransformRQ15::INPUTS_RFFT_NOISY_4096_Q15_ID,mgr);
             ref.reload(  TransformRQ15::REF_RFFT_NOISY_4096_Q15_ID,mgr);
 
-            arm_rfft_init_q15(&this->instRfftQ15 ,4096,0,1);
+            RFFT_INIT(4096);
 
             inputchanged.create(input.nbSamples(),TransformRQ15::TEMP_Q15_ID,mgr);
 
@@ -267,7 +292,7 @@
             input.reload(TransformRQ15::INPUTS_RIFFT_NOISY_4096_Q15_ID,mgr);
             ref.reload(  TransformRQ15::INPUTS_RFFT_NOISY_4096_Q15_ID,mgr);
 
-            arm_rfft_init_q15(&this->instRfftQ15 ,4096,1,1);
+            RIFFT_INIT(4096);
 
             inputchanged.create(input.nbSamples(),TransformRQ15::TEMP_Q15_ID,mgr);
 
@@ -283,7 +308,7 @@
             input.reload(TransformRQ15::INPUTS_RFFT_STEP_32_Q15_ID,mgr);
             ref.reload(  TransformRQ15::REF_RFFT_STEP_32_Q15_ID,mgr);
 
-            arm_rfft_init_q15(&this->instRfftQ15 ,32,0,1);
+            RFFT_INIT(32);
 
             inputchanged.create(input.nbSamples(),TransformRQ15::TEMP_Q15_ID,mgr);
 
@@ -296,7 +321,7 @@
             input.reload(TransformRQ15::INPUTS_RIFFT_STEP_32_Q15_ID,mgr);
             ref.reload(  TransformRQ15::INPUTS_RFFT_STEP_32_Q15_ID,mgr);
 
-            arm_rfft_init_q15(&this->instRfftQ15 ,32,1,1);
+            RIFFT_INIT(32);
 
             inputchanged.create(input.nbSamples(),TransformRQ15::TEMP_Q15_ID,mgr);
 
@@ -310,7 +335,7 @@
             input.reload(TransformRQ15::INPUTS_RFFT_STEP_64_Q15_ID,mgr);
             ref.reload(  TransformRQ15::REF_RFFT_STEP_64_Q15_ID,mgr);
 
-            arm_rfft_init_q15(&this->instRfftQ15 ,64,0,1);
+            RFFT_INIT(64);
 
             inputchanged.create(input.nbSamples(),TransformRQ15::TEMP_Q15_ID,mgr);
 
@@ -323,7 +348,7 @@
             input.reload(TransformRQ15::INPUTS_RIFFT_STEP_64_Q15_ID,mgr);
             ref.reload(  TransformRQ15::INPUTS_RFFT_STEP_64_Q15_ID,mgr);
 
-            arm_rfft_init_q15(&this->instRfftQ15 ,64,1,1);
+            RIFFT_INIT(64);
 
             inputchanged.create(input.nbSamples(),TransformRQ15::TEMP_Q15_ID,mgr);
 
@@ -337,7 +362,7 @@
             input.reload(TransformRQ15::INPUTS_RFFT_STEP_128_Q15_ID,mgr);
             ref.reload(  TransformRQ15::REF_RFFT_STEP_128_Q15_ID,mgr);
 
-            arm_rfft_init_q15(&this->instRfftQ15 ,128,0,1);
+            RFFT_INIT(128);
 
             inputchanged.create(input.nbSamples(),TransformRQ15::TEMP_Q15_ID,mgr);
             this->ifft=0;
@@ -349,7 +374,7 @@
             input.reload(TransformRQ15::INPUTS_RIFFT_STEP_128_Q15_ID,mgr);
             ref.reload(  TransformRQ15::INPUTS_RFFT_STEP_128_Q15_ID,mgr);
 
-            arm_rfft_init_q15(&this->instRfftQ15 ,128,1,1);
+            RIFFT_INIT(128);
 
             inputchanged.create(input.nbSamples(),TransformRQ15::TEMP_Q15_ID,mgr);
 
@@ -363,7 +388,7 @@
             input.reload(TransformRQ15::INPUTS_RFFT_STEP_256_Q15_ID,mgr);
             ref.reload(  TransformRQ15::REF_RFFT_STEP_256_Q15_ID,mgr);
 
-            arm_rfft_init_q15(&this->instRfftQ15 ,256,0,1);
+            RFFT_INIT(256);
 
             inputchanged.create(input.nbSamples(),TransformRQ15::TEMP_Q15_ID,mgr);
 
@@ -376,7 +401,7 @@
             input.reload(TransformRQ15::INPUTS_RIFFT_STEP_256_Q15_ID,mgr);
             ref.reload(  TransformRQ15::INPUTS_RFFT_STEP_256_Q15_ID,mgr);
 
-            arm_rfft_init_q15(&this->instRfftQ15 ,256,1,1);
+            RIFFT_INIT(256);
 
             inputchanged.create(input.nbSamples(),TransformRQ15::TEMP_Q15_ID,mgr);
 
@@ -390,7 +415,7 @@
             input.reload(TransformRQ15::INPUTS_RFFT_STEP_512_Q15_ID,mgr);
             ref.reload(  TransformRQ15::REF_RFFT_STEP_512_Q15_ID,mgr);
 
-            arm_rfft_init_q15(&this->instRfftQ15 ,512,0,1);
+            RFFT_INIT(512);
 
             inputchanged.create(input.nbSamples(),TransformRQ15::TEMP_Q15_ID,mgr);
 
@@ -403,7 +428,7 @@
             input.reload(TransformRQ15::INPUTS_RIFFT_STEP_512_Q15_ID,mgr);
             ref.reload(  TransformRQ15::INPUTS_RFFT_STEP_512_Q15_ID,mgr);
 
-            arm_rfft_init_q15(&this->instRfftQ15 ,512,1,1);
+            RIFFT_INIT(512);
 
             inputchanged.create(input.nbSamples(),TransformRQ15::TEMP_Q15_ID,mgr);
 
@@ -417,7 +442,7 @@
             input.reload(TransformRQ15::INPUTS_RFFT_STEP_1024_Q15_ID,mgr);
             ref.reload(  TransformRQ15::REF_RFFT_STEP_1024_Q15_ID,mgr);
 
-            arm_rfft_init_q15(&this->instRfftQ15 ,1024,0,1);
+            RFFT_INIT(1024);
 
             inputchanged.create(input.nbSamples(),TransformRQ15::TEMP_Q15_ID,mgr);
 
@@ -430,7 +455,7 @@
             input.reload(TransformRQ15::INPUTS_RIFFT_STEP_1024_Q15_ID,mgr);
             ref.reload(  TransformRQ15::INPUTS_RFFT_STEP_1024_Q15_ID,mgr);
 
-            arm_rfft_init_q15(&this->instRfftQ15 ,1024,1,1);
+            RIFFT_INIT(1024);
 
             inputchanged.create(input.nbSamples(),TransformRQ15::TEMP_Q15_ID,mgr);
 
@@ -444,7 +469,7 @@
             input.reload(TransformRQ15::INPUTS_RFFT_STEP_2048_Q15_ID,mgr);
             ref.reload(  TransformRQ15::REF_RFFT_STEP_2048_Q15_ID,mgr);
 
-            arm_rfft_init_q15(&this->instRfftQ15 ,2048,0,1);
+            RFFT_INIT(2048);
 
             inputchanged.create(input.nbSamples(),TransformRQ15::TEMP_Q15_ID,mgr);
 
@@ -457,7 +482,7 @@
             input.reload(TransformRQ15::INPUTS_RIFFT_STEP_2048_Q15_ID,mgr);
             ref.reload(  TransformRQ15::INPUTS_RFFT_STEP_2048_Q15_ID,mgr);
 
-            arm_rfft_init_q15(&this->instRfftQ15 ,2048,1,1);
+            RIFFT_INIT(2048);
 
             inputchanged.create(input.nbSamples(),TransformRQ15::TEMP_Q15_ID,mgr);
 
@@ -471,7 +496,7 @@
             input.reload(TransformRQ15::INPUTS_RFFT_STEP_4096_Q15_ID,mgr);
             ref.reload(  TransformRQ15::REF_RFFT_STEP_4096_Q15_ID,mgr);
 
-            arm_rfft_init_q15(&this->instRfftQ15 ,4096,0,1);
+            RFFT_INIT(4096);
 
             inputchanged.create(input.nbSamples(),TransformRQ15::TEMP_Q15_ID,mgr);
 
@@ -484,7 +509,7 @@
             input.reload(TransformRQ15::INPUTS_RIFFT_STEP_4096_Q15_ID,mgr);
             ref.reload(  TransformRQ15::INPUTS_RFFT_STEP_4096_Q15_ID,mgr);
 
-            arm_rfft_init_q15(&this->instRfftQ15 ,4096,1,1);
+            RIFFT_INIT(4096);
 
             inputchanged.create(input.nbSamples(),TransformRQ15::TEMP_Q15_ID,mgr);
 
@@ -505,8 +530,13 @@
       This is a temporary buffer allowing the test to pass.
 
       */
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+      overheadoutputfft.create(ref.nbSamples(),TransformRQ15::FULLOUTPUT_Q15_ID,mgr);
+#else 
       overheadoutputfft.create(2*ref.nbSamples(),TransformRQ15::FULLOUTPUT_Q15_ID,mgr);
+#endif
 
+      tmp2.create(ref.nbSamples(),TransformRQ15::FULLOUTPUT_Q15_ID,mgr);
     }
 
     void TransformRQ15::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)

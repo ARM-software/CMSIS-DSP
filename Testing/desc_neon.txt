@@ -1,0 +1,2970 @@
+group Root {
+    class = Root
+
+    group DSP Tests {
+        class = DSPTests
+        folder = DSP
+
+        group Transform Tests {
+            class = TransformTests
+            folder = TransformNeon 
+
+            suite Transform Complex F32 {
+               class = TransformNeonCF32
+               folder = TransformNeonF32
+
+
+               Pattern INPUTS_CFFT_NOISY_20_F32_ID : ComplexInputSamples_Noisy_20_1_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_20_F32_ID : ComplexInputIFFTSamples_Noisy_20_1_f32.txt 
+               Pattern REF_CFFT_NOISY_20_F32_ID : ComplexFFTSamples_Noisy_20_1_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_24_F32_ID : ComplexInputSamples_Noisy_24_2_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_24_F32_ID : ComplexInputIFFTSamples_Noisy_24_2_f32.txt 
+               Pattern REF_CFFT_NOISY_24_F32_ID : ComplexFFTSamples_Noisy_24_2_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_32_F32_ID : ComplexInputSamples_Noisy_32_3_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_32_F32_ID : ComplexInputIFFTSamples_Noisy_32_3_f32.txt 
+               Pattern REF_CFFT_NOISY_32_F32_ID : ComplexFFTSamples_Noisy_32_3_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_36_F32_ID : ComplexInputSamples_Noisy_36_4_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_36_F32_ID : ComplexInputIFFTSamples_Noisy_36_4_f32.txt 
+               Pattern REF_CFFT_NOISY_36_F32_ID : ComplexFFTSamples_Noisy_36_4_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_40_F32_ID : ComplexInputSamples_Noisy_40_5_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_40_F32_ID : ComplexInputIFFTSamples_Noisy_40_5_f32.txt 
+               Pattern REF_CFFT_NOISY_40_F32_ID : ComplexFFTSamples_Noisy_40_5_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_48_F32_ID : ComplexInputSamples_Noisy_48_6_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_48_F32_ID : ComplexInputIFFTSamples_Noisy_48_6_f32.txt 
+               Pattern REF_CFFT_NOISY_48_F32_ID : ComplexFFTSamples_Noisy_48_6_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_60_F32_ID : ComplexInputSamples_Noisy_60_7_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_60_F32_ID : ComplexInputIFFTSamples_Noisy_60_7_f32.txt 
+               Pattern REF_CFFT_NOISY_60_F32_ID : ComplexFFTSamples_Noisy_60_7_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_64_F32_ID : ComplexInputSamples_Noisy_64_8_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_64_F32_ID : ComplexInputIFFTSamples_Noisy_64_8_f32.txt 
+               Pattern REF_CFFT_NOISY_64_F32_ID : ComplexFFTSamples_Noisy_64_8_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_72_F32_ID : ComplexInputSamples_Noisy_72_9_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_72_F32_ID : ComplexInputIFFTSamples_Noisy_72_9_f32.txt 
+               Pattern REF_CFFT_NOISY_72_F32_ID : ComplexFFTSamples_Noisy_72_9_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_80_F32_ID : ComplexInputSamples_Noisy_80_10_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_80_F32_ID : ComplexInputIFFTSamples_Noisy_80_10_f32.txt 
+               Pattern REF_CFFT_NOISY_80_F32_ID : ComplexFFTSamples_Noisy_80_10_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_96_F32_ID : ComplexInputSamples_Noisy_96_11_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_96_F32_ID : ComplexInputIFFTSamples_Noisy_96_11_f32.txt 
+               Pattern REF_CFFT_NOISY_96_F32_ID : ComplexFFTSamples_Noisy_96_11_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_100_F32_ID : ComplexInputSamples_Noisy_100_12_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_100_F32_ID : ComplexInputIFFTSamples_Noisy_100_12_f32.txt 
+               Pattern REF_CFFT_NOISY_100_F32_ID : ComplexFFTSamples_Noisy_100_12_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_108_F32_ID : ComplexInputSamples_Noisy_108_13_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_108_F32_ID : ComplexInputIFFTSamples_Noisy_108_13_f32.txt 
+               Pattern REF_CFFT_NOISY_108_F32_ID : ComplexFFTSamples_Noisy_108_13_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_120_F32_ID : ComplexInputSamples_Noisy_120_14_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_120_F32_ID : ComplexInputIFFTSamples_Noisy_120_14_f32.txt 
+               Pattern REF_CFFT_NOISY_120_F32_ID : ComplexFFTSamples_Noisy_120_14_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_128_F32_ID : ComplexInputSamples_Noisy_128_15_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_128_F32_ID : ComplexInputIFFTSamples_Noisy_128_15_f32.txt 
+               Pattern REF_CFFT_NOISY_128_F32_ID : ComplexFFTSamples_Noisy_128_15_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_144_F32_ID : ComplexInputSamples_Noisy_144_16_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_144_F32_ID : ComplexInputIFFTSamples_Noisy_144_16_f32.txt 
+               Pattern REF_CFFT_NOISY_144_F32_ID : ComplexFFTSamples_Noisy_144_16_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_160_F32_ID : ComplexInputSamples_Noisy_160_17_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_160_F32_ID : ComplexInputIFFTSamples_Noisy_160_17_f32.txt 
+               Pattern REF_CFFT_NOISY_160_F32_ID : ComplexFFTSamples_Noisy_160_17_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_180_F32_ID : ComplexInputSamples_Noisy_180_18_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_180_F32_ID : ComplexInputIFFTSamples_Noisy_180_18_f32.txt 
+               Pattern REF_CFFT_NOISY_180_F32_ID : ComplexFFTSamples_Noisy_180_18_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_192_F32_ID : ComplexInputSamples_Noisy_192_19_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_192_F32_ID : ComplexInputIFFTSamples_Noisy_192_19_f32.txt 
+               Pattern REF_CFFT_NOISY_192_F32_ID : ComplexFFTSamples_Noisy_192_19_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_200_F32_ID : ComplexInputSamples_Noisy_200_20_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_200_F32_ID : ComplexInputIFFTSamples_Noisy_200_20_f32.txt 
+               Pattern REF_CFFT_NOISY_200_F32_ID : ComplexFFTSamples_Noisy_200_20_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_216_F32_ID : ComplexInputSamples_Noisy_216_21_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_216_F32_ID : ComplexInputIFFTSamples_Noisy_216_21_f32.txt 
+               Pattern REF_CFFT_NOISY_216_F32_ID : ComplexFFTSamples_Noisy_216_21_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_240_F32_ID : ComplexInputSamples_Noisy_240_22_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_240_F32_ID : ComplexInputIFFTSamples_Noisy_240_22_f32.txt 
+               Pattern REF_CFFT_NOISY_240_F32_ID : ComplexFFTSamples_Noisy_240_22_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_256_F32_ID : ComplexInputSamples_Noisy_256_23_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_256_F32_ID : ComplexInputIFFTSamples_Noisy_256_23_f32.txt 
+               Pattern REF_CFFT_NOISY_256_F32_ID : ComplexFFTSamples_Noisy_256_23_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_288_F32_ID : ComplexInputSamples_Noisy_288_24_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_288_F32_ID : ComplexInputIFFTSamples_Noisy_288_24_f32.txt 
+               Pattern REF_CFFT_NOISY_288_F32_ID : ComplexFFTSamples_Noisy_288_24_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_300_F32_ID : ComplexInputSamples_Noisy_300_25_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_300_F32_ID : ComplexInputIFFTSamples_Noisy_300_25_f32.txt 
+               Pattern REF_CFFT_NOISY_300_F32_ID : ComplexFFTSamples_Noisy_300_25_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_320_F32_ID : ComplexInputSamples_Noisy_320_26_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_320_F32_ID : ComplexInputIFFTSamples_Noisy_320_26_f32.txt 
+               Pattern REF_CFFT_NOISY_320_F32_ID : ComplexFFTSamples_Noisy_320_26_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_360_F32_ID : ComplexInputSamples_Noisy_360_27_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_360_F32_ID : ComplexInputIFFTSamples_Noisy_360_27_f32.txt 
+               Pattern REF_CFFT_NOISY_360_F32_ID : ComplexFFTSamples_Noisy_360_27_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_384_F32_ID : ComplexInputSamples_Noisy_384_28_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_384_F32_ID : ComplexInputIFFTSamples_Noisy_384_28_f32.txt 
+               Pattern REF_CFFT_NOISY_384_F32_ID : ComplexFFTSamples_Noisy_384_28_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_400_F32_ID : ComplexInputSamples_Noisy_400_29_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_400_F32_ID : ComplexInputIFFTSamples_Noisy_400_29_f32.txt 
+               Pattern REF_CFFT_NOISY_400_F32_ID : ComplexFFTSamples_Noisy_400_29_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_432_F32_ID : ComplexInputSamples_Noisy_432_30_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_432_F32_ID : ComplexInputIFFTSamples_Noisy_432_30_f32.txt 
+               Pattern REF_CFFT_NOISY_432_F32_ID : ComplexFFTSamples_Noisy_432_30_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_480_F32_ID : ComplexInputSamples_Noisy_480_31_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_480_F32_ID : ComplexInputIFFTSamples_Noisy_480_31_f32.txt 
+               Pattern REF_CFFT_NOISY_480_F32_ID : ComplexFFTSamples_Noisy_480_31_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_500_F32_ID : ComplexInputSamples_Noisy_500_32_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_500_F32_ID : ComplexInputIFFTSamples_Noisy_500_32_f32.txt 
+               Pattern REF_CFFT_NOISY_500_F32_ID : ComplexFFTSamples_Noisy_500_32_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_512_F32_ID : ComplexInputSamples_Noisy_512_33_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_512_F32_ID : ComplexInputIFFTSamples_Noisy_512_33_f32.txt 
+               Pattern REF_CFFT_NOISY_512_F32_ID : ComplexFFTSamples_Noisy_512_33_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_540_F32_ID : ComplexInputSamples_Noisy_540_34_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_540_F32_ID : ComplexInputIFFTSamples_Noisy_540_34_f32.txt 
+               Pattern REF_CFFT_NOISY_540_F32_ID : ComplexFFTSamples_Noisy_540_34_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_576_F32_ID : ComplexInputSamples_Noisy_576_35_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_576_F32_ID : ComplexInputIFFTSamples_Noisy_576_35_f32.txt 
+               Pattern REF_CFFT_NOISY_576_F32_ID : ComplexFFTSamples_Noisy_576_35_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_600_F32_ID : ComplexInputSamples_Noisy_600_36_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_600_F32_ID : ComplexInputIFFTSamples_Noisy_600_36_f32.txt 
+               Pattern REF_CFFT_NOISY_600_F32_ID : ComplexFFTSamples_Noisy_600_36_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_640_F32_ID : ComplexInputSamples_Noisy_640_37_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_640_F32_ID : ComplexInputIFFTSamples_Noisy_640_37_f32.txt 
+               Pattern REF_CFFT_NOISY_640_F32_ID : ComplexFFTSamples_Noisy_640_37_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_720_F32_ID : ComplexInputSamples_Noisy_720_38_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_720_F32_ID : ComplexInputIFFTSamples_Noisy_720_38_f32.txt 
+               Pattern REF_CFFT_NOISY_720_F32_ID : ComplexFFTSamples_Noisy_720_38_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_768_F32_ID : ComplexInputSamples_Noisy_768_39_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_768_F32_ID : ComplexInputIFFTSamples_Noisy_768_39_f32.txt 
+               Pattern REF_CFFT_NOISY_768_F32_ID : ComplexFFTSamples_Noisy_768_39_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_800_F32_ID : ComplexInputSamples_Noisy_800_40_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_800_F32_ID : ComplexInputIFFTSamples_Noisy_800_40_f32.txt 
+               Pattern REF_CFFT_NOISY_800_F32_ID : ComplexFFTSamples_Noisy_800_40_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_864_F32_ID : ComplexInputSamples_Noisy_864_41_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_864_F32_ID : ComplexInputIFFTSamples_Noisy_864_41_f32.txt 
+               Pattern REF_CFFT_NOISY_864_F32_ID : ComplexFFTSamples_Noisy_864_41_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_900_F32_ID : ComplexInputSamples_Noisy_900_42_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_900_F32_ID : ComplexInputIFFTSamples_Noisy_900_42_f32.txt 
+               Pattern REF_CFFT_NOISY_900_F32_ID : ComplexFFTSamples_Noisy_900_42_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_960_F32_ID : ComplexInputSamples_Noisy_960_43_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_960_F32_ID : ComplexInputIFFTSamples_Noisy_960_43_f32.txt 
+               Pattern REF_CFFT_NOISY_960_F32_ID : ComplexFFTSamples_Noisy_960_43_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1000_F32_ID : ComplexInputSamples_Noisy_1000_44_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_1000_F32_ID : ComplexInputIFFTSamples_Noisy_1000_44_f32.txt 
+               Pattern REF_CFFT_NOISY_1000_F32_ID : ComplexFFTSamples_Noisy_1000_44_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1024_F32_ID : ComplexInputSamples_Noisy_1024_45_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_1024_F32_ID : ComplexInputIFFTSamples_Noisy_1024_45_f32.txt 
+               Pattern REF_CFFT_NOISY_1024_F32_ID : ComplexFFTSamples_Noisy_1024_45_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1080_F32_ID : ComplexInputSamples_Noisy_1080_46_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_1080_F32_ID : ComplexInputIFFTSamples_Noisy_1080_46_f32.txt 
+               Pattern REF_CFFT_NOISY_1080_F32_ID : ComplexFFTSamples_Noisy_1080_46_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1152_F32_ID : ComplexInputSamples_Noisy_1152_47_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_1152_F32_ID : ComplexInputIFFTSamples_Noisy_1152_47_f32.txt 
+               Pattern REF_CFFT_NOISY_1152_F32_ID : ComplexFFTSamples_Noisy_1152_47_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1200_F32_ID : ComplexInputSamples_Noisy_1200_48_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_1200_F32_ID : ComplexInputIFFTSamples_Noisy_1200_48_f32.txt 
+               Pattern REF_CFFT_NOISY_1200_F32_ID : ComplexFFTSamples_Noisy_1200_48_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1280_F32_ID : ComplexInputSamples_Noisy_1280_49_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_1280_F32_ID : ComplexInputIFFTSamples_Noisy_1280_49_f32.txt 
+               Pattern REF_CFFT_NOISY_1280_F32_ID : ComplexFFTSamples_Noisy_1280_49_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1440_F32_ID : ComplexInputSamples_Noisy_1440_50_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_1440_F32_ID : ComplexInputIFFTSamples_Noisy_1440_50_f32.txt 
+               Pattern REF_CFFT_NOISY_1440_F32_ID : ComplexFFTSamples_Noisy_1440_50_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1500_F32_ID : ComplexInputSamples_Noisy_1500_51_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_1500_F32_ID : ComplexInputIFFTSamples_Noisy_1500_51_f32.txt 
+               Pattern REF_CFFT_NOISY_1500_F32_ID : ComplexFFTSamples_Noisy_1500_51_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1536_F32_ID : ComplexInputSamples_Noisy_1536_52_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_1536_F32_ID : ComplexInputIFFTSamples_Noisy_1536_52_f32.txt 
+               Pattern REF_CFFT_NOISY_1536_F32_ID : ComplexFFTSamples_Noisy_1536_52_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1600_F32_ID : ComplexInputSamples_Noisy_1600_53_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_1600_F32_ID : ComplexInputIFFTSamples_Noisy_1600_53_f32.txt 
+               Pattern REF_CFFT_NOISY_1600_F32_ID : ComplexFFTSamples_Noisy_1600_53_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1728_F32_ID : ComplexInputSamples_Noisy_1728_54_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_1728_F32_ID : ComplexInputIFFTSamples_Noisy_1728_54_f32.txt 
+               Pattern REF_CFFT_NOISY_1728_F32_ID : ComplexFFTSamples_Noisy_1728_54_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1800_F32_ID : ComplexInputSamples_Noisy_1800_55_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_1800_F32_ID : ComplexInputIFFTSamples_Noisy_1800_55_f32.txt 
+               Pattern REF_CFFT_NOISY_1800_F32_ID : ComplexFFTSamples_Noisy_1800_55_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1920_F32_ID : ComplexInputSamples_Noisy_1920_56_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_1920_F32_ID : ComplexInputIFFTSamples_Noisy_1920_56_f32.txt 
+               Pattern REF_CFFT_NOISY_1920_F32_ID : ComplexFFTSamples_Noisy_1920_56_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_2000_F32_ID : ComplexInputSamples_Noisy_2000_57_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_2000_F32_ID : ComplexInputIFFTSamples_Noisy_2000_57_f32.txt 
+               Pattern REF_CFFT_NOISY_2000_F32_ID : ComplexFFTSamples_Noisy_2000_57_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_2048_F32_ID : ComplexInputSamples_Noisy_2048_58_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_2048_F32_ID : ComplexInputIFFTSamples_Noisy_2048_58_f32.txt 
+               Pattern REF_CFFT_NOISY_2048_F32_ID : ComplexFFTSamples_Noisy_2048_58_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_2160_F32_ID : ComplexInputSamples_Noisy_2160_59_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_2160_F32_ID : ComplexInputIFFTSamples_Noisy_2160_59_f32.txt 
+               Pattern REF_CFFT_NOISY_2160_F32_ID : ComplexFFTSamples_Noisy_2160_59_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_2304_F32_ID : ComplexInputSamples_Noisy_2304_60_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_2304_F32_ID : ComplexInputIFFTSamples_Noisy_2304_60_f32.txt 
+               Pattern REF_CFFT_NOISY_2304_F32_ID : ComplexFFTSamples_Noisy_2304_60_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_2400_F32_ID : ComplexInputSamples_Noisy_2400_61_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_2400_F32_ID : ComplexInputIFFTSamples_Noisy_2400_61_f32.txt 
+               Pattern REF_CFFT_NOISY_2400_F32_ID : ComplexFFTSamples_Noisy_2400_61_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_2560_F32_ID : ComplexInputSamples_Noisy_2560_62_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_2560_F32_ID : ComplexInputIFFTSamples_Noisy_2560_62_f32.txt 
+               Pattern REF_CFFT_NOISY_2560_F32_ID : ComplexFFTSamples_Noisy_2560_62_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_2700_F32_ID : ComplexInputSamples_Noisy_2700_63_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_2700_F32_ID : ComplexInputIFFTSamples_Noisy_2700_63_f32.txt 
+               Pattern REF_CFFT_NOISY_2700_F32_ID : ComplexFFTSamples_Noisy_2700_63_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_2880_F32_ID : ComplexInputSamples_Noisy_2880_64_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_2880_F32_ID : ComplexInputIFFTSamples_Noisy_2880_64_f32.txt 
+               Pattern REF_CFFT_NOISY_2880_F32_ID : ComplexFFTSamples_Noisy_2880_64_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_3000_F32_ID : ComplexInputSamples_Noisy_3000_65_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_3000_F32_ID : ComplexInputIFFTSamples_Noisy_3000_65_f32.txt 
+               Pattern REF_CFFT_NOISY_3000_F32_ID : ComplexFFTSamples_Noisy_3000_65_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_3072_F32_ID : ComplexInputSamples_Noisy_3072_66_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_3072_F32_ID : ComplexInputIFFTSamples_Noisy_3072_66_f32.txt 
+               Pattern REF_CFFT_NOISY_3072_F32_ID : ComplexFFTSamples_Noisy_3072_66_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_3200_F32_ID : ComplexInputSamples_Noisy_3200_67_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_3200_F32_ID : ComplexInputIFFTSamples_Noisy_3200_67_f32.txt 
+               Pattern REF_CFFT_NOISY_3200_F32_ID : ComplexFFTSamples_Noisy_3200_67_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_3456_F32_ID : ComplexInputSamples_Noisy_3456_68_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_3456_F32_ID : ComplexInputIFFTSamples_Noisy_3456_68_f32.txt 
+               Pattern REF_CFFT_NOISY_3456_F32_ID : ComplexFFTSamples_Noisy_3456_68_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_3600_F32_ID : ComplexInputSamples_Noisy_3600_69_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_3600_F32_ID : ComplexInputIFFTSamples_Noisy_3600_69_f32.txt 
+               Pattern REF_CFFT_NOISY_3600_F32_ID : ComplexFFTSamples_Noisy_3600_69_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_3840_F32_ID : ComplexInputSamples_Noisy_3840_70_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_3840_F32_ID : ComplexInputIFFTSamples_Noisy_3840_70_f32.txt 
+               Pattern REF_CFFT_NOISY_3840_F32_ID : ComplexFFTSamples_Noisy_3840_70_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_4000_F32_ID : ComplexInputSamples_Noisy_4000_71_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_4000_F32_ID : ComplexInputIFFTSamples_Noisy_4000_71_f32.txt 
+               Pattern REF_CFFT_NOISY_4000_F32_ID : ComplexFFTSamples_Noisy_4000_71_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_4096_F32_ID : ComplexInputSamples_Noisy_4096_72_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_4096_F32_ID : ComplexInputIFFTSamples_Noisy_4096_72_f32.txt 
+               Pattern REF_CFFT_NOISY_4096_F32_ID : ComplexFFTSamples_Noisy_4096_72_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_4320_F32_ID : ComplexInputSamples_Noisy_4320_73_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_4320_F32_ID : ComplexInputIFFTSamples_Noisy_4320_73_f32.txt 
+               Pattern REF_CFFT_NOISY_4320_F32_ID : ComplexFFTSamples_Noisy_4320_73_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_4500_F32_ID : ComplexInputSamples_Noisy_4500_74_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_4500_F32_ID : ComplexInputIFFTSamples_Noisy_4500_74_f32.txt 
+               Pattern REF_CFFT_NOISY_4500_F32_ID : ComplexFFTSamples_Noisy_4500_74_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_4608_F32_ID : ComplexInputSamples_Noisy_4608_75_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_4608_F32_ID : ComplexInputIFFTSamples_Noisy_4608_75_f32.txt 
+               Pattern REF_CFFT_NOISY_4608_F32_ID : ComplexFFTSamples_Noisy_4608_75_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_4800_F32_ID : ComplexInputSamples_Noisy_4800_76_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_4800_F32_ID : ComplexInputIFFTSamples_Noisy_4800_76_f32.txt 
+               Pattern REF_CFFT_NOISY_4800_F32_ID : ComplexFFTSamples_Noisy_4800_76_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_5120_F32_ID : ComplexInputSamples_Noisy_5120_77_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_5120_F32_ID : ComplexInputIFFTSamples_Noisy_5120_77_f32.txt 
+               Pattern REF_CFFT_NOISY_5120_F32_ID : ComplexFFTSamples_Noisy_5120_77_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_5400_F32_ID : ComplexInputSamples_Noisy_5400_78_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_5400_F32_ID : ComplexInputIFFTSamples_Noisy_5400_78_f32.txt 
+               Pattern REF_CFFT_NOISY_5400_F32_ID : ComplexFFTSamples_Noisy_5400_78_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_20_F32_ID : ComplexInputSamples_Step_20_79_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_20_F32_ID : ComplexInputIFFTSamples_Step_20_79_f32.txt 
+               Pattern REF_CFFT_STEP_20_F32_ID : ComplexFFTSamples_Step_20_79_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_24_F32_ID : ComplexInputSamples_Step_24_80_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_24_F32_ID : ComplexInputIFFTSamples_Step_24_80_f32.txt 
+               Pattern REF_CFFT_STEP_24_F32_ID : ComplexFFTSamples_Step_24_80_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_32_F32_ID : ComplexInputSamples_Step_32_81_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_32_F32_ID : ComplexInputIFFTSamples_Step_32_81_f32.txt 
+               Pattern REF_CFFT_STEP_32_F32_ID : ComplexFFTSamples_Step_32_81_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_36_F32_ID : ComplexInputSamples_Step_36_82_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_36_F32_ID : ComplexInputIFFTSamples_Step_36_82_f32.txt 
+               Pattern REF_CFFT_STEP_36_F32_ID : ComplexFFTSamples_Step_36_82_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_40_F32_ID : ComplexInputSamples_Step_40_83_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_40_F32_ID : ComplexInputIFFTSamples_Step_40_83_f32.txt 
+               Pattern REF_CFFT_STEP_40_F32_ID : ComplexFFTSamples_Step_40_83_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_48_F32_ID : ComplexInputSamples_Step_48_84_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_48_F32_ID : ComplexInputIFFTSamples_Step_48_84_f32.txt 
+               Pattern REF_CFFT_STEP_48_F32_ID : ComplexFFTSamples_Step_48_84_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_60_F32_ID : ComplexInputSamples_Step_60_85_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_60_F32_ID : ComplexInputIFFTSamples_Step_60_85_f32.txt 
+               Pattern REF_CFFT_STEP_60_F32_ID : ComplexFFTSamples_Step_60_85_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_64_F32_ID : ComplexInputSamples_Step_64_86_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_64_F32_ID : ComplexInputIFFTSamples_Step_64_86_f32.txt 
+               Pattern REF_CFFT_STEP_64_F32_ID : ComplexFFTSamples_Step_64_86_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_72_F32_ID : ComplexInputSamples_Step_72_87_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_72_F32_ID : ComplexInputIFFTSamples_Step_72_87_f32.txt 
+               Pattern REF_CFFT_STEP_72_F32_ID : ComplexFFTSamples_Step_72_87_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_80_F32_ID : ComplexInputSamples_Step_80_88_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_80_F32_ID : ComplexInputIFFTSamples_Step_80_88_f32.txt 
+               Pattern REF_CFFT_STEP_80_F32_ID : ComplexFFTSamples_Step_80_88_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_96_F32_ID : ComplexInputSamples_Step_96_89_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_96_F32_ID : ComplexInputIFFTSamples_Step_96_89_f32.txt 
+               Pattern REF_CFFT_STEP_96_F32_ID : ComplexFFTSamples_Step_96_89_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_100_F32_ID : ComplexInputSamples_Step_100_90_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_100_F32_ID : ComplexInputIFFTSamples_Step_100_90_f32.txt 
+               Pattern REF_CFFT_STEP_100_F32_ID : ComplexFFTSamples_Step_100_90_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_108_F32_ID : ComplexInputSamples_Step_108_91_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_108_F32_ID : ComplexInputIFFTSamples_Step_108_91_f32.txt 
+               Pattern REF_CFFT_STEP_108_F32_ID : ComplexFFTSamples_Step_108_91_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_120_F32_ID : ComplexInputSamples_Step_120_92_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_120_F32_ID : ComplexInputIFFTSamples_Step_120_92_f32.txt 
+               Pattern REF_CFFT_STEP_120_F32_ID : ComplexFFTSamples_Step_120_92_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_128_F32_ID : ComplexInputSamples_Step_128_93_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_128_F32_ID : ComplexInputIFFTSamples_Step_128_93_f32.txt 
+               Pattern REF_CFFT_STEP_128_F32_ID : ComplexFFTSamples_Step_128_93_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_144_F32_ID : ComplexInputSamples_Step_144_94_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_144_F32_ID : ComplexInputIFFTSamples_Step_144_94_f32.txt 
+               Pattern REF_CFFT_STEP_144_F32_ID : ComplexFFTSamples_Step_144_94_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_160_F32_ID : ComplexInputSamples_Step_160_95_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_160_F32_ID : ComplexInputIFFTSamples_Step_160_95_f32.txt 
+               Pattern REF_CFFT_STEP_160_F32_ID : ComplexFFTSamples_Step_160_95_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_180_F32_ID : ComplexInputSamples_Step_180_96_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_180_F32_ID : ComplexInputIFFTSamples_Step_180_96_f32.txt 
+               Pattern REF_CFFT_STEP_180_F32_ID : ComplexFFTSamples_Step_180_96_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_192_F32_ID : ComplexInputSamples_Step_192_97_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_192_F32_ID : ComplexInputIFFTSamples_Step_192_97_f32.txt 
+               Pattern REF_CFFT_STEP_192_F32_ID : ComplexFFTSamples_Step_192_97_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_200_F32_ID : ComplexInputSamples_Step_200_98_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_200_F32_ID : ComplexInputIFFTSamples_Step_200_98_f32.txt 
+               Pattern REF_CFFT_STEP_200_F32_ID : ComplexFFTSamples_Step_200_98_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_216_F32_ID : ComplexInputSamples_Step_216_99_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_216_F32_ID : ComplexInputIFFTSamples_Step_216_99_f32.txt 
+               Pattern REF_CFFT_STEP_216_F32_ID : ComplexFFTSamples_Step_216_99_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_240_F32_ID : ComplexInputSamples_Step_240_100_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_240_F32_ID : ComplexInputIFFTSamples_Step_240_100_f32.txt 
+               Pattern REF_CFFT_STEP_240_F32_ID : ComplexFFTSamples_Step_240_100_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_256_F32_ID : ComplexInputSamples_Step_256_101_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_256_F32_ID : ComplexInputIFFTSamples_Step_256_101_f32.txt 
+               Pattern REF_CFFT_STEP_256_F32_ID : ComplexFFTSamples_Step_256_101_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_288_F32_ID : ComplexInputSamples_Step_288_102_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_288_F32_ID : ComplexInputIFFTSamples_Step_288_102_f32.txt 
+               Pattern REF_CFFT_STEP_288_F32_ID : ComplexFFTSamples_Step_288_102_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_300_F32_ID : ComplexInputSamples_Step_300_103_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_300_F32_ID : ComplexInputIFFTSamples_Step_300_103_f32.txt 
+               Pattern REF_CFFT_STEP_300_F32_ID : ComplexFFTSamples_Step_300_103_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_320_F32_ID : ComplexInputSamples_Step_320_104_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_320_F32_ID : ComplexInputIFFTSamples_Step_320_104_f32.txt 
+               Pattern REF_CFFT_STEP_320_F32_ID : ComplexFFTSamples_Step_320_104_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_360_F32_ID : ComplexInputSamples_Step_360_105_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_360_F32_ID : ComplexInputIFFTSamples_Step_360_105_f32.txt 
+               Pattern REF_CFFT_STEP_360_F32_ID : ComplexFFTSamples_Step_360_105_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_384_F32_ID : ComplexInputSamples_Step_384_106_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_384_F32_ID : ComplexInputIFFTSamples_Step_384_106_f32.txt 
+               Pattern REF_CFFT_STEP_384_F32_ID : ComplexFFTSamples_Step_384_106_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_400_F32_ID : ComplexInputSamples_Step_400_107_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_400_F32_ID : ComplexInputIFFTSamples_Step_400_107_f32.txt 
+               Pattern REF_CFFT_STEP_400_F32_ID : ComplexFFTSamples_Step_400_107_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_432_F32_ID : ComplexInputSamples_Step_432_108_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_432_F32_ID : ComplexInputIFFTSamples_Step_432_108_f32.txt 
+               Pattern REF_CFFT_STEP_432_F32_ID : ComplexFFTSamples_Step_432_108_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_480_F32_ID : ComplexInputSamples_Step_480_109_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_480_F32_ID : ComplexInputIFFTSamples_Step_480_109_f32.txt 
+               Pattern REF_CFFT_STEP_480_F32_ID : ComplexFFTSamples_Step_480_109_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_500_F32_ID : ComplexInputSamples_Step_500_110_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_500_F32_ID : ComplexInputIFFTSamples_Step_500_110_f32.txt 
+               Pattern REF_CFFT_STEP_500_F32_ID : ComplexFFTSamples_Step_500_110_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_512_F32_ID : ComplexInputSamples_Step_512_111_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_512_F32_ID : ComplexInputIFFTSamples_Step_512_111_f32.txt 
+               Pattern REF_CFFT_STEP_512_F32_ID : ComplexFFTSamples_Step_512_111_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_540_F32_ID : ComplexInputSamples_Step_540_112_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_540_F32_ID : ComplexInputIFFTSamples_Step_540_112_f32.txt 
+               Pattern REF_CFFT_STEP_540_F32_ID : ComplexFFTSamples_Step_540_112_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_576_F32_ID : ComplexInputSamples_Step_576_113_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_576_F32_ID : ComplexInputIFFTSamples_Step_576_113_f32.txt 
+               Pattern REF_CFFT_STEP_576_F32_ID : ComplexFFTSamples_Step_576_113_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_600_F32_ID : ComplexInputSamples_Step_600_114_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_600_F32_ID : ComplexInputIFFTSamples_Step_600_114_f32.txt 
+               Pattern REF_CFFT_STEP_600_F32_ID : ComplexFFTSamples_Step_600_114_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_640_F32_ID : ComplexInputSamples_Step_640_115_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_640_F32_ID : ComplexInputIFFTSamples_Step_640_115_f32.txt 
+               Pattern REF_CFFT_STEP_640_F32_ID : ComplexFFTSamples_Step_640_115_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_720_F32_ID : ComplexInputSamples_Step_720_116_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_720_F32_ID : ComplexInputIFFTSamples_Step_720_116_f32.txt 
+               Pattern REF_CFFT_STEP_720_F32_ID : ComplexFFTSamples_Step_720_116_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_768_F32_ID : ComplexInputSamples_Step_768_117_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_768_F32_ID : ComplexInputIFFTSamples_Step_768_117_f32.txt 
+               Pattern REF_CFFT_STEP_768_F32_ID : ComplexFFTSamples_Step_768_117_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_800_F32_ID : ComplexInputSamples_Step_800_118_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_800_F32_ID : ComplexInputIFFTSamples_Step_800_118_f32.txt 
+               Pattern REF_CFFT_STEP_800_F32_ID : ComplexFFTSamples_Step_800_118_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_864_F32_ID : ComplexInputSamples_Step_864_119_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_864_F32_ID : ComplexInputIFFTSamples_Step_864_119_f32.txt 
+               Pattern REF_CFFT_STEP_864_F32_ID : ComplexFFTSamples_Step_864_119_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_900_F32_ID : ComplexInputSamples_Step_900_120_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_900_F32_ID : ComplexInputIFFTSamples_Step_900_120_f32.txt 
+               Pattern REF_CFFT_STEP_900_F32_ID : ComplexFFTSamples_Step_900_120_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_960_F32_ID : ComplexInputSamples_Step_960_121_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_960_F32_ID : ComplexInputIFFTSamples_Step_960_121_f32.txt 
+               Pattern REF_CFFT_STEP_960_F32_ID : ComplexFFTSamples_Step_960_121_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_1000_F32_ID : ComplexInputSamples_Step_1000_122_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_1000_F32_ID : ComplexInputIFFTSamples_Step_1000_122_f32.txt 
+               Pattern REF_CFFT_STEP_1000_F32_ID : ComplexFFTSamples_Step_1000_122_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_1024_F32_ID : ComplexInputSamples_Step_1024_123_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_1024_F32_ID : ComplexInputIFFTSamples_Step_1024_123_f32.txt 
+               Pattern REF_CFFT_STEP_1024_F32_ID : ComplexFFTSamples_Step_1024_123_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_1080_F32_ID : ComplexInputSamples_Step_1080_124_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_1080_F32_ID : ComplexInputIFFTSamples_Step_1080_124_f32.txt 
+               Pattern REF_CFFT_STEP_1080_F32_ID : ComplexFFTSamples_Step_1080_124_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_1152_F32_ID : ComplexInputSamples_Step_1152_125_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_1152_F32_ID : ComplexInputIFFTSamples_Step_1152_125_f32.txt 
+               Pattern REF_CFFT_STEP_1152_F32_ID : ComplexFFTSamples_Step_1152_125_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_1200_F32_ID : ComplexInputSamples_Step_1200_126_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_1200_F32_ID : ComplexInputIFFTSamples_Step_1200_126_f32.txt 
+               Pattern REF_CFFT_STEP_1200_F32_ID : ComplexFFTSamples_Step_1200_126_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_1280_F32_ID : ComplexInputSamples_Step_1280_127_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_1280_F32_ID : ComplexInputIFFTSamples_Step_1280_127_f32.txt 
+               Pattern REF_CFFT_STEP_1280_F32_ID : ComplexFFTSamples_Step_1280_127_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_1440_F32_ID : ComplexInputSamples_Step_1440_128_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_1440_F32_ID : ComplexInputIFFTSamples_Step_1440_128_f32.txt 
+               Pattern REF_CFFT_STEP_1440_F32_ID : ComplexFFTSamples_Step_1440_128_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_1500_F32_ID : ComplexInputSamples_Step_1500_129_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_1500_F32_ID : ComplexInputIFFTSamples_Step_1500_129_f32.txt 
+               Pattern REF_CFFT_STEP_1500_F32_ID : ComplexFFTSamples_Step_1500_129_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_1536_F32_ID : ComplexInputSamples_Step_1536_130_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_1536_F32_ID : ComplexInputIFFTSamples_Step_1536_130_f32.txt 
+               Pattern REF_CFFT_STEP_1536_F32_ID : ComplexFFTSamples_Step_1536_130_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_1600_F32_ID : ComplexInputSamples_Step_1600_131_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_1600_F32_ID : ComplexInputIFFTSamples_Step_1600_131_f32.txt 
+               Pattern REF_CFFT_STEP_1600_F32_ID : ComplexFFTSamples_Step_1600_131_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_1728_F32_ID : ComplexInputSamples_Step_1728_132_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_1728_F32_ID : ComplexInputIFFTSamples_Step_1728_132_f32.txt 
+               Pattern REF_CFFT_STEP_1728_F32_ID : ComplexFFTSamples_Step_1728_132_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_1800_F32_ID : ComplexInputSamples_Step_1800_133_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_1800_F32_ID : ComplexInputIFFTSamples_Step_1800_133_f32.txt 
+               Pattern REF_CFFT_STEP_1800_F32_ID : ComplexFFTSamples_Step_1800_133_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_1920_F32_ID : ComplexInputSamples_Step_1920_134_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_1920_F32_ID : ComplexInputIFFTSamples_Step_1920_134_f32.txt 
+               Pattern REF_CFFT_STEP_1920_F32_ID : ComplexFFTSamples_Step_1920_134_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_2000_F32_ID : ComplexInputSamples_Step_2000_135_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_2000_F32_ID : ComplexInputIFFTSamples_Step_2000_135_f32.txt 
+               Pattern REF_CFFT_STEP_2000_F32_ID : ComplexFFTSamples_Step_2000_135_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_2048_F32_ID : ComplexInputSamples_Step_2048_136_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_2048_F32_ID : ComplexInputIFFTSamples_Step_2048_136_f32.txt 
+               Pattern REF_CFFT_STEP_2048_F32_ID : ComplexFFTSamples_Step_2048_136_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_2160_F32_ID : ComplexInputSamples_Step_2160_137_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_2160_F32_ID : ComplexInputIFFTSamples_Step_2160_137_f32.txt 
+               Pattern REF_CFFT_STEP_2160_F32_ID : ComplexFFTSamples_Step_2160_137_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_2304_F32_ID : ComplexInputSamples_Step_2304_138_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_2304_F32_ID : ComplexInputIFFTSamples_Step_2304_138_f32.txt 
+               Pattern REF_CFFT_STEP_2304_F32_ID : ComplexFFTSamples_Step_2304_138_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_2400_F32_ID : ComplexInputSamples_Step_2400_139_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_2400_F32_ID : ComplexInputIFFTSamples_Step_2400_139_f32.txt 
+               Pattern REF_CFFT_STEP_2400_F32_ID : ComplexFFTSamples_Step_2400_139_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_2560_F32_ID : ComplexInputSamples_Step_2560_140_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_2560_F32_ID : ComplexInputIFFTSamples_Step_2560_140_f32.txt 
+               Pattern REF_CFFT_STEP_2560_F32_ID : ComplexFFTSamples_Step_2560_140_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_2700_F32_ID : ComplexInputSamples_Step_2700_141_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_2700_F32_ID : ComplexInputIFFTSamples_Step_2700_141_f32.txt 
+               Pattern REF_CFFT_STEP_2700_F32_ID : ComplexFFTSamples_Step_2700_141_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_2880_F32_ID : ComplexInputSamples_Step_2880_142_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_2880_F32_ID : ComplexInputIFFTSamples_Step_2880_142_f32.txt 
+               Pattern REF_CFFT_STEP_2880_F32_ID : ComplexFFTSamples_Step_2880_142_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_3000_F32_ID : ComplexInputSamples_Step_3000_143_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_3000_F32_ID : ComplexInputIFFTSamples_Step_3000_143_f32.txt 
+               Pattern REF_CFFT_STEP_3000_F32_ID : ComplexFFTSamples_Step_3000_143_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_3072_F32_ID : ComplexInputSamples_Step_3072_144_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_3072_F32_ID : ComplexInputIFFTSamples_Step_3072_144_f32.txt 
+               Pattern REF_CFFT_STEP_3072_F32_ID : ComplexFFTSamples_Step_3072_144_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_3200_F32_ID : ComplexInputSamples_Step_3200_145_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_3200_F32_ID : ComplexInputIFFTSamples_Step_3200_145_f32.txt 
+               Pattern REF_CFFT_STEP_3200_F32_ID : ComplexFFTSamples_Step_3200_145_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_3456_F32_ID : ComplexInputSamples_Step_3456_146_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_3456_F32_ID : ComplexInputIFFTSamples_Step_3456_146_f32.txt 
+               Pattern REF_CFFT_STEP_3456_F32_ID : ComplexFFTSamples_Step_3456_146_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_3600_F32_ID : ComplexInputSamples_Step_3600_147_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_3600_F32_ID : ComplexInputIFFTSamples_Step_3600_147_f32.txt 
+               Pattern REF_CFFT_STEP_3600_F32_ID : ComplexFFTSamples_Step_3600_147_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_3840_F32_ID : ComplexInputSamples_Step_3840_148_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_3840_F32_ID : ComplexInputIFFTSamples_Step_3840_148_f32.txt 
+               Pattern REF_CFFT_STEP_3840_F32_ID : ComplexFFTSamples_Step_3840_148_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_4000_F32_ID : ComplexInputSamples_Step_4000_149_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_4000_F32_ID : ComplexInputIFFTSamples_Step_4000_149_f32.txt 
+               Pattern REF_CFFT_STEP_4000_F32_ID : ComplexFFTSamples_Step_4000_149_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_4096_F32_ID : ComplexInputSamples_Step_4096_150_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_4096_F32_ID : ComplexInputIFFTSamples_Step_4096_150_f32.txt 
+               Pattern REF_CFFT_STEP_4096_F32_ID : ComplexFFTSamples_Step_4096_150_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_4320_F32_ID : ComplexInputSamples_Step_4320_151_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_4320_F32_ID : ComplexInputIFFTSamples_Step_4320_151_f32.txt 
+               Pattern REF_CFFT_STEP_4320_F32_ID : ComplexFFTSamples_Step_4320_151_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_4500_F32_ID : ComplexInputSamples_Step_4500_152_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_4500_F32_ID : ComplexInputIFFTSamples_Step_4500_152_f32.txt 
+               Pattern REF_CFFT_STEP_4500_F32_ID : ComplexFFTSamples_Step_4500_152_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_4608_F32_ID : ComplexInputSamples_Step_4608_153_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_4608_F32_ID : ComplexInputIFFTSamples_Step_4608_153_f32.txt 
+               Pattern REF_CFFT_STEP_4608_F32_ID : ComplexFFTSamples_Step_4608_153_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_4800_F32_ID : ComplexInputSamples_Step_4800_154_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_4800_F32_ID : ComplexInputIFFTSamples_Step_4800_154_f32.txt 
+               Pattern REF_CFFT_STEP_4800_F32_ID : ComplexFFTSamples_Step_4800_154_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_5120_F32_ID : ComplexInputSamples_Step_5120_155_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_5120_F32_ID : ComplexInputIFFTSamples_Step_5120_155_f32.txt 
+               Pattern REF_CFFT_STEP_5120_F32_ID : ComplexFFTSamples_Step_5120_155_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_5400_F32_ID : ComplexInputSamples_Step_5400_156_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_5400_F32_ID : ComplexInputIFFTSamples_Step_5400_156_f32.txt 
+               Pattern REF_CFFT_STEP_5400_F32_ID : ComplexFFTSamples_Step_5400_156_f32.txt 
+
+               Output  OUTPUT_CFFT_F32_ID : ComplexFFTSamples
+
+               Functions {
+                  cfft_noisy_20_f32:test_cfft_f32
+                  cfft_noisy_24_f32:test_cfft_f32
+                  cfft_noisy_32_f32:test_cfft_f32
+                  cfft_noisy_36_f32:test_cfft_f32
+                  cfft_noisy_40_f32:test_cfft_f32
+                  cfft_noisy_48_f32:test_cfft_f32
+                  cfft_noisy_60_f32:test_cfft_f32
+                  cfft_noisy_64_f32:test_cfft_f32
+                  cfft_noisy_72_f32:test_cfft_f32
+                  cfft_noisy_80_f32:test_cfft_f32
+                  cfft_noisy_96_f32:test_cfft_f32
+                  cfft_noisy_100_f32:test_cfft_f32
+                  cfft_noisy_108_f32:test_cfft_f32
+                  cfft_noisy_120_f32:test_cfft_f32
+                  cfft_noisy_128_f32:test_cfft_f32
+                  cfft_noisy_144_f32:test_cfft_f32
+                  cfft_noisy_160_f32:test_cfft_f32
+                  cfft_noisy_180_f32:test_cfft_f32
+                  cfft_noisy_192_f32:test_cfft_f32
+                  cfft_noisy_200_f32:test_cfft_f32
+                  cfft_noisy_216_f32:test_cfft_f32
+                  cfft_noisy_240_f32:test_cfft_f32
+                  cfft_noisy_256_f32:test_cfft_f32
+                  cfft_noisy_288_f32:test_cfft_f32
+                  cfft_noisy_300_f32:test_cfft_f32
+                  cfft_noisy_320_f32:test_cfft_f32
+                  cfft_noisy_360_f32:test_cfft_f32
+                  cfft_noisy_384_f32:test_cfft_f32
+                  cfft_noisy_400_f32:test_cfft_f32
+                  cfft_noisy_432_f32:test_cfft_f32
+                  cfft_noisy_480_f32:test_cfft_f32
+                  cfft_noisy_500_f32:test_cfft_f32
+                  cfft_noisy_512_f32:test_cfft_f32
+                  cfft_noisy_540_f32:test_cfft_f32
+                  cfft_noisy_576_f32:test_cfft_f32
+                  cfft_noisy_600_f32:test_cfft_f32
+                  cfft_noisy_640_f32:test_cfft_f32
+                  cfft_noisy_720_f32:test_cfft_f32
+                  cfft_noisy_768_f32:test_cfft_f32
+                  cfft_noisy_800_f32:test_cfft_f32
+                  cfft_noisy_864_f32:test_cfft_f32
+                  cfft_noisy_900_f32:test_cfft_f32
+                  cfft_noisy_960_f32:test_cfft_f32
+                  cfft_noisy_1000_f32:test_cfft_f32
+                  cfft_noisy_1024_f32:test_cfft_f32
+                  cfft_noisy_1080_f32:test_cfft_f32
+                  cfft_noisy_1152_f32:test_cfft_f32
+                  cfft_noisy_1200_f32:test_cfft_f32
+                  cfft_noisy_1280_f32:test_cfft_f32
+                  cfft_noisy_1440_f32:test_cfft_f32
+                  cfft_noisy_1500_f32:test_cfft_f32
+                  cfft_noisy_1536_f32:test_cfft_f32
+                  cfft_noisy_1600_f32:test_cfft_f32
+                  cfft_noisy_1728_f32:test_cfft_f32
+                  cfft_noisy_1800_f32:test_cfft_f32
+                  cfft_noisy_1920_f32:test_cfft_f32
+                  cfft_noisy_2000_f32:test_cfft_f32
+                  cfft_noisy_2048_f32:test_cfft_f32
+                  cfft_noisy_2160_f32:test_cfft_f32
+                  cfft_noisy_2304_f32:test_cfft_f32
+                  cfft_noisy_2400_f32:test_cfft_f32
+                  cfft_noisy_2560_f32:test_cfft_f32
+                  cfft_noisy_2700_f32:test_cfft_f32
+                  cfft_noisy_2880_f32:test_cfft_f32
+                  cfft_noisy_3000_f32:test_cfft_f32
+                  cfft_noisy_3072_f32:test_cfft_f32
+                  cfft_noisy_3200_f32:test_cfft_f32
+                  cfft_noisy_3456_f32:test_cfft_f32
+                  cfft_noisy_3600_f32:test_cfft_f32
+                  cfft_noisy_3840_f32:test_cfft_f32
+                  cfft_noisy_4000_f32:test_cfft_f32
+                  cfft_noisy_4096_f32:test_cfft_f32
+                  cfft_noisy_4320_f32:test_cfft_f32
+                  cfft_noisy_4500_f32:test_cfft_f32
+                  cfft_noisy_4608_f32:test_cfft_f32
+                  disabled{cfft_noisy_4800_f32:test_cfft_f32}
+                  disabled{cfft_noisy_5120_f32:test_cfft_f32}
+                  disabled{cfft_noisy_5400_f32:test_cfft_f32}
+                  cfft_step_20_f32:test_cfft_f32
+                  cfft_step_24_f32:test_cfft_f32
+                  cfft_step_32_f32:test_cfft_f32
+                  cfft_step_36_f32:test_cfft_f32
+                  cfft_step_40_f32:test_cfft_f32
+                  cfft_step_48_f32:test_cfft_f32
+                  cfft_step_60_f32:test_cfft_f32
+                  cfft_step_64_f32:test_cfft_f32
+                  cfft_step_72_f32:test_cfft_f32
+                  cfft_step_80_f32:test_cfft_f32
+                  cfft_step_96_f32:test_cfft_f32
+                  cfft_step_100_f32:test_cfft_f32
+                  cfft_step_108_f32:test_cfft_f32
+                  cfft_step_120_f32:test_cfft_f32
+                  cfft_step_128_f32:test_cfft_f32
+                  cfft_step_144_f32:test_cfft_f32
+                  cfft_step_160_f32:test_cfft_f32
+                  cfft_step_180_f32:test_cfft_f32
+                  cfft_step_192_f32:test_cfft_f32
+                  cfft_step_200_f32:test_cfft_f32
+                  cfft_step_216_f32:test_cfft_f32
+                  cfft_step_240_f32:test_cfft_f32
+                  cfft_step_256_f32:test_cfft_f32
+                  cfft_step_288_f32:test_cfft_f32
+                  cfft_step_300_f32:test_cfft_f32
+                  cfft_step_320_f32:test_cfft_f32
+                  cfft_step_360_f32:test_cfft_f32
+                  cfft_step_384_f32:test_cfft_f32
+                  cfft_step_400_f32:test_cfft_f32
+                  cfft_step_432_f32:test_cfft_f32
+                  cfft_step_480_f32:test_cfft_f32
+                  cfft_step_500_f32:test_cfft_f32
+                  cfft_step_512_f32:test_cfft_f32
+                  cfft_step_540_f32:test_cfft_f32
+                  cfft_step_576_f32:test_cfft_f32
+                  cfft_step_600_f32:test_cfft_f32
+                  cfft_step_640_f32:test_cfft_f32
+                  cfft_step_720_f32:test_cfft_f32
+                  cfft_step_768_f32:test_cfft_f32
+                  cfft_step_800_f32:test_cfft_f32
+                  cfft_step_864_f32:test_cfft_f32
+                  cfft_step_900_f32:test_cfft_f32
+                  cfft_step_960_f32:test_cfft_f32
+                  cfft_step_1000_f32:test_cfft_f32
+                  cfft_step_1024_f32:test_cfft_f32
+                  cfft_step_1080_f32:test_cfft_f32
+                  cfft_step_1152_f32:test_cfft_f32
+                  cfft_step_1200_f32:test_cfft_f32
+                  cfft_step_1280_f32:test_cfft_f32
+                  cfft_step_1440_f32:test_cfft_f32
+                  cfft_step_1500_f32:test_cfft_f32
+                  cfft_step_1536_f32:test_cfft_f32
+                  cfft_step_1600_f32:test_cfft_f32
+                  cfft_step_1728_f32:test_cfft_f32
+                  cfft_step_1800_f32:test_cfft_f32
+                  cfft_step_1920_f32:test_cfft_f32
+                  cfft_step_2000_f32:test_cfft_f32
+                  cfft_step_2048_f32:test_cfft_f32
+                  cfft_step_2160_f32:test_cfft_f32
+                  cfft_step_2304_f32:test_cfft_f32
+                  cfft_step_2400_f32:test_cfft_f32
+                  cfft_step_2560_f32:test_cfft_f32
+                  cfft_step_2700_f32:test_cfft_f32
+                  cfft_step_2880_f32:test_cfft_f32
+                  cfft_step_3000_f32:test_cfft_f32
+                  cfft_step_3072_f32:test_cfft_f32
+                  cfft_step_3200_f32:test_cfft_f32
+                  cfft_step_3456_f32:test_cfft_f32
+                  cfft_step_3600_f32:test_cfft_f32
+                  cfft_step_3840_f32:test_cfft_f32
+                  cfft_step_4000_f32:test_cfft_f32
+                  cfft_step_4096_f32:test_cfft_f32
+                  cfft_step_4320_f32:test_cfft_f32
+                  cfft_step_4500_f32:test_cfft_f32
+                  cfft_step_4608_f32:test_cfft_f32
+                  disabled{cfft_step_4800_f32:test_cfft_f32}
+                  disabled{cfft_step_5120_f32:test_cfft_f32}
+                  disabled{cfft_step_5400_f32:test_cfft_f32}
+                  cifft_noisy_20_f32:test_cfft_f32
+                  cifft_noisy_24_f32:test_cfft_f32
+                  cifft_noisy_32_f32:test_cfft_f32
+                  cifft_noisy_36_f32:test_cfft_f32
+                  cifft_noisy_40_f32:test_cfft_f32
+                  cifft_noisy_48_f32:test_cfft_f32
+                  cifft_noisy_60_f32:test_cfft_f32
+                  cifft_noisy_64_f32:test_cfft_f32
+                  cifft_noisy_72_f32:test_cfft_f32
+                  cifft_noisy_80_f32:test_cfft_f32
+                  cifft_noisy_96_f32:test_cfft_f32
+                  cifft_noisy_100_f32:test_cfft_f32
+                  cifft_noisy_108_f32:test_cfft_f32
+                  cifft_noisy_120_f32:test_cfft_f32
+                  cifft_noisy_128_f32:test_cfft_f32
+                  cifft_noisy_144_f32:test_cfft_f32
+                  cifft_noisy_160_f32:test_cfft_f32
+                  cifft_noisy_180_f32:test_cfft_f32
+                  cifft_noisy_192_f32:test_cfft_f32
+                  cifft_noisy_200_f32:test_cfft_f32
+                  cifft_noisy_216_f32:test_cfft_f32
+                  cifft_noisy_240_f32:test_cfft_f32
+                  cifft_noisy_256_f32:test_cfft_f32
+                  cifft_noisy_288_f32:test_cfft_f32
+                  cifft_noisy_300_f32:test_cfft_f32
+                  cifft_noisy_320_f32:test_cfft_f32
+                  cifft_noisy_360_f32:test_cfft_f32
+                  cifft_noisy_384_f32:test_cfft_f32
+                  cifft_noisy_400_f32:test_cfft_f32
+                  cifft_noisy_432_f32:test_cfft_f32
+                  cifft_noisy_480_f32:test_cfft_f32
+                  cifft_noisy_500_f32:test_cfft_f32
+                  cifft_noisy_512_f32:test_cfft_f32
+                  cifft_noisy_540_f32:test_cfft_f32
+                  cifft_noisy_576_f32:test_cfft_f32
+                  cifft_noisy_600_f32:test_cfft_f32
+                  cifft_noisy_640_f32:test_cfft_f32
+                  cifft_noisy_720_f32:test_cfft_f32
+                  cifft_noisy_768_f32:test_cfft_f32
+                  cifft_noisy_800_f32:test_cfft_f32
+                  cifft_noisy_864_f32:test_cfft_f32
+                  cifft_noisy_900_f32:test_cfft_f32
+                  cifft_noisy_960_f32:test_cfft_f32
+                  cifft_noisy_1000_f32:test_cfft_f32
+                  cifft_noisy_1024_f32:test_cfft_f32
+                  cifft_noisy_1080_f32:test_cfft_f32
+                  cifft_noisy_1152_f32:test_cfft_f32
+                  cifft_noisy_1200_f32:test_cfft_f32
+                  cifft_noisy_1280_f32:test_cfft_f32
+                  cifft_noisy_1440_f32:test_cfft_f32
+                  cifft_noisy_1500_f32:test_cfft_f32
+                  cifft_noisy_1536_f32:test_cfft_f32
+                  cifft_noisy_1600_f32:test_cfft_f32
+                  cifft_noisy_1728_f32:test_cfft_f32
+                  cifft_noisy_1800_f32:test_cfft_f32
+                  cifft_noisy_1920_f32:test_cfft_f32
+                  cifft_noisy_2000_f32:test_cfft_f32
+                  cifft_noisy_2048_f32:test_cfft_f32
+                  cifft_noisy_2160_f32:test_cfft_f32
+                  cifft_noisy_2304_f32:test_cfft_f32
+                  cifft_noisy_2400_f32:test_cfft_f32
+                  cifft_noisy_2560_f32:test_cfft_f32
+                  cifft_noisy_2700_f32:test_cfft_f32
+                  cifft_noisy_2880_f32:test_cfft_f32
+                  cifft_noisy_3000_f32:test_cfft_f32
+                  cifft_noisy_3072_f32:test_cfft_f32
+                  cifft_noisy_3200_f32:test_cfft_f32
+                  cifft_noisy_3456_f32:test_cfft_f32
+                  cifft_noisy_3600_f32:test_cfft_f32
+                  cifft_noisy_3840_f32:test_cfft_f32
+                  cifft_noisy_4000_f32:test_cfft_f32
+                  cifft_noisy_4096_f32:test_cfft_f32
+                  cifft_noisy_4320_f32:test_cfft_f32
+                  cifft_noisy_4500_f32:test_cfft_f32
+                  cifft_noisy_4608_f32:test_cfft_f32
+                  disabled{cifft_noisy_4800_f32:test_cfft_f32}
+                  disabled{cifft_noisy_5120_f32:test_cfft_f32}
+                  disabled{cifft_noisy_5400_f32:test_cfft_f32}
+                  cifft_step_20_f32:test_cfft_f32
+                  cifft_step_24_f32:test_cfft_f32
+                  cifft_step_32_f32:test_cfft_f32
+                  cifft_step_36_f32:test_cfft_f32
+                  cifft_step_40_f32:test_cfft_f32
+                  cifft_step_48_f32:test_cfft_f32
+                  cifft_step_60_f32:test_cfft_f32
+                  cifft_step_64_f32:test_cfft_f32
+                  cifft_step_72_f32:test_cfft_f32
+                  cifft_step_80_f32:test_cfft_f32
+                  cifft_step_96_f32:test_cfft_f32
+                  cifft_step_100_f32:test_cfft_f32
+                  cifft_step_108_f32:test_cfft_f32
+                  cifft_step_120_f32:test_cfft_f32
+                  cifft_step_128_f32:test_cfft_f32
+                  cifft_step_144_f32:test_cfft_f32
+                  cifft_step_160_f32:test_cfft_f32
+                  cifft_step_180_f32:test_cfft_f32
+                  cifft_step_192_f32:test_cfft_f32
+                  cifft_step_200_f32:test_cfft_f32
+                  cifft_step_216_f32:test_cfft_f32
+                  cifft_step_240_f32:test_cfft_f32
+                  cifft_step_256_f32:test_cfft_f32
+                  cifft_step_288_f32:test_cfft_f32
+                  cifft_step_300_f32:test_cfft_f32
+                  cifft_step_320_f32:test_cfft_f32
+                  cifft_step_360_f32:test_cfft_f32
+                  cifft_step_384_f32:test_cfft_f32
+                  cifft_step_400_f32:test_cfft_f32
+                  cifft_step_432_f32:test_cfft_f32
+                  cifft_step_480_f32:test_cfft_f32
+                  cifft_step_500_f32:test_cfft_f32
+                  cifft_step_512_f32:test_cfft_f32
+                  cifft_step_540_f32:test_cfft_f32
+                  cifft_step_576_f32:test_cfft_f32
+                  cifft_step_600_f32:test_cfft_f32
+                  cifft_step_640_f32:test_cfft_f32
+                  cifft_step_720_f32:test_cfft_f32
+                  cifft_step_768_f32:test_cfft_f32
+                  cifft_step_800_f32:test_cfft_f32
+                  cifft_step_864_f32:test_cfft_f32
+                  cifft_step_900_f32:test_cfft_f32
+                  cifft_step_960_f32:test_cfft_f32
+                  cifft_step_1000_f32:test_cfft_f32
+                  cifft_step_1024_f32:test_cfft_f32
+                  cifft_step_1080_f32:test_cfft_f32
+                  cifft_step_1152_f32:test_cfft_f32
+                  cifft_step_1200_f32:test_cfft_f32
+                  cifft_step_1280_f32:test_cfft_f32
+                  cifft_step_1440_f32:test_cfft_f32
+                  cifft_step_1500_f32:test_cfft_f32
+                  cifft_step_1536_f32:test_cfft_f32
+                  cifft_step_1600_f32:test_cfft_f32
+                  cifft_step_1728_f32:test_cfft_f32
+                  cifft_step_1800_f32:test_cfft_f32
+                  cifft_step_1920_f32:test_cfft_f32
+                  cifft_step_2000_f32:test_cfft_f32
+                  cifft_step_2048_f32:test_cfft_f32
+                  cifft_step_2160_f32:test_cfft_f32
+                  cifft_step_2304_f32:test_cfft_f32
+                  cifft_step_2400_f32:test_cfft_f32
+                  cifft_step_2560_f32:test_cfft_f32
+                  cifft_step_2700_f32:test_cfft_f32
+                  cifft_step_2880_f32:test_cfft_f32
+                  cifft_step_3000_f32:test_cfft_f32
+                  cifft_step_3072_f32:test_cfft_f32
+                  cifft_step_3200_f32:test_cfft_f32
+                  cifft_step_3456_f32:test_cfft_f32
+                  cifft_step_3600_f32:test_cfft_f32
+                  cifft_step_3840_f32:test_cfft_f32
+                  cifft_step_4000_f32:test_cfft_f32
+                  cifft_step_4096_f32:test_cfft_f32
+                  cifft_step_4320_f32:test_cfft_f32
+                  cifft_step_4500_f32:test_cfft_f32
+                  cifft_step_4608_f32:test_cfft_f32
+                  disabled{cifft_step_4800_f32:test_cfft_f32}
+                  disabled{cifft_step_5120_f32:test_cfft_f32}
+                  disabled{cifft_step_5400_f32:test_cfft_f32}
+               }
+           }
+            suite Transform Complex F16 {
+               class = TransformNeonCF16
+               folder = TransformNeonF16
+
+
+               Pattern INPUTS_CFFT_NOISY_20_F16_ID : ComplexInputSamples_Noisy_20_1_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_20_F16_ID : ComplexInputIFFTSamples_Noisy_20_1_f16.txt 
+               Pattern REF_CFFT_NOISY_20_F16_ID : ComplexFFTSamples_Noisy_20_1_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_24_F16_ID : ComplexInputSamples_Noisy_24_2_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_24_F16_ID : ComplexInputIFFTSamples_Noisy_24_2_f16.txt 
+               Pattern REF_CFFT_NOISY_24_F16_ID : ComplexFFTSamples_Noisy_24_2_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_32_F16_ID : ComplexInputSamples_Noisy_32_3_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_32_F16_ID : ComplexInputIFFTSamples_Noisy_32_3_f16.txt 
+               Pattern REF_CFFT_NOISY_32_F16_ID : ComplexFFTSamples_Noisy_32_3_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_36_F16_ID : ComplexInputSamples_Noisy_36_4_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_36_F16_ID : ComplexInputIFFTSamples_Noisy_36_4_f16.txt 
+               Pattern REF_CFFT_NOISY_36_F16_ID : ComplexFFTSamples_Noisy_36_4_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_40_F16_ID : ComplexInputSamples_Noisy_40_5_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_40_F16_ID : ComplexInputIFFTSamples_Noisy_40_5_f16.txt 
+               Pattern REF_CFFT_NOISY_40_F16_ID : ComplexFFTSamples_Noisy_40_5_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_48_F16_ID : ComplexInputSamples_Noisy_48_6_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_48_F16_ID : ComplexInputIFFTSamples_Noisy_48_6_f16.txt 
+               Pattern REF_CFFT_NOISY_48_F16_ID : ComplexFFTSamples_Noisy_48_6_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_60_F16_ID : ComplexInputSamples_Noisy_60_7_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_60_F16_ID : ComplexInputIFFTSamples_Noisy_60_7_f16.txt 
+               Pattern REF_CFFT_NOISY_60_F16_ID : ComplexFFTSamples_Noisy_60_7_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_64_F16_ID : ComplexInputSamples_Noisy_64_8_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_64_F16_ID : ComplexInputIFFTSamples_Noisy_64_8_f16.txt 
+               Pattern REF_CFFT_NOISY_64_F16_ID : ComplexFFTSamples_Noisy_64_8_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_72_F16_ID : ComplexInputSamples_Noisy_72_9_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_72_F16_ID : ComplexInputIFFTSamples_Noisy_72_9_f16.txt 
+               Pattern REF_CFFT_NOISY_72_F16_ID : ComplexFFTSamples_Noisy_72_9_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_80_F16_ID : ComplexInputSamples_Noisy_80_10_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_80_F16_ID : ComplexInputIFFTSamples_Noisy_80_10_f16.txt 
+               Pattern REF_CFFT_NOISY_80_F16_ID : ComplexFFTSamples_Noisy_80_10_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_96_F16_ID : ComplexInputSamples_Noisy_96_11_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_96_F16_ID : ComplexInputIFFTSamples_Noisy_96_11_f16.txt 
+               Pattern REF_CFFT_NOISY_96_F16_ID : ComplexFFTSamples_Noisy_96_11_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_100_F16_ID : ComplexInputSamples_Noisy_100_12_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_100_F16_ID : ComplexInputIFFTSamples_Noisy_100_12_f16.txt 
+               Pattern REF_CFFT_NOISY_100_F16_ID : ComplexFFTSamples_Noisy_100_12_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_108_F16_ID : ComplexInputSamples_Noisy_108_13_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_108_F16_ID : ComplexInputIFFTSamples_Noisy_108_13_f16.txt 
+               Pattern REF_CFFT_NOISY_108_F16_ID : ComplexFFTSamples_Noisy_108_13_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_120_F16_ID : ComplexInputSamples_Noisy_120_14_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_120_F16_ID : ComplexInputIFFTSamples_Noisy_120_14_f16.txt 
+               Pattern REF_CFFT_NOISY_120_F16_ID : ComplexFFTSamples_Noisy_120_14_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_128_F16_ID : ComplexInputSamples_Noisy_128_15_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_128_F16_ID : ComplexInputIFFTSamples_Noisy_128_15_f16.txt 
+               Pattern REF_CFFT_NOISY_128_F16_ID : ComplexFFTSamples_Noisy_128_15_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_144_F16_ID : ComplexInputSamples_Noisy_144_16_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_144_F16_ID : ComplexInputIFFTSamples_Noisy_144_16_f16.txt 
+               Pattern REF_CFFT_NOISY_144_F16_ID : ComplexFFTSamples_Noisy_144_16_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_160_F16_ID : ComplexInputSamples_Noisy_160_17_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_160_F16_ID : ComplexInputIFFTSamples_Noisy_160_17_f16.txt 
+               Pattern REF_CFFT_NOISY_160_F16_ID : ComplexFFTSamples_Noisy_160_17_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_180_F16_ID : ComplexInputSamples_Noisy_180_18_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_180_F16_ID : ComplexInputIFFTSamples_Noisy_180_18_f16.txt 
+               Pattern REF_CFFT_NOISY_180_F16_ID : ComplexFFTSamples_Noisy_180_18_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_192_F16_ID : ComplexInputSamples_Noisy_192_19_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_192_F16_ID : ComplexInputIFFTSamples_Noisy_192_19_f16.txt 
+               Pattern REF_CFFT_NOISY_192_F16_ID : ComplexFFTSamples_Noisy_192_19_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_200_F16_ID : ComplexInputSamples_Noisy_200_20_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_200_F16_ID : ComplexInputIFFTSamples_Noisy_200_20_f16.txt 
+               Pattern REF_CFFT_NOISY_200_F16_ID : ComplexFFTSamples_Noisy_200_20_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_216_F16_ID : ComplexInputSamples_Noisy_216_21_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_216_F16_ID : ComplexInputIFFTSamples_Noisy_216_21_f16.txt 
+               Pattern REF_CFFT_NOISY_216_F16_ID : ComplexFFTSamples_Noisy_216_21_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_240_F16_ID : ComplexInputSamples_Noisy_240_22_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_240_F16_ID : ComplexInputIFFTSamples_Noisy_240_22_f16.txt 
+               Pattern REF_CFFT_NOISY_240_F16_ID : ComplexFFTSamples_Noisy_240_22_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_256_F16_ID : ComplexInputSamples_Noisy_256_23_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_256_F16_ID : ComplexInputIFFTSamples_Noisy_256_23_f16.txt 
+               Pattern REF_CFFT_NOISY_256_F16_ID : ComplexFFTSamples_Noisy_256_23_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_288_F16_ID : ComplexInputSamples_Noisy_288_24_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_288_F16_ID : ComplexInputIFFTSamples_Noisy_288_24_f16.txt 
+               Pattern REF_CFFT_NOISY_288_F16_ID : ComplexFFTSamples_Noisy_288_24_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_300_F16_ID : ComplexInputSamples_Noisy_300_25_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_300_F16_ID : ComplexInputIFFTSamples_Noisy_300_25_f16.txt 
+               Pattern REF_CFFT_NOISY_300_F16_ID : ComplexFFTSamples_Noisy_300_25_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_320_F16_ID : ComplexInputSamples_Noisy_320_26_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_320_F16_ID : ComplexInputIFFTSamples_Noisy_320_26_f16.txt 
+               Pattern REF_CFFT_NOISY_320_F16_ID : ComplexFFTSamples_Noisy_320_26_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_360_F16_ID : ComplexInputSamples_Noisy_360_27_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_360_F16_ID : ComplexInputIFFTSamples_Noisy_360_27_f16.txt 
+               Pattern REF_CFFT_NOISY_360_F16_ID : ComplexFFTSamples_Noisy_360_27_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_384_F16_ID : ComplexInputSamples_Noisy_384_28_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_384_F16_ID : ComplexInputIFFTSamples_Noisy_384_28_f16.txt 
+               Pattern REF_CFFT_NOISY_384_F16_ID : ComplexFFTSamples_Noisy_384_28_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_400_F16_ID : ComplexInputSamples_Noisy_400_29_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_400_F16_ID : ComplexInputIFFTSamples_Noisy_400_29_f16.txt 
+               Pattern REF_CFFT_NOISY_400_F16_ID : ComplexFFTSamples_Noisy_400_29_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_432_F16_ID : ComplexInputSamples_Noisy_432_30_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_432_F16_ID : ComplexInputIFFTSamples_Noisy_432_30_f16.txt 
+               Pattern REF_CFFT_NOISY_432_F16_ID : ComplexFFTSamples_Noisy_432_30_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_480_F16_ID : ComplexInputSamples_Noisy_480_31_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_480_F16_ID : ComplexInputIFFTSamples_Noisy_480_31_f16.txt 
+               Pattern REF_CFFT_NOISY_480_F16_ID : ComplexFFTSamples_Noisy_480_31_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_500_F16_ID : ComplexInputSamples_Noisy_500_32_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_500_F16_ID : ComplexInputIFFTSamples_Noisy_500_32_f16.txt 
+               Pattern REF_CFFT_NOISY_500_F16_ID : ComplexFFTSamples_Noisy_500_32_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_512_F16_ID : ComplexInputSamples_Noisy_512_33_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_512_F16_ID : ComplexInputIFFTSamples_Noisy_512_33_f16.txt 
+               Pattern REF_CFFT_NOISY_512_F16_ID : ComplexFFTSamples_Noisy_512_33_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_540_F16_ID : ComplexInputSamples_Noisy_540_34_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_540_F16_ID : ComplexInputIFFTSamples_Noisy_540_34_f16.txt 
+               Pattern REF_CFFT_NOISY_540_F16_ID : ComplexFFTSamples_Noisy_540_34_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_576_F16_ID : ComplexInputSamples_Noisy_576_35_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_576_F16_ID : ComplexInputIFFTSamples_Noisy_576_35_f16.txt 
+               Pattern REF_CFFT_NOISY_576_F16_ID : ComplexFFTSamples_Noisy_576_35_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_600_F16_ID : ComplexInputSamples_Noisy_600_36_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_600_F16_ID : ComplexInputIFFTSamples_Noisy_600_36_f16.txt 
+               Pattern REF_CFFT_NOISY_600_F16_ID : ComplexFFTSamples_Noisy_600_36_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_640_F16_ID : ComplexInputSamples_Noisy_640_37_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_640_F16_ID : ComplexInputIFFTSamples_Noisy_640_37_f16.txt 
+               Pattern REF_CFFT_NOISY_640_F16_ID : ComplexFFTSamples_Noisy_640_37_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_720_F16_ID : ComplexInputSamples_Noisy_720_38_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_720_F16_ID : ComplexInputIFFTSamples_Noisy_720_38_f16.txt 
+               Pattern REF_CFFT_NOISY_720_F16_ID : ComplexFFTSamples_Noisy_720_38_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_768_F16_ID : ComplexInputSamples_Noisy_768_39_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_768_F16_ID : ComplexInputIFFTSamples_Noisy_768_39_f16.txt 
+               Pattern REF_CFFT_NOISY_768_F16_ID : ComplexFFTSamples_Noisy_768_39_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_800_F16_ID : ComplexInputSamples_Noisy_800_40_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_800_F16_ID : ComplexInputIFFTSamples_Noisy_800_40_f16.txt 
+               Pattern REF_CFFT_NOISY_800_F16_ID : ComplexFFTSamples_Noisy_800_40_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_864_F16_ID : ComplexInputSamples_Noisy_864_41_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_864_F16_ID : ComplexInputIFFTSamples_Noisy_864_41_f16.txt 
+               Pattern REF_CFFT_NOISY_864_F16_ID : ComplexFFTSamples_Noisy_864_41_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_900_F16_ID : ComplexInputSamples_Noisy_900_42_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_900_F16_ID : ComplexInputIFFTSamples_Noisy_900_42_f16.txt 
+               Pattern REF_CFFT_NOISY_900_F16_ID : ComplexFFTSamples_Noisy_900_42_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_960_F16_ID : ComplexInputSamples_Noisy_960_43_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_960_F16_ID : ComplexInputIFFTSamples_Noisy_960_43_f16.txt 
+               Pattern REF_CFFT_NOISY_960_F16_ID : ComplexFFTSamples_Noisy_960_43_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1000_F16_ID : ComplexInputSamples_Noisy_1000_44_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_1000_F16_ID : ComplexInputIFFTSamples_Noisy_1000_44_f16.txt 
+               Pattern REF_CFFT_NOISY_1000_F16_ID : ComplexFFTSamples_Noisy_1000_44_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1024_F16_ID : ComplexInputSamples_Noisy_1024_45_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_1024_F16_ID : ComplexInputIFFTSamples_Noisy_1024_45_f16.txt 
+               Pattern REF_CFFT_NOISY_1024_F16_ID : ComplexFFTSamples_Noisy_1024_45_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1080_F16_ID : ComplexInputSamples_Noisy_1080_46_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_1080_F16_ID : ComplexInputIFFTSamples_Noisy_1080_46_f16.txt 
+               Pattern REF_CFFT_NOISY_1080_F16_ID : ComplexFFTSamples_Noisy_1080_46_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1152_F16_ID : ComplexInputSamples_Noisy_1152_47_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_1152_F16_ID : ComplexInputIFFTSamples_Noisy_1152_47_f16.txt 
+               Pattern REF_CFFT_NOISY_1152_F16_ID : ComplexFFTSamples_Noisy_1152_47_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1200_F16_ID : ComplexInputSamples_Noisy_1200_48_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_1200_F16_ID : ComplexInputIFFTSamples_Noisy_1200_48_f16.txt 
+               Pattern REF_CFFT_NOISY_1200_F16_ID : ComplexFFTSamples_Noisy_1200_48_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1280_F16_ID : ComplexInputSamples_Noisy_1280_49_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_1280_F16_ID : ComplexInputIFFTSamples_Noisy_1280_49_f16.txt 
+               Pattern REF_CFFT_NOISY_1280_F16_ID : ComplexFFTSamples_Noisy_1280_49_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1440_F16_ID : ComplexInputSamples_Noisy_1440_50_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_1440_F16_ID : ComplexInputIFFTSamples_Noisy_1440_50_f16.txt 
+               Pattern REF_CFFT_NOISY_1440_F16_ID : ComplexFFTSamples_Noisy_1440_50_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1500_F16_ID : ComplexInputSamples_Noisy_1500_51_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_1500_F16_ID : ComplexInputIFFTSamples_Noisy_1500_51_f16.txt 
+               Pattern REF_CFFT_NOISY_1500_F16_ID : ComplexFFTSamples_Noisy_1500_51_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1536_F16_ID : ComplexInputSamples_Noisy_1536_52_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_1536_F16_ID : ComplexInputIFFTSamples_Noisy_1536_52_f16.txt 
+               Pattern REF_CFFT_NOISY_1536_F16_ID : ComplexFFTSamples_Noisy_1536_52_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1600_F16_ID : ComplexInputSamples_Noisy_1600_53_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_1600_F16_ID : ComplexInputIFFTSamples_Noisy_1600_53_f16.txt 
+               Pattern REF_CFFT_NOISY_1600_F16_ID : ComplexFFTSamples_Noisy_1600_53_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1728_F16_ID : ComplexInputSamples_Noisy_1728_54_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_1728_F16_ID : ComplexInputIFFTSamples_Noisy_1728_54_f16.txt 
+               Pattern REF_CFFT_NOISY_1728_F16_ID : ComplexFFTSamples_Noisy_1728_54_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1800_F16_ID : ComplexInputSamples_Noisy_1800_55_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_1800_F16_ID : ComplexInputIFFTSamples_Noisy_1800_55_f16.txt 
+               Pattern REF_CFFT_NOISY_1800_F16_ID : ComplexFFTSamples_Noisy_1800_55_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1920_F16_ID : ComplexInputSamples_Noisy_1920_56_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_1920_F16_ID : ComplexInputIFFTSamples_Noisy_1920_56_f16.txt 
+               Pattern REF_CFFT_NOISY_1920_F16_ID : ComplexFFTSamples_Noisy_1920_56_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_2000_F16_ID : ComplexInputSamples_Noisy_2000_57_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_2000_F16_ID : ComplexInputIFFTSamples_Noisy_2000_57_f16.txt 
+               Pattern REF_CFFT_NOISY_2000_F16_ID : ComplexFFTSamples_Noisy_2000_57_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_2048_F16_ID : ComplexInputSamples_Noisy_2048_58_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_2048_F16_ID : ComplexInputIFFTSamples_Noisy_2048_58_f16.txt 
+               Pattern REF_CFFT_NOISY_2048_F16_ID : ComplexFFTSamples_Noisy_2048_58_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_2160_F16_ID : ComplexInputSamples_Noisy_2160_59_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_2160_F16_ID : ComplexInputIFFTSamples_Noisy_2160_59_f16.txt 
+               Pattern REF_CFFT_NOISY_2160_F16_ID : ComplexFFTSamples_Noisy_2160_59_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_2304_F16_ID : ComplexInputSamples_Noisy_2304_60_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_2304_F16_ID : ComplexInputIFFTSamples_Noisy_2304_60_f16.txt 
+               Pattern REF_CFFT_NOISY_2304_F16_ID : ComplexFFTSamples_Noisy_2304_60_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_2400_F16_ID : ComplexInputSamples_Noisy_2400_61_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_2400_F16_ID : ComplexInputIFFTSamples_Noisy_2400_61_f16.txt 
+               Pattern REF_CFFT_NOISY_2400_F16_ID : ComplexFFTSamples_Noisy_2400_61_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_2560_F16_ID : ComplexInputSamples_Noisy_2560_62_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_2560_F16_ID : ComplexInputIFFTSamples_Noisy_2560_62_f16.txt 
+               Pattern REF_CFFT_NOISY_2560_F16_ID : ComplexFFTSamples_Noisy_2560_62_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_2700_F16_ID : ComplexInputSamples_Noisy_2700_63_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_2700_F16_ID : ComplexInputIFFTSamples_Noisy_2700_63_f16.txt 
+               Pattern REF_CFFT_NOISY_2700_F16_ID : ComplexFFTSamples_Noisy_2700_63_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_2880_F16_ID : ComplexInputSamples_Noisy_2880_64_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_2880_F16_ID : ComplexInputIFFTSamples_Noisy_2880_64_f16.txt 
+               Pattern REF_CFFT_NOISY_2880_F16_ID : ComplexFFTSamples_Noisy_2880_64_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_3000_F16_ID : ComplexInputSamples_Noisy_3000_65_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_3000_F16_ID : ComplexInputIFFTSamples_Noisy_3000_65_f16.txt 
+               Pattern REF_CFFT_NOISY_3000_F16_ID : ComplexFFTSamples_Noisy_3000_65_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_3072_F16_ID : ComplexInputSamples_Noisy_3072_66_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_3072_F16_ID : ComplexInputIFFTSamples_Noisy_3072_66_f16.txt 
+               Pattern REF_CFFT_NOISY_3072_F16_ID : ComplexFFTSamples_Noisy_3072_66_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_3200_F16_ID : ComplexInputSamples_Noisy_3200_67_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_3200_F16_ID : ComplexInputIFFTSamples_Noisy_3200_67_f16.txt 
+               Pattern REF_CFFT_NOISY_3200_F16_ID : ComplexFFTSamples_Noisy_3200_67_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_3456_F16_ID : ComplexInputSamples_Noisy_3456_68_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_3456_F16_ID : ComplexInputIFFTSamples_Noisy_3456_68_f16.txt 
+               Pattern REF_CFFT_NOISY_3456_F16_ID : ComplexFFTSamples_Noisy_3456_68_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_3600_F16_ID : ComplexInputSamples_Noisy_3600_69_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_3600_F16_ID : ComplexInputIFFTSamples_Noisy_3600_69_f16.txt 
+               Pattern REF_CFFT_NOISY_3600_F16_ID : ComplexFFTSamples_Noisy_3600_69_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_3840_F16_ID : ComplexInputSamples_Noisy_3840_70_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_3840_F16_ID : ComplexInputIFFTSamples_Noisy_3840_70_f16.txt 
+               Pattern REF_CFFT_NOISY_3840_F16_ID : ComplexFFTSamples_Noisy_3840_70_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_4000_F16_ID : ComplexInputSamples_Noisy_4000_71_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_4000_F16_ID : ComplexInputIFFTSamples_Noisy_4000_71_f16.txt 
+               Pattern REF_CFFT_NOISY_4000_F16_ID : ComplexFFTSamples_Noisy_4000_71_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_4096_F16_ID : ComplexInputSamples_Noisy_4096_72_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_4096_F16_ID : ComplexInputIFFTSamples_Noisy_4096_72_f16.txt 
+               Pattern REF_CFFT_NOISY_4096_F16_ID : ComplexFFTSamples_Noisy_4096_72_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_4320_F16_ID : ComplexInputSamples_Noisy_4320_73_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_4320_F16_ID : ComplexInputIFFTSamples_Noisy_4320_73_f16.txt 
+               Pattern REF_CFFT_NOISY_4320_F16_ID : ComplexFFTSamples_Noisy_4320_73_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_4500_F16_ID : ComplexInputSamples_Noisy_4500_74_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_4500_F16_ID : ComplexInputIFFTSamples_Noisy_4500_74_f16.txt 
+               Pattern REF_CFFT_NOISY_4500_F16_ID : ComplexFFTSamples_Noisy_4500_74_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_4608_F16_ID : ComplexInputSamples_Noisy_4608_75_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_4608_F16_ID : ComplexInputIFFTSamples_Noisy_4608_75_f16.txt 
+               Pattern REF_CFFT_NOISY_4608_F16_ID : ComplexFFTSamples_Noisy_4608_75_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_4800_F16_ID : ComplexInputSamples_Noisy_4800_76_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_4800_F16_ID : ComplexInputIFFTSamples_Noisy_4800_76_f16.txt 
+               Pattern REF_CFFT_NOISY_4800_F16_ID : ComplexFFTSamples_Noisy_4800_76_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_5120_F16_ID : ComplexInputSamples_Noisy_5120_77_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_5120_F16_ID : ComplexInputIFFTSamples_Noisy_5120_77_f16.txt 
+               Pattern REF_CFFT_NOISY_5120_F16_ID : ComplexFFTSamples_Noisy_5120_77_f16.txt 
+
+               Pattern INPUTS_CFFT_NOISY_5400_F16_ID : ComplexInputSamples_Noisy_5400_78_f16.txt 
+               Pattern INPUTS_CIFFT_NOISY_5400_F16_ID : ComplexInputIFFTSamples_Noisy_5400_78_f16.txt 
+               Pattern REF_CFFT_NOISY_5400_F16_ID : ComplexFFTSamples_Noisy_5400_78_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_20_F16_ID : ComplexInputSamples_Step_20_79_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_20_F16_ID : ComplexInputIFFTSamples_Step_20_79_f16.txt 
+               Pattern REF_CFFT_STEP_20_F16_ID : ComplexFFTSamples_Step_20_79_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_24_F16_ID : ComplexInputSamples_Step_24_80_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_24_F16_ID : ComplexInputIFFTSamples_Step_24_80_f16.txt 
+               Pattern REF_CFFT_STEP_24_F16_ID : ComplexFFTSamples_Step_24_80_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_32_F16_ID : ComplexInputSamples_Step_32_81_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_32_F16_ID : ComplexInputIFFTSamples_Step_32_81_f16.txt 
+               Pattern REF_CFFT_STEP_32_F16_ID : ComplexFFTSamples_Step_32_81_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_36_F16_ID : ComplexInputSamples_Step_36_82_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_36_F16_ID : ComplexInputIFFTSamples_Step_36_82_f16.txt 
+               Pattern REF_CFFT_STEP_36_F16_ID : ComplexFFTSamples_Step_36_82_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_40_F16_ID : ComplexInputSamples_Step_40_83_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_40_F16_ID : ComplexInputIFFTSamples_Step_40_83_f16.txt 
+               Pattern REF_CFFT_STEP_40_F16_ID : ComplexFFTSamples_Step_40_83_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_48_F16_ID : ComplexInputSamples_Step_48_84_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_48_F16_ID : ComplexInputIFFTSamples_Step_48_84_f16.txt 
+               Pattern REF_CFFT_STEP_48_F16_ID : ComplexFFTSamples_Step_48_84_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_60_F16_ID : ComplexInputSamples_Step_60_85_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_60_F16_ID : ComplexInputIFFTSamples_Step_60_85_f16.txt 
+               Pattern REF_CFFT_STEP_60_F16_ID : ComplexFFTSamples_Step_60_85_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_64_F16_ID : ComplexInputSamples_Step_64_86_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_64_F16_ID : ComplexInputIFFTSamples_Step_64_86_f16.txt 
+               Pattern REF_CFFT_STEP_64_F16_ID : ComplexFFTSamples_Step_64_86_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_72_F16_ID : ComplexInputSamples_Step_72_87_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_72_F16_ID : ComplexInputIFFTSamples_Step_72_87_f16.txt 
+               Pattern REF_CFFT_STEP_72_F16_ID : ComplexFFTSamples_Step_72_87_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_80_F16_ID : ComplexInputSamples_Step_80_88_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_80_F16_ID : ComplexInputIFFTSamples_Step_80_88_f16.txt 
+               Pattern REF_CFFT_STEP_80_F16_ID : ComplexFFTSamples_Step_80_88_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_96_F16_ID : ComplexInputSamples_Step_96_89_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_96_F16_ID : ComplexInputIFFTSamples_Step_96_89_f16.txt 
+               Pattern REF_CFFT_STEP_96_F16_ID : ComplexFFTSamples_Step_96_89_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_100_F16_ID : ComplexInputSamples_Step_100_90_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_100_F16_ID : ComplexInputIFFTSamples_Step_100_90_f16.txt 
+               Pattern REF_CFFT_STEP_100_F16_ID : ComplexFFTSamples_Step_100_90_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_108_F16_ID : ComplexInputSamples_Step_108_91_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_108_F16_ID : ComplexInputIFFTSamples_Step_108_91_f16.txt 
+               Pattern REF_CFFT_STEP_108_F16_ID : ComplexFFTSamples_Step_108_91_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_120_F16_ID : ComplexInputSamples_Step_120_92_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_120_F16_ID : ComplexInputIFFTSamples_Step_120_92_f16.txt 
+               Pattern REF_CFFT_STEP_120_F16_ID : ComplexFFTSamples_Step_120_92_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_128_F16_ID : ComplexInputSamples_Step_128_93_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_128_F16_ID : ComplexInputIFFTSamples_Step_128_93_f16.txt 
+               Pattern REF_CFFT_STEP_128_F16_ID : ComplexFFTSamples_Step_128_93_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_144_F16_ID : ComplexInputSamples_Step_144_94_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_144_F16_ID : ComplexInputIFFTSamples_Step_144_94_f16.txt 
+               Pattern REF_CFFT_STEP_144_F16_ID : ComplexFFTSamples_Step_144_94_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_160_F16_ID : ComplexInputSamples_Step_160_95_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_160_F16_ID : ComplexInputIFFTSamples_Step_160_95_f16.txt 
+               Pattern REF_CFFT_STEP_160_F16_ID : ComplexFFTSamples_Step_160_95_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_180_F16_ID : ComplexInputSamples_Step_180_96_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_180_F16_ID : ComplexInputIFFTSamples_Step_180_96_f16.txt 
+               Pattern REF_CFFT_STEP_180_F16_ID : ComplexFFTSamples_Step_180_96_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_192_F16_ID : ComplexInputSamples_Step_192_97_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_192_F16_ID : ComplexInputIFFTSamples_Step_192_97_f16.txt 
+               Pattern REF_CFFT_STEP_192_F16_ID : ComplexFFTSamples_Step_192_97_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_200_F16_ID : ComplexInputSamples_Step_200_98_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_200_F16_ID : ComplexInputIFFTSamples_Step_200_98_f16.txt 
+               Pattern REF_CFFT_STEP_200_F16_ID : ComplexFFTSamples_Step_200_98_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_216_F16_ID : ComplexInputSamples_Step_216_99_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_216_F16_ID : ComplexInputIFFTSamples_Step_216_99_f16.txt 
+               Pattern REF_CFFT_STEP_216_F16_ID : ComplexFFTSamples_Step_216_99_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_240_F16_ID : ComplexInputSamples_Step_240_100_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_240_F16_ID : ComplexInputIFFTSamples_Step_240_100_f16.txt 
+               Pattern REF_CFFT_STEP_240_F16_ID : ComplexFFTSamples_Step_240_100_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_256_F16_ID : ComplexInputSamples_Step_256_101_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_256_F16_ID : ComplexInputIFFTSamples_Step_256_101_f16.txt 
+               Pattern REF_CFFT_STEP_256_F16_ID : ComplexFFTSamples_Step_256_101_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_288_F16_ID : ComplexInputSamples_Step_288_102_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_288_F16_ID : ComplexInputIFFTSamples_Step_288_102_f16.txt 
+               Pattern REF_CFFT_STEP_288_F16_ID : ComplexFFTSamples_Step_288_102_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_300_F16_ID : ComplexInputSamples_Step_300_103_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_300_F16_ID : ComplexInputIFFTSamples_Step_300_103_f16.txt 
+               Pattern REF_CFFT_STEP_300_F16_ID : ComplexFFTSamples_Step_300_103_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_320_F16_ID : ComplexInputSamples_Step_320_104_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_320_F16_ID : ComplexInputIFFTSamples_Step_320_104_f16.txt 
+               Pattern REF_CFFT_STEP_320_F16_ID : ComplexFFTSamples_Step_320_104_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_360_F16_ID : ComplexInputSamples_Step_360_105_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_360_F16_ID : ComplexInputIFFTSamples_Step_360_105_f16.txt 
+               Pattern REF_CFFT_STEP_360_F16_ID : ComplexFFTSamples_Step_360_105_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_384_F16_ID : ComplexInputSamples_Step_384_106_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_384_F16_ID : ComplexInputIFFTSamples_Step_384_106_f16.txt 
+               Pattern REF_CFFT_STEP_384_F16_ID : ComplexFFTSamples_Step_384_106_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_400_F16_ID : ComplexInputSamples_Step_400_107_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_400_F16_ID : ComplexInputIFFTSamples_Step_400_107_f16.txt 
+               Pattern REF_CFFT_STEP_400_F16_ID : ComplexFFTSamples_Step_400_107_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_432_F16_ID : ComplexInputSamples_Step_432_108_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_432_F16_ID : ComplexInputIFFTSamples_Step_432_108_f16.txt 
+               Pattern REF_CFFT_STEP_432_F16_ID : ComplexFFTSamples_Step_432_108_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_480_F16_ID : ComplexInputSamples_Step_480_109_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_480_F16_ID : ComplexInputIFFTSamples_Step_480_109_f16.txt 
+               Pattern REF_CFFT_STEP_480_F16_ID : ComplexFFTSamples_Step_480_109_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_500_F16_ID : ComplexInputSamples_Step_500_110_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_500_F16_ID : ComplexInputIFFTSamples_Step_500_110_f16.txt 
+               Pattern REF_CFFT_STEP_500_F16_ID : ComplexFFTSamples_Step_500_110_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_512_F16_ID : ComplexInputSamples_Step_512_111_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_512_F16_ID : ComplexInputIFFTSamples_Step_512_111_f16.txt 
+               Pattern REF_CFFT_STEP_512_F16_ID : ComplexFFTSamples_Step_512_111_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_540_F16_ID : ComplexInputSamples_Step_540_112_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_540_F16_ID : ComplexInputIFFTSamples_Step_540_112_f16.txt 
+               Pattern REF_CFFT_STEP_540_F16_ID : ComplexFFTSamples_Step_540_112_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_576_F16_ID : ComplexInputSamples_Step_576_113_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_576_F16_ID : ComplexInputIFFTSamples_Step_576_113_f16.txt 
+               Pattern REF_CFFT_STEP_576_F16_ID : ComplexFFTSamples_Step_576_113_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_600_F16_ID : ComplexInputSamples_Step_600_114_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_600_F16_ID : ComplexInputIFFTSamples_Step_600_114_f16.txt 
+               Pattern REF_CFFT_STEP_600_F16_ID : ComplexFFTSamples_Step_600_114_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_640_F16_ID : ComplexInputSamples_Step_640_115_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_640_F16_ID : ComplexInputIFFTSamples_Step_640_115_f16.txt 
+               Pattern REF_CFFT_STEP_640_F16_ID : ComplexFFTSamples_Step_640_115_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_720_F16_ID : ComplexInputSamples_Step_720_116_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_720_F16_ID : ComplexInputIFFTSamples_Step_720_116_f16.txt 
+               Pattern REF_CFFT_STEP_720_F16_ID : ComplexFFTSamples_Step_720_116_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_768_F16_ID : ComplexInputSamples_Step_768_117_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_768_F16_ID : ComplexInputIFFTSamples_Step_768_117_f16.txt 
+               Pattern REF_CFFT_STEP_768_F16_ID : ComplexFFTSamples_Step_768_117_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_800_F16_ID : ComplexInputSamples_Step_800_118_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_800_F16_ID : ComplexInputIFFTSamples_Step_800_118_f16.txt 
+               Pattern REF_CFFT_STEP_800_F16_ID : ComplexFFTSamples_Step_800_118_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_864_F16_ID : ComplexInputSamples_Step_864_119_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_864_F16_ID : ComplexInputIFFTSamples_Step_864_119_f16.txt 
+               Pattern REF_CFFT_STEP_864_F16_ID : ComplexFFTSamples_Step_864_119_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_900_F16_ID : ComplexInputSamples_Step_900_120_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_900_F16_ID : ComplexInputIFFTSamples_Step_900_120_f16.txt 
+               Pattern REF_CFFT_STEP_900_F16_ID : ComplexFFTSamples_Step_900_120_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_960_F16_ID : ComplexInputSamples_Step_960_121_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_960_F16_ID : ComplexInputIFFTSamples_Step_960_121_f16.txt 
+               Pattern REF_CFFT_STEP_960_F16_ID : ComplexFFTSamples_Step_960_121_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_1000_F16_ID : ComplexInputSamples_Step_1000_122_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_1000_F16_ID : ComplexInputIFFTSamples_Step_1000_122_f16.txt 
+               Pattern REF_CFFT_STEP_1000_F16_ID : ComplexFFTSamples_Step_1000_122_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_1024_F16_ID : ComplexInputSamples_Step_1024_123_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_1024_F16_ID : ComplexInputIFFTSamples_Step_1024_123_f16.txt 
+               Pattern REF_CFFT_STEP_1024_F16_ID : ComplexFFTSamples_Step_1024_123_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_1080_F16_ID : ComplexInputSamples_Step_1080_124_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_1080_F16_ID : ComplexInputIFFTSamples_Step_1080_124_f16.txt 
+               Pattern REF_CFFT_STEP_1080_F16_ID : ComplexFFTSamples_Step_1080_124_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_1152_F16_ID : ComplexInputSamples_Step_1152_125_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_1152_F16_ID : ComplexInputIFFTSamples_Step_1152_125_f16.txt 
+               Pattern REF_CFFT_STEP_1152_F16_ID : ComplexFFTSamples_Step_1152_125_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_1200_F16_ID : ComplexInputSamples_Step_1200_126_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_1200_F16_ID : ComplexInputIFFTSamples_Step_1200_126_f16.txt 
+               Pattern REF_CFFT_STEP_1200_F16_ID : ComplexFFTSamples_Step_1200_126_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_1280_F16_ID : ComplexInputSamples_Step_1280_127_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_1280_F16_ID : ComplexInputIFFTSamples_Step_1280_127_f16.txt 
+               Pattern REF_CFFT_STEP_1280_F16_ID : ComplexFFTSamples_Step_1280_127_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_1440_F16_ID : ComplexInputSamples_Step_1440_128_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_1440_F16_ID : ComplexInputIFFTSamples_Step_1440_128_f16.txt 
+               Pattern REF_CFFT_STEP_1440_F16_ID : ComplexFFTSamples_Step_1440_128_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_1500_F16_ID : ComplexInputSamples_Step_1500_129_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_1500_F16_ID : ComplexInputIFFTSamples_Step_1500_129_f16.txt 
+               Pattern REF_CFFT_STEP_1500_F16_ID : ComplexFFTSamples_Step_1500_129_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_1536_F16_ID : ComplexInputSamples_Step_1536_130_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_1536_F16_ID : ComplexInputIFFTSamples_Step_1536_130_f16.txt 
+               Pattern REF_CFFT_STEP_1536_F16_ID : ComplexFFTSamples_Step_1536_130_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_1600_F16_ID : ComplexInputSamples_Step_1600_131_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_1600_F16_ID : ComplexInputIFFTSamples_Step_1600_131_f16.txt 
+               Pattern REF_CFFT_STEP_1600_F16_ID : ComplexFFTSamples_Step_1600_131_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_1728_F16_ID : ComplexInputSamples_Step_1728_132_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_1728_F16_ID : ComplexInputIFFTSamples_Step_1728_132_f16.txt 
+               Pattern REF_CFFT_STEP_1728_F16_ID : ComplexFFTSamples_Step_1728_132_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_1800_F16_ID : ComplexInputSamples_Step_1800_133_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_1800_F16_ID : ComplexInputIFFTSamples_Step_1800_133_f16.txt 
+               Pattern REF_CFFT_STEP_1800_F16_ID : ComplexFFTSamples_Step_1800_133_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_1920_F16_ID : ComplexInputSamples_Step_1920_134_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_1920_F16_ID : ComplexInputIFFTSamples_Step_1920_134_f16.txt 
+               Pattern REF_CFFT_STEP_1920_F16_ID : ComplexFFTSamples_Step_1920_134_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_2000_F16_ID : ComplexInputSamples_Step_2000_135_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_2000_F16_ID : ComplexInputIFFTSamples_Step_2000_135_f16.txt 
+               Pattern REF_CFFT_STEP_2000_F16_ID : ComplexFFTSamples_Step_2000_135_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_2048_F16_ID : ComplexInputSamples_Step_2048_136_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_2048_F16_ID : ComplexInputIFFTSamples_Step_2048_136_f16.txt 
+               Pattern REF_CFFT_STEP_2048_F16_ID : ComplexFFTSamples_Step_2048_136_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_2160_F16_ID : ComplexInputSamples_Step_2160_137_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_2160_F16_ID : ComplexInputIFFTSamples_Step_2160_137_f16.txt 
+               Pattern REF_CFFT_STEP_2160_F16_ID : ComplexFFTSamples_Step_2160_137_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_2304_F16_ID : ComplexInputSamples_Step_2304_138_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_2304_F16_ID : ComplexInputIFFTSamples_Step_2304_138_f16.txt 
+               Pattern REF_CFFT_STEP_2304_F16_ID : ComplexFFTSamples_Step_2304_138_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_2400_F16_ID : ComplexInputSamples_Step_2400_139_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_2400_F16_ID : ComplexInputIFFTSamples_Step_2400_139_f16.txt 
+               Pattern REF_CFFT_STEP_2400_F16_ID : ComplexFFTSamples_Step_2400_139_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_2560_F16_ID : ComplexInputSamples_Step_2560_140_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_2560_F16_ID : ComplexInputIFFTSamples_Step_2560_140_f16.txt 
+               Pattern REF_CFFT_STEP_2560_F16_ID : ComplexFFTSamples_Step_2560_140_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_2700_F16_ID : ComplexInputSamples_Step_2700_141_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_2700_F16_ID : ComplexInputIFFTSamples_Step_2700_141_f16.txt 
+               Pattern REF_CFFT_STEP_2700_F16_ID : ComplexFFTSamples_Step_2700_141_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_2880_F16_ID : ComplexInputSamples_Step_2880_142_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_2880_F16_ID : ComplexInputIFFTSamples_Step_2880_142_f16.txt 
+               Pattern REF_CFFT_STEP_2880_F16_ID : ComplexFFTSamples_Step_2880_142_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_3000_F16_ID : ComplexInputSamples_Step_3000_143_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_3000_F16_ID : ComplexInputIFFTSamples_Step_3000_143_f16.txt 
+               Pattern REF_CFFT_STEP_3000_F16_ID : ComplexFFTSamples_Step_3000_143_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_3072_F16_ID : ComplexInputSamples_Step_3072_144_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_3072_F16_ID : ComplexInputIFFTSamples_Step_3072_144_f16.txt 
+               Pattern REF_CFFT_STEP_3072_F16_ID : ComplexFFTSamples_Step_3072_144_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_3200_F16_ID : ComplexInputSamples_Step_3200_145_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_3200_F16_ID : ComplexInputIFFTSamples_Step_3200_145_f16.txt 
+               Pattern REF_CFFT_STEP_3200_F16_ID : ComplexFFTSamples_Step_3200_145_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_3456_F16_ID : ComplexInputSamples_Step_3456_146_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_3456_F16_ID : ComplexInputIFFTSamples_Step_3456_146_f16.txt 
+               Pattern REF_CFFT_STEP_3456_F16_ID : ComplexFFTSamples_Step_3456_146_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_3600_F16_ID : ComplexInputSamples_Step_3600_147_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_3600_F16_ID : ComplexInputIFFTSamples_Step_3600_147_f16.txt 
+               Pattern REF_CFFT_STEP_3600_F16_ID : ComplexFFTSamples_Step_3600_147_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_3840_F16_ID : ComplexInputSamples_Step_3840_148_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_3840_F16_ID : ComplexInputIFFTSamples_Step_3840_148_f16.txt 
+               Pattern REF_CFFT_STEP_3840_F16_ID : ComplexFFTSamples_Step_3840_148_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_4000_F16_ID : ComplexInputSamples_Step_4000_149_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_4000_F16_ID : ComplexInputIFFTSamples_Step_4000_149_f16.txt 
+               Pattern REF_CFFT_STEP_4000_F16_ID : ComplexFFTSamples_Step_4000_149_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_4096_F16_ID : ComplexInputSamples_Step_4096_150_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_4096_F16_ID : ComplexInputIFFTSamples_Step_4096_150_f16.txt 
+               Pattern REF_CFFT_STEP_4096_F16_ID : ComplexFFTSamples_Step_4096_150_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_4320_F16_ID : ComplexInputSamples_Step_4320_151_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_4320_F16_ID : ComplexInputIFFTSamples_Step_4320_151_f16.txt 
+               Pattern REF_CFFT_STEP_4320_F16_ID : ComplexFFTSamples_Step_4320_151_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_4500_F16_ID : ComplexInputSamples_Step_4500_152_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_4500_F16_ID : ComplexInputIFFTSamples_Step_4500_152_f16.txt 
+               Pattern REF_CFFT_STEP_4500_F16_ID : ComplexFFTSamples_Step_4500_152_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_4608_F16_ID : ComplexInputSamples_Step_4608_153_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_4608_F16_ID : ComplexInputIFFTSamples_Step_4608_153_f16.txt 
+               Pattern REF_CFFT_STEP_4608_F16_ID : ComplexFFTSamples_Step_4608_153_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_4800_F16_ID : ComplexInputSamples_Step_4800_154_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_4800_F16_ID : ComplexInputIFFTSamples_Step_4800_154_f16.txt 
+               Pattern REF_CFFT_STEP_4800_F16_ID : ComplexFFTSamples_Step_4800_154_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_5120_F16_ID : ComplexInputSamples_Step_5120_155_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_5120_F16_ID : ComplexInputIFFTSamples_Step_5120_155_f16.txt 
+               Pattern REF_CFFT_STEP_5120_F16_ID : ComplexFFTSamples_Step_5120_155_f16.txt 
+
+               Pattern INPUTS_CFFT_STEP_5400_F16_ID : ComplexInputSamples_Step_5400_156_f16.txt 
+               Pattern INPUTS_CIFFT_STEP_5400_F16_ID : ComplexInputIFFTSamples_Step_5400_156_f16.txt 
+               Pattern REF_CFFT_STEP_5400_F16_ID : ComplexFFTSamples_Step_5400_156_f16.txt 
+
+               Output  OUTPUT_CFFT_F16_ID : ComplexFFTSamples
+
+               Functions {
+                  cfft_noisy_20_f16:test_cfft_f16
+                  cfft_noisy_24_f16:test_cfft_f16
+                  cfft_noisy_32_f16:test_cfft_f16
+                  cfft_noisy_36_f16:test_cfft_f16
+                  cfft_noisy_40_f16:test_cfft_f16
+                  cfft_noisy_48_f16:test_cfft_f16
+                  cfft_noisy_60_f16:test_cfft_f16
+                  cfft_noisy_64_f16:test_cfft_f16
+                  cfft_noisy_72_f16:test_cfft_f16
+                  cfft_noisy_80_f16:test_cfft_f16
+                  cfft_noisy_96_f16:test_cfft_f16
+                  cfft_noisy_100_f16:test_cfft_f16
+                  cfft_noisy_108_f16:test_cfft_f16
+                  cfft_noisy_120_f16:test_cfft_f16
+                  cfft_noisy_128_f16:test_cfft_f16
+                  cfft_noisy_144_f16:test_cfft_f16
+                  cfft_noisy_160_f16:test_cfft_f16
+                  cfft_noisy_180_f16:test_cfft_f16
+                  cfft_noisy_192_f16:test_cfft_f16
+                  cfft_noisy_200_f16:test_cfft_f16
+                  cfft_noisy_216_f16:test_cfft_f16
+                  cfft_noisy_240_f16:test_cfft_f16
+                  cfft_noisy_256_f16:test_cfft_f16
+                  cfft_noisy_288_f16:test_cfft_f16
+                  cfft_noisy_300_f16:test_cfft_f16
+                  cfft_noisy_320_f16:test_cfft_f16
+                  cfft_noisy_360_f16:test_cfft_f16
+                  cfft_noisy_384_f16:test_cfft_f16
+                  cfft_noisy_400_f16:test_cfft_f16
+                  cfft_noisy_432_f16:test_cfft_f16
+                  cfft_noisy_480_f16:test_cfft_f16
+                  cfft_noisy_500_f16:test_cfft_f16
+                  disabled{cfft_noisy_512_f16:test_cfft_f16}
+                  disabled{cfft_noisy_540_f16:test_cfft_f16}
+                  disabled{cfft_noisy_576_f16:test_cfft_f16}
+                  disabled{cfft_noisy_600_f16:test_cfft_f16}
+                  disabled{cfft_noisy_640_f16:test_cfft_f16}
+                  disabled{cfft_noisy_720_f16:test_cfft_f16}
+                  disabled{cfft_noisy_768_f16:test_cfft_f16}
+                  disabled{cfft_noisy_800_f16:test_cfft_f16}
+                  disabled{cfft_noisy_864_f16:test_cfft_f16}
+                  disabled{cfft_noisy_900_f16:test_cfft_f16}
+                  disabled{cfft_noisy_960_f16:test_cfft_f16}
+                  disabled{cfft_noisy_1000_f16:test_cfft_f16}
+                  disabled{cfft_noisy_1024_f16:test_cfft_f16}
+                  disabled{cfft_noisy_1080_f16:test_cfft_f16}
+                  disabled{cfft_noisy_1152_f16:test_cfft_f16}
+                  disabled{cfft_noisy_1200_f16:test_cfft_f16}
+                  disabled{cfft_noisy_1280_f16:test_cfft_f16}
+                  disabled{cfft_noisy_1440_f16:test_cfft_f16}
+                  disabled{cfft_noisy_1500_f16:test_cfft_f16}
+                  disabled{cfft_noisy_1536_f16:test_cfft_f16}
+                  disabled{cfft_noisy_1600_f16:test_cfft_f16}
+                  disabled{cfft_noisy_1728_f16:test_cfft_f16}
+                  disabled{cfft_noisy_1800_f16:test_cfft_f16}
+                  disabled{cfft_noisy_1920_f16:test_cfft_f16}
+                  disabled{cfft_noisy_2000_f16:test_cfft_f16}
+                  disabled{cfft_noisy_2048_f16:test_cfft_f16}
+                  disabled{cfft_noisy_2160_f16:test_cfft_f16}
+                  disabled{cfft_noisy_2304_f16:test_cfft_f16}
+                  disabled{cfft_noisy_2400_f16:test_cfft_f16}
+                  disabled{cfft_noisy_2560_f16:test_cfft_f16}
+                  disabled{cfft_noisy_2700_f16:test_cfft_f16}
+                  disabled{cfft_noisy_2880_f16:test_cfft_f16}
+                  disabled{cfft_noisy_3000_f16:test_cfft_f16}
+                  disabled{cfft_noisy_3072_f16:test_cfft_f16}
+                  disabled{cfft_noisy_3200_f16:test_cfft_f16}
+                  disabled{cfft_noisy_3456_f16:test_cfft_f16}
+                  disabled{cfft_noisy_3600_f16:test_cfft_f16}
+                  disabled{cfft_noisy_3840_f16:test_cfft_f16}
+                  disabled{cfft_noisy_4000_f16:test_cfft_f16}
+                  disabled{cfft_noisy_4096_f16:test_cfft_f16}
+                  disabled{cfft_noisy_4320_f16:test_cfft_f16}
+                  disabled{cfft_noisy_4500_f16:test_cfft_f16}
+                  disabled{cfft_noisy_4608_f16:test_cfft_f16}
+                  disabled{cfft_noisy_4800_f16:test_cfft_f16}
+                  disabled{cfft_noisy_5120_f16:test_cfft_f16}
+                  disabled{cfft_noisy_5400_f16:test_cfft_f16}
+                  cfft_step_20_f16:test_cfft_f16
+                  cfft_step_24_f16:test_cfft_f16
+                  cfft_step_32_f16:test_cfft_f16
+                  cfft_step_36_f16:test_cfft_f16
+                  cfft_step_40_f16:test_cfft_f16
+                  cfft_step_48_f16:test_cfft_f16
+                  cfft_step_60_f16:test_cfft_f16
+                  cfft_step_64_f16:test_cfft_f16
+                  cfft_step_72_f16:test_cfft_f16
+                  cfft_step_80_f16:test_cfft_f16
+                  cfft_step_96_f16:test_cfft_f16
+                  cfft_step_100_f16:test_cfft_f16
+                  cfft_step_108_f16:test_cfft_f16
+                  cfft_step_120_f16:test_cfft_f16
+                  cfft_step_128_f16:test_cfft_f16
+                  cfft_step_144_f16:test_cfft_f16
+                  cfft_step_160_f16:test_cfft_f16
+                  cfft_step_180_f16:test_cfft_f16
+                  cfft_step_192_f16:test_cfft_f16
+                  cfft_step_200_f16:test_cfft_f16
+                  cfft_step_216_f16:test_cfft_f16
+                  cfft_step_240_f16:test_cfft_f16
+                  cfft_step_256_f16:test_cfft_f16
+                  cfft_step_288_f16:test_cfft_f16
+                  cfft_step_300_f16:test_cfft_f16
+                  cfft_step_320_f16:test_cfft_f16
+                  cfft_step_360_f16:test_cfft_f16
+                  cfft_step_384_f16:test_cfft_f16
+                  cfft_step_400_f16:test_cfft_f16
+                  cfft_step_432_f16:test_cfft_f16
+                  cfft_step_480_f16:test_cfft_f16
+                  cfft_step_500_f16:test_cfft_f16
+                  disabled{cfft_step_512_f16:test_cfft_f16}
+                  disabled{cfft_step_540_f16:test_cfft_f16}
+                  disabled{cfft_step_576_f16:test_cfft_f16}
+                  disabled{cfft_step_600_f16:test_cfft_f16}
+                  disabled{cfft_step_640_f16:test_cfft_f16}
+                  disabled{cfft_step_720_f16:test_cfft_f16}
+                  disabled{cfft_step_768_f16:test_cfft_f16}
+                  disabled{cfft_step_800_f16:test_cfft_f16}
+                  disabled{cfft_step_864_f16:test_cfft_f16}
+                  disabled{cfft_step_900_f16:test_cfft_f16}
+                  disabled{cfft_step_960_f16:test_cfft_f16}
+                  disabled{cfft_step_1000_f16:test_cfft_f16}
+                  disabled{cfft_step_1024_f16:test_cfft_f16}
+                  disabled{cfft_step_1080_f16:test_cfft_f16}
+                  disabled{cfft_step_1152_f16:test_cfft_f16}
+                  disabled{cfft_step_1200_f16:test_cfft_f16}
+                  disabled{cfft_step_1280_f16:test_cfft_f16}
+                  disabled{cfft_step_1440_f16:test_cfft_f16}
+                  disabled{cfft_step_1500_f16:test_cfft_f16}
+                  disabled{cfft_step_1536_f16:test_cfft_f16}
+                  disabled{cfft_step_1600_f16:test_cfft_f16}
+                  disabled{cfft_step_1728_f16:test_cfft_f16}
+                  disabled{cfft_step_1800_f16:test_cfft_f16}
+                  disabled{cfft_step_1920_f16:test_cfft_f16}
+                  disabled{cfft_step_2000_f16:test_cfft_f16}
+                  disabled{cfft_step_2048_f16:test_cfft_f16}
+                  disabled{cfft_step_2160_f16:test_cfft_f16}
+                  disabled{cfft_step_2304_f16:test_cfft_f16}
+                  disabled{cfft_step_2400_f16:test_cfft_f16}
+                  disabled{cfft_step_2560_f16:test_cfft_f16}
+                  disabled{cfft_step_2700_f16:test_cfft_f16}
+                  disabled{cfft_step_2880_f16:test_cfft_f16}
+                  disabled{cfft_step_3000_f16:test_cfft_f16}
+                  disabled{cfft_step_3072_f16:test_cfft_f16}
+                  disabled{cfft_step_3200_f16:test_cfft_f16}
+                  disabled{cfft_step_3456_f16:test_cfft_f16}
+                  disabled{cfft_step_3600_f16:test_cfft_f16}
+                  disabled{cfft_step_3840_f16:test_cfft_f16}
+                  disabled{cfft_step_4000_f16:test_cfft_f16}
+                  disabled{cfft_step_4096_f16:test_cfft_f16}
+                  disabled{cfft_step_4320_f16:test_cfft_f16}
+                  disabled{cfft_step_4500_f16:test_cfft_f16}
+                  disabled{cfft_step_4608_f16:test_cfft_f16}
+                  disabled{cfft_step_4800_f16:test_cfft_f16}
+                  disabled{cfft_step_5120_f16:test_cfft_f16}
+                  disabled{cfft_step_5400_f16:test_cfft_f16}
+                  cifft_noisy_20_f16:test_cfft_f16
+                  cifft_noisy_24_f16:test_cfft_f16
+                  cifft_noisy_32_f16:test_cfft_f16
+                  cifft_noisy_36_f16:test_cfft_f16
+                  cifft_noisy_40_f16:test_cfft_f16
+                  cifft_noisy_48_f16:test_cfft_f16
+                  cifft_noisy_60_f16:test_cfft_f16
+                  cifft_noisy_64_f16:test_cfft_f16
+                  cifft_noisy_72_f16:test_cfft_f16
+                  cifft_noisy_80_f16:test_cfft_f16
+                  cifft_noisy_96_f16:test_cfft_f16
+                  cifft_noisy_100_f16:test_cfft_f16
+                  cifft_noisy_108_f16:test_cfft_f16
+                  cifft_noisy_120_f16:test_cfft_f16
+                  cifft_noisy_128_f16:test_cfft_f16
+                  cifft_noisy_144_f16:test_cfft_f16
+                  cifft_noisy_160_f16:test_cfft_f16
+                  cifft_noisy_180_f16:test_cfft_f16
+                  cifft_noisy_192_f16:test_cfft_f16
+                  cifft_noisy_200_f16:test_cfft_f16
+                  cifft_noisy_216_f16:test_cfft_f16
+                  cifft_noisy_240_f16:test_cfft_f16
+                  cifft_noisy_256_f16:test_cfft_f16
+                  cifft_noisy_288_f16:test_cfft_f16
+                  cifft_noisy_300_f16:test_cfft_f16
+                  cifft_noisy_320_f16:test_cfft_f16
+                  cifft_noisy_360_f16:test_cfft_f16
+                  cifft_noisy_384_f16:test_cfft_f16
+                  cifft_noisy_400_f16:test_cfft_f16
+                  cifft_noisy_432_f16:test_cfft_f16
+                  cifft_noisy_480_f16:test_cfft_f16
+                  cifft_noisy_500_f16:test_cfft_f16
+                  disabled{cifft_noisy_512_f16:test_cfft_f16}
+                  disabled{cifft_noisy_540_f16:test_cfft_f16}
+                  disabled{cifft_noisy_576_f16:test_cfft_f16}
+                  disabled{cifft_noisy_600_f16:test_cfft_f16}
+                  disabled{cifft_noisy_640_f16:test_cfft_f16}
+                  disabled{cifft_noisy_720_f16:test_cfft_f16}
+                  disabled{cifft_noisy_768_f16:test_cfft_f16}
+                  disabled{cifft_noisy_800_f16:test_cfft_f16}
+                  disabled{cifft_noisy_864_f16:test_cfft_f16}
+                  disabled{cifft_noisy_900_f16:test_cfft_f16}
+                  disabled{cifft_noisy_960_f16:test_cfft_f16}
+                  disabled{cifft_noisy_1000_f16:test_cfft_f16}
+                  disabled{cifft_noisy_1024_f16:test_cfft_f16}
+                  disabled{cifft_noisy_1080_f16:test_cfft_f16}
+                  disabled{cifft_noisy_1152_f16:test_cfft_f16}
+                  disabled{cifft_noisy_1200_f16:test_cfft_f16}
+                  disabled{cifft_noisy_1280_f16:test_cfft_f16}
+                  disabled{cifft_noisy_1440_f16:test_cfft_f16}
+                  disabled{cifft_noisy_1500_f16:test_cfft_f16}
+                  disabled{cifft_noisy_1536_f16:test_cfft_f16}
+                  disabled{cifft_noisy_1600_f16:test_cfft_f16}
+                  disabled{cifft_noisy_1728_f16:test_cfft_f16}
+                  disabled{cifft_noisy_1800_f16:test_cfft_f16}
+                  disabled{cifft_noisy_1920_f16:test_cfft_f16}
+                  disabled{cifft_noisy_2000_f16:test_cfft_f16}
+                  disabled{cifft_noisy_2048_f16:test_cfft_f16}
+                  disabled{cifft_noisy_2160_f16:test_cfft_f16}
+                  disabled{cifft_noisy_2304_f16:test_cfft_f16}
+                  disabled{cifft_noisy_2400_f16:test_cfft_f16}
+                  disabled{cifft_noisy_2560_f16:test_cfft_f16}
+                  disabled{cifft_noisy_2700_f16:test_cfft_f16}
+                  disabled{cifft_noisy_2880_f16:test_cfft_f16}
+                  disabled{cifft_noisy_3000_f16:test_cfft_f16}
+                  disabled{cifft_noisy_3072_f16:test_cfft_f16}
+                  disabled{cifft_noisy_3200_f16:test_cfft_f16}
+                  disabled{cifft_noisy_3456_f16:test_cfft_f16}
+                  disabled{cifft_noisy_3600_f16:test_cfft_f16}
+                  disabled{cifft_noisy_3840_f16:test_cfft_f16}
+                  disabled{cifft_noisy_4000_f16:test_cfft_f16}
+                  disabled{cifft_noisy_4096_f16:test_cfft_f16}
+                  disabled{cifft_noisy_4320_f16:test_cfft_f16}
+                  disabled{cifft_noisy_4500_f16:test_cfft_f16}
+                  disabled{cifft_noisy_4608_f16:test_cfft_f16}
+                  disabled{cifft_noisy_4800_f16:test_cfft_f16}
+                  disabled{cifft_noisy_5120_f16:test_cfft_f16}
+                  disabled{cifft_noisy_5400_f16:test_cfft_f16}
+                  cifft_step_20_f16:test_cfft_f16
+                  cifft_step_24_f16:test_cfft_f16
+                  cifft_step_32_f16:test_cfft_f16
+                  cifft_step_36_f16:test_cfft_f16
+                  cifft_step_40_f16:test_cfft_f16
+                  cifft_step_48_f16:test_cfft_f16
+                  cifft_step_60_f16:test_cfft_f16
+                  cifft_step_64_f16:test_cfft_f16
+                  cifft_step_72_f16:test_cfft_f16
+                  cifft_step_80_f16:test_cfft_f16
+                  cifft_step_96_f16:test_cfft_f16
+                  cifft_step_100_f16:test_cfft_f16
+                  cifft_step_108_f16:test_cfft_f16
+                  cifft_step_120_f16:test_cfft_f16
+                  cifft_step_128_f16:test_cfft_f16
+                  cifft_step_144_f16:test_cfft_f16
+                  cifft_step_160_f16:test_cfft_f16
+                  cifft_step_180_f16:test_cfft_f16
+                  cifft_step_192_f16:test_cfft_f16
+                  cifft_step_200_f16:test_cfft_f16
+                  cifft_step_216_f16:test_cfft_f16
+                  cifft_step_240_f16:test_cfft_f16
+                  cifft_step_256_f16:test_cfft_f16
+                  cifft_step_288_f16:test_cfft_f16
+                  cifft_step_300_f16:test_cfft_f16
+                  cifft_step_320_f16:test_cfft_f16
+                  cifft_step_360_f16:test_cfft_f16
+                  cifft_step_384_f16:test_cfft_f16
+                  cifft_step_400_f16:test_cfft_f16
+                  cifft_step_432_f16:test_cfft_f16
+                  cifft_step_480_f16:test_cfft_f16
+                  cifft_step_500_f16:test_cfft_f16
+                  disabled{cifft_step_512_f16:test_cfft_f16}
+                  disabled{cifft_step_540_f16:test_cfft_f16}
+                  disabled{cifft_step_576_f16:test_cfft_f16}
+                  disabled{cifft_step_600_f16:test_cfft_f16}
+                  disabled{cifft_step_640_f16:test_cfft_f16}
+                  disabled{cifft_step_720_f16:test_cfft_f16}
+                  disabled{cifft_step_768_f16:test_cfft_f16}
+                  disabled{cifft_step_800_f16:test_cfft_f16}
+                  disabled{cifft_step_864_f16:test_cfft_f16}
+                  disabled{cifft_step_900_f16:test_cfft_f16}
+                  disabled{cifft_step_960_f16:test_cfft_f16}
+                  disabled{cifft_step_1000_f16:test_cfft_f16}
+                  disabled{cifft_step_1024_f16:test_cfft_f16}
+                  disabled{cifft_step_1080_f16:test_cfft_f16}
+                  disabled{cifft_step_1152_f16:test_cfft_f16}
+                  disabled{cifft_step_1200_f16:test_cfft_f16}
+                  disabled{cifft_step_1280_f16:test_cfft_f16}
+                  disabled{cifft_step_1440_f16:test_cfft_f16}
+                  disabled{cifft_step_1500_f16:test_cfft_f16}
+                  disabled{cifft_step_1536_f16:test_cfft_f16}
+                  disabled{cifft_step_1600_f16:test_cfft_f16}
+                  disabled{cifft_step_1728_f16:test_cfft_f16}
+                  disabled{cifft_step_1800_f16:test_cfft_f16}
+                  disabled{cifft_step_1920_f16:test_cfft_f16}
+                  disabled{cifft_step_2000_f16:test_cfft_f16}
+                  disabled{cifft_step_2048_f16:test_cfft_f16}
+                  disabled{cifft_step_2160_f16:test_cfft_f16}
+                  disabled{cifft_step_2304_f16:test_cfft_f16}
+                  disabled{cifft_step_2400_f16:test_cfft_f16}
+                  disabled{cifft_step_2560_f16:test_cfft_f16}
+                  disabled{cifft_step_2700_f16:test_cfft_f16}
+                  disabled{cifft_step_2880_f16:test_cfft_f16}
+                  disabled{cifft_step_3000_f16:test_cfft_f16}
+                  disabled{cifft_step_3072_f16:test_cfft_f16}
+                  disabled{cifft_step_3200_f16:test_cfft_f16}
+                  disabled{cifft_step_3456_f16:test_cfft_f16}
+                  disabled{cifft_step_3600_f16:test_cfft_f16}
+                  disabled{cifft_step_3840_f16:test_cfft_f16}
+                  disabled{cifft_step_4000_f16:test_cfft_f16}
+                  disabled{cifft_step_4096_f16:test_cfft_f16}
+                  disabled{cifft_step_4320_f16:test_cfft_f16}
+                  disabled{cifft_step_4500_f16:test_cfft_f16}
+                  disabled{cifft_step_4608_f16:test_cfft_f16}
+                  disabled{cifft_step_4800_f16:test_cfft_f16}
+                  disabled{cifft_step_5120_f16:test_cfft_f16}
+                  disabled{cifft_step_5400_f16:test_cfft_f16}
+               }
+           }
+            suite Transform Complex Q31 {
+               class = TransformNeonCQ31
+               folder = TransformNeonQ31
+
+
+               Pattern INPUTS_CFFT_NOISY_20_Q31_ID : ComplexInputSamples_Noisy_20_1_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_20_Q31_ID : ComplexInputIFFTSamples_Noisy_20_1_q31.txt 
+               Pattern REF_CFFT_NOISY_20_Q31_ID : ComplexFFTSamples_Noisy_20_1_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_24_Q31_ID : ComplexInputSamples_Noisy_24_2_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_24_Q31_ID : ComplexInputIFFTSamples_Noisy_24_2_q31.txt 
+               Pattern REF_CFFT_NOISY_24_Q31_ID : ComplexFFTSamples_Noisy_24_2_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_32_Q31_ID : ComplexInputSamples_Noisy_32_3_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_32_Q31_ID : ComplexInputIFFTSamples_Noisy_32_3_q31.txt 
+               Pattern REF_CFFT_NOISY_32_Q31_ID : ComplexFFTSamples_Noisy_32_3_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_36_Q31_ID : ComplexInputSamples_Noisy_36_4_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_36_Q31_ID : ComplexInputIFFTSamples_Noisy_36_4_q31.txt 
+               Pattern REF_CFFT_NOISY_36_Q31_ID : ComplexFFTSamples_Noisy_36_4_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_40_Q31_ID : ComplexInputSamples_Noisy_40_5_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_40_Q31_ID : ComplexInputIFFTSamples_Noisy_40_5_q31.txt 
+               Pattern REF_CFFT_NOISY_40_Q31_ID : ComplexFFTSamples_Noisy_40_5_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_48_Q31_ID : ComplexInputSamples_Noisy_48_6_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_48_Q31_ID : ComplexInputIFFTSamples_Noisy_48_6_q31.txt 
+               Pattern REF_CFFT_NOISY_48_Q31_ID : ComplexFFTSamples_Noisy_48_6_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_60_Q31_ID : ComplexInputSamples_Noisy_60_7_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_60_Q31_ID : ComplexInputIFFTSamples_Noisy_60_7_q31.txt 
+               Pattern REF_CFFT_NOISY_60_Q31_ID : ComplexFFTSamples_Noisy_60_7_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_64_Q31_ID : ComplexInputSamples_Noisy_64_8_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_64_Q31_ID : ComplexInputIFFTSamples_Noisy_64_8_q31.txt 
+               Pattern REF_CFFT_NOISY_64_Q31_ID : ComplexFFTSamples_Noisy_64_8_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_72_Q31_ID : ComplexInputSamples_Noisy_72_9_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_72_Q31_ID : ComplexInputIFFTSamples_Noisy_72_9_q31.txt 
+               Pattern REF_CFFT_NOISY_72_Q31_ID : ComplexFFTSamples_Noisy_72_9_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_80_Q31_ID : ComplexInputSamples_Noisy_80_10_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_80_Q31_ID : ComplexInputIFFTSamples_Noisy_80_10_q31.txt 
+               Pattern REF_CFFT_NOISY_80_Q31_ID : ComplexFFTSamples_Noisy_80_10_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_96_Q31_ID : ComplexInputSamples_Noisy_96_11_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_96_Q31_ID : ComplexInputIFFTSamples_Noisy_96_11_q31.txt 
+               Pattern REF_CFFT_NOISY_96_Q31_ID : ComplexFFTSamples_Noisy_96_11_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_100_Q31_ID : ComplexInputSamples_Noisy_100_12_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_100_Q31_ID : ComplexInputIFFTSamples_Noisy_100_12_q31.txt 
+               Pattern REF_CFFT_NOISY_100_Q31_ID : ComplexFFTSamples_Noisy_100_12_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_108_Q31_ID : ComplexInputSamples_Noisy_108_13_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_108_Q31_ID : ComplexInputIFFTSamples_Noisy_108_13_q31.txt 
+               Pattern REF_CFFT_NOISY_108_Q31_ID : ComplexFFTSamples_Noisy_108_13_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_120_Q31_ID : ComplexInputSamples_Noisy_120_14_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_120_Q31_ID : ComplexInputIFFTSamples_Noisy_120_14_q31.txt 
+               Pattern REF_CFFT_NOISY_120_Q31_ID : ComplexFFTSamples_Noisy_120_14_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_128_Q31_ID : ComplexInputSamples_Noisy_128_15_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_128_Q31_ID : ComplexInputIFFTSamples_Noisy_128_15_q31.txt 
+               Pattern REF_CFFT_NOISY_128_Q31_ID : ComplexFFTSamples_Noisy_128_15_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_144_Q31_ID : ComplexInputSamples_Noisy_144_16_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_144_Q31_ID : ComplexInputIFFTSamples_Noisy_144_16_q31.txt 
+               Pattern REF_CFFT_NOISY_144_Q31_ID : ComplexFFTSamples_Noisy_144_16_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_160_Q31_ID : ComplexInputSamples_Noisy_160_17_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_160_Q31_ID : ComplexInputIFFTSamples_Noisy_160_17_q31.txt 
+               Pattern REF_CFFT_NOISY_160_Q31_ID : ComplexFFTSamples_Noisy_160_17_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_180_Q31_ID : ComplexInputSamples_Noisy_180_18_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_180_Q31_ID : ComplexInputIFFTSamples_Noisy_180_18_q31.txt 
+               Pattern REF_CFFT_NOISY_180_Q31_ID : ComplexFFTSamples_Noisy_180_18_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_192_Q31_ID : ComplexInputSamples_Noisy_192_19_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_192_Q31_ID : ComplexInputIFFTSamples_Noisy_192_19_q31.txt 
+               Pattern REF_CFFT_NOISY_192_Q31_ID : ComplexFFTSamples_Noisy_192_19_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_200_Q31_ID : ComplexInputSamples_Noisy_200_20_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_200_Q31_ID : ComplexInputIFFTSamples_Noisy_200_20_q31.txt 
+               Pattern REF_CFFT_NOISY_200_Q31_ID : ComplexFFTSamples_Noisy_200_20_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_216_Q31_ID : ComplexInputSamples_Noisy_216_21_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_216_Q31_ID : ComplexInputIFFTSamples_Noisy_216_21_q31.txt 
+               Pattern REF_CFFT_NOISY_216_Q31_ID : ComplexFFTSamples_Noisy_216_21_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_240_Q31_ID : ComplexInputSamples_Noisy_240_22_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_240_Q31_ID : ComplexInputIFFTSamples_Noisy_240_22_q31.txt 
+               Pattern REF_CFFT_NOISY_240_Q31_ID : ComplexFFTSamples_Noisy_240_22_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_256_Q31_ID : ComplexInputSamples_Noisy_256_23_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_256_Q31_ID : ComplexInputIFFTSamples_Noisy_256_23_q31.txt 
+               Pattern REF_CFFT_NOISY_256_Q31_ID : ComplexFFTSamples_Noisy_256_23_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_288_Q31_ID : ComplexInputSamples_Noisy_288_24_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_288_Q31_ID : ComplexInputIFFTSamples_Noisy_288_24_q31.txt 
+               Pattern REF_CFFT_NOISY_288_Q31_ID : ComplexFFTSamples_Noisy_288_24_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_300_Q31_ID : ComplexInputSamples_Noisy_300_25_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_300_Q31_ID : ComplexInputIFFTSamples_Noisy_300_25_q31.txt 
+               Pattern REF_CFFT_NOISY_300_Q31_ID : ComplexFFTSamples_Noisy_300_25_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_320_Q31_ID : ComplexInputSamples_Noisy_320_26_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_320_Q31_ID : ComplexInputIFFTSamples_Noisy_320_26_q31.txt 
+               Pattern REF_CFFT_NOISY_320_Q31_ID : ComplexFFTSamples_Noisy_320_26_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_360_Q31_ID : ComplexInputSamples_Noisy_360_27_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_360_Q31_ID : ComplexInputIFFTSamples_Noisy_360_27_q31.txt 
+               Pattern REF_CFFT_NOISY_360_Q31_ID : ComplexFFTSamples_Noisy_360_27_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_384_Q31_ID : ComplexInputSamples_Noisy_384_28_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_384_Q31_ID : ComplexInputIFFTSamples_Noisy_384_28_q31.txt 
+               Pattern REF_CFFT_NOISY_384_Q31_ID : ComplexFFTSamples_Noisy_384_28_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_400_Q31_ID : ComplexInputSamples_Noisy_400_29_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_400_Q31_ID : ComplexInputIFFTSamples_Noisy_400_29_q31.txt 
+               Pattern REF_CFFT_NOISY_400_Q31_ID : ComplexFFTSamples_Noisy_400_29_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_432_Q31_ID : ComplexInputSamples_Noisy_432_30_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_432_Q31_ID : ComplexInputIFFTSamples_Noisy_432_30_q31.txt 
+               Pattern REF_CFFT_NOISY_432_Q31_ID : ComplexFFTSamples_Noisy_432_30_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_480_Q31_ID : ComplexInputSamples_Noisy_480_31_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_480_Q31_ID : ComplexInputIFFTSamples_Noisy_480_31_q31.txt 
+               Pattern REF_CFFT_NOISY_480_Q31_ID : ComplexFFTSamples_Noisy_480_31_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_500_Q31_ID : ComplexInputSamples_Noisy_500_32_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_500_Q31_ID : ComplexInputIFFTSamples_Noisy_500_32_q31.txt 
+               Pattern REF_CFFT_NOISY_500_Q31_ID : ComplexFFTSamples_Noisy_500_32_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_512_Q31_ID : ComplexInputSamples_Noisy_512_33_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_512_Q31_ID : ComplexInputIFFTSamples_Noisy_512_33_q31.txt 
+               Pattern REF_CFFT_NOISY_512_Q31_ID : ComplexFFTSamples_Noisy_512_33_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_540_Q31_ID : ComplexInputSamples_Noisy_540_34_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_540_Q31_ID : ComplexInputIFFTSamples_Noisy_540_34_q31.txt 
+               Pattern REF_CFFT_NOISY_540_Q31_ID : ComplexFFTSamples_Noisy_540_34_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_576_Q31_ID : ComplexInputSamples_Noisy_576_35_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_576_Q31_ID : ComplexInputIFFTSamples_Noisy_576_35_q31.txt 
+               Pattern REF_CFFT_NOISY_576_Q31_ID : ComplexFFTSamples_Noisy_576_35_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_600_Q31_ID : ComplexInputSamples_Noisy_600_36_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_600_Q31_ID : ComplexInputIFFTSamples_Noisy_600_36_q31.txt 
+               Pattern REF_CFFT_NOISY_600_Q31_ID : ComplexFFTSamples_Noisy_600_36_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_640_Q31_ID : ComplexInputSamples_Noisy_640_37_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_640_Q31_ID : ComplexInputIFFTSamples_Noisy_640_37_q31.txt 
+               Pattern REF_CFFT_NOISY_640_Q31_ID : ComplexFFTSamples_Noisy_640_37_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_720_Q31_ID : ComplexInputSamples_Noisy_720_38_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_720_Q31_ID : ComplexInputIFFTSamples_Noisy_720_38_q31.txt 
+               Pattern REF_CFFT_NOISY_720_Q31_ID : ComplexFFTSamples_Noisy_720_38_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_768_Q31_ID : ComplexInputSamples_Noisy_768_39_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_768_Q31_ID : ComplexInputIFFTSamples_Noisy_768_39_q31.txt 
+               Pattern REF_CFFT_NOISY_768_Q31_ID : ComplexFFTSamples_Noisy_768_39_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_800_Q31_ID : ComplexInputSamples_Noisy_800_40_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_800_Q31_ID : ComplexInputIFFTSamples_Noisy_800_40_q31.txt 
+               Pattern REF_CFFT_NOISY_800_Q31_ID : ComplexFFTSamples_Noisy_800_40_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_864_Q31_ID : ComplexInputSamples_Noisy_864_41_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_864_Q31_ID : ComplexInputIFFTSamples_Noisy_864_41_q31.txt 
+               Pattern REF_CFFT_NOISY_864_Q31_ID : ComplexFFTSamples_Noisy_864_41_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_900_Q31_ID : ComplexInputSamples_Noisy_900_42_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_900_Q31_ID : ComplexInputIFFTSamples_Noisy_900_42_q31.txt 
+               Pattern REF_CFFT_NOISY_900_Q31_ID : ComplexFFTSamples_Noisy_900_42_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_960_Q31_ID : ComplexInputSamples_Noisy_960_43_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_960_Q31_ID : ComplexInputIFFTSamples_Noisy_960_43_q31.txt 
+               Pattern REF_CFFT_NOISY_960_Q31_ID : ComplexFFTSamples_Noisy_960_43_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1000_Q31_ID : ComplexInputSamples_Noisy_1000_44_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_1000_Q31_ID : ComplexInputIFFTSamples_Noisy_1000_44_q31.txt 
+               Pattern REF_CFFT_NOISY_1000_Q31_ID : ComplexFFTSamples_Noisy_1000_44_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1024_Q31_ID : ComplexInputSamples_Noisy_1024_45_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_1024_Q31_ID : ComplexInputIFFTSamples_Noisy_1024_45_q31.txt 
+               Pattern REF_CFFT_NOISY_1024_Q31_ID : ComplexFFTSamples_Noisy_1024_45_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1080_Q31_ID : ComplexInputSamples_Noisy_1080_46_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_1080_Q31_ID : ComplexInputIFFTSamples_Noisy_1080_46_q31.txt 
+               Pattern REF_CFFT_NOISY_1080_Q31_ID : ComplexFFTSamples_Noisy_1080_46_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1152_Q31_ID : ComplexInputSamples_Noisy_1152_47_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_1152_Q31_ID : ComplexInputIFFTSamples_Noisy_1152_47_q31.txt 
+               Pattern REF_CFFT_NOISY_1152_Q31_ID : ComplexFFTSamples_Noisy_1152_47_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1200_Q31_ID : ComplexInputSamples_Noisy_1200_48_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_1200_Q31_ID : ComplexInputIFFTSamples_Noisy_1200_48_q31.txt 
+               Pattern REF_CFFT_NOISY_1200_Q31_ID : ComplexFFTSamples_Noisy_1200_48_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1280_Q31_ID : ComplexInputSamples_Noisy_1280_49_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_1280_Q31_ID : ComplexInputIFFTSamples_Noisy_1280_49_q31.txt 
+               Pattern REF_CFFT_NOISY_1280_Q31_ID : ComplexFFTSamples_Noisy_1280_49_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1440_Q31_ID : ComplexInputSamples_Noisy_1440_50_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_1440_Q31_ID : ComplexInputIFFTSamples_Noisy_1440_50_q31.txt 
+               Pattern REF_CFFT_NOISY_1440_Q31_ID : ComplexFFTSamples_Noisy_1440_50_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1500_Q31_ID : ComplexInputSamples_Noisy_1500_51_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_1500_Q31_ID : ComplexInputIFFTSamples_Noisy_1500_51_q31.txt 
+               Pattern REF_CFFT_NOISY_1500_Q31_ID : ComplexFFTSamples_Noisy_1500_51_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1536_Q31_ID : ComplexInputSamples_Noisy_1536_52_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_1536_Q31_ID : ComplexInputIFFTSamples_Noisy_1536_52_q31.txt 
+               Pattern REF_CFFT_NOISY_1536_Q31_ID : ComplexFFTSamples_Noisy_1536_52_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1600_Q31_ID : ComplexInputSamples_Noisy_1600_53_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_1600_Q31_ID : ComplexInputIFFTSamples_Noisy_1600_53_q31.txt 
+               Pattern REF_CFFT_NOISY_1600_Q31_ID : ComplexFFTSamples_Noisy_1600_53_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1728_Q31_ID : ComplexInputSamples_Noisy_1728_54_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_1728_Q31_ID : ComplexInputIFFTSamples_Noisy_1728_54_q31.txt 
+               Pattern REF_CFFT_NOISY_1728_Q31_ID : ComplexFFTSamples_Noisy_1728_54_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1800_Q31_ID : ComplexInputSamples_Noisy_1800_55_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_1800_Q31_ID : ComplexInputIFFTSamples_Noisy_1800_55_q31.txt 
+               Pattern REF_CFFT_NOISY_1800_Q31_ID : ComplexFFTSamples_Noisy_1800_55_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1920_Q31_ID : ComplexInputSamples_Noisy_1920_56_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_1920_Q31_ID : ComplexInputIFFTSamples_Noisy_1920_56_q31.txt 
+               Pattern REF_CFFT_NOISY_1920_Q31_ID : ComplexFFTSamples_Noisy_1920_56_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_2000_Q31_ID : ComplexInputSamples_Noisy_2000_57_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_2000_Q31_ID : ComplexInputIFFTSamples_Noisy_2000_57_q31.txt 
+               Pattern REF_CFFT_NOISY_2000_Q31_ID : ComplexFFTSamples_Noisy_2000_57_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_2048_Q31_ID : ComplexInputSamples_Noisy_2048_58_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_2048_Q31_ID : ComplexInputIFFTSamples_Noisy_2048_58_q31.txt 
+               Pattern REF_CFFT_NOISY_2048_Q31_ID : ComplexFFTSamples_Noisy_2048_58_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_2160_Q31_ID : ComplexInputSamples_Noisy_2160_59_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_2160_Q31_ID : ComplexInputIFFTSamples_Noisy_2160_59_q31.txt 
+               Pattern REF_CFFT_NOISY_2160_Q31_ID : ComplexFFTSamples_Noisy_2160_59_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_2304_Q31_ID : ComplexInputSamples_Noisy_2304_60_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_2304_Q31_ID : ComplexInputIFFTSamples_Noisy_2304_60_q31.txt 
+               Pattern REF_CFFT_NOISY_2304_Q31_ID : ComplexFFTSamples_Noisy_2304_60_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_2400_Q31_ID : ComplexInputSamples_Noisy_2400_61_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_2400_Q31_ID : ComplexInputIFFTSamples_Noisy_2400_61_q31.txt 
+               Pattern REF_CFFT_NOISY_2400_Q31_ID : ComplexFFTSamples_Noisy_2400_61_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_2560_Q31_ID : ComplexInputSamples_Noisy_2560_62_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_2560_Q31_ID : ComplexInputIFFTSamples_Noisy_2560_62_q31.txt 
+               Pattern REF_CFFT_NOISY_2560_Q31_ID : ComplexFFTSamples_Noisy_2560_62_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_2700_Q31_ID : ComplexInputSamples_Noisy_2700_63_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_2700_Q31_ID : ComplexInputIFFTSamples_Noisy_2700_63_q31.txt 
+               Pattern REF_CFFT_NOISY_2700_Q31_ID : ComplexFFTSamples_Noisy_2700_63_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_2880_Q31_ID : ComplexInputSamples_Noisy_2880_64_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_2880_Q31_ID : ComplexInputIFFTSamples_Noisy_2880_64_q31.txt 
+               Pattern REF_CFFT_NOISY_2880_Q31_ID : ComplexFFTSamples_Noisy_2880_64_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_3000_Q31_ID : ComplexInputSamples_Noisy_3000_65_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_3000_Q31_ID : ComplexInputIFFTSamples_Noisy_3000_65_q31.txt 
+               Pattern REF_CFFT_NOISY_3000_Q31_ID : ComplexFFTSamples_Noisy_3000_65_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_3072_Q31_ID : ComplexInputSamples_Noisy_3072_66_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_3072_Q31_ID : ComplexInputIFFTSamples_Noisy_3072_66_q31.txt 
+               Pattern REF_CFFT_NOISY_3072_Q31_ID : ComplexFFTSamples_Noisy_3072_66_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_3200_Q31_ID : ComplexInputSamples_Noisy_3200_67_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_3200_Q31_ID : ComplexInputIFFTSamples_Noisy_3200_67_q31.txt 
+               Pattern REF_CFFT_NOISY_3200_Q31_ID : ComplexFFTSamples_Noisy_3200_67_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_3456_Q31_ID : ComplexInputSamples_Noisy_3456_68_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_3456_Q31_ID : ComplexInputIFFTSamples_Noisy_3456_68_q31.txt 
+               Pattern REF_CFFT_NOISY_3456_Q31_ID : ComplexFFTSamples_Noisy_3456_68_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_3600_Q31_ID : ComplexInputSamples_Noisy_3600_69_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_3600_Q31_ID : ComplexInputIFFTSamples_Noisy_3600_69_q31.txt 
+               Pattern REF_CFFT_NOISY_3600_Q31_ID : ComplexFFTSamples_Noisy_3600_69_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_3840_Q31_ID : ComplexInputSamples_Noisy_3840_70_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_3840_Q31_ID : ComplexInputIFFTSamples_Noisy_3840_70_q31.txt 
+               Pattern REF_CFFT_NOISY_3840_Q31_ID : ComplexFFTSamples_Noisy_3840_70_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_4000_Q31_ID : ComplexInputSamples_Noisy_4000_71_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_4000_Q31_ID : ComplexInputIFFTSamples_Noisy_4000_71_q31.txt 
+               Pattern REF_CFFT_NOISY_4000_Q31_ID : ComplexFFTSamples_Noisy_4000_71_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_4096_Q31_ID : ComplexInputSamples_Noisy_4096_72_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_4096_Q31_ID : ComplexInputIFFTSamples_Noisy_4096_72_q31.txt 
+               Pattern REF_CFFT_NOISY_4096_Q31_ID : ComplexFFTSamples_Noisy_4096_72_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_4320_Q31_ID : ComplexInputSamples_Noisy_4320_73_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_4320_Q31_ID : ComplexInputIFFTSamples_Noisy_4320_73_q31.txt 
+               Pattern REF_CFFT_NOISY_4320_Q31_ID : ComplexFFTSamples_Noisy_4320_73_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_4500_Q31_ID : ComplexInputSamples_Noisy_4500_74_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_4500_Q31_ID : ComplexInputIFFTSamples_Noisy_4500_74_q31.txt 
+               Pattern REF_CFFT_NOISY_4500_Q31_ID : ComplexFFTSamples_Noisy_4500_74_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_4608_Q31_ID : ComplexInputSamples_Noisy_4608_75_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_4608_Q31_ID : ComplexInputIFFTSamples_Noisy_4608_75_q31.txt 
+               Pattern REF_CFFT_NOISY_4608_Q31_ID : ComplexFFTSamples_Noisy_4608_75_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_4800_Q31_ID : ComplexInputSamples_Noisy_4800_76_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_4800_Q31_ID : ComplexInputIFFTSamples_Noisy_4800_76_q31.txt 
+               Pattern REF_CFFT_NOISY_4800_Q31_ID : ComplexFFTSamples_Noisy_4800_76_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_5120_Q31_ID : ComplexInputSamples_Noisy_5120_77_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_5120_Q31_ID : ComplexInputIFFTSamples_Noisy_5120_77_q31.txt 
+               Pattern REF_CFFT_NOISY_5120_Q31_ID : ComplexFFTSamples_Noisy_5120_77_q31.txt 
+
+               Pattern INPUTS_CFFT_NOISY_5400_Q31_ID : ComplexInputSamples_Noisy_5400_78_q31.txt 
+               Pattern INPUTS_CIFFT_NOISY_5400_Q31_ID : ComplexInputIFFTSamples_Noisy_5400_78_q31.txt 
+               Pattern REF_CFFT_NOISY_5400_Q31_ID : ComplexFFTSamples_Noisy_5400_78_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_20_Q31_ID : ComplexInputSamples_Step_20_79_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_20_Q31_ID : ComplexInputIFFTSamples_Step_20_79_q31.txt 
+               Pattern REF_CFFT_STEP_20_Q31_ID : ComplexFFTSamples_Step_20_79_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_24_Q31_ID : ComplexInputSamples_Step_24_80_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_24_Q31_ID : ComplexInputIFFTSamples_Step_24_80_q31.txt 
+               Pattern REF_CFFT_STEP_24_Q31_ID : ComplexFFTSamples_Step_24_80_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_32_Q31_ID : ComplexInputSamples_Step_32_81_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_32_Q31_ID : ComplexInputIFFTSamples_Step_32_81_q31.txt 
+               Pattern REF_CFFT_STEP_32_Q31_ID : ComplexFFTSamples_Step_32_81_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_36_Q31_ID : ComplexInputSamples_Step_36_82_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_36_Q31_ID : ComplexInputIFFTSamples_Step_36_82_q31.txt 
+               Pattern REF_CFFT_STEP_36_Q31_ID : ComplexFFTSamples_Step_36_82_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_40_Q31_ID : ComplexInputSamples_Step_40_83_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_40_Q31_ID : ComplexInputIFFTSamples_Step_40_83_q31.txt 
+               Pattern REF_CFFT_STEP_40_Q31_ID : ComplexFFTSamples_Step_40_83_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_48_Q31_ID : ComplexInputSamples_Step_48_84_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_48_Q31_ID : ComplexInputIFFTSamples_Step_48_84_q31.txt 
+               Pattern REF_CFFT_STEP_48_Q31_ID : ComplexFFTSamples_Step_48_84_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_60_Q31_ID : ComplexInputSamples_Step_60_85_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_60_Q31_ID : ComplexInputIFFTSamples_Step_60_85_q31.txt 
+               Pattern REF_CFFT_STEP_60_Q31_ID : ComplexFFTSamples_Step_60_85_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_64_Q31_ID : ComplexInputSamples_Step_64_86_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_64_Q31_ID : ComplexInputIFFTSamples_Step_64_86_q31.txt 
+               Pattern REF_CFFT_STEP_64_Q31_ID : ComplexFFTSamples_Step_64_86_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_72_Q31_ID : ComplexInputSamples_Step_72_87_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_72_Q31_ID : ComplexInputIFFTSamples_Step_72_87_q31.txt 
+               Pattern REF_CFFT_STEP_72_Q31_ID : ComplexFFTSamples_Step_72_87_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_80_Q31_ID : ComplexInputSamples_Step_80_88_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_80_Q31_ID : ComplexInputIFFTSamples_Step_80_88_q31.txt 
+               Pattern REF_CFFT_STEP_80_Q31_ID : ComplexFFTSamples_Step_80_88_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_96_Q31_ID : ComplexInputSamples_Step_96_89_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_96_Q31_ID : ComplexInputIFFTSamples_Step_96_89_q31.txt 
+               Pattern REF_CFFT_STEP_96_Q31_ID : ComplexFFTSamples_Step_96_89_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_100_Q31_ID : ComplexInputSamples_Step_100_90_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_100_Q31_ID : ComplexInputIFFTSamples_Step_100_90_q31.txt 
+               Pattern REF_CFFT_STEP_100_Q31_ID : ComplexFFTSamples_Step_100_90_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_108_Q31_ID : ComplexInputSamples_Step_108_91_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_108_Q31_ID : ComplexInputIFFTSamples_Step_108_91_q31.txt 
+               Pattern REF_CFFT_STEP_108_Q31_ID : ComplexFFTSamples_Step_108_91_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_120_Q31_ID : ComplexInputSamples_Step_120_92_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_120_Q31_ID : ComplexInputIFFTSamples_Step_120_92_q31.txt 
+               Pattern REF_CFFT_STEP_120_Q31_ID : ComplexFFTSamples_Step_120_92_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_128_Q31_ID : ComplexInputSamples_Step_128_93_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_128_Q31_ID : ComplexInputIFFTSamples_Step_128_93_q31.txt 
+               Pattern REF_CFFT_STEP_128_Q31_ID : ComplexFFTSamples_Step_128_93_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_144_Q31_ID : ComplexInputSamples_Step_144_94_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_144_Q31_ID : ComplexInputIFFTSamples_Step_144_94_q31.txt 
+               Pattern REF_CFFT_STEP_144_Q31_ID : ComplexFFTSamples_Step_144_94_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_160_Q31_ID : ComplexInputSamples_Step_160_95_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_160_Q31_ID : ComplexInputIFFTSamples_Step_160_95_q31.txt 
+               Pattern REF_CFFT_STEP_160_Q31_ID : ComplexFFTSamples_Step_160_95_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_180_Q31_ID : ComplexInputSamples_Step_180_96_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_180_Q31_ID : ComplexInputIFFTSamples_Step_180_96_q31.txt 
+               Pattern REF_CFFT_STEP_180_Q31_ID : ComplexFFTSamples_Step_180_96_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_192_Q31_ID : ComplexInputSamples_Step_192_97_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_192_Q31_ID : ComplexInputIFFTSamples_Step_192_97_q31.txt 
+               Pattern REF_CFFT_STEP_192_Q31_ID : ComplexFFTSamples_Step_192_97_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_200_Q31_ID : ComplexInputSamples_Step_200_98_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_200_Q31_ID : ComplexInputIFFTSamples_Step_200_98_q31.txt 
+               Pattern REF_CFFT_STEP_200_Q31_ID : ComplexFFTSamples_Step_200_98_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_216_Q31_ID : ComplexInputSamples_Step_216_99_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_216_Q31_ID : ComplexInputIFFTSamples_Step_216_99_q31.txt 
+               Pattern REF_CFFT_STEP_216_Q31_ID : ComplexFFTSamples_Step_216_99_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_240_Q31_ID : ComplexInputSamples_Step_240_100_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_240_Q31_ID : ComplexInputIFFTSamples_Step_240_100_q31.txt 
+               Pattern REF_CFFT_STEP_240_Q31_ID : ComplexFFTSamples_Step_240_100_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_256_Q31_ID : ComplexInputSamples_Step_256_101_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_256_Q31_ID : ComplexInputIFFTSamples_Step_256_101_q31.txt 
+               Pattern REF_CFFT_STEP_256_Q31_ID : ComplexFFTSamples_Step_256_101_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_288_Q31_ID : ComplexInputSamples_Step_288_102_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_288_Q31_ID : ComplexInputIFFTSamples_Step_288_102_q31.txt 
+               Pattern REF_CFFT_STEP_288_Q31_ID : ComplexFFTSamples_Step_288_102_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_300_Q31_ID : ComplexInputSamples_Step_300_103_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_300_Q31_ID : ComplexInputIFFTSamples_Step_300_103_q31.txt 
+               Pattern REF_CFFT_STEP_300_Q31_ID : ComplexFFTSamples_Step_300_103_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_320_Q31_ID : ComplexInputSamples_Step_320_104_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_320_Q31_ID : ComplexInputIFFTSamples_Step_320_104_q31.txt 
+               Pattern REF_CFFT_STEP_320_Q31_ID : ComplexFFTSamples_Step_320_104_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_360_Q31_ID : ComplexInputSamples_Step_360_105_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_360_Q31_ID : ComplexInputIFFTSamples_Step_360_105_q31.txt 
+               Pattern REF_CFFT_STEP_360_Q31_ID : ComplexFFTSamples_Step_360_105_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_384_Q31_ID : ComplexInputSamples_Step_384_106_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_384_Q31_ID : ComplexInputIFFTSamples_Step_384_106_q31.txt 
+               Pattern REF_CFFT_STEP_384_Q31_ID : ComplexFFTSamples_Step_384_106_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_400_Q31_ID : ComplexInputSamples_Step_400_107_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_400_Q31_ID : ComplexInputIFFTSamples_Step_400_107_q31.txt 
+               Pattern REF_CFFT_STEP_400_Q31_ID : ComplexFFTSamples_Step_400_107_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_432_Q31_ID : ComplexInputSamples_Step_432_108_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_432_Q31_ID : ComplexInputIFFTSamples_Step_432_108_q31.txt 
+               Pattern REF_CFFT_STEP_432_Q31_ID : ComplexFFTSamples_Step_432_108_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_480_Q31_ID : ComplexInputSamples_Step_480_109_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_480_Q31_ID : ComplexInputIFFTSamples_Step_480_109_q31.txt 
+               Pattern REF_CFFT_STEP_480_Q31_ID : ComplexFFTSamples_Step_480_109_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_500_Q31_ID : ComplexInputSamples_Step_500_110_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_500_Q31_ID : ComplexInputIFFTSamples_Step_500_110_q31.txt 
+               Pattern REF_CFFT_STEP_500_Q31_ID : ComplexFFTSamples_Step_500_110_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_512_Q31_ID : ComplexInputSamples_Step_512_111_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_512_Q31_ID : ComplexInputIFFTSamples_Step_512_111_q31.txt 
+               Pattern REF_CFFT_STEP_512_Q31_ID : ComplexFFTSamples_Step_512_111_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_540_Q31_ID : ComplexInputSamples_Step_540_112_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_540_Q31_ID : ComplexInputIFFTSamples_Step_540_112_q31.txt 
+               Pattern REF_CFFT_STEP_540_Q31_ID : ComplexFFTSamples_Step_540_112_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_576_Q31_ID : ComplexInputSamples_Step_576_113_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_576_Q31_ID : ComplexInputIFFTSamples_Step_576_113_q31.txt 
+               Pattern REF_CFFT_STEP_576_Q31_ID : ComplexFFTSamples_Step_576_113_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_600_Q31_ID : ComplexInputSamples_Step_600_114_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_600_Q31_ID : ComplexInputIFFTSamples_Step_600_114_q31.txt 
+               Pattern REF_CFFT_STEP_600_Q31_ID : ComplexFFTSamples_Step_600_114_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_640_Q31_ID : ComplexInputSamples_Step_640_115_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_640_Q31_ID : ComplexInputIFFTSamples_Step_640_115_q31.txt 
+               Pattern REF_CFFT_STEP_640_Q31_ID : ComplexFFTSamples_Step_640_115_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_720_Q31_ID : ComplexInputSamples_Step_720_116_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_720_Q31_ID : ComplexInputIFFTSamples_Step_720_116_q31.txt 
+               Pattern REF_CFFT_STEP_720_Q31_ID : ComplexFFTSamples_Step_720_116_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_768_Q31_ID : ComplexInputSamples_Step_768_117_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_768_Q31_ID : ComplexInputIFFTSamples_Step_768_117_q31.txt 
+               Pattern REF_CFFT_STEP_768_Q31_ID : ComplexFFTSamples_Step_768_117_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_800_Q31_ID : ComplexInputSamples_Step_800_118_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_800_Q31_ID : ComplexInputIFFTSamples_Step_800_118_q31.txt 
+               Pattern REF_CFFT_STEP_800_Q31_ID : ComplexFFTSamples_Step_800_118_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_864_Q31_ID : ComplexInputSamples_Step_864_119_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_864_Q31_ID : ComplexInputIFFTSamples_Step_864_119_q31.txt 
+               Pattern REF_CFFT_STEP_864_Q31_ID : ComplexFFTSamples_Step_864_119_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_900_Q31_ID : ComplexInputSamples_Step_900_120_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_900_Q31_ID : ComplexInputIFFTSamples_Step_900_120_q31.txt 
+               Pattern REF_CFFT_STEP_900_Q31_ID : ComplexFFTSamples_Step_900_120_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_960_Q31_ID : ComplexInputSamples_Step_960_121_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_960_Q31_ID : ComplexInputIFFTSamples_Step_960_121_q31.txt 
+               Pattern REF_CFFT_STEP_960_Q31_ID : ComplexFFTSamples_Step_960_121_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_1000_Q31_ID : ComplexInputSamples_Step_1000_122_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_1000_Q31_ID : ComplexInputIFFTSamples_Step_1000_122_q31.txt 
+               Pattern REF_CFFT_STEP_1000_Q31_ID : ComplexFFTSamples_Step_1000_122_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_1024_Q31_ID : ComplexInputSamples_Step_1024_123_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_1024_Q31_ID : ComplexInputIFFTSamples_Step_1024_123_q31.txt 
+               Pattern REF_CFFT_STEP_1024_Q31_ID : ComplexFFTSamples_Step_1024_123_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_1080_Q31_ID : ComplexInputSamples_Step_1080_124_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_1080_Q31_ID : ComplexInputIFFTSamples_Step_1080_124_q31.txt 
+               Pattern REF_CFFT_STEP_1080_Q31_ID : ComplexFFTSamples_Step_1080_124_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_1152_Q31_ID : ComplexInputSamples_Step_1152_125_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_1152_Q31_ID : ComplexInputIFFTSamples_Step_1152_125_q31.txt 
+               Pattern REF_CFFT_STEP_1152_Q31_ID : ComplexFFTSamples_Step_1152_125_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_1200_Q31_ID : ComplexInputSamples_Step_1200_126_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_1200_Q31_ID : ComplexInputIFFTSamples_Step_1200_126_q31.txt 
+               Pattern REF_CFFT_STEP_1200_Q31_ID : ComplexFFTSamples_Step_1200_126_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_1280_Q31_ID : ComplexInputSamples_Step_1280_127_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_1280_Q31_ID : ComplexInputIFFTSamples_Step_1280_127_q31.txt 
+               Pattern REF_CFFT_STEP_1280_Q31_ID : ComplexFFTSamples_Step_1280_127_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_1440_Q31_ID : ComplexInputSamples_Step_1440_128_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_1440_Q31_ID : ComplexInputIFFTSamples_Step_1440_128_q31.txt 
+               Pattern REF_CFFT_STEP_1440_Q31_ID : ComplexFFTSamples_Step_1440_128_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_1500_Q31_ID : ComplexInputSamples_Step_1500_129_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_1500_Q31_ID : ComplexInputIFFTSamples_Step_1500_129_q31.txt 
+               Pattern REF_CFFT_STEP_1500_Q31_ID : ComplexFFTSamples_Step_1500_129_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_1536_Q31_ID : ComplexInputSamples_Step_1536_130_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_1536_Q31_ID : ComplexInputIFFTSamples_Step_1536_130_q31.txt 
+               Pattern REF_CFFT_STEP_1536_Q31_ID : ComplexFFTSamples_Step_1536_130_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_1600_Q31_ID : ComplexInputSamples_Step_1600_131_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_1600_Q31_ID : ComplexInputIFFTSamples_Step_1600_131_q31.txt 
+               Pattern REF_CFFT_STEP_1600_Q31_ID : ComplexFFTSamples_Step_1600_131_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_1728_Q31_ID : ComplexInputSamples_Step_1728_132_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_1728_Q31_ID : ComplexInputIFFTSamples_Step_1728_132_q31.txt 
+               Pattern REF_CFFT_STEP_1728_Q31_ID : ComplexFFTSamples_Step_1728_132_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_1800_Q31_ID : ComplexInputSamples_Step_1800_133_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_1800_Q31_ID : ComplexInputIFFTSamples_Step_1800_133_q31.txt 
+               Pattern REF_CFFT_STEP_1800_Q31_ID : ComplexFFTSamples_Step_1800_133_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_1920_Q31_ID : ComplexInputSamples_Step_1920_134_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_1920_Q31_ID : ComplexInputIFFTSamples_Step_1920_134_q31.txt 
+               Pattern REF_CFFT_STEP_1920_Q31_ID : ComplexFFTSamples_Step_1920_134_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_2000_Q31_ID : ComplexInputSamples_Step_2000_135_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_2000_Q31_ID : ComplexInputIFFTSamples_Step_2000_135_q31.txt 
+               Pattern REF_CFFT_STEP_2000_Q31_ID : ComplexFFTSamples_Step_2000_135_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_2048_Q31_ID : ComplexInputSamples_Step_2048_136_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_2048_Q31_ID : ComplexInputIFFTSamples_Step_2048_136_q31.txt 
+               Pattern REF_CFFT_STEP_2048_Q31_ID : ComplexFFTSamples_Step_2048_136_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_2160_Q31_ID : ComplexInputSamples_Step_2160_137_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_2160_Q31_ID : ComplexInputIFFTSamples_Step_2160_137_q31.txt 
+               Pattern REF_CFFT_STEP_2160_Q31_ID : ComplexFFTSamples_Step_2160_137_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_2304_Q31_ID : ComplexInputSamples_Step_2304_138_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_2304_Q31_ID : ComplexInputIFFTSamples_Step_2304_138_q31.txt 
+               Pattern REF_CFFT_STEP_2304_Q31_ID : ComplexFFTSamples_Step_2304_138_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_2400_Q31_ID : ComplexInputSamples_Step_2400_139_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_2400_Q31_ID : ComplexInputIFFTSamples_Step_2400_139_q31.txt 
+               Pattern REF_CFFT_STEP_2400_Q31_ID : ComplexFFTSamples_Step_2400_139_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_2560_Q31_ID : ComplexInputSamples_Step_2560_140_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_2560_Q31_ID : ComplexInputIFFTSamples_Step_2560_140_q31.txt 
+               Pattern REF_CFFT_STEP_2560_Q31_ID : ComplexFFTSamples_Step_2560_140_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_2700_Q31_ID : ComplexInputSamples_Step_2700_141_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_2700_Q31_ID : ComplexInputIFFTSamples_Step_2700_141_q31.txt 
+               Pattern REF_CFFT_STEP_2700_Q31_ID : ComplexFFTSamples_Step_2700_141_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_2880_Q31_ID : ComplexInputSamples_Step_2880_142_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_2880_Q31_ID : ComplexInputIFFTSamples_Step_2880_142_q31.txt 
+               Pattern REF_CFFT_STEP_2880_Q31_ID : ComplexFFTSamples_Step_2880_142_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_3000_Q31_ID : ComplexInputSamples_Step_3000_143_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_3000_Q31_ID : ComplexInputIFFTSamples_Step_3000_143_q31.txt 
+               Pattern REF_CFFT_STEP_3000_Q31_ID : ComplexFFTSamples_Step_3000_143_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_3072_Q31_ID : ComplexInputSamples_Step_3072_144_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_3072_Q31_ID : ComplexInputIFFTSamples_Step_3072_144_q31.txt 
+               Pattern REF_CFFT_STEP_3072_Q31_ID : ComplexFFTSamples_Step_3072_144_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_3200_Q31_ID : ComplexInputSamples_Step_3200_145_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_3200_Q31_ID : ComplexInputIFFTSamples_Step_3200_145_q31.txt 
+               Pattern REF_CFFT_STEP_3200_Q31_ID : ComplexFFTSamples_Step_3200_145_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_3456_Q31_ID : ComplexInputSamples_Step_3456_146_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_3456_Q31_ID : ComplexInputIFFTSamples_Step_3456_146_q31.txt 
+               Pattern REF_CFFT_STEP_3456_Q31_ID : ComplexFFTSamples_Step_3456_146_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_3600_Q31_ID : ComplexInputSamples_Step_3600_147_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_3600_Q31_ID : ComplexInputIFFTSamples_Step_3600_147_q31.txt 
+               Pattern REF_CFFT_STEP_3600_Q31_ID : ComplexFFTSamples_Step_3600_147_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_3840_Q31_ID : ComplexInputSamples_Step_3840_148_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_3840_Q31_ID : ComplexInputIFFTSamples_Step_3840_148_q31.txt 
+               Pattern REF_CFFT_STEP_3840_Q31_ID : ComplexFFTSamples_Step_3840_148_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_4000_Q31_ID : ComplexInputSamples_Step_4000_149_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_4000_Q31_ID : ComplexInputIFFTSamples_Step_4000_149_q31.txt 
+               Pattern REF_CFFT_STEP_4000_Q31_ID : ComplexFFTSamples_Step_4000_149_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_4096_Q31_ID : ComplexInputSamples_Step_4096_150_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_4096_Q31_ID : ComplexInputIFFTSamples_Step_4096_150_q31.txt 
+               Pattern REF_CFFT_STEP_4096_Q31_ID : ComplexFFTSamples_Step_4096_150_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_4320_Q31_ID : ComplexInputSamples_Step_4320_151_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_4320_Q31_ID : ComplexInputIFFTSamples_Step_4320_151_q31.txt 
+               Pattern REF_CFFT_STEP_4320_Q31_ID : ComplexFFTSamples_Step_4320_151_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_4500_Q31_ID : ComplexInputSamples_Step_4500_152_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_4500_Q31_ID : ComplexInputIFFTSamples_Step_4500_152_q31.txt 
+               Pattern REF_CFFT_STEP_4500_Q31_ID : ComplexFFTSamples_Step_4500_152_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_4608_Q31_ID : ComplexInputSamples_Step_4608_153_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_4608_Q31_ID : ComplexInputIFFTSamples_Step_4608_153_q31.txt 
+               Pattern REF_CFFT_STEP_4608_Q31_ID : ComplexFFTSamples_Step_4608_153_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_4800_Q31_ID : ComplexInputSamples_Step_4800_154_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_4800_Q31_ID : ComplexInputIFFTSamples_Step_4800_154_q31.txt 
+               Pattern REF_CFFT_STEP_4800_Q31_ID : ComplexFFTSamples_Step_4800_154_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_5120_Q31_ID : ComplexInputSamples_Step_5120_155_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_5120_Q31_ID : ComplexInputIFFTSamples_Step_5120_155_q31.txt 
+               Pattern REF_CFFT_STEP_5120_Q31_ID : ComplexFFTSamples_Step_5120_155_q31.txt 
+
+               Pattern INPUTS_CFFT_STEP_5400_Q31_ID : ComplexInputSamples_Step_5400_156_q31.txt 
+               Pattern INPUTS_CIFFT_STEP_5400_Q31_ID : ComplexInputIFFTSamples_Step_5400_156_q31.txt 
+               Pattern REF_CFFT_STEP_5400_Q31_ID : ComplexFFTSamples_Step_5400_156_q31.txt 
+
+               Output  OUTPUT_CFFT_Q31_ID : ComplexFFTSamples
+
+               Functions {
+                  cfft_noisy_20_q31:test_cfft_q31
+                  cfft_noisy_24_q31:test_cfft_q31
+                  cfft_noisy_32_q31:test_cfft_q31
+                  cfft_noisy_36_q31:test_cfft_q31
+                  cfft_noisy_40_q31:test_cfft_q31
+                  cfft_noisy_48_q31:test_cfft_q31
+                  cfft_noisy_60_q31:test_cfft_q31
+                  cfft_noisy_64_q31:test_cfft_q31
+                  cfft_noisy_72_q31:test_cfft_q31
+                  cfft_noisy_80_q31:test_cfft_q31
+                  cfft_noisy_96_q31:test_cfft_q31
+                  cfft_noisy_100_q31:test_cfft_q31
+                  cfft_noisy_108_q31:test_cfft_q31
+                  cfft_noisy_120_q31:test_cfft_q31
+                  cfft_noisy_128_q31:test_cfft_q31
+                  cfft_noisy_144_q31:test_cfft_q31
+                  cfft_noisy_160_q31:test_cfft_q31
+                  cfft_noisy_180_q31:test_cfft_q31
+                  cfft_noisy_192_q31:test_cfft_q31
+                  cfft_noisy_200_q31:test_cfft_q31
+                  cfft_noisy_216_q31:test_cfft_q31
+                  cfft_noisy_240_q31:test_cfft_q31
+                  cfft_noisy_256_q31:test_cfft_q31
+                  cfft_noisy_288_q31:test_cfft_q31
+                  cfft_noisy_300_q31:test_cfft_q31
+                  cfft_noisy_320_q31:test_cfft_q31
+                  cfft_noisy_360_q31:test_cfft_q31
+                  cfft_noisy_384_q31:test_cfft_q31
+                  cfft_noisy_400_q31:test_cfft_q31
+                  cfft_noisy_432_q31:test_cfft_q31
+                  cfft_noisy_480_q31:test_cfft_q31
+                  cfft_noisy_500_q31:test_cfft_q31
+                  cfft_noisy_512_q31:test_cfft_q31
+                  cfft_noisy_540_q31:test_cfft_q31
+                  cfft_noisy_576_q31:test_cfft_q31
+                  cfft_noisy_600_q31:test_cfft_q31
+                  cfft_noisy_640_q31:test_cfft_q31
+                  cfft_noisy_720_q31:test_cfft_q31
+                  cfft_noisy_768_q31:test_cfft_q31
+                  cfft_noisy_800_q31:test_cfft_q31
+                  cfft_noisy_864_q31:test_cfft_q31
+                  cfft_noisy_900_q31:test_cfft_q31
+                  cfft_noisy_960_q31:test_cfft_q31
+                  cfft_noisy_1000_q31:test_cfft_q31
+                  cfft_noisy_1024_q31:test_cfft_q31
+                  cfft_noisy_1080_q31:test_cfft_q31
+                  cfft_noisy_1152_q31:test_cfft_q31
+                  cfft_noisy_1200_q31:test_cfft_q31
+                  cfft_noisy_1280_q31:test_cfft_q31
+                  cfft_noisy_1440_q31:test_cfft_q31
+                  cfft_noisy_1500_q31:test_cfft_q31
+                  cfft_noisy_1536_q31:test_cfft_q31
+                  cfft_noisy_1600_q31:test_cfft_q31
+                  cfft_noisy_1728_q31:test_cfft_q31
+                  cfft_noisy_1800_q31:test_cfft_q31
+                  cfft_noisy_1920_q31:test_cfft_q31
+                  cfft_noisy_2000_q31:test_cfft_q31
+                  cfft_noisy_2048_q31:test_cfft_q31
+                  cfft_noisy_2160_q31:test_cfft_q31
+                  cfft_noisy_2304_q31:test_cfft_q31
+                  cfft_noisy_2400_q31:test_cfft_q31
+                  cfft_noisy_2560_q31:test_cfft_q31
+                  cfft_noisy_2700_q31:test_cfft_q31
+                  cfft_noisy_2880_q31:test_cfft_q31
+                  cfft_noisy_3000_q31:test_cfft_q31
+                  cfft_noisy_3072_q31:test_cfft_q31
+                  cfft_noisy_3200_q31:test_cfft_q31
+                  cfft_noisy_3456_q31:test_cfft_q31
+                  cfft_noisy_3600_q31:test_cfft_q31
+                  cfft_noisy_3840_q31:test_cfft_q31
+                  cfft_noisy_4000_q31:test_cfft_q31
+                  cfft_noisy_4096_q31:test_cfft_q31
+                  cfft_noisy_4320_q31:test_cfft_q31
+                  cfft_noisy_4500_q31:test_cfft_q31
+                  cfft_noisy_4608_q31:test_cfft_q31
+                  disabled{cfft_noisy_4800_q31:test_cfft_q31}
+                  disabled{cfft_noisy_5120_q31:test_cfft_q31}
+                  disabled{cfft_noisy_5400_q31:test_cfft_q31}
+                  cfft_step_20_q31:test_cfft_q31
+                  cfft_step_24_q31:test_cfft_q31
+                  cfft_step_32_q31:test_cfft_q31
+                  cfft_step_36_q31:test_cfft_q31
+                  cfft_step_40_q31:test_cfft_q31
+                  cfft_step_48_q31:test_cfft_q31
+                  cfft_step_60_q31:test_cfft_q31
+                  cfft_step_64_q31:test_cfft_q31
+                  cfft_step_72_q31:test_cfft_q31
+                  cfft_step_80_q31:test_cfft_q31
+                  cfft_step_96_q31:test_cfft_q31
+                  cfft_step_100_q31:test_cfft_q31
+                  cfft_step_108_q31:test_cfft_q31
+                  cfft_step_120_q31:test_cfft_q31
+                  cfft_step_128_q31:test_cfft_q31
+                  cfft_step_144_q31:test_cfft_q31
+                  cfft_step_160_q31:test_cfft_q31
+                  cfft_step_180_q31:test_cfft_q31
+                  cfft_step_192_q31:test_cfft_q31
+                  cfft_step_200_q31:test_cfft_q31
+                  cfft_step_216_q31:test_cfft_q31
+                  cfft_step_240_q31:test_cfft_q31
+                  cfft_step_256_q31:test_cfft_q31
+                  cfft_step_288_q31:test_cfft_q31
+                  cfft_step_300_q31:test_cfft_q31
+                  cfft_step_320_q31:test_cfft_q31
+                  cfft_step_360_q31:test_cfft_q31
+                  cfft_step_384_q31:test_cfft_q31
+                  cfft_step_400_q31:test_cfft_q31
+                  cfft_step_432_q31:test_cfft_q31
+                  cfft_step_480_q31:test_cfft_q31
+                  cfft_step_500_q31:test_cfft_q31
+                  cfft_step_512_q31:test_cfft_q31
+                  cfft_step_540_q31:test_cfft_q31
+                  cfft_step_576_q31:test_cfft_q31
+                  cfft_step_600_q31:test_cfft_q31
+                  cfft_step_640_q31:test_cfft_q31
+                  cfft_step_720_q31:test_cfft_q31
+                  cfft_step_768_q31:test_cfft_q31
+                  cfft_step_800_q31:test_cfft_q31
+                  cfft_step_864_q31:test_cfft_q31
+                  cfft_step_900_q31:test_cfft_q31
+                  cfft_step_960_q31:test_cfft_q31
+                  cfft_step_1000_q31:test_cfft_q31
+                  cfft_step_1024_q31:test_cfft_q31
+                  cfft_step_1080_q31:test_cfft_q31
+                  cfft_step_1152_q31:test_cfft_q31
+                  cfft_step_1200_q31:test_cfft_q31
+                  cfft_step_1280_q31:test_cfft_q31
+                  cfft_step_1440_q31:test_cfft_q31
+                  cfft_step_1500_q31:test_cfft_q31
+                  cfft_step_1536_q31:test_cfft_q31
+                  cfft_step_1600_q31:test_cfft_q31
+                  cfft_step_1728_q31:test_cfft_q31
+                  cfft_step_1800_q31:test_cfft_q31
+                  cfft_step_1920_q31:test_cfft_q31
+                  cfft_step_2000_q31:test_cfft_q31
+                  cfft_step_2048_q31:test_cfft_q31
+                  cfft_step_2160_q31:test_cfft_q31
+                  cfft_step_2304_q31:test_cfft_q31
+                  cfft_step_2400_q31:test_cfft_q31
+                  cfft_step_2560_q31:test_cfft_q31
+                  cfft_step_2700_q31:test_cfft_q31
+                  cfft_step_2880_q31:test_cfft_q31
+                  cfft_step_3000_q31:test_cfft_q31
+                  cfft_step_3072_q31:test_cfft_q31
+                  cfft_step_3200_q31:test_cfft_q31
+                  cfft_step_3456_q31:test_cfft_q31
+                  cfft_step_3600_q31:test_cfft_q31
+                  cfft_step_3840_q31:test_cfft_q31
+                  cfft_step_4000_q31:test_cfft_q31
+                  cfft_step_4096_q31:test_cfft_q31
+                  cfft_step_4320_q31:test_cfft_q31
+                  cfft_step_4500_q31:test_cfft_q31
+                  cfft_step_4608_q31:test_cfft_q31
+                  disabled{cfft_step_4800_q31:test_cfft_q31}
+                  disabled{cfft_step_5120_q31:test_cfft_q31}
+                  disabled{cfft_step_5400_q31:test_cfft_q31}
+                  cifft_noisy_20_q31:test_cifft_q31
+                  cifft_noisy_24_q31:test_cifft_q31
+                  cifft_noisy_32_q31:test_cifft_q31
+                  cifft_noisy_36_q31:test_cifft_q31
+                  cifft_noisy_40_q31:test_cifft_q31
+                  cifft_noisy_48_q31:test_cifft_q31
+                  cifft_noisy_60_q31:test_cifft_q31
+                  cifft_noisy_64_q31:test_cifft_q31
+                  cifft_noisy_72_q31:test_cifft_q31
+                  cifft_noisy_80_q31:test_cifft_q31
+                  cifft_noisy_96_q31:test_cifft_q31
+                  cifft_noisy_100_q31:test_cifft_q31
+                  cifft_noisy_108_q31:test_cifft_q31
+                  cifft_noisy_120_q31:test_cifft_q31
+                  cifft_noisy_128_q31:test_cifft_q31
+                  cifft_noisy_144_q31:test_cifft_q31
+                  cifft_noisy_160_q31:test_cifft_q31
+                  cifft_noisy_180_q31:test_cifft_q31
+                  cifft_noisy_192_q31:test_cifft_q31
+                  cifft_noisy_200_q31:test_cifft_q31
+                  cifft_noisy_216_q31:test_cifft_q31
+                  cifft_noisy_240_q31:test_cifft_q31
+                  cifft_noisy_256_q31:test_cifft_q31
+                  cifft_noisy_288_q31:test_cifft_q31
+                  cifft_noisy_300_q31:test_cifft_q31
+                  cifft_noisy_320_q31:test_cifft_q31
+                  cifft_noisy_360_q31:test_cifft_q31
+                  cifft_noisy_384_q31:test_cifft_q31
+                  cifft_noisy_400_q31:test_cifft_q31
+                  cifft_noisy_432_q31:test_cifft_q31
+                  cifft_noisy_480_q31:test_cifft_q31
+                  cifft_noisy_500_q31:test_cifft_q31
+                  cifft_noisy_512_q31:test_cifft_q31
+                  cifft_noisy_540_q31:test_cifft_q31
+                  cifft_noisy_576_q31:test_cifft_q31
+                  cifft_noisy_600_q31:test_cifft_q31
+                  cifft_noisy_640_q31:test_cifft_q31
+                  cifft_noisy_720_q31:test_cifft_q31
+                  cifft_noisy_768_q31:test_cifft_q31
+                  cifft_noisy_800_q31:test_cifft_q31
+                  cifft_noisy_864_q31:test_cifft_q31
+                  cifft_noisy_900_q31:test_cifft_q31
+                  cifft_noisy_960_q31:test_cifft_q31
+                  cifft_noisy_1000_q31:test_cifft_q31
+                  cifft_noisy_1024_q31:test_cifft_q31
+                  cifft_noisy_1080_q31:test_cifft_q31
+                  cifft_noisy_1152_q31:test_cifft_q31
+                  cifft_noisy_1200_q31:test_cifft_q31
+                  cifft_noisy_1280_q31:test_cifft_q31
+                  cifft_noisy_1440_q31:test_cifft_q31
+                  cifft_noisy_1500_q31:test_cifft_q31
+                  cifft_noisy_1536_q31:test_cifft_q31
+                  cifft_noisy_1600_q31:test_cifft_q31
+                  cifft_noisy_1728_q31:test_cifft_q31
+                  cifft_noisy_1800_q31:test_cifft_q31
+                  cifft_noisy_1920_q31:test_cifft_q31
+                  cifft_noisy_2000_q31:test_cifft_q31
+                  cifft_noisy_2048_q31:test_cifft_q31
+                  cifft_noisy_2160_q31:test_cifft_q31
+                  cifft_noisy_2304_q31:test_cifft_q31
+                  cifft_noisy_2400_q31:test_cifft_q31
+                  cifft_noisy_2560_q31:test_cifft_q31
+                  cifft_noisy_2700_q31:test_cifft_q31
+                  cifft_noisy_2880_q31:test_cifft_q31
+                  cifft_noisy_3000_q31:test_cifft_q31
+                  cifft_noisy_3072_q31:test_cifft_q31
+                  cifft_noisy_3200_q31:test_cifft_q31
+                  cifft_noisy_3456_q31:test_cifft_q31
+                  cifft_noisy_3600_q31:test_cifft_q31
+                  cifft_noisy_3840_q31:test_cifft_q31
+                  cifft_noisy_4000_q31:test_cifft_q31
+                  cifft_noisy_4096_q31:test_cifft_q31
+                  cifft_noisy_4320_q31:test_cifft_q31
+                  cifft_noisy_4500_q31:test_cifft_q31
+                  cifft_noisy_4608_q31:test_cifft_q31
+                  disabled{cifft_noisy_4800_q31:test_cifft_q31}
+                  disabled{cifft_noisy_5120_q31:test_cifft_q31}
+                  disabled{cifft_noisy_5400_q31:test_cifft_q31}
+                  cifft_step_20_q31:test_cifft_q31
+                  cifft_step_24_q31:test_cifft_q31
+                  cifft_step_32_q31:test_cifft_q31
+                  cifft_step_36_q31:test_cifft_q31
+                  cifft_step_40_q31:test_cifft_q31
+                  cifft_step_48_q31:test_cifft_q31
+                  cifft_step_60_q31:test_cifft_q31
+                  cifft_step_64_q31:test_cifft_q31
+                  cifft_step_72_q31:test_cifft_q31
+                  cifft_step_80_q31:test_cifft_q31
+                  cifft_step_96_q31:test_cifft_q31
+                  cifft_step_100_q31:test_cifft_q31
+                  cifft_step_108_q31:test_cifft_q31
+                  cifft_step_120_q31:test_cifft_q31
+                  cifft_step_128_q31:test_cifft_q31
+                  cifft_step_144_q31:test_cifft_q31
+                  cifft_step_160_q31:test_cifft_q31
+                  cifft_step_180_q31:test_cifft_q31
+                  cifft_step_192_q31:test_cifft_q31
+                  cifft_step_200_q31:test_cifft_q31
+                  cifft_step_216_q31:test_cifft_q31
+                  cifft_step_240_q31:test_cifft_q31
+                  cifft_step_256_q31:test_cifft_q31
+                  cifft_step_288_q31:test_cifft_q31
+                  cifft_step_300_q31:test_cifft_q31
+                  cifft_step_320_q31:test_cifft_q31
+                  cifft_step_360_q31:test_cifft_q31
+                  cifft_step_384_q31:test_cifft_q31
+                  cifft_step_400_q31:test_cifft_q31
+                  cifft_step_432_q31:test_cifft_q31
+                  cifft_step_480_q31:test_cifft_q31
+                  cifft_step_500_q31:test_cifft_q31
+                  cifft_step_512_q31:test_cifft_q31
+                  cifft_step_540_q31:test_cifft_q31
+                  cifft_step_576_q31:test_cifft_q31
+                  cifft_step_600_q31:test_cifft_q31
+                  cifft_step_640_q31:test_cifft_q31
+                  cifft_step_720_q31:test_cifft_q31
+                  cifft_step_768_q31:test_cifft_q31
+                  cifft_step_800_q31:test_cifft_q31
+                  cifft_step_864_q31:test_cifft_q31
+                  cifft_step_900_q31:test_cifft_q31
+                  cifft_step_960_q31:test_cifft_q31
+                  cifft_step_1000_q31:test_cifft_q31
+                  cifft_step_1024_q31:test_cifft_q31
+                  cifft_step_1080_q31:test_cifft_q31
+                  cifft_step_1152_q31:test_cifft_q31
+                  cifft_step_1200_q31:test_cifft_q31
+                  cifft_step_1280_q31:test_cifft_q31
+                  cifft_step_1440_q31:test_cifft_q31
+                  cifft_step_1500_q31:test_cifft_q31
+                  cifft_step_1536_q31:test_cifft_q31
+                  cifft_step_1600_q31:test_cifft_q31
+                  cifft_step_1728_q31:test_cifft_q31
+                  cifft_step_1800_q31:test_cifft_q31
+                  cifft_step_1920_q31:test_cifft_q31
+                  cifft_step_2000_q31:test_cifft_q31
+                  cifft_step_2048_q31:test_cifft_q31
+                  cifft_step_2160_q31:test_cifft_q31
+                  cifft_step_2304_q31:test_cifft_q31
+                  cifft_step_2400_q31:test_cifft_q31
+                  cifft_step_2560_q31:test_cifft_q31
+                  cifft_step_2700_q31:test_cifft_q31
+                  cifft_step_2880_q31:test_cifft_q31
+                  cifft_step_3000_q31:test_cifft_q31
+                  cifft_step_3072_q31:test_cifft_q31
+                  cifft_step_3200_q31:test_cifft_q31
+                  cifft_step_3456_q31:test_cifft_q31
+                  cifft_step_3600_q31:test_cifft_q31
+                  cifft_step_3840_q31:test_cifft_q31
+                  cifft_step_4000_q31:test_cifft_q31
+                  cifft_step_4096_q31:test_cifft_q31
+                  cifft_step_4320_q31:test_cifft_q31
+                  cifft_step_4500_q31:test_cifft_q31
+                  cifft_step_4608_q31:test_cifft_q31
+                  disabled{cifft_step_4800_q31:test_cifft_q31}
+                  disabled{cifft_step_5120_q31:test_cifft_q31}
+                  disabled{cifft_step_5400_q31:test_cifft_q31}
+               }
+           }
+            suite Transform Complex Q15 {
+               class = TransformNeonCQ15
+               folder = TransformNeonQ15
+
+
+               Pattern INPUTS_CFFT_NOISY_32_Q15_ID : ComplexInputSamples_Noisy_32_1_q15.txt 
+               Pattern INPUTS_CIFFT_NOISY_32_Q15_ID : ComplexInputIFFTSamples_Noisy_32_1_q15.txt 
+               Pattern REF_CFFT_NOISY_32_Q15_ID : ComplexFFTSamples_Noisy_32_1_q15.txt 
+
+               Pattern INPUTS_CFFT_NOISY_64_Q15_ID : ComplexInputSamples_Noisy_64_2_q15.txt 
+               Pattern INPUTS_CIFFT_NOISY_64_Q15_ID : ComplexInputIFFTSamples_Noisy_64_2_q15.txt 
+               Pattern REF_CFFT_NOISY_64_Q15_ID : ComplexFFTSamples_Noisy_64_2_q15.txt 
+
+               Pattern INPUTS_CFFT_NOISY_128_Q15_ID : ComplexInputSamples_Noisy_128_3_q15.txt 
+               Pattern INPUTS_CIFFT_NOISY_128_Q15_ID : ComplexInputIFFTSamples_Noisy_128_3_q15.txt 
+               Pattern REF_CFFT_NOISY_128_Q15_ID : ComplexFFTSamples_Noisy_128_3_q15.txt 
+
+               Pattern INPUTS_CFFT_NOISY_256_Q15_ID : ComplexInputSamples_Noisy_256_4_q15.txt 
+               Pattern INPUTS_CIFFT_NOISY_256_Q15_ID : ComplexInputIFFTSamples_Noisy_256_4_q15.txt 
+               Pattern REF_CFFT_NOISY_256_Q15_ID : ComplexFFTSamples_Noisy_256_4_q15.txt 
+
+               Pattern INPUTS_CFFT_NOISY_512_Q15_ID : ComplexInputSamples_Noisy_512_5_q15.txt 
+               Pattern INPUTS_CIFFT_NOISY_512_Q15_ID : ComplexInputIFFTSamples_Noisy_512_5_q15.txt 
+               Pattern REF_CFFT_NOISY_512_Q15_ID : ComplexFFTSamples_Noisy_512_5_q15.txt 
+
+               Pattern INPUTS_CFFT_NOISY_1024_Q15_ID : ComplexInputSamples_Noisy_1024_6_q15.txt 
+               Pattern INPUTS_CIFFT_NOISY_1024_Q15_ID : ComplexInputIFFTSamples_Noisy_1024_6_q15.txt 
+               Pattern REF_CFFT_NOISY_1024_Q15_ID : ComplexFFTSamples_Noisy_1024_6_q15.txt 
+
+               Pattern INPUTS_CFFT_NOISY_2048_Q15_ID : ComplexInputSamples_Noisy_2048_7_q15.txt 
+               Pattern INPUTS_CIFFT_NOISY_2048_Q15_ID : ComplexInputIFFTSamples_Noisy_2048_7_q15.txt 
+               Pattern REF_CFFT_NOISY_2048_Q15_ID : ComplexFFTSamples_Noisy_2048_7_q15.txt 
+
+               Pattern INPUTS_CFFT_NOISY_4096_Q15_ID : ComplexInputSamples_Noisy_4096_8_q15.txt 
+               Pattern INPUTS_CIFFT_NOISY_4096_Q15_ID : ComplexInputIFFTSamples_Noisy_4096_8_q15.txt 
+               Pattern REF_CFFT_NOISY_4096_Q15_ID : ComplexFFTSamples_Noisy_4096_8_q15.txt 
+
+               Pattern INPUTS_CFFT_NOISY_8192_Q15_ID : ComplexInputSamples_Noisy_8192_9_q15.txt 
+               Pattern INPUTS_CIFFT_NOISY_8192_Q15_ID : ComplexInputIFFTSamples_Noisy_8192_9_q15.txt 
+               Pattern REF_CFFT_NOISY_8192_Q15_ID : ComplexFFTSamples_Noisy_8192_9_q15.txt 
+
+               Pattern INPUTS_CFFT_STEP_32_Q15_ID : ComplexInputSamples_Step_32_10_q15.txt 
+               Pattern INPUTS_CIFFT_STEP_32_Q15_ID : ComplexInputIFFTSamples_Step_32_10_q15.txt 
+               Pattern REF_CFFT_STEP_32_Q15_ID : ComplexFFTSamples_Step_32_10_q15.txt 
+
+               Pattern INPUTS_CFFT_STEP_64_Q15_ID : ComplexInputSamples_Step_64_11_q15.txt 
+               Pattern INPUTS_CIFFT_STEP_64_Q15_ID : ComplexInputIFFTSamples_Step_64_11_q15.txt 
+               Pattern REF_CFFT_STEP_64_Q15_ID : ComplexFFTSamples_Step_64_11_q15.txt 
+
+               Pattern INPUTS_CFFT_STEP_128_Q15_ID : ComplexInputSamples_Step_128_12_q15.txt 
+               Pattern INPUTS_CIFFT_STEP_128_Q15_ID : ComplexInputIFFTSamples_Step_128_12_q15.txt 
+               Pattern REF_CFFT_STEP_128_Q15_ID : ComplexFFTSamples_Step_128_12_q15.txt 
+
+               Pattern INPUTS_CFFT_STEP_256_Q15_ID : ComplexInputSamples_Step_256_13_q15.txt 
+               Pattern INPUTS_CIFFT_STEP_256_Q15_ID : ComplexInputIFFTSamples_Step_256_13_q15.txt 
+               Pattern REF_CFFT_STEP_256_Q15_ID : ComplexFFTSamples_Step_256_13_q15.txt 
+
+               Pattern INPUTS_CFFT_STEP_512_Q15_ID : ComplexInputSamples_Step_512_14_q15.txt 
+               Pattern INPUTS_CIFFT_STEP_512_Q15_ID : ComplexInputIFFTSamples_Step_512_14_q15.txt 
+               Pattern REF_CFFT_STEP_512_Q15_ID : ComplexFFTSamples_Step_512_14_q15.txt 
+
+               Pattern INPUTS_CFFT_STEP_1024_Q15_ID : ComplexInputSamples_Step_1024_15_q15.txt 
+               Pattern INPUTS_CIFFT_STEP_1024_Q15_ID : ComplexInputIFFTSamples_Step_1024_15_q15.txt 
+               Pattern REF_CFFT_STEP_1024_Q15_ID : ComplexFFTSamples_Step_1024_15_q15.txt 
+
+               Pattern INPUTS_CFFT_STEP_2048_Q15_ID : ComplexInputSamples_Step_2048_16_q15.txt 
+               Pattern INPUTS_CIFFT_STEP_2048_Q15_ID : ComplexInputIFFTSamples_Step_2048_16_q15.txt 
+               Pattern REF_CFFT_STEP_2048_Q15_ID : ComplexFFTSamples_Step_2048_16_q15.txt 
+
+               Pattern INPUTS_CFFT_STEP_4096_Q15_ID : ComplexInputSamples_Step_4096_17_q15.txt 
+               Pattern INPUTS_CIFFT_STEP_4096_Q15_ID : ComplexInputIFFTSamples_Step_4096_17_q15.txt 
+               Pattern REF_CFFT_STEP_4096_Q15_ID : ComplexFFTSamples_Step_4096_17_q15.txt 
+
+               Pattern INPUTS_CFFT_STEP_8192_Q15_ID : ComplexInputSamples_Step_8192_18_q15.txt 
+               Pattern INPUTS_CIFFT_STEP_8192_Q15_ID : ComplexInputIFFTSamples_Step_8192_18_q15.txt 
+               Pattern REF_CFFT_STEP_8192_Q15_ID : ComplexFFTSamples_Step_8192_18_q15.txt 
+
+               Output  OUTPUT_CFFT_Q15_ID : ComplexFFTSamples
+
+               Functions {
+                  cfft_noisy_32_q15:test_cfft_q15
+                  cfft_noisy_64_q15:test_cfft_q15
+                  cfft_noisy_128_q15:test_cfft_q15
+                  cfft_noisy_256_q15:test_cfft_q15
+                  cfft_noisy_512_q15:test_cfft_q15
+                  cfft_noisy_1024_q15:test_cfft_q15
+                  disabled{cfft_noisy_2048_q15:test_cfft_q15}
+                  disabled{cfft_noisy_4096_q15:test_cfft_q15}
+                  disabled{cfft_noisy_8192_q15:test_cfft_q15}
+                  cfft_step_32_q15:test_cfft_q15
+                  cfft_step_64_q15:test_cfft_q15
+                  cfft_step_128_q15:test_cfft_q15
+                  cfft_step_256_q15:test_cfft_q15
+                  cfft_step_512_q15:test_cfft_q15
+                  cfft_step_1024_q15:test_cfft_q15
+                  disabled{cfft_step_2048_q15:test_cfft_q15}
+                  disabled{cfft_step_4096_q15:test_cfft_q15}
+                  disabled{cfft_step_8192_q15:test_cfft_q15}
+                  cifft_noisy_32_q15:test_cifft_q15
+                  cifft_noisy_64_q15:test_cifft_q15
+                  cifft_noisy_128_q15:test_cifft_q15
+                  cifft_noisy_256_q15:test_cifft_q15
+                  cifft_noisy_512_q15:test_cifft_q15
+                  cifft_noisy_1024_q15:test_cifft_q15
+                  disabled{cifft_noisy_2048_q15:test_cifft_q15}
+                  disabled{cifft_noisy_4096_q15:test_cifft_q15}
+                  disabled{cifft_noisy_8192_q15:test_cifft_q15}
+                  cifft_step_32_q15:test_cifft_q15
+                  cifft_step_64_q15:test_cifft_q15
+                  cifft_step_128_q15:test_cifft_q15
+                  cifft_step_256_q15:test_cifft_q15
+                  cifft_step_512_q15:test_cifft_q15
+                  cifft_step_1024_q15:test_cifft_q15
+                  disabled{cifft_step_2048_q15:test_cifft_q15}
+                  disabled{cifft_step_4096_q15:test_cifft_q15}
+                  disabled{cifft_step_8192_q15:test_cifft_q15}
+               }
+           }
+       }
+   }
+}

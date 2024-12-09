@@ -4,6 +4,8 @@
 #include "Test.h"
 
 #define SNR_THRESHOLD 30
+#define ABS_ERROR_Q15 ((q15_t)15)
+
 
     void TransformCQ15::test_cfft_q15()
     {
@@ -13,13 +15,25 @@
 
        memcpy(outfftp,inp,sizeof(q15_t)*input.nbSamples());
    
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+          q15_t *tmp2p = tmp2.ptr();
+
+          arm_cfft_q15(
+             &(this->instCfftQ15),
+             inp,
+             outfftp,
+             tmp2p,
+             this->ifft);
+#else
        arm_cfft_q15(
              &(this->instCfftQ15),
              outfftp,
              this->ifft,
              1);
+#endif
           
         ASSERT_SNR(outputfft,ref,(float32_t)SNR_THRESHOLD);
+        ASSERT_NEAR_EQ(outputfft,ref,ABS_ERROR_Q15);
         ASSERT_EMPTY_TAIL(outputfft);
        
         
@@ -34,11 +48,21 @@
 
         memcpy(outfftp,inp,sizeof(q15_t)*input.nbSamples());
    
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+        q15_t *tmp2p = tmp2.ptr();
+        arm_cfft_q15(
+             &(this->instCfftQ15),
+             inp,
+             outfftp,
+             tmp2p,
+             this->ifft);
+#else
         arm_cfft_q15(
              &(this->instCfftQ15),
              outfftp,
              this->ifft,
              1);
+#endif 
 
         for(unsigned long i=0; i < outputfft.nbSamples();i++)
         {
@@ -46,6 +70,7 @@
         }
           
         ASSERT_SNR(outputfft,ref,(float32_t)SNR_THRESHOLD);
+        ASSERT_NEAR_EQ(outputfft,ref,ABS_ERROR_Q15);
         ASSERT_EMPTY_TAIL(outputfft);
 
        
@@ -483,6 +508,7 @@
        }
 
        outputfft.create(ref.nbSamples(),TransformCQ15::OUTPUT_CFFT_Q15_ID,mgr);
+       tmp2.create(ref.nbSamples(),TransformCQ15::OUTPUT_CFFT_Q15_ID,mgr);
 
 
     }

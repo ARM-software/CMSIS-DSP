@@ -22,14 +22,20 @@ a double precision computation.
         float16_t *tmpinp=tmpin.ptr(); 
         float16_t *outp=output.ptr();
         float16_t *tmpp=tmp.ptr();
+        
 
 
         memcpy((void*)tmpinp,(void*)inp1,sizeof(float16_t)*this->fftLen);
+        #if defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
+        float16_t *tmp2p=tmp2.ptr();
+        arm_mfcc_f16(&mfcc,tmpinp,outp,tmpp,tmp2p);
+        #else
         arm_mfcc_f16(&mfcc,tmpinp,outp,tmpp);
+        #endif 
 
         ASSERT_EMPTY_TAIL(output);
 
-        ASSERT_SNR(output,ref,(float16_t)SNR_THRESHOLD);
+        ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
 
         ASSERT_CLOSE_ERROR(output,ref,ABS_ERROR,REL_ERROR);
 
@@ -58,6 +64,7 @@ a double precision computation.
                     mfcc_filter_coefs_config3_f16,
                     mfcc_window_coefs_config3_f16);
             tmp.create(2*nb,MFCCF16::TMP_MFCC_F16_ID,mgr);
+            tmp2.create(nb,MFCCF16::TMP_MFCC_F16_ID,mgr);
             tmpin.create(nb,MFCCF16::TMPIN_MFCC_F16_ID,mgr);
           }
           break;
@@ -74,6 +81,7 @@ a double precision computation.
                       mfcc_filter_coefs_config2_f16,
                       mfcc_window_coefs_config2_f16);
             tmp.create(2*nb,MFCCF16::TMP_MFCC_F16_ID,mgr);
+            tmp2.create(nb,MFCCF16::TMP_MFCC_F16_ID,mgr);
             tmpin.create(nb,MFCCF16::TMPIN_MFCC_F16_ID,mgr);
           }
           break;
@@ -89,6 +97,7 @@ a double precision computation.
                       mfcc_filter_coefs_config1_f16,
                       mfcc_window_coefs_config1_f16);
             tmp.create(2*nb,MFCCF16::TMP_MFCC_F16_ID,mgr);
+            tmp2.create(nb,MFCCF16::TMP_MFCC_F16_ID,mgr);
             tmpin.create(nb,MFCCF16::TMPIN_MFCC_F16_ID,mgr);
 
           }
@@ -106,6 +115,7 @@ a double precision computation.
                     mfcc_filter_coefs_config3_f16,
                     mfcc_window_coefs_config3_f16);
             tmp.create(2*nb,MFCCF16::TMP_MFCC_F16_ID,mgr);
+            tmp2.create(nb,MFCCF16::TMP_MFCC_F16_ID,mgr);
             tmpin.create(nb,MFCCF16::TMPIN_MFCC_F16_ID,mgr);
           }
           break;
@@ -122,6 +132,7 @@ a double precision computation.
                       mfcc_filter_coefs_config2_f16,
                       mfcc_window_coefs_config2_f16);
             tmp.create(2*nb,MFCCF16::TMP_MFCC_F16_ID,mgr);
+            tmp2.create(nb,MFCCF16::TMP_MFCC_F16_ID,mgr);
             tmpin.create(nb,MFCCF16::TMPIN_MFCC_F16_ID,mgr);
           }
           break;
@@ -137,6 +148,7 @@ a double precision computation.
                       mfcc_filter_coefs_config1_f16,
                       mfcc_window_coefs_config1_f16);
             tmp.create(2*nb,MFCCF16::TMP_MFCC_F16_ID,mgr);
+            tmp2.create(nb,MFCCF16::TMP_MFCC_F16_ID,mgr);
             tmpin.create(nb,MFCCF16::TMPIN_MFCC_F16_ID,mgr);
 
           }

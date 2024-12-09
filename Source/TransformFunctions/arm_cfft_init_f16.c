@@ -101,6 +101,21 @@ arm_status arm_cfft_init_##LEN##_f16(                                  \
     return (status);                                                   \
 }
 
+#elif defined(ARM_MATH_NEON_FLOAT16)  && !defined(ARM_MATH_AUTOVECTORIZE)
+#include "arm_neon_tables_f16.h"
+
+#define CFFTINIT_F16(LEN,LENTWIDDLE)                                             \
+ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_##LEN##_f16(arm_cfft_instance_f16 * S)\
+{                                                                                \
+  /*  Initialise the default arm status */                                       \
+  arm_status status = ARM_MATH_SUCCESS;                                          \
+  S->pTwiddle = arm_neon_twiddles_##LEN##_f16;                                   \
+  S->factors=arm_neon_factors_##LEN##_f16;                                       \
+  S->fftLen = LEN;                                                               \
+  S->algorithm_flag = 0;                                                         \
+  S->last_twiddles = NULL;                                                       \
+  return status;                                                                 \
+}
 #else
 
 #if defined(ARM_FLOAT16_SUPPORTED)
@@ -140,7 +155,7 @@ arm_status arm_cfft_init_##LEN##_f16(arm_cfft_instance_f16 * S)                 
                    - \ref ARM_MATH_SUCCESS        : Operation successful
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
 
-  @par          Use of this function is mandatory only for the MVE version of the FFT.
+  @par          Use of this function is mandatory only for the Helium and Neon versions of the FFT.
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
@@ -153,7 +168,7 @@ CFFTINIT_F16(4096,4096)
                    - \ref ARM_MATH_SUCCESS        : Operation successful
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
 
-  @par          Use of this function is mandatory only for the MVE version of the FFT.
+  @par          Use of this function is mandatory only for the Helium and Neon versions of the FFT.
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
@@ -167,7 +182,7 @@ CFFTINIT_F16(2048,1024)
                    - \ref ARM_MATH_SUCCESS        : Operation successful
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
 
-  @par          Use of this function is mandatory only for the MVE version of the FFT.
+  @par          Use of this function is mandatory only for the Helium and Neon versions of the FFT.
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
@@ -181,7 +196,7 @@ CFFTINIT_F16(1024,1024)
                    - \ref ARM_MATH_SUCCESS        : Operation successful
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
 
-  @par          Use of this function is mandatory only for the MVE version of the FFT.
+  @par          Use of this function is mandatory only for the Helium and Neon versions of the FFT.
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
@@ -195,7 +210,7 @@ CFFTINIT_F16(512,256)
                    - \ref ARM_MATH_SUCCESS        : Operation successful
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
 
-  @par          Use of this function is mandatory only for the MVE version of the FFT.
+  @par          Use of this function is mandatory only for the Helium and Neon versions of the FFT.
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
@@ -209,7 +224,7 @@ CFFTINIT_F16(256,256)
                    - \ref ARM_MATH_SUCCESS        : Operation successful
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
 
-  @par          Use of this function is mandatory only for the MVE version of the FFT.
+  @par          Use of this function is mandatory only for the Helium and Neon versions of the FFT.
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
@@ -223,7 +238,7 @@ CFFTINIT_F16(128,64)
                    - \ref ARM_MATH_SUCCESS        : Operation successful
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
 
-  @par          Use of this function is mandatory only for the MVE version of the FFT.
+  @par          Use of this function is mandatory only for the Helium and Neon versions of the FFT.
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
@@ -237,7 +252,7 @@ CFFTINIT_F16(64,64)
                    - \ref ARM_MATH_SUCCESS        : Operation successful
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
 
-  @par          Use of this function is mandatory only for the MVE version of the FFT.
+  @par          Use of this function is mandatory only for the Helium and Neon versions of the FFT.
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
@@ -251,7 +266,7 @@ CFFTINIT_F16(32,16)
                    - \ref ARM_MATH_SUCCESS        : Operation successful
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
 
-  @par          Use of this function is mandatory only for the MVE version of the FFT.
+  @par          Use of this function is mandatory only for the Helium and Neon versions of the FFT.
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
  */
@@ -266,7 +281,7 @@ CFFTINIT_F16(16,16)
                    - \ref ARM_MATH_SUCCESS        : Operation successful
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
 
-  @par          Use of this function is mandatory only for the MVE version of the FFT.
+  @par          Use of this function is mandatory only for the Helium and Neon versions of the FFT.
                 Other versions can still initialize directly the data structure using 
                 variables declared in arm_const_structs.h
   

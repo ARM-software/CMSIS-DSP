@@ -4,26 +4,41 @@
 #include "Test.h"
 
 #define SNR_THRESHOLD 120
+#define REL_ERROR (2.0e-5)
+#define ABS_ERROR (8.0e-5)
 
     void TransformCF32::test_cfft_f32()
     {
        const float32_t *inp = input.ptr();
 
+       float32_t *infftp = inputfft.ptr();
+
        float32_t *outfftp = outputfft.ptr();
 
+        memcpy(infftp,inp,sizeof(float32_t)*input.nbSamples());
+
+   
+#if defined(ARM_MATH_NEON)
+        float32_t *bufferp = bufferfft.ptr();
+        arm_cfft_f32(
+             &(this->varInstCfftF32),
+             infftp,
+             outfftp,
+             bufferp,
+             this->ifft);
+#else
         memcpy(outfftp,inp,sizeof(float32_t)*input.nbSamples());
 
-        ASSERT_TRUE(status == ARM_MATH_SUCCESS);
-   
         arm_cfft_f32(
              &(this->varInstCfftF32),
              outfftp,
              this->ifft,
              1);
-       
+#endif
 
           
         ASSERT_SNR(outputfft,ref,(float32_t)SNR_THRESHOLD);
+        ASSERT_CLOSE_ERROR(outputfft,ref,ABS_ERROR,REL_ERROR);
         ASSERT_EMPTY_TAIL(outputfft);
 
 
@@ -468,8 +483,11 @@
 
 
        }
+       inputfft.create(ref.nbSamples(),TransformCF32::OUTPUT_CFFT_F32_ID,mgr);
+
        outputfft.create(ref.nbSamples(),TransformCF32::OUTPUT_CFFT_F32_ID,mgr);
-       
+       bufferfft.create(ref.nbSamples(),TransformCF32::OUTPUT_CFFT_F32_ID,mgr);
+
 
     }
 

@@ -25,7 +25,7 @@
 #ifndef ARM_SORTING_H_
 #define ARM_SORTING_H_
 
-#include "arm_math.h"
+#include "dsp/support_functions.h"
 
 #ifdef   __cplusplus
 extern "C"
