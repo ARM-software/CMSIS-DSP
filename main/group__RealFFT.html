@@ -148,8 +148,6 @@ Content</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group__RealFFTF32"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RealFFTF32.html">Real FFT F32 Functions</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group__DeprecatedRealFFT"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DeprecatedRealFFT.html">Deprecated Real FFT Functions</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <dl class="section user"><dt></dt><dd>The CMSIS DSP library includes specialized algorithms for computing the FFT of real data sequences. The FFT is defined over complex data but in many applications the input is real. Real FFT algorithms take advantage of the symmetry properties of the FFT and have a speed advantage over complex algorithms of the same length. </dd></dl>
@@ -168,8 +166,8 @@ Real Fast Fourier Transform</div></div>
 Real Inverse Fast Fourier Transform</div></div>
  </dd></dl>
 <dl class="section user"><dt></dt><dd>The algorithms for floating-point, Q15, and Q31 data are slightly different and we describe each algorithm in turn. </dd></dl>
-<dl class="section user"><dt>Floating-point</dt><dd>The main functions are <a class="el" href="group__RealFFTF32.html#ga5d2ec62f3e35575eba467d09ddcd98b5">arm_rfft_fast_f32()</a> and <a class="el" href="group__RealFFTF32.html#gac5fceb172551e7c11eb4d0e17ef15aa3">arm_rfft_fast_init_f32()</a>. The older functions <a class="el" href="group__DeprecatedRealFFT.html#ga3df1766d230532bc068fc4ed69d0fcdc">arm_rfft_f32()</a> and <a class="el" href="group__DeprecatedRealFFT.html#ga10717ee326bf50832ef1c25b85a23068">arm_rfft_init_f32()</a> have been deprecated but are still documented. For f16, the functions are <a class="el" href="group__RealFFTF16.html#gaf018157c88626e83de3d9143f5273d18">arm_rfft_fast_f16()</a> and <a class="el" href="group__RealFFTF16.html#gacc1c721dd5a690a4c90cfb0264058659">arm_rfft_fast_init_f16()</a>. For f64, the functions are <a class="el" href="group__RealFFTF64.html#gae3b00f039305039732f7364171da89fb">arm_rfft_fast_f64()</a> and <a class="el" href="group__RealFFTF64.html#ga51ca806ce1aa56a231684add8d2820bb">arm_rfft_fast_init_f64()</a>. </dd></dl>
-<dl class="section user"><dt></dt><dd>The FFT of a real N-point sequence has even symmetry in the frequency domain. The second half of the data equals the conjugate of the first half flipped in frequency. This conjugate part is not computed by the float RFFT. As consequence, the output of a N point real FFT should be a N//2 + 1 complex numbers so N + 2 floats. </dd></dl>
+<dl class="section user"><dt>Floating-point</dt><dd>The main functions are <a class="el" href="group__RealFFTF32.html#ga5d2ec62f3e35575eba467d09ddcd98b5">arm_rfft_fast_f32()</a> and <a class="el" href="group__RealFFTF32.html#gac5fceb172551e7c11eb4d0e17ef15aa3">arm_rfft_fast_init_f32()</a>.</dd></dl>
+<p>For f16, the functions are <a class="el" href="group__RealFFTF16.html#gaf018157c88626e83de3d9143f5273d18">arm_rfft_fast_f16()</a> and <a class="el" href="group__RealFFTF16.html#gacc1c721dd5a690a4c90cfb0264058659">arm_rfft_fast_init_f16()</a>. For f64, the functions are <a class="el" href="group__RealFFTF64.html#gae3b00f039305039732f7364171da89fb">arm_rfft_fast_f64()</a> and <a class="el" href="group__RealFFTF64.html#ga51ca806ce1aa56a231684add8d2820bb">arm_rfft_fast_init_f64()</a>. </p><dl class="section user"><dt></dt><dd>The FFT of a real N-point sequence has even symmetry in the frequency domain. The second half of the data equals the conjugate of the first half flipped in frequency. This conjugate part is not computed by the float RFFT. As consequence, the output of a N point real FFT should be a N//2 + 1 complex numbers so N + 2 floats. </dd></dl>
 <dl class="section user"><dt></dt><dd>It happens that the first complex of number of the RFFT output is actually all real. Its real part represents the DC offset. The value at Nyquist frequency is also real.</dd></dl>
 <dl class="section user"><dt></dt><dd>Those two complex numbers can be encoded with 2 floats rather than using two numbers with an imaginary part set to zero. </dd></dl>
 <dl class="section user"><dt></dt><dd>The implementation is using a trick so that the output buffer can be N float : the last real is packaged in the imaginary part of the first complex (since this imaginary part is not used and is zero).</dd></dl>
@@ -189,7 +187,23 @@ Real Inverse Fast Fourier Transform</div></div>
       <a class="el" href="structarm__rfft__instance__q15.html" title="Instance structure for the Q15 RFFT/RIFFT function.">arm_rfft_instance_q15</a> S = {fftLenReal, fftLenBy2, ifftFlagR, bitReverseFlagR, twidCoefRModifier, pTwiddleAReal, pTwiddleBReal, pCfft};
   </pre> where <code>fftLenReal</code> is the length of the real transform; <code>fftLenBy2</code> length of the internal complex transform (fftLenReal/2). <code>ifftFlagR</code> Selects forward (=0) or inverse (=1) transform. <code>bitReverseFlagR</code> Selects bit reversed output (=0) or normal order output (=1). <code>twidCoefRModifier</code> stride modifier for the twiddle factor table. The value is based on the FFT length; <code>pTwiddleAReal</code>points to the A array of twiddle coefficients; <code>pTwiddleBReal</code>points to the B array of twiddle coefficients; <code>pCfft</code> points to the CFFT Instance structure. The CFFT structure must also be initialized. <br  />
  </dd></dl>
-<dl class="section user"><dt></dt><dd>Note that with MVE versions you can't initialize instance structures directly and <b>must use the initialization function</b>. </dd></dl>
+<dl class="section user"><dt></dt><dd>Note that with MVE versions you can't initialize instance structures directly and <b>must use the initialization function</b>.</dd></dl>
+<dl class="section user"><dt>Neon version</dt><dd>The neon version has a different API. The input and output buffers must be different. There is a temporary buffer that is not optional.</dd></dl>
+<p>The bit reverse flag is not more available in Neon version.</p>
+<p>The size of the temporary buffer is fftSize float.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code hl_function" href="group__RealFFTF32.html#ga5d2ec62f3e35575eba467d09ddcd98b5" title="Processing function for the floating-point real FFT.">arm_rfft_fast_f32</a>(</div>
+<div class="line">        <span class="keyword">const</span> <a class="code hl_struct" href="structarm__rfft__fast__instance__f32.html" title="Instance structure for the floating-point RFFT/RIFFT function.">arm_rfft_fast_instance_f32</a> * S,</div>
+<div class="line">        <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> * p, </div>
+<div class="line">        <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> * pOut,</div>
+<div class="line">        <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> *tmpbuf,</div>
+<div class="line">        uint8_t ifftFlag);</div>
+</div><!-- fragment --><dl class="section user"><dt>RFFT Output buffer sizes</dt><dd>They are also the input sizes for the RIFFT</dd></dl>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadRight">Scalar   </th><th class="markdownTableHeadRight">Helium   </th><th class="markdownTableHeadRight">Neon    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyRight">fftSize   </td><td class="markdownTableBodyRight">fftSize   </td><td class="markdownTableBodyRight">fftSize   </td></tr>
+</table>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

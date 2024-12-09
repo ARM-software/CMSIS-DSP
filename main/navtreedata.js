@@ -40,15 +40,15 @@ var NAVTREEINDEX =
 [
 "annotated.html",
 "group__COMMON.html#ga87032cf209a345081caeb3692af2174b",
-"group__FIXED.html#ga1584849f3f51a524e17a48d8c0c4be0f",
-"group__FUSION.html#ga0d7636d950aa0638b9a6532e4814b22d",
-"group__IIR__Lattice.html#gaed3b0230bb77439dc902daa625985e04",
-"group__Matrix.html#aaa84d81a018b21a4612e48b89b621cf9",
-"group__QuatProd.html",
-"group__WindowBARTLETT.html#ga43616d15eb8b6e960d09063db316ed33",
-"group__q31__to__x.html#ga775f3a1996f00a8048c4b7acba2e0828",
-"structarm__dct4__instance__q15.html#a8ba8c9fa75542dac82553fee982ccd3e",
-"structarm__mfcc__instance__q31.html#a60390d32129e3b390a6b249223168b63"
+"group__FIXED.html#ga27217ada53c40424a1f02485b4037d45",
+"group__FUSION.html#ga5e94654d3f1f670867fb8957577396dc",
+"group__LD.html",
+"group__Matrix.html#abb20cdd597b9ff4a34cb9a01eb740cf7",
+"group__RMS.html#ga20586bc59cabbfc38a935c2448833dd2",
+"group__WindowBLACKMAN__HARRIS__92DB.html#gad84667126d863984ac30d7068e6f9ab5",
+"index.html#autotoc_md3",
+"structarm__fir__interpolate__instance__q31.html#a8f92bb07e0812f94679438cdf412b26a",
+"structarm__svm__polynomial__instance__f16.html#a2d1be16c16d99cbba003a47ee2a3234f"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -9,6 +9,7 @@ var group__ComplexFFTQ31 =
     [ "arm_cfft_init_4096_q31", "group__ComplexFFTQ31.html#ga56469f2da7e5cb59f012575546fc3595", null ],
     [ "arm_cfft_init_512_q31", "group__ComplexFFTQ31.html#gaa7142f240c982739017be80f65c86ebb", null ],
     [ "arm_cfft_init_64_q31", "group__ComplexFFTQ31.html#ga5c88c65ad09319307dd81e03ea5c8886", null ],
+    [ "arm_cfft_init_dynamic_q31", "group__ComplexFFTQ31.html#ga46c8c32d6cee8153bc3266041cc85172", null ],
     [ "arm_cfft_init_q31", "group__ComplexFFTQ31.html#ga196bb4e5466c74650b6cc76bb2efdfe2", null ],
     [ "arm_cfft_q31", "group__ComplexFFTQ31.html#ga5a0008bd997ab6e2e299ef2fb272fb4b", null ]
 ];

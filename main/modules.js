@@ -17,5 +17,7 @@ var modules =
     [ "SVM Functions", "group__groupSVM.html", "group__groupSVM" ],
     [ "Transform Functions", "group__groupTransforms.html", "group__groupTransforms" ],
     [ "Window Functions", "group__groupWindow.html", "group__groupWindow" ],
-    [ "C++ extension", "group__DSPPP.html", "group__DSPPP" ]
+    [ "Deprecated Real FFT Functions", "group__DeprecatedRealFFT.html", null ],
+    [ "C++ extension", "group__DSPPP.html", "group__DSPPP" ],
+    [ "DCT Type IV Tables", "group__DCT4__IDCT4__Table.html", "group__DCT4__IDCT4__Table" ]
 ];

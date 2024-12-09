@@ -166,8 +166,12 @@ Functions</h2></td></tr>
 <tr class="memitem:gacc1c721dd5a690a4c90cfb0264058659"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__genericTypes.html#ga5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RealFFTF16.html#gacc1c721dd5a690a4c90cfb0264058659">arm_rfft_fast_init_f16</a> (<a class="el" href="structarm__rfft__fast__instance__f16.html">arm_rfft_fast_instance_f16</a> *S, uint16_t fftLen)</td></tr>
 <tr class="memdesc:gacc1c721dd5a690a4c90cfb0264058659"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generic initialization function for the floating-point real FFT.  <br /></td></tr>
 <tr class="separator:gacc1c721dd5a690a4c90cfb0264058659"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga37dd0512f502fc63d35d0dbf1c5d3f21"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structarm__rfft__fast__instance__f16.html">arm_rfft_fast_instance_f16</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RealFFTF16.html#ga37dd0512f502fc63d35d0dbf1c5d3f21">arm_rfft_fast_init_dynamic_f16</a> (uint32_t nfft)</td></tr>
+<tr class="memdesc:ga37dd0512f502fc63d35d0dbf1c5d3f21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize data structure for a RFFT.  <br /></td></tr>
+<tr class="separator:ga37dd0512f502fc63d35d0dbf1c5d3f21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
+<p>end of ComplexFFTF16 group </p>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="gaf018157c88626e83de3d9143f5273d18" name="gaf018157c88626e83de3d9143f5273d18"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaf018157c88626e83de3d9143f5273d18">&#9670;&#160;</a></span>arm_rfft_fast_f16()</h2>
@@ -469,6 +473,34 @@ Functions</h2></td></tr>
 <li><a class="el" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a74897e18d4b8f62b12a7d8a01dd2bb35">ARM_MATH_ARGUMENT_ERROR</a> : an error is detected </li>
 </ul>
 </dd></dl>
+
+</div>
+</div>
+<a id="ga37dd0512f502fc63d35d0dbf1c5d3f21" name="ga37dd0512f502fc63d35d0dbf1c5d3f21"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga37dd0512f502fc63d35d0dbf1c5d3f21">&#9670;&#160;</a></span>arm_rfft_fast_init_dynamic_f16()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structarm__rfft__fast__instance__f16.html">arm_rfft_fast_instance_f16</a> * arm_rfft_fast_init_dynamic_f16 </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>nfft</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialize data structure for a RFFT. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">nfft</td><td>The rfft length</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the new structure</dd></dl>
+<dl class="section user"><dt>This function is only available for Neon</dt><dd>This function is allocating memory. The memory must be released when no more used. This function can be used with RFFT lengths longer than the ones supported on Cortex-M </dd></dl>
 
 </div>
 </div>

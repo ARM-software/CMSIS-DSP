@@ -166,8 +166,12 @@ Functions</h2></td></tr>
 <tr class="memitem:gac5fceb172551e7c11eb4d0e17ef15aa3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__genericTypes.html#ga5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RealFFTF32.html#gac5fceb172551e7c11eb4d0e17ef15aa3">arm_rfft_fast_init_f32</a> (<a class="el" href="structarm__rfft__fast__instance__f32.html">arm_rfft_fast_instance_f32</a> *S, uint16_t fftLen)</td></tr>
 <tr class="memdesc:gac5fceb172551e7c11eb4d0e17ef15aa3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generic initialization function for the floating-point real FFT.  <br /></td></tr>
 <tr class="separator:gac5fceb172551e7c11eb4d0e17ef15aa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae61b3b3d27a5ec3bf06d3b0e354538e2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structarm__rfft__fast__instance__f32.html">arm_rfft_fast_instance_f32</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RealFFTF32.html#gae61b3b3d27a5ec3bf06d3b0e354538e2">arm_rfft_fast_init_dynamic_f32</a> (uint32_t nfft)</td></tr>
+<tr class="memdesc:gae61b3b3d27a5ec3bf06d3b0e354538e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize data structure for a RFFT.  <br /></td></tr>
+<tr class="separator:gae61b3b3d27a5ec3bf06d3b0e354538e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
+<p>end of RealFFTF16 group </p>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="ga5d2ec62f3e35575eba467d09ddcd98b5" name="ga5d2ec62f3e35575eba467d09ddcd98b5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga5d2ec62f3e35575eba467d09ddcd98b5">&#9670;&#160;</a></span>arm_rfft_fast_f32()</h2>
@@ -215,12 +219,22 @@ Functions</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">pOut</td><td>points to output buffer </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">ifftFlag</td><td><ul>
 <li>value = 0: RFFT</li>
-<li>value = 1: RIFFT </li>
+<li>value = 1: RIFFT</li>
 </ul>
 </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section user"><dt>Neon version</dt><dd>The neon version has a different API. The input and output buffers must be different. There is a temporary buffer. </dd></dl>
+<dl class="section user"><dt></dt><dd>The bit reverse flag is not more available in Neon version.</dd></dl>
+<dl class="section user"><dt></dt><dd>The size of the temporary buffer is fftSize float.</dd></dl>
+<dl class="section user"><dt></dt><dd><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code hl_function" href="group__RealFFTF32.html#ga5d2ec62f3e35575eba467d09ddcd98b5" title="Processing function for the floating-point real FFT.">arm_rfft_fast_f32</a>(</div>
+<div class="line">        <span class="keyword">const</span> <a class="code hl_struct" href="structarm__rfft__fast__instance__f32.html" title="Instance structure for the floating-point RFFT/RIFFT function.">arm_rfft_fast_instance_f32</a> * S,</div>
+<div class="line">        <span class="keyword">const</span> <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> * p, </div>
+<div class="line">        <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> * pOut,</div>
+<div class="line">        <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> *tmpbuf,</div>
+<div class="line">        uint8_t ifftFlag);</div>
+</div><!-- fragment --> </dd></dl>
 
 </div>
 </div>
@@ -469,6 +483,34 @@ Functions</h2></td></tr>
 <li><a class="el" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a74897e18d4b8f62b12a7d8a01dd2bb35">ARM_MATH_ARGUMENT_ERROR</a> : an error is detected </li>
 </ul>
 </dd></dl>
+
+</div>
+</div>
+<a id="gae61b3b3d27a5ec3bf06d3b0e354538e2" name="gae61b3b3d27a5ec3bf06d3b0e354538e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae61b3b3d27a5ec3bf06d3b0e354538e2">&#9670;&#160;</a></span>arm_rfft_fast_init_dynamic_f32()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structarm__rfft__fast__instance__f32.html">arm_rfft_fast_instance_f32</a> * arm_rfft_fast_init_dynamic_f32 </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>nfft</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialize data structure for a RFFT. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">nfft</td><td>The rfft length</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the new structure</dd></dl>
+<dl class="section user"><dt>This function is only available for Neon</dt><dd>This function is allocating memory. The memory must be released when no more used. This function can be used with RFFT lengths longer than the ones supported on Cortex-M </dd></dl>
 
 </div>
 </div>

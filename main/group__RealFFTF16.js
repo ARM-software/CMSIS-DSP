@@ -9,5 +9,6 @@ var group__RealFFTF16 =
     [ "arm_rfft_fast_init_4096_f16", "group__RealFFTF16.html#gac0815ccad8a36de962595c556a8d84fa", null ],
     [ "arm_rfft_fast_init_512_f16", "group__RealFFTF16.html#ga24801f2735294f2f3eb9eaee62db7919", null ],
     [ "arm_rfft_fast_init_64_f16", "group__RealFFTF16.html#gadb0b0d0ac76414a73f3182eab83814ac", null ],
+    [ "arm_rfft_fast_init_dynamic_f16", "group__RealFFTF16.html#ga37dd0512f502fc63d35d0dbf1c5d3f21", null ],
     [ "arm_rfft_fast_init_f16", "group__RealFFTF16.html#gacc1c721dd5a690a4c90cfb0264058659", null ]
 ];

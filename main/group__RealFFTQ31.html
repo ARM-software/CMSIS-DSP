@@ -169,8 +169,12 @@ Functions</h2></td></tr>
 <tr class="memitem:gabaeab5646aeea9844e6d42ca8c73fe3a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RealFFTQ31.html#gabaeab5646aeea9844e6d42ca8c73fe3a">arm_rfft_q31</a> (const <a class="el" href="structarm__rfft__instance__q31.html">arm_rfft_instance_q31</a> *S, <a class="el" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *pSrc, <a class="el" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *pDst)</td></tr>
 <tr class="memdesc:gabaeab5646aeea9844e6d42ca8c73fe3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processing function for the Q31 RFFT/RIFFT.  <br /></td></tr>
 <tr class="separator:gabaeab5646aeea9844e6d42ca8c73fe3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4ef317ca56a564be7fac06381c4f2550"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structarm__rfft__instance__q31.html">arm_rfft_instance_q31</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RealFFTQ31.html#ga4ef317ca56a564be7fac06381c4f2550">arm_rfft_init_dynamic_q31</a> (uint32_t nfft)</td></tr>
+<tr class="memdesc:ga4ef317ca56a564be7fac06381c4f2550"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize RFFT Q31 with memory allocation.  <br /></td></tr>
+<tr class="separator:ga4ef317ca56a564be7fac06381c4f2550"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
+<p>end of RealFFTF32 group </p>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="ga9511ff87e5f8efd5d2b4929d29c4e019" name="ga9511ff87e5f8efd5d2b4929d29c4e019"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga9511ff87e5f8efd5d2b4929d29c4e019">&#9670;&#160;</a></span>arm_rfft_init_1024_q31()</h2>
@@ -712,6 +716,34 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ga4ef317ca56a564be7fac06381c4f2550" name="ga4ef317ca56a564be7fac06381c4f2550"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4ef317ca56a564be7fac06381c4f2550">&#9670;&#160;</a></span>arm_rfft_init_dynamic_q31()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structarm__rfft__instance__q31.html">arm_rfft_instance_q31</a> * arm_rfft_init_dynamic_q31 </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>nfft</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialize RFFT Q31 with memory allocation. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">nfft</td><td>The nfft</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to RFFT instance Q31</dd></dl>
+<dl class="section user"><dt>This function is only available for Neon</dt><dd>This function is allocating memory. The memory must be released when no more used. This function can be used with RFFT lengths longer than the ones supported on Cortex-M </dd></dl>
+
+</div>
+</div>
 <a id="ga5abde938abbe72e95c5bab080eb33c45" name="ga5abde938abbe72e95c5bab080eb33c45"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga5abde938abbe72e95c5bab080eb33c45">&#9670;&#160;</a></span>arm_rfft_init_q31()</h2>
 
@@ -871,7 +903,22 @@ Functions</h2></td></tr>
 <td class="markdownTableBodyRight">8192   </td><td class="markdownTableBodyRight">1.31   </td><td class="markdownTableBodyRight">14.18   </td><td class="markdownTableBodyRight">0   </td></tr>
 </table>
 <dl class="section user"><dt></dt><dd>If the input buffer is of length N (fftLenReal), the output buffer must have length 2N since it is containing the conjugate part (except for MVE version where N+2 is enough). The input buffer is modified by this function. </dd></dl>
-<dl class="section user"><dt></dt><dd>For the RIFFT, the source buffer must have length N+2 since the Nyquist frequency value is needed but conjugate part is ignored. It is not using the packing trick of the float version. </dd></dl>
+<dl class="section user"><dt></dt><dd>For the RIFFT, the source buffer must have length N+2 since the Nyquist frequency value is needed but conjugate part is ignored. It is not using the packing trick of the float version.</dd></dl>
+<dl class="section user"><dt>Neon implementation</dt><dd>The temporary buffer has size fftLength * 2 The RFFT output buffer has size fftLen + 2 The RIFFT output buffer has size fftLen</dd></dl>
+<div class="fragment"><div class="line">     <span class="keywordtype">void</span> <a class="code hl_function" href="group__RealFFTQ31.html#gabaeab5646aeea9844e6d42ca8c73fe3a" title="Processing function for the Q31 RFFT/RIFFT.">arm_rfft_q31</a>(</div>
+<div class="line"><span class="keyword">const</span> <a class="code hl_struct" href="structarm__rfft__instance__q31.html" title="Instance structure for the Q31 RFFT/RIFFT function.">arm_rfft_instance_q31</a> * S,</div>
+<div class="line">      <span class="keyword">const</span> <a class="code hl_typedef" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0" title="32-bit fractional data type in 1.31 format.">q31_t</a> * pSrc,</div>
+<div class="line">      <a class="code hl_typedef" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0" title="32-bit fractional data type in 1.31 format.">q31_t</a> * pDst,</div>
+<div class="line">      <a class="code hl_typedef" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0" title="32-bit fractional data type in 1.31 format.">q31_t</a> *tmp,</div>
+<div class="line">      uint8_t ifftFlag</div>
+<div class="line">      )</div>
+</div><!-- fragment --><dl class="section user"><dt>RFFT Output buffer sizes</dt><dd>They are also the input sizes for the RIFFT</dd></dl>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadRight">Scalar   </th><th class="markdownTableHeadRight">Helium   </th><th class="markdownTableHeadRight">Neon    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyRight">2*fftSize   </td><td class="markdownTableBodyRight">fftSize + 2   </td><td class="markdownTableBodyRight">fftSize + 2   </td></tr>
+</table>
 
 </div>
 </div>

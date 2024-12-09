@@ -10,5 +10,6 @@ var group__ComplexFFTF16 =
     [ "arm_cfft_init_4096_f16", "group__ComplexFFTF16.html#ga961c5441c9b8c843cf36758b3a4f053d", null ],
     [ "arm_cfft_init_512_f16", "group__ComplexFFTF16.html#ga55d9e05dc08917b6ceb87a6bfb54ca55", null ],
     [ "arm_cfft_init_64_f16", "group__ComplexFFTF16.html#gaa99407fff10833baa3e9caf22cee59b0", null ],
+    [ "arm_cfft_init_dynamic_f16", "group__ComplexFFTF16.html#gaf62f6c3b618ae101edec45846d92b82a", null ],
     [ "arm_cfft_init_f16", "group__ComplexFFTF16.html#ga0bcde45b3f30287d9015efe3372ef489", null ]
 ];

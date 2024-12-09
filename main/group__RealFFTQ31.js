@@ -9,6 +9,7 @@ var group__RealFFTQ31 =
     [ "arm_rfft_init_512_q31", "group__RealFFTQ31.html#ga440e811ab01829da4c6d7e296ff69d60", null ],
     [ "arm_rfft_init_64_q31", "group__RealFFTQ31.html#ga2eb6bed920931a032b4c3407671fb50c", null ],
     [ "arm_rfft_init_8192_q31", "group__RealFFTQ31.html#gaf6d2c128e4e49bc76c37e15991c77eed", null ],
+    [ "arm_rfft_init_dynamic_q31", "group__RealFFTQ31.html#ga4ef317ca56a564be7fac06381c4f2550", null ],
     [ "arm_rfft_init_q31", "group__RealFFTQ31.html#ga5abde938abbe72e95c5bab080eb33c45", null ],
     [ "arm_rfft_q31", "group__RealFFTQ31.html#gabaeab5646aeea9844e6d42ca8c73fe3a", null ]
 ];

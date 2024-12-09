@@ -9,5 +9,6 @@ var group__RealFFTF32 =
     [ "arm_rfft_fast_init_4096_f32", "group__RealFFTF32.html#gac95418a84aafc513c652d5a846b01357", null ],
     [ "arm_rfft_fast_init_512_f32", "group__RealFFTF32.html#ga3f5684480c40457917c833d3426a4363", null ],
     [ "arm_rfft_fast_init_64_f32", "group__RealFFTF32.html#gae9b7dca9c1b972718ad17457901f2c1b", null ],
+    [ "arm_rfft_fast_init_dynamic_f32", "group__RealFFTF32.html#gae61b3b3d27a5ec3bf06d3b0e354538e2", null ],
     [ "arm_rfft_fast_init_f32", "group__RealFFTF32.html#gac5fceb172551e7c11eb4d0e17ef15aa3", null ]
 ];

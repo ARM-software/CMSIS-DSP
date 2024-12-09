@@ -169,6 +169,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gae945cbeefda447a2f4b303a4ae6fa579"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__genericTypes.html#ga5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ComplexFFTF32.html#gae945cbeefda447a2f4b303a4ae6fa579">arm_cfft_init_f32</a> (<a class="el" href="structarm__cfft__instance__f32.html">arm_cfft_instance_f32</a> *S, uint16_t fftLen)</td></tr>
 <tr class="memdesc:gae945cbeefda447a2f4b303a4ae6fa579"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generic initialization function for the cfft f32 function.  <br /></td></tr>
 <tr class="separator:gae945cbeefda447a2f4b303a4ae6fa579"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadc0ad2e057c1fe04e3c93e6915501142"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structarm__cfft__instance__f32.html">arm_cfft_instance_f32</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ComplexFFTF32.html#gadc0ad2e057c1fe04e3c93e6915501142">arm_cfft_init_dynamic_f32</a> (uint32_t fftLen)</td></tr>
+<tr class="memdesc:gadc0ad2e057c1fe04e3c93e6915501142"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize data structure for a FFT.  <br /></td></tr>
+<tr class="separator:gadc0ad2e057c1fe04e3c93e6915501142"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <h2 class="groupheader">Function Documentation</h2>
@@ -228,6 +231,14 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section user"><dt>Neon version</dt><dd>The neon version has a different API. The input and output buffers must be different. There is an optional temporary buffer. If the temporary buffer is not used, the input buffer is modified. The temporary buffer has same size as input or output buffer. The bit reverse flag is not more available in Neon version.</dd></dl>
+<dl class="section user"><dt></dt><dd><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code hl_function" href="group__ComplexFFTF32.html#gade0f9c4ff157b6b9c72a1eafd86ebf80" title="Processing function for the floating-point complex FFT.">arm_cfft_f32</a>(</div>
+<div class="line">        <span class="keyword">const</span> <a class="code hl_struct" href="structarm__cfft__instance__f32.html" title="Instance structure for the floating-point CFFT/CIFFT function.">arm_cfft_instance_f32</a> * S,</div>
+<div class="line">              <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> * pIn,</div>
+<div class="line">              <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> * pOut,</div>
+<div class="line">              <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> * pBuffer, </div>
+<div class="line">              uint8_t ifftFlag);</div>
+</div><!-- fragment --> </dd></dl>
 
 </div>
 </div>
@@ -259,7 +270,7 @@ Functions</h2></td></tr>
 <li><a class="el" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a74897e18d4b8f62b12a7d8a01dd2bb35">ARM_MATH_ARGUMENT_ERROR</a> : an error is detected</li>
 </ul>
 </dd></dl>
-<dl class="section user"><dt>Use of this function is mandatory only for the MVE version of the FFT.</dt><dd>Other versions can still initialize directly the data structure using variables declared in arm_const_structs.h </dd></dl>
+<dl class="section user"><dt>Use of this function is mandatory only for the Helium and Neon versions of the FFT.</dt><dd>Other versions can still initialize directly the data structure using variables declared in arm_const_structs.h </dd></dl>
 
 </div>
 </div>
@@ -291,7 +302,7 @@ Functions</h2></td></tr>
 <li><a class="el" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a74897e18d4b8f62b12a7d8a01dd2bb35">ARM_MATH_ARGUMENT_ERROR</a> : an error is detected</li>
 </ul>
 </dd></dl>
-<dl class="section user"><dt>Use of this function is mandatory only for the MVE version of the FFT.</dt><dd>Other versions can still initialize directly the data structure using variables declared in arm_const_structs.h </dd></dl>
+<dl class="section user"><dt>Use of this function is mandatory only for the Helium and Neon versions of the FFT.</dt><dd>Other versions can still initialize directly the data structure using variables declared in arm_const_structs.h </dd></dl>
 
 </div>
 </div>
@@ -323,7 +334,7 @@ Functions</h2></td></tr>
 <li><a class="el" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a74897e18d4b8f62b12a7d8a01dd2bb35">ARM_MATH_ARGUMENT_ERROR</a> : an error is detected</li>
 </ul>
 </dd></dl>
-<dl class="section user"><dt>Use of this function is mandatory only for the MVE version of the FFT.</dt><dd>Other versions can still initialize directly the data structure using variables declared in arm_const_structs.h </dd></dl>
+<dl class="section user"><dt>Use of this function is mandatory only for the Helium and Neon versions of the FFT.</dt><dd>Other versions can still initialize directly the data structure using variables declared in arm_const_structs.h </dd></dl>
 
 </div>
 </div>
@@ -355,7 +366,7 @@ Functions</h2></td></tr>
 <li><a class="el" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a74897e18d4b8f62b12a7d8a01dd2bb35">ARM_MATH_ARGUMENT_ERROR</a> : an error is detected</li>
 </ul>
 </dd></dl>
-<dl class="section user"><dt>Use of this function is mandatory only for the MVE version of the FFT.</dt><dd>Other versions can still initialize directly the data structure using variables declared in arm_const_structs.h </dd></dl>
+<dl class="section user"><dt>Use of this function is mandatory only for the Helium and Neon versions of the FFT.</dt><dd>Other versions can still initialize directly the data structure using variables declared in arm_const_structs.h </dd></dl>
 
 </div>
 </div>
@@ -387,7 +398,7 @@ Functions</h2></td></tr>
 <li><a class="el" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a74897e18d4b8f62b12a7d8a01dd2bb35">ARM_MATH_ARGUMENT_ERROR</a> : an error is detected</li>
 </ul>
 </dd></dl>
-<dl class="section user"><dt>Use of this function is mandatory only for the MVE version of the FFT.</dt><dd>Other versions can still initialize directly the data structure using variables declared in arm_const_structs.h </dd></dl>
+<dl class="section user"><dt>Use of this function is mandatory only for the Helium and Neon versions of the FFT.</dt><dd>Other versions can still initialize directly the data structure using variables declared in arm_const_structs.h </dd></dl>
 
 </div>
 </div>
@@ -419,7 +430,7 @@ Functions</h2></td></tr>
 <li><a class="el" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a74897e18d4b8f62b12a7d8a01dd2bb35">ARM_MATH_ARGUMENT_ERROR</a> : an error is detected</li>
 </ul>
 </dd></dl>
-<dl class="section user"><dt>Use of this function is mandatory only for the MVE version of the FFT.</dt><dd>Other versions can still initialize directly the data structure using variables declared in arm_const_structs.h </dd></dl>
+<dl class="section user"><dt>Use of this function is mandatory only for the Helium and Neon versions of the FFT.</dt><dd>Other versions can still initialize directly the data structure using variables declared in arm_const_structs.h </dd></dl>
 
 </div>
 </div>
@@ -451,7 +462,7 @@ Functions</h2></td></tr>
 <li><a class="el" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a74897e18d4b8f62b12a7d8a01dd2bb35">ARM_MATH_ARGUMENT_ERROR</a> : an error is detected</li>
 </ul>
 </dd></dl>
-<dl class="section user"><dt>Use of this function is mandatory only for the MVE version of the FFT.</dt><dd>Other versions can still initialize directly the data structure using variables declared in arm_const_structs.h </dd></dl>
+<dl class="section user"><dt>Use of this function is mandatory only for the Helium and Neon versions of the FFT.</dt><dd>Other versions can still initialize directly the data structure using variables declared in arm_const_structs.h </dd></dl>
 
 </div>
 </div>
@@ -483,7 +494,7 @@ Functions</h2></td></tr>
 <li><a class="el" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a74897e18d4b8f62b12a7d8a01dd2bb35">ARM_MATH_ARGUMENT_ERROR</a> : an error is detected</li>
 </ul>
 </dd></dl>
-<dl class="section user"><dt>Use of this function is mandatory only for the MVE version of the FFT.</dt><dd>Other versions can still initialize directly the data structure using variables declared in arm_const_structs.h </dd></dl>
+<dl class="section user"><dt>Use of this function is mandatory only for the Helium and Neon versions of the FFT.</dt><dd>Other versions can still initialize directly the data structure using variables declared in arm_const_structs.h </dd></dl>
 
 </div>
 </div>
@@ -515,7 +526,36 @@ Functions</h2></td></tr>
 <li><a class="el" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a74897e18d4b8f62b12a7d8a01dd2bb35">ARM_MATH_ARGUMENT_ERROR</a> : an error is detected</li>
 </ul>
 </dd></dl>
-<dl class="section user"><dt>Use of this function is mandatory only for the MVE version of the FFT.</dt><dd>Other versions can still initialize directly the data structure using variables declared in arm_const_structs.h </dd></dl>
+<dl class="section user"><dt>Use of this function is mandatory only for the Helium and Neon versions of the FFT.</dt><dd>Other versions can still initialize directly the data structure using variables declared in arm_const_structs.h </dd></dl>
+
+</div>
+</div>
+<a id="gadc0ad2e057c1fe04e3c93e6915501142" name="gadc0ad2e057c1fe04e3c93e6915501142"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadc0ad2e057c1fe04e3c93e6915501142">&#9670;&#160;</a></span>arm_cfft_init_dynamic_f32()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structarm__cfft__instance__f32.html">arm_cfft_instance_f32</a> * arm_cfft_init_dynamic_f32 </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>fftLen</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialize data structure for a FFT. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">fftLen</td><td>The fft length</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the new structure</dd></dl>
+<dl class="section user"><dt>This function is only available for Neon</dt><dd>This function is allocating memory. The memory must be released when no more used. This function can be used with FFT lengths longer than the ones supported on Cortex-M</dd></dl>
+<p>With this function, FFT lengths can also contain factor 3 and 5 (but must be multiple of 4) </p>
 
 </div>
 </div>
@@ -558,7 +598,7 @@ Functions</h2></td></tr>
 <li><a class="el" href="group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a74897e18d4b8f62b12a7d8a01dd2bb35">ARM_MATH_ARGUMENT_ERROR</a> : an error is detected</li>
 </ul>
 </dd></dl>
-<dl class="section user"><dt></dt><dd>Use of this function is mandatory only for the MVE version of the FFT. Other versions can still initialize directly the data structure using variables declared in arm_const_structs.h</dd></dl>
+<dl class="section user"><dt></dt><dd>Use of this function is mandatory only for the Helium and Neon versions of the FFT. Other versions can still initialize directly the data structure using variables declared in arm_const_structs.h</dd></dl>
 <dl class="section user"><dt></dt><dd>This function should be used only if you don't know the FFT sizes that you'll need at build time. The use of this function will prevent the linker from removing the FFT tables that are not needed and the library code size will be bigger than needed.</dd></dl>
 <dl class="section user"><dt></dt><dd>If you use CMSIS-DSP as a static library, and if you know the FFT sizes that you need at build time, then it is better to use the initialization functions defined for each FFT size. </dd></dl>
 
