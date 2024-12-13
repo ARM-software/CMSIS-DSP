@@ -112,13 +112,8 @@ extern "C"
 #include <limits.h>
 
 /* evaluate ARM DSP feature */
-/* Intrinsincs are defined in CMSIS Core that is not available when
- * targeting Cortex-A or Cortex-R
- */
-#if !defined(ARM_MATH_NEON) && !defined(ARM_MATH_NEON_EXPERIMENTAL)
 #if (defined (__ARM_FEATURE_DSP) && (__ARM_FEATURE_DSP == 1))
   #define ARM_MATH_DSP                   1
-#endif
 #endif
 
 #if defined(ARM_MATH_NEON)
