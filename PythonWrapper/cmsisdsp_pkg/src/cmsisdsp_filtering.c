@@ -5199,7 +5199,6 @@ cmsis_arm_biquad_cas_df1_32x64_q31(PyObject *obj, PyObject *args)
 {
 
   PyObject *S=NULL; // input
-  arm_biquad_cas_df1_32x64_ins_q31 *S_converted=NULL; // input
   PyObject *pSrc=NULL; // input
   q31_t *pSrc_converted=NULL; // input
   q31_t *pDst=NULL; // output
@@ -5208,13 +5207,14 @@ cmsis_arm_biquad_cas_df1_32x64_q31(PyObject *obj, PyObject *args)
   if (PyArg_ParseTuple(args,"OO",&S,&pSrc))
   {
 
+    dsp_arm_biquad_cas_df1_32x64_ins_q31Object *selfS = (dsp_arm_biquad_cas_df1_32x64_ins_q31Object *)S;
     GETARGUMENT(pSrc,NPY_INT32,int32_t,int32_t);
     blockSize = arraySizepSrc ;
 
     pDst=PyMem_Malloc(sizeof(q31_t)*blockSize);
 
 
-    arm_biquad_cas_df1_32x64_q31(S_converted,pSrc_converted,pDst,blockSize);
+    arm_biquad_cas_df1_32x64_q31(selfS->instance,pSrc_converted,pDst,blockSize);
  INT32ARRAY1(pDstOBJ,blockSize,pDst);
 
     PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
@@ -5233,7 +5233,6 @@ cmsis_arm_biquad_cas_df1_32x64_init_q31(PyObject *obj, PyObject *args)
 {
 
   PyObject *S=NULL; // input
-  arm_biquad_cas_df1_32x64_ins_q31 *S_converted=NULL; // input
   uint32_t numStages; // input
   PyObject *pCoeffs=NULL; // input
   q31_t *pCoeffs_converted=NULL; // input
@@ -5243,11 +5242,11 @@ cmsis_arm_biquad_cas_df1_32x64_init_q31(PyObject *obj, PyObject *args)
 
   if (PyArg_ParseTuple(args,"OiOOi",&S,&numStages,&pCoeffs,&pState,&postShift))
   {
-
+    dsp_arm_biquad_cas_df1_32x64_ins_q31Object *selfS = (dsp_arm_biquad_cas_df1_32x64_ins_q31Object *)S;
     GETARGUMENT(pCoeffs,NPY_INT32,int32_t,int32_t);
     GETARGUMENT(pState,NPY_INT64,q63_t,q63_t);
 
-    arm_biquad_cas_df1_32x64_init_q31(S_converted,(uint8_t)numStages,pCoeffs_converted,pState_converted,(uint8_t)postShift);
+    arm_biquad_cas_df1_32x64_init_q31(selfS->instance,(uint8_t)numStages,pCoeffs_converted,pState_converted,(uint8_t)postShift);
     Py_RETURN_NONE;
 
   }
