@@ -112,10 +112,16 @@ extern "C"
 #include <limits.h>
 
 /* evaluate ARM DSP feature */
-/* Intrinsincs are defined in CMSIS Core that is not available when
- * targeting Cortex-A or Cortex-R
+/* __GNUC_PYTHON__ is disabling dependency to CMSIS Core.
+ * As consequence, DSP intrinsics (defined in CMSIS Core)
+ * cannot be used anymore even if __ARM_FEATURE_DSP is defined.
+ * It is the only way to build on a target not supported
+ * by CMSIS Core.
+ * 
+ * ARM_MATH_NEON is used to enable the Neon variants. 
+ * When Neon variants are enabled, the DSP extension are disabled
  */
-#if !defined(ARM_MATH_NEON) && !defined(ARM_MATH_NEON_EXPERIMENTAL)
+#if !defined(__GNUC_PYTHON__) && !defined(ARM_MATH_NEON) && !defined(ARM_MATH_NEON_EXPERIMENTAL)
 #if (defined (__ARM_FEATURE_DSP) && (__ARM_FEATURE_DSP == 1))
   #define ARM_MATH_DSP                   1
 #endif
