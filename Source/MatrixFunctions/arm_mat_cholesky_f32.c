@@ -258,12 +258,17 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cholesky_f32(
              vecGj1=vld1q_f32(&pG[(j + 1) * n + k]);
              vecGj2=vld1q_f32(&pG[(j + 2) * n + k]);
              vecGj3=vld1q_f32(&pG[(j + 3) * n + k]);
-
+#if defined(__ARM_FEATURE_FMA)
              acc0 = vfmaq_f32(acc0, vecGi, vecGj0);
              acc1 = vfmaq_f32(acc1, vecGi, vecGj1);
              acc2 = vfmaq_f32(acc2, vecGi, vecGj2);
              acc3 = vfmaq_f32(acc3, vecGi, vecGj3);
-
+#else
+             acc0 = vmlaq_f32(acc0, vecGi, vecGj0);
+             acc1 = vmlaq_f32(acc1, vecGi, vecGj1);
+             acc2 = vmlaq_f32(acc2, vecGi, vecGj2);
+             acc3 = vmlaq_f32(acc3, vecGi, vecGj3);
+#endif
              kCnt--;
              k+=4;
           }
@@ -319,9 +324,11 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cholesky_f32(
 
              vecGi=vld1q_f32(&pG[i * n + k]);
              vecGj=vld1q_f32(&pG[j * n + k]);
-
+#if defined(__ARM_FEATURE_FMA)
              acc = vfmaq_f32(acc, vecGi, vecGj);
-
+#else
+             acc = vmlaq_f32(acc, vecGi, vecGj);
+#endif
              kCnt--;
              k+=4;
           }

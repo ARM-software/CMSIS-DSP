@@ -132,8 +132,11 @@ ARM_DSP_ATTRIBUTE void arm_mse_f32(
         pSrcB += 4;
 
         vecA = vsubq_f32(vecA, vecB);
-
+#if defined(__ARM_FEATURE_FMA)
         vecSum = vfmaq_f32(vecSum, vecA, vecA);
+#else
+        vecSum = vmlaq_f32(vecSum, vecA, vecA);
+#endif
         /*
          * Decrement the blockSize loop counter
          */
