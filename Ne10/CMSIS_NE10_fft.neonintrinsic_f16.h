@@ -35,6 +35,8 @@
 #include "CMSIS_NE10_fft.h"
 #include <arm_neon.h>
 
+#if defined(ARM_MATH_NEON_FLOAT16)
+
 #define NE10_CPX_ADD_NEON_F16(Z,A,B) do {           \
     Z.val[0] = A.val[0] + B.val[0];    \
     Z.val[1] = A.val[1] + B.val[1];    \
@@ -397,4 +399,5 @@ const static float16x4_t DIV_TW81N_NEON = VDUPQ_N_F16(DIV_TW81N);
 #define NE10_PRINT_Qx8_VECTOR(Q_VECTOR) ;
 #define NE10_PRINT_Qx4_VECTOR(Q_VECTOR) ;
 #define NE10_PRINT_Q2x4_VECTOR(Q2_VECTOR) ;
+#endif // defined(ARM_MATH_NEON_FLOAT16)
 #endif // header
