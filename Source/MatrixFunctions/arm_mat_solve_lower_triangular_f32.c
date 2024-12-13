@@ -209,7 +209,11 @@
             for(k=0; k < i; k++)
             {
                 vecX = vld1q_f32(&pX[cols*k+j]);
+#if defined(__ARM_FEATURE_FMA)
                 vecA = vfmsq_f32(vecA,vdupq_n_f32(pLT[n*i + k]),vecX);
+#else
+                vecA = vmlsq_f32(vecA,vdupq_n_f32(pLT[n*i + k]),vecX);
+#endif
             }
 
             if (pLT[n*i + i]==0.0f)
