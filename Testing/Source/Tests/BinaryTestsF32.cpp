@@ -81,9 +81,10 @@ static void checkInnerTail(float32_t *b)
 
       ASSERT_EMPTY_TAIL(output);
 
+      ASSERT_CLOSE_ERROR(output,ref,ABS_ERROR,REL_ERROR);
+
       ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
 
-      ASSERT_CLOSE_ERROR(output,ref,ABS_ERROR,REL_ERROR);
 
     } 
 
