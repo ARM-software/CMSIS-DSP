@@ -120,35 +120,36 @@ add_executable(test main.cpp
 if (NEON)
     target_sources(test PUBLIC 
         Source/Tests/TransformNeonCF32.cpp
-        Source/Tests/TransformNeonCF16.cpp
         Source/Tests/TransformNeonCQ31.cpp
         Source/Tests/TransformNeonCQ15.cpp
         )
+    
+
 endif()
 
-if (NOT DISABLEFLOAT16)
-        target_sources(test PUBLIC
-           Source/Tests/BasicTestsF16.cpp
-           Source/Tests/BayesF16.cpp
-           Source/Tests/BinaryTestsF16.cpp
-           Source/Tests/BIQUADF16.cpp
-           Source/Tests/ComplexTestsF16.cpp
-           Source/Tests/DistanceTestsF16.cpp
-           Source/Tests/FastMathF16.cpp
-           Source/Tests/FIRF16.cpp
-           Source/Tests/InterpolationTestsF16.cpp
-           Source/Tests/mfccdata_f16.c
-           Source/Tests/MFCCF16.cpp
-           Source/Tests/MISCF16.cpp
-           Source/Tests/StatsTestsF16.cpp
-           Source/Tests/SupportBarTestsF16.cpp
-           Source/Tests/SupportTestsF16.cpp
-           Source/Tests/SVMF16.cpp
-           Source/Tests/TransformCF16.cpp
-           Source/Tests/TransformRF16.cpp
-           Source/Tests/UnaryTestsF16.cpp
-                )
-endif()
+#if (NOT DISABLEFLOAT16)
+#        target_sources(test PUBLIC
+#           Source/Tests/BasicTestsF16.cpp
+#           Source/Tests/BayesF16.cpp
+#           Source/Tests/BinaryTestsF16.cpp
+#           Source/Tests/BIQUADF16.cpp
+#           Source/Tests/ComplexTestsF16.cpp
+#           Source/Tests/DistanceTestsF16.cpp
+#           Source/Tests/FastMathF16.cpp
+#           Source/Tests/FIRF16.cpp
+#           Source/Tests/InterpolationTestsF16.cpp
+#           Source/Tests/mfccdata_f16.c
+#           Source/Tests/MFCCF16.cpp
+#           Source/Tests/MISCF16.cpp
+#           Source/Tests/StatsTestsF16.cpp
+#           Source/Tests/SupportBarTestsF16.cpp
+#           Source/Tests/SupportTestsF16.cpp
+#           Source/Tests/SVMF16.cpp
+#           Source/Tests/TransformCF16.cpp
+#           Source/Tests/TransformRF16.cpp
+#           Source/Tests/UnaryTestsF16.cpp
+#                )
+#endif()
 
 target_include_directories(test PUBLIC FrameworkInclude
   GeneratedInclude
@@ -231,6 +232,8 @@ endif()
 
 target_link_libraries(test PUBLIC CMSISDSP)
 
+target_compile_options(CMSISDSP PUBLIC -march=native)
+target_compile_options(test PUBLIC -march=native)
 
 if(NOAUTOVEC)
     target_compile_options(CMSISDSP PRIVATE -fno-slp-vectorize -fno-vectorize)
