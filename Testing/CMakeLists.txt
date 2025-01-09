@@ -239,6 +239,7 @@ target_compile_option(CMSISDSP PRIVATE -Wsign-compare
 
 endif()
 
+
 target_link_libraries(test PUBLIC CMSISDSP)
 
 target_compile_options(CMSISDSP PUBLIC -march=native)
