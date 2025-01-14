@@ -16,7 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         compiler: [AC6, CLANG, GCC]
-    runs-on: ubuntu-latest    
+    runs-on: ubuntu-22.04    
 
     steps:
       - name: Checkout
