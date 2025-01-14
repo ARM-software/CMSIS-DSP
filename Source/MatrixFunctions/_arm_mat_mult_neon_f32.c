@@ -33,34 +33,30 @@
 #define COLS_BLOCK 128 // cols
 
 
-static float PACKEDB[INNER_BLOCK*COLS_BLOCK];
-static float PACKEDA[ROWS_BLOCK*INNER_BLOCK];
-static float PACKEDC[ROWS_BLOCK*COLS_BLOCK];
+static __ALIGNED(16) float PACKEDB[INNER_BLOCK*COLS_BLOCK];
+static __ALIGNED(16) float PACKEDA[ROWS_BLOCK*INNER_BLOCK];
+static __ALIGNED(16) float PACKEDC[ROWS_BLOCK*COLS_BLOCK];
 
 #if 0
 // update 6x16 submatrix C[x:x+6][y:y+16]
 // using A[x:x+6][l:r] and B[l:r][y:y+16]
-__STATIC_INLINE void kernel(const float * __restrict__ a, 
-                            float *  __restrict__ c, 
-                            int x, int y, int yp,
-                            int l, int r, 
-                            int colsa,int colsb) {
+__STATIC_INLINE void kernel(int xp, int yp,int r) {
     //printf("%d %d %d %d, yp=%d\n",x,y,l,r,yp);
     vec t[DR][DCS]={0}; // will be zero-filled and stored in ymm registers
     
     const float *pB = &PACKEDB[yp];
 
 
-    for (int k=l; k < r ; k ++) 
+    for (int k=0; k < r ; k ++) 
     {
-        const float *pAlpha0 = &a[(x + 0) * colsa+k];
+        const float *pAlpha0 = &PACKEDA[xp * INNER_BLOCK + k];
         int i=0;
         for (; i < DR; i++) 
         {
             vec tmp;
 
             float alpha0 = *pAlpha0;
-            pAlpha0 += colsa;
+            pAlpha0 += INNER_BLOCK;
 
             tmp = vld1q_f32(pB);
             pB += LANE;
@@ -80,7 +76,7 @@ __STATIC_INLINE void kernel(const float * __restrict__ a,
     }
 
     // write the results back to C
-    float *pC = &c[x * colsb + y];
+    float *pC = &PACKEDC[xp * COLS_BLOCK + yp];
     for (int i = 0; i < DR; i++)
     {
         for (int j = 0; j < DCS; j++)
@@ -90,7 +86,7 @@ __STATIC_INLINE void kernel(const float * __restrict__ a,
             vst1q_f32(pC,tmp);
             pC += LANE;
         }
-        pC += colsb - DC;
+        pC += COLS_BLOCK - DC;
     }
 }
 #else
@@ -102,11 +98,7 @@ tmp = vaddq_f32(tmp,t##i##j);\
 vst1q_f32(pC,tmp);           
 
 // Only ok with DCS = 2
-__STATIC_INLINE void kernel(const float * __restrict__ a, 
-  float *  __restrict__ c, 
-  int x, int y, int yp,
-  int l, int r, 
-  int colsa,int colsb) {
+__STATIC_INLINE void kernel(int xp, int yp,int r) {
 
     //printf("row=%d col=%d l=%d r=%d\n",x,y,l,r);
   const float *pB0 = &PACKEDB[yp];
@@ -141,18 +133,20 @@ __STATIC_INLINE void kernel(const float * __restrict__ a,
   vec t32 = vdupq_n_f32(0);
   vec t33 = vdupq_n_f32(0);
 
-  const float *pAlpha0 = &a[(x + 0) * colsa + l];
-  const float *pAlpha1 = pAlpha0 + colsa;
-  const float *pAlpha2 = pAlpha1 + colsa;
-  const float *pAlpha3 = pAlpha2 + colsa;
+  const float *pAlpha0 = &PACKEDA[xp * INNER_BLOCK];
+  const float *pAlpha1 = pAlpha0 + INNER_BLOCK;
+  const float *pAlpha2 = pAlpha1 + INNER_BLOCK;
+  const float *pAlpha3 = pAlpha2 + INNER_BLOCK;
 
-  for (int k=l; k < r ; k ++) 
+  
+
+  for (int k=0; k < r ; k ++) 
   {
             // broadcast a[x + i][k] into a register
-    float alpha0 = *pAlpha0++;
-    float alpha1 = *pAlpha1++;
-    float alpha2 = *pAlpha2++;
-    float alpha3 = *pAlpha3++;
+    const float alpha0 = *pAlpha0++;
+    const float alpha1 = *pAlpha1++;
+    const float alpha2 = *pAlpha2++;
+    const float alpha3 = *pAlpha3++;
 
     tmp00 = vld1q_f32(pB0);
     pB0 += LANE;
@@ -168,7 +162,8 @@ __STATIC_INLINE void kernel(const float * __restrict__ a,
 
             // multiply b[k][y:y+16] by it and update t[i][0] and t[i][1]
 
-
+    //__builtin_prefetch (&array[(mid + 1 + high)/2], 0, 1);
+    
     t00 = vfmaq_n_f32(t00,tmp00,alpha0);
     t10 = vfmaq_n_f32(t10,tmp00,alpha1);
     t20 = vfmaq_n_f32(t20,tmp00,alpha2);
@@ -197,7 +192,7 @@ __STATIC_INLINE void kernel(const float * __restrict__ a,
   }
 
     // write the results back to C
-  float *pC = &c[x * colsb + y];
+  float *pC = &PACKEDC[xp * COLS_BLOCK + yp];
   vec tmp;
 
   UPDATE(0,0);
@@ -207,7 +202,7 @@ __STATIC_INLINE void kernel(const float * __restrict__ a,
   UPDATE(0,2);
   pC += LANE;
   UPDATE(0,3);
-  pC += (colsb - 3*LANE);
+  pC += (COLS_BLOCK - 3*LANE);
 
   UPDATE(1,0);
   pC += LANE;
@@ -216,7 +211,7 @@ __STATIC_INLINE void kernel(const float * __restrict__ a,
   UPDATE(1,2);
   pC += LANE;
   UPDATE(1,3);
-  pC += (colsb - 3*LANE);
+  pC += (COLS_BLOCK - 3*LANE);
 
   UPDATE(2,0);
   pC += LANE;
@@ -225,7 +220,7 @@ __STATIC_INLINE void kernel(const float * __restrict__ a,
   UPDATE(2,2);
   pC += LANE;
   UPDATE(2,3);
-  pC += (colsb - 3*LANE);
+  pC += (COLS_BLOCK - 3*LANE);
 
   UPDATE(3,0);
   pC += LANE;
@@ -240,38 +235,74 @@ __STATIC_INLINE void kernel(const float * __restrict__ a,
 #endif
 
 
-#define PACKB(WIDTH,COL,IN)                 \
-{                                  \
-\
-const float *pB = &b[COL+IN*WIDTH];\
-float *packed=PACKEDB;           \
-int nb = MIN(WIDTH,COL+COLS_BLOCK)-COL; \
-for(int i=0;i<INNER_BLOCK;i++)            \
-  {                                \
-for(int j=0;j<nb;j++)         \
- {                             \
-*packed++ = *pB++;         \
-}                             \
-packed += COLS_BLOCK - nb; \
-pB += WIDTH - nb;              \
-}                                \
+#define PACK(BUF,PACKED,WIDTH,HEIGHT,RB,CB,ROW,COL)               \
+{                                                 \
+    const float *p = &BUF[COL+ROW*WIDTH];          \
+    float *packed=PACKED;                        \
+    int nb_rows = MIN(HEIGHT,ROW+RB)-ROW;\
+    int nb_cols = MIN(WIDTH,COL+CB)-COL;  \
+    for(int i=0;i<nb_rows;i++)                    \
+    {                                             \
+        for(int j=0;j<nb_cols;j++)                \
+        {                                         \
+            *packed++ = *p++;                    \
+        }                                         \
+        packed += CB - nb_cols;           \
+        p += WIDTH - nb_cols;                    \
+    }                                             \
 }
 
-#define PACKA(WIDTH,HEIGHT,ROW,IN)                 \
-{                                  \
-                                   \
-const float *pA = &a[ROW*WIDTH+IN];\
-float *packed=PACKEDA;             \
-int nb = MIN(HEIGHT,ROW+ROWS_BLOCK)-ROW;   \
-for(int i=0;i<nb;i++)              \
-{                                  \
-for(int j=0;j<COLS_BLOCK;j++)              \
-{                                  \
-  packed[j*INNER_BLOCK+i] = *pA++;          \
-}                                  \
-pA += WIDTH - COLS_BLOCK;                  \
-}                                  \
+#define ZEROPACK(PACKED,WIDTH,HEIGHT,RB,CB,ROW,COL)               \
+{                                                 \
+    float *packed=PACKED;                        \
+    int nb_rows = MIN(HEIGHT,ROW+RB)-ROW;\
+    int nb_cols = MIN(WIDTH,COL+CB)-COL;  \
+    for(int i=0;i<nb_rows;i++)                    \
+    {                                             \
+        for(int j=0;j<nb_cols;j++)                \
+        {                                         \
+            *packed++ = 0;                    \
+        }                                         \
+        packed += CB - nb_cols;           \
+    }                                             \
 }
+
+#define PACKTR(BUF,PACKED,WIDTH,HEIGHT,RB,CB,ROW,COL)\
+{                                                    \
+    const float *p = &BUF[COL+ROW*WIDTH];            \
+    float *packed=PACKED;                            \
+    int nb_rows = MIN(HEIGHT,ROW+RB)-ROW;            \
+    int nb_cols = MIN(WIDTH,COL+CB)-COL;             \
+                                                     \
+    for(int j=0;j<nb_cols;j++)                       \
+    {                                                \
+       for(int i=0;i<nb_rows;i++)                    \
+       {                                            \
+            *packed++ = p[i*WIDTH+j];                \
+       }                                            \
+       packed += RB - nb_rows;                      \
+    }                                                \
+}
+
+
+#define UNPACK(BUF,PACKED,WIDTH,HEIGHT,RB,CB,ROW,COL)               \
+{                                                 \
+    float *p = &BUF[COL+ROW*WIDTH];          \
+    const float *packed=PACKED;                        \
+    int nb_rows = MIN(HEIGHT,ROW+RB)-ROW;\
+    int nb_cols = MIN(WIDTH,COL+CB)-COL;  \
+    for(int i=0;i<nb_rows;i++)                    \
+    {                                             \
+        for(int j=0;j<nb_cols;j++)                \
+        {                                         \
+            *p++ = *packed++;                    \
+        }                                         \
+        packed += CB - nb_cols;           \
+        p += WIDTH - nb_cols;                    \
+    }                                             \
+}
+
+
 
 ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_f32(
   const arm_matrix_instance_f32 * pSrcA,
@@ -282,9 +313,9 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_f32(
   const float32_t *b = pSrcB->pData;
   float32_t *c = pDst->pData;
 
-  int rows,cols,inner;
+  int rows,cols,inners;
   rows=pSrcA->numRows;
-  inner=pSrcA->numCols;
+  inners=pSrcA->numCols;
   cols=pSrcB->numCols;
 
 
@@ -300,66 +331,64 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_f32(
 // ROWS_BLOCKxCOLS_BLOCK -> L2 
 // 
 // // 64 120 128
-const int inner_delta = INNER_BLOCK; // inner
-const int rows_delta = ROWS_BLOCK; // rows
-const int cols_delta = COLS_BLOCK; // cols
+    const int inners_delta = INNER_BLOCK; // inner
+    const int rows_delta = ROWS_BLOCK; // rows
+    const int cols_delta = COLS_BLOCK; // cols
 
 
-memset(c,0,sizeof(float32_t)*rows*cols);
+    //memset(c,0,sizeof(float32_t)*rows*cols);
 
-for (int block_col = 0; block_col < cols; block_col += cols_delta)
-{ 
+    for (int block_col = 0; block_col < cols; block_col += cols_delta)
+    { 
     // now we are working with b[:][block_col:block_col+cols_delta]
-  for (int block_row = 0; block_row < rows; block_row += rows_delta) 
-  {    
-    
-        // now we are working with a[block_row:block_row+rows_delta][:]
-   for (int block_inner = 0; block_inner < inner; block_inner += inner_delta)
-// 
-   {
-    PACKB(cols,block_col,block_inner);
-
-    int row=block_row;
-
-    for (; row <= (MIN(block_row + rows_delta, rows)-DR); row += DR)
-    {
-      int col=block_col;
-
-      for (; col <= (MIN(block_col + cols_delta, cols)-DC); col += DC)
-      {
-        kernel(a, c, row,col, col-block_col,block_inner, MIN(block_inner + inner_delta, inner), inner, cols);
-      }
-
-      for(;col < MIN(block_col + cols_delta, cols); col ++)
-      {
-        for(int nr = 0; nr < DR ; nr++)
+      for (int block_row = 0; block_row < rows; block_row += rows_delta) 
+      {    
+        ZEROPACK(PACKEDC,rows,cols,rows_delta,cols_delta,block_row,block_col);
+          // now we are working with a[block_row:block_row+rows_delta][:]
+        for (int block_inner = 0; block_inner < inners; block_inner += inners_delta)
         {
-          for(int k=block_inner;k<MIN(block_inner + inner_delta, inner);k++)
+          PACK(a,PACKEDA,rows,inners,rows_delta,inners_delta,block_row,block_inner);
+          PACK(b,PACKEDB,inners,cols,inners_delta,cols_delta,block_inner,block_col);
+
+          int row=0;
+
+          for (; row <= (MIN(0 + rows_delta, rows - block_row)-DR); row += DR)
           {
-            c[(row+nr) * cols + col] += a[(row+nr) * inner + k] * b[k * cols + col];
+            int col=0;
+
+            for (; col <= (MIN(0 + cols_delta, cols - block_col)-DC); col += DC)
+            {
+              kernel(row, col,MIN(inners_delta, inners-block_inner));
+            }
+
+            for(;col < MIN(0 + cols_delta, cols - block_col); col ++)
+            {
+              for(int nr = 0; nr < DR ; nr++)
+              {
+                for(int k=0;k<MIN(0 + inners_delta, inners - block_inner);k++)
+                {
+                  PACKEDC[(row+nr-0) * cols_delta + col- 0] += PACKEDA[(row+nr-0) * INNER_BLOCK + k - 0] * PACKEDB[(k-0) * cols_delta + col - 0];
+                }
+              }
+            }
           }
-        }
-      }
 
-    }
+          for(;row < MIN(0 + rows_delta, rows - block_row);row++)
+          {
+            for(int col=0 ;col < MIN(0 + cols_delta, cols- block_col); col ++)
+            {
+              for(int k=0;k<MIN(0 + inners_delta, inners - block_inner);k++)
+              {
+               PACKEDC[(row-0) * cols_delta + col- 0] += PACKEDA[(row-0) * INNER_BLOCK + k - 0] * PACKEDB[(k-0) * cols_delta + col- 0];
+              }
+            }
+          }
+       }
+       UNPACK(c,PACKEDC,rows,cols,rows_delta,cols_delta,block_row,block_col);
+     }
+   }
 
-    for(;row < MIN(block_row + rows_delta, rows);row++)
-    {
-      for(int col=block_col ;col < MIN(block_col + cols_delta, cols); col ++)
-      {
-       for(int k=block_inner;k<MIN(block_inner + inner_delta, inner);k++)
-       {
-        c[row * cols + col] += a[row * inner + k] * b[k * cols + col];
-      }
-    }
-  }
-
-}
-}
-
-}
-
-return (ARM_MATH_SUCCESS);
+   return (ARM_MATH_SUCCESS);
 }
 
 #undef DR 
