@@ -13,20 +13,29 @@
 #define vec float32x4_t
 #define hvec float32x2_t
 
-//#define S1 200 
-//#define S2 160
-//#define S3 64 
+//#define INNER_BLOCK 200 
+//#define ROWS_BLOCK 160
+//#define COLS_BLOCK 64 
 
-// A block : S2 x S3 
-// B block : S3 x S1
-// C block S2 x S1
-#define S1 64  // inner
-#define S2 256 // rows
-#define S3 64 // cols
+// A block : ROWS_BLOCK x COLS_BLOCK 
+// B block : COLS_BLOCK x INNER_BLOCK
+// C block ROWS_BLOCK x INNER_BLOCK
+// 
+
+// A55
+//#define INNER_BLOCK 64  // inner
+//#define ROWS_BLOCK 256 // rows
+//#define COLS_BLOCK 64 // cols
+
+// N1
+#define INNER_BLOCK 64  // inner
+#define ROWS_BLOCK 512 // rows
+#define COLS_BLOCK 128 // cols
 
 
-static float PACKEDB[S1*S3];
-static float PACKEDA[S2*S1];
+static float PACKEDB[INNER_BLOCK*COLS_BLOCK];
+static float PACKEDA[ROWS_BLOCK*INNER_BLOCK];
+static float PACKEDC[ROWS_BLOCK*COLS_BLOCK];
 
 #if 0
 // update 6x16 submatrix C[x:x+6][y:y+16]
@@ -67,7 +76,7 @@ __STATIC_INLINE void kernel(const float * __restrict__ a,
             }
             pB -= (DC+LANE);
         }
-        pB += S3;
+        pB += COLS_BLOCK;
     }
 
     // write the results back to C
@@ -101,9 +110,9 @@ __STATIC_INLINE void kernel(const float * __restrict__ a,
 
     //printf("row=%d col=%d l=%d r=%d\n",x,y,l,r);
   const float *pB0 = &PACKEDB[yp];
-    //const float *pB1 = pB0 + S3;
-    //const float *pB2 = pB1 + S3;
-    //const float *pB3 = pB2 + S3;
+    //const float *pB1 = pB0 + COLS_BLOCK;
+    //const float *pB2 = pB1 + COLS_BLOCK;
+    //const float *pB3 = pB2 + COLS_BLOCK;
 
   vec tmp00,tmp01,tmp02,tmp03;
     //vec tmp10,tmp11,tmp12,tmp13;
@@ -183,7 +192,7 @@ __STATIC_INLINE void kernel(const float * __restrict__ a,
     t23 = vfmaq_n_f32(t23,tmp03,alpha2);
     t33 = vfmaq_n_f32(t33,tmp03,alpha3);
 
-    pB0 += S3 - 3*LANE;
+    pB0 += COLS_BLOCK - 3*LANE;
 
   }
 
@@ -236,14 +245,14 @@ __STATIC_INLINE void kernel(const float * __restrict__ a,
 \
 const float *pB = &b[COL+IN*WIDTH];\
 float *packed=PACKEDB;           \
-int nb = MIN(WIDTH,COL+S3)-COL; \
-for(int i=0;i<S1;i++)            \
+int nb = MIN(WIDTH,COL+COLS_BLOCK)-COL; \
+for(int i=0;i<INNER_BLOCK;i++)            \
   {                                \
 for(int j=0;j<nb;j++)         \
  {                             \
 *packed++ = *pB++;         \
 }                             \
-packed += S3 - nb; \
+packed += COLS_BLOCK - nb; \
 pB += WIDTH - nb;              \
 }                                \
 }
@@ -253,14 +262,14 @@ pB += WIDTH - nb;              \
                                    \
 const float *pA = &a[ROW*WIDTH+IN];\
 float *packed=PACKEDA;             \
-int nb = MIN(HEIGHT,ROW+S2)-ROW;   \
+int nb = MIN(HEIGHT,ROW+ROWS_BLOCK)-ROW;   \
 for(int i=0;i<nb;i++)              \
 {                                  \
-for(int j=0;j<S3;j++)              \
+for(int j=0;j<COLS_BLOCK;j++)              \
 {                                  \
-  packed[j*S1+i] = *pA++;          \
+  packed[j*INNER_BLOCK+i] = *pA++;          \
 }                                  \
-pA += WIDTH - S3;                  \
+pA += WIDTH - COLS_BLOCK;                  \
 }                                  \
 }
 
@@ -280,51 +289,52 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_f32(
 
 
   
-//const int s3 = S3;  // how many columns of B to select
-//const int s2 = S2; // how many rows of A to select 
-//const int s1 = S1; // how many rows of B to select
+//const int cols_delta = COLS_BLOCK;  // how many columns of B to select
+//const int rows_delta = ROWS_BLOCK; // how many rows of A to select 
+//const int inner_delta = INNER_BLOCK; // how many rows of B to select
 //
-// A block : S2 x S1 
-// B block : S1 x S3
-// C block S2 x S1
-// S3XS1 -> half of L1 
-// S2xS3 -> L2 
+// A block : ROWS_BLOCK x INNER_BLOCK 
+// B block : INNER_BLOCK x COLS_BLOCK
+// C block ROWS_BLOCK x INNER_BLOCK
+// COLS_BLOCKXINNER_BLOCK -> half of L1 
+// ROWS_BLOCKxCOLS_BLOCK -> L2 
 // 
 // // 64 120 128
-const int s1 = S1; // inner
-const int s2 = S2; // rows
-const int s3 = S3; // cols
+const int inner_delta = INNER_BLOCK; // inner
+const int rows_delta = ROWS_BLOCK; // rows
+const int cols_delta = COLS_BLOCK; // cols
 
 
 memset(c,0,sizeof(float32_t)*rows*cols);
 
-for (int i3 = 0; i3 < cols; i3 += s3)
+for (int block_col = 0; block_col < cols; block_col += cols_delta)
 { 
-    // now we are working with b[:][i3:i3+s3]
-  for (int i2 = 0; i2 < rows; i2 += s2) 
+    // now we are working with b[:][block_col:block_col+cols_delta]
+  for (int block_row = 0; block_row < rows; block_row += rows_delta) 
   {    
-        // now we are working with a[i2:i2+s2][:]
-   for (int i1 = 0; i1 < inner; i1 += s1)
+    
+        // now we are working with a[block_row:block_row+rows_delta][:]
+   for (int block_inner = 0; block_inner < inner; block_inner += inner_delta)
 // 
    {
-    PACKB(cols,i3,i1);
+    PACKB(cols,block_col,block_inner);
 
-    int row=i2;
+    int row=block_row;
 
-    for (; row <= (MIN(i2 + s2, rows)-DR); row += DR)
+    for (; row <= (MIN(block_row + rows_delta, rows)-DR); row += DR)
     {
-      int col=i3;
+      int col=block_col;
 
-      for (; col <= (MIN(i3 + s3, cols)-DC); col += DC)
+      for (; col <= (MIN(block_col + cols_delta, cols)-DC); col += DC)
       {
-        kernel(a, c, row,col, col-i3,i1, MIN(i1 + s1, inner), inner, cols);
+        kernel(a, c, row,col, col-block_col,block_inner, MIN(block_inner + inner_delta, inner), inner, cols);
       }
 
-      for(;col < MIN(i3 + s3, cols); col ++)
+      for(;col < MIN(block_col + cols_delta, cols); col ++)
       {
         for(int nr = 0; nr < DR ; nr++)
         {
-          for(int k=i1;k<MIN(i1 + s1, inner);k++)
+          for(int k=block_inner;k<MIN(block_inner + inner_delta, inner);k++)
           {
             c[(row+nr) * cols + col] += a[(row+nr) * inner + k] * b[k * cols + col];
           }
@@ -333,11 +343,11 @@ for (int i3 = 0; i3 < cols; i3 += s3)
 
     }
 
-    for(;row < MIN(i2 + s2, rows);row++)
+    for(;row < MIN(block_row + rows_delta, rows);row++)
     {
-      for(int col=i3 ;col < MIN(i3 + s3, cols); col ++)
+      for(int col=block_col ;col < MIN(block_col + cols_delta, cols); col ++)
       {
-       for(int k=i1;k<MIN(i1 + s1, inner);k++)
+       for(int k=block_inner;k<MIN(block_inner + inner_delta, inner);k++)
        {
         c[row * cols + col] += a[row * inner + k] * b[k * cols + col];
       }
