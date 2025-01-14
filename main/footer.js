@@ -1,7 +1,7 @@
 function writeHeader() {
-    document.write('Version 1.16.3-dev14');
+    document.write('Version 1.16.3-dev15');
 };
 
 function writeFooter()  {
-    document.write('Generated on Fri Dec 13 2024 14:11:34 for CMSIS-DSP 1.16.3-dev14+g4ee6da9. Copyright &copy; 2024 Arm Limited (or its affiliates). All rights reserved.');
+    document.write('Generated on Tue Jan 14 2025 08:14:17 for CMSIS-DSP 1.16.3-dev15+gbce1825. Copyright &copy; 2025 Arm Limited (or its affiliates). All rights reserved.');
 };
