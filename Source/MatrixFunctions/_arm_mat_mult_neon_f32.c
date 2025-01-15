@@ -1,4 +1,5 @@
 
+#include <stdio.h>
 
 #define L1_CACHE_SIZE (16*1024)
 #define L2_CACHE_SIZE (128*1024)
@@ -23,19 +24,26 @@
 // 
 
 // A55
-//#define INNER_BLOCK 64  // inner
+// INNER * DC < L1/2
+// INNER * ROWS < L2 
+// INNER * COLS < L3
+#define INNER_BLOCK ((((L1_CACHE_SIZE>>2) >> 1)/DC+DC-1) & ~(DC-1))
+#define ROWS_BLOCK (((L2_CACHE_SIZE>>2) / INNER_BLOCK + DR - 1) & ~(DR-1) ) //256 // rows
+#define COLS_BLOCK (((L3_CACHE_SIZE>>2) / INNER_BLOCK + DC - 1) & ~(DC-1)) //1024 // cols
+
+//#define INNER_BLOCK 128  // inner
 //#define ROWS_BLOCK 256 // rows
-//#define COLS_BLOCK 64 // cols
+//#define COLS_BLOCK 1024 // cols
+
 
 // N1
-#define INNER_BLOCK 64  // inner
-#define ROWS_BLOCK 512 // rows
-#define COLS_BLOCK 128 // cols
+//#define INNER_BLOCK 64  // inner
+//#define ROWS_BLOCK 512 // rows
+//#define COLS_BLOCK 128 // cols
 
 
-static __ALIGNED(16) float PACKEDB[INNER_BLOCK*COLS_BLOCK];
+static __ALIGNED(16) float PACKEDB[INNER_BLOCK*DC];
 static __ALIGNED(16) float PACKEDA[ROWS_BLOCK*INNER_BLOCK];
-static __ALIGNED(16) float PACKEDC[ROWS_BLOCK*COLS_BLOCK];
 
 #if 0
 // update 6x16 submatrix C[x:x+6][y:y+16]
@@ -92,16 +100,12 @@ __STATIC_INLINE void kernel(int xp, int yp,int r) {
 #else
 
 
-#define UPDATE(i,j)            \
-tmp = vld1q_f32(pC);         \
-tmp = vaddq_f32(tmp,t##i##j);\
-vst1q_f32(pC,tmp);           
 
 // Only ok with DCS = 2
-__STATIC_INLINE void kernel(int xp, int yp,int r) {
+__STATIC_INLINE void kernel(int cols,float32_t *pC,int xp, int yp,int r) {
 
     //printf("row=%d col=%d l=%d r=%d\n",x,y,l,r);
-  const float *pB0 = &PACKEDB[yp];
+  const float *pB0 = PACKEDB;
     //const float *pB1 = pB0 + COLS_BLOCK;
     //const float *pB2 = pB1 + COLS_BLOCK;
     //const float *pB3 = pB2 + COLS_BLOCK;
@@ -112,26 +116,43 @@ __STATIC_INLINE void kernel(int xp, int yp,int r) {
     //vec tmp30,tmp31,tmp32,tmp33;
 
 
-  vec t00 = vdupq_n_f32(0);
-  vec t01 = vdupq_n_f32(0);
-  vec t02 = vdupq_n_f32(0);
-  vec t03 = vdupq_n_f32(0);
+  const float *p = pC;
 
+  vec t00 = vld1q_f32(p);
+  p += LANE;
+  vec t01 = vld1q_f32(p);
+  p += LANE;
+  vec t02 = vld1q_f32(p);
+  p += LANE;
+  vec t03 = vld1q_f32(p);
+  p += cols - 3*LANE;
 
-  vec t10 = vdupq_n_f32(0);
-  vec t11 = vdupq_n_f32(0);
-  vec t12 = vdupq_n_f32(0);
-  vec t13 = vdupq_n_f32(0);
+  vec t10 = vld1q_f32(p);
+  p += LANE;
+  vec t11 = vld1q_f32(p);
+  p += LANE;
+  vec t12 = vld1q_f32(p);
+  p += LANE;
+  vec t13 = vld1q_f32(p);
+  p += cols - 3*LANE;
 
-  vec t20 = vdupq_n_f32(0);
-  vec t21 = vdupq_n_f32(0);
-  vec t22 = vdupq_n_f32(0);
-  vec t23 = vdupq_n_f32(0);
+  vec t20 = vld1q_f32(p);
+  p += LANE;
+  vec t21 = vld1q_f32(p);
+  p += LANE;
+  vec t22 = vld1q_f32(p);
+  p += LANE;
+  vec t23 = vld1q_f32(p);
+  p += cols - 3*LANE;
 
-  vec t30 = vdupq_n_f32(0);
-  vec t31 = vdupq_n_f32(0);
-  vec t32 = vdupq_n_f32(0);
-  vec t33 = vdupq_n_f32(0);
+  vec t30 = vld1q_f32(p);
+  p += LANE;
+  vec t31 = vld1q_f32(p);
+  p += LANE;
+  vec t32 = vld1q_f32(p);
+  p += LANE;
+  vec t33 = vld1q_f32(p);
+  p += cols - 3*LANE;
 
   const float *pAlpha0 = &PACKEDA[xp * INNER_BLOCK];
   const float *pAlpha1 = pAlpha0 + INNER_BLOCK;
@@ -158,6 +179,7 @@ __STATIC_INLINE void kernel(int xp, int yp,int r) {
     pB0 += LANE;
 
     tmp03 = vld1q_f32(pB0);
+    pB0 += LANE;
 
 
             // multiply b[k][y:y+16] by it and update t[i][0] and t[i][1]
@@ -187,121 +209,68 @@ __STATIC_INLINE void kernel(int xp, int yp,int r) {
     t23 = vfmaq_n_f32(t23,tmp03,alpha2);
     t33 = vfmaq_n_f32(t33,tmp03,alpha3);
 
-    pB0 += COLS_BLOCK - 3*LANE;
+    //pB0 += DC - 3*LANE;
 
   }
 
     // write the results back to C
-  float *pC = &PACKEDC[xp * COLS_BLOCK + yp];
-  vec tmp;
 
-  UPDATE(0,0);
+  vst1q_f32(pC,t00);
   pC += LANE;
-  UPDATE(0,1);
+  vst1q_f32(pC,t01);
   pC += LANE;
-  UPDATE(0,2);
+  vst1q_f32(pC,t02);
   pC += LANE;
-  UPDATE(0,3);
-  pC += (COLS_BLOCK - 3*LANE);
+  vst1q_f32(pC,t03);
+  pC += cols - 3*LANE;
 
-  UPDATE(1,0);
+  vst1q_f32(pC,t10);
   pC += LANE;
-  UPDATE(1,1);
+  vst1q_f32(pC,t11);
   pC += LANE;
-  UPDATE(1,2);
+  vst1q_f32(pC,t12);
   pC += LANE;
-  UPDATE(1,3);
-  pC += (COLS_BLOCK - 3*LANE);
+  vst1q_f32(pC,t13);
+  pC += cols - 3*LANE;
 
-  UPDATE(2,0);
+  vst1q_f32(pC,t20);
   pC += LANE;
-  UPDATE(2,1);
+  vst1q_f32(pC,t21);
   pC += LANE;
-  UPDATE(2,2);
+  vst1q_f32(pC,t22);
   pC += LANE;
-  UPDATE(2,3);
-  pC += (COLS_BLOCK - 3*LANE);
+  vst1q_f32(pC,t23);
+  pC += cols - 3*LANE;
 
-  UPDATE(3,0);
+  vst1q_f32(pC,t30);
   pC += LANE;
-  UPDATE(3,1);
+  vst1q_f32(pC,t31);
   pC += LANE;
-  UPDATE(3,2);
+  vst1q_f32(pC,t32);
   pC += LANE;
-  UPDATE(3,3);
+  vst1q_f32(pC,t33);
+  pC += cols - 3*LANE;
 
 }
 #undef UPDATE
 #endif
 
 
-#define PACK(BUF,PACKED,WIDTH,HEIGHT,RB,CB,ROW,COL)               \
-{                                                 \
-    const float *p = &BUF[COL+ROW*WIDTH];          \
-    float *packed=PACKED;                        \
-    int nb_rows = MIN(HEIGHT,ROW+RB)-ROW;\
-    int nb_cols = MIN(WIDTH,COL+CB)-COL;  \
-    for(int i=0;i<nb_rows;i++)                    \
-    {                                             \
-        for(int j=0;j<nb_cols;j++)                \
-        {                                         \
-            *packed++ = *p++;                    \
-        }                                         \
-        packed += CB - nb_cols;           \
-        p += WIDTH - nb_cols;                    \
-    }                                             \
+#define PACK(BUF,PACKED,WIDTH,HEIGHT,RB,CB,ROW,COL)\
+{                                                  \
+    const float *p = &(BUF)[(COL)+(ROW)*(WIDTH)];  \
+    float *packed=(PACKED);                        \
+    int nb_rows = MIN((HEIGHT),(ROW)+(RB))-(ROW);  \
+    int nb_cols = MIN((WIDTH),(COL)+(CB)) - (COL);\
+    for(int i=0;i<nb_rows;i++)                     \
+    {                                              \
+        for(int j=0;j<nb_cols;j++)                 \
+        {                                          \
+            *packed++ = p[i*(WIDTH)+j];            \
+        }                                          \
+        packed += (CB) - nb_cols;                  \
+    }                                              \
 }
-
-#define ZEROPACK(PACKED,WIDTH,HEIGHT,RB,CB,ROW,COL)               \
-{                                                 \
-    float *packed=PACKED;                        \
-    int nb_rows = MIN(HEIGHT,ROW+RB)-ROW;\
-    int nb_cols = MIN(WIDTH,COL+CB)-COL;  \
-    for(int i=0;i<nb_rows;i++)                    \
-    {                                             \
-        for(int j=0;j<nb_cols;j++)                \
-        {                                         \
-            *packed++ = 0;                    \
-        }                                         \
-        packed += CB - nb_cols;           \
-    }                                             \
-}
-
-#define PACKTR(BUF,PACKED,WIDTH,HEIGHT,RB,CB,ROW,COL)\
-{                                                    \
-    const float *p = &BUF[COL+ROW*WIDTH];            \
-    float *packed=PACKED;                            \
-    int nb_rows = MIN(HEIGHT,ROW+RB)-ROW;            \
-    int nb_cols = MIN(WIDTH,COL+CB)-COL;             \
-                                                     \
-    for(int j=0;j<nb_cols;j++)                       \
-    {                                                \
-       for(int i=0;i<nb_rows;i++)                    \
-       {                                            \
-            *packed++ = p[i*WIDTH+j];                \
-       }                                            \
-       packed += RB - nb_rows;                      \
-    }                                                \
-}
-
-
-#define UNPACK(BUF,PACKED,WIDTH,HEIGHT,RB,CB,ROW,COL)               \
-{                                                 \
-    float *p = &BUF[COL+ROW*WIDTH];          \
-    const float *packed=PACKED;                        \
-    int nb_rows = MIN(HEIGHT,ROW+RB)-ROW;\
-    int nb_cols = MIN(WIDTH,COL+CB)-COL;  \
-    for(int i=0;i<nb_rows;i++)                    \
-    {                                             \
-        for(int j=0;j<nb_cols;j++)                \
-        {                                         \
-            *p++ = *packed++;                    \
-        }                                         \
-        packed += CB - nb_cols;           \
-        p += WIDTH - nb_cols;                    \
-    }                                             \
-}
-
 
 
 ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_f32(
@@ -318,10 +287,9 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_f32(
   inners=pSrcA->numCols;
   cols=pSrcB->numCols;
 
-
   
-//const int cols_delta = COLS_BLOCK;  // how many columns of B to select
-//const int rows_delta = ROWS_BLOCK; // how many rows of A to select 
+//const int COLS_BLOCK = COLS_BLOCK;  // how many columns of B to select
+//const int ROWS_BLOCK = ROWS_BLOCK; // how many rows of A to select 
 //const int inner_delta = INNER_BLOCK; // how many rows of B to select
 //
 // A block : ROWS_BLOCK x INNER_BLOCK 
@@ -331,62 +299,59 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_f32(
 // ROWS_BLOCKxCOLS_BLOCK -> L2 
 // 
 // // 64 120 128
-    const int inners_delta = INNER_BLOCK; // inner
-    const int rows_delta = ROWS_BLOCK; // rows
-    const int cols_delta = COLS_BLOCK; // cols
-
 
     //memset(c,0,sizeof(float32_t)*rows*cols);
 
-    for (int block_col = 0; block_col < cols; block_col += cols_delta)
+    for (int block_col = 0; block_col < cols; block_col += COLS_BLOCK)
     { 
-    // now we are working with b[:][block_col:block_col+cols_delta]
-      for (int block_row = 0; block_row < rows; block_row += rows_delta) 
+    // now we are working with b[:][block_col:block_col+COLS_BLOCK]
+      for (int block_row = 0; block_row < rows; block_row += ROWS_BLOCK) 
       {    
-        ZEROPACK(PACKEDC,rows,cols,rows_delta,cols_delta,block_row,block_col);
-          // now we are working with a[block_row:block_row+rows_delta][:]
-        for (int block_inner = 0; block_inner < inners; block_inner += inners_delta)
+          // now we are working with a[block_row:block_row+ROWS_BLOCK][:]
+        for (int block_inner = 0; block_inner < inners; block_inner += INNER_BLOCK)
         {
-          PACK(a,PACKEDA,rows,inners,rows_delta,inners_delta,block_row,block_inner);
-          PACK(b,PACKEDB,inners,cols,inners_delta,cols_delta,block_inner,block_col);
+          PACK(a,PACKEDA,inners,rows,ROWS_BLOCK,INNER_BLOCK,block_row,block_inner);
 
-          int row=0;
+          int col=0;
 
-          for (; row <= (MIN(0 + rows_delta, rows - block_row)-DR); row += DR)
+          for (; col <= (MIN(0 + COLS_BLOCK, cols - block_col)-DC); col += DC)
           {
-            int col=0;
+            int row=0;
+            PACK(b,PACKEDB,cols,inners,INNER_BLOCK,DC,block_inner,block_col+col);
 
-            for (; col <= (MIN(0 + cols_delta, cols - block_col)-DC); col += DC)
+            for (; row <= (MIN(0 + ROWS_BLOCK, rows - block_row)-DR); row += DR)
             {
-              kernel(row, col,MIN(inners_delta, inners-block_inner));
+              kernel(cols,c+(block_row+row)*cols + block_col+col,row, col,MIN(INNER_BLOCK, inners-block_inner));
             }
 
-            for(;col < MIN(0 + cols_delta, cols - block_col); col ++)
+            for(; row < MIN(0 + ROWS_BLOCK, rows - block_row); row ++)
             {
-              for(int nr = 0; nr < DR ; nr++)
+              for(int nc=0;nc < DC; nc ++)
               {
-                for(int k=0;k<MIN(0 + inners_delta, inners - block_inner);k++)
+                for(int k=0;k<MIN(0 + INNER_BLOCK, inners - block_inner);k++)
                 {
-                  PACKEDC[(row+nr-0) * cols_delta + col- 0] += PACKEDA[(row+nr-0) * INNER_BLOCK + k - 0] * PACKEDB[(k-0) * cols_delta + col - 0];
+                  c[(row+block_row)*cols + (nc + col+block_col)] += PACKEDA[(row-0) * INNER_BLOCK + k - 0] * PACKEDB[k*DC+nc];
                 }
               }
             }
           }
 
-          for(;row < MIN(0 + rows_delta, rows - block_row);row++)
+          PACK(b,PACKEDB,cols,inners,INNER_BLOCK,DC,block_inner,block_col+col);
+          
+          for(int row=0;row < MIN(0 + ROWS_BLOCK, rows - block_row);row++)
           {
-            for(int col=0 ;col < MIN(0 + cols_delta, cols- block_col); col ++)
+            int maxnc=MIN(0 + COLS_BLOCK, cols- block_col) - col;
+            for(int nc=0;nc < maxnc; nc ++)
             {
-              for(int k=0;k<MIN(0 + inners_delta, inners - block_inner);k++)
+              for(int k=0;k<MIN(0 + INNER_BLOCK, inners - block_inner);k++)
               {
-               PACKEDC[(row-0) * cols_delta + col- 0] += PACKEDA[(row-0) * INNER_BLOCK + k - 0] * PACKEDB[(k-0) * cols_delta + col- 0];
+                c[(row+block_row)*cols + (col+block_col+nc)] += PACKEDA[(row-0) * INNER_BLOCK + k - 0] * PACKEDB[k*DC+nc];
               }
             }
           }
-       }
-       UNPACK(c,PACKEDC,rows,cols,rows_delta,cols_delta,block_row,block_col);
-     }
-   }
+       } // end inner loop
+     } // end row loop
+   } // end col loop
 
    return (ARM_MATH_SUCCESS);
 }
