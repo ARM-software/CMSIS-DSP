@@ -29,6 +29,19 @@
 
 #include "arm_math_types.h"
 
+/* Size are in bytes */
+#if !defined(ARM_MATH_L1_CACHE_SIZE)
+#define ARM_MATH_L1_CACHE_SIZE (16*1024)
+#endif 
+
+#if !defined(ARM_MATH_L2_CACHE_SIZE)
+#define ARM_MATH_L2_CACHE_SIZE (128*1024)
+#endif 
+
+#if !defined(ARM_MATH_L3_CACHE_SIZE)
+#define ARM_MATH_L3_CACHE_SIZE (512*1024)
+#endif
+
 
 #ifdef   __cplusplus
 extern "C"
