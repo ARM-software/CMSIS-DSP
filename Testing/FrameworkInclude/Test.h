@@ -55,7 +55,6 @@
 // (uint32_t)1.0 would give 1. We want the hexadecimal representation of the float.
 // TOINT32(1.0) can be used
 
-
 namespace Testing 
 {
   enum TestStatus
