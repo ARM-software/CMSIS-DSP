@@ -16,7 +16,11 @@ using namespace std;
 #ifdef BENCHMARK
 #define MEMSIZE 300000
 #else
+#if defined(ARM_MATH_NEON)
+#define MEMSIZE 2000000
+#else
 #define MEMSIZE 230000
+#endif
 #endif
 #endif
 

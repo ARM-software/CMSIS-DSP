@@ -53,7 +53,7 @@ static double abs_err,rel_err;
        // To investigate ...
        for(unsigned int i=0;i<input.nbSamples();i++)
        {
-         tmp[i] = (_Float16)inp[i] / (_Float16)6000.0f;
+         tmp[i] = (float)inp[i] / (float)6000.0f;
        }
    
 #if defined(ARM_MATH_NEON)
@@ -75,7 +75,7 @@ static double abs_err,rel_err;
           
         for(unsigned int i=0;i<input.nbSamples();i++)
         {
-          outp[i] = (_Float16)outp[i] * (_Float16)6000.0f;
+          outp[i] = (float)outp[i] * (float)6000.0f;
         }
 
         ASSERT_SNR(outputfft,ref,(float32_t)SNR_THRESHOLD);

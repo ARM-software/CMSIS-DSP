@@ -736,7 +736,7 @@ namespace Client
            for(i=0; i < nb; i++)
            {
               v = data[i];
-              t = TOINT64(v);
+              TOINT64(t,v);
               #if __SIZEOF_LONG__ == 8
               printf("D: 0x%016lx\n",t);
               #else
@@ -759,7 +759,7 @@ namespace Client
             for(i=0; i < nb; i++)
             {
                v = data[i];
-               t = TOINT32(v);
+               TOINT32(t,v);
                printf("D: 0x%08x\n",t);
             }
             printf("D: END\n");
@@ -779,7 +779,7 @@ namespace Client
             for(i=0; i < nb; i++)
             {
                v = data[i];
-               t = TOINT16(v);
+               TOINT16(t,v);
                printf("D: 0x0000%04x\n",t);
             }
             printf("D: END\n");

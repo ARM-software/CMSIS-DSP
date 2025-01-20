@@ -42,11 +42,12 @@
 
 // Pattern files are containing hexadecimal values.
 // So we need to be able to convert some int into float without convertion
-#define TOINT16(v) *((uint16_t*)&v)
-#define TOINT32(v) *((uint32_t*)&v)
-#define TOINT64(v) *((uint64_t*)&v)
+#define TOINT16(dst,v) memcpy (&dst, &v, 2); //*((uint16_t*)&v)
+#define TOINT32(dst,v) memcpy (&dst, &v, 4);// *((uint32_t*)&v)
+#define TOINT64(dst,v) memcpy (&dst, &v, 8); // *((uint64_t*)&v)
 // Or convert some  float into a uint32 or uint64 without convertion
-#define TOTYP(TYP,v) *((TYP*)&v)
+//#define TOTYP(TYP,v) *((TYP*)&v)
+
 // So it is a cast and not a data conversion.
 // (uint32_t)1.0 would give 1. We want the hexadecimal representation of the float.
 // TOINT32(1.0) can be used
