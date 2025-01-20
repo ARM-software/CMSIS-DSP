@@ -31,7 +31,7 @@
 #include <math.h>
 
 namespace Client {
-     ArrayMemory::ArrayMemory(char* ptr, size_t bufferLength,int aligned, bool tail)
+     ArrayMemory::ArrayMemory(char* ptr, size_t bufferLength,size_t aligned, bool tail)
      {
          this->m_ptr=ptr;
          this->m_currentPtr=ptr;
@@ -92,10 +92,10 @@ namespace Client {
          // Compute some offset to align the new buffer to be allocated
          if (this->alignSize > 0)
          {
-            unsigned long offset;
-            unsigned long pad;
+            size_t offset;
+            size_t pad;
 
-            offset=(unsigned long)(this->m_currentPtr - this->m_ptr);
+            offset=(size_t)(this->m_currentPtr - this->m_ptr);
             pad = this->alignSize*ceil(1.0*offset / (1.0*this->alignSize)) - offset;
             //printf("new  = %ld, old = %ld\n",pad,offset);
             this->m_currentPtr += pad;
@@ -127,7 +127,7 @@ namespace Client {
             char *p=ptr + length;
             bool isEmpty=true;
     
-            for(unsigned long i=0; i < this->getTailSize() ; i++)
+            for(size_t i=0; i < this->getTailSize() ; i++)
             {
                 //printf("%d\n",p[i]);
                 if (p[i] != 0)

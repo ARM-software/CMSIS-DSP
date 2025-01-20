@@ -39,7 +39,7 @@ namespace Client{
 class ArrayMemory:public Client::Memory
 {
    public:
-    ArrayMemory(char* ptr, size_t bufferLength,int aligned, bool tail);
+    ArrayMemory(char* ptr, size_t bufferLength,size_t aligned, bool tail);
     ArrayMemory(char* ptr, size_t bufferLength);
     virtual char *NewBuffer(size_t length);
     virtual void FreeMemory();
