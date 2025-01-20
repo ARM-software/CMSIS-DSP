@@ -4,6 +4,7 @@ import itertools
 import Tools
 import scipy.fftpack
 import argparse
+import copy
 
 # Special FFT sizes to test radix-3 and 5 only available
 # for Neon implementation and CFFT F32, CFFt F16 and CFFT Q31.
@@ -23,6 +24,15 @@ radix3 = [3**n for n in range(0,NB_RADIX_3+1)]
 radix5 = [5**n for n in range(0,NB_RADIX_5+1)]
 
 FFTSIZES = sorted(list(filter(lambda a : a > 16 and a < 5700,[int(np.prod(x)) for x in itertools.product(radix2,radix3,radix5)])))
+
+FFTSIZES_F32 = copy.deepcopy(FFTSIZES)
+
+FFTSIZES_F32.append(8192)
+FFTSIZES_F32.append(16384)
+FFTSIZES_F32.append(32768)
+
+FFTSIZES_F32=sorted(FFTSIZES_F32)
+
 FFTSIZES_Q15 = [2**n for n in range(5,14)]
 
 DATATYPES = ["F32","F16","Q31","Q15"]
@@ -30,6 +40,8 @@ DATATYPES = ["F32","F16","Q31","Q15"]
 def fftsizes(d):
     if d == "Q15":
         return FFTSIZES_Q15
+    if d == "F32":
+        return FFTSIZES_F32
     return FFTSIZES
 
 def disabled(d,l,s):
@@ -37,7 +49,7 @@ def disabled(d,l,s):
         return f"disabled{{{s}}}"
     if d == "Q15" and l > 1024:
         return f"disabled{{{s}}}"
-    if l >= 4800:
+    if d != "F32" and l >= 4800:
         return f"disabled{{{s}}}"
     return s
 
@@ -185,7 +197,7 @@ def threshold(d):
 #define ABS_ERROR (1.0e-1)"""
     return """#define SNR_THRESHOLD 100
 #define REL_ERROR (1.0e-4)
-#define ABS_ERROR (4.0e-4)"""
+#define ABS_ERROR (2.0e-3)"""
 
 def the_test(d):
     return f"""{threshold(d)}

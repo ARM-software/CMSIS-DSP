@@ -326,317 +326,341 @@ group Root {
                Pattern INPUTS_CIFFT_NOISY_5400_F32_ID : ComplexInputIFFTSamples_Noisy_5400_78_f32.txt 
                Pattern REF_CFFT_NOISY_5400_F32_ID : ComplexFFTSamples_Noisy_5400_78_f32.txt 
 
-               Pattern INPUTS_CFFT_STEP_20_F32_ID : ComplexInputSamples_Step_20_79_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_20_F32_ID : ComplexInputIFFTSamples_Step_20_79_f32.txt 
-               Pattern REF_CFFT_STEP_20_F32_ID : ComplexFFTSamples_Step_20_79_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_24_F32_ID : ComplexInputSamples_Step_24_80_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_24_F32_ID : ComplexInputIFFTSamples_Step_24_80_f32.txt 
-               Pattern REF_CFFT_STEP_24_F32_ID : ComplexFFTSamples_Step_24_80_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_32_F32_ID : ComplexInputSamples_Step_32_81_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_32_F32_ID : ComplexInputIFFTSamples_Step_32_81_f32.txt 
-               Pattern REF_CFFT_STEP_32_F32_ID : ComplexFFTSamples_Step_32_81_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_36_F32_ID : ComplexInputSamples_Step_36_82_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_36_F32_ID : ComplexInputIFFTSamples_Step_36_82_f32.txt 
-               Pattern REF_CFFT_STEP_36_F32_ID : ComplexFFTSamples_Step_36_82_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_40_F32_ID : ComplexInputSamples_Step_40_83_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_40_F32_ID : ComplexInputIFFTSamples_Step_40_83_f32.txt 
-               Pattern REF_CFFT_STEP_40_F32_ID : ComplexFFTSamples_Step_40_83_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_48_F32_ID : ComplexInputSamples_Step_48_84_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_48_F32_ID : ComplexInputIFFTSamples_Step_48_84_f32.txt 
-               Pattern REF_CFFT_STEP_48_F32_ID : ComplexFFTSamples_Step_48_84_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_60_F32_ID : ComplexInputSamples_Step_60_85_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_60_F32_ID : ComplexInputIFFTSamples_Step_60_85_f32.txt 
-               Pattern REF_CFFT_STEP_60_F32_ID : ComplexFFTSamples_Step_60_85_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_64_F32_ID : ComplexInputSamples_Step_64_86_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_64_F32_ID : ComplexInputIFFTSamples_Step_64_86_f32.txt 
-               Pattern REF_CFFT_STEP_64_F32_ID : ComplexFFTSamples_Step_64_86_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_72_F32_ID : ComplexInputSamples_Step_72_87_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_72_F32_ID : ComplexInputIFFTSamples_Step_72_87_f32.txt 
-               Pattern REF_CFFT_STEP_72_F32_ID : ComplexFFTSamples_Step_72_87_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_80_F32_ID : ComplexInputSamples_Step_80_88_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_80_F32_ID : ComplexInputIFFTSamples_Step_80_88_f32.txt 
-               Pattern REF_CFFT_STEP_80_F32_ID : ComplexFFTSamples_Step_80_88_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_96_F32_ID : ComplexInputSamples_Step_96_89_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_96_F32_ID : ComplexInputIFFTSamples_Step_96_89_f32.txt 
-               Pattern REF_CFFT_STEP_96_F32_ID : ComplexFFTSamples_Step_96_89_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_100_F32_ID : ComplexInputSamples_Step_100_90_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_100_F32_ID : ComplexInputIFFTSamples_Step_100_90_f32.txt 
-               Pattern REF_CFFT_STEP_100_F32_ID : ComplexFFTSamples_Step_100_90_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_108_F32_ID : ComplexInputSamples_Step_108_91_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_108_F32_ID : ComplexInputIFFTSamples_Step_108_91_f32.txt 
-               Pattern REF_CFFT_STEP_108_F32_ID : ComplexFFTSamples_Step_108_91_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_120_F32_ID : ComplexInputSamples_Step_120_92_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_120_F32_ID : ComplexInputIFFTSamples_Step_120_92_f32.txt 
-               Pattern REF_CFFT_STEP_120_F32_ID : ComplexFFTSamples_Step_120_92_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_128_F32_ID : ComplexInputSamples_Step_128_93_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_128_F32_ID : ComplexInputIFFTSamples_Step_128_93_f32.txt 
-               Pattern REF_CFFT_STEP_128_F32_ID : ComplexFFTSamples_Step_128_93_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_144_F32_ID : ComplexInputSamples_Step_144_94_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_144_F32_ID : ComplexInputIFFTSamples_Step_144_94_f32.txt 
-               Pattern REF_CFFT_STEP_144_F32_ID : ComplexFFTSamples_Step_144_94_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_160_F32_ID : ComplexInputSamples_Step_160_95_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_160_F32_ID : ComplexInputIFFTSamples_Step_160_95_f32.txt 
-               Pattern REF_CFFT_STEP_160_F32_ID : ComplexFFTSamples_Step_160_95_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_180_F32_ID : ComplexInputSamples_Step_180_96_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_180_F32_ID : ComplexInputIFFTSamples_Step_180_96_f32.txt 
-               Pattern REF_CFFT_STEP_180_F32_ID : ComplexFFTSamples_Step_180_96_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_192_F32_ID : ComplexInputSamples_Step_192_97_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_192_F32_ID : ComplexInputIFFTSamples_Step_192_97_f32.txt 
-               Pattern REF_CFFT_STEP_192_F32_ID : ComplexFFTSamples_Step_192_97_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_200_F32_ID : ComplexInputSamples_Step_200_98_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_200_F32_ID : ComplexInputIFFTSamples_Step_200_98_f32.txt 
-               Pattern REF_CFFT_STEP_200_F32_ID : ComplexFFTSamples_Step_200_98_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_216_F32_ID : ComplexInputSamples_Step_216_99_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_216_F32_ID : ComplexInputIFFTSamples_Step_216_99_f32.txt 
-               Pattern REF_CFFT_STEP_216_F32_ID : ComplexFFTSamples_Step_216_99_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_240_F32_ID : ComplexInputSamples_Step_240_100_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_240_F32_ID : ComplexInputIFFTSamples_Step_240_100_f32.txt 
-               Pattern REF_CFFT_STEP_240_F32_ID : ComplexFFTSamples_Step_240_100_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_256_F32_ID : ComplexInputSamples_Step_256_101_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_256_F32_ID : ComplexInputIFFTSamples_Step_256_101_f32.txt 
-               Pattern REF_CFFT_STEP_256_F32_ID : ComplexFFTSamples_Step_256_101_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_288_F32_ID : ComplexInputSamples_Step_288_102_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_288_F32_ID : ComplexInputIFFTSamples_Step_288_102_f32.txt 
-               Pattern REF_CFFT_STEP_288_F32_ID : ComplexFFTSamples_Step_288_102_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_300_F32_ID : ComplexInputSamples_Step_300_103_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_300_F32_ID : ComplexInputIFFTSamples_Step_300_103_f32.txt 
-               Pattern REF_CFFT_STEP_300_F32_ID : ComplexFFTSamples_Step_300_103_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_320_F32_ID : ComplexInputSamples_Step_320_104_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_320_F32_ID : ComplexInputIFFTSamples_Step_320_104_f32.txt 
-               Pattern REF_CFFT_STEP_320_F32_ID : ComplexFFTSamples_Step_320_104_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_360_F32_ID : ComplexInputSamples_Step_360_105_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_360_F32_ID : ComplexInputIFFTSamples_Step_360_105_f32.txt 
-               Pattern REF_CFFT_STEP_360_F32_ID : ComplexFFTSamples_Step_360_105_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_384_F32_ID : ComplexInputSamples_Step_384_106_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_384_F32_ID : ComplexInputIFFTSamples_Step_384_106_f32.txt 
-               Pattern REF_CFFT_STEP_384_F32_ID : ComplexFFTSamples_Step_384_106_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_400_F32_ID : ComplexInputSamples_Step_400_107_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_400_F32_ID : ComplexInputIFFTSamples_Step_400_107_f32.txt 
-               Pattern REF_CFFT_STEP_400_F32_ID : ComplexFFTSamples_Step_400_107_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_432_F32_ID : ComplexInputSamples_Step_432_108_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_432_F32_ID : ComplexInputIFFTSamples_Step_432_108_f32.txt 
-               Pattern REF_CFFT_STEP_432_F32_ID : ComplexFFTSamples_Step_432_108_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_480_F32_ID : ComplexInputSamples_Step_480_109_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_480_F32_ID : ComplexInputIFFTSamples_Step_480_109_f32.txt 
-               Pattern REF_CFFT_STEP_480_F32_ID : ComplexFFTSamples_Step_480_109_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_500_F32_ID : ComplexInputSamples_Step_500_110_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_500_F32_ID : ComplexInputIFFTSamples_Step_500_110_f32.txt 
-               Pattern REF_CFFT_STEP_500_F32_ID : ComplexFFTSamples_Step_500_110_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_512_F32_ID : ComplexInputSamples_Step_512_111_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_512_F32_ID : ComplexInputIFFTSamples_Step_512_111_f32.txt 
-               Pattern REF_CFFT_STEP_512_F32_ID : ComplexFFTSamples_Step_512_111_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_540_F32_ID : ComplexInputSamples_Step_540_112_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_540_F32_ID : ComplexInputIFFTSamples_Step_540_112_f32.txt 
-               Pattern REF_CFFT_STEP_540_F32_ID : ComplexFFTSamples_Step_540_112_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_576_F32_ID : ComplexInputSamples_Step_576_113_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_576_F32_ID : ComplexInputIFFTSamples_Step_576_113_f32.txt 
-               Pattern REF_CFFT_STEP_576_F32_ID : ComplexFFTSamples_Step_576_113_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_600_F32_ID : ComplexInputSamples_Step_600_114_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_600_F32_ID : ComplexInputIFFTSamples_Step_600_114_f32.txt 
-               Pattern REF_CFFT_STEP_600_F32_ID : ComplexFFTSamples_Step_600_114_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_640_F32_ID : ComplexInputSamples_Step_640_115_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_640_F32_ID : ComplexInputIFFTSamples_Step_640_115_f32.txt 
-               Pattern REF_CFFT_STEP_640_F32_ID : ComplexFFTSamples_Step_640_115_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_720_F32_ID : ComplexInputSamples_Step_720_116_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_720_F32_ID : ComplexInputIFFTSamples_Step_720_116_f32.txt 
-               Pattern REF_CFFT_STEP_720_F32_ID : ComplexFFTSamples_Step_720_116_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_768_F32_ID : ComplexInputSamples_Step_768_117_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_768_F32_ID : ComplexInputIFFTSamples_Step_768_117_f32.txt 
-               Pattern REF_CFFT_STEP_768_F32_ID : ComplexFFTSamples_Step_768_117_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_800_F32_ID : ComplexInputSamples_Step_800_118_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_800_F32_ID : ComplexInputIFFTSamples_Step_800_118_f32.txt 
-               Pattern REF_CFFT_STEP_800_F32_ID : ComplexFFTSamples_Step_800_118_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_864_F32_ID : ComplexInputSamples_Step_864_119_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_864_F32_ID : ComplexInputIFFTSamples_Step_864_119_f32.txt 
-               Pattern REF_CFFT_STEP_864_F32_ID : ComplexFFTSamples_Step_864_119_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_900_F32_ID : ComplexInputSamples_Step_900_120_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_900_F32_ID : ComplexInputIFFTSamples_Step_900_120_f32.txt 
-               Pattern REF_CFFT_STEP_900_F32_ID : ComplexFFTSamples_Step_900_120_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_960_F32_ID : ComplexInputSamples_Step_960_121_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_960_F32_ID : ComplexInputIFFTSamples_Step_960_121_f32.txt 
-               Pattern REF_CFFT_STEP_960_F32_ID : ComplexFFTSamples_Step_960_121_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_1000_F32_ID : ComplexInputSamples_Step_1000_122_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_1000_F32_ID : ComplexInputIFFTSamples_Step_1000_122_f32.txt 
-               Pattern REF_CFFT_STEP_1000_F32_ID : ComplexFFTSamples_Step_1000_122_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_1024_F32_ID : ComplexInputSamples_Step_1024_123_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_1024_F32_ID : ComplexInputIFFTSamples_Step_1024_123_f32.txt 
-               Pattern REF_CFFT_STEP_1024_F32_ID : ComplexFFTSamples_Step_1024_123_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_1080_F32_ID : ComplexInputSamples_Step_1080_124_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_1080_F32_ID : ComplexInputIFFTSamples_Step_1080_124_f32.txt 
-               Pattern REF_CFFT_STEP_1080_F32_ID : ComplexFFTSamples_Step_1080_124_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_1152_F32_ID : ComplexInputSamples_Step_1152_125_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_1152_F32_ID : ComplexInputIFFTSamples_Step_1152_125_f32.txt 
-               Pattern REF_CFFT_STEP_1152_F32_ID : ComplexFFTSamples_Step_1152_125_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_1200_F32_ID : ComplexInputSamples_Step_1200_126_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_1200_F32_ID : ComplexInputIFFTSamples_Step_1200_126_f32.txt 
-               Pattern REF_CFFT_STEP_1200_F32_ID : ComplexFFTSamples_Step_1200_126_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_1280_F32_ID : ComplexInputSamples_Step_1280_127_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_1280_F32_ID : ComplexInputIFFTSamples_Step_1280_127_f32.txt 
-               Pattern REF_CFFT_STEP_1280_F32_ID : ComplexFFTSamples_Step_1280_127_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_1440_F32_ID : ComplexInputSamples_Step_1440_128_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_1440_F32_ID : ComplexInputIFFTSamples_Step_1440_128_f32.txt 
-               Pattern REF_CFFT_STEP_1440_F32_ID : ComplexFFTSamples_Step_1440_128_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_1500_F32_ID : ComplexInputSamples_Step_1500_129_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_1500_F32_ID : ComplexInputIFFTSamples_Step_1500_129_f32.txt 
-               Pattern REF_CFFT_STEP_1500_F32_ID : ComplexFFTSamples_Step_1500_129_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_1536_F32_ID : ComplexInputSamples_Step_1536_130_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_1536_F32_ID : ComplexInputIFFTSamples_Step_1536_130_f32.txt 
-               Pattern REF_CFFT_STEP_1536_F32_ID : ComplexFFTSamples_Step_1536_130_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_1600_F32_ID : ComplexInputSamples_Step_1600_131_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_1600_F32_ID : ComplexInputIFFTSamples_Step_1600_131_f32.txt 
-               Pattern REF_CFFT_STEP_1600_F32_ID : ComplexFFTSamples_Step_1600_131_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_1728_F32_ID : ComplexInputSamples_Step_1728_132_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_1728_F32_ID : ComplexInputIFFTSamples_Step_1728_132_f32.txt 
-               Pattern REF_CFFT_STEP_1728_F32_ID : ComplexFFTSamples_Step_1728_132_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_1800_F32_ID : ComplexInputSamples_Step_1800_133_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_1800_F32_ID : ComplexInputIFFTSamples_Step_1800_133_f32.txt 
-               Pattern REF_CFFT_STEP_1800_F32_ID : ComplexFFTSamples_Step_1800_133_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_1920_F32_ID : ComplexInputSamples_Step_1920_134_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_1920_F32_ID : ComplexInputIFFTSamples_Step_1920_134_f32.txt 
-               Pattern REF_CFFT_STEP_1920_F32_ID : ComplexFFTSamples_Step_1920_134_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_2000_F32_ID : ComplexInputSamples_Step_2000_135_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_2000_F32_ID : ComplexInputIFFTSamples_Step_2000_135_f32.txt 
-               Pattern REF_CFFT_STEP_2000_F32_ID : ComplexFFTSamples_Step_2000_135_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_2048_F32_ID : ComplexInputSamples_Step_2048_136_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_2048_F32_ID : ComplexInputIFFTSamples_Step_2048_136_f32.txt 
-               Pattern REF_CFFT_STEP_2048_F32_ID : ComplexFFTSamples_Step_2048_136_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_2160_F32_ID : ComplexInputSamples_Step_2160_137_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_2160_F32_ID : ComplexInputIFFTSamples_Step_2160_137_f32.txt 
-               Pattern REF_CFFT_STEP_2160_F32_ID : ComplexFFTSamples_Step_2160_137_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_2304_F32_ID : ComplexInputSamples_Step_2304_138_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_2304_F32_ID : ComplexInputIFFTSamples_Step_2304_138_f32.txt 
-               Pattern REF_CFFT_STEP_2304_F32_ID : ComplexFFTSamples_Step_2304_138_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_2400_F32_ID : ComplexInputSamples_Step_2400_139_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_2400_F32_ID : ComplexInputIFFTSamples_Step_2400_139_f32.txt 
-               Pattern REF_CFFT_STEP_2400_F32_ID : ComplexFFTSamples_Step_2400_139_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_2560_F32_ID : ComplexInputSamples_Step_2560_140_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_2560_F32_ID : ComplexInputIFFTSamples_Step_2560_140_f32.txt 
-               Pattern REF_CFFT_STEP_2560_F32_ID : ComplexFFTSamples_Step_2560_140_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_2700_F32_ID : ComplexInputSamples_Step_2700_141_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_2700_F32_ID : ComplexInputIFFTSamples_Step_2700_141_f32.txt 
-               Pattern REF_CFFT_STEP_2700_F32_ID : ComplexFFTSamples_Step_2700_141_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_2880_F32_ID : ComplexInputSamples_Step_2880_142_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_2880_F32_ID : ComplexInputIFFTSamples_Step_2880_142_f32.txt 
-               Pattern REF_CFFT_STEP_2880_F32_ID : ComplexFFTSamples_Step_2880_142_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_3000_F32_ID : ComplexInputSamples_Step_3000_143_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_3000_F32_ID : ComplexInputIFFTSamples_Step_3000_143_f32.txt 
-               Pattern REF_CFFT_STEP_3000_F32_ID : ComplexFFTSamples_Step_3000_143_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_3072_F32_ID : ComplexInputSamples_Step_3072_144_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_3072_F32_ID : ComplexInputIFFTSamples_Step_3072_144_f32.txt 
-               Pattern REF_CFFT_STEP_3072_F32_ID : ComplexFFTSamples_Step_3072_144_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_3200_F32_ID : ComplexInputSamples_Step_3200_145_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_3200_F32_ID : ComplexInputIFFTSamples_Step_3200_145_f32.txt 
-               Pattern REF_CFFT_STEP_3200_F32_ID : ComplexFFTSamples_Step_3200_145_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_3456_F32_ID : ComplexInputSamples_Step_3456_146_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_3456_F32_ID : ComplexInputIFFTSamples_Step_3456_146_f32.txt 
-               Pattern REF_CFFT_STEP_3456_F32_ID : ComplexFFTSamples_Step_3456_146_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_3600_F32_ID : ComplexInputSamples_Step_3600_147_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_3600_F32_ID : ComplexInputIFFTSamples_Step_3600_147_f32.txt 
-               Pattern REF_CFFT_STEP_3600_F32_ID : ComplexFFTSamples_Step_3600_147_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_3840_F32_ID : ComplexInputSamples_Step_3840_148_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_3840_F32_ID : ComplexInputIFFTSamples_Step_3840_148_f32.txt 
-               Pattern REF_CFFT_STEP_3840_F32_ID : ComplexFFTSamples_Step_3840_148_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_4000_F32_ID : ComplexInputSamples_Step_4000_149_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_4000_F32_ID : ComplexInputIFFTSamples_Step_4000_149_f32.txt 
-               Pattern REF_CFFT_STEP_4000_F32_ID : ComplexFFTSamples_Step_4000_149_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_4096_F32_ID : ComplexInputSamples_Step_4096_150_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_4096_F32_ID : ComplexInputIFFTSamples_Step_4096_150_f32.txt 
-               Pattern REF_CFFT_STEP_4096_F32_ID : ComplexFFTSamples_Step_4096_150_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_4320_F32_ID : ComplexInputSamples_Step_4320_151_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_4320_F32_ID : ComplexInputIFFTSamples_Step_4320_151_f32.txt 
-               Pattern REF_CFFT_STEP_4320_F32_ID : ComplexFFTSamples_Step_4320_151_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_4500_F32_ID : ComplexInputSamples_Step_4500_152_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_4500_F32_ID : ComplexInputIFFTSamples_Step_4500_152_f32.txt 
-               Pattern REF_CFFT_STEP_4500_F32_ID : ComplexFFTSamples_Step_4500_152_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_4608_F32_ID : ComplexInputSamples_Step_4608_153_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_4608_F32_ID : ComplexInputIFFTSamples_Step_4608_153_f32.txt 
-               Pattern REF_CFFT_STEP_4608_F32_ID : ComplexFFTSamples_Step_4608_153_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_4800_F32_ID : ComplexInputSamples_Step_4800_154_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_4800_F32_ID : ComplexInputIFFTSamples_Step_4800_154_f32.txt 
-               Pattern REF_CFFT_STEP_4800_F32_ID : ComplexFFTSamples_Step_4800_154_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_5120_F32_ID : ComplexInputSamples_Step_5120_155_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_5120_F32_ID : ComplexInputIFFTSamples_Step_5120_155_f32.txt 
-               Pattern REF_CFFT_STEP_5120_F32_ID : ComplexFFTSamples_Step_5120_155_f32.txt 
-
-               Pattern INPUTS_CFFT_STEP_5400_F32_ID : ComplexInputSamples_Step_5400_156_f32.txt 
-               Pattern INPUTS_CIFFT_STEP_5400_F32_ID : ComplexInputIFFTSamples_Step_5400_156_f32.txt 
-               Pattern REF_CFFT_STEP_5400_F32_ID : ComplexFFTSamples_Step_5400_156_f32.txt 
+               Pattern INPUTS_CFFT_NOISY_8192_F32_ID : ComplexInputSamples_Noisy_8192_79_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_8192_F32_ID : ComplexInputIFFTSamples_Noisy_8192_79_f32.txt 
+               Pattern REF_CFFT_NOISY_8192_F32_ID : ComplexFFTSamples_Noisy_8192_79_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_16384_F32_ID : ComplexInputSamples_Noisy_16384_80_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_16384_F32_ID : ComplexInputIFFTSamples_Noisy_16384_80_f32.txt 
+               Pattern REF_CFFT_NOISY_16384_F32_ID : ComplexFFTSamples_Noisy_16384_80_f32.txt 
+
+               Pattern INPUTS_CFFT_NOISY_32768_F32_ID : ComplexInputSamples_Noisy_32768_81_f32.txt 
+               Pattern INPUTS_CIFFT_NOISY_32768_F32_ID : ComplexInputIFFTSamples_Noisy_32768_81_f32.txt 
+               Pattern REF_CFFT_NOISY_32768_F32_ID : ComplexFFTSamples_Noisy_32768_81_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_20_F32_ID : ComplexInputSamples_Step_20_82_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_20_F32_ID : ComplexInputIFFTSamples_Step_20_82_f32.txt 
+               Pattern REF_CFFT_STEP_20_F32_ID : ComplexFFTSamples_Step_20_82_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_24_F32_ID : ComplexInputSamples_Step_24_83_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_24_F32_ID : ComplexInputIFFTSamples_Step_24_83_f32.txt 
+               Pattern REF_CFFT_STEP_24_F32_ID : ComplexFFTSamples_Step_24_83_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_32_F32_ID : ComplexInputSamples_Step_32_84_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_32_F32_ID : ComplexInputIFFTSamples_Step_32_84_f32.txt 
+               Pattern REF_CFFT_STEP_32_F32_ID : ComplexFFTSamples_Step_32_84_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_36_F32_ID : ComplexInputSamples_Step_36_85_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_36_F32_ID : ComplexInputIFFTSamples_Step_36_85_f32.txt 
+               Pattern REF_CFFT_STEP_36_F32_ID : ComplexFFTSamples_Step_36_85_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_40_F32_ID : ComplexInputSamples_Step_40_86_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_40_F32_ID : ComplexInputIFFTSamples_Step_40_86_f32.txt 
+               Pattern REF_CFFT_STEP_40_F32_ID : ComplexFFTSamples_Step_40_86_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_48_F32_ID : ComplexInputSamples_Step_48_87_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_48_F32_ID : ComplexInputIFFTSamples_Step_48_87_f32.txt 
+               Pattern REF_CFFT_STEP_48_F32_ID : ComplexFFTSamples_Step_48_87_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_60_F32_ID : ComplexInputSamples_Step_60_88_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_60_F32_ID : ComplexInputIFFTSamples_Step_60_88_f32.txt 
+               Pattern REF_CFFT_STEP_60_F32_ID : ComplexFFTSamples_Step_60_88_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_64_F32_ID : ComplexInputSamples_Step_64_89_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_64_F32_ID : ComplexInputIFFTSamples_Step_64_89_f32.txt 
+               Pattern REF_CFFT_STEP_64_F32_ID : ComplexFFTSamples_Step_64_89_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_72_F32_ID : ComplexInputSamples_Step_72_90_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_72_F32_ID : ComplexInputIFFTSamples_Step_72_90_f32.txt 
+               Pattern REF_CFFT_STEP_72_F32_ID : ComplexFFTSamples_Step_72_90_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_80_F32_ID : ComplexInputSamples_Step_80_91_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_80_F32_ID : ComplexInputIFFTSamples_Step_80_91_f32.txt 
+               Pattern REF_CFFT_STEP_80_F32_ID : ComplexFFTSamples_Step_80_91_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_96_F32_ID : ComplexInputSamples_Step_96_92_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_96_F32_ID : ComplexInputIFFTSamples_Step_96_92_f32.txt 
+               Pattern REF_CFFT_STEP_96_F32_ID : ComplexFFTSamples_Step_96_92_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_100_F32_ID : ComplexInputSamples_Step_100_93_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_100_F32_ID : ComplexInputIFFTSamples_Step_100_93_f32.txt 
+               Pattern REF_CFFT_STEP_100_F32_ID : ComplexFFTSamples_Step_100_93_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_108_F32_ID : ComplexInputSamples_Step_108_94_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_108_F32_ID : ComplexInputIFFTSamples_Step_108_94_f32.txt 
+               Pattern REF_CFFT_STEP_108_F32_ID : ComplexFFTSamples_Step_108_94_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_120_F32_ID : ComplexInputSamples_Step_120_95_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_120_F32_ID : ComplexInputIFFTSamples_Step_120_95_f32.txt 
+               Pattern REF_CFFT_STEP_120_F32_ID : ComplexFFTSamples_Step_120_95_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_128_F32_ID : ComplexInputSamples_Step_128_96_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_128_F32_ID : ComplexInputIFFTSamples_Step_128_96_f32.txt 
+               Pattern REF_CFFT_STEP_128_F32_ID : ComplexFFTSamples_Step_128_96_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_144_F32_ID : ComplexInputSamples_Step_144_97_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_144_F32_ID : ComplexInputIFFTSamples_Step_144_97_f32.txt 
+               Pattern REF_CFFT_STEP_144_F32_ID : ComplexFFTSamples_Step_144_97_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_160_F32_ID : ComplexInputSamples_Step_160_98_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_160_F32_ID : ComplexInputIFFTSamples_Step_160_98_f32.txt 
+               Pattern REF_CFFT_STEP_160_F32_ID : ComplexFFTSamples_Step_160_98_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_180_F32_ID : ComplexInputSamples_Step_180_99_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_180_F32_ID : ComplexInputIFFTSamples_Step_180_99_f32.txt 
+               Pattern REF_CFFT_STEP_180_F32_ID : ComplexFFTSamples_Step_180_99_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_192_F32_ID : ComplexInputSamples_Step_192_100_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_192_F32_ID : ComplexInputIFFTSamples_Step_192_100_f32.txt 
+               Pattern REF_CFFT_STEP_192_F32_ID : ComplexFFTSamples_Step_192_100_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_200_F32_ID : ComplexInputSamples_Step_200_101_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_200_F32_ID : ComplexInputIFFTSamples_Step_200_101_f32.txt 
+               Pattern REF_CFFT_STEP_200_F32_ID : ComplexFFTSamples_Step_200_101_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_216_F32_ID : ComplexInputSamples_Step_216_102_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_216_F32_ID : ComplexInputIFFTSamples_Step_216_102_f32.txt 
+               Pattern REF_CFFT_STEP_216_F32_ID : ComplexFFTSamples_Step_216_102_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_240_F32_ID : ComplexInputSamples_Step_240_103_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_240_F32_ID : ComplexInputIFFTSamples_Step_240_103_f32.txt 
+               Pattern REF_CFFT_STEP_240_F32_ID : ComplexFFTSamples_Step_240_103_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_256_F32_ID : ComplexInputSamples_Step_256_104_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_256_F32_ID : ComplexInputIFFTSamples_Step_256_104_f32.txt 
+               Pattern REF_CFFT_STEP_256_F32_ID : ComplexFFTSamples_Step_256_104_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_288_F32_ID : ComplexInputSamples_Step_288_105_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_288_F32_ID : ComplexInputIFFTSamples_Step_288_105_f32.txt 
+               Pattern REF_CFFT_STEP_288_F32_ID : ComplexFFTSamples_Step_288_105_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_300_F32_ID : ComplexInputSamples_Step_300_106_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_300_F32_ID : ComplexInputIFFTSamples_Step_300_106_f32.txt 
+               Pattern REF_CFFT_STEP_300_F32_ID : ComplexFFTSamples_Step_300_106_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_320_F32_ID : ComplexInputSamples_Step_320_107_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_320_F32_ID : ComplexInputIFFTSamples_Step_320_107_f32.txt 
+               Pattern REF_CFFT_STEP_320_F32_ID : ComplexFFTSamples_Step_320_107_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_360_F32_ID : ComplexInputSamples_Step_360_108_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_360_F32_ID : ComplexInputIFFTSamples_Step_360_108_f32.txt 
+               Pattern REF_CFFT_STEP_360_F32_ID : ComplexFFTSamples_Step_360_108_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_384_F32_ID : ComplexInputSamples_Step_384_109_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_384_F32_ID : ComplexInputIFFTSamples_Step_384_109_f32.txt 
+               Pattern REF_CFFT_STEP_384_F32_ID : ComplexFFTSamples_Step_384_109_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_400_F32_ID : ComplexInputSamples_Step_400_110_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_400_F32_ID : ComplexInputIFFTSamples_Step_400_110_f32.txt 
+               Pattern REF_CFFT_STEP_400_F32_ID : ComplexFFTSamples_Step_400_110_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_432_F32_ID : ComplexInputSamples_Step_432_111_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_432_F32_ID : ComplexInputIFFTSamples_Step_432_111_f32.txt 
+               Pattern REF_CFFT_STEP_432_F32_ID : ComplexFFTSamples_Step_432_111_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_480_F32_ID : ComplexInputSamples_Step_480_112_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_480_F32_ID : ComplexInputIFFTSamples_Step_480_112_f32.txt 
+               Pattern REF_CFFT_STEP_480_F32_ID : ComplexFFTSamples_Step_480_112_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_500_F32_ID : ComplexInputSamples_Step_500_113_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_500_F32_ID : ComplexInputIFFTSamples_Step_500_113_f32.txt 
+               Pattern REF_CFFT_STEP_500_F32_ID : ComplexFFTSamples_Step_500_113_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_512_F32_ID : ComplexInputSamples_Step_512_114_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_512_F32_ID : ComplexInputIFFTSamples_Step_512_114_f32.txt 
+               Pattern REF_CFFT_STEP_512_F32_ID : ComplexFFTSamples_Step_512_114_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_540_F32_ID : ComplexInputSamples_Step_540_115_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_540_F32_ID : ComplexInputIFFTSamples_Step_540_115_f32.txt 
+               Pattern REF_CFFT_STEP_540_F32_ID : ComplexFFTSamples_Step_540_115_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_576_F32_ID : ComplexInputSamples_Step_576_116_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_576_F32_ID : ComplexInputIFFTSamples_Step_576_116_f32.txt 
+               Pattern REF_CFFT_STEP_576_F32_ID : ComplexFFTSamples_Step_576_116_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_600_F32_ID : ComplexInputSamples_Step_600_117_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_600_F32_ID : ComplexInputIFFTSamples_Step_600_117_f32.txt 
+               Pattern REF_CFFT_STEP_600_F32_ID : ComplexFFTSamples_Step_600_117_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_640_F32_ID : ComplexInputSamples_Step_640_118_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_640_F32_ID : ComplexInputIFFTSamples_Step_640_118_f32.txt 
+               Pattern REF_CFFT_STEP_640_F32_ID : ComplexFFTSamples_Step_640_118_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_720_F32_ID : ComplexInputSamples_Step_720_119_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_720_F32_ID : ComplexInputIFFTSamples_Step_720_119_f32.txt 
+               Pattern REF_CFFT_STEP_720_F32_ID : ComplexFFTSamples_Step_720_119_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_768_F32_ID : ComplexInputSamples_Step_768_120_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_768_F32_ID : ComplexInputIFFTSamples_Step_768_120_f32.txt 
+               Pattern REF_CFFT_STEP_768_F32_ID : ComplexFFTSamples_Step_768_120_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_800_F32_ID : ComplexInputSamples_Step_800_121_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_800_F32_ID : ComplexInputIFFTSamples_Step_800_121_f32.txt 
+               Pattern REF_CFFT_STEP_800_F32_ID : ComplexFFTSamples_Step_800_121_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_864_F32_ID : ComplexInputSamples_Step_864_122_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_864_F32_ID : ComplexInputIFFTSamples_Step_864_122_f32.txt 
+               Pattern REF_CFFT_STEP_864_F32_ID : ComplexFFTSamples_Step_864_122_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_900_F32_ID : ComplexInputSamples_Step_900_123_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_900_F32_ID : ComplexInputIFFTSamples_Step_900_123_f32.txt 
+               Pattern REF_CFFT_STEP_900_F32_ID : ComplexFFTSamples_Step_900_123_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_960_F32_ID : ComplexInputSamples_Step_960_124_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_960_F32_ID : ComplexInputIFFTSamples_Step_960_124_f32.txt 
+               Pattern REF_CFFT_STEP_960_F32_ID : ComplexFFTSamples_Step_960_124_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_1000_F32_ID : ComplexInputSamples_Step_1000_125_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_1000_F32_ID : ComplexInputIFFTSamples_Step_1000_125_f32.txt 
+               Pattern REF_CFFT_STEP_1000_F32_ID : ComplexFFTSamples_Step_1000_125_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_1024_F32_ID : ComplexInputSamples_Step_1024_126_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_1024_F32_ID : ComplexInputIFFTSamples_Step_1024_126_f32.txt 
+               Pattern REF_CFFT_STEP_1024_F32_ID : ComplexFFTSamples_Step_1024_126_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_1080_F32_ID : ComplexInputSamples_Step_1080_127_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_1080_F32_ID : ComplexInputIFFTSamples_Step_1080_127_f32.txt 
+               Pattern REF_CFFT_STEP_1080_F32_ID : ComplexFFTSamples_Step_1080_127_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_1152_F32_ID : ComplexInputSamples_Step_1152_128_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_1152_F32_ID : ComplexInputIFFTSamples_Step_1152_128_f32.txt 
+               Pattern REF_CFFT_STEP_1152_F32_ID : ComplexFFTSamples_Step_1152_128_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_1200_F32_ID : ComplexInputSamples_Step_1200_129_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_1200_F32_ID : ComplexInputIFFTSamples_Step_1200_129_f32.txt 
+               Pattern REF_CFFT_STEP_1200_F32_ID : ComplexFFTSamples_Step_1200_129_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_1280_F32_ID : ComplexInputSamples_Step_1280_130_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_1280_F32_ID : ComplexInputIFFTSamples_Step_1280_130_f32.txt 
+               Pattern REF_CFFT_STEP_1280_F32_ID : ComplexFFTSamples_Step_1280_130_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_1440_F32_ID : ComplexInputSamples_Step_1440_131_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_1440_F32_ID : ComplexInputIFFTSamples_Step_1440_131_f32.txt 
+               Pattern REF_CFFT_STEP_1440_F32_ID : ComplexFFTSamples_Step_1440_131_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_1500_F32_ID : ComplexInputSamples_Step_1500_132_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_1500_F32_ID : ComplexInputIFFTSamples_Step_1500_132_f32.txt 
+               Pattern REF_CFFT_STEP_1500_F32_ID : ComplexFFTSamples_Step_1500_132_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_1536_F32_ID : ComplexInputSamples_Step_1536_133_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_1536_F32_ID : ComplexInputIFFTSamples_Step_1536_133_f32.txt 
+               Pattern REF_CFFT_STEP_1536_F32_ID : ComplexFFTSamples_Step_1536_133_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_1600_F32_ID : ComplexInputSamples_Step_1600_134_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_1600_F32_ID : ComplexInputIFFTSamples_Step_1600_134_f32.txt 
+               Pattern REF_CFFT_STEP_1600_F32_ID : ComplexFFTSamples_Step_1600_134_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_1728_F32_ID : ComplexInputSamples_Step_1728_135_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_1728_F32_ID : ComplexInputIFFTSamples_Step_1728_135_f32.txt 
+               Pattern REF_CFFT_STEP_1728_F32_ID : ComplexFFTSamples_Step_1728_135_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_1800_F32_ID : ComplexInputSamples_Step_1800_136_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_1800_F32_ID : ComplexInputIFFTSamples_Step_1800_136_f32.txt 
+               Pattern REF_CFFT_STEP_1800_F32_ID : ComplexFFTSamples_Step_1800_136_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_1920_F32_ID : ComplexInputSamples_Step_1920_137_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_1920_F32_ID : ComplexInputIFFTSamples_Step_1920_137_f32.txt 
+               Pattern REF_CFFT_STEP_1920_F32_ID : ComplexFFTSamples_Step_1920_137_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_2000_F32_ID : ComplexInputSamples_Step_2000_138_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_2000_F32_ID : ComplexInputIFFTSamples_Step_2000_138_f32.txt 
+               Pattern REF_CFFT_STEP_2000_F32_ID : ComplexFFTSamples_Step_2000_138_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_2048_F32_ID : ComplexInputSamples_Step_2048_139_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_2048_F32_ID : ComplexInputIFFTSamples_Step_2048_139_f32.txt 
+               Pattern REF_CFFT_STEP_2048_F32_ID : ComplexFFTSamples_Step_2048_139_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_2160_F32_ID : ComplexInputSamples_Step_2160_140_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_2160_F32_ID : ComplexInputIFFTSamples_Step_2160_140_f32.txt 
+               Pattern REF_CFFT_STEP_2160_F32_ID : ComplexFFTSamples_Step_2160_140_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_2304_F32_ID : ComplexInputSamples_Step_2304_141_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_2304_F32_ID : ComplexInputIFFTSamples_Step_2304_141_f32.txt 
+               Pattern REF_CFFT_STEP_2304_F32_ID : ComplexFFTSamples_Step_2304_141_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_2400_F32_ID : ComplexInputSamples_Step_2400_142_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_2400_F32_ID : ComplexInputIFFTSamples_Step_2400_142_f32.txt 
+               Pattern REF_CFFT_STEP_2400_F32_ID : ComplexFFTSamples_Step_2400_142_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_2560_F32_ID : ComplexInputSamples_Step_2560_143_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_2560_F32_ID : ComplexInputIFFTSamples_Step_2560_143_f32.txt 
+               Pattern REF_CFFT_STEP_2560_F32_ID : ComplexFFTSamples_Step_2560_143_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_2700_F32_ID : ComplexInputSamples_Step_2700_144_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_2700_F32_ID : ComplexInputIFFTSamples_Step_2700_144_f32.txt 
+               Pattern REF_CFFT_STEP_2700_F32_ID : ComplexFFTSamples_Step_2700_144_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_2880_F32_ID : ComplexInputSamples_Step_2880_145_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_2880_F32_ID : ComplexInputIFFTSamples_Step_2880_145_f32.txt 
+               Pattern REF_CFFT_STEP_2880_F32_ID : ComplexFFTSamples_Step_2880_145_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_3000_F32_ID : ComplexInputSamples_Step_3000_146_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_3000_F32_ID : ComplexInputIFFTSamples_Step_3000_146_f32.txt 
+               Pattern REF_CFFT_STEP_3000_F32_ID : ComplexFFTSamples_Step_3000_146_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_3072_F32_ID : ComplexInputSamples_Step_3072_147_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_3072_F32_ID : ComplexInputIFFTSamples_Step_3072_147_f32.txt 
+               Pattern REF_CFFT_STEP_3072_F32_ID : ComplexFFTSamples_Step_3072_147_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_3200_F32_ID : ComplexInputSamples_Step_3200_148_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_3200_F32_ID : ComplexInputIFFTSamples_Step_3200_148_f32.txt 
+               Pattern REF_CFFT_STEP_3200_F32_ID : ComplexFFTSamples_Step_3200_148_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_3456_F32_ID : ComplexInputSamples_Step_3456_149_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_3456_F32_ID : ComplexInputIFFTSamples_Step_3456_149_f32.txt 
+               Pattern REF_CFFT_STEP_3456_F32_ID : ComplexFFTSamples_Step_3456_149_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_3600_F32_ID : ComplexInputSamples_Step_3600_150_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_3600_F32_ID : ComplexInputIFFTSamples_Step_3600_150_f32.txt 
+               Pattern REF_CFFT_STEP_3600_F32_ID : ComplexFFTSamples_Step_3600_150_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_3840_F32_ID : ComplexInputSamples_Step_3840_151_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_3840_F32_ID : ComplexInputIFFTSamples_Step_3840_151_f32.txt 
+               Pattern REF_CFFT_STEP_3840_F32_ID : ComplexFFTSamples_Step_3840_151_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_4000_F32_ID : ComplexInputSamples_Step_4000_152_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_4000_F32_ID : ComplexInputIFFTSamples_Step_4000_152_f32.txt 
+               Pattern REF_CFFT_STEP_4000_F32_ID : ComplexFFTSamples_Step_4000_152_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_4096_F32_ID : ComplexInputSamples_Step_4096_153_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_4096_F32_ID : ComplexInputIFFTSamples_Step_4096_153_f32.txt 
+               Pattern REF_CFFT_STEP_4096_F32_ID : ComplexFFTSamples_Step_4096_153_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_4320_F32_ID : ComplexInputSamples_Step_4320_154_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_4320_F32_ID : ComplexInputIFFTSamples_Step_4320_154_f32.txt 
+               Pattern REF_CFFT_STEP_4320_F32_ID : ComplexFFTSamples_Step_4320_154_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_4500_F32_ID : ComplexInputSamples_Step_4500_155_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_4500_F32_ID : ComplexInputIFFTSamples_Step_4500_155_f32.txt 
+               Pattern REF_CFFT_STEP_4500_F32_ID : ComplexFFTSamples_Step_4500_155_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_4608_F32_ID : ComplexInputSamples_Step_4608_156_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_4608_F32_ID : ComplexInputIFFTSamples_Step_4608_156_f32.txt 
+               Pattern REF_CFFT_STEP_4608_F32_ID : ComplexFFTSamples_Step_4608_156_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_4800_F32_ID : ComplexInputSamples_Step_4800_157_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_4800_F32_ID : ComplexInputIFFTSamples_Step_4800_157_f32.txt 
+               Pattern REF_CFFT_STEP_4800_F32_ID : ComplexFFTSamples_Step_4800_157_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_5120_F32_ID : ComplexInputSamples_Step_5120_158_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_5120_F32_ID : ComplexInputIFFTSamples_Step_5120_158_f32.txt 
+               Pattern REF_CFFT_STEP_5120_F32_ID : ComplexFFTSamples_Step_5120_158_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_5400_F32_ID : ComplexInputSamples_Step_5400_159_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_5400_F32_ID : ComplexInputIFFTSamples_Step_5400_159_f32.txt 
+               Pattern REF_CFFT_STEP_5400_F32_ID : ComplexFFTSamples_Step_5400_159_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_8192_F32_ID : ComplexInputSamples_Step_8192_160_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_8192_F32_ID : ComplexInputIFFTSamples_Step_8192_160_f32.txt 
+               Pattern REF_CFFT_STEP_8192_F32_ID : ComplexFFTSamples_Step_8192_160_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_16384_F32_ID : ComplexInputSamples_Step_16384_161_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_16384_F32_ID : ComplexInputIFFTSamples_Step_16384_161_f32.txt 
+               Pattern REF_CFFT_STEP_16384_F32_ID : ComplexFFTSamples_Step_16384_161_f32.txt 
+
+               Pattern INPUTS_CFFT_STEP_32768_F32_ID : ComplexInputSamples_Step_32768_162_f32.txt 
+               Pattern INPUTS_CIFFT_STEP_32768_F32_ID : ComplexInputIFFTSamples_Step_32768_162_f32.txt 
+               Pattern REF_CFFT_STEP_32768_F32_ID : ComplexFFTSamples_Step_32768_162_f32.txt 
 
                Output  OUTPUT_CFFT_F32_ID : ComplexFFTSamples
 
@@ -716,9 +740,12 @@ group Root {
                   cfft_noisy_4320_f32:test_cfft_f32
                   cfft_noisy_4500_f32:test_cfft_f32
                   cfft_noisy_4608_f32:test_cfft_f32
-                  disabled{cfft_noisy_4800_f32:test_cfft_f32}
-                  disabled{cfft_noisy_5120_f32:test_cfft_f32}
-                  disabled{cfft_noisy_5400_f32:test_cfft_f32}
+                  cfft_noisy_4800_f32:test_cfft_f32
+                  cfft_noisy_5120_f32:test_cfft_f32
+                  cfft_noisy_5400_f32:test_cfft_f32
+                  cfft_noisy_8192_f32:test_cfft_f32
+                  cfft_noisy_16384_f32:test_cfft_f32
+                  cfft_noisy_32768_f32:test_cfft_f32
                   cfft_step_20_f32:test_cfft_f32
                   cfft_step_24_f32:test_cfft_f32
                   cfft_step_32_f32:test_cfft_f32
@@ -794,9 +821,12 @@ group Root {
                   cfft_step_4320_f32:test_cfft_f32
                   cfft_step_4500_f32:test_cfft_f32
                   cfft_step_4608_f32:test_cfft_f32
-                  disabled{cfft_step_4800_f32:test_cfft_f32}
-                  disabled{cfft_step_5120_f32:test_cfft_f32}
-                  disabled{cfft_step_5400_f32:test_cfft_f32}
+                  cfft_step_4800_f32:test_cfft_f32
+                  cfft_step_5120_f32:test_cfft_f32
+                  cfft_step_5400_f32:test_cfft_f32
+                  cfft_step_8192_f32:test_cfft_f32
+                  cfft_step_16384_f32:test_cfft_f32
+                  cfft_step_32768_f32:test_cfft_f32
                   cifft_noisy_20_f32:test_cfft_f32
                   cifft_noisy_24_f32:test_cfft_f32
                   cifft_noisy_32_f32:test_cfft_f32
@@ -872,9 +902,12 @@ group Root {
                   cifft_noisy_4320_f32:test_cfft_f32
                   cifft_noisy_4500_f32:test_cfft_f32
                   cifft_noisy_4608_f32:test_cfft_f32
-                  disabled{cifft_noisy_4800_f32:test_cfft_f32}
-                  disabled{cifft_noisy_5120_f32:test_cfft_f32}
-                  disabled{cifft_noisy_5400_f32:test_cfft_f32}
+                  cifft_noisy_4800_f32:test_cfft_f32
+                  cifft_noisy_5120_f32:test_cfft_f32
+                  cifft_noisy_5400_f32:test_cfft_f32
+                  cifft_noisy_8192_f32:test_cfft_f32
+                  cifft_noisy_16384_f32:test_cfft_f32
+                  cifft_noisy_32768_f32:test_cfft_f32
                   cifft_step_20_f32:test_cfft_f32
                   cifft_step_24_f32:test_cfft_f32
                   cifft_step_32_f32:test_cfft_f32
@@ -950,9 +983,12 @@ group Root {
                   cifft_step_4320_f32:test_cfft_f32
                   cifft_step_4500_f32:test_cfft_f32
                   cifft_step_4608_f32:test_cfft_f32
-                  disabled{cifft_step_4800_f32:test_cfft_f32}
-                  disabled{cifft_step_5120_f32:test_cfft_f32}
-                  disabled{cifft_step_5400_f32:test_cfft_f32}
+                  cifft_step_4800_f32:test_cfft_f32
+                  cifft_step_5120_f32:test_cfft_f32
+                  cifft_step_5400_f32:test_cfft_f32
+                  cifft_step_8192_f32:test_cfft_f32
+                  cifft_step_16384_f32:test_cfft_f32
+                  cifft_step_32768_f32:test_cfft_f32
                }
            }
             suite Transform Complex F16 {

@@ -39,7 +39,7 @@ namespace Client{
 class ArrayMemory:public Client::Memory
 {
    public:
-    ArrayMemory(char* ptr, size_t bufferLength,int aligned, bool tail);
+    ArrayMemory(char* ptr, size_t bufferLength,size_t aligned, bool tail);
     ArrayMemory(char* ptr, size_t bufferLength);
     virtual char *NewBuffer(size_t length);
     virtual void FreeMemory();
@@ -53,7 +53,7 @@ class ArrayMemory:public Client::Memory
      size_t m_bufferLength;
      // Alignment required for all buffers
      // (in future may be a setting per bufer)
-     int alignSize;
+     size_t alignSize;
      // True if some padding must be added after buffers
      bool tail=true;
      // Current pointer to the memory 
