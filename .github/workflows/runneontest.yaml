@@ -73,12 +73,12 @@ jobs:
           cmake .. 
 
           python ../processTests.py -p ../Patterns -d ../Parameters -gen .. -e -f ../Output.pickle
-          make 
+          ninja 
           ./test > result.txt
           python ../processResult.py -e -f ../Output.pickle -r result.txt -html > result.html 
 
           python ../processTests.py -p ../Patterns -d ../Parameters -gen .. -e -f ../Output_f16.pickle
-          make 
+          ninja 
           ./test > result_f16.txt
           python ../processResult.py -e -f ../Output_f16.pickle -r result_f16.txt -html > result_f16.html 
 
