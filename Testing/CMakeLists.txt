@@ -157,49 +157,77 @@ target_include_directories(test PUBLIC FrameworkInclude
 
 target_compile_definitions(test PUBLIC EMBEDDED NOTIMING)
 
-target_compile_options(test PUBLIC -Wsign-compare 
-        -Wdouble-promotion 
-        -DNDEBUG 
-        -Wall 
-        -Wextra  
-        -O3 
-        -Wno-packed 
-        -Wno-missing-variable-declarations  
-        -Wno-missing-noreturn 
-        -Wno-sign-conversion 
-        -Wno-nonportable-include-path 
-        -Wno-reserved-id-macro 
-        -Wno-unused-macros 
-        -Wno-documentation-unknown-command 
-        -Wno-documentation 
-        -Wno-parentheses-equality 
-        -Wno-reserved-identifier
+target_compile_options(test PUBLIC -Wsign-compare
+        -Wdouble-promotion
+        -DNDEBUG
+        -Wall
+	-Wextra
+        -O3
+	-Wno-packed
+        -Wno-missing-noreturn
+        -Wno-sign-conversion
+        -Wno-unused-macros
         -ffunction-sections
         -fdata-sections
         -march=armv8.2-a+fp16fml
         )
 
+
+if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+
 target_compile_options(CMSISDSP PRIVATE -Wsign-compare 
-        -Wdouble-promotion 
-        -DNDEBUG 
-        -Wall 
-        -Wextra  
-        -O3 
-        -ffast-math
-        -Wno-packed 
-        -Wno-missing-variable-declarations 
-        -Wno-missing-noreturn 
-        -Wno-sign-conversion 
-        -Wno-nonportable-include-path 
-        -Wno-reserved-id-macro 
-        -Wno-unused-macros 
-        -Wno-documentation-unknown-command 
-        -Wno-documentation 
-        -Wno-parentheses-equality 
-        -Wno-reserved-identifier
-        -ffunction-sections
-        -fdata-sections
-        -march=armv8.2-a+fp16fml)
+ -Wdouble-promotion 
+ -Wfloat-conversion 
+ -DNDEBUG 
+ -Wall 
+ -Wextra  
+ -std=c11 
+ -O3
+ -ffast-math
+ -Wno-packed 
+ -Wno-missing-prototypes 
+ -Wno-missing-noreturn 
+ -Wno-sign-conversion 
+ -Wno-unused-macros 
+ -flax-vector-conversions
+ -Wno-maybe-uninitialized
+ -ffunction-sections
+ -fdata-sections
+ -march=armv8.2-a+fp16fml
+ -Wmissing-prototypes
+ )
+
+else()
+
+target_compile_option(CMSISDSP PRIVATE -Wsign-compare
+  -Wdouble-promotion
+  -Wfloat-conversion
+  -DNDEBUG
+  -Wall
+  -Wextra
+  -Werror
+  -std=c11
+  -O3
+  -ffast-math
+  -Wno-packed
+  -Wno-missing-variable-declarations
+  -Wno-missing-prototypes
+  -Wno-missing-noreturn
+  -Wno-sign-conversion
+  -Wno-nonportable-include-path
+  -Wno-reserved-id-macro
+  -Wno-unused-macros
+  -Wno-documentation-unknown-command
+  -Wno-documentation
+  -Wno-parentheses-equality
+  -Wno-reserved-identifier
+  -ffunction-sections
+  -fdata-sections
+  -march=armv8.2-a+fp16fml
+  -Wmissing-prototypes
+)
+
+endif()
 
 target_link_libraries(test PUBLIC CMSISDSP)
 
