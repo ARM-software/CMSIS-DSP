@@ -70,7 +70,7 @@ jobs:
           cd Testing/build
           echo "Running tests"
 
-          cmake .. 
+          cmake -G "Ninja" .. 
 
           python ../processTests.py -p ../Patterns -d ../Parameters -gen .. -e -f ../Output.pickle
           ninja 
