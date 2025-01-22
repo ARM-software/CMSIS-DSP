@@ -58,10 +58,12 @@ jobs:
 
           echo "Preprocess test description"
           python preprocess.py -f desc.txt -o Output.pickle
-          python preprocess.py  -f desc_f16.txt -o Output_f16.pickle
+          python preprocess.py -f desc_neon.txt -o Output_neon.pickle
+          python preprocess.py -f desc_f16.txt -o Output_f16.pickle
 
           echo "Generate missing CPP headers"
           python processTests.py -gen . -p Patterns -d Parameters -f Output.pickle -e
+          python processTests.py -gen . -p Patterns -d Parameters -f Output_neon.pickle -e
           python processTests.py -gen . -p Patterns -d Parameters -f Output_f16.pickle -e
 
 
@@ -77,6 +79,12 @@ jobs:
           ./test > result.txt
           python ../processResult.py -e -f ../Output.pickle -r result.txt -html > result.html 
 
+          python ../processTests.py -p ../Patterns -d ../Parameters -gen .. -e -f ../Output_neon.pickle
+          ninja 
+          ./test > result_neon.txt
+          python ../processResult.py -e -f ../Output_neon.pickle -r result_neon.txt -html > result_neon.html 
+
+
           python ../processTests.py -p ../Patterns -d ../Parameters -gen .. -e -f ../Output_f16.pickle
           ninja 
           ./test > result_f16.txt
@@ -89,6 +97,7 @@ jobs:
           name: neon-test-report
           path: |
              Testing/build/result.html
+             Testing/build/result_neon.html
              Testing/build/result_f16.html
 
       
@@ -98,5 +107,6 @@ jobs:
           
           echo "Checking output..."
           test "$(grep "FAILED" result.html | wc -l)" -eq 0
+          test "$(grep "FAILED" result_neon.html | wc -l)" -eq 0
           test "$(grep "FAILED" result_f16.html | wc -l)" -eq 0
 
