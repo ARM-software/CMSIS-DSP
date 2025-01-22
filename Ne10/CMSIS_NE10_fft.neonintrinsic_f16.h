@@ -119,14 +119,14 @@
 #define CONST_TW_81   0.70710678f16
 #define CONST_TW_81N -0.70710678f16
 
-const static float16x4_t Q_TW_81    = VDUPQ_N_F16(CONST_TW_81 );
-const static float16x4_t Q_TW_81N   = VDUPQ_N_F16(CONST_TW_81N);
+static const float16x4_t Q_TW_81    = VDUPQ_N_F16(CONST_TW_81 );
+static const float16x4_t Q_TW_81N   = VDUPQ_N_F16(CONST_TW_81N);
 
 #define DIV_TW81   1.4142136f16
 #define DIV_TW81N -1.4142136f16
 
-const static float16x4_t DIV_TW81_NEON  = VDUPQ_N_F16(DIV_TW81);
-const static float16x4_t DIV_TW81N_NEON = VDUPQ_N_F16(DIV_TW81N);
+static const float16x4_t DIV_TW81_NEON  = VDUPQ_N_F16(DIV_TW81);
+static const float16x4_t DIV_TW81N_NEON = VDUPQ_N_F16(DIV_TW81N);
 
 #define NE10_RADIX8x4_R2C_NEON_KERNEL_S1(Q_OUT,Q_IN) do {   \
         Q_OUT ## 0 = vadd_f16 (Q_IN ## 0, Q_IN ## 4);      \

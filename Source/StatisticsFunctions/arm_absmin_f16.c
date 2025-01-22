@@ -145,7 +145,7 @@ ARM_DSP_ATTRIBUTE void arm_absmin_f16(
         float16_t * pResult,
         uint32_t * pIndex)
 {
-        float16_t cur_absmin, out;                     /* Temporary variables to store the output value. */\
+        _Float16 cur_absmin, out;                     /* Temporary variables to store the output value. */\
         uint32_t blkCnt, outIndex;                     /* Loop counter */                                   \
         uint32_t index;                                /* index of maximum value */                         \
                                                                                                             \

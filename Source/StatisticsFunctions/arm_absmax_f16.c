@@ -143,7 +143,7 @@ ARM_DSP_ATTRIBUTE void arm_absmax_f16(
         float16_t * pResult,
         uint32_t * pIndex)
 {
-        float16_t cur_absmax, out;                     /* Temporary variables to store the output value. */\
+        _Float16 cur_absmax, out;                     /* Temporary variables to store the output value. */\
         uint32_t blkCnt, outIndex;                     /* Loop counter */                                   \
         uint32_t index;                                /* index of maximum value */                         \
                                                                                                             \

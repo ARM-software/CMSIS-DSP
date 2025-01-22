@@ -51,7 +51,7 @@ extern "C"
                                         \
   for(_w=0;_w < nb; _w++)                  \
   {                                     \
-     *data *= CAST v;                   \
+     *data = CAST *data * CAST v;                   \
      data += _numCols;                   \
   }                                     \
 }
@@ -178,54 +178,63 @@ extern "C"
   }                                    \
 }
 
-#define SCALE_ROW_F16(A,COL,v,i)       \
-{                                      \
+#define SCALE_ROW_F16(A,COL,v,i)        \
+{                                       \
   int32_t _w;                           \
-  float16_t *data = (A)->pData;        \
+  float16_t *data = (A)->pData;         \
   const int32_t _numCols = (A)->numCols;\
   const int32_t nb = _numCols-(COL);    \
-                                       \
+                                        \
   data += i*_numCols + (COL);           \
-                                       \
-  for(_w=0;_w < nb; _w++)                 \
-  {                                    \
-     *data++ *= (_Float16)v;           \
-  }                                    \
+                                        \
+  _Float16 sum;                         \
+  for(_w=0;_w < nb; _w++)               \
+  {                                     \
+     sum = *data;                       \
+     sum *= (_Float16)v;                \
+     *data++ = sum;                     \
+  }                                     \
 }
 
 
-#define MAC_ROW_F16(COL,A,i,v,B,j)                \
-{                                                 \
-  int32_t _w;                                      \
-  float16_t *dataA = (A)->pData;                  \
-  float16_t *dataB = (B)->pData;                  \
-  const int32_t _numCols = (A)->numCols;           \
-  const int32_t nb = _numCols-(COL);               \
-                                                  \
-  dataA += i*_numCols + (COL);                     \
-  dataB += j*_numCols + (COL);                     \
-                                                  \
-  for(_w=0;_w < nb; _w++)                            \
-  {                                               \
-     *dataA++ += (_Float16)v * (_Float16)*dataB++;\
-  }                                               \
+#define MAC_ROW_F16(COL,A,i,v,B,j)           \
+{                                            \
+  int32_t _w;                                \
+  float16_t *dataA = (A)->pData;             \
+  float16_t *dataB = (B)->pData;             \
+  const int32_t _numCols = (A)->numCols;     \
+  const int32_t nb = _numCols-(COL);         \
+                                             \
+  dataA += i*_numCols + (COL);               \
+  dataB += j*_numCols + (COL);               \
+                                             \
+  _Float16 sum ;                             \
+  for(_w=0;_w < nb; _w++)                    \
+  {                                          \
+     sum = *dataA;                           \
+     sum += (_Float16)v * (_Float16)*dataB++;\
+     *dataA++ = sum;                         \
+  }                                          \
 }
 
-#define MAS_ROW_F16(COL,A,i,v,B,j)                \
-{                                                 \
-  int32_t _w;                                      \
-  float16_t *dataA = (A)->pData;                  \
-  float16_t *dataB = (B)->pData;                  \
-  const int32_t _numCols = (A)->numCols;           \
-  const int32_t nb = _numCols-(COL);               \
-                                                  \
-  dataA += i*_numCols + (COL);                     \
-  dataB += j*_numCols + (COL);                     \
-                                                  \
-  for(_w=0;_w < nb; _w++)                            \
-  {                                               \
-     *dataA++ -= (_Float16)v * (_Float16)*dataB++;\
-  }                                               \
+#define MAS_ROW_F16(COL,A,i,v,B,j)           \
+{                                            \
+  int32_t _w;                                \
+  float16_t *dataA = (A)->pData;             \
+  float16_t *dataB = (B)->pData;             \
+  const int32_t _numCols = (A)->numCols;     \
+  const int32_t nb = _numCols-(COL);         \
+                                             \
+  dataA += i*_numCols + (COL);               \
+  dataB += j*_numCols + (COL);               \
+                                             \
+  _Float16 sum ;                             \
+  for(_w=0;_w < nb; _w++)                    \
+  {                                          \
+     sum = *dataA;                           \
+     sum -= (_Float16)v * (_Float16)*dataB++;\
+     *dataA++ = sum;                         \
+  }                                          \
 }
 
 #endif /*defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)*/

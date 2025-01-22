@@ -67,7 +67,7 @@ __STATIC_FORCEINLINE float16_t arm_atan_limited_f16(float16_t x)
 __STATIC_FORCEINLINE float16_t arm_atan_f16(float16_t x)
 {
    int sign=0;
-   float16_t res=0.0f16;
+   _Float16 res=0.0f16;
 
    if ((_Float16)x < 0.0f16)
    {
@@ -91,7 +91,7 @@ __STATIC_FORCEINLINE float16_t arm_atan_f16(float16_t x)
      res = -(_Float16)res;
    }
 
-   return(res);
+   return((float16_t)res);
 }
 
 /**

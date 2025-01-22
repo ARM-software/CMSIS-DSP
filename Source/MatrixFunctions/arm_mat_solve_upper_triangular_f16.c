@@ -193,7 +193,7 @@ arm_status status;                             /* status of matrix inverse */
        {
             ut_row = &pUT[n*i];
 
-            float16_t tmp=a_col[i * cols];
+            _Float16 tmp=a_col[i * cols];
             
             for(k=n-1; k > i; k--)
             {

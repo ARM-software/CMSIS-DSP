@@ -203,7 +203,7 @@
        {
             lt_row = &pLT[n*i];
 
-            float16_t tmp=a_col[i * cols];
+            _Float16 tmp=a_col[i * cols];
             
             for(k=0; k < i; k++)
             {

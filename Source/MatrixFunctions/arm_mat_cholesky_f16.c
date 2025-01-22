@@ -234,7 +234,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cholesky_f16(
        /* The division is done in float32 for accuracy reason and
        because doing it in f16 would not have any impact on the performances.
        */
-       invSqrtVj = 1.0f/sqrtf((float32_t)pG[i * n + i]);
+       invSqrtVj = (float16_t)(1.0f/sqrtf((float32_t)pG[i * n + i]));
        SCALE_COL_F16(pDst,i,invSqrtVj,i);
 
     }

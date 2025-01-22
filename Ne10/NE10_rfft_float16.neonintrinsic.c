@@ -1119,7 +1119,7 @@ static void arm_ne10_radix4_c2r_with_twiddles_first_stage_second_butterfly (
     NE10_INV_BUTTERFLY_TMP( 0,1, 1,3,
                             1,0, 3,2);
 
-    q_in3[3] *= - 1.0f;
+    q_in3[3] = (_Float16)q_in3[3] * (-(_Float16)1.0f16);
     NE10_INV_BUTTERFLY_TMP( 1,1, 0,3,
                             3,3, 1,1);
 
@@ -1132,7 +1132,7 @@ static void arm_ne10_radix4_c2r_with_twiddles_first_stage_second_butterfly (
     NE10_INV_BUTTERFLY_TMP( 2,1, 3,3,
                             1,2, 3,0);
 
-    q_in3[1] *= - 1.0f;
+    q_in3[1] = (_Float16)q_in3[1] * (-(_Float16)1.0f16);
     NE10_INV_BUTTERFLY_TMP( 3,1, 2,3,
                             3,1, 1,3);
 #undef NE10_INV_BUTTERFLY_TMP

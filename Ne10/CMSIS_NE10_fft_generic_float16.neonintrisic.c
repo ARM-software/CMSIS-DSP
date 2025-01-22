@@ -345,12 +345,12 @@ static inline void NE10_FFT8_FUC_NEON_F16 (CPLX out[8],
         const CPLX in[8])
 {
     CPLX s[8];
-    const static ne10_fft_cpx_float16_t TW_8[4] =
+    static const ne10_fft_cpx_float16_t TW_8[4] =
     {
-        {  1.00000,  0.00000 },
-        {  0.70711, -0.70711 },
-        {  0.00000, -1.00000 },
-        { -0.70711, -0.70711 },
+        {  1.00000f16,  0.00000f16 },
+        {  0.70711f16, -0.70711f16 },
+        {  0.00000f16, -1.00000f16 },
+        { -0.70711f16, -0.70711f16 },
     };
 
     // STAGE - 1
@@ -430,7 +430,7 @@ static void ne10_radix_2_butterfly_float16_neon_##ISFIRSTSTAGE##_##ISINVERSE##_#
     ne10_int32_t f_count;                                                       \
     ne10_int32_t m_count;                                                       \
                                                                                 \
-    const REAL one_by_fft_neon = NE10_REAL_DUP_NEON_F16 (0.25 / nfft);          \
+    const REAL one_by_fft_neon = NE10_REAL_DUP_NEON_F16 (0.25f16 / nfft);          \
                                                                                 \
     for (f_count = fstride; f_count > 0; f_count--)                             \
     {                                                                           \
@@ -509,7 +509,7 @@ static void ne10_radix_4_butterfly_float16_neon_##ISFIRSTSTAGE##_##ISINVERSE##_#
     ne10_int32_t f_count;                                                       \
     ne10_int32_t m_count;                                                       \
                                                                                 \
-    const REAL one_by_fft_neon = NE10_REAL_DUP_NEON_F16 (0.25 / nfft);          \
+    const REAL one_by_fft_neon = NE10_REAL_DUP_NEON_F16 (0.25f16 / nfft);          \
                                                                                 \
     for (f_count = fstride; f_count > 0; f_count--)                             \
     {                                                                           \
@@ -593,7 +593,7 @@ static void ne10_radix_3_butterfly_float16_neon_##ISFIRSTSTAGE##_##ISINVERSE##_#
     ne10_int32_t f_count;                                                       \
     ne10_int32_t m_count;                                                       \
                                                                                 \
-    const REAL one_by_fft_neon = NE10_REAL_DUP_NEON_F16 (0.25 / nfft);          \
+    const REAL one_by_fft_neon = NE10_REAL_DUP_NEON_F16 (0.25f16 / nfft);          \
     const float16x4_t TW_3IN_NEON_F16 = vdup_n_f16 (TW_3IN_F16);               \
     const float16x4_t HALF_NEON_F16 = vdup_n_f16 (0.5f16);                       \
                                                                                 \
@@ -693,7 +693,7 @@ static void ne10_radix_5_butterfly_float16_neon_##ISFIRSTSTAGE##_##ISINVERSE##_#
     ne10_int32_t f_count;                                                             \
     ne10_int32_t m_count;                                                             \
                                                                                       \
-    const REAL one_by_fft_neon = NE10_REAL_DUP_NEON_F16 (0.25 / nfft);                \
+    const REAL one_by_fft_neon = NE10_REAL_DUP_NEON_F16 (0.25f16 / nfft);                \
                                                                                       \
     for (f_count = fstride; f_count > 0; f_count--)                                   \
     {                                                                                 \
@@ -815,7 +815,7 @@ static void ne10_radix_8_butterfly_float16_neon_##ISFIRSTSTAGE##_##ISINVERSE##_#
     ne10_int32_t f_count;                                                       \
     ne10_int32_t m_count;                                                       \
                                                                                 \
-    const REAL one_by_fft_neon = NE10_REAL_DUP_NEON_F16 (0.25 / nfft);          \
+    const REAL one_by_fft_neon = NE10_REAL_DUP_NEON_F16 (0.25f16 / nfft);          \
                                                                                 \
     for (f_count = fstride; f_count > 0; f_count--)                             \
     {                                                                           \
