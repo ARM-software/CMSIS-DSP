@@ -63,32 +63,39 @@ jobs:
           python processTests.py -gen . -p Patterns -d Parameters -f Output_neon.pickle -e
           python processTests.py -gen . -p Patterns -d Parameters -f Output_f16.pickle -e
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
+          cd build
+
+          cmake -G "Unix Makefiles" .. 
+
+#      - name: Setup tmate session
+#        uses: mxschmitt/action-tmate@v3
         
-      - name: Execute
+      - name: Execute generic tests
         run: |
           cd Testing/build
-          echo "Running tests"
-
-          cmake -G "Ninja" .. 
 
           python ../processTests.py -p ../Patterns -d ../Parameters -gen .. -e -f ../Output.pickle
-          ninja 
+          make VERBOSE=1 
           ./test > result.txt
           python ../processResult.py -e -f ../Output.pickle -r result.txt -html > result.html 
 
+      - name: Execute neon specific C tests
+        run: |
+          cd Testing/build
+
           python ../processTests.py -p ../Patterns -d ../Parameters -gen .. -e -f ../Output_neon.pickle
-          ninja 
+          make 
           ./test > result_neon.txt
           python ../processResult.py -e -f ../Output_neon.pickle -r result_neon.txt -html > result_neon.html 
 
+      - name: Execute f16 C tests
+        run: |
+          cd Testing/build
 
           python ../processTests.py -p ../Patterns -d ../Parameters -gen .. -e -f ../Output_f16.pickle
-          ninja 
+          make 
           ./test > result_f16.txt
           python ../processResult.py -e -f ../Output_f16.pickle -r result_f16.txt -html > result_f16.html 
-
 
       - name: Upload test report
         uses: actions/upload-artifact@v4
