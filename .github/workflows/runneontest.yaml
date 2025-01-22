@@ -31,10 +31,7 @@ jobs:
           sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 60 --slave /usr/bin/g++ g++ /usr/bin/g++-11
           sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 40 --slave /usr/bin/g++ g++ /usr/bin/g++-12
           sudo update-alternatives --set gcc  /usr/bin/gcc-12
-#          sudo apt install gcc-11-aarch64-linux-gnu
 
-#      - name: Setup tmate session
-#        uses: mxschmitt/action-tmate@v3
 
       - name: Activate vcpkg
         uses: ARM-software/cmsis-actions/vcpkg@v1
@@ -66,7 +63,9 @@ jobs:
           python processTests.py -gen . -p Patterns -d Parameters -f Output_neon.pickle -e
           python processTests.py -gen . -p Patterns -d Parameters -f Output_f16.pickle -e
 
-
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        
       - name: Execute
         run: |
           cd Testing/build
