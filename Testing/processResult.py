@@ -185,7 +185,6 @@ class HTMLFormatter:
                 print("</tr>")
 
              if passed != 1:
-
                 print("<tr><td colspan=4><font color=\"red\">%s at line %d</font></td></tr>" % (errorStr(theError), theLine))
                 if (len(errorDetail)>0):
                    print("<tr><td colspan=4><font color=\"red\">" + errorDetail + "</font></td></tr>")
@@ -578,6 +577,7 @@ parser.add_argument('-o', nargs='?',type = str, default="Output", help="Output d
 parser.add_argument('-b', nargs='?',type = str, default="FullBenchmark", help="Full Benchmark dir path")
 parser.add_argument('-m', action='store_true', help="Mathematica output")
 parser.add_argument('-t', nargs='?',type = str, default=None, help="External trace file")
+parser.add_argument('--noerr', action='store_true', help="Exit code forced to 0")
 
 args = parser.parse_args()
 
@@ -601,7 +601,10 @@ if args.f is not None:
        with open(args.r,"r") as results:
           extractDataFiles(results,args.o)
 
-    sys.exit(resultStatus)
+    if args.noerr:
+       sys.exit(0)
+    else:
+       sys.exit(resultStatus)
     
 else:
     parser.print_help()
