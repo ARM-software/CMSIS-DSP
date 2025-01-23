@@ -1,4 +1,4 @@
-name: Neon Compile and Run
+name: Neon tests
 on:
   workflow_dispatch:
   pull_request:
