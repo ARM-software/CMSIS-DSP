@@ -66,10 +66,10 @@ jobs:
           cd build
 
           cmake -G "Unix Makefiles" .. 
-
-#      - name: Setup tmate session
-#        uses: mxschmitt/action-tmate@v3
         
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+
       - name: Execute generic tests
         run: |
           cd Testing/build
@@ -78,7 +78,7 @@ jobs:
           make VERBOSE=1 
           ./test > result.txt
           python ../processResult.py -e -f ../Output.pickle -r result.txt -html > result.html 
-
+      
       - name: Execute neon specific C tests
         run: |
           cd Testing/build
