@@ -1,11 +1,11 @@
 name: Build documentation and pack
-#on:
-#  workflow_dispatch:
-#  pull_request:
-#  push:
-#    branches: [main]
-#  release:
-#    types: [published]
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches: [main]
+  release:
+    types: [published]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
