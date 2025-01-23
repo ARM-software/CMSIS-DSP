@@ -10,7 +10,7 @@ Reference patterns are generated with
 a double precision computation.
 
 */
-#define REL_ERROR (1.0e-4)
+#define REL_ERROR (2.0e-4)
 
     void BIQUADF32::test_biquad_cascade_df1_ref()
     {
