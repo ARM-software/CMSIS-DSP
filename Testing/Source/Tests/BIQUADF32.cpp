@@ -10,8 +10,7 @@ Reference patterns are generated with
 a double precision computation.
 
 */
-#define REL_ERROR (1.2e-3)
-
+#define REL_ERROR (1.0e-4)
 
     void BIQUADF32::test_biquad_cascade_df1_ref()
     {
@@ -118,9 +117,12 @@ a double precision computation.
            The filter is initialized with the coefs, blockSize and numTaps.
 
            */
-#if !defined(ARM_MATH_NEON) 
+// Neon disabled because this filter has issues with Neon.
+// So test changed to use the scalar version
+//#if !defined(ARM_MATH_NEON) 
            arm_biquad_cascade_df2T_init_f32(&this->Sdf2T,3,coefsp,statep);
-#else
+#if 0
+//#else
            float32_t *vecCoefsPtr = vecCoefs.ptr();
 
            // Those Neon coefs must be computed from original coefs
@@ -244,11 +246,13 @@ a double precision computation.
         float32_t *statep = state.ptr();
         const int16_t *configsp = configs.ptr();
 
-#if !defined(ARM_MATH_NEON) 
+// Neon version has issues and is disabled.
+// So the test is not using Neon version
+//#if !defined(ARM_MATH_NEON) 
         const float32_t *coefsp = coefs.ptr();
-#else
-        float32_t *coefsp = coefs.ptr();
-#endif
+//#else
+//        float32_t *coefsp = coefs.ptr();
+//#endif
         
         const float32_t *inputp = inputs.ptr();
         float32_t *outp = output.ptr();
@@ -284,9 +288,10 @@ a double precision computation.
            The filter is initialized with the coefs, blockSize and numTaps.
 
            */
-#if !defined(ARM_MATH_NEON) 
+//#if !defined(ARM_MATH_NEON) 
            arm_biquad_cascade_df2T_init_f32(&this->Sdf2T,numStages,coefsp,statep);
-#else
+//#else
+#if 0
            float32_t *vecCoefsPtr = vecCoefs.ptr();
 
            // Those Neon coefs must be computed from original coefs

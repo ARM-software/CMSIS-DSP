@@ -6,6 +6,8 @@
 
 [![CPP Tests](https://github.com/ARM-software/CMSIS-DSP/actions/workflows/runcpptest.yaml/badge.svg)](https://github.com/ARM-software/CMSIS-DSP/actions/workflows/runcpptest.yaml)
 
+[![Neon Tests](https://github.com/ARM-software/CMSIS-DSP/actions/workflows/runneontest.yaml/badge.svg)](https://github.com/ARM-software/CMSIS-DSP/actions/workflows/runneontest.yaml)
+
 ## About
 
 CMSIS-DSP is an optimized compute library for embedded systems (DSP is in the name for legacy reasons).
