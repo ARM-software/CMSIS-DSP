@@ -150,7 +150,7 @@ ARM_DSP_ATTRIBUTE float16_t arm_canberra_distance_f16(const float16_t *pA,const 
       tmpA = *pA++;
       tmpB = *pB++;
 
-      diff = fabsf((float32_t)((_Float16)tmpA - (_Float16)tmpB));
+      diff = (float16_t)fabsf((float32_t)((_Float16)tmpA - (_Float16)tmpB));
       sum = (_Float16)fabsf((float32_t)tmpA) + (_Float16)fabsf((float32_t)tmpB);
       if (((_Float16)tmpA != 0.0f16) || ((_Float16)tmpB != 0.0f16))
       {

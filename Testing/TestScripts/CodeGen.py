@@ -884,7 +884,7 @@ class CodeGen:
         with open(testDriveHeaderPath,"w") as driverFile:
           driverFile.write("#ifndef _DRIVER_H_\n")
           driverFile.write("#define _DRIVER_H_\n")
-          driverFile.write("__ALIGNED(8) const char testDesc[]={\n")
+          driverFile.write("__ALIGNED(8) const unsigned char testDesc[]={\n")
           self._offset=0
           with open(patternHeaderPath,"w") as includeFile:
             includeFile.write("#ifndef _PATTERNS_H_\n")

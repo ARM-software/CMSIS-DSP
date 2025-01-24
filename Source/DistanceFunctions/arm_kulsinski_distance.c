@@ -64,7 +64,7 @@ ARM_DSP_ATTRIBUTE float32_t arm_kulsinski_distance(const uint32_t *pA, const uin
 
     arm_boolean_distance_TT_TF_FT(pA, pB, numberOfBools, &ctt, &ctf, &cft);
 
-    return(1.0*(ctf + cft - ctt + numberOfBools) / (cft + ctf + numberOfBools));
+    return(1.0f*(ctf + cft - ctt + numberOfBools) / (cft + ctf + numberOfBools));
 }
 
 

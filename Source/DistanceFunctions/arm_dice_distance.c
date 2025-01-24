@@ -79,7 +79,7 @@ ARM_DSP_ATTRIBUTE float32_t arm_dice_distance(const uint32_t *pA, const uint32_t
 
     arm_boolean_distance_TT_TF_FT(pA, pB, numberOfBools, &ctt, &ctf, &cft);
 
-    return(1.0*(ctf + cft) / (2.0*ctt + cft + ctf));
+    return(1.0f*(ctf + cft) / (2.0f*ctt + cft + ctf));
 }
 
 

@@ -422,8 +422,8 @@ __STATIC_INLINE void ne10_radix8x4_neon (ne10_fft_cpx_float32_t *out,
     ne10_int32_t src_step = stride << 1; // ne10_fft_cpx_float32_t -> float32_t offset
     const float32_t *p_src = (const float32_t *) in;
     float32_t *p_dst = (float32_t *) out;
-    const ne10_float32_t TW_81 = 0.70710678;
-    const ne10_float32_t TW_81N = -0.70710678;
+    const ne10_float32_t TW_81 = 0.70710678f;
+    const ne10_float32_t TW_81N = -0.70710678f;
 
     CMPLX_VEC_F32 q2_in0, q2_in1, q2_in2, q2_in3, q2_in4, q2_in5, q2_in6, q2_in7;
     float32x4_t q_sin0_r, q_sin0_i, q_sin1_r, q_sin1_i, q_sin2_r, q_sin2_i, q_sin3_r, q_sin3_i;
@@ -759,8 +759,8 @@ __STATIC_INLINE void ne10_radix8x4_inverse_neon (ne10_fft_cpx_float32_t *out,
     ne10_int32_t src_step = stride << 1;
     const float32_t *p_src = (const float32_t *) in;
     float32_t *p_dst = (float32_t *) out;
-    const ne10_float32_t TW_81 = 0.70710678;
-    const ne10_float32_t TW_81N = -0.70710678;
+    const ne10_float32_t TW_81 = 0.70710678f;
+    const ne10_float32_t TW_81N = -0.70710678f;
 
     CMPLX_VEC_F32 q2_in0, q2_in1, q2_in2, q2_in3, q2_in4, q2_in5, q2_in6, q2_in7;
     float32x4_t q_sin0_r, q_sin0_i, q_sin1_r, q_sin1_i, q_sin2_r, q_sin2_i, q_sin3_r, q_sin3_i;

@@ -109,7 +109,7 @@ static void arm_ne10_radix8x4_c2r_neon (
     NE10_DECLARE_8(float32x4_t,q_out);
 
 #if defined(CMSIS_NE10_DSP_RIFFT_SCALING)
-    const ne10_float32_t one_by_N = 0.25 / nfft;
+    const ne10_float32_t one_by_N = 0.25f / nfft;
     const float32x4_t one_by_N_neon = vdupq_n_f32(one_by_N);
 #endif 
 
@@ -193,7 +193,7 @@ static void arm_ne10_radix4x4_c2r_neon (
           float32x4_t *Fout_neon = (float32x4_t*) Fout;
 
 #if defined(CMSIS_NE10_DSP_RIFFT_SCALING)
-    const ne10_float32_t one_by_N = 0.25 / nfft;
+    const ne10_float32_t one_by_N = 0.25f / nfft;
     const float32x4_t one_by_N_neon = vdupq_n_f32(one_by_N);
 #endif
     for (f_count = 0; f_count < fstride; f_count ++)

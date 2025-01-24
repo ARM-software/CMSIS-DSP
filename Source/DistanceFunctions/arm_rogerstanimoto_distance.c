@@ -66,7 +66,7 @@ ARM_DSP_ATTRIBUTE float32_t arm_rogerstanimoto_distance(const uint32_t *pA, cons
 
     r = 2*(ctf + cft);
 
-    return(1.0*r / (r + ctt + cff));
+    return(1.0f*r / (r + ctt + cff));
 }
 
 
