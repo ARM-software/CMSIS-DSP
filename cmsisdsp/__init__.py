@@ -20,7 +20,7 @@ from cmsisdsp_window import *
 __version__ = cmsisdsp.version.__version__
 
 # CMSIS-DSP Version used to build the wrapper
-cmsis_dsp_version="1.15.0"
+cmsis_dsp_version="1.16.2"
 
 
 # CMSIS-DSP Commit hash used to build the wrapper
