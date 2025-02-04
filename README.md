@@ -1,12 +1,6 @@
+[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/ARM-software/CMSIS-DSP?include_prereleases)](https://github.com/ARM-software/CMSIS-DSP/releases/latest)[![GitHub](https://img.shields.io/github/license/ARM-software/CMSIS-DSP)](https://github.com/ARM-software/CMSIS-DSP/blob/main/LICENSE)[![C Tests](https://img.shields.io/github/actions/workflow/status/ARM-software/CMSIS-DSP/runtest.yaml?logo=arm&logoColor=0091bd&label=C%20Cortex-M%20Tests)](https://github.com/ARM-software/CMSIS-DSP/actions/workflows/runtest.yaml)[![CPP Tests](https://img.shields.io/github/actions/workflow/status/ARM-software/CMSIS-DSP/runcpptest.yaml?logo=arm&logoColor=0091bd&label=CPP%20Cortex-M%20Tests)](https://github.com/ARM-software/CMSIS-DSP/actions/workflows/runcpptest.yaml)[![Neon Tests](https://img.shields.io/github/actions/workflow/status/ARM-software/CMSIS-DSP/runneontest.yaml?logo=arm&logoColor=0091bd&label=Cortex-A%20Tests)](https://github.com/ARM-software/CMSIS-DSP/actions/workflows/runneontest.yaml)
+
 # CMSIS-DSP
-
-![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/ARM-software/CMSIS-DSP?include_prereleases) ![GitHub](https://img.shields.io/github/license/ARM-software/CMSIS-DSP) 
-
-[![C Tests](https://github.com/ARM-software/CMSIS-DSP/actions/workflows/runtest.yaml/badge.svg)](https://github.com/ARM-software/CMSIS-DSP/actions/workflows/runtest.yaml)
-
-[![CPP Tests](https://github.com/ARM-software/CMSIS-DSP/actions/workflows/runcpptest.yaml/badge.svg)](https://github.com/ARM-software/CMSIS-DSP/actions/workflows/runcpptest.yaml)
-
-[![Neon Tests](https://github.com/ARM-software/CMSIS-DSP/actions/workflows/runneontest.yaml/badge.svg)](https://github.com/ARM-software/CMSIS-DSP/actions/workflows/runneontest.yaml)
 
 ## About
 
@@ -24,9 +18,6 @@ This repository contains the CMSIS-DSP library and several other projects:
 
 You don't need any of the other projects to build and use CMSIS-DSP library. Building the other projects may require installation of other libraries (CMSIS), other tools (Arm Virtual Hardware) or CMSIS build tools.
 
-### License Terms
-
-CMSIS-DSP is licensed under [Apache License 2.0](LICENSE).
 
 ### CMSIS-DSP Kernels
 
@@ -115,33 +106,13 @@ You can build CMSIS-DSP with the open CMSIS-Pack, or cmake, or Makefile and it i
 
 The standard way to build is by using the CMSIS pack technology. CMSIS-DSP is available as a pack.
 
-This pack technology is supported by some IDE like [Keil MDK](https://www.keil.com/download/product/) or [Keil studio](https://www.keil.arm.com/).
-
-You can also use those packs using the [Open CMSIS-Pack](https://www.open-cmsis-pack.org/) technology and from command line on any platform.
-
-You should first install the tools from https://github.com/Open-CMSIS-Pack/devtools/tree/main/tools
-
-You can get the CMSIS-Toolbox which is containing the package installer, cmsis build and cmsis project manager. Here is some documentation:
-
-* Documentation about [CMSIS Build](https://open-cmsis-pack.github.io/devtools/buildmgr/latest/index.html)
-* Documentation about [CMSIS Pack](https://open-cmsis-pack.github.io/Open-CMSIS-Pack-Spec/main/html/index.html)
-* Documentation about [CMSIS Project manager](https://github.com/Open-CMSIS-Pack/devtools/blob/main/tools/projmgr/docs/Manual/Overview.md)
-
-Once you have installed the tools, you'll need to download the pack index using the `cpackget` tool.
-
-Then, you'll need to convert a solution file into `.cprj`. For instance, for the CMSIS-DSP Examples, you can go to: 
-
-`Examples/cmsis_build` 
-
-and then type 
-
-`csolution convert -s examples.csolution_ac6.yml`
-
-This command processes the `examples.csolution_ac6.yml` describing how to build the examples for several platforms. It will generate lots of `.cprj` files that can be built with `cbuild`.
+You can use [CMSIS-Toolbox](https://open-cmsis-pack.github.io/cmsis-toolbox/) or any of the [Arm Keil IDEs](https://www.keil.arm.com/)
 
 If you want to build the `FFT` example for the `Corstone-300` virtual hardware platform, you could just do:
 
-`cbuild "fftbin.Release+VHT-Corstone-300.cprj"`
+`cbuild -O cprj examples_ac6.csolution.yml --update-rte -r --toolchain AC6 -c fftbin.Release+VHT-Corstone-300"`
+
+from the `Examples/cmsis_build` folder and assuming the command line tools and the needed packs have been installed.
 
 ### How to build with Make
 
@@ -291,3 +262,11 @@ Some files are needed to generate the PythonWrapper:
 * MANIFEST.in
 * pyproject.toml
 * setup.py
+
+# License
+
+CMSIS-DSP  is licensed under [![License](https://img.shields.io/github/license/ARM-software/CMSIS-DSP?label)](https://github.com/ARM-software/CMSIS-DSP/blob/main/LICENSE).
+
+# Contributions and Pull Requests
+
+Contributions are accepted under [![License](https://img.shields.io/github/license/ARM-software/CMSIS-DSP?label)](https://github.com/ARM-software/CMSIS-DSP/blob/main/LICENSE). Only submit contributions where you have authored all of the code.
