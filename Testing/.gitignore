@@ -29,3 +29,4 @@ Tmp/
 .*@*
 dspenv/
 dspenv_aarch64/
+Patterns/DSP/MatrixNeon/

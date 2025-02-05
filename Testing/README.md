@@ -21,9 +21,15 @@ Once you have cloned the right version and installed the Python packages, you ne
 
 **Generation of all C files needed to build the tests.** 
 
-The commands must be run from Testing folder:
+The commands must be run from `Testing` folder:
 
 `createDefaultFolder.sh`
+
+Matrix patterns for Neon are too big to be commited to github.
+
+As consequence, they need to be regenerated.
+
+`python PatternGeneration/MatrixNeon.py`
 
 `python preprocess.py -f desc.txt`
 
