@@ -3002,5 +3002,37 @@ group Root {
                }
            }
        }
+
+        group Matrix Tests {
+           class = MatrixTests
+           folder = MatrixNeon
+
+           group Binary Tests{
+              class = BinaryTests 
+              folder = Binary 
+
+              suite Binary F32 {
+                class = BinaryTestsNeonF32 
+                folder = BinaryF32
+
+                Pattern INPUTS1_F32_ID : InputA1_f32.txt 
+                Pattern INPUTS2_F32_ID : InputB1_f32.txt 
+
+
+                Pattern REFMUL1_F32_ID : RefMul1_f32.txt
+                Pattern DIMSBINARY1_S16_ID : DimsBinary1_s16.txt 
+
+
+                Output  OUT_F32_ID : Output
+                Output  TMPA_F32_ID : TmpA
+                Output  TMPB_F32_ID : TmpB
+
+                Functions {
+                  test mult:test_mat_mult_f32
+                }
+
+             }
+           }
+        }
    }
 }

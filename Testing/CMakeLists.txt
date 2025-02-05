@@ -123,6 +123,7 @@ if (NEON)
         Source/Tests/TransformNeonCF32.cpp
         Source/Tests/TransformNeonCQ31.cpp
         Source/Tests/TransformNeonCQ15.cpp
+        Source/Tests/BinaryTestsNeonF32.cpp
         )
     
 
