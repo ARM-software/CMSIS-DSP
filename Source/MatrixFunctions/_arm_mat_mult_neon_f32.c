@@ -964,7 +964,7 @@ __STATIC_INLINE void kernel_2x8(int cols,float32_t *pC,int xp,int r) {
 __STATIC_INLINE void kernel_2x4(int cols,float32_t *pC,int xp,int r) {
 
   const float *pB0 = PACKEDB;
-  vec tmp00,tmp01;
+  vec tmp00;
    
   const float *p = pC;
 
@@ -1005,6 +1005,7 @@ __STATIC_INLINE void kernel_2x4(int cols,float32_t *pC,int xp,int r) {
 
 __STATIC_INLINE void kernel_1x16(int cols,float32_t *pC,int xp,int r) {
 
+  (void)cols;
   const float *pB0 = PACKEDB;
   vec tmp00,tmp01,tmp02,tmp03;
    
@@ -1158,6 +1159,7 @@ __STATIC_INLINE void kernel_1x8(int cols,float32_t *pC,int xp,int r) {
 
 __STATIC_INLINE void kernel_1x4(int cols,float32_t *pC,int xp,int r) {
 
+  (void)cols;
   vec tmp00,tmp01;
   const float *pB0 = PACKEDB;
    
@@ -1549,6 +1551,7 @@ __STATIC_INLINE void kernel_2xc(int cols,float32_t *pC,int xp,int r,int nbc) {
 }
 
 __STATIC_INLINE void kernel_1xc(int cols,float32_t *pC,int xp,int r,int nbc) {
+  (void)cols;
   const float *pB0 = PACKEDB;
   float *p0 = pC;
 

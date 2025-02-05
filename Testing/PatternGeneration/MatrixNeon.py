@@ -17,9 +17,13 @@ col_block=768
 row_block=256
 inner_block=128
 
-BLOCK_COLS=[0,col_block,2*col_block]
-BLOCK_ROWS=[0,row_block,2*row_block]
-BLOCK_INNER=[0,inner_block,2*inner_block]
+#BLOCK_COLS=[0,col_block,2*col_block]
+#BLOCK_ROWS=[0,row_block,2*row_block]
+#BLOCK_INNER=[0,inner_block,2*inner_block]
+
+BLOCK_COLS=[col_block,2*col_block,2*col_block+1]
+BLOCK_ROWS=[row_block,2*row_block,2*row_block+1]
+BLOCK_INNER=[inner_block,2*inner_block,2*inner_block+1]
 
 def remove_zero(l):
     if len(l[0])==3:
@@ -43,14 +47,20 @@ def writeBinaryTests(config,format,desc):
     DR = 4
     DC = 4
 
-    drs = [8,4,11,10,9,7,6,5,3,2,1]
-    dcs = [32,16,12,8,4,3,28,24,20]
+    drs = [1,2,3,4,8,9,10,11]
+    dcs = [1,2,3,4,8,9]
 
-    rows = sum(remove_zero(cartesian(drs,BLOCK_ROWS,sizes)))
-    cols = sum(remove_zero(cartesian(dcs,BLOCK_COLS,sizes)))
-    inners = sum(remove_zero(cartesian(BLOCK_INNER,sizes)))
+    #rows = sum(remove_zero(cartesian(drs,BLOCK_ROWS,sizes)))
+    #cols = sum(remove_zero(cartesian(dcs,BLOCK_COLS,sizes)))
+    #inners = sum(remove_zero(cartesian(BLOCK_INNER,sizes)))
+    #
+    OTHER = 32
+    rows=[(x,OTHER,OTHER) for x in (drs+BLOCK_ROWS)]
+    cols=[(OTHER,x,OTHER) for x in (dcs+BLOCK_COLS)]
+    inners=[(OTHER,OTHER,x) for x in (BLOCK_INNER+sizes)]
 
-    maxnb = np.max(np.hstack([rows,cols,inners]))
+    maxnb = np.max(np.hstack([drs,dcs,sizes,BLOCK_COLS,BLOCK_ROWS,BLOCK_INNER]))
+    print(f"Max nb = {maxnb}")
 
     data1=np.random.randn(maxnb*maxnb)
     data2=np.random.randn(maxnb*maxnb)
@@ -61,9 +71,12 @@ def writeBinaryTests(config,format,desc):
     config.writeInput(1, data1,"InputA")
     config.writeInput(1, data2,"InputB")
     #
-    binarySizes = cartesian(sorted(rows),sorted(inners),sorted(cols))
-    print(len(binarySizes))
-    return
+    binarySizes = sorted(rows)+sorted(inners)+sorted(cols)
+    #print(len(binarySizes))
+    #return
+    dims=[l[0]*l[2] for l in binarySizes]
+    bytes=25*np.sum(dims)
+    print(f"Estimated size of result text file : {bytes} bytes")
 
     dims=[] 
     vals=[]
@@ -108,10 +121,10 @@ def generatePatterns():
 
     #writeBinaryTests(configBinaryf64,Tools.F64,"F64")
     writeBinaryTests(configBinaryf32,Tools.F32,"F32")
-    #writeBinaryTests(configBinaryf16,Tools.F16,"F16")
-    #writeBinaryTests(configBinaryq31,Tools.Q31,"Q31")
-    #writeBinaryTests(configBinaryq15,Tools.Q15,"Q15")
-    #writeBinaryTests(configBinaryq7,Tools.Q7,"Q7")
+    writeBinaryTests(configBinaryf16,Tools.F16,"F16")
+    writeBinaryTests(configBinaryq31,Tools.Q31,"Q31")
+    writeBinaryTests(configBinaryq15,Tools.Q15,"Q15")
+    writeBinaryTests(configBinaryq7,Tools.Q7,"Q7")
 
     
 if __name__ == '__main__':
