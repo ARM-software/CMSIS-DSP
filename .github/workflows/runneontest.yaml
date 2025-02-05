@@ -53,6 +53,9 @@ jobs:
           echo "Install missing python packages"
           pip install -r requirements.txt
 
+          echo "Generate some missing test patterns"
+          python PatternGeneration/MatrixNeon.py
+
           echo "Preprocess test description"
           python preprocess.py -f desc.txt -o Output.pickle
           python preprocess.py -f desc_neon.txt -o Output_neon.pickle
