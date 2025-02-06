@@ -1,5 +1,6 @@
 var NAVTREEINDEX7 =
 {
+"group__WindowBLACKMAN__HARRIS__92DB.html#ga11d4e3b5fba216d819757fcae14f7372":[4,16,1,1,1],
 "group__WindowBLACKMAN__HARRIS__92DB.html#gad84667126d863984ac30d7068e6f9ab5":[4,16,1,1,0],
 "group__WindowFlat.html":[4,16,0],
 "group__WindowHAMMING.html":[4,16,1,2],
@@ -248,6 +249,5 @@ var NAVTREEINDEX7 =
 "index.html":[0],
 "index.html":[],
 "index.html#autotoc_md0":[0,0],
-"index.html#autotoc_md1":[0,1],
-"index.html#autotoc_md2":[0,1,0]
+"index.html#autotoc_md1":[0,1]
 };

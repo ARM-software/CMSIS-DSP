@@ -1,5 +1,6 @@
 var NAVTREEINDEX6 =
 {
+"group__RMS.html":[4,12,11],
 "group__RMS.html#ga20586bc59cabbfc38a935c2448833dd2":[4,12,11,3],
 "group__RMS.html#ga8be796318d41c7cbb68f8f3c0b96020f":[4,12,11,2],
 "group__RMS.html#gae256dfcb1a1e5e696f17d4068575c7cd":[4,12,11,0],
@@ -248,6 +249,5 @@ var NAVTREEINDEX6 =
 "group__WindowBARTLETT.html":[4,16,1,0],
 "group__WindowBARTLETT.html#ga43616d15eb8b6e960d09063db316ed33":[4,16,1,0,0],
 "group__WindowBARTLETT.html#ga994367241f5f154f03a562afbcd12cf1":[4,16,1,0,1],
-"group__WindowBLACKMAN__HARRIS__92DB.html":[4,16,1,1],
-"group__WindowBLACKMAN__HARRIS__92DB.html#ga11d4e3b5fba216d819757fcae14f7372":[4,16,1,1,1]
+"group__WindowBLACKMAN__HARRIS__92DB.html":[4,16,1,1]
 };

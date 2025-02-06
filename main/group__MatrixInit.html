@@ -151,6 +151,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga48a5e5d37e1f062cc57fcfaf683343cc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MatrixInit.html#ga48a5e5d37e1f062cc57fcfaf683343cc">arm_mat_init_q31</a> (<a class="el" href="structarm__matrix__instance__q31.html">arm_matrix_instance_q31</a> *S, uint16_t nRows, uint16_t nColumns, <a class="el" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *pData)</td></tr>
 <tr class="memdesc:ga48a5e5d37e1f062cc57fcfaf683343cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Q31 matrix initialization.  <br /></td></tr>
 <tr class="separator:ga48a5e5d37e1f062cc57fcfaf683343cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf6dce8741cd4f169f9447747ada587fe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MatrixInit.html#gaf6dce8741cd4f169f9447747ada587fe">arm_mat_init_q7</a> (<a class="el" href="structarm__matrix__instance__q7.html">arm_matrix_instance_q7</a> *S, uint16_t nRows, uint16_t nColumns, <a class="el" href="group__genericTypes.html#gae541b6f232c305361e9b416fc9eed263">q7_t</a> *pData)</td></tr>
+<tr class="memdesc:gaf6dce8741cd4f169f9447747ada587fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Q7 matrix initialization.  <br /></td></tr>
+<tr class="separator:gaf6dce8741cd4f169f9447747ada587fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>Initializes the underlying matrix data structure. The functions set the <code>numRows</code>, <code>numCols</code>, and <code>pData</code> fields of the matrix data structure. </p>
@@ -401,6 +404,57 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">S</td><td>points to an instance of the Q31 matrix structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">nRows</td><td>number of rows in the matrix </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">nColumns</td><td>number of columns in the matrix </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pData</td><td>points to the matrix data array </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaf6dce8741cd4f169f9447747ada587fe" name="gaf6dce8741cd4f169f9447747ada587fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf6dce8741cd4f169f9447747ada587fe">&#9670;&#160;</a></span>arm_mat_init_q7()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_mat_init_q7 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structarm__matrix__instance__q7.html">arm_matrix_instance_q7</a> *&#160;</td>
+          <td class="paramname"><em>S</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>nRows</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>nColumns</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__genericTypes.html#gae541b6f232c305361e9b416fc9eed263">q7_t</a> *&#160;</td>
+          <td class="paramname"><em>pData</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Q7 matrix initialization. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">S</td><td>points to an instance of the floating-point matrix structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">nRows</td><td>number of rows in the matrix </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">nColumns</td><td>number of columns in the matrix </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">pData</td><td>points to the matrix data array </td></tr>

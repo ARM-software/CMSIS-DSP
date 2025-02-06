@@ -1,5 +1,6 @@
 var NAVTREEINDEX9 =
 {
+"structarm__fir__interpolate__instance__q31.html#a80e7fdf4747dbda8eadb2663fb4be317":[5,0,50,1],
 "structarm__fir__interpolate__instance__q31.html#a8f92bb07e0812f94679438cdf412b26a":[5,0,50,2],
 "structarm__fir__interpolate__instance__q31.html#adee4ba3ee8869865af7d8fa08ca913d6":[5,0,50,3],
 "structarm__fir__interpolate__instance__q31.html#aee73cc056696e504430c53eaa9c58cf0":[5,0,50,0],
@@ -248,6 +249,5 @@ var NAVTREEINDEX9 =
 "structarm__svm__linear__instance__f32.html#ac0020a4e04df9d200969b1ba84799d88":[5,0,94,5],
 "structarm__svm__linear__instance__f32.html#ac74855c4f6df20c9b07ee5fe002378fc":[5,0,94,4],
 "structarm__svm__polynomial__instance__f16.html":[5,0,95],
-"structarm__svm__polynomial__instance__f16.html#a192432a474907a70b37aa10ddabc0c97":[5,0,95,2],
-"structarm__svm__polynomial__instance__f16.html#a1abe530f26ba6a68edea942ebd904a0a":[5,0,95,5]
+"structarm__svm__polynomial__instance__f16.html#a192432a474907a70b37aa10ddabc0c97":[5,0,95,2]
 };
