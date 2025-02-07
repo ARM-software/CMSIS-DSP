@@ -19,10 +19,11 @@ option(NEONEXPERIMENTAL "" OFF)
 option(DISABLEFLOAT16 "" OFF)
 add_subdirectory(../Source bin_dsp)
 target_compile_options(CMSISDSP PUBLIC -g)
-
+target_compile_definitions(CMSISDSP PRIVATE ARM_DSP_CUSTOM_CONFIG)
+target_include_directories(CMSISDSP PRIVATE .)
 
 add_executable(test main.cpp
-	patterndata.c
+    patterndata.c
     testmain.cpp
     FrameworkSource/ArrayMemory.cpp
     FrameworkSource/Calibrate.cpp
@@ -116,7 +117,7 @@ add_executable(test main.cpp
     Source/Tests/UnaryTestsQ31.cpp
     Source/Tests/WindowTestsF32.cpp
     Source/Tests/WindowTestsF64.cpp
-	)
+    )
 
 if (NEON)
     target_sources(test PUBLIC 
@@ -172,9 +173,9 @@ target_compile_options(test PUBLIC -Wsign-compare
         -Wdouble-promotion
         -DNDEBUG
         -Wall
-	-Wextra
+    -Wextra
         -O3
-	-Wno-packed
+    -Wno-packed
         -Wno-missing-noreturn
         -Wno-sign-conversion
         -Wno-unused-macros
