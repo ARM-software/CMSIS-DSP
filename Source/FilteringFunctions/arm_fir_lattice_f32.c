@@ -58,7 +58,7 @@
       y[n] = fM[n]
   </pre>
   @par
-                   <code>pCoeffs</code> points to tha array of reflection coefficients of size <code>numStages</code>.
+                   <code>pCoeffs</code> points to the array of reflection coefficients of size <code>numStages</code>.
                    Reflection Coefficients are stored in the following order.
   @par
   <pre>

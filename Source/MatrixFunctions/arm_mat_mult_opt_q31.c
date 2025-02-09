@@ -412,7 +412,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_opt_q31(
         while (row > 0u) {
             /*
              * For every row wise process, the column loop counter is to be initiated
-             * Compute 2 columns and 2 rows in parrallel
+             * Compute 2 columns and 2 rows in parallel
              */
             col = numColsB >> 1;
             j = 0;

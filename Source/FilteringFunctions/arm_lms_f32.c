@@ -39,7 +39,7 @@
   LMS filters use a gradient descent method in which the filter coefficients are updated based on the instantaneous error signal.
   Adaptive filters are often used in communication systems, equalizers, and noise removal.
   The CMSIS DSP Library contains LMS filter functions that operate on Q15, Q31, and floating-point data types.
-  The library also contains normalized LMS filters in which the filter coefficient adaptation is indepedent of the level of the input signal.
+  The library also contains normalized LMS filters in which the filter coefficient adaptation is independent of the level of the input signal.
 
   An LMS filter consists of two components as shown below.
   The first component is a standard transversal or FIR filter.

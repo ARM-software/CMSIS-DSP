@@ -85,7 +85,7 @@ def run(args,mustPrint=False,dumpStdErr=True,timeout=20,printCmd=False):
             print(result.stdout)
         return(Result(result.stdout))
     except Exception as e:
-        printError("Exception occured")
+        printError("Exception occurred")
         ERROR_OCCURED = True
         return(Result(str(e),error=True))
 

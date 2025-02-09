@@ -46,7 +46,7 @@ struct number_traits<float16_t>
 
 #if !defined(ARM_MATH_MVE_FLOAT16)
 /**
- * @brief      float16 vector descrition when no vector architecture
+ * @brief      float16 vector description when no vector architecture
  */
 template<>
 struct vector_traits<float16_t> {

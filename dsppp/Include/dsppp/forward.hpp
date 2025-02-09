@@ -71,7 +71,7 @@ Is a contiguous array in memory with scalar indexing
 It can be an _Expr
 Vector has a length
 
-Generally used whe scalar indexing is required or length
+Generally used when scalar indexing is required or length
 
 */
 template<typename T>

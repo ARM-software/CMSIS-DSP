@@ -55,7 +55,7 @@
                    Lastly, the accumulator is saturated to yield a result in 1.15 format.
   @par
                    In this filter, filter coefficients are updated for each sample and
-                   the updation of filter cofficients are saturted.
+                   the updation of filter coefficients are saturted.
  */
 
 ARM_DSP_ATTRIBUTE void arm_lms_q15(

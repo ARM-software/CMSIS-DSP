@@ -227,7 +227,7 @@ def addRows(conn,elem,tableName,full,runid=0):
         if field in VALKEYFIELD:
             if field == "CATEGORY":
               # Remove type extension to get category name so that
-              # all types are maped to same category which will
+              # all types are mapped to same category which will
               # help for post processing.
               testField=re.sub(r'^(.*)[:]([^:]+)(F16|F32|F64|Q31|Q15|Q7)$',r'\1',row[field])
               val = findInTable(conn,"CATEGORY","category",testField,"categoryid")

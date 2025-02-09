@@ -50,12 +50,12 @@
 #include "math_helper.h"
 
 /**
- * @brief  Caluclation of SNR
+ * @brief  Calculation of SNR
  * @param[in]  pRef 	Pointer to the reference buffer
  * @param[in]  pTest	Pointer to the test buffer
  * @param[in]  buffSize	total number of samples
  * @return     SNR
- * The function Caluclates signal to noise ratio for the reference output
+ * The function Calculates signal to noise ratio for the reference output
  * and test output
  */
 
@@ -258,10 +258,10 @@ void arm_provide_guard_bits_q7 (q7_t * input_buf,
 
 
 /**
- * @brief  Caluclates number of guard bits
+ * @brief  Calculates number of guard bits
  * @param[in]  num_adds 	number of additions
  * @return guard bits
- * The function Caluclates the number of guard bits
+ * The function Calculates the number of guard bits
  * depending on the numtaps
  */
 

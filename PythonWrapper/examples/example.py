@@ -60,7 +60,7 @@ biquadQ31 = dsp.arm_biquad_casd_df1_inst_q31()
 numStages=3
 state=np.zeros(numStages*4)
 # For use in CMSIS, denominator coefs must be negated
-# and first a0 coef wihich is always 1 must be removed
+# and first a0 coef which is always 1 must be removed
 coefs=np.reshape(np.hstack((sos[:,:3],-sos[:,4:])),15)
 coefs = coefs / 4.0 
 coefsQ31 = toQ31(coefs)

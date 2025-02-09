@@ -140,7 +140,7 @@ float32_t  refDotProdOut = 5.9273644806352142;
 * Declare Global variables
 * ------------------------------------------------------------------- */
 float32_t multOutput[MAX_BLOCKSIZE];  /* Intermediate output */
-float32_t testOutput;  /* Final ouput */
+float32_t testOutput;  /* Final output */
 
 arm_status status;   /* Status of the example */
 

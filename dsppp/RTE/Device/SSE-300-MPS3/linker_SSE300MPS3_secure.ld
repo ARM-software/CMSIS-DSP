@@ -15,7 +15,7 @@
 ; */
 
 /* Linker script to configure memory regions. */
-/* This file will be run trough the pre-processor. */
+/* This file will be run through the pre-processor. */
 
 #include "region_defs.h"
 
@@ -106,7 +106,7 @@ SECTIONS
      * this region as Non-Secure Callable. The maximum size of this executable
      * region makes it only used the space left over by the ER_CODE region
      * so that you can rely on code+veneer size combined will not exceed the
-     * S_CODE_SIZE value. We also substract from the available space the
+     * S_CODE_SIZE value. We also subtract from the available space the
      * area used to align this section on 32 bytes boundary (for SAU conf).
      */
     .gnu.sgstubs : ALIGN(32)

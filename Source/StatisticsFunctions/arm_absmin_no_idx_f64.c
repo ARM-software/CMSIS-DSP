@@ -62,7 +62,7 @@ ARM_DSP_ATTRIBUTE void arm_absmin_no_idx_f64(
     
     
     
-    /* Load first input value that act as reference value for comparision */
+    /* Load first input value that act as reference value for comparison */
     
     
     /* Initialize blkCnt with number of samples */
@@ -117,7 +117,7 @@ ARM_DSP_ATTRIBUTE void arm_absmin_no_idx_f64(
     uint32_t blkCnt;                     /* Loop counter */
     
     
-    /* Load first input value that act as reference value for comparision */
+    /* Load first input value that act as reference value for comparison */
     out = fabs(*pSrc++);
     
     /* Initialize blkCnt with number of samples */

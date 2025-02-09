@@ -702,7 +702,7 @@ extern void arm_bitreversal_32(
                    needed FFTs.</b> Other FFT versions can continue to be initialized as
                    explained below.
   @par
-                   For versions not targetting Helium or Neon, pre-initialized data structures containing twiddle factors
+                   For versions not targeting Helium or Neon, pre-initialized data structures containing twiddle factors
                    and bit reversal tables are provided and defined in <code>arm_const_structs.h</code>.  Include
                    this header in your function and then pass one of the constant structures as
                    an argument to arm_cfft_f32.  For example:
@@ -770,7 +770,7 @@ extern void arm_bitreversal_32(
                    Pre-initialized data structures containing twiddle factors and bit reversal
                    tables are provided and defined in <code>arm_const_structs.h</code>.  Include
                    this header in your function and then pass one of the constant structures as
-                   an argument to arm_cfft_q31 (except if you are targetting Helium or Neon). For example:
+                   an argument to arm_cfft_q31 (except if you are targeting Helium or Neon). For example:
   @par
                    <code>arm_cfft_q31(arm_cfft_sR_q31_len64, pSrc, 1, 1)</code>
   @par

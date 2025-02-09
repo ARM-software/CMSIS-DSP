@@ -13,7 +13,7 @@ CMSIS-DSP tests are using similar SNR values for different type (f32, q31, q15, 
 
 /*
 
-With thie threshold, the test will fail
+With this threshold, the test will fail
 
 #define REL_ERROR (2.0e-6) 
 

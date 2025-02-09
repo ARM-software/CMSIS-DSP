@@ -136,7 +136,7 @@ a double precision computation.
         /*
 
         q and -q are representing the same rotation.
-        To remove the ambiguity we force the real part ot be positive.
+        To remove the ambiguity we force the real part to be positive.
         Same convention followed in Python script.
 
         */

@@ -189,7 +189,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_scale_f32(
       res = vmulq_f32(vec1, vdupq_n_f32(scale));
       vst1q_f32(pOut, res);
 
-      /* update pointers to process next sampels */
+      /* update pointers to process next samples */
       pIn += 4U;
       pOut += 4U;
 

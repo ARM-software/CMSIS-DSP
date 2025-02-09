@@ -141,7 +141,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_scale_q31(
   uint32_t blkCnt;                               /* Loop counter */
   arm_status status;                             /* Status of matrix scaling */
   int32_t kShift = shift + 1;                    /* Shift to apply after scaling */
-  q31_t in, out;                                 /* Temporary variabels */
+  q31_t in, out;                                 /* Temporary variables */
 
 #ifdef ARM_MATH_MATRIX_CHECK
 

@@ -56,14 +56,14 @@
  *
  * \par Block Diagram:
  * \par
- * \image html linearInterpExampleMethod1.gif "Method 1: Sine caluclation using fast math"
+ * \image html linearInterpExampleMethod1.gif "Method 1: Sine calculation using fast math"
  * \par
- * \image html linearInterpExampleMethod2.gif "Method 2: Sine caluclation using interpolation function"
+ * \image html linearInterpExampleMethod2.gif "Method 2: Sine calculation using interpolation function"
  *
  * \par Variables Description:
  * \par
  * \li \c testInputSin_f32         points to the input values for sine calculation
- * \li \c testRefSinOutput32_f32   points to the reference values caculated from sin() matlab function
+ * \li \c testRefSinOutput32_f32   points to the reference values calculated from sin() matlab function
  * \li \c testOutput               points to output buffer calculation from cubic interpolation
  * \li \c testLinIntOutput         points to output buffer calculation from linear interpolation
  * \li \c snr1                     Signal to noise ratio for reference and cubic interpolation output
@@ -136,7 +136,7 @@ float32_t testLinIntOutput[TEST_LENGTH_SAMPLES];
 extern const float arm_linear_interep_table[1884];
 
 /* ----------------------------------------------------------------------
-* Global Variables for caluclating SNR's for Method1 & Method 2
+* Global Variables for calculating SNR's for Method1 & Method 2
 * ------------------------------------------------------------------- */
 float32_t snr1;
 float32_t snr2;

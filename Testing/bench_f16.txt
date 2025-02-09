@@ -77,7 +77,7 @@ group Root {
               Functions {
                  Elementwise multiplication:vec_mult_f16
                  Vector addition:vec_add_f16
-                 Vector substraction:vec_sub_f16
+                 Vector subtraction:vec_sub_f16
                  Elementwise absolute value:vec_abs_f16
                  Elementwise negation:vec_negate_f16
                  Elementwise offset:vec_offset_f16
@@ -354,7 +354,7 @@ group Root {
               ParamList {
                   VECDIM,NBVECS
                   Summary VECDIM,NBVECS
-                  Names "Vector dimension","Number of suppot vectors"
+                  Names "Vector dimension","Number of support vectors"
                   Formula "VECDIM*NBVECS"
               }
 
@@ -522,12 +522,12 @@ group Root {
                    Matrix Inversion:test_mat_inverse_f16
                    Matrix Transpose:test_mat_trans_f16
                    Matrix Addition:test_mat_add_f16
-                   Matrix Substraction:test_mat_sub_f16
+                   Matrix Subtraction:test_mat_sub_f16
                    Matrix Vector Multiplication:test_mat_vec_mult_f16
                    Matrix Complex Transpose:test_mat_cmplx_trans_f16
                    Cholesky decomposition:test_mat_cholesky_dpo_f16 -> PARAM_CHOLESKY_ID
                    Backward substitution:test_solve_upper_triangular_f16 -> PARAM_CHOLESKY_ID
-                   Foward substitution:test_solve_lower_triangular_f16 -> PARAM_CHOLESKY_ID
+                   Forward substitution:test_solve_lower_triangular_f16 -> PARAM_CHOLESKY_ID
                 } -> PARAM1_ID
               }
 

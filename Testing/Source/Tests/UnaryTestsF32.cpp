@@ -743,7 +743,7 @@ void UnaryTestsF32::test_mat_inverse_f32()
           
           /* Compute P A P^t */
 
-          // Create identiy matrix
+          // Create identity matrix
           for(int r=0; r < n; r++)
           {
             for(int c=0; c < n; c++)

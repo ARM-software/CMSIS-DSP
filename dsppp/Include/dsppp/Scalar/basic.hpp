@@ -135,7 +135,7 @@ inline void eval(DA &v,
 }
 
 /**
- * @brief      2D expression evaluator for scalar archiecture
+ * @brief      2D expression evaluator for scalar architecture
  *
  * @param      v          Destination value
  * @param[in]  other      The expression
@@ -189,7 +189,7 @@ inline void eval2D(DA &v,
  *
  * @param[in]  a          Left hand side
  * @param[in]  b          Right hand side
- * @param[in]  l          Vector lenght
+ * @param[in]  l          Vector length
  *
  * @tparam     DA         Left hand side datatype (may be expression)
  * @tparam     DB         Right hand side datatype (may be expression)

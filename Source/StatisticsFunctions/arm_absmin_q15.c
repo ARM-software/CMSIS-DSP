@@ -145,7 +145,7 @@ ARM_DSP_ATTRIBUTE void arm_absmin_q15(
                                                                                                             \
   /* Initialize index value to zero. */                                                                     \
   outIndex = 0U;                                                                                            \
-  /* Load first input value that act as reference value for comparision */                                  \
+  /* Load first input value that act as reference value for comparison */                                  \
   out = *pSrc++;                                                                                            \
   out = (out > 0) ? out : (q15_t)__QSUB16(0, out);                                                                           \
   /* Initialize index of extrema value. */                                                                  \
@@ -232,7 +232,7 @@ ARM_DSP_ATTRIBUTE void arm_absmin_q15(
 
   /* Initialise index value to zero. */
   outIndex = 0U;
-  /* Load first input value that act as reference value for comparision */
+  /* Load first input value that act as reference value for comparison */
   out = (*pSrc > 0) ? *pSrc : ((*pSrc == (q15_t) 0x8000) ? 0x7fff : -*pSrc);
   pSrc++;
 

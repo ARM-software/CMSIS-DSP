@@ -918,7 +918,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_q31(
           /* Reading imaginary part of complex matrix B */
           d0 = *(pIn2 + 1U);
 
-          /* Multiply and Accumlates */
+          /* Multiply and Accumulates */
           sumReal += (q63_t) a0 * c0;
           sumImag += (q63_t) b0 * c0;
 
@@ -926,7 +926,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_q31(
           pIn1 += 2U;
           pIn2 += 2 * numColsB;
 
-          /* Multiply and Accumlates */
+          /* Multiply and Accumulates */
           sumReal -= (q63_t) b0 * d0;
           sumImag += (q63_t) a0 * d0;
 
@@ -938,7 +938,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_q31(
           b1 = *(pIn1 + 1U);
           d1 = *(pIn2 + 1U);
 
-          /* Multiply and Accumlates */
+          /* Multiply and Accumulates */
           sumReal += (q63_t) a1 * c1;
           sumImag += (q63_t) b1 * c1;
 
@@ -946,7 +946,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_q31(
           pIn1 += 2U;
           pIn2 += 2 * numColsB;
 
-          /* Multiply and Accumlates */
+          /* Multiply and Accumulates */
           sumReal -= (q63_t) b1 * d1;
           sumImag += (q63_t) a1 * d1;
 
@@ -955,7 +955,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_q31(
           b0 = *(pIn1 + 1U);
           d0 = *(pIn2 + 1U);
 
-          /* Multiply and Accumlates */
+          /* Multiply and Accumulates */
           sumReal += (q63_t) a0 * c0;
           sumImag += (q63_t) b0 * c0;
 
@@ -963,7 +963,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_q31(
           pIn1 += 2U;
           pIn2 += 2 * numColsB;
 
-          /* Multiply and Accumlates */
+          /* Multiply and Accumulates */
           sumReal -= (q63_t) b0 * d0;
           sumImag += (q63_t) a0 * d0;
 
@@ -974,7 +974,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_q31(
           b1 = *(pIn1 + 1U);
           d1 = *(pIn2 + 1U);
 
-          /* Multiply and Accumlates */
+          /* Multiply and Accumulates */
           sumReal += (q63_t) a1 * c1;
           sumImag += (q63_t) b1 * c1;
 
@@ -982,7 +982,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_q31(
           pIn1 += 2U;
           pIn2 += 2 * numColsB;
 
-          /* Multiply and Accumlates */
+          /* Multiply and Accumulates */
           sumReal -= (q63_t) b1 * d1;
           sumImag += (q63_t) a1 * d1;
 
@@ -1009,7 +1009,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_q31(
           b1 = *(pIn1 + 1U);
           d1 = *(pIn2 + 1U);
 
-          /* Multiply and Accumlates */
+          /* Multiply and Accumulates */
           sumReal += (q63_t) a1 * c1;
           sumImag += (q63_t) b1 * c1;
 
@@ -1017,7 +1017,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_q31(
           pIn1 += 2U;
           pIn2 += 2 * numColsB;
 
-          /* Multiply and Accumlates */
+          /* Multiply and Accumulates */
           sumReal -= (q63_t) b1 * d1;
           sumImag += (q63_t) a1 * d1;
 

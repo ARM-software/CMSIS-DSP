@@ -84,7 +84,7 @@ When vector is true we have a vector datatype
 A temporary accumulator datatype and an accumulator datatype.
 For most types the temporary and accumulator are the same.
 For float, vector instruction mac is doing a mac per lane.
-So temporay is a vector and the final accumulator is a float.
+So temporary is a vector and the final accumulator is a float.
 
 */
 
@@ -200,7 +200,7 @@ vmacc_p
 /*
 
 If there is the need to tune the intrinsics depending on the
-Helium variant of the architecture, somehting like that could be used.
+Helium variant of the architecture, something like that could be used.
 In practice, selection is done at level of of algorithms more than
 instructions where it may be simple to just use a #if to use the
 right intrinsics when it is available.

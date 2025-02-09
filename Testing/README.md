@@ -150,7 +150,7 @@ The design is a consequence of all the requirements.
 
 A test description file is defined with a specific syntax to support R1 to R8.
 
-#### Hierachical structure
+#### Hierarchical structure
 
     group Root {
         class = Root
@@ -342,7 +342,7 @@ Generally, there is a calibration at beginning of the Runner to estimate the ove
 cycle measurements. This overhead is then removed when doing the measurement.
 
 #### IO
-According to R12 and R15, tests do not know how to access patterns. It is a responsiblity implemented with the IO, Pattern and PatternMgr.
+According to R12 and R15, tests do not know how to access patterns. It is a responsibility implemented with the IO, Pattern and PatternMgr.
 
 IO is about loading patterns and dumping output. It is not about IO in general.
 We provide 2 IO implementations : Semihosting and FPGA.
@@ -361,7 +361,7 @@ There are 3 modes, Test only, Dump only, Test and dump.
 
 In dump only mode, tests using pattern will fail but the tests will be considered as passed (because we are only interested in the output).
 
-But it means that no test using patterns shoudl be used in the middle of the test or some part of it may not be executed. Those tests must be kept at the end.
+But it means that no test using patterns should be used in the middle of the test or some part of it may not be executed. Those tests must be kept at the end.
 
 #### processResult
 For R14, we have a python script which will process the result of tests and format it into several possible formats like text, CSV, Mathematica dataset. 
@@ -424,7 +424,7 @@ always use -e option.
 
     python processTests.py -e
 
-You can pass a C++ class to specifiy that you want to generate tests only for a specific group or suite.
+You can pass a C++ class to specify that you want to generate tests only for a specific group or suite.
 
     python processTests.py -e BasicTests
 
@@ -512,7 +512,7 @@ The PARAMS must be compatible between all suites which are children of AGroup
 
 Output.pickle is used by default. It can be changed with -f option.
 
-To add a to sqlite3 databse:
+To add a to sqlite3 database:
 
     python addToDB.py -e AGroup
 

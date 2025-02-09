@@ -435,8 +435,8 @@ constexpr vector_length_t static_length() {
 
 /*
 
-False only when DA and DB are static vector and with differet size
-Anyother case is ok.
+False only when DA and DB are static vector and with different size
+Any other case is ok.
 
 */
 

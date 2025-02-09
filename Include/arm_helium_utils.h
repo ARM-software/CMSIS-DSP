@@ -115,7 +115,7 @@ __STATIC_FORCEINLINE float16x8_t __mve_cmplx_sum_intra_vec_f16(
     uint32_t    tmp = 0;
 
     vecTmp = (float16x8_t) vrev64q_s32((int32x4_t) vecIn);
-    // TO TRACK : using canonical addition leads to unefficient code generation for f16
+    // TO TRACK : using canonical addition leads to inefficient code generation for f16
     // vecTmp = vecTmp + vecAccCpx0;
     /*
      * Compute
@@ -135,7 +135,7 @@ __STATIC_FORCEINLINE float16x8_t __mve_cmplx_sum_intra_vec_f16(
      */
     vecOut = vaddq_f16(vecOut, vecTmp);
     /*
-     * Cmplx sum is in 4rd & 5th f16 elt
+     * Cmplx sum is in 4th & 5th f16 elt
      * return full vector
      */
     return vecOut;
@@ -155,7 +155,7 @@ __STATIC_FORCEINLINE void mve_cmplx_sum_intra_vec_f16(
 {
     float16x8_t   vecOut = __mve_cmplx_sum_intra_vec_f16(vecIn);
     /*
-     * Cmplx sum is in 4rd & 5th f16 elt
+     * Cmplx sum is in 4th & 5th f16 elt
      * use 32-bit extraction
      */
     *(float32_t *) pOut = ((float32x4_t) vecOut)[2];

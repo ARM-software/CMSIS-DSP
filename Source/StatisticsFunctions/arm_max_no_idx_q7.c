@@ -110,7 +110,7 @@ ARM_DSP_ATTRIBUTE void arm_max_no_idx_q7(
   q7_t maxVal1, out;       /* Temporary variables to store the output value. */     
   uint32_t blkCnt;              /* loop counter */                                  
                                                                                     
-  /* Load first input value that act as reference value for comparision */          
+  /* Load first input value that act as reference value for comparison */          
   out = *pSrc++;                                                                    
                                                                                     
   blkCnt = (blockSize - 1U);                                                        

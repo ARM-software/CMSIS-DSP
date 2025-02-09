@@ -36,7 +36,7 @@
 #define CMSIS_NE10_FFT_COMMON_VARIBLES_H
 
 ///////////////////////////
-// common varibles
+// common variables
 ///////////////////////////
 
 /* Twiddles used in Radix-8 FFT */

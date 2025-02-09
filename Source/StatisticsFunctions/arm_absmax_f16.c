@@ -149,7 +149,7 @@ ARM_DSP_ATTRIBUTE void arm_absmax_f16(
                                                                                                             \
   /* Initialize index value to zero. */                                                                     \
   outIndex = 0U;                                                                                            \
-  /* Load first input value that act as reference value for comparision */                                  \
+  /* Load first input value that act as reference value for comparison */                                  \
   out = *pSrc++;                                                                                            \
   out = ((_Float16)out > 0.0f16) ? out : -(_Float16)out;                                                                             \
   /* Initialize index of extrema value. */                                                                  \
@@ -236,7 +236,7 @@ ARM_DSP_ATTRIBUTE void arm_absmax_f16(
   /* Initialise index value to zero. */
   outIndex = 0U;
 
-  /* Load first input value that act as reference value for comparision */
+  /* Load first input value that act as reference value for comparison */
   out = (_Float16)fabsf((float32_t)*pSrc++);
 
   /* Initialize blkCnt with number of samples */

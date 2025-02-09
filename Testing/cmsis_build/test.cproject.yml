@@ -131,7 +131,7 @@ project:
 
   # A CMSIS-DSP Layer is used to be able to build
   # and test with the current source version
-  # without requring to install a CMSIS Pack
+  # without requiring to install a CMSIS Pack
   layers:
     - layer: dsp.clayer.yml 
     

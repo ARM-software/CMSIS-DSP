@@ -125,7 +125,7 @@ ARM_DSP_ATTRIBUTE void arm_iir_lattice_f32(
 {       
         float32_t *pState = S->pState;                   /* State pointer */
         float32_t *pStateCur;                            /* State current pointer */
-        float32_t acc;                                   /* Accumlator */
+        float32_t acc;                                   /* Accumulator */
         float32_t fnext1, fnext2, gcurr1, gnext;         /* Temporary variables for lattice stages */
         float32_t *px1, *px2, *pk, *pv;                  /* Temporary pointers for state and coef */
         uint32_t numStages = S->numStages;               /* Number of stages */
@@ -305,7 +305,7 @@ ARM_DSP_ATTRIBUTE void arm_iir_lattice_f32(
   }
 
   /* Processing is complete. Now copy last S->numStages samples to start of the buffer
-     for the preperation of next frame process */
+     for the preparation of next frame process */
 
   /* Points to the start of the state buffer */
   pStateCur = &S->pState[0];

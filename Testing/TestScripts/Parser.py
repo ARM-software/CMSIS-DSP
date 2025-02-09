@@ -156,7 +156,7 @@ class TreeElem:
     def classify(self):
         """ Compute the node kind recursively
 
-        Node kind is infered from the tree structure and not present
+        Node kind is inferred from the tree structure and not present
         in the test description.
         A suite is basically a leaf of the tree and only contain tests.
         A group is containing a suite or another group.

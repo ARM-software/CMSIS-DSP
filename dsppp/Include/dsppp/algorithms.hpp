@@ -12,7 +12,7 @@
 
 /**
 In this file we have kernels that are written in an
-architecture independant way (using operators of the library)
+architecture independent way (using operators of the library)
 
 */
 

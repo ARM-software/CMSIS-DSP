@@ -67,7 +67,7 @@ ARM_DSP_ATTRIBUTE void arm_svm_linear_predict_f32(
     row = numRows;
 
     /*
-     * compute 4 rows in parrallel
+     * compute 4 rows in parallel
      */
     while (row >= 4) 
     {

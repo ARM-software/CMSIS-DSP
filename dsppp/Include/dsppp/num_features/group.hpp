@@ -48,7 +48,7 @@ struct number_traits<std::tuple<E...>>
 Assume that all E are using the same scalar type or coherent types
 like f32 and q13 that have same number of lanes.
 
-Any other mix will not work and won't be catched at build time.
+Any other mix will not work and won't be caught at build time.
 
 */
 

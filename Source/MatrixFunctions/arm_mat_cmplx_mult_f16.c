@@ -784,7 +784,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_f16(
           /* Reading imaginary part of complex matrix B */
           d0 = *(pIn2 + 1U);
 
-          /* Multiply and Accumlates */
+          /* Multiply and Accumulates */
           sumReal += a0 * c0;
           sumImag += b0 * c0;
 
@@ -792,7 +792,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_f16(
           pIn1 += 2U;
           pIn2 += 2 * numColsB;
 
-          /* Multiply and Accumlates */
+          /* Multiply and Accumulates */
           sumReal -= b0 * d0;
           sumImag += a0 * d0;
 
@@ -804,7 +804,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_f16(
           b1 = *(pIn1 + 1U);
           d1 = *(pIn2 + 1U);
 
-          /* Multiply and Accumlates */
+          /* Multiply and Accumulates */
           sumReal += a1 * c1;
           sumImag += b1 * c1;
 
@@ -812,7 +812,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_f16(
           pIn1 += 2U;
           pIn2 += 2 * numColsB;
 
-          /* Multiply and Accumlates */
+          /* Multiply and Accumulates */
           sumReal -= b1 * d1;
           sumImag += a1 * d1;
 
@@ -821,7 +821,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_f16(
           b0 = *(pIn1 + 1U);
           d0 = *(pIn2 + 1U);
 
-          /* Multiply and Accumlates */
+          /* Multiply and Accumulates */
           sumReal += a0 * c0;
           sumImag += b0 * c0;
 
@@ -829,7 +829,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_f16(
           pIn1 += 2U;
           pIn2 += 2 * numColsB;
 
-          /* Multiply and Accumlates */
+          /* Multiply and Accumulates */
           sumReal -= b0 * d0;
           sumImag += a0 * d0;
 
@@ -840,7 +840,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_f16(
           b1 = *(pIn1 + 1U);
           d1 = *(pIn2 + 1U);
 
-          /* Multiply and Accumlates */
+          /* Multiply and Accumulates */
           sumReal += a1 * c1;
           sumImag += b1 * c1;
 
@@ -848,7 +848,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_f16(
           pIn1 += 2U;
           pIn2 += 2 * numColsB;
 
-          /* Multiply and Accumlates */
+          /* Multiply and Accumulates */
           sumReal -= b1 * d1;
           sumImag += a1 * d1;
 
@@ -875,7 +875,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_f16(
           b1 = *(pIn1 + 1U);
           d1 = *(pIn2 + 1U);
 
-          /* Multiply and Accumlates */
+          /* Multiply and Accumulates */
           sumReal += a1 * c1;
           sumImag += b1 * c1;
 
@@ -883,7 +883,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_f16(
           pIn1 += 2U;
           pIn2 += 2 * numColsB;
 
-          /* Multiply and Accumlates */
+          /* Multiply and Accumulates */
           sumReal -= b1 * d1;
           sumImag += a1 * d1;
 

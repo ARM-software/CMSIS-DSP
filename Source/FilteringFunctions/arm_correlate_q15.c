@@ -825,7 +825,7 @@ ARM_DSP_ATTRIBUTE void arm_correlate_q15(
   /* So srcBLen is always considered as shorter or equal to srcALen */
   /* But CORR(x, y) is reverse of CORR(y, x) */
   /* So, when srcBLen > srcALen, output pointer is made to point to the end of the output buffer */
-  /* and a varaible, inv is set to 1 */
+  /* and a variable, inv is set to 1 */
   /* If lengths are not equal then zero pad has to be done to  make the two
    * inputs of same length. But to improve the performance, we include zeroes
    * in the output instead of zero padding either of the the inputs*/
@@ -833,7 +833,7 @@ ARM_DSP_ATTRIBUTE void arm_correlate_q15(
    * starting of the output buffer */
   /* If srcALen < srcBLen, (srcALen - srcBLen) zeroes has to included in the
    * ending of the output buffer */
-  /* Once the zero padding is done the remaining of the output is calcualted
+  /* Once the zero padding is done the remaining of the output is calculated
    * using convolution but with the shorter signal time shifted. */
 
   /* Calculate the length of the remaining sequence */

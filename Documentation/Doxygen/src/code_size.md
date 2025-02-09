@@ -1,6 +1,6 @@
 # Code size {#dsppp_code_size}
 
-It was explained in previous sections that types `Vector<T,NB1>` and `Vector<T,NB2>` are considered as different types if `NB1` and `NB2` are differents.
+It was explained in previous sections that types `Vector<T,NB1>` and `Vector<T,NB2>` are considered as different types if `NB1` and `NB2` are different.
 
 A template algorithm is like a code generator that will generate different code for different values of the template arguments : the types.
 

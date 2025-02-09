@@ -166,7 +166,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_conv_partial_fast_opt_q15(
       k--;
     }
 
-    /* Initialze temporary scratch pointer */
+    /* Initialize temporary scratch pointer */
     pScr1 = pScratch1;
 
     /* Assuming scratch1 buffer is aligned by 32-bit */
@@ -206,10 +206,10 @@ ARM_DSP_ATTRIBUTE arm_status arm_conv_partial_fast_opt_q15(
 
     while (blkCnt > 0)
     {
-      /* Initialze temporary scratch pointer as scratch1 */
+      /* Initialize temporary scratch pointer as scratch1 */
       pScr1 = pScratch1;
 
-      /* Clear Accumlators */
+      /* Clear Accumulators */
       acc0 = 0;
       acc1 = 0;
       acc2 = 0;
@@ -326,10 +326,10 @@ ARM_DSP_ATTRIBUTE arm_status arm_conv_partial_fast_opt_q15(
     /* Calculate convolution for remaining samples of Bigger length sequence */
     while (blkCnt > 0)
     {
-      /* Initialze temporary scratch pointer as scratch1 */
+      /* Initialize temporary scratch pointer as scratch1 */
       pScr1 = pScratch1;
 
-      /* Clear Accumlators */
+      /* Clear Accumulators */
       acc0 = 0;
 
       tapCnt = (srcBLen) >> 1U;

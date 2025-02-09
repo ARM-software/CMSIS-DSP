@@ -52,14 +52,14 @@ class ArrayMemory:public Client::Memory
      // Size of C array buffer
      size_t m_bufferLength;
      // Alignment required for all buffers
-     // (in future may be a setting per bufer)
+     // (in future may be a setting per buffer)
      int alignSize;
      // True if some padding must be added after buffers
      bool tail=true;
      // Current pointer to the memory 
      // It is where a new buffer will be allocated
      char *m_currentPtr;
-     // Error occured
+     // Error occurred
      bool memError=false;
 
      size_t getTailSize();

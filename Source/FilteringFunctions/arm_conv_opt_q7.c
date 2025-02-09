@@ -200,10 +200,10 @@ ARM_DSP_ATTRIBUTE void arm_conv_opt_q7(
 
   while (blkCnt > 0)
   {
-    /* Initialze temporary scratch pointer as scratch1 */
+    /* Initialize temporary scratch pointer as scratch1 */
     pScr1 = pScratch1;
 
-    /* Clear Accumlators */
+    /* Clear Accumulators */
     acc0 = 0;
     acc1 = 0;
     acc2 = 0;
@@ -312,10 +312,10 @@ ARM_DSP_ATTRIBUTE void arm_conv_opt_q7(
   /* Calculate convolution for remaining samples of Bigger length sequence */
   while (blkCnt > 0)
   {
-    /* Initialze temporary scratch pointer as scratch1 */
+    /* Initialize temporary scratch pointer as scratch1 */
     pScr1 = pScratch1;
 
-    /* Clear Accumlators */
+    /* Clear Accumulators */
     acc0 = 0;
 
     tapCnt = (srcBLen) >> 1U;

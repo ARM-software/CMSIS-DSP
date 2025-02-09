@@ -146,7 +146,7 @@ def generatorDesc( str, loc, toks):
 def parseTestFields( str, loc, toks):
     if "fields" in toks:
         fields = toks["fields"]
-        # merge list of dictionnaries into a dictionnary
+        # merge list of dictionaries into a dictionary
         newFields = dict((key,d[key]) for d in fields for key in d)
         return(newFields)
 

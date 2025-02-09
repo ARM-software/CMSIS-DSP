@@ -35,7 +35,7 @@
 /**
   @defgroup MatrixComplexTrans Complex Matrix Transpose
 
-  Tranposes a complex matrix.
+  Transposes a complex matrix.
 
   Transposing an <code>M x N</code> matrix flips it around the center diagonal and results in an <code>N x M</code> matrix.
  

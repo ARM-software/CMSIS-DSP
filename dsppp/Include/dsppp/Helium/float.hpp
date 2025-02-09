@@ -74,7 +74,7 @@ typename std::enable_if<std::is_base_of<Helium,arch>::value>::type >
   /**
    * @brief      Zero lane
    *
-   * @return     Value to wrte 0 into a lane
+   * @return     Value to write 0 into a lane
    */
   static constexpr float zero_lane() {return 0.0f;};
   
@@ -83,7 +83,7 @@ typename std::enable_if<std::is_base_of<Helium,arch>::value>::type >
   /**
    * @brief      Lane value
    *
-   * @param[in]  x    Lane vlue
+   * @param[in]  x    Lane value
    *
    * @return     Value with scalar datatype
    */

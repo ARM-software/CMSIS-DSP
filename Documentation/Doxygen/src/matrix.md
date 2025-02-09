@@ -123,7 +123,7 @@ In addition to the vector operations `+`,`-` and `*`, matrixes are supporting mo
 * `dot` for vector / matrix products
 * `diagonal` to create a diagonal matrix from a vector.
 * `identity` to create an identity matrix
-* `tranpose` to create the transposed matrix
+* `transpose` to create the transposed matrix
 * `outer` for the outer product of two vectors
 
 ### dot

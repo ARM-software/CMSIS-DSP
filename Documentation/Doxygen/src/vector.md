@@ -69,7 +69,7 @@ You can then operate with this virtual vector:
 subD = subD + 2.0f;
 ```
 
-If you display the vector `d`, you'll see that `2.0f` has been added to all elements starting from the 2rd one.
+If you display the vector `d`, you'll see that `2.0f` has been added to all elements starting from the 2nd one.
 
 `VectorView` do not own their memory. It is owned by the original vector. 
 
