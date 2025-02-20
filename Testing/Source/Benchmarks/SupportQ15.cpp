@@ -4,22 +4,22 @@
    
     void SupportQ15::test_copy_q15()
     {
-       
+      arm_copy_q15(this->pSrc, this->pDst, this->nbSamples);
     } 
 
     void SupportQ15::test_fill_q15()
     {
-
+       arm_fill_q15(0x9f, this->pDst, this->nbSamples);
     }
 
     void SupportQ15::test_q7_to_q15()
     {
-
+       arm_q7_to_q15(this->pSrcQ7, this->pDst, this->nbSamples);
     }
 
     void SupportQ15::test_q31_to_q15()
     {
-
+       arm_q31_to_q15(this->pSrcQ31, this->pDst, this->nbSamples);
     }
 
 
