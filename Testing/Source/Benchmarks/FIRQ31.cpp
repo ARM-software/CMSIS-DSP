@@ -33,7 +33,7 @@ static __ALIGNED(8) q31_t coeffArray[64];
        samples.reload(FIRQ31::SAMPLES1_Q31_ID,mgr,this->nbSamples);
        coefs.reload(FIRQ31::COEFS1_Q31_ID,mgr,this->nbTaps);
 
-       state.create(2*ROUND_UP(this->nbSamples,4) + this->nbSamples + this->nbTaps - 1,FIRQ31::STATE_Q31_ID,mgr);
+       state.create(2*ARM_ROUND_UP(this->nbSamples,4) + this->nbSamples + this->nbTaps - 1,FIRQ31::STATE_Q31_ID,mgr);
        output.create(this->nbSamples,FIRQ31::OUT_SAMPLES_Q31_ID,mgr);
 
        switch(id)
