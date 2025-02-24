@@ -620,7 +620,32 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_f16(
 }
 #else
 
+#if defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 
+/**
+ * @brief Floating-point matrix multiplication.
+ * @param[in]       *pSrcA points to the first input matrix structure
+ * @param[in]       *pSrcB points to the second input matrix structure
+ * @param[out]      *pDst points to output matrix structure
+ * @return          The function returns either
+ * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+ */
+
+ #define LANE 8
+ #define DTYPE float16_t
+ #define VEC float16x8_t
+ 
+ #define HVEC float16x4_t
+ #define VLOAD(PTR) vld1q_f16((PTR))
+ 
+ #define VSTORE(PTR,VAL) vst1q_f16((PTR),(VAL))
+ #define VMAC_N(ACC,VEC,SCALAR) ACC = vfmaq_n_f16(ACC,(VEC),(SCALAR))
+ #define MATTYPE arm_matrix_instance_f16
+ #define EXT(A) A##_f16
+ 
+ #include "_arm_mat_mult_neon.c"
+
+#else
 ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_f16(
   const arm_matrix_instance_f16 * pSrcA,
   const arm_matrix_instance_f16 * pSrcB,
@@ -758,6 +783,6 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_f16(
 /**
  * @} end of MatrixMult group
  */
-
+ #endif /* #if defined(ARM_MATH_NEON) */
 #endif /* #if defined(ARM_FLOAT16_SUPPORTED) */ 
 

@@ -1,11 +1,10 @@
 
 
 
-
+#define DCS 4 // Max number of vectors for columns (can't be changed)
 #define DC (LANE*DCS) // Must be multiple of lane
 #define DR 4 // Max number rows in kernels (can't be changed)
 #define HDR 2 // Max number rows by half
-#define DCS 4 // Max number of vectors for columns (can't be changed)
 
 // INNER * DC < L1/2
 // INNER * ROWS < L2 
@@ -1232,119 +1231,43 @@ __STATIC_INLINE void EXT(kernel_4rxc)(int cols,DTYPE *pC,int xp,int r,int nbc) {
   const DTYPE *pAlpha2 = pAlpha1 + r;
   const DTYPE *pAlpha3 = pAlpha2 + r;
 
-  if (nbc == 1)
+  
+  DTYPE v0[LANE-1];
+  DTYPE v1[LANE-1];
+  DTYPE v2[LANE-1];
+  DTYPE v3[LANE-1];
+
+  for(int i=0;i<nbc;i++)
   {
-      DTYPE v0;
-      DTYPE v1;
-      DTYPE v2;
-      DTYPE v3;
-         
-      v0 = p0[0];
-      v1 = p1[0];
-      v2 = p2[0];
-      v3 = p3[0];
-      
-      for (int k=0; k < r ; k ++) 
-      {
-        const DTYPE alpha0 = *pAlpha0++;
-        const DTYPE alpha1 = *pAlpha1++;
-        const DTYPE alpha2 = *pAlpha2++;
-        const DTYPE alpha3 = *pAlpha3++;
-        
+     v0[i] = p0[i];
+     v1[i] = p1[i];
+     v2[i] = p2[i];
+     v3[i] = p3[i];
+  }
+    
+  for (int k=0; k < r ; k ++) 
+  {
+    const DTYPE alpha0 = *pAlpha0++;
+    const DTYPE alpha1 = *pAlpha1++;
+    const DTYPE alpha2 = *pAlpha2++;
+    const DTYPE alpha3 = *pAlpha3++;
+    for (int c=0;c<nbc;c++)
+    {
         DTYPE b = *pB0++;
-            
-        v0 += alpha0 * b;
-        v1 += alpha1 * b;
-        v2 += alpha2 * b;
-        v3 += alpha3 * b;
-    
-      }
-
-      p0[0] = v0;
-      p1[0] = v1;
-      p2[0] = v2;
-      p3[0] = v3;
-      
+        
+        v0[c] += alpha0 * b;
+        v1[c] += alpha1 * b;
+        v2[c] += alpha2 * b;
+        v3[c] += alpha3 * b;
+    }
   }
-  else if (nbc == 2)
-  {
-      DTYPE v0[2];
-      DTYPE v1[2];
-      DTYPE v2[2];
-      DTYPE v3[2];
-      for(int i=0;i<2;i++)
-      {
-         v0[i] = p0[i];
-         v1[i] = p1[i];
-         v2[i] = p2[i];
-         v3[i] = p3[i];
-      }
-    
-      for (int k=0; k < r ; k ++) 
-      {
-        const DTYPE alpha0 = *pAlpha0++;
-        const DTYPE alpha1 = *pAlpha1++;
-        const DTYPE alpha2 = *pAlpha2++;
-        const DTYPE alpha3 = *pAlpha3++;
-        for (int c=0;c<2;c++)
-        {
-            DTYPE b = *pB0++;
-            
-            v0[c] += alpha0 * b;
-            v1[c] += alpha1 * b;
-            v2[c] += alpha2 * b;
-            v3[c] += alpha3 * b;
-        }
-    
-      }
 
-      for(int i=0;i<2;i++)
-      {
-         p0[i] = v0[i];
-         p1[i] = v1[i];
-         p2[i] = v2[i];
-         p3[i] = v3[i];
-      }
-  }
-  else
+  for(int i=0;i<nbc;i++)
   {
-      DTYPE v0[3];
-      DTYPE v1[3];
-      DTYPE v2[3];
-      DTYPE v3[3];
-      for(int i=0;i<3;i++)
-      {
-         v0[i] = p0[i];
-         v1[i] = p1[i];
-         v2[i] = p2[i];
-         v3[i] = p3[i];
-      }
-    
-      for (int k=0; k < r ; k ++) 
-      {
-        const DTYPE alpha0 = *pAlpha0++;
-        const DTYPE alpha1 = *pAlpha1++;
-        const DTYPE alpha2 = *pAlpha2++;
-        const DTYPE alpha3 = *pAlpha3++;
-        for (int c=0;c<3;c++)
-        {
-            DTYPE b = *pB0++;
-            
-            v0[c] += alpha0 * b;
-            v1[c] += alpha1 * b;
-            v2[c] += alpha2 * b;
-            v3[c] += alpha3 * b;
-        }
-    
-      }
-
-      for(int i=0;i<3;i++)
-      {
-         p0[i] = v0[i];
-         p1[i] = v1[i];
-         p2[i] = v2[i];
-         p3[i] = v3[i];
-      }
+     p0[i] = v0[i];
+     p1[i] = v1[i];
+     p2[i] = v2[i];
+     p3[i] = v3[i];
   }
 }
 
@@ -1361,108 +1284,41 @@ __STATIC_INLINE void EXT(kernel_3rxc)(int cols,DTYPE *pC,int xp,int r,int nbc) {
   const DTYPE *pAlpha1 = pAlpha0 + r;
   const DTYPE *pAlpha2 = pAlpha1 + r;
 
-  if (nbc == 1)
+  
+  DTYPE v0[LANE-1];
+  DTYPE v1[LANE-1];
+  DTYPE v2[LANE-1];
+
+  for(int i=0;i<nbc;i++)
   {
-      DTYPE v0;
-      DTYPE v1;
-      DTYPE v2;
-    
-      v0 = p0[0];
-      v1 = p1[0];
-      v2 = p2[0];
-      
-      for (int k=0; k < r ; k ++) 
-      {
-        const DTYPE alpha0 = *pAlpha0++;
-        const DTYPE alpha1 = *pAlpha1++;
-        const DTYPE alpha2 = *pAlpha2++;
+     v0[i] = p0[i];
+     v1[i] = p1[i];
+     v2[i] = p2[i];
+  }
+  
+  for (int k=0; k < r ; k ++) 
+  {
+    const DTYPE alpha0 = *pAlpha0++;
+    const DTYPE alpha1 = *pAlpha1++;
+    const DTYPE alpha2 = *pAlpha2++;
+    for (int c=0;c<nbc;c++)
+    {
         DTYPE b = *pB0++;
-            
-        v0 += alpha0 * b;
-        v1 += alpha1 * b;
-        v2 += alpha2 * b;
-    
-      }
-    
-      p0[0] = v0;
-      p1[0] = v1;
-      p2[0] = v2;
-  }
-  else if (nbc == 2)
-  {
-      DTYPE v0[2];
-      DTYPE v1[2];
-      DTYPE v2[2];
-    
-      for(int i=0;i<2;i++)
-      {
-         v0[i] = p0[i];
-         v1[i] = p1[i];
-         v2[i] = p2[i];
-      }
-      
-      for (int k=0; k < r ; k ++) 
-      {
-        const DTYPE alpha0 = *pAlpha0++;
-        const DTYPE alpha1 = *pAlpha1++;
-        const DTYPE alpha2 = *pAlpha2++;
-        for (int c=0;c<2;c++)
-        {
-            DTYPE b = *pB0++;
-            
-            v0[c] += alpha0 * b;
-            v1[c] += alpha1 * b;
-            v2[c] += alpha2 * b;
-        }
-    
-      }
-    
-      for(int i=0;i<2;i++)
-      {
-         p0[i] = v0[i];
-         p1[i] = v1[i];
-         p2[i] = v2[i];
-      }
-  }
-  else
-  {
-      DTYPE v0[3];
-      DTYPE v1[3];
-      DTYPE v2[3];
-    
-      for(int i=0;i<3;i++)
-      {
-         v0[i] = p0[i];
-         v1[i] = p1[i];
-         v2[i] = p2[i];
-      }
-      
-      for (int k=0; k < r ; k ++) 
-      {
-        const DTYPE alpha0 = *pAlpha0++;
-        const DTYPE alpha1 = *pAlpha1++;
-        const DTYPE alpha2 = *pAlpha2++;
-        for (int c=0;c<3;c++)
-        {
-            DTYPE b = *pB0++;
-            
-            v0[c] += alpha0 * b;
-            v1[c] += alpha1 * b;
-            v2[c] += alpha2 * b;
-        }
-    
-      }
-    
-      for(int i=0;i<3;i++)
-      {
-         p0[i] = v0[i];
-         p1[i] = v1[i];
-         p2[i] = v2[i];
-      }
+        
+        v0[c] += alpha0 * b;
+        v1[c] += alpha1 * b;
+        v2[c] += alpha2 * b;
+    }
+
   }
 
+  for(int i=0;i<nbc;i++)
+  {
+     p0[i] = v0[i];
+     p1[i] = v1[i];
+     p2[i] = v2[i];
+  }
 
- 
 }
 
 __STATIC_INLINE void EXT(kernel_2rxc)(int cols,DTYPE *pC,int xp,int r,int nbc) {
@@ -1476,98 +1332,38 @@ __STATIC_INLINE void EXT(kernel_2rxc)(int cols,DTYPE *pC,int xp,int r,int nbc) {
   const DTYPE *pAlpha0 = &packedA[xp * r];
   const DTYPE *pAlpha1 = pAlpha0 + r;
 
-  if (nbc == 1)
+  
+  DTYPE v0[LANE-1];
+  DTYPE v1[LANE-1];
+
+  for(int i=0;i<nbc;i++)
   {
-      DTYPE v0;
-      DTYPE v1;
-    
-      v0 = p0[0];
-      v1 = p1[0];
-      
-      for (int k=0; k < r ; k ++) 
-      {
-        const DTYPE alpha0 = *pAlpha0++;
-        const DTYPE alpha1 = *pAlpha1++;
-    
+     v0[i] = p0[i];
+     v1[i] = p1[i];
+  }
+  
+  
+  for (int k=0; k < r ; k ++) 
+  {
+    const DTYPE alpha0 = *pAlpha0++;
+    const DTYPE alpha1 = *pAlpha1++;
+
+    for (int c=0;c<nbc;c++)
+    {
         DTYPE b = *pB0++;
-            
-        v0 += alpha0 * b;
-        v1 += alpha1 * b;
-    
-      }
-    
-      p0[0] = v0;
-      p1[0] = v1;
-  }
-  else if (nbc == 2)
-  {
-      DTYPE v0[2];
-      DTYPE v1[2];
-    
-      for(int i=0;i<2;i++)
-      {
-         v0[i] = p0[i];
-         v1[i] = p1[i];
-      }
-      
-      
-      for (int k=0; k < r ; k ++) 
-      {
-        const DTYPE alpha0 = *pAlpha0++;
-        const DTYPE alpha1 = *pAlpha1++;
-    
-        for (int c=0;c<2;c++)
-        {
-            DTYPE b = *pB0++;
-            
-            v0[c] += alpha0 * b;
-            v1[c] += alpha1 * b;
-        }
-    
-      }
-    
-      for(int i=0;i<2;i++)
-      {
-         p0[i] = v0[i];
-         p1[i] = v1[i];
-      }
-  }
-  else
-  {
-      DTYPE v0[3];
-      DTYPE v1[3];
-    
-      for(int i=0;i<3;i++)
-      {
-         v0[i] = p0[i];
-         v1[i] = p1[i];
-      }
-      
-      
-      for (int k=0; k < r ; k ++) 
-      {
-        const DTYPE alpha0 = *pAlpha0++;
-        const DTYPE alpha1 = *pAlpha1++;
-    
-        for (int c=0;c<3;c++)
-        {
-            DTYPE b = *pB0++;
-            
-            v0[c] += alpha0 * b;
-            v1[c] += alpha1 * b;
-        }
-    
-      }
-    
-      for(int i=0;i<3;i++)
-      {
-         p0[i] = v0[i];
-         p1[i] = v1[i];
-      }
+        
+        v0[c] += alpha0 * b;
+        v1[c] += alpha1 * b;
+    }
+
   }
 
+  for(int i=0;i<nbc;i++)
+  {
+     p0[i] = v0[i];
+     p1[i] = v1[i];
+  }
 
- 
 }
 
 __STATIC_INLINE void EXT(kernel_1rxc)(int cols,DTYPE *pC,int xp,int r,int nbc) {
@@ -1579,80 +1375,32 @@ __STATIC_INLINE void EXT(kernel_1rxc)(int cols,DTYPE *pC,int xp,int r,int nbc) {
 
   const DTYPE *pAlpha0 = &packedA[xp * r];
 
-  if (nbc == 1)
+ 
+  DTYPE v0[LANE-1];
+
+  for(int i=0;i<nbc;i++)
   {
-       DTYPE v0;
-
-       v0 = p0[0];
-       
-       for (int k=0; k < r ; k ++) 
-       {
-         const DTYPE alpha0 = *pAlpha0++;
-
-         DTYPE b = *pB0++;
-             
-          v0 += alpha0 * b;
-
-       }
-
-       p0[0] = v0;
+      v0[i] = p0[i];
   }
-  else if (nbc == 2)
-  {
-       DTYPE v0[2];
-
-       for(int i=0;i<2;i++)
-       {
-          v0[i] = p0[i];
-       }
        
-       for (int k=0; k < r ; k ++) 
-       {
-         const DTYPE alpha0 = *pAlpha0++;
-
-         for (int c=0;c<2;c++)
-         {
-             DTYPE b = *pB0++;
-             
-             v0[c] += alpha0 * b;
-         }
-
-       }
-
-       for(int i=0;i<2;i++)
-       {
-          p0[i] = v0[i];
-       }
-  }
-  else
+  for (int k=0; k < r ; k ++) 
   {
-       DTYPE v0[3];
+    const DTYPE alpha0 = *pAlpha0++;
 
-       for(int i=0;i<3;i++)
-       {
-          v0[i] = p0[i];
-       }
-       
-       for (int k=0; k < r ; k ++) 
-       {
-         const DTYPE alpha0 = *pAlpha0++;
-
-         for (int c=0;c<3;c++)
-         {
-             DTYPE b = *pB0++;
+    for (int c=0;c<nbc;c++)
+    {
+      DTYPE b = *pB0++;
              
-             v0[c] += alpha0 * b;
-         }
+      v0[c] += alpha0 * b;
+    }
 
-       }
-
-       for(int i=0;i<3;i++)
-       {
-          p0[i] = v0[i];
-       }
   }
 
-
+  for(int i=0;i<nbc;i++)
+  {
+    p0[i] = v0[i];
+  }
+  
 }
 
 #define PACK(BUF,PACKED,WIDTH,HEIGHT,RB,CB,ROW,COL)     \
@@ -1709,10 +1457,10 @@ ARM_DSP_ATTRIBUTE arm_status EXT(arm_mat_mult) (
 
           int col=0;
 
-          for (; col <= (MIN(0 + COLS_BLOCK, cols - block_col)-DC); col += DC)
+          for (; col <= (MIN(0 + COLS_BLOCK, cols - block_col)-(4*LANE)); col += (4*LANE))
           {
             int row=0;
-            PACK(b,PACKEDB,cols,inners,max_inner,DC,block_inner,block_col+col);
+            PACK(b,PACKEDB,cols,inners,max_inner,(4*LANE),block_inner,block_col+col);
 
             for (; row <= (max_rows-DR); row += DR)
             {
@@ -1738,10 +1486,10 @@ ARM_DSP_ATTRIBUTE arm_status EXT(arm_mat_mult) (
           } // end block col
 
 
-          for (; col <= (MIN(0 + COLS_BLOCK, cols - block_col)-12); col += 12)
+          for (; col <= (MIN(0 + COLS_BLOCK, cols - block_col)-(3*LANE)); col += (3*LANE))
           {
              int row=0;
-             PACK(b,PACKEDB,cols,inners,max_inner,12,block_inner,block_col+col);
+             PACK(b,PACKEDB,cols,inners,max_inner,(3*LANE),block_inner,block_col+col);
 
              for (; row <= (max_rows-DR); row += DR)
              {
@@ -1764,10 +1512,10 @@ ARM_DSP_ATTRIBUTE arm_status EXT(arm_mat_mult) (
              }
           }
 
-          for (; col <= (MIN(0 + COLS_BLOCK, cols - block_col)-8); col += 8)
+          for (; col <= (MIN(0 + COLS_BLOCK, cols - block_col)-(2*LANE)); col += (2*LANE))
           {
             int row=0;
-            PACK(b,PACKEDB,cols,inners,max_inner,8,block_inner,block_col+col);
+            PACK(b,PACKEDB,cols,inners,max_inner,(2*LANE),block_inner,block_col+col);
 
             for (; row <= (max_rows-DR); row += DR)
             {
@@ -1790,10 +1538,10 @@ ARM_DSP_ATTRIBUTE arm_status EXT(arm_mat_mult) (
             }
           }
 
-          for (; col <= (MIN(0 + COLS_BLOCK, cols - block_col)-4); col += 4)
+          for (; col <= (MIN(0 + COLS_BLOCK, cols - block_col)-(1*LANE)); col += (1*LANE))
           {
             int row=0;
-            PACK(b,PACKEDB,cols,inners,max_inner,4,block_inner,block_col+col);
+            PACK(b,PACKEDB,cols,inners,max_inner,(1*LANE),block_inner,block_col+col);
 
             for (; row <= (max_rows-DR); row += DR)
             {
