@@ -3,22 +3,22 @@
 
     void SupportQ7::test_copy_q7()
     {
-       
+       arm_copy_q7(this->pSrc, this->pDst, this->nbSamples);
     } 
 
     void SupportQ7::test_fill_q7()
     {
-
+       arm_fill_q7(0x97, this->pDst, this->nbSamples);
     }
 
     void SupportQ7::test_q15_to_q7()
     {
-
+       arm_q15_to_q7(this->pSrcQ15, this->pDst, this->nbSamples);
     }
 
     void SupportQ7::test_q31_to_q7()
     {
-
+       arm_q31_to_q7(this->pSrcQ31, this->pDst, this->nbSamples);
     }
 
     void SupportQ7::setUp(Testing::testID_t id,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr)

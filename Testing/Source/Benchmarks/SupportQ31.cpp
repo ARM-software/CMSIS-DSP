@@ -4,22 +4,22 @@
    
     void SupportQ31::test_copy_q31()
     {
-       
+       arm_copy_q31(this->pSrc, this->pDst, this->nbSamples);       
     } 
 
     void SupportQ31::test_fill_q31()
     {
-
+       arm_fill_q31(0xaf, this->pDst, this->nbSamples);
     }
 
     void SupportQ31::test_q7_to_q31()
     {
-
+       arm_q7_to_q31(this->pSrcQ7, this->pDst, this->nbSamples);
     }
 
     void SupportQ31::test_q15_to_q31()
     {
-
+       arm_q15_to_q31(this->pSrcQ15, this->pDst, this->nbSamples);
     }
 
     void SupportQ31::setUp(Testing::testID_t id,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr)
