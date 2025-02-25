@@ -105,7 +105,7 @@ Semihosting driver. Used to read a text file describing how to drive the test.
       void recomputeTestDir();
       // Get the path to a pattern from a pattern ID
       std::string getPatternPath(Testing::PatternID_t id);
-      // Get a path to an output file from an ouput category
+      // Get a path to an output file from an output category
       // (test ID will be used so same output ID
       // is giving different names for different tests)
       std::string getOutputPath(Testing::outputID_t id);
@@ -131,7 +131,7 @@ Semihosting driver. Used to read a text file describing how to drive the test.
       // (where to find pattenrs)
       std::string testDir;
       // Array of folder used to build the 
-      // testDir parth
+      // testDir path
       std::vector<std::string> *path;
       // Root directory for patterns
       std::string patternRootPath;

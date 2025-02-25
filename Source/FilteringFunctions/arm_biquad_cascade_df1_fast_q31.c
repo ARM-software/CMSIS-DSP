@@ -50,7 +50,7 @@
                    These intermediate results are added to a 2.30 accumulator.
                    Finally, the accumulator is saturated and converted to a 1.31 result.
                    The fast version has the same overflow behavior as the standard version and provides less precision since it discards the low 32 bits of each multiplication result.
-                   In order to avoid overflows completely the input signal must be scaled down by two bits and lie in the range [-0.25 +0.25). Use the intialization function
+                   In order to avoid overflows completely the input signal must be scaled down by two bits and lie in the range [-0.25 +0.25). Use the initialization function
                    arm_biquad_cascade_df1_init_q31() to initialize filter structure.
   @remark
                    Refer to \ref arm_biquad_cascade_df1_q31() for a slower implementation of this function

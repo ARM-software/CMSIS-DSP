@@ -115,12 +115,12 @@ void arm_f16_to_float(const float16_t * pSrc, float32_t * pDst, uint32_t blockSi
 /**
  * @brief Weighted average
  * @param[in]    *in           Array of input values.
- * @param[in]    *weigths      Weights
+ * @param[in]    *weights      Weights
  * @param[in]    blockSize     Number of samples in the input array.
  * @return Weighted average
  */
 float16_t arm_weighted_average_f16(const float16_t *in
-  , const float16_t *weigths
+  , const float16_t *weights
   , uint32_t blockSize);
 
 

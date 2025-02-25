@@ -46,7 +46,7 @@ void initCycleMeasurement()
     int32_t   value = 1;
     
 
-    // peform reset:
+    // perform reset:
     if (DO_RESET)
     {
         value |= 2;             // reset all counters to zero.

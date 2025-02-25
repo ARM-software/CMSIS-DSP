@@ -97,7 +97,7 @@ ARM_DSP_ATTRIBUTE void arm_svm_polynomial_predict_f16(
     row = numRows;
 
     /*
-     * compute 4 rows in parrallel
+     * compute 4 rows in parallel
      */
     while (row >= 4) {
         const float16_t *pInA2, *pInA3;
@@ -193,7 +193,7 @@ ARM_DSP_ATTRIBUTE void arm_svm_polynomial_predict_f16(
     }
 
     /*
-     * compute 2 rows in parrallel
+     * compute 2 rows in parallel
      */
     if (row >= 2) {
         float16_t const *pSrcA0Vec, *pSrcA1Vec, *pInVec;

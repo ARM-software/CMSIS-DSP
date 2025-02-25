@@ -44,7 +44,7 @@ struct number_traits<std::complex<float16_t>>
 };
 
 /**
- * @brief      float16 vector descrition when no vector architecture
+ * @brief      float16 vector description when no vector architecture
  */
 template<typename arch>
 struct vector_traits<std::complex<float16_t>,arch,

@@ -78,7 +78,7 @@ __STATIC_FORCEINLINE q31_t divide(q31_t n, q31_t d)
   (void)status;
   
   // d is used instead of l
-  // So we will need to substract to 2 instead of 1.
+  // So we will need to subtract to 2 instead of 1.
   r = mul32x16(d,inverse);
   r = TWO_Q30 - (r << shift);
   r = mul32x16(r, inverse);

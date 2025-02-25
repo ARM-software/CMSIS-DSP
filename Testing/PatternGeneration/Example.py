@@ -68,7 +68,7 @@ def generatePatterns():
     
     
     # Test patterns for each config are generated.
-    # Second argument may be used to vary the content fo files
+    # Second argument may be used to vary the content of files
     # depending on the type.
     #
     # For instance, in Tools there is Tools.loopnb which can be used

@@ -40,7 +40,7 @@ struct VectorView
     /**
     * @brief  Compute the number of elements in the vector view
     * @param start Vector view start index
-    * @param stop Vector view stop index (first elemnt after the view)
+    * @param stop Vector view stop index (first element after the view)
     * @return Vector dimension
     *
     */
@@ -53,7 +53,7 @@ struct VectorView
     * @brief  Create a vector view on a buffer
     * @param v Buffer of samples (not owned by the view)
     * @param start Start index of the view
-    * @param stop Stop index of the view (first elemnt after the view)
+    * @param stop Stop index of the view (first element after the view)
     *
     */
     explicit VectorView(T *v,const vector_length_t start,const vector_length_t stop):
@@ -71,7 +71,7 @@ struct VectorView
     * @brief  Create a vector view on vector
     * @param v Vector storage (not owned by the view)
     * @param start Start index of the view
-    * @param stop Stop index of the view (first elemnt after the view)
+    * @param stop Stop index of the view (first element after the view)
     *
     */
     explicit VectorView(const Vector_Base<T> &v,const index_t start,const index_t stop):
@@ -224,7 +224,7 @@ struct VectorView
     * @param other the other vector view
     *
     * The new vector view will point to the same storage as the
-    * other vector view. No copy of element is occuring.
+    * other vector view. No copy of element is occurring.
     * To copy vector view content, the expr and copy operators
     * are needed.
     */
@@ -237,7 +237,7 @@ struct VectorView
     * @param other the other vector view
     *
     * The new vector view will point to the same storage as the
-    * other vector view. No copy of element is occuring.
+    * other vector view. No copy of element is occurring.
     *
     * The other vector view is no more valid (points to null storage)
     */
@@ -487,7 +487,7 @@ struct VectorView<T,DYNAMIC>
     /**
     * @brief  Compute the number of elements in the vector view
     * @param start Vector view start index
-    * @param stop Vector view stop index (first elemnt after the view)
+    * @param stop Vector view stop index (first element after the view)
     * @param stride Stride (only known at runtime)
     * @return Vector dimension
     *
@@ -501,7 +501,7 @@ struct VectorView<T,DYNAMIC>
     * @brief  Create a vector view on a buffer
     * @param v Buffer of samples (not owned by the view)
     * @param start Start index of the view
-    * @param stop Stop index of the view (first elemnt after the view)
+    * @param stop Stop index of the view (first element after the view)
     * @param stride Stride (only known at runtime)
     *
     */
@@ -681,7 +681,7 @@ struct VectorView<T,DYNAMIC>
     * @param other the other vector view
     *
     * The new vector view will point to the same storage as the
-    * other vector view. No copy of element is occuring.
+    * other vector view. No copy of element is occurring.
     * To copy vector view content, the expr and copy operators
     * are needed.
     */
@@ -694,7 +694,7 @@ struct VectorView<T,DYNAMIC>
     * @param other the other vector view
     *
     * The new vector view will point to the same storage as the
-    * other vector view. No copy of element is occuring.
+    * other vector view. No copy of element is occurring.
     *
     * The other vector view is no more valid (points to null storage)
     */

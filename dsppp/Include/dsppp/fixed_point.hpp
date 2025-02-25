@@ -404,7 +404,7 @@ struct Q<M,F,true,int64_t> {
    * 
    * Some problem may occur since the unsigned may not be representable
    * with the less bits required for the sign representation.
-   * This convertion is not saturating.
+   * This conversion is not saturating.
    */
   constexpr explicit Q(const Q<M,F,false>&other) 
     :v{value_type(other.v)} {};
@@ -736,7 +736,7 @@ struct Q<M,F,true,int32_t> {
    * 
    * Some problem may occur since the unsigned may not be representable
    * with the less bits required for the sign representation.
-   * This convertion is not saturating.
+   * This conversion is not saturating.
    */
   constexpr explicit Q(const Q<M,F,false>&other):
   v{value_type(other.v)} {};
@@ -1078,7 +1078,7 @@ struct Q<M,F,true,int16_t> {
    * 
    * Some problem may occur since the unsigned may not be representable
    * with the less bits required for the sign representation.
-   * This convertion is not saturating.
+   * This conversion is not saturating.
    */
   constexpr explicit Q(const Q<M,F,false>&other):v{value_type(other.v)} {};
 
@@ -1433,7 +1433,7 @@ struct Q<M,F,true,int8_t> {
    * 
    * Some problem may occur since the unsigned may not be representable
    * with the less bits required for the sign representation.
-   * This convertion is not saturating.
+   * This conversion is not saturating.
    */
   constexpr explicit Q(const Q<M,F,false>&other):v{value_type(other.v)} {};
 
@@ -2229,7 +2229,7 @@ struct Accumulate<MD,MS,F,S,true> {
  * @param[in]  b     Second fixed point number
  *
  * @tparam     MD    Number of mantissa bits for destination
- * @tparam     MS    Number of mantissa bits fro source
+ * @tparam     MS    Number of mantissa bits for source
  * @tparam     F     Number of fractional bits
  * @tparam     S     Is the representation signed
  *

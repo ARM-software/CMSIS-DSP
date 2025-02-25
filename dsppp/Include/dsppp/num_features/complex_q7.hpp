@@ -48,7 +48,7 @@ struct number_traits<std::complex<Q<17,14>>>
 };
 
 /**
- * @brief      Vector descrition when no vector architecture
+ * @brief      Vector description when no vector architecture
  *
  * @tparam     arch  Current architecture
  */

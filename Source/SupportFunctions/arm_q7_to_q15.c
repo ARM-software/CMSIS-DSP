@@ -125,7 +125,7 @@ ARM_DSP_ATTRIBUTE void arm_q7_to_q15(
     /* rotatate in by 8 and extend two q7_t values to q15_t values */
     in1 = __SXTB16(__ROR(in, 8));
 
-    /* extend remainig two q7_t values to q15_t values */
+    /* extend remaining two q7_t values to q15_t values */
     in2 = __SXTB16(in);
 
     in1 = in1 << 8U;

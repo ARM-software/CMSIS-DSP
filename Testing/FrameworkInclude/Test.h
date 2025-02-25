@@ -41,7 +41,7 @@
 #define MAX_NB_SAMPLES 0
 
 // Pattern files are containing hexadecimal values.
-// So we need to be able to convert some int into float without convertion
+// So we need to be able to convert some int into float without conversion
 //#define TOINT16(v) *((uint16_t*)&v)
 //#define TOINT32(v) *((uint32_t*)&v)
 //#define TOINT64(v) *((uint64_t*)&v)
@@ -49,7 +49,7 @@
 #define TOINT16(d,v) memcpy(&d,&v,2)
 #define TOINT32(d,v) memcpy(&d,&v,4)
 #define TOINT64(d,v) memcpy(&d,&v,8)
-// Or convert some  float into a uint32 or uint64 without convertion
+// Or convert some  float into a uint32 or uint64 without conversion
 //#define TOTYP(TYP,v) *((TYP*)&v)
 // So it is a cast and not a data conversion.
 // (uint32_t)1.0 would give 1. We want the hexadecimal representation of the float.
@@ -159,14 +159,14 @@ API of Memory managers used in the test framework
 
     // Memory allocation errors must be tracked during a test.
     // The runner should force the test status to FAILED
-    // when a memory error occured.
+    // when a memory error occurred.
     virtual bool HasMemError()=0;
 
     // When memory manager is supporting tail
     // then we can check that the tail of the buffer has not been 
     // corrupted.
     // The tail being the additional words after the end of the buffer allocated
-    // by the memory manager so that there is some seperation between
+    // by the memory manager so that there is some separation between
     // successive buffers.
     // When memory manager is not supporting tail, this function should
     // always succeed.
@@ -323,7 +323,7 @@ API of Memory managers used in the test framework
           It is not using the Memory manager since tests don't have access
           to the array of parameters.
 
-          They receive parameters as a vector argument for the setUp fucntion.
+          They receive parameters as a vector argument for the setUp function.
       */
       virtual Testing::param_t* ImportParams(Testing::PatternID_t,Testing::nbParameterEntries_t &,Testing::ParameterKind &)=0;
 
@@ -395,7 +395,7 @@ API of Memory managers used in the test framework
 // It knows how to import patterns into memory or dump
 // memory into outputs (output which may be different from a file)
 // The running mode is controlling if dumping is disabled or not.
-// But cna also be used by the runner to know if test results must be ignored or not.
+// But can also be used by the runner to know if test results must be ignored or not.
 // Pattern manager is used by the tests
 // In current version load and dump functions are visible to any body.
 // In theory they should only be visible to Patterns
@@ -408,7 +408,7 @@ public:
         maxSamples is coming from the test.
 
         A test does not know what is the length of a pattern since the test
-        has no visiblity on how the pattern is imported (file, serial port, include files
+        has no visibility on how the pattern is imported (file, serial port, include files
         etc ...).
 
         So the test is specifying the max sampls it needs.
@@ -435,7 +435,7 @@ public:
     /** Create a local pattern.
 
         Generally it is used as output of a test and has no
-        correspondance to a pattern in the suite.
+        correspondence to a pattern in the suite.
 
     */
     float64_t *local_f64(Testing::nbSamples_t);
@@ -489,7 +489,7 @@ public:
 
     // Memory allocation errors must be tracked during a test.
     // The runner should force the test status to FAILED
-    // when a memory error occured.
+    // when a memory error occurred.
     bool HasMemError()
     {
       return(m_mem->HasMemError());

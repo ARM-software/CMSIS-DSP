@@ -173,10 +173,10 @@ ARM_DSP_ATTRIBUTE void arm_correlate_fast_opt_q15(
 
   while (blkCnt > 0)
   {
-    /* Initialze temporary scratch pointer as scratch1 */
+    /* Initialize temporary scratch pointer as scratch1 */
     pScr1 = pScratch;
 
-    /* Clear Accumlators */
+    /* Clear Accumulators */
     acc0 = 0;
     acc1 = 0;
     acc2 = 0;
@@ -292,10 +292,10 @@ ARM_DSP_ATTRIBUTE void arm_correlate_fast_opt_q15(
   /* Calculate correlation for remaining samples of Bigger length sequence */
   while (blkCnt > 0)
   {
-    /* Initialze temporary scratch pointer as scratch1 */
+    /* Initialize temporary scratch pointer as scratch1 */
     pScr1 = pScratch;
 
-    /* Clear Accumlators */
+    /* Clear Accumulators */
     acc0 = 0;
 
     tapCnt = (srcBLen) >> 1U;

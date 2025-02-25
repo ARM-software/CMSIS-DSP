@@ -44,7 +44,7 @@ extern "C"
 #endif
 
 
-/* Included for instrinsics definitions */
+/* Included for intrinsics definitions */
 #if defined (_MSC_VER ) 
 #include <stdint.h>
 #define __STATIC_FORCEINLINE static __forceinline

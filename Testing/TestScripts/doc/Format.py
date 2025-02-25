@@ -16,7 +16,7 @@ def joinit(iterable, delimiter):
 # First we order the categories
 # Then we order the cores in each category
 # The final ORDEREDCORES is what is used
-# to order tjhe values
+# to order the values
 # Since some cores may be missing, each atble display
 # is computing a rstricted ordered core list with only the available cores.
 CORTEXCATEGORIES=["Cortex-M","Cortex-R","Cortex-A"]

@@ -362,7 +362,7 @@ def analyseResult(resultPath,root,results,embedded,benchmark,trace,formatter):
     calibration = 0
     if trace:
       # First cycle in the trace is the calibration data
-      # The noramlisation factor must be coherent with the C code one.
+      # The normalisation factor must be coherent with the C code one.
       calibration = int(getCyclesFromTrace(trace) / 20)
     formatter.start()
     path = []

@@ -26,7 +26,7 @@
  */
 
 /*
- * CMSIS-DSP f16 implementtaion based upon the Ne10 f32 one
+ * CMSIS-DSP f16 implementation based upon the Ne10 f32 one
  */
 
 #include <arm_neon.h>

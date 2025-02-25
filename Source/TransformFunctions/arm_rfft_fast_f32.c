@@ -309,7 +309,7 @@ static void merge_rfft_f32(
 #elif defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 /*
 
-No stage merge functins defined here for Neon.
+No stage merge functions defined here for Neon.
 
 */
 #else

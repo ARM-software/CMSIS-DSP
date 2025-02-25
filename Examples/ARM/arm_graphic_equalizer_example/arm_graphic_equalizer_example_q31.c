@@ -73,7 +73,7 @@
  * \par
  * \image html GEQ_allbandresponse.gif
  * \par
- * Each 4th order filter has 10 coefficents for a grand total of 950 different filter
+ * Each 4th order filter has 10 coefficients for a grand total of 950 different filter
  * coefficients that must be tabulated. The input and output data is in Q31 format.
  * For better noise performance, the two low frequency bands are implemented using the high
  * precision 32x64-bit Biquad filters. The remaining 3 high frequency bands use standard

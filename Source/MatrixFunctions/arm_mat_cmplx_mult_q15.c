@@ -464,7 +464,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_q15(
           pSourceA = read_q15x2_ia (&pInA);
           pSourceB = read_q15x2_ia (&pInB);
 
-          /* Multiply and Accumlates */
+          /* Multiply and Accumulates */
 #ifdef ARM_MATH_BIG_ENDIAN
           prod1 = -__SMUSD(pSourceA, pSourceB);
 #else
@@ -478,7 +478,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_q15(
           pSourceA = read_q15x2_ia (&pInA);
           pSourceB = read_q15x2_ia (&pInB);
 
-          /* Multiply and Accumlates */
+          /* Multiply and Accumulates */
 #ifdef ARM_MATH_BIG_ENDIAN
           prod1 = -__SMUSD(pSourceA, pSourceB);
 #else
@@ -497,7 +497,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_q15(
           c = *pInB;
           d = *(pInB + 1U);
 
-          /* Multiply and Accumlates */
+          /* Multiply and Accumulates */
           sumReal += (q31_t) a *c;
           sumImag += (q31_t) a *d;
           sumReal -= (q31_t) b *d;
@@ -513,7 +513,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_q15(
           /* update pointer */
           pInA += 4U;
 
-          /* Multiply and Accumlates */
+          /* Multiply and Accumulates */
           sumReal += (q31_t) a * c;
           sumImag += (q31_t) a * d;
           sumReal -= (q31_t) b * d;
@@ -537,7 +537,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_q15(
           pSourceA = read_q15x2_ia (&pInA);
           pSourceB = read_q15x2_ia (&pInB);
 
-          /* Multiply and Accumlates */
+          /* Multiply and Accumulates */
 #ifdef ARM_MATH_BIG_ENDIAN
           prod1 = -__SMUSD(pSourceA, pSourceB);
 #else
@@ -555,7 +555,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_q15(
           c = *pInB++;
           d = *pInB++;
 
-          /* Multiply and Accumlates */
+          /* Multiply and Accumulates */
           sumReal += (q31_t) a * c;
           sumImag += (q31_t) a * d;
           sumReal -= (q31_t) b * d;

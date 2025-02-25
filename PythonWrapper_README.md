@@ -184,7 +184,7 @@ You convert back to a complex format to compare with scipy:
 
 ## Matrix 
 
-For matrix, the instance variables are masked by the Python API. We decided that for matrix only there was no use for having the [CMSIS-DSP](https://github.com/ARM-software/CMSIS-DSP) instance visibles since they contain the same information as the numpy array (samples and dimension).
+For matrix, the instance variables are masked by the Python API. We decided that for matrix only there was no use for having the [CMSIS-DSP](https://github.com/ARM-software/CMSIS-DSP) instance visible since they contain the same information as the numpy array (samples and dimension).
 
 So to use a [CMSIS-DSP](https://github.com/ARM-software/CMSIS-DSP) matrix function, it is very simple:
 

@@ -31,7 +31,7 @@ LR_CODE S_DDR4_START {
      * set this region as Non-Secure Callable. The maximum size of this
      * executable region makes it only used the space left over by the ER_CODE
      * region so that you can rely on code+veneer size combined will not exceed
-     * the S_CODE_SIZE value. We also substract from the available space the
+     * the S_CODE_SIZE value. We also subtract from the available space the
      * area used to align this section on 32 bytes boundary (for SAU conf).
      */
     ER_CODE_CMSE_VENEER +0 ALIGN 32 {

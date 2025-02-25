@@ -1,7 +1,7 @@
 /* ----------------------------------------------------------------------
  * Project:      CMSIS DSP Library
  * Title:        CompexMathFunctions.c
- * Description:  Combination of all comlex math function source files.
+ * Description:  Combination of all complex math function source files.
  *
  * $Date:        18. March 2019
  * $Revision:    V1.0.0

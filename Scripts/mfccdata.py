@@ -1,7 +1,7 @@
 ###########################################
 # Project:      CMSIS DSP Library
 # Title:        mfccdata.py
-# Description:  Generation of MFCC arays for the MFCC C init function
+# Description:  Generation of MFCC arrays for the MFCC C init function
 # 
 # $Date:        07 September 2021
 # $Revision:    V1.10.0

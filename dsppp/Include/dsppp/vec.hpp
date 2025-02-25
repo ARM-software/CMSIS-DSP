@@ -583,7 +583,7 @@ inline _Expr<OP> operator+(const VA &a,
 /*
 
 Core algorithms that cannot be expressed only with high level
-abstractions and need intrinsincs.
+abstractions and need intrinsics.
 
 */
 #include "Helium/matrix_multiply.hpp"

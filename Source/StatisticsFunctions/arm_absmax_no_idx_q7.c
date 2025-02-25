@@ -97,7 +97,7 @@ ARM_DSP_ATTRIBUTE void arm_absmax_no_idx_q7(
         uint32_t blkCnt;                     /* Loop counter */                                   \
                                                                                                             \
                                                                                            \
-  /* Load first input value that act as reference value for comparision */                                  \
+  /* Load first input value that act as reference value for comparison */                                  \
   out = *pSrc++;                                                                                            \
   out = (out > 0) ? out : (q7_t)__QSUB8(0, out);                                                                           \
                                                                                               \
@@ -174,7 +174,7 @@ ARM_DSP_ATTRIBUTE void arm_absmax_no_idx_q7(
 
 
 
-  /* Load first input value that act as reference value for comparision */
+  /* Load first input value that act as reference value for comparison */
   out = (*pSrc > 0) ? *pSrc : ((*pSrc == (q7_t) 0x80) ? (q7_t) 0x7f : -*pSrc);
   pSrc++;
 

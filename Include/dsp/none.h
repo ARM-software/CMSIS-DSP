@@ -1,6 +1,6 @@
 /******************************************************************************
  * @file     none.h
- * @brief    Intrinsincs when no DSP extension available
+ * @brief    Intrinsics when no DSP extension available
  * @version  V1.9.0
  * @date     20. July 2020
  ******************************************************************************/

@@ -164,7 +164,7 @@ class CodeGen:
         with open(os.path.join(thedir,"%s_decl.h" % theClass),"w") as decl:
             # Use list of test functions to
             # declare them in the header.
-            # Since we don't want to declare the functino several times,
+            # Since we don't want to declare the function several times,
             # that's why we needed to keep track of functions in the code above:
             # to remove redundancies since the function
             # can appear several time in the root object.
@@ -223,7 +223,7 @@ class CodeGen:
            if root.kind == TestScripts.Parser.TreeElem.GROUP:
                # For a group, first iterate on the children then on the
                # parent because the parent definitino in the header is
-               # dependent on the children definition (member varaiables)
+               # dependent on the children definition (member variables)
                # So children must gbe defined before.
                for c in root:
                    self._genCode(c,dir,sourceFile,headerFile)
@@ -281,12 +281,12 @@ class CodeGen:
         Then, if node is a suite, description of the suite is generated.
          Number of parameters or 0
            It is the number of arguments used by function setUp (arity).
-           It is not the number of samples in a paramater file
+           It is not the number of samples in a parameter file
            The number of samples is always a multiple
            For instance if width and height are the parameters then number
            of parameters (arity) is 2.
            But each parameter file may contain several combination of (width,height)
-           So the lenght of those files will be a multiple of 2.
+           So the length of those files will be a multiple of 2.
 
          The number of patterns path is generated
          The patterns names are generated
@@ -315,7 +315,7 @@ class CodeGen:
 
         So, for a test (which is also a TreeElement in the structure),
         only node kind and node id are generated followed by 
-        param description and n for folder (since ther is never any folder)
+        param description and n for folder (since there is never any folder)
         
         In the test description file, there is never any way to change the pattern
         folder for a test.
@@ -436,7 +436,7 @@ class CodeGen:
             
       Args:
         v (int) : The int64 to write
-        f (file) : the opended file
+        f (file) : the opened file
       Raises:
         Nothing 
       Returns:
@@ -469,7 +469,7 @@ class CodeGen:
             
       Args:
         v (int) : The int32 to write
-        f (file) : the opended file
+        f (file) : the opened file
       Raises:
         Nothing 
       Returns:
@@ -495,7 +495,7 @@ class CodeGen:
             
       Args:
         v (int) : The int3 to write
-        f (file) : the opended file
+        f (file) : the opened file
       Raises:
         Nothing 
       Returns:
@@ -515,7 +515,7 @@ class CodeGen:
             
       Args:
         v (int) : The int to write
-        f (file) : the opended file
+        f (file) : the opened file
       Raises:
         Nothing 
       Returns:
@@ -533,7 +533,7 @@ class CodeGen:
               
         Args:
           v (str) : The string to write
-          f (file) : the opended file
+          f (file) : the opened file
         Raises:
           Nothing 
         Returns:
@@ -614,7 +614,7 @@ class CodeGen:
             pat.readline()
             # Then we read the Value 
             v = self.convertToInt(k,pat.readline())
-            # Depending on the word size, this hex must be writen to 
+            # Depending on the word size, this hex must be written to 
             # the C array as 4,2 or 1 number.
             if k == 'D':
                self._write64(v,includeFile)
@@ -679,7 +679,7 @@ class CodeGen:
             # and then a line giving the hex data
             # Then we read the Value 
             v = int(pat.readline().strip(),0)
-            # Depending on the word size, this hex must be writen to 
+            # Depending on the word size, this hex must be written to 
             # the C array as 4,2 or 1 number.
             self._write32(v,includeFile)
           # Add the padding to the pattern
@@ -850,7 +850,7 @@ class CodeGen:
       if benchMode:
         src += "Bench"
         header += "Bench"
-      # Generate .cpp and .h files neded to run the tests
+      # Generate .cpp and .h files needed to run the tests
       testDescCPath = os.path.join(src,"TestDesc.cpp")
       testDescHeaderPath = os.path.join(header,"TestDesc.h")
       with open(testDescCPath,"w") as sourceFile:

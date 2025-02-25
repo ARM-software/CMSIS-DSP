@@ -91,7 +91,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_sqrt_q31(
     temp = 0x30000000 - temp; 
     var1 = ((q63_t) var1 * temp) >> 29;
 
-    /* 3nd iteration */
+    /* 3rd iteration */
     temp = ((q63_t) var1 * var1) >> 28;
     temp = ((q63_t) number * temp) >> 31;
     temp = 0x30000000 - temp; 

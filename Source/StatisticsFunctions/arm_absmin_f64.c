@@ -56,7 +56,7 @@ ARM_DSP_ATTRIBUTE void arm_absmin_f64(
   /* Initialise index value to zero. */
   outIndex = 0U;
 
-  /* Load first input value that act as reference value for comparision */
+  /* Load first input value that act as reference value for comparison */
   out = fabs(*pSrc++);
 
   /* Initialize blkCnt with number of samples */

@@ -170,7 +170,7 @@ ARM_DSP_ATTRIBUTE void arm_absmax_q7(
                                                                                                             \
   /* Initialize index value to zero. */                                                                     \
   outIndex = 0U;                                                                                            \
-  /* Load first input value that act as reference value for comparision */                                  \
+  /* Load first input value that act as reference value for comparison */                                  \
   out = *pSrc++;                                                                                            \
   out = (out > 0) ? out : (q7_t)__QSUB8(0, out);                                                                           \
   /* Initialize index of extrema value. */                                                                  \
@@ -257,7 +257,7 @@ ARM_DSP_ATTRIBUTE void arm_absmax_q7(
 
   /* Initialise index value to zero. */
   outIndex = 0U;
-  /* Load first input value that act as reference value for comparision */
+  /* Load first input value that act as reference value for comparison */
   out = (*pSrc > 0) ? *pSrc : ((*pSrc == (q7_t) 0x80) ? (q7_t) 0x7f : -*pSrc);
   pSrc++;
 

@@ -156,7 +156,7 @@ ARM_DSP_ATTRIBUTE void arm_absmin_f32(
                                                                                                             \
   /* Initialize index value to zero. */                                                                     \
   outIndex = 0U;                                                                                            \
-  /* Load first input value that act as reference value for comparision */                                  \
+  /* Load first input value that act as reference value for comparison */                                  \
   out = *pSrc++;                                                                                            \
   out = (out > 0.0f) ? out : -out;                                                                             \
   /* Initialize index of extrema value. */                                                                  \
@@ -243,7 +243,7 @@ ARM_DSP_ATTRIBUTE void arm_absmin_f32(
   /* Initialise index value to zero. */
   outIndex = 0U;
 
-  /* Load first input value that act as reference value for comparision */
+  /* Load first input value that act as reference value for comparison */
   out = fabsf(*pSrc++);
 
   /* Initialize blkCnt with number of samples */

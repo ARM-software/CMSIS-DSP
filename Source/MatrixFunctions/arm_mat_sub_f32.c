@@ -36,7 +36,7 @@
   @defgroup MatrixSub Matrix Subtraction
 
   Subtract two matrices.
-  @par Subraction of two 3 x 3 matrices
+  @par Subtraction of two 3 x 3 matrices
   
   \f[
   \begin{pmatrix}

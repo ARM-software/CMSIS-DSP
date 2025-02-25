@@ -47,7 +47,7 @@
  *
  * \par Description:
  * \par
- * Demonstrates the use of Matrix Transpose, Matrix Muliplication, and Matrix Inverse
+ * Demonstrates the use of Matrix Transpose, Matrix Multiplication, and Matrix Inverse
  * functions to apply least squares fitting to input data. Least squares fitting is
  * the procedure for finding the best-fitting curve that minimizes the sum of the
  * squares of the offsets (least square error) from a given set of data.
@@ -96,7 +96,7 @@
 #define SNR_THRESHOLD   77
 
 /* --------------------------------------------------------------------------------
-* Test input data(Cycles) taken from FIR Q15 module for differant cases of blockSize
+* Test input data(Cycles) taken from FIR Q15 module for different cases of blockSize
 * and tapSize
 * --------------------------------------------------------------------------------- */
 
@@ -132,7 +132,7 @@ float32_t ATMAI_f32[16];
 float32_t X_f32[4];
 
 /* ----------------------------------------------------------------------
-* Reference ouput buffer C1, C2, C3 and C4 taken from MATLAB
+* Reference output buffer C1, C2, C3 and C4 taken from MATLAB
 * ------------------------------------------------------------------- */
 const float32_t xRef_f32[4] = {73.0, 8.0, 21.25, 2.875};
 

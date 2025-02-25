@@ -124,7 +124,7 @@ rows,columns = m.shape
 # wrapper to allocate two temporary buffers.
 # Like that you can check you have dimensionned the arrays in the
 # right way.
-# The content of the temporary buffers is not accesible from the
+# The content of the temporary buffers is not accessible from the
 # Python API. tmpa and tmpb are not modified.
 tmpa=np.zeros(rows)
 tmpb=np.zeros(rows)

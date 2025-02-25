@@ -18,7 +18,7 @@
 ; */
 
 /* Linker script to configure memory regions. */
-/* This file will be run trough the pre-processor. */
+/* This file will be run through the pre-processor. */
 
 #include "region_defs.h"
 

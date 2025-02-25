@@ -156,7 +156,7 @@ static void arm_fir_interpolate2_f32_mve(
      */
     pStateCurnt = S->pState + (phaseLen - 1U);
     /*
-     * Total number of intput samples
+     * Total number of input samples
      */
     blkCnt = blockSize;
     /*
@@ -288,7 +288,7 @@ ARM_DSP_ATTRIBUTE void arm_fir_interpolate_f32(
      */
     pStateCurnt = S->pState + (phaseLen - 1U);
     /*
-     * Total number of intput samples
+     * Total number of input samples
      */
     blkCnt = blockSize;
     /*
@@ -1169,7 +1169,7 @@ ARM_DSP_ATTRIBUTE void arm_fir_interpolate_f32(
   /* pStateCur points to the location where the new input data should be written */
   pStateCur = S->pState + (phaseLen - 1U);
 
-  /* Total number of intput samples */
+  /* Total number of input samples */
   blkCnt = blockSize;
 
   /* Loop over the blockSize. */

@@ -23,7 +23,7 @@
  * for C/C++ but for the linker scripts too.
  * Beware of the following limitations:
  *   - LD (GCC linker) requires white space around operators.
- *   - UL postfix for macros is not suported by the linker script
+ *   - UL postfix for macros is not supported by the linker script
  ****************************************************************/
 
 /* Secure Code */
