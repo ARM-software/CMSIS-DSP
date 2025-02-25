@@ -156,7 +156,7 @@ Functions</h2></td></tr>
 <tr class="separator:ga69c9c64338c067f1fb4990dcdc8c143f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
-<p>LMS filters are a class of adaptive filters that are able to "learn" an unknown transfer functions. LMS filters use a gradient descent method in which the filter coefficients are updated based on the instantaneous error signal. Adaptive filters are often used in communication systems, equalizers, and noise removal. The CMSIS DSP Library contains LMS filter functions that operate on Q15, Q31, and floating-point data types. The library also contains normalized LMS filters in which the filter coefficient adaptation is indepedent of the level of the input signal.</p>
+<p>LMS filters are a class of adaptive filters that are able to "learn" an unknown transfer functions. LMS filters use a gradient descent method in which the filter coefficients are updated based on the instantaneous error signal. Adaptive filters are often used in communication systems, equalizers, and noise removal. The CMSIS DSP Library contains LMS filter functions that operate on Q15, Q31, and floating-point data types. The library also contains normalized LMS filters in which the filter coefficient adaptation is independent of the level of the input signal.</p>
 <p>An LMS filter consists of two components as shown below. The first component is a standard transversal or FIR filter. The second component is a coefficient update mechanism. The LMS filter has two input signals. The "input" feeds the FIR filter while the "reference input" corresponds to the desired output of the FIR filter. That is, the FIR filter coefficients are updated so that the output of the FIR filter matches the reference input. The filter coefficient update mechanism is based on the difference between the FIR filter output and the reference input. This "error signal" tends towards zero as the filter adapts. The LMS processing functions accept the input and reference input signals and generate the filter output and error signal. </p><div class="image">
 <img src="LMS.gif" alt=""/>
 <div class="caption">
@@ -546,7 +546,7 @@ Internal structure of the Least Mean Square filter</div></div>
   </dd>
 </dl>
 <dl class="section user"><dt>Scaling and Overflow Behavior</dt><dd>The function is implemented using an internal 64-bit accumulator. Both coefficients and state variables are represented in 1.15 format and multiplications yield a 2.30 result. The 2.30 intermediate results are accumulated in a 64-bit accumulator in 34.30 format. There is no risk of internal overflow with this approach and the full precision of intermediate multiplications is preserved. After all additions have been performed, the accumulator is truncated to 34.15 format by discarding low 15 bits. Lastly, the accumulator is saturated to yield a result in 1.15 format. </dd></dl>
-<dl class="section user"><dt></dt><dd>In this filter, filter coefficients are updated for each sample and the updation of filter cofficients are saturted. </dd></dl>
+<dl class="section user"><dt></dt><dd>In this filter, filter coefficients are updated for each sample and the updation of filter coefficients are saturted. </dd></dl>
 
 </div>
 </div>
@@ -613,7 +613,7 @@ Internal structure of the Least Mean Square filter</div></div>
   </dd>
 </dl>
 <dl class="section user"><dt>Scaling and Overflow Behavior</dt><dd>The function is implemented using an internal 64-bit accumulator. The accumulator has a 2.62 format and maintains full precision of the intermediate multiplication results but provides only a single guard bit. Thus, if the accumulator result overflows it wraps around rather than clips. In order to avoid overflows completely the input signal must be scaled down by log2(numTaps) bits. The reference signal should not be scaled down. After all multiply-accumulates are performed, the 2.62 accumulator is shifted and saturated to 1.31 format to yield the final result. The output signal and error signal are in 1.31 format. </dd></dl>
-<dl class="section user"><dt></dt><dd>In this filter, filter coefficients are updated for each sample and the updation of filter cofficients are saturted. </dd></dl>
+<dl class="section user"><dt></dt><dd>In this filter, filter coefficients are updated for each sample and the updation of filter coefficients are saturted. </dd></dl>
 
 </div>
 </div>

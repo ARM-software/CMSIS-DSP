@@ -1,5 +1,5 @@
 var group__weightedaverage =
 [
-    [ "arm_weighted_average_f16", "group__weightedaverage.html#ga5109e2a8b99632973843d86bd7ad851b", null ],
-    [ "arm_weighted_average_f32", "group__weightedaverage.html#gacb3c3c0baca35abeb83b8cb3554046ab", null ]
+    [ "arm_weighted_average_f16", "group__weightedaverage.html#ga7f74b71feb5f74682dbff4e2e3bf8a95", null ],
+    [ "arm_weighted_average_f32", "group__weightedaverage.html#ga5e7af9827a42000ced487cff433010c8", null ]
 ];
