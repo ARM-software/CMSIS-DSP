@@ -576,7 +576,61 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q7(
     return(status);
 }
 #else
-ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q7(const arm_matrix_instance_q7 *pSrcA, const arm_matrix_instance_q7 *pSrcB, arm_matrix_instance_q7 *pDst, q7_t *pState)
+
+#if defined(ARM_MATH_NEON)
+
+/**
+ * @brief Q7 matrix multiplication
+ * @param[in]       *pSrcA points to the first input matrix structure
+ * @param[in]       *pSrcB points to the second input matrix structure
+ * @param[out]      *pDst points to output matrix structure
+ * @param[in]       *pState points to the array for storing intermediate results (Unused in some versions)
+ * @return          The function returns either
+ * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+ */
+
+#define LANE 16
+#define DTYPE q7_t
+#define VEC int8x16_t
+#define VECACC int16x8x2_t
+
+#define SCALARACC int32_t 
+#define SCALAR_LOAD_AND_WIDEN(DST,TMP0,PTR) DST = (SCALARACC)(*(PTR))
+#define SCALAR_STORE_AND_NARROW(PTR,HTMP0,VAL) *(PTR) = (q7_t) __SSAT((VAL) >> 7, 16)
+#define SCALAR_MAC_N(ACC,VEC,SCALAR) ACC += (SCALARACC)(VEC) * (SCALARACC)(SCALAR)
+
+#define HVEC int8x8x2_t
+#define VLOAD(PTR) vld1q_s8((PTR))
+
+#define VSTORE(PTR,VAL) vst1q_s8((PTR),(VAL))
+
+#define VLOAD_AND_WIDEN(DST,TMP0,PTR)           \
+    TMP0 = vld1q_s8((PTR));                    \
+    DST.val[0] = vmovl_s8(vget_low_s8(TMP0)); \
+    DST.val[1] = vmovl_s8(vget_high_s8(TMP0));
+
+#define VSTORE_AND_NARROW(PTR,HTMP,VAL) \
+    HTMP.val[0] = vqshrn_n_s16(VAL.val[0],7);    \
+    HTMP.val[1] = vqshrn_n_s16(VAL.val[1],7);    \
+    vst1q_s8(PTR,vcombine_s8(HTMP.val[0],HTMP.val[1]));
+
+    #define VMAC_N(ACC,VEC,SCALAR) \
+    ACC.val[0] = vmlal_s8(ACC.val[0],vget_low_s8(VEC),vdup_n_s8(SCALAR)); \
+    ACC.val[1] = vmlal_s8(ACC.val[1],vget_high_s8(VEC),vdup_n_s8(SCALAR));
+
+#define MATTYPE arm_matrix_instance_q7
+#define EXT(A) A##_q7
+#define HAS_TEMP_BUFFER
+#define USE_TMP_REGISTER
+
+#include "_arm_mat_mult_neon.c"
+
+
+#else
+ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q7(const arm_matrix_instance_q7 *pSrcA, 
+    const arm_matrix_instance_q7 *pSrcB,
+     arm_matrix_instance_q7 *pDst, 
+     q7_t *pState)
 {
     q31_t sum; /* accumulator */
     q7_t *pIn1 = pSrcA->pData;                    /* input data matrix pointer A */
@@ -671,6 +725,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q7(const arm_matrix_instance_q7 *pSrcA
     /* Return to application */
     return (status);
 }
+#endif /* #if defined(ARM_MATH_NEON) */
 #endif /* defined(ARM_MATH_MVEI) */
 
 /**

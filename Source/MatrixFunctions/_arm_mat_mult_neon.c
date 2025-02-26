@@ -17,6 +17,10 @@
 static __ALIGNED(16) char PACKEDB[4*INNER_BLOCK*DC];
 static __ALIGNED(16) char PACKEDA[4*ROWS_BLOCK*INNER_BLOCK];
 
+#if !defined(USE_TMP_REGISTER)
+#define tmpld
+#define htmp
+#endif
 
 // 4 row and 4 column VECtors
 __STATIC_INLINE void EXT(kernel_4rx4cv)(int cols,DTYPE *pC,int xp,int r) {
@@ -25,43 +29,64 @@ __STATIC_INLINE void EXT(kernel_4rx4cv)(int cols,DTYPE *pC,int xp,int r) {
   const DTYPE *packedA = (DTYPE*)PACKEDA;
 
   VEC tmp00,tmp01,tmp02,tmp03;
+
+  #if defined(USE_TMP_REGISTER)
+  VEC tmpld;
+  HVEC htmp;
+  #endif
    
   const DTYPE *p = pC;
 
-  VEC t00 = VLOAD(p);
+  VECACC t00;
+  VLOAD_AND_WIDEN(t00,tmpld,p);
   p += LANE;
-  VEC t01 = VLOAD(p);
+  VECACC t01;
+  VLOAD_AND_WIDEN(t01,tmpld,p);
   p += LANE;
-  VEC t02 = VLOAD(p);
+  VECACC t02;
+  VLOAD_AND_WIDEN(t02,tmpld,p);
   p += LANE;
-  VEC t03 = VLOAD(p);
+  VECACC t03;
+  VLOAD_AND_WIDEN(t03,tmpld,p);
   p += cols - 3*LANE;
 
-  VEC t10 = VLOAD(p);
+  VECACC t10;
+  VLOAD_AND_WIDEN(t10,tmpld,p);
   p += LANE;
-  VEC t11 = VLOAD(p);
+  VECACC t11;
+  VLOAD_AND_WIDEN(t11,tmpld,p);
   p += LANE;
-  VEC t12 = VLOAD(p);
+  VECACC t12;
+  VLOAD_AND_WIDEN(t12,tmpld,p);
   p += LANE;
-  VEC t13 = VLOAD(p);
+  VECACC t13;
+  VLOAD_AND_WIDEN(t13,tmpld,p);
   p += cols - 3*LANE;
 
-  VEC t20 = VLOAD(p);
+  VECACC t20;
+  VLOAD_AND_WIDEN(t20,tmpld,p);
   p += LANE;
-  VEC t21 = VLOAD(p);
+  VECACC t21;
+  VLOAD_AND_WIDEN(t21,tmpld,p);
   p += LANE;
-  VEC t22 = VLOAD(p);
+  VECACC t22;
+  VLOAD_AND_WIDEN(t22,tmpld,p);
   p += LANE;
-  VEC t23 = VLOAD(p);
+  VECACC t23;
+  VLOAD_AND_WIDEN(t23,tmpld,p);
   p += cols - 3*LANE;
 
-  VEC t30 = VLOAD(p);
+  VECACC t30;
+  VLOAD_AND_WIDEN(t30,tmpld,p);
   p += LANE;
-  VEC t31 = VLOAD(p);
+  VECACC t31;
+  VLOAD_AND_WIDEN(t31,tmpld,p);
   p += LANE;
-  VEC t32 = VLOAD(p);
+  VECACC t32;
+  VLOAD_AND_WIDEN(t32,tmpld,p);
   p += LANE;
-  VEC t33 = VLOAD(p);
+  VECACC t33;
+  VLOAD_AND_WIDEN(t33,tmpld,p);
   p += cols - 3*LANE;
 
   const DTYPE *pAlpha0 = &packedA[xp * r];
@@ -116,40 +141,40 @@ __STATIC_INLINE void EXT(kernel_4rx4cv)(int cols,DTYPE *pC,int xp,int r) {
 
   }
 
-  VSTORE(pC,t00);
+  VSTORE_AND_NARROW(pC,htmp,t00);
   pC += LANE;
-  VSTORE(pC,t01);
+  VSTORE_AND_NARROW(pC,htmp,t01);
   pC += LANE;
-  VSTORE(pC,t02);
+  VSTORE_AND_NARROW(pC,htmp,t02);
   pC += LANE;
-  VSTORE(pC,t03);
+  VSTORE_AND_NARROW(pC,htmp,t03);
   pC += cols - 3*LANE;
 
-  VSTORE(pC,t10);
+  VSTORE_AND_NARROW(pC,htmp,t10);
   pC += LANE;
-  VSTORE(pC,t11);
+  VSTORE_AND_NARROW(pC,htmp,t11);
   pC += LANE;
-  VSTORE(pC,t12);
+  VSTORE_AND_NARROW(pC,htmp,t12);
   pC += LANE;
-  VSTORE(pC,t13);
+  VSTORE_AND_NARROW(pC,htmp,t13);
   pC += cols - 3*LANE;
 
-  VSTORE(pC,t20);
+  VSTORE_AND_NARROW(pC,htmp,t20);
   pC += LANE;
-  VSTORE(pC,t21);
+  VSTORE_AND_NARROW(pC,htmp,t21);
   pC += LANE;
-  VSTORE(pC,t22);
+  VSTORE_AND_NARROW(pC,htmp,t22);
   pC += LANE;
-  VSTORE(pC,t23);
+  VSTORE_AND_NARROW(pC,htmp,t23);
   pC += cols - 3*LANE;
 
-  VSTORE(pC,t30);
+  VSTORE_AND_NARROW(pC,htmp,t30);
   pC += LANE;
-  VSTORE(pC,t31);
+  VSTORE_AND_NARROW(pC,htmp,t31);
   pC += LANE;
-  VSTORE(pC,t32);
+  VSTORE_AND_NARROW(pC,htmp,t32);
   pC += LANE;
-  VSTORE(pC,t33);
+  VSTORE_AND_NARROW(pC,htmp,t33);
   pC += cols - 3*LANE;
 }
 
@@ -159,35 +184,51 @@ __STATIC_INLINE void EXT(kernel_4rx3cv)(int cols,DTYPE *pC,int xp,int r) {
   const DTYPE *packedA = (DTYPE*)PACKEDA;
 
   VEC tmp00,tmp01,tmp02;
+  #if defined(USE_TMP_REGISTER)
+  VEC tmpld;
+  HVEC htmp;
+  #endif
    
   const DTYPE *p = pC;
 
-  VEC t00 = VLOAD(p);
+  VECACC t00;
+  VLOAD_AND_WIDEN(t00,tmpld,p);
   p += LANE;
-  VEC t01 = VLOAD(p);
+  VECACC t01;
+  VLOAD_AND_WIDEN(t01,tmpld,p);
   p += LANE;
-  VEC t02 = VLOAD(p);
+  VECACC t02;
+  VLOAD_AND_WIDEN(t02,tmpld,p);
   p += cols - 2*LANE;
 
-  VEC t10 = VLOAD(p);
+  VECACC t10;
+  VLOAD_AND_WIDEN(t10,tmpld,p);
   p += LANE;
-  VEC t11 = VLOAD(p);
+  VECACC t11;
+  VLOAD_AND_WIDEN(t11,tmpld,p);
   p += LANE;
-  VEC t12 = VLOAD(p);
+  VECACC t12;
+  VLOAD_AND_WIDEN(t12,tmpld,p);
   p += cols - 2*LANE;
 
-  VEC t20 = VLOAD(p);
+  VECACC t20;
+  VLOAD_AND_WIDEN(t20,tmpld,p);
   p += LANE;
-  VEC t21 = VLOAD(p);
+  VECACC t21;
+  VLOAD_AND_WIDEN(t21,tmpld,p);
   p += LANE;
-  VEC t22 = VLOAD(p);
+  VECACC t22;
+  VLOAD_AND_WIDEN(t22,tmpld,p);
   p += cols - 2*LANE;
 
-  VEC t30 = VLOAD(p);
+  VECACC t30;
+  VLOAD_AND_WIDEN(t30,tmpld,p);
   p += LANE;
-  VEC t31 = VLOAD(p);
+  VECACC t31;
+  VLOAD_AND_WIDEN(t31,tmpld,p);
   p += LANE;
-  VEC t32 = VLOAD(p);
+  VECACC t32;
+  VLOAD_AND_WIDEN(t32,tmpld,p);
   p += cols - 2*LANE;
 
   const DTYPE *pAlpha0 = &packedA[xp * r];
@@ -233,32 +274,32 @@ __STATIC_INLINE void EXT(kernel_4rx3cv)(int cols,DTYPE *pC,int xp,int r) {
 
   }
 
-  VSTORE(pC,t00);
+  VSTORE_AND_NARROW(pC,htmp,t00);
   pC += LANE;
-  VSTORE(pC,t01);
+  VSTORE_AND_NARROW(pC,htmp,t01);
   pC += LANE;
-  VSTORE(pC,t02);
+  VSTORE_AND_NARROW(pC,htmp,t02);
   pC += cols - 2*LANE;
 
-  VSTORE(pC,t10);
+  VSTORE_AND_NARROW(pC,htmp,t10);
   pC += LANE;
-  VSTORE(pC,t11);
+  VSTORE_AND_NARROW(pC,htmp,t11);
   pC += LANE;
-  VSTORE(pC,t12);
+  VSTORE_AND_NARROW(pC,htmp,t12);
   pC += cols - 2*LANE;
 
-  VSTORE(pC,t20);
+  VSTORE_AND_NARROW(pC,htmp,t20);
   pC += LANE;
-  VSTORE(pC,t21);
+  VSTORE_AND_NARROW(pC,htmp,t21);
   pC += LANE;
-  VSTORE(pC,t22);
+  VSTORE_AND_NARROW(pC,htmp,t22);
   pC += cols - 2*LANE;
 
-  VSTORE(pC,t30);
+  VSTORE_AND_NARROW(pC,htmp,t30);
   pC += LANE;
-  VSTORE(pC,t31);
+  VSTORE_AND_NARROW(pC,htmp,t31);
   pC += LANE;
-  VSTORE(pC,t32);
+  VSTORE_AND_NARROW(pC,htmp,t32);
   pC += cols - 2*LANE;
 
 }
@@ -268,27 +309,39 @@ __STATIC_INLINE void EXT(kernel_4rx2cv)(int cols,DTYPE *pC,int xp,int r) {
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
   const DTYPE *packedA = (DTYPE*)PACKEDA;
   VEC tmp00,tmp01;
+  #if defined(USE_TMP_REGISTER)
+  VEC tmpld;
+  HVEC htmp;
+  #endif
    
   const DTYPE *p = pC;
 
-  VEC t00 = VLOAD(p);
+  VECACC t00;
+  VLOAD_AND_WIDEN(t00,tmpld,p);
   p += LANE;
-  VEC t01 = VLOAD(p);
+  VECACC t01;
+  VLOAD_AND_WIDEN(t01,tmpld,p);
   p += cols - LANE;
 
-  VEC t10 = VLOAD(p);
+  VECACC t10;
+  VLOAD_AND_WIDEN(t10,tmpld,p);
   p += LANE;
-  VEC t11 = VLOAD(p);
+  VECACC t11;
+  VLOAD_AND_WIDEN(t11,tmpld,p);
   p += cols - LANE;
 
-  VEC t20 = VLOAD(p);
+  VECACC t20;
+  VLOAD_AND_WIDEN(t20,tmpld,p);
   p += LANE;
-  VEC t21 = VLOAD(p);
+  VECACC t21;
+  VLOAD_AND_WIDEN(t21,tmpld,p);
   p += cols - LANE;
 
-  VEC t30 = VLOAD(p);
+  VECACC t30;
+  VLOAD_AND_WIDEN(t30,tmpld,p);
   p += LANE;
-  VEC t31 = VLOAD(p);
+  VECACC t31;
+  VLOAD_AND_WIDEN(t31,tmpld,p);
   p += cols - LANE;
 
   const DTYPE *pAlpha0 = &packedA[xp * r];
@@ -327,24 +380,24 @@ __STATIC_INLINE void EXT(kernel_4rx2cv)(int cols,DTYPE *pC,int xp,int r) {
 
   }
 
-  VSTORE(pC,t00);
+  VSTORE_AND_NARROW(pC,htmp,t00);
   pC += LANE;
-  VSTORE(pC,t01);
+  VSTORE_AND_NARROW(pC,htmp,t01);
   pC += cols - LANE;
 
-  VSTORE(pC,t10);
+  VSTORE_AND_NARROW(pC,htmp,t10);
   pC += LANE;
-  VSTORE(pC,t11);
+  VSTORE_AND_NARROW(pC,htmp,t11);
   pC += cols - LANE;
 
-  VSTORE(pC,t20);
+  VSTORE_AND_NARROW(pC,htmp,t20);
   pC += LANE;
-  VSTORE(pC,t21);
+  VSTORE_AND_NARROW(pC,htmp,t21);
   pC += cols - LANE;
 
-  VSTORE(pC,t30);
+  VSTORE_AND_NARROW(pC,htmp,t30);
   pC += LANE;
-  VSTORE(pC,t31);
+  VSTORE_AND_NARROW(pC,htmp,t31);
   pC += cols - LANE;
 
 }
@@ -354,13 +407,21 @@ __STATIC_INLINE void EXT(kernel_4rx1cv)(int cols,DTYPE *pC,int xp,int r) {
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
   const DTYPE *packedA = (DTYPE*)PACKEDA;
   VEC tmp00;
+  #if defined(USE_TMP_REGISTER)
+  VEC tmpld;
+  HVEC htmp;
+  #endif
    
   const DTYPE *p = pC;
 
-  VEC t00 = VLOAD(p);
-  VEC t10 = VLOAD(p);
-  VEC t20 = VLOAD(p);
-  VEC t30 = VLOAD(p);
+  VECACC t00;
+  VLOAD_AND_WIDEN(t00,tmpld,p);
+  VECACC t10;
+  VLOAD_AND_WIDEN(t10,tmpld,p);
+  VECACC t20;
+  VLOAD_AND_WIDEN(t20,tmpld,p);
+  VECACC t30;
+  VLOAD_AND_WIDEN(t30,tmpld,p);
  
 
   const DTYPE *pAlpha0 = &packedA[xp * r];
@@ -389,13 +450,13 @@ __STATIC_INLINE void EXT(kernel_4rx1cv)(int cols,DTYPE *pC,int xp,int r) {
 
   }
 
-  VSTORE(pC,t00);
+  VSTORE_AND_NARROW(pC,htmp,t00);
   pC += cols;
-  VSTORE(pC,t10);
+  VSTORE_AND_NARROW(pC,htmp,t10);
   pC += cols;
-  VSTORE(pC,t20);
+  VSTORE_AND_NARROW(pC,htmp,t20);
   pC += cols;
-  VSTORE(pC,t30);
+  VSTORE_AND_NARROW(pC,htmp,t30);
  
 
 }
@@ -405,34 +466,50 @@ __STATIC_INLINE void EXT(kernel_3rx4cv)(int cols,DTYPE *pC,int xp,int r) {
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
   const DTYPE *packedA = (DTYPE*)PACKEDA;
   VEC tmp00,tmp01,tmp02,tmp03;
+  #if defined(USE_TMP_REGISTER)
+  VEC tmpld;
+  HVEC htmp;
+  #endif
    
   const DTYPE *p = pC;
 
-  VEC t00 = VLOAD(p);
+  VECACC t00;
+  VLOAD_AND_WIDEN(t00,tmpld,p);
   p += LANE;
-  VEC t01 = VLOAD(p);
+  VECACC t01;
+  VLOAD_AND_WIDEN(t01,tmpld,p);
   p += LANE;
-  VEC t02 = VLOAD(p);
+  VECACC t02;
+  VLOAD_AND_WIDEN(t02,tmpld,p);
   p += LANE;
-  VEC t03 = VLOAD(p);
+  VECACC t03;
+  VLOAD_AND_WIDEN(t03,tmpld,p);
   p += cols - 3*LANE;
 
-  VEC t10 = VLOAD(p);
+  VECACC t10;
+  VLOAD_AND_WIDEN(t10,tmpld,p);
   p += LANE;
-  VEC t11 = VLOAD(p);
+  VECACC t11;
+  VLOAD_AND_WIDEN(t11,tmpld,p);
   p += LANE;
-  VEC t12 = VLOAD(p);
+  VECACC t12;
+  VLOAD_AND_WIDEN(t12,tmpld,p);
   p += LANE;
-  VEC t13 = VLOAD(p);
+  VECACC t13;
+  VLOAD_AND_WIDEN(t13,tmpld,p);
   p += cols - 3*LANE;
 
-  VEC t20 = VLOAD(p);
+  VECACC t20;
+  VLOAD_AND_WIDEN(t20,tmpld,p);
   p += LANE;
-  VEC t21 = VLOAD(p);
+  VECACC t21;
+  VLOAD_AND_WIDEN(t21,tmpld,p);
   p += LANE;
-  VEC t22 = VLOAD(p);
+  VECACC t22;
+  VLOAD_AND_WIDEN(t22,tmpld,p);
   p += LANE;
-  VEC t23 = VLOAD(p);
+  VECACC t23;
+  VLOAD_AND_WIDEN(t23,tmpld,p);
   p += cols - 3*LANE;
 
   
@@ -483,31 +560,31 @@ __STATIC_INLINE void EXT(kernel_3rx4cv)(int cols,DTYPE *pC,int xp,int r) {
 
   }
 
-  VSTORE(pC,t00);
+  VSTORE_AND_NARROW(pC,htmp,t00);
   pC += LANE;
-  VSTORE(pC,t01);
+  VSTORE_AND_NARROW(pC,htmp,t01);
   pC += LANE;
-  VSTORE(pC,t02);
+  VSTORE_AND_NARROW(pC,htmp,t02);
   pC += LANE;
-  VSTORE(pC,t03);
+  VSTORE_AND_NARROW(pC,htmp,t03);
   pC += cols - 3*LANE;
 
-  VSTORE(pC,t10);
+  VSTORE_AND_NARROW(pC,htmp,t10);
   pC += LANE;
-  VSTORE(pC,t11);
+  VSTORE_AND_NARROW(pC,htmp,t11);
   pC += LANE;
-  VSTORE(pC,t12);
+  VSTORE_AND_NARROW(pC,htmp,t12);
   pC += LANE;
-  VSTORE(pC,t13);
+  VSTORE_AND_NARROW(pC,htmp,t13);
   pC += cols - 3*LANE;
 
-  VSTORE(pC,t20);
+  VSTORE_AND_NARROW(pC,htmp,t20);
   pC += LANE;
-  VSTORE(pC,t21);
+  VSTORE_AND_NARROW(pC,htmp,t21);
   pC += LANE;
-  VSTORE(pC,t22);
+  VSTORE_AND_NARROW(pC,htmp,t22);
   pC += LANE;
-  VSTORE(pC,t23);
+  VSTORE_AND_NARROW(pC,htmp,t23);
   pC += cols - 3*LANE;
 
 
@@ -519,28 +596,41 @@ __STATIC_INLINE void EXT(kernel_3rx3cv)(int cols,DTYPE *pC,int xp,int r) {
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
   const DTYPE *packedA = (DTYPE*)PACKEDA;
   VEC tmp00,tmp01,tmp02;
+  #if defined(USE_TMP_REGISTER)
+  VEC tmpld;
+  HVEC htmp;
+  #endif
    
   const DTYPE *p = pC;
 
-  VEC t00 = VLOAD(p);
+  VECACC t00;
+  VLOAD_AND_WIDEN(t00,tmpld,p);
   p += LANE;
-  VEC t01 = VLOAD(p);
+  VECACC t01;
+  VLOAD_AND_WIDEN(t01,tmpld,p);
   p += LANE;
-  VEC t02 = VLOAD(p);
+  VECACC t02;
+  VLOAD_AND_WIDEN(t02,tmpld,p);
   p += cols - 2*LANE;
 
-  VEC t10 = VLOAD(p);
+  VECACC t10;
+  VLOAD_AND_WIDEN(t10,tmpld,p);
   p += LANE;
-  VEC t11 = VLOAD(p);
+  VECACC t11;
+  VLOAD_AND_WIDEN(t11,tmpld,p);
   p += LANE;
-  VEC t12 = VLOAD(p);
+  VECACC t12;
+  VLOAD_AND_WIDEN(t12,tmpld,p);
   p += cols - 2*LANE;
 
-  VEC t20 = VLOAD(p);
+  VECACC t20;
+  VLOAD_AND_WIDEN(t20,tmpld,p);
   p += LANE;
-  VEC t21 = VLOAD(p);
+  VECACC t21;
+  VLOAD_AND_WIDEN(t21,tmpld,p);
   p += LANE;
-  VEC t22 = VLOAD(p);
+  VECACC t22;
+  VLOAD_AND_WIDEN(t22,tmpld,p);
   p += cols - 2*LANE;
 
   
@@ -586,25 +676,25 @@ __STATIC_INLINE void EXT(kernel_3rx3cv)(int cols,DTYPE *pC,int xp,int r) {
 
   }
 
-  VSTORE(pC,t00);
+  VSTORE_AND_NARROW(pC,htmp,t00);
   pC += LANE;
-  VSTORE(pC,t01);
+  VSTORE_AND_NARROW(pC,htmp,t01);
   pC += LANE;
-  VSTORE(pC,t02);
+  VSTORE_AND_NARROW(pC,htmp,t02);
   pC += cols - 2*LANE;
 
-  VSTORE(pC,t10);
+  VSTORE_AND_NARROW(pC,htmp,t10);
   pC += LANE;
-  VSTORE(pC,t11);
+  VSTORE_AND_NARROW(pC,htmp,t11);
   pC += LANE;
-  VSTORE(pC,t12);
+  VSTORE_AND_NARROW(pC,htmp,t12);
   pC += cols - 2*LANE;
 
-  VSTORE(pC,t20);
+  VSTORE_AND_NARROW(pC,htmp,t20);
   pC += LANE;
-  VSTORE(pC,t21);
+  VSTORE_AND_NARROW(pC,htmp,t21);
   pC += LANE;
-  VSTORE(pC,t22);
+  VSTORE_AND_NARROW(pC,htmp,t22);
   pC += cols - 2*LANE;
 
 
@@ -616,22 +706,32 @@ __STATIC_INLINE void EXT(kernel_3rx2cv)(int cols,DTYPE *pC,int xp,int r) {
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
   const DTYPE *packedA = (DTYPE*)PACKEDA;
   VEC tmp00,tmp01;
+  #if defined(USE_TMP_REGISTER)
+  VEC tmpld;
+  HVEC htmp;
+  #endif
    
   const DTYPE *p = pC;
 
-  VEC t00 = VLOAD(p);
+  VECACC t00;
+  VLOAD_AND_WIDEN(t00,tmpld,p);
   p += LANE;
-  VEC t01 = VLOAD(p);
+  VECACC t01;
+  VLOAD_AND_WIDEN(t01,tmpld,p);
   p += cols - LANE;
 
-  VEC t10 = VLOAD(p);
+  VECACC t10;
+  VLOAD_AND_WIDEN(t10,tmpld,p);
   p += LANE;
-  VEC t11 = VLOAD(p);
+  VECACC t11;
+  VLOAD_AND_WIDEN(t11,tmpld,p);
   p += cols - LANE;
 
-  VEC t20 = VLOAD(p);
+  VECACC t20;
+  VLOAD_AND_WIDEN(t20,tmpld,p);
   p += LANE;
-  VEC t21 = VLOAD(p);
+  VECACC t21;
+  VLOAD_AND_WIDEN(t21,tmpld,p);
   p += cols - LANE;
 
   
@@ -670,19 +770,19 @@ __STATIC_INLINE void EXT(kernel_3rx2cv)(int cols,DTYPE *pC,int xp,int r) {
 
   }
 
-  VSTORE(pC,t00);
+  VSTORE_AND_NARROW(pC,htmp,t00);
   pC += LANE;
-  VSTORE(pC,t01);
+  VSTORE_AND_NARROW(pC,htmp,t01);
   pC += cols - LANE;
 
-  VSTORE(pC,t10);
+  VSTORE_AND_NARROW(pC,htmp,t10);
   pC += LANE;
-  VSTORE(pC,t11);
+  VSTORE_AND_NARROW(pC,htmp,t11);
   pC += cols - LANE;
 
-  VSTORE(pC,t20);
+  VSTORE_AND_NARROW(pC,htmp,t20);
   pC += LANE;
-  VSTORE(pC,t21);
+  VSTORE_AND_NARROW(pC,htmp,t21);
   pC += cols - LANE;
 
 
@@ -694,16 +794,23 @@ __STATIC_INLINE void EXT(kernel_3rx1cv)(int cols,DTYPE *pC,int xp,int r) {
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
   const DTYPE *packedA = (DTYPE*)PACKEDA;
   VEC tmp00;
+  #if defined(USE_TMP_REGISTER)
+  VEC tmpld;
+  HVEC htmp;
+  #endif
    
   const DTYPE *p = pC;
 
-  VEC t00 = VLOAD(p);
+  VECACC t00;
+  VLOAD_AND_WIDEN(t00,tmpld,p);
   p += cols ;
 
-  VEC t10 = VLOAD(p);
+  VECACC t10;
+  VLOAD_AND_WIDEN(t10,tmpld,p);
   p += cols ;
 
-  VEC t20 = VLOAD(p);
+  VECACC t20;
+  VLOAD_AND_WIDEN(t20,tmpld,p);
   p += cols;
 
   
@@ -736,13 +843,13 @@ __STATIC_INLINE void EXT(kernel_3rx1cv)(int cols,DTYPE *pC,int xp,int r) {
 
   }
 
-  VSTORE(pC,t00);
+  VSTORE_AND_NARROW(pC,htmp,t00);
   pC += cols ;
 
-  VSTORE(pC,t10);
+  VSTORE_AND_NARROW(pC,htmp,t10);
   pC += cols ;
 
-  VSTORE(pC,t20);
+  VSTORE_AND_NARROW(pC,htmp,t20);
   pC += cols ;
 
 
@@ -754,25 +861,37 @@ __STATIC_INLINE void EXT(kernel_2rx4cv)(int cols,DTYPE *pC,int xp,int r) {
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
   const DTYPE *packedA = (DTYPE*)PACKEDA;
   VEC tmp00,tmp01,tmp02,tmp03;
+  #if defined(USE_TMP_REGISTER)
+  VEC tmpld;
+  HVEC htmp;
+  #endif
    
   const DTYPE *p = pC;
 
-  VEC t00 = VLOAD(p);
+  VECACC t00;
+  VLOAD_AND_WIDEN(t00,tmpld,p);
   p += LANE;
-  VEC t01 = VLOAD(p);
+  VECACC t01;
+  VLOAD_AND_WIDEN(t01,tmpld,p);
   p += LANE;
-  VEC t02 = VLOAD(p);
+  VECACC t02;
+  VLOAD_AND_WIDEN(t02,tmpld,p);
   p += LANE;
-  VEC t03 = VLOAD(p);
+  VECACC t03;
+  VLOAD_AND_WIDEN(t03,tmpld,p);
   p += cols - 3*LANE;
 
-  VEC t10 = VLOAD(p);
+  VECACC t10;
+  VLOAD_AND_WIDEN(t10,tmpld,p);
   p += LANE;
-  VEC t11 = VLOAD(p);
+  VECACC t11;
+  VLOAD_AND_WIDEN(t11,tmpld,p);
   p += LANE;
-  VEC t12 = VLOAD(p);
+  VECACC t12;
+  VLOAD_AND_WIDEN(t12,tmpld,p);
   p += LANE;
-  VEC t13 = VLOAD(p);
+  VECACC t13;
+  VLOAD_AND_WIDEN(t13,tmpld,p);
   p += cols - 3*LANE;
 
  
@@ -816,22 +935,22 @@ __STATIC_INLINE void EXT(kernel_2rx4cv)(int cols,DTYPE *pC,int xp,int r) {
 
   }
 
-  VSTORE(pC,t00);
+  VSTORE_AND_NARROW(pC,htmp,t00);
   pC += LANE;
-  VSTORE(pC,t01);
+  VSTORE_AND_NARROW(pC,htmp,t01);
   pC += LANE;
-  VSTORE(pC,t02);
+  VSTORE_AND_NARROW(pC,htmp,t02);
   pC += LANE;
-  VSTORE(pC,t03);
+  VSTORE_AND_NARROW(pC,htmp,t03);
   pC += cols - 3*LANE;
 
-  VSTORE(pC,t10);
+  VSTORE_AND_NARROW(pC,htmp,t10);
   pC += LANE;
-  VSTORE(pC,t11);
+  VSTORE_AND_NARROW(pC,htmp,t11);
   pC += LANE;
-  VSTORE(pC,t12);
+  VSTORE_AND_NARROW(pC,htmp,t12);
   pC += LANE;
-  VSTORE(pC,t13);
+  VSTORE_AND_NARROW(pC,htmp,t13);
   pC += cols - 3*LANE;
 
 
@@ -842,21 +961,31 @@ __STATIC_INLINE void EXT(kernel_2rx3cv)(int cols,DTYPE *pC,int xp,int r) {
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
   const DTYPE *packedA = (DTYPE*)PACKEDA;
   VEC tmp00,tmp01,tmp02;
+  #if defined(USE_TMP_REGISTER)
+  VEC tmpld;
+  HVEC htmp;
+  #endif
    
   const DTYPE *p = pC;
 
-  VEC t00 = VLOAD(p);
+  VECACC t00;
+  VLOAD_AND_WIDEN(t00,tmpld,p);
   p += LANE;
-  VEC t01 = VLOAD(p);
+  VECACC t01;
+  VLOAD_AND_WIDEN(t01,tmpld,p);
   p += LANE;
-  VEC t02 = VLOAD(p);
+  VECACC t02;
+  VLOAD_AND_WIDEN(t02,tmpld,p);
   p += cols - 2*LANE;
 
-  VEC t10 = VLOAD(p);
+  VECACC t10;
+  VLOAD_AND_WIDEN(t10,tmpld,p);
   p += LANE;
-  VEC t11 = VLOAD(p);
+  VECACC t11;
+  VLOAD_AND_WIDEN(t11,tmpld,p);
   p += LANE;
-  VEC t12 = VLOAD(p);
+  VECACC t12;
+  VLOAD_AND_WIDEN(t12,tmpld,p);
   p += cols - 2*LANE;
 
  
@@ -895,18 +1024,18 @@ __STATIC_INLINE void EXT(kernel_2rx3cv)(int cols,DTYPE *pC,int xp,int r) {
 
   }
 
-  VSTORE(pC,t00);
+  VSTORE_AND_NARROW(pC,htmp,t00);
   pC += LANE;
-  VSTORE(pC,t01);
+  VSTORE_AND_NARROW(pC,htmp,t01);
   pC += LANE;
-  VSTORE(pC,t02);
+  VSTORE_AND_NARROW(pC,htmp,t02);
   pC += cols - 2*LANE;
 
-  VSTORE(pC,t10);
+  VSTORE_AND_NARROW(pC,htmp,t10);
   pC += LANE;
-  VSTORE(pC,t11);
+  VSTORE_AND_NARROW(pC,htmp,t11);
   pC += LANE;
-  VSTORE(pC,t12);
+  VSTORE_AND_NARROW(pC,htmp,t12);
   pC += cols - 2*LANE;
 
 
@@ -917,17 +1046,25 @@ __STATIC_INLINE void EXT(kernel_2rx2cv)(int cols,DTYPE *pC,int xp,int r) {
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
   const DTYPE *packedA = (DTYPE*)PACKEDA;
   VEC tmp00,tmp01;
+  #if defined(USE_TMP_REGISTER)
+  VEC tmpld;
+  HVEC htmp;
+  #endif
    
   const DTYPE *p = pC;
 
-  VEC t00 = VLOAD(p);
+  VECACC t00;
+  VLOAD_AND_WIDEN(t00,tmpld,p);
   p += LANE;
-  VEC t01 = VLOAD(p);
+  VECACC t01;
+  VLOAD_AND_WIDEN(t01,tmpld,p);
   p += cols - LANE;
 
-  VEC t10 = VLOAD(p);
+  VECACC t10;
+  VLOAD_AND_WIDEN(t10,tmpld,p);
   p += LANE;
-  VEC t11 = VLOAD(p);
+  VECACC t11;
+  VLOAD_AND_WIDEN(t11,tmpld,p);
   p += cols - LANE;
 
  
@@ -959,14 +1096,14 @@ __STATIC_INLINE void EXT(kernel_2rx2cv)(int cols,DTYPE *pC,int xp,int r) {
 
   }
 
-  VSTORE(pC,t00);
+  VSTORE_AND_NARROW(pC,htmp,t00);
   pC += LANE;
-  VSTORE(pC,t01);
+  VSTORE_AND_NARROW(pC,htmp,t01);
   pC += cols - LANE;
 
-  VSTORE(pC,t10);
+  VSTORE_AND_NARROW(pC,htmp,t10);
   pC += LANE;
-  VSTORE(pC,t11);
+  VSTORE_AND_NARROW(pC,htmp,t11);
   pC += cols - LANE;
 
 
@@ -977,11 +1114,17 @@ __STATIC_INLINE void EXT(kernel_2rx1cv)(int cols,DTYPE *pC,int xp,int r) {
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
   const DTYPE *packedA = (DTYPE*)PACKEDA;
   VEC tmp00;
+  #if defined(USE_TMP_REGISTER)
+  VEC tmpld;
+  HVEC htmp;
+  #endif
    
   const DTYPE *p = pC;
 
-  VEC t00 = VLOAD(p);
-  VEC t10 = VLOAD(p);
+  VECACC t00;
+  VLOAD_AND_WIDEN(t00,tmpld,p);
+  VECACC t10;
+  VLOAD_AND_WIDEN(t10,tmpld,p);
  
 
  
@@ -1006,10 +1149,10 @@ __STATIC_INLINE void EXT(kernel_2rx1cv)(int cols,DTYPE *pC,int xp,int r) {
 
   }
 
-  VSTORE(pC,t00);
+  VSTORE_AND_NARROW(pC,htmp,t00);
   pC += cols;
 
-  VSTORE(pC,t10);
+  VSTORE_AND_NARROW(pC,htmp,t10);
   pC += cols ;
 
 
@@ -1021,16 +1164,24 @@ __STATIC_INLINE void EXT(kernel_1rx4cv)(int cols,DTYPE *pC,int xp,int r) {
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
   const DTYPE *packedA = (DTYPE*)PACKEDA;
   VEC tmp00,tmp01,tmp02,tmp03;
+  #if defined(USE_TMP_REGISTER)
+  VEC tmpld;
+  HVEC htmp;
+  #endif
    
   const DTYPE *p = pC;
 
-  VEC t00 = VLOAD(p);
+  VECACC t00;
+  VLOAD_AND_WIDEN(t00,tmpld,p);
   p += LANE;
-  VEC t01 = VLOAD(p);
+  VECACC t01;
+  VLOAD_AND_WIDEN(t01,tmpld,p);
   p += LANE;
-  VEC t02 = VLOAD(p);
+  VECACC t02;
+  VLOAD_AND_WIDEN(t02,tmpld,p);
   p += LANE;
-  VEC t03 = VLOAD(p);
+  VECACC t03;
+  VLOAD_AND_WIDEN(t03,tmpld,p);
 
   const DTYPE *pAlpha0 = &packedA[xp * r];
 
@@ -1057,13 +1208,13 @@ __STATIC_INLINE void EXT(kernel_1rx4cv)(int cols,DTYPE *pC,int xp,int r) {
     
   }
 
-  VSTORE(pC,t00);
+  VSTORE_AND_NARROW(pC,htmp,t00);
   pC += LANE;
-  VSTORE(pC,t01);
+  VSTORE_AND_NARROW(pC,htmp,t01);
   pC += LANE;
-  VSTORE(pC,t02);
+  VSTORE_AND_NARROW(pC,htmp,t02);
   pC += LANE;
-  VSTORE(pC,t03);
+  VSTORE_AND_NARROW(pC,htmp,t03);
 
 
 }
@@ -1073,14 +1224,21 @@ __STATIC_INLINE void EXT(kernel_1rx3cv)(int cols,DTYPE *pC,int xp,int r) {
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
   const DTYPE *packedA = (DTYPE*)PACKEDA;
   VEC tmp00,tmp01,tmp02;
+  #if defined(USE_TMP_REGISTER)
+  VEC tmpld;
+  HVEC htmp;
+  #endif
    
   const DTYPE *p = pC;
 
-  VEC t00 = VLOAD(p);
+  VECACC t00;
+  VLOAD_AND_WIDEN(t00,tmpld,p);
   p += LANE;
-  VEC t01 = VLOAD(p);
+  VECACC t01;
+  VLOAD_AND_WIDEN(t01,tmpld,p);
   p += LANE;
-  VEC t02 = VLOAD(p);
+  VECACC t02;
+  VLOAD_AND_WIDEN(t02,tmpld,p);
   p += cols - 2*LANE;
 
  
@@ -1114,11 +1272,11 @@ __STATIC_INLINE void EXT(kernel_1rx3cv)(int cols,DTYPE *pC,int xp,int r) {
 
   }
 
-  VSTORE(pC,t00);
+  VSTORE_AND_NARROW(pC,htmp,t00);
   pC += LANE;
-  VSTORE(pC,t01);
+  VSTORE_AND_NARROW(pC,htmp,t01);
   pC += LANE;
-  VSTORE(pC,t02);
+  VSTORE_AND_NARROW(pC,htmp,t02);
   pC += cols - 2*LANE;
 
 
@@ -1127,14 +1285,21 @@ __STATIC_INLINE void EXT(kernel_1rx3cv)(int cols,DTYPE *pC,int xp,int r) {
 __STATIC_INLINE void EXT(kernel_1rx2cv)(int cols,DTYPE *pC,int xp,int r) {
 
   VEC tmp00,tmp01;
+  #if defined(USE_TMP_REGISTER)
+  VEC tmpld;
+  HVEC htmp;
+  #endif
+
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
   const DTYPE *packedA = (DTYPE*)PACKEDA;
    
   const DTYPE *p = pC;
 
-  VEC t00 = VLOAD(p);
+  VECACC t00;
+  VLOAD_AND_WIDEN(t00,tmpld,p);
   p += LANE;
-  VEC t01 = VLOAD(p);
+  VECACC t01;
+  VLOAD_AND_WIDEN(t01,tmpld,p);
   p += cols - LANE;
 
  
@@ -1165,9 +1330,9 @@ __STATIC_INLINE void EXT(kernel_1rx2cv)(int cols,DTYPE *pC,int xp,int r) {
 
   }
 
-  VSTORE(pC,t00);
+  VSTORE_AND_NARROW(pC,htmp,t00);
   pC += LANE;
-  VSTORE(pC,t01);
+  VSTORE_AND_NARROW(pC,htmp,t01);
 
 
 }
@@ -1176,12 +1341,18 @@ __STATIC_INLINE void EXT(kernel_1rx1cv)(int cols,DTYPE *pC,int xp,int r) {
 
   (void)cols;
   VEC tmp00,tmp01;
+  #if defined(USE_TMP_REGISTER)
+  VEC tmpld;
+  HVEC htmp;
+  #endif
+
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
   const DTYPE *packedA = (DTYPE*)PACKEDA;
    
   const DTYPE *p = pC;
 
-  VEC t00 = VLOAD(p);
+  VECACC t00;
+  VLOAD_AND_WIDEN(t00,tmpld,p);
 
  
   const DTYPE *pAlpha0 = &packedA[xp * r];
@@ -1212,12 +1383,17 @@ __STATIC_INLINE void EXT(kernel_1rx1cv)(int cols,DTYPE *pC,int xp,int r) {
     VMAC_N(t00,tmp00,alpha0);
   }
 
-  VSTORE(pC,t00);
+  VSTORE_AND_NARROW(pC,htmp,t00);
 
 }
 
 __STATIC_INLINE void EXT(kernel_4rxc)(int cols,DTYPE *pC,int xp,int r,int nbc) {
 
+  #if defined(USE_TMP_REGISTER)
+  VEC tmpld;
+  HVEC htmp;
+  #endif
+  
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
   const DTYPE *packedA = (DTYPE*)PACKEDA;
   DTYPE *p0 = pC;
@@ -1232,17 +1408,17 @@ __STATIC_INLINE void EXT(kernel_4rxc)(int cols,DTYPE *pC,int xp,int r,int nbc) {
   const DTYPE *pAlpha3 = pAlpha2 + r;
 
   
-  DTYPE v0[LANE-1];
-  DTYPE v1[LANE-1];
-  DTYPE v2[LANE-1];
-  DTYPE v3[LANE-1];
+  SCALARACC v0[LANE-1];
+  SCALARACC v1[LANE-1];
+  SCALARACC v2[LANE-1];
+  SCALARACC v3[LANE-1];
 
   for(int i=0;i<nbc;i++)
   {
-     v0[i] = p0[i];
-     v1[i] = p1[i];
-     v2[i] = p2[i];
-     v3[i] = p3[i];
+    SCALAR_LOAD_AND_WIDEN(v0[i],tmpld,p0+i);
+    SCALAR_LOAD_AND_WIDEN(v1[i],tmpld,p1+i);
+    SCALAR_LOAD_AND_WIDEN(v2[i],tmpld,p2+i);
+    SCALAR_LOAD_AND_WIDEN(v3[i],tmpld,p3+i);
   }
     
   for (int k=0; k < r ; k ++) 
@@ -1255,23 +1431,28 @@ __STATIC_INLINE void EXT(kernel_4rxc)(int cols,DTYPE *pC,int xp,int r,int nbc) {
     {
         DTYPE b = *pB0++;
         
-        v0[c] += alpha0 * b;
-        v1[c] += alpha1 * b;
-        v2[c] += alpha2 * b;
-        v3[c] += alpha3 * b;
+        SCALAR_MAC_N(v0[c],alpha0,b);
+        SCALAR_MAC_N(v1[c],alpha1,b);
+        SCALAR_MAC_N(v2[c],alpha2,b);
+        SCALAR_MAC_N(v3[c],alpha3,b);
     }
   }
 
   for(int i=0;i<nbc;i++)
   {
-     p0[i] = v0[i];
-     p1[i] = v1[i];
-     p2[i] = v2[i];
-     p3[i] = v3[i];
+     SCALAR_STORE_AND_NARROW(p0+i,htmp,v0[i]);
+     SCALAR_STORE_AND_NARROW(p1+i,htmp,v1[i]);
+     SCALAR_STORE_AND_NARROW(p2+i,htmp,v2[i]);
+     SCALAR_STORE_AND_NARROW(p3+i,htmp,v3[i]);
   }
 }
 
 __STATIC_INLINE void EXT(kernel_3rxc)(int cols,DTYPE *pC,int xp,int r,int nbc) {
+
+  #if defined(USE_TMP_REGISTER)
+  VEC tmpld;
+  HVEC htmp;
+  #endif
 
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
   const DTYPE *packedA = (DTYPE*)PACKEDA;
@@ -1285,15 +1466,15 @@ __STATIC_INLINE void EXT(kernel_3rxc)(int cols,DTYPE *pC,int xp,int r,int nbc) {
   const DTYPE *pAlpha2 = pAlpha1 + r;
 
   
-  DTYPE v0[LANE-1];
-  DTYPE v1[LANE-1];
-  DTYPE v2[LANE-1];
+  SCALARACC v0[LANE-1];
+  SCALARACC v1[LANE-1];
+  SCALARACC v2[LANE-1];
 
   for(int i=0;i<nbc;i++)
   {
-     v0[i] = p0[i];
-     v1[i] = p1[i];
-     v2[i] = p2[i];
+    SCALAR_LOAD_AND_WIDEN(v0[i],tmpld,p0+i);
+    SCALAR_LOAD_AND_WIDEN(v1[i],tmpld,p1+i);
+    SCALAR_LOAD_AND_WIDEN(v2[i],tmpld,p2+i);
   }
   
   for (int k=0; k < r ; k ++) 
@@ -1305,23 +1486,28 @@ __STATIC_INLINE void EXT(kernel_3rxc)(int cols,DTYPE *pC,int xp,int r,int nbc) {
     {
         DTYPE b = *pB0++;
         
-        v0[c] += alpha0 * b;
-        v1[c] += alpha1 * b;
-        v2[c] += alpha2 * b;
+        SCALAR_MAC_N(v0[c],alpha0,b);
+        SCALAR_MAC_N(v1[c],alpha1,b);
+        SCALAR_MAC_N(v2[c],alpha2,b);
     }
 
   }
 
   for(int i=0;i<nbc;i++)
   {
-     p0[i] = v0[i];
-     p1[i] = v1[i];
-     p2[i] = v2[i];
+    SCALAR_STORE_AND_NARROW(p0+i,htmp,v0[i]);
+    SCALAR_STORE_AND_NARROW(p1+i,htmp,v1[i]);
+    SCALAR_STORE_AND_NARROW(p2+i,htmp,v2[i]);
   }
 
 }
 
 __STATIC_INLINE void EXT(kernel_2rxc)(int cols,DTYPE *pC,int xp,int r,int nbc) {
+
+  #if defined(USE_TMP_REGISTER)
+  VEC tmpld;
+  HVEC htmp;
+  #endif
 
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
   const DTYPE *packedA = (DTYPE*)PACKEDA;
@@ -1333,13 +1519,13 @@ __STATIC_INLINE void EXT(kernel_2rxc)(int cols,DTYPE *pC,int xp,int r,int nbc) {
   const DTYPE *pAlpha1 = pAlpha0 + r;
 
   
-  DTYPE v0[LANE-1];
-  DTYPE v1[LANE-1];
+  SCALARACC v0[LANE-1];
+  SCALARACC v1[LANE-1];
 
   for(int i=0;i<nbc;i++)
   {
-     v0[i] = p0[i];
-     v1[i] = p1[i];
+    SCALAR_LOAD_AND_WIDEN(v0[i],tmpld,p0+i);
+    SCALAR_LOAD_AND_WIDEN(v1[i],tmpld,p1+i);
   }
   
   
@@ -1352,22 +1538,27 @@ __STATIC_INLINE void EXT(kernel_2rxc)(int cols,DTYPE *pC,int xp,int r,int nbc) {
     {
         DTYPE b = *pB0++;
         
-        v0[c] += alpha0 * b;
-        v1[c] += alpha1 * b;
+        SCALAR_MAC_N(v0[c],alpha0,b);
+        SCALAR_MAC_N(v1[c],alpha1,b);
     }
 
   }
 
   for(int i=0;i<nbc;i++)
   {
-     p0[i] = v0[i];
-     p1[i] = v1[i];
+    SCALAR_STORE_AND_NARROW(p0+i,htmp,v0[i]);
+    SCALAR_STORE_AND_NARROW(p1+i,htmp,v1[i]);
   }
 
 }
 
 __STATIC_INLINE void EXT(kernel_1rxc)(int cols,DTYPE *pC,int xp,int r,int nbc) {
   (void)cols;
+  #if defined(USE_TMP_REGISTER)
+  VEC tmpld;
+  HVEC htmp;
+  #endif
+
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
   const DTYPE *packedA = (DTYPE*)PACKEDA;
   DTYPE *p0 = pC;
@@ -1376,11 +1567,11 @@ __STATIC_INLINE void EXT(kernel_1rxc)(int cols,DTYPE *pC,int xp,int r,int nbc) {
   const DTYPE *pAlpha0 = &packedA[xp * r];
 
  
-  DTYPE v0[LANE-1];
+  SCALARACC v0[LANE-1];
 
   for(int i=0;i<nbc;i++)
   {
-      v0[i] = p0[i];
+    SCALAR_LOAD_AND_WIDEN(v0[i],tmpld,p0+i);
   }
        
   for (int k=0; k < r ; k ++) 
@@ -1391,14 +1582,14 @@ __STATIC_INLINE void EXT(kernel_1rxc)(int cols,DTYPE *pC,int xp,int r,int nbc) {
     {
       DTYPE b = *pB0++;
              
-      v0[c] += alpha0 * b;
+      SCALAR_MAC_N(v0[c],alpha0,b);
     }
 
   }
 
   for(int i=0;i<nbc;i++)
   {
-    p0[i] = v0[i];
+    SCALAR_STORE_AND_NARROW(p0+i,htmp,v0[i]);
   }
   
 }
@@ -1430,9 +1621,16 @@ __STATIC_INLINE void EXT(kernel_1rxc)(int cols,DTYPE *pC,int xp,int r,int nbc) {
 
 
 ARM_DSP_ATTRIBUTE arm_status EXT(arm_mat_mult) (
+#if defined(HAS_TEMP_BUFFER)
+  const MATTYPE * pSrcA,
+  const MATTYPE * pSrcB,
+  MATTYPE * pDst,
+  DTYPE   * pState)
+#else
   const MATTYPE * pSrcA,
   const MATTYPE * pSrcB,
   MATTYPE * pDst)
+#endif
 {
   const DTYPE *a = pSrcA->pData;
   const DTYPE *b = pSrcB->pData;
@@ -1603,12 +1801,32 @@ ARM_DSP_ATTRIBUTE arm_status EXT(arm_mat_mult) (
 #undef LANE 
 #undef DTYPE 
 #undef VEC 
+#undef VECACC
 #undef HVEC 
 #undef VLOAD
 #undef VSTORE
 #undef VMAC_N
 #undef MATTYPE 
 #undef EXT
+#undef SCALARACC
+#undef VLOAD_AND_WIDEN
+#undef VSTORE_AND_NARROW
+#undef SCALAR_LOAD_AND_WIDEN
+#undef SCALAR_STORE_AND_NARROW
+#undef SCALAR_MAC_N
+#if !defined(USE_TMP_REGISTER)
+#undef tmpld
+#undef htmp
+#endif
+
+#if defined(HAS_TEMP_BUFFER)
+#undef HAS_TEMP_BUFFER
+#endif
+#if defined(USE_TMP_REGISTER)
+#undef USE_TMP_REGISTER
+#endif
+
+
 
 #undef DC 
 #undef DR 
