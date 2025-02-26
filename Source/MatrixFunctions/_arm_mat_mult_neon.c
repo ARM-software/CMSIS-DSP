@@ -1389,10 +1389,6 @@ __STATIC_INLINE void EXT(kernel_1rx1cv)(int cols,DTYPE *pC,int xp,int r) {
 
 __STATIC_INLINE void EXT(kernel_4rxc)(int cols,DTYPE *pC,int xp,int r,int nbc) {
 
-  #if defined(USE_TMP_REGISTER)
-  VEC tmpld;
-  HVEC htmp;
-  #endif
   
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
   const DTYPE *packedA = (DTYPE*)PACKEDA;
@@ -1415,10 +1411,10 @@ __STATIC_INLINE void EXT(kernel_4rxc)(int cols,DTYPE *pC,int xp,int r,int nbc) {
 
   for(int i=0;i<nbc;i++)
   {
-    SCALAR_LOAD_AND_WIDEN(v0[i],tmpld,p0+i);
-    SCALAR_LOAD_AND_WIDEN(v1[i],tmpld,p1+i);
-    SCALAR_LOAD_AND_WIDEN(v2[i],tmpld,p2+i);
-    SCALAR_LOAD_AND_WIDEN(v3[i],tmpld,p3+i);
+    SCALAR_LOAD_AND_WIDEN(v0[i],p0+i);
+    SCALAR_LOAD_AND_WIDEN(v1[i],p1+i);
+    SCALAR_LOAD_AND_WIDEN(v2[i],p2+i);
+    SCALAR_LOAD_AND_WIDEN(v3[i],p3+i);
   }
     
   for (int k=0; k < r ; k ++) 
@@ -1440,19 +1436,15 @@ __STATIC_INLINE void EXT(kernel_4rxc)(int cols,DTYPE *pC,int xp,int r,int nbc) {
 
   for(int i=0;i<nbc;i++)
   {
-     SCALAR_STORE_AND_NARROW(p0+i,htmp,v0[i]);
-     SCALAR_STORE_AND_NARROW(p1+i,htmp,v1[i]);
-     SCALAR_STORE_AND_NARROW(p2+i,htmp,v2[i]);
-     SCALAR_STORE_AND_NARROW(p3+i,htmp,v3[i]);
+     SCALAR_STORE_AND_NARROW(p0+i,v0[i]);
+     SCALAR_STORE_AND_NARROW(p1+i,v1[i]);
+     SCALAR_STORE_AND_NARROW(p2+i,v2[i]);
+     SCALAR_STORE_AND_NARROW(p3+i,v3[i]);
   }
 }
 
 __STATIC_INLINE void EXT(kernel_3rxc)(int cols,DTYPE *pC,int xp,int r,int nbc) {
 
-  #if defined(USE_TMP_REGISTER)
-  VEC tmpld;
-  HVEC htmp;
-  #endif
 
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
   const DTYPE *packedA = (DTYPE*)PACKEDA;
@@ -1472,9 +1464,9 @@ __STATIC_INLINE void EXT(kernel_3rxc)(int cols,DTYPE *pC,int xp,int r,int nbc) {
 
   for(int i=0;i<nbc;i++)
   {
-    SCALAR_LOAD_AND_WIDEN(v0[i],tmpld,p0+i);
-    SCALAR_LOAD_AND_WIDEN(v1[i],tmpld,p1+i);
-    SCALAR_LOAD_AND_WIDEN(v2[i],tmpld,p2+i);
+    SCALAR_LOAD_AND_WIDEN(v0[i],p0+i);
+    SCALAR_LOAD_AND_WIDEN(v1[i],p1+i);
+    SCALAR_LOAD_AND_WIDEN(v2[i],p2+i);
   }
   
   for (int k=0; k < r ; k ++) 
@@ -1495,19 +1487,15 @@ __STATIC_INLINE void EXT(kernel_3rxc)(int cols,DTYPE *pC,int xp,int r,int nbc) {
 
   for(int i=0;i<nbc;i++)
   {
-    SCALAR_STORE_AND_NARROW(p0+i,htmp,v0[i]);
-    SCALAR_STORE_AND_NARROW(p1+i,htmp,v1[i]);
-    SCALAR_STORE_AND_NARROW(p2+i,htmp,v2[i]);
+    SCALAR_STORE_AND_NARROW(p0+i,v0[i]);
+    SCALAR_STORE_AND_NARROW(p1+i,v1[i]);
+    SCALAR_STORE_AND_NARROW(p2+i,v2[i]);
   }
 
 }
 
 __STATIC_INLINE void EXT(kernel_2rxc)(int cols,DTYPE *pC,int xp,int r,int nbc) {
 
-  #if defined(USE_TMP_REGISTER)
-  VEC tmpld;
-  HVEC htmp;
-  #endif
 
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
   const DTYPE *packedA = (DTYPE*)PACKEDA;
@@ -1524,8 +1512,8 @@ __STATIC_INLINE void EXT(kernel_2rxc)(int cols,DTYPE *pC,int xp,int r,int nbc) {
 
   for(int i=0;i<nbc;i++)
   {
-    SCALAR_LOAD_AND_WIDEN(v0[i],tmpld,p0+i);
-    SCALAR_LOAD_AND_WIDEN(v1[i],tmpld,p1+i);
+    SCALAR_LOAD_AND_WIDEN(v0[i],p0+i);
+    SCALAR_LOAD_AND_WIDEN(v1[i],p1+i);
   }
   
   
@@ -1546,18 +1534,15 @@ __STATIC_INLINE void EXT(kernel_2rxc)(int cols,DTYPE *pC,int xp,int r,int nbc) {
 
   for(int i=0;i<nbc;i++)
   {
-    SCALAR_STORE_AND_NARROW(p0+i,htmp,v0[i]);
-    SCALAR_STORE_AND_NARROW(p1+i,htmp,v1[i]);
+    SCALAR_STORE_AND_NARROW(p0+i,v0[i]);
+    SCALAR_STORE_AND_NARROW(p1+i,v1[i]);
   }
 
 }
 
 __STATIC_INLINE void EXT(kernel_1rxc)(int cols,DTYPE *pC,int xp,int r,int nbc) {
   (void)cols;
-  #if defined(USE_TMP_REGISTER)
-  VEC tmpld;
-  HVEC htmp;
-  #endif
+
 
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
   const DTYPE *packedA = (DTYPE*)PACKEDA;
@@ -1571,7 +1556,7 @@ __STATIC_INLINE void EXT(kernel_1rxc)(int cols,DTYPE *pC,int xp,int r,int nbc) {
 
   for(int i=0;i<nbc;i++)
   {
-    SCALAR_LOAD_AND_WIDEN(v0[i],tmpld,p0+i);
+    SCALAR_LOAD_AND_WIDEN(v0[i],p0+i);
   }
        
   for (int k=0; k < r ; k ++) 
@@ -1589,7 +1574,7 @@ __STATIC_INLINE void EXT(kernel_1rxc)(int cols,DTYPE *pC,int xp,int r,int nbc) {
 
   for(int i=0;i<nbc;i++)
   {
-    SCALAR_STORE_AND_NARROW(p0+i,htmp,v0[i]);
+    SCALAR_STORE_AND_NARROW(p0+i,v0[i]);
   }
   
 }
@@ -1632,6 +1617,9 @@ ARM_DSP_ATTRIBUTE arm_status EXT(arm_mat_mult) (
   MATTYPE * pDst)
 #endif
 {
+  #if defined(HAS_TEMP_BUFFER)
+  (void)pState;
+  #endif
   const DTYPE *a = pSrcA->pData;
   const DTYPE *b = pSrcB->pData;
   DTYPE *c = pDst->pData;

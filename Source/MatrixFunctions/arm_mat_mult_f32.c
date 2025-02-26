@@ -552,8 +552,8 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_f32(
 #define VECACC float32x4_t
 
 #define SCALARACC float32_t 
-#define SCALAR_LOAD_AND_WIDEN(DST,TMP0,PTR) DST = (SCALARACC)(*(PTR))
-#define SCALAR_STORE_AND_NARROW(PTR,HTMP0,VAL) *(PTR) = (VAL)
+#define SCALAR_LOAD_AND_WIDEN(DST,PTR) DST = (SCALARACC)(*(PTR))
+#define SCALAR_STORE_AND_NARROW(PTR,VAL) *(PTR) = (VAL)
 #define SCALAR_MAC_N(ACC,VEC,SCALAR) ACC += (VEC) * (SCALAR)
 
 #define HVEC float32x2_t
