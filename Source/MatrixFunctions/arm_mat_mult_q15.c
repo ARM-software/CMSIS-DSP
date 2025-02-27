@@ -47,13 +47,19 @@
                    - \ref ARM_MATH_SUCCESS       : Operation successful
                    - \ref ARM_MATH_SIZE_MISMATCH : Matrix size check failed
 
-  @par           Scaling and Overflow Behavior
+  @par           Scaling and Overflow Behavior (except on Neon)
                    The function is implemented using an internal 64-bit accumulator. The inputs to the
                    multiplications are in 1.15 format and multiplications yield a 2.30 result.
                    The 2.30 intermediate results are accumulated in a 64-bit accumulator in 34.30 format.
                    This approach provides 33 guard bits and there is no risk of overflow.
                    The 34.30 result is then truncated to 34.15 format by discarding the low 15 bits
                    and then saturated to 1.15 format.
+  @par           Neon version
+                   The Neon version is currently using a 32-bit accumulator. As consequence, it should
+                   not be used to multiply too big matrixes or you'll get saturation issues.
+                   If you try to scale down the data to avoid the saturations, you may lose too
+                   much accuracy. The Neon implementation is not (currently) made for big matrixes.
+                               
   @par
                    Refer to \ref arm_mat_mult_fast_q15() for a faster but less precise version of this function.
  

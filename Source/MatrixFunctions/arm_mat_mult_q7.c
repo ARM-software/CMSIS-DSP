@@ -39,21 +39,33 @@
  */
 
 /**
- * @brief Q7 matrix multiplication
- * @param[in]       *pSrcA points to the first input matrix structure
- * @param[in]       *pSrcB points to the second input matrix structure
- * @param[out]      *pDst points to output matrix structure
- * @param[in]       *pState points to the array for storing intermediate results (Unused in some versions)
- * @return          The function returns either
- * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
- *
- * @details
- * <b>Scaling and Overflow Behavior:</b>
- *
- * \par
- * The function is implemented using a 32-bit internal accumulator saturated to 1.7 format.
- *
- *
+  @brief         Q7 matrix multiplication.
+  @param[in]     pSrcA      points to the first input matrix structure
+  @param[in]     pSrcB      points to the second input matrix structure
+  @param[out]    pDst       points to output matrix structure
+  @param[in]     pState     points to the array for storing intermediate results
+  @return        execution status
+                   - \ref ARM_MATH_SUCCESS       : Operation successful
+                   - \ref ARM_MATH_SIZE_MISMATCH : Matrix size check failed
+
+  @par           Scaling and Overflow Behavior (except Neon version)
+                   The function is implemented using an internal 32-bit accumulator. The inputs to the
+                   multiplications are in 1.7 format and multiplications yield a 2.14 result.
+                   The 2.14 intermediate results are accumulated in a 32-bit accumulator in 18.14 format.
+                   The 18.14 result is then truncated to 18.7 format by discarding the low 7 bits
+                   and then saturated to 1.7 format.
+  @par           Neon version
+                   The Neon version is currently using a 16-bit accumulator. As consequence, it should
+                   not be used to multiply too big matrixes or you'll get saturation issues.
+                   If you try to scale down the data to avoid the saturations, you may lose too
+                   much accuracy. The Neon implementation is not (currently) made for big matrixes.
+
+                            
+  @par
+                   Refer to \ref arm_mat_mult_fast_q15() for a faster but less precise version of this function.
+ 
+  @par             pState
+                   pState will contain the transpose of pSrcB
  */
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 __STATIC_FORCEINLINE arm_status arm_mat_mult_q7_2x2_mve(
