@@ -4,7 +4,7 @@
 
 #include "dsp/basic_math_functions.h"
 
-#define SNR_THRESHOLD 70
+#define SNR_THRESHOLD 75
 
 /* 
 
@@ -12,7 +12,7 @@ Reference patterns are generated with
 a double precision computation.
 
 */
-#define ABS_ERROR_Q15 ((q15_t)2000)
+#define ABS_ERROR_Q15 ((q15_t)2)
 
 /* Upper bound of maximum matrix dimension used by Python */
 #define MAXMATRIXDIM 1537
@@ -77,6 +77,9 @@ static void checkInnerTail(q15_t *b)
 
           try
           {
+            // Shift disabled because the loss of accuracy is too big
+            // Saturation is avoided by limiting the test to smaller matrixes.
+            shift = 0;
             if (shift!=0)
                arm_shift_q15(inp1,-shift,ap,rows*internal);
             status=arm_mat_mult_q15(&this->in1,&this->in2,&this->out,tmpPtr);

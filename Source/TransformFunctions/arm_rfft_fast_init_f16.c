@@ -394,4 +394,11 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_f16(
   @} end of RealFFTF16 group
  */
 
+ #if defined(RFFT_INIT)
+ #undef RFFT_INIT
+ #endif
+
+ #if defined(FAST_INIT_FUNC)
+ #undef FAST_INIT_FUNC
+ #endif
 #endif /*  #if defined(ARM_FLOAT16_SUPPORTED) */

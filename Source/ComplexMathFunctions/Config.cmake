@@ -1,6 +1,13 @@
 cmake_minimum_required (VERSION 3.14)
 
+if (FASTBUILD)
+  target_sources(CMSISDSP PRIVATE ComplexMathFunctions/ComplexMathFunctions.c)
 
+  if ((NOT ARMAC5) AND (NOT DISABLEFLOAT16))
+    target_sources(CMSISDSP PRIVATE ComplexMathFunctions/ComplexMathFunctionsF16.c)
+  endif()
+
+else()
 
 
 # MVE code is using a table for computing the fast sqrt arm_cmplx_mag_q31
@@ -41,3 +48,4 @@ target_sources(CMSISDSP PRIVATE ComplexMathFunctions/arm_cmplx_mult_cmplx_f16.c)
 target_sources(CMSISDSP PRIVATE ComplexMathFunctions/arm_cmplx_mult_real_f16.c)
 endif()
 
+endif()

@@ -1,6 +1,5 @@
 
 
-
 #define DCS 4 // Max number of vectors for columns (can't be changed)
 #define DC (LANE*DCS) // Must be multiple of lane
 #define DR 4 // Max number rows in kernels (can't be changed)
@@ -13,10 +12,11 @@
 #define ROWS_BLOCK ((((ARM_MATH_L2_CACHE_SIZE>>2) >> 0) / INNER_BLOCK + DR - 1) & ~(DR-1) ) 
 #define COLS_BLOCK (((ARM_MATH_L3_CACHE_SIZE>>2) / INNER_BLOCK + DC - 1) & ~(DC-1)) 
 
-
+#if !defined(PACKEDARRAY)
+#define PACKEDARRAY
 static __ALIGNED(16) char PACKEDB[4*INNER_BLOCK*DC];
 static __ALIGNED(16) char PACKEDA[4*ROWS_BLOCK*INNER_BLOCK];
-
+#endif
 
 // 4 row and 4 column VECtors
 __STATIC_INLINE void EXT(kernel_4rx4cv)(int cols,DTYPE *pC,int xp,int r) {

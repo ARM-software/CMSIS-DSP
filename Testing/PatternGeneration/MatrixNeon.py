@@ -36,7 +36,13 @@ def sum(dims):
        return [l[0]+l[1]+l[2] for l in dims]
     else:
        return [l[0]+l[1] for l in dims]
+    
+class Accept:
+   def __init__(self,lim):
+      self._lim = lim
 
+   def accept(self,t):
+      return t[0] <= self._lim and t[1] <= self._lim and t[2] <= self._lim
 
 def writeBinaryTests(config,format,desc):
     sizes=[Tools.loopnb(format,Tools.TAILONLY),
@@ -58,6 +64,22 @@ def writeBinaryTests(config,format,desc):
     rows=[(x,OTHER,OTHER) for x in (drs+BLOCK_ROWS)]
     cols=[(OTHER,x,OTHER) for x in (dcs+BLOCK_COLS)]
     inners=[(OTHER,OTHER,x) for x in (BLOCK_INNER+sizes)]
+
+    if format == Tools.Q15:
+       # Size is limited for Q15 and Q7 datatype otherwise we get saturation
+       # or loss of accuracy since we need to shift the data too much to avoid
+       # saturation
+       rows = filter(Accept(256).accept,rows)
+       cols = filter(Accept(256).accept,cols)
+       inners = filter(Accept(256).accept,inners)
+
+    if format == Tools.Q7:
+       # Size is limited for Q15 and Q7 datatype otherwise we get saturation
+       # or loss of accuracy since we need to shift the data too much to avoid
+       # saturation
+       rows = filter(Accept(128).accept,rows)
+       cols = filter(Accept(128).accept,cols)
+       inners = filter(Accept(128).accept,inners)
 
     maxnb = np.max(np.hstack([drs,dcs,sizes,BLOCK_COLS,BLOCK_ROWS,BLOCK_INNER]))
     print(f"Max nb = {maxnb}")
@@ -123,10 +145,10 @@ def generatePatterns():
     configBinaryq7.setOverwrite(False)
 
     ##writeBinaryTests(configBinaryf64,Tools.F64,"F64")
-    writeBinaryTests(configBinaryf32,Tools.F32,"F32")
-    writeBinaryTests(configBinaryf16,Tools.F16,"F16")
-    writeBinaryTests(configBinaryq31,Tools.Q31,"Q31")
-    writeBinaryTests(configBinaryq15,Tools.Q15,"Q15")
+    #writeBinaryTests(configBinaryf32,Tools.F32,"F32")
+    #writeBinaryTests(configBinaryf16,Tools.F16,"F16")
+    #writeBinaryTests(configBinaryq31,Tools.Q31,"Q31")
+    #writeBinaryTests(configBinaryq15,Tools.Q15,"Q15")
     writeBinaryTests(configBinaryq7,Tools.Q7,"Q7")
 
     

@@ -20,6 +20,7 @@ option(HOST "Build for host" OFF)
 option(AUTOVECTORIZE "Prefer autovectorizable code to one using C intrinsics" OFF)
 option(LAXVECTORCONVERSIONS "Lax vector conversions" ON)
 option(NEON_RIFFT_SCALING "Scaling of RIFFT with Neon" ON)
+option(FASTBUILD "Faster build" ON)
 
 ###########################
 #

@@ -1,7 +1,14 @@
 cmake_minimum_required (VERSION 3.14)
 
 
+if (FASTBUILD)
+  target_sources(CMSISDSP PRIVATE StatisticsFunctions/StatisticsFunctions.c)
 
+  if ((NOT ARMAC5) AND (NOT DISABLEFLOAT16))
+    target_sources(CMSISDSP PRIVATE StatisticsFunctions/StatisticsFunctionsF16.c)
+  endif()
+
+else()
 
 
 target_sources(CMSISDSP PRIVATE StatisticsFunctions/arm_entropy_f32.c)
@@ -105,4 +112,6 @@ target_sources(CMSISDSP PRIVATE StatisticsFunctions/arm_absmin_f16.c)
 target_sources(CMSISDSP PRIVATE StatisticsFunctions/arm_absmax_no_idx_f16.c)
 target_sources(CMSISDSP PRIVATE StatisticsFunctions/arm_absmin_no_idx_f16.c)
 target_sources(CMSISDSP PRIVATE StatisticsFunctions/arm_accumulate_f16.c)
+endif()
+
 endif()
