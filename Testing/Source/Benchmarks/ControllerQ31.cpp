@@ -12,41 +12,53 @@
 
     void ControllerQ31::test_clarke_q31() 
     {
-       q31_t Ialpha;
-       q31_t Ibeta;
+       q31_t * Ia;
+       q31_t * Ib;
+
+       Ia = this->pSrc;
+       Ib = reinterpret_cast<q31_t *> (reinterpret_cast<uintptr_t>(this->pSrc) + (this->nbSamples << 2));
        for(int i=0; i < this->nbSamples; i++)
        {
-         arm_clarke_q31(0xccccccd,0x1999999a,&Ialpha,&Ibeta);
+         arm_clarke_q31(*Ia++,*(--Ib),this->pOuta,this->pOutb);
        }
     }
 
     void ControllerQ31::test_inv_clarke_q31() 
     {
-       q31_t Ia;
-       q31_t Ib;
+       q31_t * Ia;
+       q31_t * Ib;
+
+       Ia = this->pSrc;
+       Ib = reinterpret_cast<q31_t *> (reinterpret_cast<uintptr_t>(this->pSrc) + (this->nbSamples << 2));
        for(int i=0; i < this->nbSamples; i++)
        {
-         arm_clarke_q31(0xccccccd,0x1999999a,&Ia,&Ib);
+         arm_inv_clarke_q31(*Ia++,*(--Ib),this->pOuta,this->pOutb);
        }
     }
 
     void ControllerQ31::test_park_q31() 
     {
-       q31_t Id,Iq;
+       q31_t * Ia;
+       q31_t * Ib;
 
+       Ia = this->pSrc;
+       Ib = reinterpret_cast<q31_t *> (reinterpret_cast<uintptr_t>(this->pSrc) + (this->nbSamples << 2));
        for(int i=0; i < this->nbSamples; i++)
        {
-          arm_park_q31(0xccccccd,0x1999999a,&Id,&Iq,0xccccccd,0x1999999a);
+         arm_park_q31(*Ia++,*(--Ib),this->pOuta,this->pOutb,0x3a1c5c56,0x720c8074); //theta = 27(Deg)
        }
     }
 
     void ControllerQ31::test_inv_park_q31() 
     {
-        q31_t Ialpha,Ibeta;
+        q31_t * Ia;
+        q31_t * Ib;
 
+        Ia = this->pSrc;
+        Ib = reinterpret_cast<q31_t *> (reinterpret_cast<uintptr_t>(this->pSrc) + (this->nbSamples << 2));
         for(int i=0; i < this->nbSamples; i++)
         {
-           arm_inv_park_q31(0xccccccd,0x1999999a,&Ialpha,&Ibeta,0xccccccd,0x1999999a);
+          arm_inv_park_q31(*Ia++,*(--Ib),this->pOuta,this->pOutb,0x3a1c5c56,0x720c8074);
         }
     }
 
