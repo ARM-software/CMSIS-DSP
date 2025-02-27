@@ -3032,6 +3032,96 @@ group Root {
                 }
 
              }
+
+              suite Binary F16 {
+                class = BinaryTestsNeonF16 
+                folder = BinaryF16
+
+                Pattern INPUTS1_F16_ID : InputA1_f16.txt 
+                Pattern INPUTS2_F16_ID : InputB1_f16.txt 
+
+
+                Pattern REFMUL1_F16_ID : RefMul1_f16.txt
+                Pattern DIMSBINARY1_S16_ID : DimsBinary1_s16.txt 
+
+
+                Output  OUT_F16_ID : Output
+                Output  TMPA_F16_ID : TmpA
+                Output  TMPB_F16_ID : TmpB
+
+                Functions {
+                  test mult:test_mat_mult_f16
+                }
+
+             }
+
+              suite Binary Q31 {
+                class = BinaryTestsNeonQ31 
+                folder = BinaryQ31
+
+                Pattern INPUTS1_Q31_ID : InputA1_q31.txt 
+                Pattern INPUTS2_Q31_ID : InputB1_q31.txt 
+
+
+                Pattern REFMUL1_Q31_ID : RefMul1_q31.txt
+                Pattern DIMSBINARY1_S16_ID : DimsBinary1_s16.txt 
+
+
+                Output  OUT_Q31_ID : Output
+                Output  TMPA_Q31_ID : TmpA
+                Output  TMPB_Q31_ID : TmpB
+
+                Functions {
+                  test mult:test_mat_mult_q31
+                }
+
+             }
+
+              suite Binary Q15 {
+                class = BinaryTestsNeonQ15 
+                folder = BinaryQ15
+
+                Pattern INPUTS1_Q15_ID : InputA1_q15.txt 
+                Pattern INPUTS2_Q15_ID : InputB1_q15.txt 
+
+
+                Pattern REFMUL1_Q15_ID : RefMul1_q15.txt
+                Pattern DIMSBINARY1_S16_ID : DimsBinary1_s16.txt 
+
+
+                Output  OUT_Q15_ID : Output
+                Output  TMPA_Q15_ID : TmpA
+                Output  TMPB_Q15_ID : TmpB
+                Output  TMP_Q15_ID : Tmp
+
+                Functions {
+                  test mult:test_mat_mult_q15
+                }
+
+             }
+
+              suite Binary Q7 {
+                class = BinaryTestsNeonQ7 
+                folder = BinaryQ7
+
+                Pattern INPUTS1_Q7_ID : InputA1_q7.txt 
+                Pattern INPUTS2_Q7_ID : InputB1_q7.txt 
+
+
+                Pattern REFMUL1_Q7_ID : RefMul1_q7.txt
+                Pattern DIMSBINARY1_S16_ID : DimsBinary1_s16.txt 
+
+
+                Output  OUT_Q7_ID : Output
+                Output  TMPA_Q7_ID : TmpA
+                Output  TMPB_Q7_ID : TmpB
+                Output  TMP_Q7_ID : Tmp
+
+                Functions {
+                  test mult:test_mat_mult_q7
+                }
+
+             }
            }
         }
    }

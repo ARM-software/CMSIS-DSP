@@ -551,6 +551,9 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_f32(
 #define VEC float32x4_t
 #define VECACC float32x4_t
 
+#define TMPREG
+
+
 #define SCALARACC float32_t 
 #define SCALAR_LOAD_AND_WIDEN(DST,PTR) DST = (SCALARACC)(*(PTR))
 #define SCALAR_STORE_AND_NARROW(PTR,VAL) *(PTR) = (VAL)
@@ -560,8 +563,8 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_f32(
 #define VLOAD(PTR) vld1q_f32((PTR))
 #define VSTORE(PTR,VAL) vst1q_f32((PTR),(VAL))
 
-#define VLOAD_AND_WIDEN(DST,TMP0,PTR) DST = vld1q_f32((PTR))
-#define VSTORE_AND_NARROW(PTR,HTMP,VAL) vst1q_f32((PTR),(VAL))
+#define VLOAD_AND_WIDEN(DST,PTR) DST = vld1q_f32((PTR))
+#define VSTORE_AND_NARROW(PTR,VAL) vst1q_f32((PTR),(VAL))
 
 #define VMAC_N(ACC,VEC,SCALAR) ACC = vfmaq_n_f32(ACC,(VEC),(SCALAR))
 #define MATTYPE arm_matrix_instance_f32

@@ -125,6 +125,9 @@ if (NEON)
         Source/Tests/TransformNeonCQ31.cpp
         Source/Tests/TransformNeonCQ15.cpp
         Source/Tests/BinaryTestsNeonF32.cpp
+        Source/Tests/BinaryTestsNeonQ31.cpp
+        Source/Tests/BinaryTestsNeonQ15.cpp
+        Source/Tests/BinaryTestsNeonQ7.cpp
         )
     
 
@@ -156,6 +159,7 @@ if (NOT DISABLEFLOAT16)
     if (NEON)
        target_sources(test PUBLIC 
         Source/Tests/TransformNeonCF16.cpp
+        Source/Tests/BinaryTestsNeonF16.cpp
         )
     
 

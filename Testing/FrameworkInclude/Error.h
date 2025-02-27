@@ -119,6 +119,9 @@ extern void assert_snr_error(unsigned long nb,AnyPattern<q7_t> &pa,AnyPattern<q7
 extern void assert_snr_error(unsigned long nb,float64_t pa,float64_t pb, float64_t threshold);
 extern void assert_snr_error(unsigned long nb,float32_t pa,float32_t pb, float32_t threshold);
 
+extern void assert_snr_error_nb(unsigned long linenb,const q15_t *pa,const q15_t *pb, float32_t threshold,int nb);
+
+
 #if !defined (__CC_ARM) && defined(ARM_FLOAT16_SUPPORTED)
 extern void assert_snr_error(unsigned long nb,float16_t pa,float16_t pb, float32_t threshold);
 #endif 
@@ -157,9 +160,13 @@ Macros to use to implement tests.
 #define ASSERT_EQ_PARTIAL(NB,A,B) Client::assert_equal_partial(__LINE__,NB,A,B)
 
 #define ASSERT_NEAR_EQ(A,B,THRESH) Client::assert_near_equal(__LINE__,A,B,THRESH)
+#define ASSERT_NEAR_EQ_NB(A,B,THRESH,NB) Client::assert_near_equal_nb(__LINE__,A,B,THRESH,NB)
+
 #define ASSERT_REL_ERROR(A,B,THRESH) Client::assert_relative_error(__LINE__,A,B,THRESH)
 #define ASSERT_CLOSE_ERROR(A,B,ABSTHRESH,RELTHRESH) Client::assert_close_error(__LINE__,A,B,ABSTHRESH,RELTHRESH)
 #define ASSERT_SNR(A,B,SNR) Client::assert_snr_error(__LINE__,A,B,SNR)
+#define ASSERT_SNR_NB(A,B,SNR,NB) Client::assert_snr_error_nb(__LINE__,A,B,SNR,NB)
+
 #define ASSERT_TRUE(A) Client::assert_true(__LINE__,A)
 #define ASSERT_FALSE(A) Client::assert_false(__LINE__,A)
 #define ASSERT_NOT_EMPTY(A) Client::assert_not_empty(__LINE__,A)
@@ -268,6 +275,27 @@ void assert_near_equal(unsigned long nb,T pa, T pb, T threshold)
     if (abs(pa - pb) > threshold)
     {
          throw (Error(NEAR_EQUAL_ERROR,nb));
+    }
+};
+
+template <typename T> 
+void assert_near_equal_nb(unsigned long linenb,T *ptrA, T *ptrB, T threshold,unsigned long nb)
+{
+    unsigned long i=0;
+    char id[40];
+   
+    for(i=0; i < nb; i++)
+    {
+       try
+       {
+          assert_near_equal(linenb,ptrA[i],ptrB[i],threshold);
+       }
+       catch(Error &err)
+       {          
+          snprintf(id,40," (local nb=%lu)",i);
+          strcat(err.details,id);
+          throw(err);
+       }
     }
 };
 

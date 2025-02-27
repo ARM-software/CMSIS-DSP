@@ -85,9 +85,12 @@ def writeBinaryTests(config,format,desc):
     with Progress() as progress:
         for (a,b,c) in progress.track(binarySizes, description=desc):
            progress.console.print(f"{a} x {b} x {c}")
+           m = int(np.log2(np.max([a,b,c])))
            dims.append(a)
            dims.append(b)
            dims.append(c)
+           if format == Tools.Q31 or format == Tools.Q15 or format == Tools.Q7:
+              dims.append(m)
     
            ma = np.copy(data1[0:a*b]).reshape(a,b)
            mb = np.copy(data2[0:b*c]).reshape(b,c)
@@ -112,14 +115,14 @@ def generatePatterns():
     configBinaryq15=Tools.Config(PATTERNBINDIR,PARAMBINDIR,"q15")
     configBinaryq7=Tools.Config(PATTERNBINDIR,PARAMBINDIR,"q7")
 
-    configBinaryf64.setOverwrite(True)
-    configBinaryf32.setOverwrite(True)
-    configBinaryf16.setOverwrite(True)
-    configBinaryq31.setOverwrite(True)
-    configBinaryq15.setOverwrite(True)
-    configBinaryq7.setOverwrite(True)
+    configBinaryf64.setOverwrite(False)
+    configBinaryf32.setOverwrite(False)
+    configBinaryf16.setOverwrite(False)
+    configBinaryq31.setOverwrite(False)
+    configBinaryq15.setOverwrite(False)
+    configBinaryq7.setOverwrite(False)
 
-    #writeBinaryTests(configBinaryf64,Tools.F64,"F64")
+    ##writeBinaryTests(configBinaryf64,Tools.F64,"F64")
     writeBinaryTests(configBinaryf32,Tools.F32,"F32")
     writeBinaryTests(configBinaryf16,Tools.F16,"F16")
     writeBinaryTests(configBinaryq31,Tools.Q31,"Q31")

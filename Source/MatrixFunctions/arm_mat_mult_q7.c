@@ -594,25 +594,28 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q7(
 #define VEC int8x16_t
 #define VECACC int16x8x2_t
 
+#define TMPREG \
+  VEC tmpld; \
+  int8x8x2_t htmp;
+
 #define SCALARACC int32_t 
 #define SCALAR_LOAD_AND_WIDEN(DST,PTR) DST = (SCALARACC)(*(PTR))
 #define SCALAR_STORE_AND_NARROW(PTR,VAL) *(PTR) = (q7_t) __SSAT((VAL) >> 7, 16)
 #define SCALAR_MAC_N(ACC,VEC,SCALAR) ACC += (SCALARACC)(VEC) * (SCALARACC)(SCALAR)
 
-#define HVEC int8x8x2_t
 #define VLOAD(PTR) vld1q_s8((PTR))
 
 #define VSTORE(PTR,VAL) vst1q_s8((PTR),(VAL))
 
-#define VLOAD_AND_WIDEN(DST,TMP0,PTR)           \
-    TMP0 = vld1q_s8((PTR));                    \
-    DST.val[0] = vmovl_s8(vget_low_s8(TMP0)); \
-    DST.val[1] = vmovl_s8(vget_high_s8(TMP0));
+#define VLOAD_AND_WIDEN(DST,PTR)           \
+    tmpld = vld1q_s8((PTR));                    \
+    DST.val[0] = vmovl_s8(vget_low_s8(tmpld)); \
+    DST.val[1] = vmovl_s8(vget_high_s8(tmpld));
 
-#define VSTORE_AND_NARROW(PTR,HTMP,VAL) \
-    HTMP.val[0] = vqshrn_n_s16(VAL.val[0],7);    \
-    HTMP.val[1] = vqshrn_n_s16(VAL.val[1],7);    \
-    vst1q_s8(PTR,vcombine_s8(HTMP.val[0],HTMP.val[1]));
+#define VSTORE_AND_NARROW(PTR,VAL) \
+    htmp.val[0] = vqshrn_n_s16(VAL.val[0],7);    \
+    htmp.val[1] = vqshrn_n_s16(VAL.val[1],7);    \
+    vst1q_s8(PTR,vcombine_s8(htmp.val[0],htmp.val[1]));
 
     #define VMAC_N(ACC,VEC,SCALAR) \
     ACC.val[0] = vmlal_s8(ACC.val[0],vget_low_s8(VEC),vdup_n_s8(SCALAR)); \

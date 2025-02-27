@@ -632,6 +632,7 @@ float arm_snr_q31(q31_t *pRef, q31_t *pTest, uint32_t buffSize)
     }
 
 
+  //printf("Signal = %f, Error %f\n",(double)EnergySignal,(double)EnergyError);
   SNR = 10 * log10f (EnergySignal / EnergyError);
 
   /* Checking for a NAN value in SNR */
@@ -644,7 +645,7 @@ float arm_snr_q31(q31_t *pRef, q31_t *pTest, uint32_t buffSize)
 
 }
 
-float arm_snr_q15(q15_t *pRef, q15_t *pTest, uint32_t buffSize)
+float arm_snr_q15(const q15_t *pRef, const q15_t *pTest, uint32_t buffSize)
 {
   float EnergySignal = 0.0, EnergyError = 0.0;
   uint32_t i;
@@ -932,7 +933,7 @@ void assert_snr_error(unsigned long nb,AnyPattern<q31_t> &pa,AnyPattern<q31_t> &
 
    snr = arm_snr_q31(ptrA, ptrB, pa.nbSamples());
 
-   //printf("SNR = %f\n",snr);
+   //printf("SNR = %f\n",(double)snr);
 
    if (snr < threshold)
    {
@@ -941,6 +942,26 @@ void assert_snr_error(unsigned long nb,AnyPattern<q31_t> &pa,AnyPattern<q31_t> &
      throw (Error(SNR_ERROR,nb,details));
    }
 
+}
+
+void assert_snr_error_nb(unsigned long linenb,
+  const q15_t *ptrA,
+  const q15_t *ptrB, 
+  float32_t threshold,
+  unsigned long nb)
+{
+  float32_t snr;
+
+  snr = arm_snr_q15(ptrA, ptrB, nb);
+
+  //printf("SNR = %f\n",(double)snr);
+
+  if (snr < threshold)
+  {
+    char details[200];
+    snprintf(details,200,"SNR %g < %g",(double)snr,(double)threshold);
+    throw (Error(SNR_ERROR,linenb,details));
+  }
 }
 
 void assert_snr_error(unsigned long nb,q31_t a,q31_t b, float32_t threshold)
