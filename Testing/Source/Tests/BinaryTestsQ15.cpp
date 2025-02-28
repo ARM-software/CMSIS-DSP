@@ -1,6 +1,7 @@
 #include "BinaryTestsQ15.h"
 #include <stdio.h>
 #include "Error.h"
+#include "dsp/basic_math_functions.h"
 
 #define SNR_THRESHOLD 70
 #define SNR_LOW_THRESHOLD 30
@@ -46,9 +47,10 @@ static void checkInnerTail(q15_t *b)
                                             \
       q15_t *outp=output.ptr();             \
       q15_t *tmpPtr=tmp.ptr();              \
+      q15_t *refp=ref.ptr();              \
       int16_t *dimsp = dims.ptr();          \
-      int nbMatrixes = dims.nbSamples() / 3;\
-      int rows,internal,columns;            \
+      int nbMatrixes = dims.nbSamples() / 4;\
+      int rows,internal,columns,shift;            \
       int i;
 
 
@@ -85,6 +87,7 @@ static void checkInnerTail(q15_t *b)
     void BinaryTestsQ15::test_mat_mult_q15()
     {     
       LOADDATA2();
+      (void)shift;
       arm_status status;
 
 
@@ -93,16 +96,79 @@ static void checkInnerTail(q15_t *b)
           rows = *dimsp++;
           internal = *dimsp++;
           columns = *dimsp++;
+          shift = *dimsp++;
 
 
           PREPAREDATA2R();
-          memset(tmpPtr,0,sizeof(q15_t)*internal*columns + 16);
-          status=arm_mat_mult_q15(&this->in1,&this->in2,&this->out,tmpPtr);
-          ASSERT_TRUE(status==ARM_MATH_SUCCESS);
+          try
+          {
+             memset(tmpPtr,0,sizeof(q15_t)*internal*columns + 16);
+             status=arm_mat_mult_q15(&this->in1,&this->in2,&this->out,tmpPtr);
+             ASSERT_TRUE(status==ARM_MATH_SUCCESS);
+             ASSERT_NEAR_EQ_NB(outp,refp,ABS_HIGH_ERROR_Q15,rows*columns);
+             
+   
+             outp += (rows * columns);
+             refp += (rows * columns);
+             checkInnerTail(outp);
+             checkInnerTail(tmpPtr + internal * columns);
+          }
+          catch(Client::Error &err)
+          {
+            char tmp[256];
+            snprintf(tmp,256," (%d x %d x %d)\n",rows,internal,columns);
+            strcat(err.details,tmp);
+            throw(err);
+          }
 
-          outp += (rows * columns);
-          checkInnerTail(outp);
-          checkInnerTail(tmpPtr + internal * columns);
+      }
+
+
+      ASSERT_SNR(output,ref,(q15_t)SNR_LOW_THRESHOLD);
+
+      ASSERT_NEAR_EQ(output,ref,ABS_HIGH_ERROR_Q15);
+
+    } 
+
+    void BinaryTestsQ15::test_mat_mult_fast_q15()
+    {     
+      LOADDATA2();
+      arm_status status;
+
+
+      for(i=0;i < nbMatrixes ; i ++)
+      {
+          rows = *dimsp++;
+          internal = *dimsp++;
+          columns = *dimsp++;
+          shift = *dimsp++;
+
+
+          PREPAREDATA2R();
+
+          try
+          {
+             memset(tmpPtr,0,sizeof(q15_t)*internal*columns + 16);
+             if (shift!=0)
+               arm_shift_q15(inp1,-shift,ap,rows*internal);
+             status=arm_mat_mult_fast_q15(&this->in1,&this->in2,&this->out,tmpPtr);
+             if (shift!=0)
+               arm_shift_q15(outp,shift,outp,rows*columns);
+             ASSERT_TRUE(status==ARM_MATH_SUCCESS);
+             ASSERT_NEAR_EQ_NB(outp,refp,ABS_HIGH_ERROR_Q15,rows*columns);
+   
+             outp += (rows * columns);
+             refp += (rows * columns);
+             checkInnerTail(outp);
+             checkInnerTail(tmpPtr + internal * columns);
+          }
+          catch(Client::Error &err)
+          {
+            char tmp[256];
+            snprintf(tmp,256," (%d x %d x %d)\n",rows,internal,columns);
+            strcat(err.details,tmp);
+            throw(err);
+          }
 
       }
 
@@ -119,6 +185,8 @@ static void checkInnerTail(q15_t *b)
     void BinaryTestsQ15::test_mat_cmplx_mult_q15()
     {     
       LOADDATA2();
+      (void)shift;
+      (void)refp;
       arm_status status;
 
       for(i=0;i < nbMatrixes ; i ++)
@@ -126,6 +194,7 @@ static void checkInnerTail(q15_t *b)
           rows = *dimsp++;
           internal = *dimsp++;
           columns = *dimsp++;
+          shift = *dimsp++;
 
 
           PREPAREDATA2C();
@@ -176,6 +245,19 @@ static void checkInnerTail(q15_t *b)
             a.create(2*MAXMATRIXDIM*MAXMATRIXDIM,BinaryTestsQ15::TMPA_Q15_ID,mgr);
             b.create(2*MAXMATRIXDIM*MAXMATRIXDIM,BinaryTestsQ15::TMPB_Q15_ID,mgr);
             tmp.create(2*MAXMATRIXDIM*MAXMATRIXDIM,BinaryTestsQ15::TMP_Q15_ID,mgr);
+         break;
+
+         case TEST_MAT_MULT_FAST_Q15_3:
+            input1.reload(BinaryTestsQ15::INPUTS1_Q15_ID,mgr);
+            input2.reload(BinaryTestsQ15::INPUTS2_Q15_ID,mgr);
+            dims.reload(BinaryTestsQ15::DIMSBINARY1_S16_ID,mgr);
+
+            ref.reload(BinaryTestsQ15::REFMUL1_Q15_ID,mgr);
+
+            output.create(ref.nbSamples(),BinaryTestsQ15::OUT_Q15_ID,mgr);
+            a.create(MAXMATRIXDIM*MAXMATRIXDIM,BinaryTestsQ15::TMPA_Q15_ID,mgr);
+            b.create(MAXMATRIXDIM*MAXMATRIXDIM,BinaryTestsQ15::TMPB_Q15_ID,mgr);
+            tmp.create(MAXMATRIXDIM*MAXMATRIXDIM,BinaryTestsQ15::TMP_Q15_ID,mgr);
          break;
 
 

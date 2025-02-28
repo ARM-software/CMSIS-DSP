@@ -1,6 +1,7 @@
 #include "BinaryTestsQ7.h"
 #include <stdio.h>
 #include "Error.h"
+#include "dsp/basic_math_functions.h"
 
 #define SNR_THRESHOLD 20
 
@@ -48,10 +49,11 @@ static void checkInnerTail(q7_t *b)
       q7_t *bp=b.ptr();                    \
                                             \
       q7_t *outp=output.ptr();             \
+      q7_t *refp=ref.ptr();             \
       q7_t *tmpPtr=tmp.ptr();              \
       int16_t *dimsp = dims.ptr();          \
-      int nbMatrixes = dims.nbSamples() / 3;\
-      int rows,internal,columns;            \
+      int nbMatrixes = dims.nbSamples() / 4;\
+      int rows,internal,columns,shift;            \
       int i;
 
 
@@ -76,6 +78,7 @@ static void checkInnerTail(q7_t *b)
     void BinaryTestsQ7::test_mat_mult_q7()
     {     
       LOADDATA2();
+      (void)shift;
       arm_status status;
 
       for(i=0;i < nbMatrixes ; i ++)
@@ -83,17 +86,34 @@ static void checkInnerTail(q7_t *b)
           rows = *dimsp++;
           internal = *dimsp++;
           columns = *dimsp++;
+          shift = *dimsp++;
 
           PREPAREDATA2();
-          memset(tmpPtr,0,sizeof(q7_t)*internal*columns + 16);
-          checkInnerTail(tmpPtr + internal*columns);
-          
-          status=arm_mat_mult_q7(&this->in1,&this->in2,&this->out,tmpPtr);
-          ASSERT_TRUE(status==ARM_MATH_SUCCESS);
-
-          outp += (rows * columns);
-          checkInnerTail(outp);
-          checkInnerTail(tmpPtr + internal*columns);
+          try
+          {
+              memset(tmpPtr,0,sizeof(q7_t)*internal*columns + 16);
+              checkInnerTail(tmpPtr + internal*columns);
+              
+              if (shift!=0)
+                arm_shift_q7(inp1,-shift,ap,rows*internal);
+              status=arm_mat_mult_q7(&this->in1,&this->in2,&this->out,tmpPtr);
+              if (shift!=0)
+                arm_shift_q7(outp,shift,outp,rows*columns);
+              ASSERT_TRUE(status==ARM_MATH_SUCCESS);
+              ASSERT_NEAR_EQ_NB(outp,refp,ABS_ERROR_Q7,rows*columns);
+    
+              outp += (rows * columns);
+              refp += (rows * columns);
+              checkInnerTail(outp);
+              checkInnerTail(tmpPtr + internal*columns);
+          }
+          catch(Client::Error &err)
+          {
+            char tmp[256];
+            snprintf(tmp,256," (%d x %d x %d)\n",rows,internal,columns);
+            strcat(err.details,tmp);
+            throw(err);
+          }
       }
 
       ASSERT_EMPTY_TAIL(output);

@@ -3717,6 +3717,7 @@ group Root {
                   test mult:test_mat_mult_q31
                   test complex mult:test_mat_cmplx_mult_q31
                   test mult opt:test_mat_mult_opt_q31
+                  test mult:test_mat_mult_fast_q31
                 }
 
              }
@@ -3743,6 +3744,7 @@ group Root {
                 Functions {
                   test mult:test_mat_mult_q15
                   test complex mult:test_mat_cmplx_mult_q15
+                  test mult:test_mat_mult_fast_q15
                 }
 
              }
