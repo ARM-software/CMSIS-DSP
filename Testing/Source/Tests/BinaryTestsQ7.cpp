@@ -94,6 +94,7 @@ static void checkInnerTail(q7_t *b)
               memset(tmpPtr,0,sizeof(q7_t)*internal*columns + 16);
               checkInnerTail(tmpPtr + internal*columns);
               
+              shift = 0;
               if (shift!=0)
                 arm_shift_q7(inp1,-shift,ap,rows*internal);
               status=arm_mat_mult_q7(&this->in1,&this->in2,&this->out,tmpPtr);

@@ -604,34 +604,53 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q7(
 #define LANE 16
 #define DTYPE q7_t
 #define VEC int8x16_t
-#define VECACC int16x8x2_t
+#define VECACC struct { \
+    int32x4_t val[4];   \
+}
 
-#define TMPREG \
-  VEC tmpld; \
-  int8x8x2_t htmp;
+#define TMPREG       \
+  int8x16_t tmp1;    \
+  int16x8x2_t tmp2;   \
+  int16x4_t tlow;    \
+  int16x4_t thigh;   \
+  int16x8_t tmp;     \
+  int8x8_t  htmplo,htmphigh;
+
 
 #define SCALARACC int32_t 
 #define SCALAR_LOAD_AND_WIDEN(DST,PTR) DST = (SCALARACC)(*(PTR))
-#define SCALAR_STORE_AND_NARROW(PTR,VAL) *(PTR) = (q7_t) __SSAT((VAL) >> 7, 16)
+#define SCALAR_STORE_AND_NARROW(PTR,VAL) *(PTR) = (q7_t) __SSAT((VAL) >> 7, 8)
 #define SCALAR_MAC_N(ACC,VEC,SCALAR) ACC += (SCALARACC)(VEC) * (SCALARACC)(SCALAR)
 
 #define VLOAD(PTR) vld1q_s8((PTR))
 
 #define VSTORE(PTR,VAL) vst1q_s8((PTR),(VAL))
 
-#define VLOAD_AND_WIDEN(DST,PTR)           \
-    tmpld = vld1q_s8((PTR));                    \
-    DST.val[0] = vmovl_s8(vget_low_s8(tmpld)); \
-    DST.val[1] = vmovl_s8(vget_high_s8(tmpld));
+#define VLOAD_AND_WIDEN(DST,PTR)                       \
+    tmp1 = vld1q_s8((PTR));                            \
+    tmp2.val[0] = vmovl_s8(vget_low_s8(tmp1));         \
+    tmp2.val[1] = vmovl_s8(vget_high_s8(tmp1));        \
+    DST.val[0] = vmovl_s16(vget_low_s8(tmp2.val[0]));  \
+    DST.val[1] = vmovl_s16(vget_high_s8(tmp2.val[0])); \
+    DST.val[2] = vmovl_s16(vget_low_s8(tmp2.val[1]));  \
+    DST.val[3] = vmovl_s16(vget_high_s8(tmp2.val[1]));
 
-#define VSTORE_AND_NARROW(PTR,VAL) \
-    htmp.val[0] = vqshrn_n_s16(VAL.val[0],7);    \
-    htmp.val[1] = vqshrn_n_s16(VAL.val[1],7);    \
-    vst1q_s8(PTR,vcombine_s8(htmp.val[0],htmp.val[1]));
+#define VSTORE_AND_NARROW(PTR,VAL)                      \
+    tlow = vqshrn_n_s32(VAL.val[0],7);                  \
+    thigh = vqshrn_n_s32(VAL.val[1],7);                 \
+    htmplo = vqmovn_s16(vcombine_s16(tlow,thigh)); \
+    tlow = vqshrn_n_s32(VAL.val[2],7);                  \
+    thigh = vqshrn_n_s32(VAL.val[3],7);                 \
+    htmphigh = vqmovn_s16(vcombine_s16(tlow,thigh)); \
+    vst1q_s8(PTR,vcombine_s8(htmplo,htmphigh));
 
-    #define VMAC_N(ACC,VEC,SCALAR) \
-    ACC.val[0] = vmlal_s8(ACC.val[0],vget_low_s8(VEC),vdup_n_s8(SCALAR)); \
-    ACC.val[1] = vmlal_s8(ACC.val[1],vget_high_s8(VEC),vdup_n_s8(SCALAR));
+    #define VMAC_N(ACC,VEC,SCALAR)                                    \
+    tmp = vmull_s8(vget_low_s8(VEC),vdup_n_s8(SCALAR));               \
+    ACC.val[0] = vaddq_s32(ACC.val[0],vmovl_s16(vget_low_s16(tmp)));  \
+    ACC.val[1] = vaddq_s32(ACC.val[1],vmovl_s16(vget_high_s16(tmp))); \
+    tmp = vmull_s8(vget_high_s8(VEC),vdup_n_s8(SCALAR));              \
+    ACC.val[2] = vaddq_s32(ACC.val[2],vmovl_s16(vget_low_s16(tmp)));  \
+    ACC.val[3] = vaddq_s32(ACC.val[3],vmovl_s16(vget_high_s16(tmp)));
 
 #define MATTYPE arm_matrix_instance_q7
 #define EXT(A) A##_q7
