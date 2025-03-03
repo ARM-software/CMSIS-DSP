@@ -660,6 +660,9 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q31(
 #define MATTYPE arm_matrix_instance_q31
 #define EXT(A) A##_q31
 
+#define FUNCNAME arm_mat_mult_q31
+
+
 #include "_arm_mat_mult_neon.c"
 
 #else

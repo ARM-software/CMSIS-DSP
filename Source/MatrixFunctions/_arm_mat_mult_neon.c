@@ -1553,7 +1553,7 @@ __STATIC_INLINE void EXT(kernel_1rxc)(int cols,DTYPE *pC,int xp,int r,int nbc) {
 }
 
 
-ARM_DSP_ATTRIBUTE arm_status EXT(arm_mat_mult) (
+ARM_DSP_ATTRIBUTE arm_status FUNCNAME (
 #if defined(HAS_TEMP_BUFFER)
   const MATTYPE * pSrcA,
   const MATTYPE * pSrcB,
@@ -1750,6 +1750,8 @@ ARM_DSP_ATTRIBUTE arm_status EXT(arm_mat_mult) (
 #undef SCALAR_LOAD_AND_WIDEN
 #undef SCALAR_STORE_AND_NARROW
 #undef SCALAR_MAC_N
+
+#undef FUNCNAME
 
 #undef TMPREG
 

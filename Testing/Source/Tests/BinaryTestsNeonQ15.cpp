@@ -5,7 +5,7 @@
 #include "dsp/basic_math_functions.h"
 
 #define SNR_THRESHOLD 75
-
+#define SNR_LOW_THRESHOLD 75
 /* 
 
 Reference patterns are generated with
@@ -13,6 +13,7 @@ a double precision computation.
 
 */
 #define ABS_ERROR_Q15 ((q15_t)2)
+#define ABS_LOW_ERROR_Q15 ((q15_t)2)
 
 /* Upper bound of maximum matrix dimension used by Python */
 #define MAXMATRIXDIM 1537
@@ -23,6 +24,10 @@ static void checkInnerTail(q15_t *b)
     ASSERT_TRUE(b[1] == 0);
     ASSERT_TRUE(b[2] == 0);
     ASSERT_TRUE(b[3] == 0);
+    ASSERT_TRUE(b[4] == 0);
+    ASSERT_TRUE(b[5] == 0);
+    ASSERT_TRUE(b[6] == 0);
+    ASSERT_TRUE(b[7] == 0);
 }
 
 #define LOADDATA2()                          \
@@ -77,6 +82,7 @@ static void checkInnerTail(q15_t *b)
 
           try
           {
+            memset(tmpPtr,0,sizeof(q15_t)*MAXMATRIXDIM*MAXMATRIXDIM);
             // Shift disabled because the loss of accuracy is too big
             // Saturation is avoided by limiting the test to smaller matrixes.
             shift = 0;
@@ -111,6 +117,57 @@ static void checkInnerTail(q15_t *b)
 
     } 
 
+    void BinaryTestsNeonQ15::test_mat_mult_fast_q15()
+    {     
+      LOADDATA2();
+      arm_status status;
+
+      for(i=0;i < nbMatrixes ; i ++)
+      {
+          rows = *dimsp++;
+          internal = *dimsp++;
+          columns = *dimsp++;
+          shift = *dimsp++;
+
+          PREPAREDATA2R();
+
+          try
+          {
+            memset(tmpPtr,0,sizeof(q15_t)*MAXMATRIXDIM*MAXMATRIXDIM);
+            // Shift disabled because the loss of accuracy is too big
+            // Saturation is avoided by limiting the test to smaller matrixes.
+            shift = 0;
+            if (shift!=0)
+               arm_shift_q15(inp1,-shift,ap,rows*internal);
+            status=arm_mat_mult_fast_q15(&this->in1,&this->in2,&this->out,tmpPtr);
+            if (shift!=0)
+               arm_shift_q15(outp,shift,outp,rows*columns);
+            ASSERT_TRUE(status==ARM_MATH_SUCCESS);
+            ASSERT_NEAR_EQ_NB(outp,refp,ABS_ERROR_Q15,rows*columns);
+          }
+          catch(Client::Error &err)
+          {
+            char tmp[256];
+            snprintf(tmp,256," (%d x %d x %d)\n",rows,internal,columns);
+            strcat(err.details,tmp);
+            throw(err);
+          }
+
+          outp += (rows * columns);
+          refp += (rows * columns);
+          checkInnerTail(outp);
+
+      }
+
+      ASSERT_EMPTY_TAIL(output);
+
+      ASSERT_SNR(output,ref,(q15_t)SNR_THRESHOLD);
+
+      ASSERT_NEAR_EQ(output,ref,ABS_ERROR_Q15);
+
+
+    }
+
 
 
     void BinaryTestsNeonQ15::setUp(Testing::testID_t id,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr)
@@ -133,9 +190,22 @@ static void checkInnerTail(q15_t *b)
             tmp.create(MAXMATRIXDIM*MAXMATRIXDIM,BinaryTestsNeonQ15::TMP_Q15_ID,mgr);
 
          break;
-      }
-       
+      
 
+         case TEST_MAT_MULT_FAST_Q15_3:
+            input1.reload(BinaryTestsNeonQ15::INPUTS1_Q15_ID,mgr);
+            input2.reload(BinaryTestsNeonQ15::INPUTS2_Q15_ID,mgr);
+            dims.reload(BinaryTestsNeonQ15::DIMSBINARY1_S16_ID,mgr);
+
+            ref.reload(BinaryTestsNeonQ15::REFMUL1_Q15_ID,mgr);
+
+            output.create(ref.nbSamples(),BinaryTestsNeonQ15::OUT_Q15_ID,mgr);
+            a.create(MAXMATRIXDIM*MAXMATRIXDIM,BinaryTestsNeonQ15::TMPA_Q15_ID,mgr);
+            b.create(MAXMATRIXDIM*MAXMATRIXDIM,BinaryTestsNeonQ15::TMPB_Q15_ID,mgr);
+            tmp.create(MAXMATRIXDIM*MAXMATRIXDIM,BinaryTestsNeonQ15::TMP_Q15_ID,mgr);
+         break;
+       
+      }
     
     }
 

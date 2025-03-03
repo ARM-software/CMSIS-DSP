@@ -630,10 +630,10 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q7(
     tmp1 = vld1q_s8((PTR));                            \
     tmp2.val[0] = vmovl_s8(vget_low_s8(tmp1));         \
     tmp2.val[1] = vmovl_s8(vget_high_s8(tmp1));        \
-    DST.val[0] = vmovl_s16(vget_low_s8(tmp2.val[0]));  \
-    DST.val[1] = vmovl_s16(vget_high_s8(tmp2.val[0])); \
-    DST.val[2] = vmovl_s16(vget_low_s8(tmp2.val[1]));  \
-    DST.val[3] = vmovl_s16(vget_high_s8(tmp2.val[1]));
+    DST.val[0] = vmovl_s16(vget_low_s16(tmp2.val[0]));  \
+    DST.val[1] = vmovl_s16(vget_high_s16(tmp2.val[0])); \
+    DST.val[2] = vmovl_s16(vget_low_s16(tmp2.val[1]));  \
+    DST.val[3] = vmovl_s16(vget_high_s16(tmp2.val[1]));
 
 #define VSTORE_AND_NARROW(PTR,VAL)                      \
     tlow = vqshrn_n_s32(VAL.val[0],7);                  \
@@ -656,6 +656,9 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q7(
 #define EXT(A) A##_q7
 #define HAS_TEMP_BUFFER
 #define USE_TMP_REGISTER
+
+#define FUNCNAME arm_mat_mult_q7
+
 
 #include "_arm_mat_mult_neon.c"
 

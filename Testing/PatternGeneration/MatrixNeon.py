@@ -69,17 +69,17 @@ def writeBinaryTests(config,format,desc):
        # Size is limited for Q15 and Q7 datatype otherwise we get saturation
        # or loss of accuracy since we need to shift the data too much to avoid
        # saturation
-       rows = filter(Accept(256).accept,rows)
-       cols = filter(Accept(256).accept,cols)
-       inners = filter(Accept(256).accept,inners)
+       limited_rows = filter(Accept(256).accept,rows)
+       limited_cols = filter(Accept(256).accept,cols)
+       limited_inners = filter(Accept(256).accept,inners)
 
     if format == Tools.Q7:
        # Size is limited for Q15 and Q7 datatype otherwise we get saturation
        # or loss of accuracy since we need to shift the data too much to avoid
        # saturation
-       rows = filter(Accept(128).accept,rows)
-       cols = filter(Accept(128).accept,cols)
-       inners = filter(Accept(128).accept,inners)
+       limited_rows = filter(Accept(128).accept,rows)
+       limited_cols = filter(Accept(128).accept,cols)
+       limited_inners = filter(Accept(128).accept,inners)
 
     maxnb = np.max(np.hstack([drs,dcs,sizes,BLOCK_COLS,BLOCK_ROWS,BLOCK_INNER]))
     print(f"Max nb = {maxnb}")
@@ -94,11 +94,16 @@ def writeBinaryTests(config,format,desc):
     config.writeInput(1, data2,"InputB")
     #
     binarySizes = sorted(rows)+sorted(inners)+sorted(cols)
+    limited_binarySizes = sorted(limited_rows)+sorted(limited_inners)+sorted(limited_cols)
     #print(len(binarySizes))
     #return
     dims=[l[0]*l[2] for l in binarySizes]
     bytes=25*np.sum(dims)
     print(f"Estimated size of result text file : {bytes} bytes")
+
+    limited_dims=[l[0]*l[2] for l in limited_binarySizes]
+    limited_bytes=25*np.sum(limited_dims)
+    print(f"Estimated size of limited result text file : {limited_bytes} bytes")
 
     dims=[] 
     vals=[]
@@ -122,6 +127,33 @@ def writeBinaryTests(config,format,desc):
     
     config.writeInputS16(1, dims,"DimsBinary")
     config.writeReference(1, vals,"RefMul")
+
+    dims=[] 
+    vals=[]
+
+    # Limited sizes for the mult_fast version (less accuracy)
+    # or the normal version (q7) when no fast version is provided and the
+    # normal version is not accurate enough for big matrixes.
+    if format == Tools.Q15 or format == Tools.Q7:
+       with Progress() as progress:
+           for (a,b,c) in progress.track(limited_binarySizes, description=desc):
+              progress.console.print(f"{a} x {b} x {c}")
+              m = int(np.log2(np.max([a,b,c])))
+              dims.append(a)
+              dims.append(b)
+              dims.append(c)
+              if format == Tools.Q31 or format == Tools.Q15 or format == Tools.Q7:
+                 dims.append(m)
+       
+              ma = np.copy(data1[0:a*b]).reshape(a,b)
+              mb = np.copy(data2[0:b*c]).reshape(b,c)
+              r = np.matmul(ma , mb) 
+              r = list(r.reshape(a*c))
+              vals = vals + r
+       
+       
+       config.writeInputS16(1, dims,"DimsLimitedBinary")
+       config.writeReference(1, vals,"RefLimitedMul")
 
     
 

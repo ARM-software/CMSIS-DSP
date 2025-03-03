@@ -654,6 +654,9 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_f16(
  #define VMAC_N(ACC,VEC,SCALAR) ACC = vfmaq_n_f16(ACC,(VEC),(SCALAR))
  #define MATTYPE arm_matrix_instance_f16
  #define EXT(A) A##_f16
+
+ #define FUNCNAME arm_mat_mult_f16
+
  
  #include "_arm_mat_mult_neon.c"
 

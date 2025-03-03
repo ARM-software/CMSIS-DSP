@@ -3096,6 +3096,8 @@ group Root {
 
                 Functions {
                   test mult:test_mat_mult_q15
+                  disabled {test complex mult:test_mat_cmplx_mult_q15}
+                  test mult:test_mat_mult_fast_q15
                 }
 
              }

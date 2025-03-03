@@ -570,6 +570,9 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_f32(
 #define MATTYPE arm_matrix_instance_f32
 #define EXT(A) A##_f32
 
+#define FUNCNAME arm_mat_mult_f32
+
+
 #include "_arm_mat_mult_neon.c"
 
 #else

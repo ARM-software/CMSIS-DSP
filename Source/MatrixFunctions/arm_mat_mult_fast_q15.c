@@ -52,7 +52,7 @@
                    the fast variant use a 32-bit rather than a 64-bit accumulator.
                    The result of each 1.15 x 1.15 multiplication is truncated to
                    2.30 format. These intermediate results are accumulated in a 32-bit register in 2.30
-                   format. Finally, the accumulator is saturated and converted to a 1.15 result.
+                   format. 
   @par
                    The fast version has the same overflow behavior as the standard version but provides
                    less precision since it discards the low 16 bits of each multiplication result.
@@ -63,12 +63,54 @@
                    Refer to \ref arm_mat_mult_q15() for a slower implementation of this function
                    which uses 64-bit accumulation to provide higher precision.
  */
+#if defined(ARM_MATH_NEON)
+#define LANE 8
+#define DTYPE q15_t
+#define VEC int16x8_t
+#define VECACC int32x4x2_t
 
+#define TMPREG \
+  VEC tmpld; \
+  int16x4x2_t htmp;
+
+#define SCALARACC int64_t 
+#define SCALAR_LOAD_AND_WIDEN(DST,PTR) DST = (SCALARACC)(*(PTR))
+#define SCALAR_STORE_AND_NARROW(PTR,VAL) *(PTR) = (q15_t) __SSAT((VAL) >> 15, 16)
+#define SCALAR_MAC_N(ACC,VEC,SCALAR) ACC += (SCALARACC)(VEC) * (SCALARACC)(SCALAR)
+
+#define VLOAD(PTR) vld1q_s16((PTR))
+
+#define VSTORE(PTR,VAL) vst1q_s16((PTR),(VAL))
+
+#define VLOAD_AND_WIDEN(DST,PTR)           \
+    tmpld = vld1q_s16((PTR));                    \
+    DST.val[0] = vmovl_s16(vget_low_s16(tmpld)); \
+    DST.val[1] = vmovl_s16(vget_high_s16(tmpld));
+
+#define VSTORE_AND_NARROW(PTR,VAL) \
+    htmp.val[0] = vqshrn_n_s32(VAL.val[0],15);    \
+    htmp.val[1] = vqshrn_n_s32(VAL.val[1],15);    \
+    vst1q_s16(PTR,vcombine_s16(htmp.val[0],htmp.val[1]));
+
+#define VMAC_N(ACC,VEC,SCALAR) \
+   ACC.val[0] = vmlal_n_s16(ACC.val[0],vget_low_s16(VEC),(SCALAR)); \
+   ACC.val[1] = vmlal_n_s16(ACC.val[1],vget_high_s16(VEC),(SCALAR));
+
+#define MATTYPE arm_matrix_instance_q15
+#define EXT(A) A##_q15
+#define HAS_TEMP_BUFFER
+#define USE_TMP_REGISTER
+
+#define FUNCNAME arm_mat_mult_fast_q15
+
+#include "_arm_mat_mult_neon.c"
+
+#else
 ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_fast_q15(
-  const arm_matrix_instance_q15 * pSrcA,
-  const arm_matrix_instance_q15 * pSrcB,
-        arm_matrix_instance_q15 * pDst,
-        q15_t                   * pState)
+        const arm_matrix_instance_q15 * pSrcA,
+        const arm_matrix_instance_q15 * pSrcB,
+              arm_matrix_instance_q15 * pDst,
+              q15_t                   * pState)
 {
         q31_t sum;                                     /* Accumulator */
         q15_t *pSrcBT = pState;                        /* Input data matrix pointer for transpose */
@@ -477,7 +519,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_fast_q15(
   /* Return to application */
   return (status);
 }
-
+#endif
 /**
   @} end of MatrixMult group
  */
