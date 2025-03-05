@@ -84,8 +84,11 @@ def writeBinaryTests(config,format,desc):
     maxnb = np.max(np.hstack([drs,dcs,sizes,BLOCK_COLS,BLOCK_ROWS,BLOCK_INNER]))
     print(f"Max nb = {maxnb}")
 
-    data1=np.random.randn(maxnb*maxnb)
-    data2=np.random.randn(maxnb*maxnb)
+    # To have reproducible tests
+    rng = np.random.default_rng(seed=10)
+
+    data1=rng.standard_normal(maxnb*maxnb)
+    data2=rng.standard_normal(maxnb*maxnb)
     
     data1 = Tools.normalize(data1)
     data2 = Tools.normalize(data2)
@@ -94,21 +97,23 @@ def writeBinaryTests(config,format,desc):
     config.writeInput(1, data2,"InputB")
     #
     binarySizes = sorted(rows)+sorted(inners)+sorted(cols)
-    limited_binarySizes = sorted(limited_rows)+sorted(limited_inners)+sorted(limited_cols)
+    if format == Tools.Q15 or format == Tools.Q7:
+       limited_binarySizes = sorted(limited_rows)+sorted(limited_inners)+sorted(limited_cols)
     #print(len(binarySizes))
     #return
     dims=[l[0]*l[2] for l in binarySizes]
     bytes=25*np.sum(dims)
     print(f"Estimated size of result text file : {bytes} bytes")
 
-    limited_dims=[l[0]*l[2] for l in limited_binarySizes]
-    limited_bytes=25*np.sum(limited_dims)
-    print(f"Estimated size of limited result text file : {limited_bytes} bytes")
+    if format == Tools.Q15 or format == Tools.Q7:
+       limited_dims=[l[0]*l[2] for l in limited_binarySizes]
+       limited_bytes=25*np.sum(limited_dims)
+       print(f"Estimated size of limited result text file : {limited_bytes} bytes")
 
     dims=[] 
     vals=[]
 
-
+    nb = 0
     with Progress() as progress:
         for (a,b,c) in progress.track(binarySizes, description=desc):
            progress.console.print(f"{a} x {b} x {c}")
@@ -121,9 +126,14 @@ def writeBinaryTests(config,format,desc):
     
            ma = np.copy(data1[0:a*b]).reshape(a,b)
            mb = np.copy(data2[0:b*c]).reshape(b,c)
+           #if nb == 0 and format == Tools.F32:
+           #      np.savetxt('ma.txt', ma, delimiter=',')   # X is an array
+           #      np.savetxt('mb.txt', mb.T, delimiter=',')   # X is an array
            r = np.matmul(ma , mb) 
            r = list(r.reshape(a*c))
            vals = vals + r
+
+           nb = nb + 1
     
     config.writeInputS16(1, dims,"DimsBinary")
     config.writeReference(1, vals,"RefMul")
@@ -181,7 +191,7 @@ def generatePatterns():
     #writeBinaryTests(configBinaryf16,Tools.F16,"F16")
     #writeBinaryTests(configBinaryq31,Tools.Q31,"Q31")
     #writeBinaryTests(configBinaryq15,Tools.Q15,"Q15")
-    writeBinaryTests(configBinaryq7,Tools.Q7,"Q7")
+    #writeBinaryTests(configBinaryq7,Tools.Q7,"Q7")
 
     
 if __name__ == '__main__':

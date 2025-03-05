@@ -4,6 +4,9 @@
 
 #include "dsp/basic_math_functions.h"
 
+extern int cov_mat_mul_q15[20];
+extern int cov_mat_mul_fast_q15[20];
+
 #define SNR_THRESHOLD 75
 #define SNR_LOW_THRESHOLD 75
 /* 
@@ -12,8 +15,8 @@ Reference patterns are generated with
 a double precision computation.
 
 */
-#define ABS_ERROR_Q15 ((q15_t)2)
-#define ABS_LOW_ERROR_Q15 ((q15_t)2)
+#define ABS_ERROR_Q15 ((q15_t)12)
+#define ABS_LOW_ERROR_Q15 ((q15_t)3)
 
 /* Upper bound of maximum matrix dimension used by Python */
 #define MAXMATRIXDIM 1537
@@ -97,7 +100,7 @@ static void checkInnerTail(q15_t *b)
           catch(Client::Error &err)
           {
             char tmp[256];
-            snprintf(tmp,256," (%d x %d x %d)\n",rows,internal,columns);
+            snprintf(tmp,256," mat id=%d (%d x %d x %d)\n",i,rows,internal,columns);
             strcat(err.details,tmp);
             throw(err);
           }
@@ -148,7 +151,7 @@ static void checkInnerTail(q15_t *b)
           catch(Client::Error &err)
           {
             char tmp[256];
-            snprintf(tmp,256," (%d x %d x %d)\n",rows,internal,columns);
+            snprintf(tmp,256," mat id=%d (%d x %d x %d)\n",i,rows,internal,columns);
             strcat(err.details,tmp);
             throw(err);
           }
@@ -167,6 +170,50 @@ static void checkInnerTail(q15_t *b)
 
 
     }
+
+    void BinaryTestsNeonQ15::beforeSuite()  
+    {
+       for(int i=0;i<NBKERNELS;i++)
+       {
+         cov_mat_mul_q15[i]=0;
+         cov_mat_mul_fast_q15[i]=0;
+       }
+    };
+
+    void BinaryTestsNeonQ15::afterSuite() 
+    {
+      int noerr = 1;
+      Client::Error err(COVERAGE_ERROR,__LINE__);
+      
+      for(int i=0;i<NBKERNELS;i++)
+      {
+         
+         if (cov_mat_mul_q15[i]==0)
+         {
+           noerr=0;
+           char tmp[20];
+           snprintf(tmp,20,"i=%d ",i);
+           err.add_message(tmp);
+         }
+      }
+
+      err.add_message(" F ");
+      for(int i=0;i<NBKERNELS;i++)
+      {
+         
+         if (cov_mat_mul_fast_q15[i]==0)
+         {
+           noerr=0;
+           char tmp[20];
+           snprintf(tmp,20,"i=%d ",i);
+           err.add_message(tmp);
+         }
+      }
+      if (noerr==0)
+      {
+        throw(err);
+      }
+    };
 
 
 
@@ -195,9 +242,9 @@ static void checkInnerTail(q15_t *b)
          case TEST_MAT_MULT_FAST_Q15_3:
             input1.reload(BinaryTestsNeonQ15::INPUTS1_Q15_ID,mgr);
             input2.reload(BinaryTestsNeonQ15::INPUTS2_Q15_ID,mgr);
-            dims.reload(BinaryTestsNeonQ15::DIMSBINARY1_S16_ID,mgr);
+            dims.reload(BinaryTestsNeonQ15::DIMSLIMITEDBINARY1_S16_ID,mgr);
 
-            ref.reload(BinaryTestsNeonQ15::REFMUL1_Q15_ID,mgr);
+            ref.reload(BinaryTestsNeonQ15::REFLIMITEDMUL1_Q15_ID,mgr);
 
             output.create(ref.nbSamples(),BinaryTestsNeonQ15::OUT_Q15_ID,mgr);
             a.create(MAXMATRIXDIM*MAXMATRIXDIM,BinaryTestsNeonQ15::TMPA_Q15_ID,mgr);

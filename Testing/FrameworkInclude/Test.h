@@ -249,7 +249,7 @@ API of Memory managers used in the test framework
           the parameters are displayed after test status.
           Line should begin with b
       */
-      virtual void DumpParams(std::vector<Testing::param_t>&)=0;
+      virtual void DumpParams(const std::vector<Testing::param_t>&)=0;
 
 
       /** Dump an end of group/suite to output
@@ -583,6 +583,9 @@ private:
 
       // Change the status of the forceInCache mode.
       void setForceInCache(bool);
+
+      virtual void beforeSuite(){};
+      virtual void afterSuite(){};
 
     private:
         bool m_forcedInCache=false;

@@ -3,12 +3,17 @@
 
 #include "dsp/matrix_functions.h"
 
+#define NBKERNELS 20
+
 class BinaryTestsNeonQ15:public Client::Suite
     {
         public:
             BinaryTestsNeonQ15(Testing::testID_t id);
             virtual void setUp(Testing::testID_t,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr);
             virtual void tearDown(Testing::testID_t,Client::PatternMgr *mgr);
+            virtual void beforeSuite() final;
+            virtual void afterSuite() final;
+        
         private:
             #include "BinaryTestsNeonQ15_decl.h"
             Client::Pattern<q15_t> input1;

@@ -3088,6 +3088,9 @@ group Root {
                 Pattern REFMUL1_Q15_ID : RefMul1_q15.txt
                 Pattern DIMSBINARY1_S16_ID : DimsBinary1_s16.txt 
 
+                Pattern REFLIMITEDMUL1_Q15_ID : RefLimitedMul1_q15.txt
+                Pattern DIMSLIMITEDBINARY1_S16_ID : DimsLimitedBinary1_s16.txt 
+
 
                 Output  OUT_Q15_ID : Output
                 Output  TMPA_Q15_ID : TmpA
@@ -3112,6 +3115,9 @@ group Root {
 
                 Pattern REFMUL1_Q7_ID : RefMul1_q7.txt
                 Pattern DIMSBINARY1_S16_ID : DimsBinary1_s16.txt 
+
+                Pattern REFLIMITEDMUL1_Q7_ID : RefLimitedMul1_q7.txt
+                Pattern DIMSLIMITEDBINARY1_S16_ID : DimsLimitedBinary1_s16.txt
 
 
                 Output  OUT_Q7_ID : Output

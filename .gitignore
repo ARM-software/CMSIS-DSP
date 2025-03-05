@@ -43,3 +43,5 @@ boost_1_84_0/
 # Output of the linkchecker tool
 linkchecker-out.csv
 .vscode/
+.cache/
+

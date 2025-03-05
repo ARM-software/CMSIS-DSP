@@ -34,6 +34,7 @@
 #include <cstddef>
 #include <cstdlib>
 #include <cstdio>
+#include <vector>
 #include "IORunner.h"
 #include "Error.h"
 #include "Timing.h"
@@ -205,8 +206,12 @@ fast models.
         volatile Testing::cycles_t cycles=0;
         Testing::nbParameters_t nbParams;
 
+        s->beforeSuite();
+
         // Read node identification (suite)
         m_io->ReadIdentification();
+        //int id=m_io->CurrentTestID();
+
         // Read suite nb of parameters 
         nbParams = m_io->ReadNbParameters();
 
@@ -383,6 +388,19 @@ fast models.
             }
         }
         // Signal end of group processing to output
+        try { 
+          s->afterSuite();
+        }
+        catch(Error &err)
+        {
+          m_io->DispStatus(Testing::kTestFailed,err.errorID,0,0);
+          m_io->DispErrorDetails(err.details);
+          m_io->DumpParams(std::vector<Testing::param_t>());
+          if (this->m_runningMode != Testing::kDumpOnly)
+          {
+            finalResult = Testing::kTestFailed;
+          }
+        }
         m_io->EndGroup();
         return(finalResult);
      }

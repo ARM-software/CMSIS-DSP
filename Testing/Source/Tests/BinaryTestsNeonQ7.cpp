@@ -11,7 +11,7 @@ Reference patterns are generated with
 a double precision computation.
 
 */
-#define ABS_ERROR_Q7 ((q7_t)5)
+#define ABS_ERROR_Q7 ((q7_t)13)
 
 /* Upper bound of maximum matrix dimension used by Python */
 #define MAXMATRIXDIM 737

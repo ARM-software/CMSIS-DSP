@@ -641,15 +641,21 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q31(
 #define VEC int32x4_t
 #define VECACC int32x4_t
 
-#define TMPREG
+#define TMPLD
+#define TMPST
+#define TMPMAC
 
-#define SCALARACC int64_t 
+#define SCALARACC int32_t 
 #define SCALAR_LOAD_AND_WIDEN(DST,PTR) DST = (SCALARACC)(*(PTR))
-#define SCALAR_STORE_AND_NARROW(PTR,VAL) *(PTR) = (__SSAT((VAL), 31) << 1U)
-#define SCALAR_MAC_N(ACC,VEC,SCALAR) ACC += ((SCALARACC)(VEC) * (SCALARACC)(SCALAR)) >> 32
+#define SCALAR_STORE_AND_NARROW(PTR,VAL) *(PTR) = (VAL)
+#define SCALAR_MAC_N(ACC,VEC,SCALAR) ACC += __SSAT((((int64_t)(VEC) * (int64_t)(SCALAR)) >> 32),31) << 1U
 
-#define VLOAD(PTR) vld1q_s32((PTR))
+#define VLOAD(DST,PTR) DST = vld1q_s32((PTR))
 #define VSTORE(PTR,VAL) vst1q_s32((PTR),(VAL))
+
+#define VLOAD_ACC(DST,PTR) DST = vld1q_s32((PTR))
+#define VSTORE_ACC(PTR,VAL) vst1q_s32((PTR),(VAL))
+
 
 #define VLOAD_AND_WIDEN(DST,PTR) DST = vld1q_s32((PTR))
 #define VSTORE_AND_NARROW(PTR,VAL) vst1q_s32((PTR),(VAL))

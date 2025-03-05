@@ -22,6 +22,8 @@ target_compile_options(CMSISDSP PUBLIC -g)
 target_compile_definitions(CMSISDSP PRIVATE ARM_DSP_CUSTOM_CONFIG)
 target_include_directories(CMSISDSP PRIVATE .)
 
+target_compile_definitions(CMSISDSP PUBLIC ARM_DSP_TESTING)
+
 add_executable(test main.cpp
     patterndata.c
     testmain.cpp
@@ -248,8 +250,6 @@ endif()
 
 target_link_libraries(test PUBLIC CMSISDSP)
 
-target_compile_options(CMSISDSP PUBLIC -march=native)
-target_compile_options(test PUBLIC -march=native)
 
 if(NOAUTOVEC)
     target_compile_options(CMSISDSP PRIVATE -fno-slp-vectorize -fno-vectorize)

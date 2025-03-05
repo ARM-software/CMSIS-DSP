@@ -69,18 +69,36 @@
 #define VEC int16x8_t
 #define VECACC int32x4x2_t
 
-#define TMPREG \
-  VEC tmpld; \
+#define TMPMAC
+
+#define TMPLD \
+  VEC tmpld;
+
+#define TMPST       \
   int16x4x2_t htmp;
 
-#define SCALARACC int64_t 
+#if defined(ARM_DSP_TESTING)
+int cov_mat_mul_fast_q15[20]={0};
+#define LOGKERNEL(A,B) cov_mat_mul_fast_q15[B]=1;
+#else
+#define LOGKERNEL(A,B) 
+#endif
+
+#define SCALARACC int32_t 
 #define SCALAR_LOAD_AND_WIDEN(DST,PTR) DST = (SCALARACC)(*(PTR))
 #define SCALAR_STORE_AND_NARROW(PTR,VAL) *(PTR) = (q15_t) __SSAT((VAL) >> 15, 16)
 #define SCALAR_MAC_N(ACC,VEC,SCALAR) ACC += (SCALARACC)(VEC) * (SCALARACC)(SCALAR)
 
-#define VLOAD(PTR) vld1q_s16((PTR))
-
+#define VLOAD(DST,PTR) DST = vld1q_s16((PTR))
 #define VSTORE(PTR,VAL) vst1q_s16((PTR),(VAL))
+
+#define VLOAD_ACC(DST,PTR)         \
+  DST.val[0] = vld1q_s32((PTR)+4*0); \
+  DST.val[1] = vld1q_s32((PTR)+4*1);
+  
+#define VSTORE_ACC(PTR,VAL)        \
+  vst1q_s32((PTR)+4*0,(VAL).val[0]); \
+  vst1q_s32((PTR)+4*1,(VAL).val[1]);
 
 #define VLOAD_AND_WIDEN(DST,PTR)           \
     tmpld = vld1q_s16((PTR));                    \
@@ -97,7 +115,7 @@
    ACC.val[1] = vmlal_n_s16(ACC.val[1],vget_high_s16(VEC),(SCALAR));
 
 #define MATTYPE arm_matrix_instance_q15
-#define EXT(A) A##_q15
+#define EXT(A) A##_fast_q15
 #define HAS_TEMP_BUFFER
 #define USE_TMP_REGISTER
 

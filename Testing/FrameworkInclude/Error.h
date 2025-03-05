@@ -45,6 +45,7 @@
 #define EMPTY_PATTERN_ERROR 9
 #define TAIL_NOT_EMPTY_ERROR 10
 #define CLOSE_ERROR 11
+#define COVERAGE_ERROR 12
 
 namespace Client {
 
@@ -66,6 +67,11 @@ class Error: public std::exception
         this->lineNumber = nb;
         strcpy(this->details,details);
     };
+
+    void add_message(const char* msg)
+    {
+        strncat(details,msg,199);
+    }
 
     Testing::errorID_t errorID;
     unsigned long lineNumber;

@@ -39,6 +39,7 @@ static void checkInnerTail(q31_t *b)
       q31_t *bp=b.ptr();                 \
                                              \
       q31_t *outp=output.ptr();          \
+      q31_t *refp=ref.ptr(); \
       int16_t *dimsp = dims.ptr();           \
       int nbMatrixes = dims.nbSamples() / 4;\
       int rows,internal,columns,shift;                      \
@@ -79,14 +80,24 @@ static void checkInnerTail(q31_t *b)
 
           PREPAREDATA2R();
 
+          try {
           if (shift!=0)
              arm_shift_q31(inp1,-shift,ap,rows*internal);
           status=arm_mat_mult_q31(&this->in1,&this->in2,&this->out);
           if (shift!=0)
              arm_shift_q31(outp,shift,outp,rows*columns);
           ASSERT_TRUE(status==ARM_MATH_SUCCESS);
-
+          ASSERT_NEAR_EQ_NB(outp,refp,ABS_ERROR_Q31,rows*columns);
+          
+          }
+          catch(Client::Error &err) {
+            char tmp[256];
+            snprintf(tmp,256," (%d x %d x %d)\n",rows,internal,columns);
+            strcat(err.details,tmp);
+            throw(err);
+          }
           outp += (rows * columns);
+          refp += (rows * columns);
           checkInnerTail(outp);
 
       }

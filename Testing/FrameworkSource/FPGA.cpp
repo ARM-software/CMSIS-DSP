@@ -422,11 +422,11 @@ namespace Client
     }
 
 
-    void FPGA::DumpParams(std::vector<Testing::param_t>& params)
+    void FPGA::DumpParams(const std::vector<Testing::param_t>& params)
       {
            bool begin=true;
            printf("b ");
-           for(std::vector<Testing::param_t>::iterator it = params.begin(); it != params.end(); ++it) 
+           for(std::vector<Testing::param_t>::const_iterator it = params.begin(); it != params.end(); ++it) 
            {
               if (!begin)
               {

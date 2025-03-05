@@ -608,12 +608,16 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q7(
     int32x4_t val[4];   \
 }
 
-#define TMPREG       \
-  int8x16_t tmp1;    \
-  int16x8x2_t tmp2;   \
-  int16x4_t tlow;    \
-  int16x4_t thigh;   \
-  int16x8_t tmp;     \
+#define TMPMAC \
+int16x8_t tmp;
+
+#define TMPLD       \
+  int8x16_t tmp1;   \
+  int16x8x2_t tmp2; 
+
+#define TMPST                \
+  int16x4_t tlow;            \
+  int16x4_t thigh;           \
   int8x8_t  htmplo,htmphigh;
 
 
@@ -622,9 +626,20 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q7(
 #define SCALAR_STORE_AND_NARROW(PTR,VAL) *(PTR) = (q7_t) __SSAT((VAL) >> 7, 8)
 #define SCALAR_MAC_N(ACC,VEC,SCALAR) ACC += (SCALARACC)(VEC) * (SCALARACC)(SCALAR)
 
-#define VLOAD(PTR) vld1q_s8((PTR))
-
+#define VLOAD(DST,PTR) DST = vld1q_s8((PTR))
 #define VSTORE(PTR,VAL) vst1q_s8((PTR),(VAL))
+
+#define VLOAD_ACC(DST,PTR)         \
+  DST.val[0] = vld1q_s32((PTR)+4*0); \
+  DST.val[1] = vld1q_s32((PTR)+4*1); \
+  DST.val[2] = vld1q_s32((PTR)+4*2); \
+  DST.val[3] = vld1q_s32((PTR)+4*3);
+
+#define VSTORE_ACC(PTR,VAL)        \
+  vst1q_s32((PTR)+4*0,(VAL).val[0]); \
+  vst1q_s32((PTR)+4*1,(VAL).val[1]); \
+  vst1q_s32((PTR)+4*2,(VAL).val[2]); \
+  vst1q_s32((PTR)+4*3,(VAL).val[3]);
 
 #define VLOAD_AND_WIDEN(DST,PTR)                       \
     tmp1 = vld1q_s8((PTR));                            \
