@@ -18,6 +18,24 @@ Q31 = 31
 Q15 = 15
 Q7 = 7
 
+def nblane(format):
+    nb = 0
+    if format == F64:
+        nb=2
+    if format == F32:
+        nb=4
+    if format == F16:
+        nb=8
+    if format == Q63:
+        nb=2
+    if format == Q31:
+        nb=4
+    if format == Q15:
+        nb=8
+    if format == Q7:
+        nb=16
+    return(nb)
+   
 def loopnb(format,loopkind):
     nb = 0
     if loopkind == TAILONLY:

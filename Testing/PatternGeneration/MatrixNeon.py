@@ -53,6 +53,8 @@ def writeBinaryTests(config,format,desc):
     DR = 4
     DC = 4
 
+    nl = Tools.nblane(format)
+
     drs = [1,2,3,4,8,9,10,11]
     dcs = [1,2,3,4,8,9]
 
@@ -62,8 +64,13 @@ def writeBinaryTests(config,format,desc):
     #
     OTHER = 32
     rows=[(x,OTHER,OTHER) for x in (drs+BLOCK_ROWS)]
-    cols=[(OTHER,x,OTHER) for x in (dcs+BLOCK_COLS)]
-    inners=[(OTHER,OTHER,x) for x in (BLOCK_INNER+sizes)]
+    cols=[(OTHER,OTHER,x) for x in (dcs+BLOCK_COLS)]
+    inners=[(OTHER,x,OTHER) for x in (BLOCK_INNER+sizes)]
+
+    kernels = cartesian([1,2,3,4],list(range(1,nl))+[nl*1,nl*2,nl*3,nl*4])
+    kernels_dims=[(x[0],32,x[1]) for x in kernels]
+    #print(kernels_dims)
+
 
     if format == Tools.Q15:
        # Size is limited for Q15 and Q7 datatype otherwise we get saturation
@@ -82,7 +89,7 @@ def writeBinaryTests(config,format,desc):
        limited_inners = filter(Accept(128).accept,inners)
 
     maxnb = np.max(np.hstack([drs,dcs,sizes,BLOCK_COLS,BLOCK_ROWS,BLOCK_INNER]))
-    print(f"Max nb = {maxnb}")
+    print(f"Max matrix dim = {maxnb}")
 
     # To have reproducible tests
     rng = np.random.default_rng(seed=10)
@@ -99,7 +106,12 @@ def writeBinaryTests(config,format,desc):
     binarySizes = sorted(rows)+sorted(inners)+sorted(cols)
     if format == Tools.Q15 or format == Tools.Q7:
        limited_binarySizes = sorted(limited_rows)+sorted(limited_inners)+sorted(limited_cols)
-    #print(len(binarySizes))
+   
+   
+    binarySizes = kernels_dims + binarySizes
+    if format == Tools.Q15 or format == Tools.Q7:
+       limited_binarySizes = kernels_dims + limited_binarySizes
+    print(f"Nb matrixes {len(binarySizes)}")
     #return
     dims=[l[0]*l[2] for l in binarySizes]
     bytes=25*np.sum(dims)
@@ -112,6 +124,7 @@ def writeBinaryTests(config,format,desc):
 
     dims=[] 
     vals=[]
+
 
     nb = 0
     with Progress() as progress:
@@ -179,19 +192,19 @@ def generatePatterns():
     configBinaryq15=Tools.Config(PATTERNBINDIR,PARAMBINDIR,"q15")
     configBinaryq7=Tools.Config(PATTERNBINDIR,PARAMBINDIR,"q7")
 
-    configBinaryf64.setOverwrite(False)
-    configBinaryf32.setOverwrite(False)
-    configBinaryf16.setOverwrite(False)
-    configBinaryq31.setOverwrite(False)
-    configBinaryq15.setOverwrite(False)
-    configBinaryq7.setOverwrite(False)
+    configBinaryf64.setOverwrite(True)
+    configBinaryf32.setOverwrite(True)
+    configBinaryf16.setOverwrite(True)
+    configBinaryq31.setOverwrite(True)
+    configBinaryq15.setOverwrite(True)
+    configBinaryq7.setOverwrite(True)
 
-    ##writeBinaryTests(configBinaryf64,Tools.F64,"F64")
-    #writeBinaryTests(configBinaryf32,Tools.F32,"F32")
-    #writeBinaryTests(configBinaryf16,Tools.F16,"F16")
-    #writeBinaryTests(configBinaryq31,Tools.Q31,"Q31")
-    #writeBinaryTests(configBinaryq15,Tools.Q15,"Q15")
-    #writeBinaryTests(configBinaryq7,Tools.Q7,"Q7")
+    writeBinaryTests(configBinaryf64,Tools.F64,"F64")
+    writeBinaryTests(configBinaryf32,Tools.F32,"F32")
+    writeBinaryTests(configBinaryf16,Tools.F16,"F16")
+    writeBinaryTests(configBinaryq31,Tools.Q31,"Q31")
+    writeBinaryTests(configBinaryq15,Tools.Q15,"Q15")
+    writeBinaryTests(configBinaryq7,Tools.Q7,"Q7")
 
     
 if __name__ == '__main__':

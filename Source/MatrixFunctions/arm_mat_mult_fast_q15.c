@@ -69,7 +69,8 @@
 #define VEC int16x8_t
 #define VECACC int32x4x2_t
 
-#define TMPMAC
+#define TMPMAC \
+ int32x4_t tmp;
 
 #define TMPLD \
   VEC tmpld;
@@ -110,9 +111,11 @@ int cov_mat_mul_fast_q15[20]={0};
     htmp.val[1] = vqshrn_n_s32(VAL.val[1],15);    \
     vst1q_s16(PTR,vcombine_s16(htmp.val[0],htmp.val[1]));
 
-#define VMAC_N(ACC,VEC,SCALAR) \
-   ACC.val[0] = vmlal_n_s16(ACC.val[0],vget_low_s16(VEC),(SCALAR)); \
-   ACC.val[1] = vmlal_n_s16(ACC.val[1],vget_high_s16(VEC),(SCALAR));
+#define VMAC_N(ACC,VEC,SCALAR)                             \
+   tmp = vmull_s16(vget_low_s16(VEC),vdup_n_s16(SCALAR));  \
+   ACC.val[0] = vqaddq_s32(ACC.val[0],tmp);                \
+   tmp = vmull_s16(vget_high_s16(VEC),vdup_n_s16(SCALAR)); \
+   ACC.val[1] =vqaddq_s32(ACC.val[1],tmp);
 
 #define MATTYPE arm_matrix_instance_q15
 #define EXT(A) A##_fast_q15
