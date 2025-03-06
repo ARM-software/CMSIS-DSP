@@ -641,6 +641,8 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q31(
 #define VEC int32x4_t
 #define VECACC int32x4_t
 
+#define CLEAR_ACC(tmp) tmp = vdupq_n_s32(0);
+
 #define TMPLD
 #define TMPST
 #define TMPMAC

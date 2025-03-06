@@ -69,6 +69,9 @@
 #define VEC int16x8_t
 #define VECACC int32x4x2_t
 
+#define CLEAR_ACC(tmp) tmp.val[0] = vdupq_n_s32(0); \
+ tmp.val[1] = vdupq_n_s32(0);
+
 #define TMPMAC \
  int32x4_t tmp;
 

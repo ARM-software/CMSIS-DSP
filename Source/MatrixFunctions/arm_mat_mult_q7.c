@@ -608,6 +608,13 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q7(
     int32x4_t val[4];   \
 }
 
+#define CLEAR_ACC(tmp)\
+  tmp.val[0] = vdupq_n_s32(0); \
+  tmp.val[1] = vdupq_n_s32(0); \
+  tmp.val[2] = vdupq_n_s32(0); \
+  tmp.val[3] = vdupq_n_s32(0);
+
+
 #define TMPMAC \
 int16x8_t tmp;
 

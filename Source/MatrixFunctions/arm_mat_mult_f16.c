@@ -635,6 +635,9 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_f16(
  #define DTYPE float16_t
  #define VEC float16x8_t
  #define VECACC float16x8_t
+ #define FLOATALGO
+
+ #define CLEAR_ACC(tmp) tmp = vdupq_n_f16(0.0f16)
 
  #define TMPLD
  #define TMPMAC

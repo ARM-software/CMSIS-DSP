@@ -40,7 +40,7 @@ static __ALIGNED(16) char PACKEDC[8*ROWS_BLOCK*COLS_BLOCK];
 #endif
 
 // 4 row and 4 column VECtors
-__STATIC_INLINE void EXT(kernel_4rx4cv)(int col,int max_cols,int xp,int r) {
+__STATIC_INLINE void EXT(kernel_4rx4cv)(SCALARACC *packedc,int col,int max_cols,int xp,int r) {
 
   LOGKERNEL("kernel_4rx4cv\n",0);
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
@@ -50,7 +50,7 @@ __STATIC_INLINE void EXT(kernel_4rx4cv)(int col,int max_cols,int xp,int r) {
 
   TMPMAC
    
-  SCALARACC *pC = &((SCALARACC*)PACKEDC)[xp*max_cols+col];
+  SCALARACC *pC = &packedc[xp*max_cols+col];
   const SCALARACC *p = pC;
   
 
@@ -196,7 +196,7 @@ __STATIC_INLINE void EXT(kernel_4rx4cv)(int col,int max_cols,int xp,int r) {
   pC += max_cols - 3*LANE;
 }
 
-__STATIC_INLINE void EXT(kernel_4rx3cv)(int col,int max_cols,int xp,int r) {
+__STATIC_INLINE void EXT(kernel_4rx3cv)(SCALARACC *packedc,int col,int max_cols,int xp,int r) {
 
   LOGKERNEL("kernel_4rx3cv\n",1);
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
@@ -205,7 +205,7 @@ __STATIC_INLINE void EXT(kernel_4rx3cv)(int col,int max_cols,int xp,int r) {
   VEC tmp00,tmp01,tmp02;
   TMPMAC
    
-  SCALARACC *pC = &((SCALARACC*)PACKEDC)[xp*max_cols+col];
+  SCALARACC *pC = &packedc[xp*max_cols+col];
   const SCALARACC *p = pC;
   
 
@@ -322,7 +322,7 @@ __STATIC_INLINE void EXT(kernel_4rx3cv)(int col,int max_cols,int xp,int r) {
 
 }
 
-__STATIC_INLINE void EXT(kernel_4rx2cv)(int col,int max_cols,int xp,int r) {
+__STATIC_INLINE void EXT(kernel_4rx2cv)(SCALARACC *packedc,int col,int max_cols,int xp,int r) {
 
   LOGKERNEL("kernel_4rx2cv\n",2);
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
@@ -330,7 +330,7 @@ __STATIC_INLINE void EXT(kernel_4rx2cv)(int col,int max_cols,int xp,int r) {
   VEC tmp00,tmp01;
   TMPMAC
    
-  SCALARACC *pC = &((SCALARACC*)PACKEDC)[xp*max_cols+col];
+  SCALARACC *pC = &packedc[xp*max_cols+col];
   const SCALARACC *p = pC;
   
 
@@ -420,7 +420,7 @@ __STATIC_INLINE void EXT(kernel_4rx2cv)(int col,int max_cols,int xp,int r) {
 
 }
 
-__STATIC_INLINE void EXT(kernel_4rx1cv)(int col,int max_cols,int xp,int r) {
+__STATIC_INLINE void EXT(kernel_4rx1cv)(SCALARACC *packedc,int col,int max_cols,int xp,int r) {
 
   LOGKERNEL("kernel_4rx1cv\n",3);
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
@@ -428,7 +428,7 @@ __STATIC_INLINE void EXT(kernel_4rx1cv)(int col,int max_cols,int xp,int r) {
   VEC tmp00;
   TMPMAC
    
-  SCALARACC *pC = &((SCALARACC*)PACKEDC)[xp*max_cols+col];
+  SCALARACC *pC = &packedc[xp*max_cols+col];
   const SCALARACC *p = pC;
   
 
@@ -483,7 +483,7 @@ __STATIC_INLINE void EXT(kernel_4rx1cv)(int col,int max_cols,int xp,int r) {
 
 }
 
-__STATIC_INLINE void EXT(kernel_3rx4cv)(int col,int max_cols,int xp,int r) {
+__STATIC_INLINE void EXT(kernel_3rx4cv)(SCALARACC *packedc,int col,int max_cols,int xp,int r) {
 
   LOGKERNEL("kernel_3rx4cv\n",4);
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
@@ -491,7 +491,7 @@ __STATIC_INLINE void EXT(kernel_3rx4cv)(int col,int max_cols,int xp,int r) {
   VEC tmp00,tmp01,tmp02,tmp03;
   TMPMAC
    
-  SCALARACC *pC = &((SCALARACC*)PACKEDC)[xp*max_cols+col];
+  SCALARACC *pC = &packedc[xp*max_cols+col];
   const SCALARACC *p = pC;
   
 
@@ -613,7 +613,7 @@ __STATIC_INLINE void EXT(kernel_3rx4cv)(int col,int max_cols,int xp,int r) {
 
 }
 
-__STATIC_INLINE void EXT(kernel_3rx3cv)(int col,int max_cols,int xp,int r) {
+__STATIC_INLINE void EXT(kernel_3rx3cv)(SCALARACC *packedc,int col,int max_cols,int xp,int r) {
 
   LOGKERNEL("kernel_3rx3cv\n",5);
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
@@ -621,7 +621,7 @@ __STATIC_INLINE void EXT(kernel_3rx3cv)(int col,int max_cols,int xp,int r) {
   VEC tmp00,tmp01,tmp02;
   TMPMAC
    
-  SCALARACC *pC = &((SCALARACC*)PACKEDC)[xp*max_cols+col];
+  SCALARACC *pC = &packedc[xp*max_cols+col];
   const SCALARACC *p = pC;
   
 
@@ -723,7 +723,7 @@ __STATIC_INLINE void EXT(kernel_3rx3cv)(int col,int max_cols,int xp,int r) {
 
 }
 
-__STATIC_INLINE void EXT(kernel_3rx2cv)(int col,int max_cols,int xp,int r) {
+__STATIC_INLINE void EXT(kernel_3rx2cv)(SCALARACC *packedc,int col,int max_cols,int xp,int r) {
 
   LOGKERNEL("kernel_3rx2cv\n",6);
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
@@ -731,7 +731,7 @@ __STATIC_INLINE void EXT(kernel_3rx2cv)(int col,int max_cols,int xp,int r) {
   VEC tmp00,tmp01;
   TMPMAC
    
-  SCALARACC *pC = &((SCALARACC*)PACKEDC)[xp*max_cols+col];
+  SCALARACC *pC = &packedc[xp*max_cols+col];
   const SCALARACC *p = pC;
   
 
@@ -811,7 +811,7 @@ __STATIC_INLINE void EXT(kernel_3rx2cv)(int col,int max_cols,int xp,int r) {
 
 }
 
-__STATIC_INLINE void EXT(kernel_3rx1cv)(int col,int max_cols,int xp,int r) {
+__STATIC_INLINE void EXT(kernel_3rx1cv)(SCALARACC *packedc,int col,int max_cols,int xp,int r) {
 
   LOGKERNEL("kernel_3rx1cv\n",7);
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
@@ -819,7 +819,7 @@ __STATIC_INLINE void EXT(kernel_3rx1cv)(int col,int max_cols,int xp,int r) {
   VEC tmp00;
   TMPMAC
    
-  SCALARACC *pC = &((SCALARACC*)PACKEDC)[xp*max_cols+col];
+  SCALARACC *pC = &packedc[xp*max_cols+col];
   const SCALARACC *p = pC;
   
 
@@ -878,7 +878,7 @@ __STATIC_INLINE void EXT(kernel_3rx1cv)(int col,int max_cols,int xp,int r) {
 
 }
 
-__STATIC_INLINE void EXT(kernel_2rx4cv)(int col,int max_cols,int xp,int r) {
+__STATIC_INLINE void EXT(kernel_2rx4cv)(SCALARACC *packedc,int col,int max_cols,int xp,int r) {
 
   LOGKERNEL("kernel_2rx4cv\n",8);
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
@@ -886,7 +886,7 @@ __STATIC_INLINE void EXT(kernel_2rx4cv)(int col,int max_cols,int xp,int r) {
   VEC tmp00,tmp01,tmp02,tmp03;
   TMPMAC
    
-  SCALARACC *pC = &((SCALARACC*)PACKEDC)[xp*max_cols+col];
+  SCALARACC *pC = &packedc[xp*max_cols+col];
   const SCALARACC *p = pC;
   
 
@@ -978,7 +978,7 @@ __STATIC_INLINE void EXT(kernel_2rx4cv)(int col,int max_cols,int xp,int r) {
 
 }
 
-__STATIC_INLINE void EXT(kernel_2rx3cv)(int col,int max_cols,int xp,int r) {
+__STATIC_INLINE void EXT(kernel_2rx3cv)(SCALARACC *packedc,int col,int max_cols,int xp,int r) {
 
   LOGKERNEL("kernel_2rx3cv\n",9);
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
@@ -986,7 +986,7 @@ __STATIC_INLINE void EXT(kernel_2rx3cv)(int col,int max_cols,int xp,int r) {
   VEC tmp00,tmp01,tmp02;
   TMPMAC
    
-  SCALARACC *pC = &((SCALARACC*)PACKEDC)[xp*max_cols+col];
+  SCALARACC *pC = &packedc[xp*max_cols+col];
   const SCALARACC *p = pC;
   
 
@@ -1063,7 +1063,7 @@ __STATIC_INLINE void EXT(kernel_2rx3cv)(int col,int max_cols,int xp,int r) {
 
 }
 
-__STATIC_INLINE void EXT(kernel_2rx2cv)(int col,int max_cols,int xp,int r) {
+__STATIC_INLINE void EXT(kernel_2rx2cv)(SCALARACC *packedc,int col,int max_cols,int xp,int r) {
 
   LOGKERNEL("kernel_2rx2cv\n",10);
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
@@ -1071,7 +1071,7 @@ __STATIC_INLINE void EXT(kernel_2rx2cv)(int col,int max_cols,int xp,int r) {
   VEC tmp00,tmp01;
   TMPMAC
    
-  SCALARACC *pC = &((SCALARACC*)PACKEDC)[xp*max_cols+col];
+  SCALARACC *pC = &packedc[xp*max_cols+col];
   const SCALARACC *p = pC;
   
 
@@ -1131,7 +1131,7 @@ __STATIC_INLINE void EXT(kernel_2rx2cv)(int col,int max_cols,int xp,int r) {
 
 }
 
-__STATIC_INLINE void EXT(kernel_2rx1cv)(int col,int max_cols,int xp,int r) {
+__STATIC_INLINE void EXT(kernel_2rx1cv)(SCALARACC *packedc,int col,int max_cols,int xp,int r) {
 
   LOGKERNEL("kernel_2rx1cv\n",11);
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
@@ -1141,7 +1141,7 @@ __STATIC_INLINE void EXT(kernel_2rx1cv)(int col,int max_cols,int xp,int r) {
   TMPMAC
   
    
-  SCALARACC *pC = &((SCALARACC*)PACKEDC)[xp*max_cols+col];
+  SCALARACC *pC = &packedc[xp*max_cols+col];
   const SCALARACC *p = pC;
   
 
@@ -1184,7 +1184,7 @@ __STATIC_INLINE void EXT(kernel_2rx1cv)(int col,int max_cols,int xp,int r) {
 
 }
 
-__STATIC_INLINE void EXT(kernel_1rx4cv)(int col,int max_cols,int xp,int r) {
+__STATIC_INLINE void EXT(kernel_1rx4cv)(SCALARACC *packedc,int col,int max_cols,int xp,int r) {
 
   LOGKERNEL("kernel_1rx4cv\n",12);
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
@@ -1193,7 +1193,7 @@ __STATIC_INLINE void EXT(kernel_1rx4cv)(int col,int max_cols,int xp,int r) {
 
   TMPMAC
    
-  SCALARACC *pC = &((SCALARACC*)PACKEDC)[xp*max_cols+col];
+  SCALARACC *pC = &packedc[xp*max_cols+col];
   const SCALARACC *p = pC;
 
   VECACC t00;
@@ -1243,7 +1243,7 @@ __STATIC_INLINE void EXT(kernel_1rx4cv)(int col,int max_cols,int xp,int r) {
 
 }
 
-__STATIC_INLINE void EXT(kernel_1rx3cv)(int col,int max_cols,int xp,int r) {
+__STATIC_INLINE void EXT(kernel_1rx3cv)(SCALARACC *packedc,int col,int max_cols,int xp,int r) {
 
   LOGKERNEL("kernel_1rx3cv\n",13);
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
@@ -1251,7 +1251,7 @@ __STATIC_INLINE void EXT(kernel_1rx3cv)(int col,int max_cols,int xp,int r) {
   VEC tmp00,tmp01,tmp02;
   TMPMAC
    
-  SCALARACC *pC = &((SCALARACC*)PACKEDC)[xp*max_cols+col];
+  SCALARACC *pC = &packedc[xp*max_cols+col];
   const SCALARACC *p = pC;
   
 
@@ -1306,7 +1306,7 @@ __STATIC_INLINE void EXT(kernel_1rx3cv)(int col,int max_cols,int xp,int r) {
 
 }
 
-__STATIC_INLINE void EXT(kernel_1rx2cv)(int col,int max_cols,int xp,int r) {
+__STATIC_INLINE void EXT(kernel_1rx2cv)(SCALARACC *packedc,int col,int max_cols,int xp,int r) {
 
   LOGKERNEL("kernel_1rx2cv\n",14);
   VEC tmp00,tmp01;
@@ -1315,7 +1315,7 @@ __STATIC_INLINE void EXT(kernel_1rx2cv)(int col,int max_cols,int xp,int r) {
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
   const DTYPE *packedA = (DTYPE*)PACKEDA;
    
-  SCALARACC *pC = &((SCALARACC*)PACKEDC)[xp*max_cols+col];
+  SCALARACC *pC = &packedc[xp*max_cols+col];
   const SCALARACC *p = pC;
   
 
@@ -1361,7 +1361,7 @@ __STATIC_INLINE void EXT(kernel_1rx2cv)(int col,int max_cols,int xp,int r) {
 
 }
 
-__STATIC_INLINE void EXT(kernel_1rx1cv)(int col,int max_cols,int xp,int r) {
+__STATIC_INLINE void EXT(kernel_1rx1cv)(SCALARACC *packedc,int col,int max_cols,int xp,int r) {
 
   LOGKERNEL("kernel_1rx1cv\n",15);
   VEC tmp00,tmp01;
@@ -1370,7 +1370,7 @@ __STATIC_INLINE void EXT(kernel_1rx1cv)(int col,int max_cols,int xp,int r) {
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
   const DTYPE *packedA = (DTYPE*)PACKEDA;
    
-  SCALARACC *pC = &((SCALARACC*)PACKEDC)[xp*max_cols+col];
+  SCALARACC *pC = &packedc[xp*max_cols+col];
   const SCALARACC *p = pC;
   
 
@@ -1410,12 +1410,12 @@ __STATIC_INLINE void EXT(kernel_1rx1cv)(int col,int max_cols,int xp,int r) {
 
 }
 
-__STATIC_INLINE void EXT(kernel_4rxc)(int col,int max_cols,int xp,int r,int nbc) {
+__STATIC_INLINE void EXT(kernel_4rxc)(SCALARACC *packedc,int col,int max_cols,int xp,int r,int nbc) {
 
   LOGKERNEL("kernel_4rxc\n",16);
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
   const DTYPE *packedA = (DTYPE*)PACKEDA;
-  SCALARACC *p0 = &((SCALARACC*)PACKEDC)[xp*max_cols+col];
+  SCALARACC *p0 = &packedc[xp*max_cols+col];
   SCALARACC *p1 = p0+max_cols;
   SCALARACC *p2 = p1+max_cols;
   SCALARACC *p3 = p2+max_cols;
@@ -1466,12 +1466,12 @@ __STATIC_INLINE void EXT(kernel_4rxc)(int col,int max_cols,int xp,int r,int nbc)
   }
 }
 
-__STATIC_INLINE void EXT(kernel_3rxc)(int col,int max_cols,int xp,int r,int nbc) {
+__STATIC_INLINE void EXT(kernel_3rxc)(SCALARACC *packedc,int col,int max_cols,int xp,int r,int nbc) {
 
   LOGKERNEL("kernel_3rxc\n",17);
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
   const DTYPE *packedA = (DTYPE*)PACKEDA;
-  SCALARACC *p0 = &((SCALARACC*)PACKEDC)[xp*max_cols+col];
+  SCALARACC *p0 = &packedc[xp*max_cols+col];
   SCALARACC *p1 = p0+max_cols;
   SCALARACC *p2 = p1+max_cols;
 
@@ -1517,12 +1517,12 @@ __STATIC_INLINE void EXT(kernel_3rxc)(int col,int max_cols,int xp,int r,int nbc)
 
 }
 
-__STATIC_INLINE void EXT(kernel_2rxc)(int col,int max_cols,int xp,int r,int nbc) {
+__STATIC_INLINE void EXT(kernel_2rxc)(SCALARACC *packedc,int col,int max_cols,int xp,int r,int nbc) {
 
   LOGKERNEL("kernel_2rxc\n",18);
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
   const DTYPE *packedA = (DTYPE*)PACKEDA;
-  SCALARACC *p0 = &((SCALARACC*)PACKEDC)[xp*max_cols+col];
+  SCALARACC *p0 = &packedc[xp*max_cols+col];
   SCALARACC *p1 = p0+max_cols;
 
 
@@ -1563,12 +1563,12 @@ __STATIC_INLINE void EXT(kernel_2rxc)(int col,int max_cols,int xp,int r,int nbc)
 
 }
 
-__STATIC_INLINE void EXT(kernel_1rxc)(int col,int max_cols,int xp,int r,int nbc) {
+__STATIC_INLINE void EXT(kernel_1rxc)(SCALARACC *packedc,int col,int max_cols,int xp,int r,int nbc) {
 
   LOGKERNEL("kernel_1rxc\n",19);
   const DTYPE *pB0 = (DTYPE*)PACKEDB;
   const DTYPE *packedA = (DTYPE*)PACKEDA;
-  SCALARACC *p0 = &((SCALARACC*)PACKEDC)[xp*max_cols+col];
+  SCALARACC *p0 = &packedc[xp*max_cols+col];
 
 
   const DTYPE *pAlpha0 = &packedA[xp * r];
@@ -1657,6 +1657,30 @@ __STATIC_INLINE void EXT(kernel_1rxc)(int col,int max_cols,int xp,int r,int nbc)
     }                                                         \
 }
 
+#define CLEAR_PACKED(PACKED,WIDTH,HEIGHT,RB,CB,ROW,COL)     \
+{                                                        \
+    SCALARACC *packed=(SCALARACC*)(PACKED);              \
+    const int nb_rows = MIN((HEIGHT),(ROW)+(RB))-(ROW);  \
+    const int nb_cols = MIN((WIDTH),(COL)+(CB)) - (COL); \
+    for(int i=0;i<nb_rows;i++)                           \
+    {                                                    \
+        int j=0;                                         \
+        VECACC vtmp ;                                     \
+        CLEAR_ACC(vtmp);                                  \
+        for(;j<=(nb_cols-LANE);j+=LANE)                  \
+        {                                                \
+            VSTORE_ACC(packed,vtmp);                      \
+            packed += LANE;                              \
+        }                                                \
+        const SCALARACC tmp=0;                           \
+        for(;j<nb_cols;j++)                              \
+        {                                                \
+            *packed++ = tmp;                             \
+        }                                                \
+        packed += (CB) - nb_cols;                        \
+    }                                                    \
+}
+
 #define UNPACK_AND_NARROW(BUF,PACKED,WIDTH,HEIGHT,RB,CB,ROW,COL) \
 {                                                                \
     TMPST;                                                       \
@@ -1704,13 +1728,39 @@ ARM_DSP_ATTRIBUTE arm_status FUNCNAME (
   const DTYPE *a = pSrcA->pData;
   const DTYPE *b = pSrcB->pData;
   DTYPE *c = pDst->pData;
+  SCALARACC *packedc = (SCALARACC*)PACKEDC;
+  #if defined(FLOATALGO)
+  int mustcopy=0;
+  #endif
 
   int rows,cols,inners;
   rows=pSrcA->numRows;
   inners=pSrcA->numCols;
   cols=pSrcB->numCols;
 
-   memset(c,0,sizeof(DTYPE)*cols*rows);
+  #if defined(FLOATALGO)
+  /*
+  
+  For float, the accumulator has same datatype as output datatype.
+  So, we can use directly the output matrix to accumulate.
+  It is what we do for small matrixes.
+  For bigger matrixes, it still makes sense (for cache effects) to use a
+  temporary smaller matrix and copy it into some part of the output matrix.
+
+  For fixed point, we use the temporary matrix in all cases since the
+  accumulator datatype is different from the output datatype.
+  
+  */
+  if ((cols > COLS_BLOCK) || (rows > ROWS_BLOCK))
+  {
+    mustcopy = 1;
+  }
+  else
+  {
+    memset(c,0,sizeof(DTYPE)*cols*rows);
+  }
+  #endif
+
 
     for (int block_col = 0; block_col < cols; block_col += COLS_BLOCK)
     { 
@@ -1718,7 +1768,19 @@ ARM_DSP_ATTRIBUTE arm_status FUNCNAME (
       {    
         int max_cols = MIN(0 + COLS_BLOCK, cols - block_col);
         int max_rows = MIN(0 + ROWS_BLOCK, rows - block_row);
-        PACK_AND_WIDEN(c,PACKEDC,cols,rows,max_rows,max_cols,block_row,block_col);
+        #if defined(FLOATALGO)
+        if (mustcopy)
+        {
+           CLEAR_PACKED(PACKEDC,cols,rows,max_rows,max_cols,block_row,block_col);
+           packedc = (SCALARACC*)PACKEDC;
+        }
+        else 
+        {
+          packedc = (SCALARACC*)c;
+        }
+        #else
+        CLEAR_PACKED(PACKEDC,cols,rows,max_rows,max_cols,block_row,block_col);
+        #endif
         for (int block_inner = 0; block_inner < inners; block_inner += INNER_BLOCK)
         {
           int max_inner = MIN(INNER_BLOCK, inners-block_inner);
@@ -1733,7 +1795,7 @@ ARM_DSP_ATTRIBUTE arm_status FUNCNAME (
 
             for (; row <= (max_rows-DR); row += DR)
             {
-              EXT(kernel_4rx4cv)(col,max_cols,row,max_inner);
+              EXT(kernel_4rx4cv)(packedc,col,max_cols,row,max_inner);
             }
 
             int remaining = max_rows - row;
@@ -1741,16 +1803,16 @@ ARM_DSP_ATTRIBUTE arm_status FUNCNAME (
             //for (; row <= (max_rows-HDR); row += HDR)
             if (remaining == 3)
             {
-              EXT(kernel_3rx4cv)(col,max_cols,row,max_inner);
+              EXT(kernel_3rx4cv)(packedc,col,max_cols,row,max_inner);
             }
             else if (remaining == 2)
             {
-              EXT(kernel_2rx4cv)(col,max_cols,row,max_inner);
+              EXT(kernel_2rx4cv)(packedc,col,max_cols,row,max_inner);
             }
             else if (remaining == 1)
             //(; row < max_rows; row ++)
             {
-              EXT(kernel_1rx4cv)(col,max_cols,row,max_inner);
+              EXT(kernel_1rx4cv)(packedc,col,max_cols,row,max_inner);
             } // end remaining row
           } // end block col
 
@@ -1762,22 +1824,22 @@ ARM_DSP_ATTRIBUTE arm_status FUNCNAME (
 
              for (; row <= (max_rows-DR); row += DR)
              {
-               EXT(kernel_4rx3cv)(col,max_cols,row,max_inner);
+               EXT(kernel_4rx3cv)(packedc,col,max_cols,row,max_inner);
              }
 
              int remaining = max_rows - row;
 
              if (remaining == 3)
              {
-               EXT(kernel_3rx3cv)(col,max_cols,row,max_inner);
+               EXT(kernel_3rx3cv)(packedc,col,max_cols,row,max_inner);
              }
              else if (remaining == 2)
              {
-               EXT(kernel_2rx3cv)(col,max_cols,row,max_inner);
+               EXT(kernel_2rx3cv)(packedc,col,max_cols,row,max_inner);
              }
              else if (remaining == 1)
              {
-               EXT(kernel_1rx3cv)(col,max_cols,row,max_inner);
+               EXT(kernel_1rx3cv)(packedc,col,max_cols,row,max_inner);
              }
           }
 
@@ -1788,22 +1850,22 @@ ARM_DSP_ATTRIBUTE arm_status FUNCNAME (
 
             for (; row <= (max_rows-DR); row += DR)
             {
-              EXT(kernel_4rx2cv)(col,max_cols,row,max_inner);
+              EXT(kernel_4rx2cv)(packedc,col,max_cols,row,max_inner);
             }
 
             int remaining = max_rows - row;
 
             if (remaining == 3)
             {
-              EXT(kernel_3rx2cv)(col,max_cols,row,max_inner);
+              EXT(kernel_3rx2cv)(packedc,col,max_cols,row,max_inner);
             }
             else if (remaining == 2)
             {
-              EXT(kernel_2rx2cv)(col,max_cols,row,max_inner);
+              EXT(kernel_2rx2cv)(packedc,col,max_cols,row,max_inner);
             }
             else if (remaining == 1)
             {
-              EXT(kernel_1rx2cv)(col,max_cols,row,max_inner);
+              EXT(kernel_1rx2cv)(packedc,col,max_cols,row,max_inner);
             }
           }
 
@@ -1814,22 +1876,22 @@ ARM_DSP_ATTRIBUTE arm_status FUNCNAME (
 
             for (; row <= (max_rows-DR); row += DR)
             {
-              EXT(kernel_4rx1cv)(col,max_cols,row,max_inner);
+              EXT(kernel_4rx1cv)(packedc,col,max_cols,row,max_inner);
             }
 
             int remaining = max_rows - row;
 
             if (remaining == 3)
             {
-              EXT(kernel_3rx1cv)(col,max_cols,row,max_inner);
+              EXT(kernel_3rx1cv)(packedc,col,max_cols,row,max_inner);
             }
             else if (remaining == 2)
             {
-              EXT(kernel_2rx1cv)(col,max_cols,row,max_inner);
+              EXT(kernel_2rx1cv)(packedc,col,max_cols,row,max_inner);
             }
             else if (remaining == 1)
             {
-              EXT(kernel_1rx1cv)(col,max_cols,row,max_inner);
+              EXT(kernel_1rx1cv)(packedc,col,max_cols,row,max_inner);
             }
           }
 
@@ -1841,26 +1903,33 @@ ARM_DSP_ATTRIBUTE arm_status FUNCNAME (
 
              for (; row <= (max_rows-DR); row += DR)
              {
-               EXT(kernel_4rxc)(col,max_cols,row,max_inner,maxnc);
+               EXT(kernel_4rxc)(packedc,col,max_cols,row,max_inner,maxnc);
              }
 
              int remaining = max_rows - row;
 
              if (remaining == 3)
              {
-               EXT(kernel_3rxc)(col,max_cols,row,max_inner,maxnc);
+               EXT(kernel_3rxc)(packedc,col,max_cols,row,max_inner,maxnc);
              }
              else if (remaining == 2)
              {
-               EXT(kernel_2rxc)(col,max_cols,row,max_inner,maxnc);
+               EXT(kernel_2rxc)(packedc,col,max_cols,row,max_inner,maxnc);
              }
              else if (remaining == 1)
              {
-              EXT(kernel_1rxc)(col,max_cols,row,max_inner,maxnc);
+              EXT(kernel_1rxc)(packedc,col,max_cols,row,max_inner,maxnc);
              }
           }
         } // end inner loop
+        #if defined(FLOATALGO)
+        if (mustcopy)
+        {
+          UNPACK_AND_NARROW(c,PACKEDC,cols,rows,max_rows,max_cols,block_row,block_col);
+        }
+        #else
         UNPACK_AND_NARROW(c,PACKEDC,cols,rows,max_rows,max_cols,block_row,block_col);
+        #endif
      } // end row loop
    } // end col loop
 
@@ -1887,11 +1956,17 @@ ARM_DSP_ATTRIBUTE arm_status FUNCNAME (
 #undef VLOAD_AND_WIDEN
 #undef VSTORE_AND_NARROW
 #undef EXT
+#undef CLEAR_ACC
 
 #undef VLOAD_ACC
 #undef VSTORE_ACC
 
 #undef FUNCNAME
+
+#undef PACK
+#undef PACK_AND_WIDEN
+#undef UNPACK_AND_NARROW
+#undef CLEAR
 
 #undef TMPMAC
 #undef TMPLD
@@ -1919,6 +1994,10 @@ ARM_DSP_ATTRIBUTE arm_status FUNCNAME (
 
 #if defined(HAS_TEMP_BUFFER)
 #undef HAS_TEMP_BUFFER
+#endif
+
+#if defined(FLOATALGO)
+#undef FLOATALGO
 #endif
 
 
