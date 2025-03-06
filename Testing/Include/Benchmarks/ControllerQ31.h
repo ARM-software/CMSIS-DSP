@@ -20,6 +20,7 @@ class ControllerQ31:public Client::Suite
             arm_pid_instance_q31  instPid;
             q31_t *pSrc;
             q31_t *pDst;
-            
+            q31_t *pOuta;
+            q31_t *pOutb;
             
     };
