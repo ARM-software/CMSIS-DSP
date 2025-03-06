@@ -2,11 +2,11 @@
  * @file     system_ARMCM0plus.c
  * @brief    CMSIS Device System Source File for
  *           ARMCM0plus Device
- * @version  V1.0.0
- * @date     09. July 2018
+ * @version  V2.0.0
+ * @date     06. April 2023
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -23,7 +23,11 @@
  * limitations under the License.
  */
 
-#include "ARMCM0plus.h"
+#if defined (ARMCM0P)
+  #include "ARMCM0plus.h"
+#else
+  #error device not specified!
+#endif
 
 /*----------------------------------------------------------------------------
   Define clocks
@@ -32,6 +36,10 @@
 
 #define  SYSTEM_CLOCK    (XTAL / 2U)
 
+/*----------------------------------------------------------------------------
+  Exception / Interrupt Vector table
+ *----------------------------------------------------------------------------*/
+extern const VECTOR_TABLE_Type __VECTOR_TABLE[48];
 
 /*----------------------------------------------------------------------------
   System Core Clock Variable
@@ -54,7 +62,7 @@ void SystemInit (void)
 {
 
 #if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
-  SCB->VTOR = (uint32_t) &(__VECTOR_TABLE);
+  SCB->VTOR = (uint32_t) &(__VECTOR_TABLE[0]);
 #endif
 
   SystemCoreClock = SYSTEM_CLOCK;

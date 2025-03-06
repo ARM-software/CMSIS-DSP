@@ -128,6 +128,7 @@ project:
       - ../FrameworkInclude
       - ../GeneratedInclude
       - ../Include/Tests
+      - .
 
   # A CMSIS-DSP Layer is used to be able to build
   # and test with the current source version

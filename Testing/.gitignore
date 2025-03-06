@@ -29,3 +29,6 @@ Tmp/
 .*@*
 dspenv/
 dspenv_aarch64/
+.clangd
+*.dbgconf
+*.cbuild-set.yml 
