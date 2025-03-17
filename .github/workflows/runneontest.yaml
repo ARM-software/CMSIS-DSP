@@ -105,6 +105,10 @@ jobs:
              Testing/build/result.html
              Testing/build/result_transform_neon.html
              Testing/build/result_binaryf32_neon.html
+             Testing/build/result_binaryf16_neon.html
+             Testing/build/result_binaryq31_neon.html
+             Testing/build/result_binaryq15_neon.html
+             Testing/build/result_binaryq7_neon.html
              Testing/build/result_f16.html
 
       
