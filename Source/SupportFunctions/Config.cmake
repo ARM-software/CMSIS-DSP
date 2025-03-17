@@ -1,7 +1,14 @@
 cmake_minimum_required (VERSION 3.14)
 
 
+if (FASTBUILD)
+  target_sources(CMSISDSP PRIVATE SupportFunctions/SupportFunctions.c)
 
+  if ((NOT ARMAC5) AND (NOT DISABLEFLOAT16))
+    target_sources(CMSISDSP PRIVATE SupportFunctions/SupportFunctionsF16.c)
+  endif()
+
+else()
 
 target_sources(CMSISDSP PRIVATE SupportFunctions/arm_barycenter_f32.c
 SupportFunctions/arm_bitonic_sort_f32.c
@@ -64,4 +71,4 @@ target_sources(CMSISDSP PRIVATE SupportFunctions/arm_barycenter_f16.c)
 target_sources(CMSISDSP PRIVATE SupportFunctions/arm_f16_to_f64.c)
 target_sources(CMSISDSP PRIVATE SupportFunctions/arm_f64_to_f16.c)
 endif()
-
+endif()

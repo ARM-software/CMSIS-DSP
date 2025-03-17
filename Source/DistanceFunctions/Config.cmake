@@ -1,6 +1,15 @@
 cmake_minimum_required (VERSION 3.14)
 
+target_include_directories(CMSISDSP PRIVATE "DistanceFunctions")
 
+if (FASTBUILD)
+  target_sources(CMSISDSP PRIVATE DistanceFunctions/DistanceFunctions.c)
+
+  if ((NOT ARMAC5) AND (NOT DISABLEFLOAT16))
+    target_sources(CMSISDSP PRIVATE DistanceFunctions/DistanceFunctionsF16.c)
+  endif()
+
+else()
 
 target_sources(CMSISDSP PRIVATE DistanceFunctions/arm_boolean_distance.c)
 target_sources(CMSISDSP PRIVATE DistanceFunctions/arm_braycurtis_distance_f32.c)
@@ -30,7 +39,6 @@ target_sources(CMSISDSP PRIVATE DistanceFunctions/arm_dtw_path_f32.c)
 target_sources(CMSISDSP PRIVATE DistanceFunctions/arm_dtw_init_window_q7.c)
 
 
-target_include_directories(CMSISDSP PRIVATE "DistanceFunctions")
 
 if ((NOT ARMAC5) AND (NOT DISABLEFLOAT16))
 target_sources(CMSISDSP PRIVATE DistanceFunctions/arm_braycurtis_distance_f16.c)
@@ -44,4 +52,4 @@ target_sources(CMSISDSP PRIVATE DistanceFunctions/arm_jensenshannon_distance_f16
 target_sources(CMSISDSP PRIVATE DistanceFunctions/arm_minkowski_distance_f16.c)
 endif()
 
- 
+endif()

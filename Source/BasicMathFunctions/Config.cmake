@@ -86,6 +86,14 @@ BasicMathFunctions/arm_or_u8.c
 BasicMathFunctions/arm_not_u8.c  
 BasicMathFunctions/arm_xor_u8.c)
 
+if (FASTBUILD)
+  target_sources(CMSISDSP PRIVATE BasicMathFunctions/BasicMathFunctions.c)
+
+  if ((NOT ARMAC5) AND (NOT DISABLEFLOAT16))
+    target_sources(CMSISDSP PRIVATE BasicMathFunctions/BasicMathFunctionsF16.c)
+  endif()
+
+else()
 target_sources(CMSISDSP PRIVATE ${SRCF64})
 target_sources(CMSISDSP PRIVATE ${SRCF32})
 
@@ -102,3 +110,4 @@ target_sources(CMSISDSP PRIVATE ${SRCU16})
 target_sources(CMSISDSP PRIVATE ${SRCU8})
 
 
+endif()

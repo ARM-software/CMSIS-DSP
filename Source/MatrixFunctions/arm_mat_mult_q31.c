@@ -623,6 +623,57 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q31(
 }
 
 #else
+
+#if defined(ARM_MATH_NEON)
+
+/**
+  @brief         Q31 matrix multiplication.
+  @param[in]     pSrcA      points to the first input matrix structure
+  @param[in]     pSrcB      points to the second input matrix structure
+  @param[out]    pDst       points to output matrix structure
+  @return        execution status
+                   - \ref ARM_MATH_SUCCESS       : Operation successful
+                   - \ref ARM_MATH_SIZE_MISMATCH : Matrix size check failed
+**/
+
+#define LANE 4
+#define DTYPE q31_t
+#define VEC int32x4_t
+#define VECACC int32x4_t
+
+#define CLEAR_ACC(tmp) tmp = vdupq_n_s32(0);
+
+#define TMPLD
+#define TMPST
+#define TMPMAC
+
+#define SCALARACC int32_t 
+#define SCALAR_LOAD_AND_WIDEN(DST,PTR) DST = (SCALARACC)(*(PTR))
+#define SCALAR_STORE_AND_NARROW(PTR,VAL) *(PTR) = (VAL)
+#define SCALAR_MAC_N(ACC,VEC,SCALAR) ACC += __SSAT((((int64_t)(VEC) * (int64_t)(SCALAR)) >> 32),31) << 1U
+
+#define VLOAD(DST,PTR) DST = vld1q_s32((PTR))
+#define VSTORE(PTR,VAL) vst1q_s32((PTR),(VAL))
+
+#define VLOAD_ACC(DST,PTR) DST = vld1q_s32((PTR))
+#define VSTORE_ACC(PTR,VAL) vst1q_s32((PTR),(VAL))
+
+
+#define VLOAD_AND_WIDEN(DST,PTR) DST = vld1q_s32((PTR))
+#define VSTORE_AND_NARROW(PTR,VAL) vst1q_s32((PTR),(VAL))
+
+
+#define VMAC_N(ACC,VEC,SCALAR) ACC = vqaddq_s32(ACC,vqdmulhq_n_s32((VEC),(SCALAR)))
+
+#define MATTYPE arm_matrix_instance_q31
+#define EXT(A) A##_q31
+
+#define FUNCNAME arm_mat_mult_q31
+
+
+#include "_arm_mat_mult_neon.c"
+
+#else
 ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q31(
   const arm_matrix_instance_q31 * pSrcA,
   const arm_matrix_instance_q31 * pSrcB,
@@ -754,6 +805,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q31(
   /* Return to application */
   return (status);
 }
+#endif /* #if defined(ARM_MATH_NEON) */
 #endif /* defined(ARM_MATH_MVEI) */
 
 /**

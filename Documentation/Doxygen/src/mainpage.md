@@ -179,6 +179,13 @@ For CFFT and RFFT, a new Neon specific initialization function is available to b
 
 For CFFT, this new Neon specific initialization allows to use FFT lengths with factor of 3 and 5 in the length (but must still be a multiple of 4 length).
 
+Note that matrix multiply for Q15 and Q7 is using accumulators on 32 bits (Q15) and 16 bits (Q7) for Neon. Other versions (scalar and Helium) are using 64 bits (Q15) and 32 bits (Q7).
+
+You should not try to multiply too big Q15/Q7 matrixes with Neon because you'll likely get saturation issues.
+If you scale down the data to avoid the saturation issues, the loss of accuracy may be too big.
+
+An implementation accumulating on more bits would give better results but would also be slower.
+
 
 ## License {#license}
 

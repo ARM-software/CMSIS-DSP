@@ -1,7 +1,14 @@
 cmake_minimum_required (VERSION 3.14)
 
 
+if (FASTBUILD)
+  target_sources(CMSISDSP PRIVATE MatrixFunctions/MatrixFunctions.c)
 
+  if ((NOT ARMAC5) AND (NOT DISABLEFLOAT16))
+    target_sources(CMSISDSP PRIVATE MatrixFunctions/MatrixFunctionsF16.c)
+  endif()
+
+else()
 
 set(SRCF64 MatrixFunctions/arm_mat_cholesky_f64.c
 MatrixFunctions/arm_mat_inverse_f64.c
@@ -92,4 +99,5 @@ MatrixFunctions/arm_mat_qr_f16.c
 MatrixFunctions/arm_householder_f16.c
 )
 
+endif()
 endif()

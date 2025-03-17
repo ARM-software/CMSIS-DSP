@@ -133,9 +133,14 @@ def writeBinaryTests(config,format):
    
     dims=[] 
     for (a,b,c) in binarySizes:
+       m = int(np.log2(np.max([a,b,c])))
        dims.append(a)
        dims.append(b)
        dims.append(c)
+       # Fast matmul Q15 and Q7 in scalar are not applying any saturation
+       # so the data need to be scaled in the test
+       if format == Tools.Q15 or format == Tools.Q7:
+              dims.append(m)
     # Two matrix shapes with a common dimension
     config.writeInputS16(1, dims,"DimsBinary")
 
@@ -1186,8 +1191,8 @@ def generatePatterns():
     #writeBinaryTests(configBinaryf32,Tools.F32)
     #writeBinaryTests(configBinaryf16,Tools.F16)
     #writeBinaryTests(configBinaryq31,Tools.Q31)
-    #writeBinaryTests(configBinaryq15,Tools.Q15)
-    #writeBinaryTests(configBinaryq7,Tools.Q7)
+    writeBinaryTests(configBinaryq15,Tools.Q15)
+    writeBinaryTests(configBinaryq7,Tools.Q7)
     
     PATTERNUNDIR = os.path.join("Patterns","DSP","Matrix","Unary","Unary")
     PARAMUNDIR = os.path.join("Parameters","DSP","Matrix","Unary","Unary")

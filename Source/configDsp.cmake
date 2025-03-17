@@ -41,7 +41,7 @@ endif()
 
 target_include_directories(${project} PRIVATE "${DSP}/PrivateInclude")
 
-if (MVEI OR MVEF OR HELIUM)
+if (MVEI OR MVEF OR HELIUM OR NEON OR NEONEXPERIMENTAL)
     # By default, GCC does not enable implicit conversion between vectors of different numbers or types of elements
     # which is required by some code in CMSIS-DSP
     if (LAXVECTORCONVERSIONS)

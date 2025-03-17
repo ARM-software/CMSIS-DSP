@@ -39,21 +39,33 @@
  */
 
 /**
- * @brief Q7 matrix multiplication
- * @param[in]       *pSrcA points to the first input matrix structure
- * @param[in]       *pSrcB points to the second input matrix structure
- * @param[out]      *pDst points to output matrix structure
- * @param[in]       *pState points to the array for storing intermediate results (Unused in some versions)
- * @return          The function returns either
- * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
- *
- * @details
- * <b>Scaling and Overflow Behavior:</b>
- *
- * \par
- * The function is implemented using a 32-bit internal accumulator saturated to 1.7 format.
- *
- *
+  @brief         Q7 matrix multiplication.
+  @param[in]     pSrcA      points to the first input matrix structure
+  @param[in]     pSrcB      points to the second input matrix structure
+  @param[out]    pDst       points to output matrix structure
+  @param[in]     pState     points to the array for storing intermediate results
+  @return        execution status
+                   - \ref ARM_MATH_SUCCESS       : Operation successful
+                   - \ref ARM_MATH_SIZE_MISMATCH : Matrix size check failed
+
+  @par           Scaling and Overflow Behavior (except Neon version)
+                   The function is implemented using an internal 32-bit accumulator. The inputs to the
+                   multiplications are in 1.7 format and multiplications yield a 2.14 result.
+                   The 2.14 intermediate results are accumulated in a 32-bit accumulator in 18.14 format.
+                   The 18.14 result is then truncated to 18.7 format by discarding the low 7 bits
+                   and then saturated to 1.7 format.
+  @par           Neon version
+                   The Neon version is currently using a 16-bit accumulator. As consequence, it should
+                   not be used to multiply too big matrixes or you'll get saturation issues.
+                   If you try to scale down the data to avoid the saturations, you may lose too
+                   much accuracy. The Neon implementation is not (currently) made for big matrixes.
+
+                            
+  @par
+                   Refer to \ref arm_mat_mult_fast_q15() for a faster but less precise version of this function.
+ 
+  @par             pState
+                   pState will contain the transpose of pSrcB
  */
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 __STATIC_FORCEINLINE arm_status arm_mat_mult_q7_2x2_mve(
@@ -576,7 +588,108 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q7(
     return(status);
 }
 #else
-ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q7(const arm_matrix_instance_q7 *pSrcA, const arm_matrix_instance_q7 *pSrcB, arm_matrix_instance_q7 *pDst, q7_t *pState)
+
+#if defined(ARM_MATH_NEON)
+
+/**
+ * @brief Q7 matrix multiplication
+ * @param[in]       *pSrcA points to the first input matrix structure
+ * @param[in]       *pSrcB points to the second input matrix structure
+ * @param[out]      *pDst points to output matrix structure
+ * @param[in]       *pState points to the array for storing intermediate results (Unused in some versions)
+ * @return          The function returns either
+ * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+ */
+
+#define LANE 16
+#define DTYPE q7_t
+#define VEC int8x16_t
+#define VECACC struct { \
+    int32x4_t val[4];   \
+}
+
+#define CLEAR_ACC(tmp)\
+  tmp.val[0] = vdupq_n_s32(0); \
+  tmp.val[1] = vdupq_n_s32(0); \
+  tmp.val[2] = vdupq_n_s32(0); \
+  tmp.val[3] = vdupq_n_s32(0);
+
+
+#define TMPMAC \
+int16x8_t tmp;
+
+#define TMPLD       \
+  int8x16_t tmp1;   \
+  int16x8x2_t tmp2; 
+
+#define TMPST                \
+  int16x4_t tlow;            \
+  int16x4_t thigh;           \
+  int8x8_t  htmplo,htmphigh;
+
+
+#define SCALARACC int32_t 
+#define SCALAR_LOAD_AND_WIDEN(DST,PTR) DST = (SCALARACC)(*(PTR))
+#define SCALAR_STORE_AND_NARROW(PTR,VAL) *(PTR) = (q7_t) __SSAT((VAL) >> 7, 8)
+#define SCALAR_MAC_N(ACC,VEC,SCALAR) ACC += (SCALARACC)(VEC) * (SCALARACC)(SCALAR)
+
+#define VLOAD(DST,PTR) DST = vld1q_s8((PTR))
+#define VSTORE(PTR,VAL) vst1q_s8((PTR),(VAL))
+
+#define VLOAD_ACC(DST,PTR)         \
+  DST.val[0] = vld1q_s32((PTR)+4*0); \
+  DST.val[1] = vld1q_s32((PTR)+4*1); \
+  DST.val[2] = vld1q_s32((PTR)+4*2); \
+  DST.val[3] = vld1q_s32((PTR)+4*3);
+
+#define VSTORE_ACC(PTR,VAL)        \
+  vst1q_s32((PTR)+4*0,(VAL).val[0]); \
+  vst1q_s32((PTR)+4*1,(VAL).val[1]); \
+  vst1q_s32((PTR)+4*2,(VAL).val[2]); \
+  vst1q_s32((PTR)+4*3,(VAL).val[3]);
+
+#define VLOAD_AND_WIDEN(DST,PTR)                       \
+    tmp1 = vld1q_s8((PTR));                            \
+    tmp2.val[0] = vmovl_s8(vget_low_s8(tmp1));         \
+    tmp2.val[1] = vmovl_s8(vget_high_s8(tmp1));        \
+    DST.val[0] = vmovl_s16(vget_low_s16(tmp2.val[0]));  \
+    DST.val[1] = vmovl_s16(vget_high_s16(tmp2.val[0])); \
+    DST.val[2] = vmovl_s16(vget_low_s16(tmp2.val[1]));  \
+    DST.val[3] = vmovl_s16(vget_high_s16(tmp2.val[1]));
+
+#define VSTORE_AND_NARROW(PTR,VAL)                      \
+    tlow = vqshrn_n_s32(VAL.val[0],7);                  \
+    thigh = vqshrn_n_s32(VAL.val[1],7);                 \
+    htmplo = vqmovn_s16(vcombine_s16(tlow,thigh)); \
+    tlow = vqshrn_n_s32(VAL.val[2],7);                  \
+    thigh = vqshrn_n_s32(VAL.val[3],7);                 \
+    htmphigh = vqmovn_s16(vcombine_s16(tlow,thigh)); \
+    vst1q_s8(PTR,vcombine_s8(htmplo,htmphigh));
+
+    #define VMAC_N(ACC,VEC,SCALAR)                                    \
+    tmp = vmull_s8(vget_low_s8(VEC),vdup_n_s8(SCALAR));               \
+    ACC.val[0] = vaddq_s32(ACC.val[0],vmovl_s16(vget_low_s16(tmp)));  \
+    ACC.val[1] = vaddq_s32(ACC.val[1],vmovl_s16(vget_high_s16(tmp))); \
+    tmp = vmull_s8(vget_high_s8(VEC),vdup_n_s8(SCALAR));              \
+    ACC.val[2] = vaddq_s32(ACC.val[2],vmovl_s16(vget_low_s16(tmp)));  \
+    ACC.val[3] = vaddq_s32(ACC.val[3],vmovl_s16(vget_high_s16(tmp)));
+
+#define MATTYPE arm_matrix_instance_q7
+#define EXT(A) A##_q7
+#define HAS_TEMP_BUFFER
+#define USE_TMP_REGISTER
+
+#define FUNCNAME arm_mat_mult_q7
+
+
+#include "_arm_mat_mult_neon.c"
+
+
+#else
+ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q7(const arm_matrix_instance_q7 *pSrcA, 
+    const arm_matrix_instance_q7 *pSrcB,
+     arm_matrix_instance_q7 *pDst, 
+     q7_t *pState)
 {
     q31_t sum; /* accumulator */
     q7_t *pIn1 = pSrcA->pData;                    /* input data matrix pointer A */
@@ -671,6 +784,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q7(const arm_matrix_instance_q7 *pSrcA
     /* Return to application */
     return (status);
 }
+#endif /* #if defined(ARM_MATH_NEON) */
 #endif /* defined(ARM_MATH_MVEI) */
 
 /**

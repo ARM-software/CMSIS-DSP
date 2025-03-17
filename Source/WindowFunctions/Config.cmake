@@ -1,5 +1,9 @@
 cmake_minimum_required (VERSION 3.14)
 
+if (FASTBUILD)
+  target_sources(CMSISDSP PRIVATE WindowFunctions/WindowFunctions.c)
+
+else()
 
 set(SRCF64 WindowFunctions/arm_welch_f64.c
 WindowFunctions/arm_bartlett_f64.c
@@ -50,3 +54,4 @@ target_sources(CMSISDSP PRIVATE ${SRCF64})
 target_sources(CMSISDSP PRIVATE ${SRCF32})
 
 
+endif()

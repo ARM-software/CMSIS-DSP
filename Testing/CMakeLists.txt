@@ -18,10 +18,14 @@ option(NEON "" ON)
 option(NEONEXPERIMENTAL "" OFF)
 option(DISABLEFLOAT16 "" OFF)
 add_subdirectory(../Source bin_dsp)
+target_compile_options(CMSISDSP PUBLIC -g)
+target_compile_definitions(CMSISDSP PRIVATE ARM_DSP_CUSTOM_CONFIG)
+target_include_directories(CMSISDSP PRIVATE .)
 
+target_compile_definitions(CMSISDSP PUBLIC ARM_DSP_TESTING)
 
 add_executable(test main.cpp
-	patterndata.c
+    patterndata.c
     testmain.cpp
     FrameworkSource/ArrayMemory.cpp
     FrameworkSource/Calibrate.cpp
@@ -115,15 +119,20 @@ add_executable(test main.cpp
     Source/Tests/UnaryTestsQ31.cpp
     Source/Tests/WindowTestsF32.cpp
     Source/Tests/WindowTestsF64.cpp
-	)
+    )
 
 if (NEON)
     target_sources(test PUBLIC 
         Source/Tests/TransformNeonCF32.cpp
-        Source/Tests/TransformNeonCF16.cpp
         Source/Tests/TransformNeonCQ31.cpp
         Source/Tests/TransformNeonCQ15.cpp
+        Source/Tests/BinaryTestsNeonF32.cpp
+        Source/Tests/BinaryTestsNeonQ31.cpp
+        Source/Tests/BinaryTestsNeonQ15.cpp
+        Source/Tests/BinaryTestsNeonQ7.cpp
         )
+    
+
 endif()
 
 if (NOT DISABLEFLOAT16)
@@ -148,6 +157,15 @@ if (NOT DISABLEFLOAT16)
            Source/Tests/TransformRF16.cpp
            Source/Tests/UnaryTestsF16.cpp
                 )
+
+    if (NEON)
+       target_sources(test PUBLIC 
+        Source/Tests/TransformNeonCF16.cpp
+        Source/Tests/BinaryTestsNeonF16.cpp
+        )
+    
+
+endif()
 endif()
 
 target_include_directories(test PUBLIC FrameworkInclude
@@ -161,9 +179,9 @@ target_compile_options(test PUBLIC -Wsign-compare
         -Wdouble-promotion
         -DNDEBUG
         -Wall
-	-Wextra
+    -Wextra
         -O3
-	-Wno-packed
+    -Wno-packed
         -Wno-missing-noreturn
         -Wno-sign-conversion
         -Wno-unused-macros
@@ -228,6 +246,7 @@ target_compile_option(CMSISDSP PRIVATE -Wsign-compare
 )
 
 endif()
+
 
 target_link_libraries(test PUBLIC CMSISDSP)
 

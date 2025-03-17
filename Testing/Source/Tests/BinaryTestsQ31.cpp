@@ -10,7 +10,7 @@ Reference patterns are generated with
 a double precision computation.
 
 */
-#define ABS_ERROR_Q31 ((q31_t)5)
+#define ABS_ERROR_Q31 ((q31_t)20)
 #define ABS_ERROR_Q63 ((q63_t)(1<<16))
 
 #define ONEHALF 0x40000000
@@ -35,6 +35,7 @@ static void checkInnerTail(q31_t *b)
       q31_t *bp=b.ptr();                 \
                                              \
       q31_t *outp=output.ptr();          \
+      q31_t *refp=ref.ptr();          \
       int16_t *dimsp = dims.ptr();           \
       int nbMatrixes = dims.nbSamples() / 3;\
       int rows,internal,columns;                      \
@@ -72,11 +73,62 @@ static void checkInnerTail(q31_t *b)
 
           PREPAREDATA2();
 
-          status=arm_mat_mult_q31(&this->in1,&this->in2,&this->out);
-          ASSERT_TRUE(status==ARM_MATH_SUCCESS);
+          try
+          {
+              status=arm_mat_mult_q31(&this->in1,&this->in2,&this->out);
+              ASSERT_TRUE(status==ARM_MATH_SUCCESS);
+              ASSERT_NEAR_EQ_NB(outp,refp,ABS_ERROR_Q31,rows*columns);
+    
+              outp += (rows * columns);
+              refp += (rows * columns);
+              checkInnerTail(outp);
+          }
+          catch(Client::Error &err)
+          {
+            char tmp[256];
+            snprintf(tmp,256," (%d x %d x %d)\n",rows,internal,columns);
+            strcat(err.details,tmp);
+            throw(err);
+          }
 
-          outp += (rows * columns);
-          checkInnerTail(outp);
+      }
+
+      ASSERT_SNR(output,ref,(q31_t)SNR_THRESHOLD);
+
+      ASSERT_NEAR_EQ(output,ref,ABS_ERROR_Q31);
+
+    } 
+
+    void BinaryTestsQ31::test_mat_mult_fast_q31()
+    {     
+      LOADDATA2();
+      arm_status status;
+
+      for(i=0;i < nbMatrixes ; i ++)
+      {
+          rows = *dimsp++;
+          internal = *dimsp++;
+          columns = *dimsp++;
+
+          PREPAREDATA2();
+
+          try
+          {
+              status=arm_mat_mult_fast_q31(&this->in1,&this->in2,&this->out);
+              ASSERT_TRUE(status==ARM_MATH_SUCCESS);
+              ASSERT_NEAR_EQ_NB(outp,refp,ABS_ERROR_Q31,rows*columns);
+    
+              outp += (rows * columns);
+              refp += (rows * columns);
+              checkInnerTail(outp);
+          }
+          catch(Client::Error &err)
+          {
+            char tmp[256];
+            snprintf(tmp,256," (%d x %d x %d)\n",rows,internal,columns);
+            strcat(err.details,tmp);
+            throw(err);
+          }
 
       }
 
@@ -91,6 +143,7 @@ static void checkInnerTail(q31_t *b)
     void BinaryTestsQ31::test_mat_cmplx_mult_q31()
     {     
       LOADDATA2();
+      (void)refp;
       arm_status status;
 
       for(i=0;i < nbMatrixes ; i ++)
@@ -117,6 +170,7 @@ static void checkInnerTail(q31_t *b)
     void BinaryTestsQ31::test_mat_mult_opt_q31()
     {     
       LOADDATA2();
+      (void)refp;
       q31_t *tmpPtr=tmp.ptr();      
 
       arm_status status;
@@ -189,6 +243,18 @@ static void checkInnerTail(q31_t *b)
 
             tmp.create(MAXMATRIXDIM*MAXMATRIXDIM,BinaryTestsQ31::TMPC_Q31_ID,mgr);
 
+         break;
+
+         case TEST_MAT_MULT_FAST_Q31_4:
+            input1.reload(BinaryTestsQ31::INPUTS1_Q31_ID,mgr);
+            input2.reload(BinaryTestsQ31::INPUTS2_Q31_ID,mgr);
+            dims.reload(BinaryTestsQ31::DIMSBINARY1_S16_ID,mgr);
+
+            ref.reload(BinaryTestsQ31::REFMUL1_Q31_ID,mgr);
+
+            output.create(ref.nbSamples(),BinaryTestsQ31::OUT_Q31_ID,mgr);
+            a.create(MAXMATRIXDIM*MAXMATRIXDIM,BinaryTestsQ31::TMPA_Q31_ID,mgr);
+            b.create(MAXMATRIXDIM*MAXMATRIXDIM,BinaryTestsQ31::TMPB_Q31_ID,mgr);
          break;
 
 

@@ -74,7 +74,7 @@ FPGA driver. Used to read a C array describing how to drive the test.
       virtual void ImportPattern_u16(Testing::PatternID_t,char*,Testing::nbSamples_t nb);
       virtual void ImportPattern_u8(Testing::PatternID_t,char*,Testing::nbSamples_t nb);
 
-      virtual void DumpParams(std::vector<Testing::param_t>&);
+      virtual void DumpParams(const std::vector<Testing::param_t>&);
       virtual Testing::param_t* ImportParams(Testing::PatternID_t,Testing::nbParameterEntries_t &,Testing::ParameterKind &);
       virtual bool hasParam();
       virtual Testing::PatternID_t getParamID();

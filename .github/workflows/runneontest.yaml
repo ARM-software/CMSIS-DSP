@@ -53,6 +53,9 @@ jobs:
           echo "Install missing python packages"
           pip install -r requirements.txt
 
+          echo "Generate some missing test patterns"
+          python PatternGeneration/MatrixNeon.py
+
           echo "Preprocess test description"
           python preprocess.py -f desc.txt -o Output.pickle
           python preprocess.py -f desc_neon.txt -o Output_neon.pickle
@@ -83,10 +86,7 @@ jobs:
         run: |
           cd Testing/build
 
-          python ../processTests.py -p ../Patterns -d ../Parameters -gen .. -e -f ../Output_neon.pickle
-          ninja 
-          ./test > result_neon.txt
-          python ../processResult.py --noerr -e -f ../Output_neon.pickle -r result_neon.txt -html > result_neon.html 
+          sh ../test_neon.sh
 
       - name: Execute f16 C tests
         run: |
@@ -103,7 +103,12 @@ jobs:
           name: neon-test-report
           path: |
              Testing/build/result.html
-             Testing/build/result_neon.html
+             Testing/build/result_transform_neon.html
+             Testing/build/result_binaryf32_neon.html
+             Testing/build/result_binaryf16_neon.html
+             Testing/build/result_binaryq31_neon.html
+             Testing/build/result_binaryq15_neon.html
+             Testing/build/result_binaryq7_neon.html
              Testing/build/result_f16.html
 
       
@@ -113,6 +118,11 @@ jobs:
           
           echo "Checking output..."
           test "$(grep "FAILED" result.html | wc -l)" -eq 0
-          test "$(grep "FAILED" result_neon.html | wc -l)" -eq 0
+          test "$(grep "FAILED" result_transform_neon.html | wc -l)" -eq 0
+          test "$(grep "FAILED" result_binaryf32_neon.html | wc -l)" -eq 0
+          test "$(grep "FAILED" result_binaryf16_neon.html | wc -l)" -eq 0
+          test "$(grep "FAILED" result_binaryq31_neon.html | wc -l)" -eq 0
+          test "$(grep "FAILED" result_binaryq15_neon.html | wc -l)" -eq 0
+          test "$(grep "FAILED" result_binaryq7_neon.html | wc -l)" -eq 0
           test "$(grep "FAILED" result_f16.html | wc -l)" -eq 0
 

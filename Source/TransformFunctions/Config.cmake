@@ -1,6 +1,13 @@
 cmake_minimum_required (VERSION 3.14)
 
+if (FASTBUILD)
+  target_sources(CMSISDSP PRIVATE TransformFunctions/TransformFunctions.c)
 
+  if ((NOT ARMAC5) AND (NOT DISABLEFLOAT16))
+    target_sources(CMSISDSP PRIVATE TransformFunctions/TransformFunctionsF16.c)
+  endif()
+
+else()
 
 target_sources(CMSISDSP PRIVATE TransformFunctions/arm_bitreversal.c)
 target_sources(CMSISDSP PRIVATE TransformFunctions/arm_bitreversal2.c)
@@ -124,6 +131,7 @@ target_sources(CMSISDSP PRIVATE TransformFunctions/arm_mfcc_init_f16.c)
 target_sources(CMSISDSP PRIVATE TransformFunctions/arm_mfcc_f16.c)
 endif()
 
+endif()
 
 if (NEON OR NEONEXPERIMENTAL)
     target_sources(CMSISDSP PRIVATE "${DSP}/Ne10/NE10_fft_float32.neonintrinsic.c")

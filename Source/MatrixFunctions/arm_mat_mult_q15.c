@@ -47,13 +47,19 @@
                    - \ref ARM_MATH_SUCCESS       : Operation successful
                    - \ref ARM_MATH_SIZE_MISMATCH : Matrix size check failed
 
-  @par           Scaling and Overflow Behavior
+  @par           Scaling and Overflow Behavior (except on Neon)
                    The function is implemented using an internal 64-bit accumulator. The inputs to the
                    multiplications are in 1.15 format and multiplications yield a 2.30 result.
                    The 2.30 intermediate results are accumulated in a 64-bit accumulator in 34.30 format.
                    This approach provides 33 guard bits and there is no risk of overflow.
                    The 34.30 result is then truncated to 34.15 format by discarding the low 15 bits
                    and then saturated to 1.15 format.
+  @par           Neon version
+                   The Neon version is currently using a 32-bit accumulator. As consequence, it should
+                   not be used to multiply too big matrixes or you'll get saturation issues.
+                   If you try to scale down the data to avoid the saturations, you may lose too
+                   much accuracy. The Neon implementation is not (currently) made for big matrixes.
+                               
   @par
                    Refer to \ref arm_mat_mult_fast_q15() for a faster but less precise version of this function.
  
@@ -620,7 +626,119 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q15(
     return (status);
 }
 
-#else 
+#else
+
+#if defined(ARM_MATH_NEON)
+
+/**
+  @brief         Q15 matrix multiplication.
+  @param[in]     pSrcA      points to the first input matrix structure
+  @param[in]     pSrcB      points to the second input matrix structure
+  @param[out]    pDst       points to output matrix structure
+  @param[in]     pState     points to the array for storing intermediate results
+  @return        execution status
+                   - \ref ARM_MATH_SUCCESS       : Operation successful
+                   - \ref ARM_MATH_SIZE_MISMATCH : Matrix size check failed
+**/
+
+
+#define LANE 8
+
+#define DTYPE q15_t
+#define VEC int16x8_t
+#define VECACC struct { \
+    int64x2_t val[4];   \
+}
+
+#define CLEAR_ACC(tmp) \
+    tmp.val[0] = vdupq_n_s64(0); \
+    tmp.val[1] = vdupq_n_s64(0); \
+    tmp.val[2] = vdupq_n_s64(0); \
+    tmp.val[3] = vdupq_n_s64(0);
+
+#define DEBUGVACC(X)
+
+#define DEBUGV(X)
+
+#define DEBUGS(X) 
+
+#define DEBUGSACC(X)
+
+#if defined(ARM_DSP_TESTING)
+int cov_mat_mul_q15[20]={0};
+#define LOGKERNEL(A,B) cov_mat_mul_q15[B]=1;
+#else
+#define LOGKERNEL(A,B) 
+#endif
+
+#define TMPMAC \
+int32x4_t tmp;
+
+#define TMPLD       \
+  int16x8_t tmp1;   \
+  int32x4x2_t tmp2;
+
+#define TMPST                 \
+  int32x2_t tlow;             \
+  int32x2_t thigh;            \
+  int16x4_t  htmplo,htmphigh;
+
+#define SCALARACC int64_t 
+#define SCALAR_LOAD_AND_WIDEN(DST,PTR) DST = (SCALARACC)(*(PTR))
+#define SCALAR_STORE_AND_NARROW(PTR,VAL) *(PTR) = (q15_t) __SSAT((VAL) >> 15, 16)
+#define SCALAR_MAC_N(ACC,VEC,SCALAR) ACC += (SCALARACC)(VEC) * (SCALARACC)(SCALAR)
+
+#define VLOAD(DST,PTR) DST = vld1q_s16((PTR))
+#define VSTORE(PTR,VAL) vst1q_s16((PTR),(VAL))
+
+#define VLOAD_ACC(DST,PTR)         \
+  DST.val[0] = vld1q_s64((PTR)+2*0); \
+  DST.val[1] = vld1q_s64((PTR)+2*1); \
+  DST.val[2] = vld1q_s64((PTR)+2*2); \
+  DST.val[3] = vld1q_s64((PTR)+2*3);
+
+#define VSTORE_ACC(PTR,VAL)        \
+  vst1q_s64((PTR)+2*0,(VAL).val[0]); \
+  vst1q_s64((PTR)+2*1,(VAL).val[1]); \
+  vst1q_s64((PTR)+2*2,(VAL).val[2]); \
+  vst1q_s64((PTR)+2*3,(VAL).val[3]);
+
+#define VLOAD_AND_WIDEN(DST,PTR)                       \
+    tmp1 = vld1q_s16((PTR));                            \
+    tmp2.val[0] = vmovl_s16(vget_low_s16(tmp1));         \
+    tmp2.val[1] = vmovl_s16(vget_high_s16(tmp1));        \
+    DST.val[0] = vmovl_s32(vget_low_s32(tmp2.val[0]));  \
+    DST.val[1] = vmovl_s32(vget_high_s32(tmp2.val[0])); \
+    DST.val[2] = vmovl_s32(vget_low_s32(tmp2.val[1]));  \
+    DST.val[3] = vmovl_s32(vget_high_s32(tmp2.val[1]));
+
+#define VSTORE_AND_NARROW(PTR,VAL)                      \
+    tlow = vqshrn_n_s64(VAL.val[0],15);                  \
+    thigh = vqshrn_n_s64(VAL.val[1],15);                 \
+    htmplo = vqmovn_s32(vcombine_s32(tlow,thigh)); \
+    tlow = vqshrn_n_s64(VAL.val[2],15);                  \
+    thigh = vqshrn_n_s64(VAL.val[3],15);                 \
+    htmphigh = vqmovn_s32(vcombine_s32(tlow,thigh)); \
+    vst1q_s16(PTR,vcombine_s16(htmplo,htmphigh));
+
+  #define VMAC_N(ACC,VEC,SCALAR)                                    \
+    tmp = vmull_s16(vget_low_s16(VEC),vdup_n_s16(SCALAR));               \
+    ACC.val[0] = vqaddq_s64(ACC.val[0],vmovl_s32(vget_low_s32(tmp)));  \
+    ACC.val[1] = vqaddq_s64(ACC.val[1],vmovl_s32(vget_high_s32(tmp))); \
+    tmp = vmull_s16(vget_high_s16(VEC),vdup_n_s16(SCALAR));              \
+    ACC.val[2] = vqaddq_s64(ACC.val[2],vmovl_s32(vget_low_s32(tmp)));  \
+    ACC.val[3] = vqaddq_s64(ACC.val[3],vmovl_s32(vget_high_s32(tmp)));
+
+#define MATTYPE arm_matrix_instance_q15
+#define EXT(A) A##_q15
+#define HAS_TEMP_BUFFER
+#define USE_TMP_REGISTER
+
+#define FUNCNAME arm_mat_mult_q15
+
+#include "_arm_mat_mult_neon.c"
+
+#else
 ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q15(
   const arm_matrix_instance_q15 * pSrcA,
   const arm_matrix_instance_q15 * pSrcB,
@@ -839,6 +957,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q15(
   /* Return to application */
   return (status);
 }
+#endif /* #if defined(ARM_MATH_NEON) */
 #endif /* defined(ARM_MATH_MVEI) */
 
 /**

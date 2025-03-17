@@ -2,7 +2,11 @@ cmake_minimum_required (VERSION 3.14)
 
 
 
+if (FASTBUILD)
+  target_sources(CMSISDSP PRIVATE QuaternionMathFunctions/QuaternionMathFunctions.c)
 
+
+else()
 
 
 target_sources(CMSISDSP PRIVATE QuaternionMathFunctions/arm_quaternion_norm_f32.c)
@@ -17,7 +21,7 @@ target_sources(CMSISDSP PRIVATE QuaternionMathFunctions/arm_rotation2quaternion_
 
 if ((NOT ARMAC5) AND (NOT DISABLEFLOAT16))
 endif()
-
+endif()
 
 
 
