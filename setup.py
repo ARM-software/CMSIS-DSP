@@ -134,9 +134,7 @@ def mkModule(name,srcs,funcDir):
                     extra_objects=extraobjs
                               ))
 
-flagsForCommonWithoutFFT=["-DARM_DSP_CONFIG_TABLES", 
-    "-DARM_FAST_ALLOW_TABLES", 
-    "-DARM_ALL_FAST_TABLES"]
+flagsForCommonWithoutFFT=[]
 
 moduleFiltering = mkModule('cmsisdsp_filtering',filtering,"FilteringFunctions")
 moduleMatrix = mkModule('cmsisdsp_matrix',matrix,"MatrixFunctions")
@@ -185,7 +183,7 @@ def build():
                         moduleWindow
                         ],
          include_package_data=True,
-         author = 'Copyright (C) 2010-2024 ARM Limited or its affiliates. All rights reserved.',
+         author = 'Copyright (C) 2010-2025 ARM Limited or its affiliates. All rights reserved.',
          author_email = 'christophe.favergeon@arm.com',
          url="https://github.com/ARM-software/CMSIS-DSP",
          python_requires='>=3.9',
