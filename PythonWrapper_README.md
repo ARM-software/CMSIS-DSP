@@ -54,7 +54,7 @@ Since the [CMSIS-DSP](https://github.com/ARM-software/CMSIS-DSP) wrapper is usin
 
     > pip install numpy
 
-Once `NumPy` is installed, you can build the [CMSIS-DSP](https://github.com/ARM-software/CMSIS-DSP) python wrapper. Go to folder `CMSIS/DSP`.
+Once `NumPy` is installed, you can build the [CMSIS-DSP](https://github.com/ARM-software/CMSIS-DSP) python wrapper. Go to folder `CMSIS-DSP`.
 
 Now, you can install the cmsisdsp package in editable mode:
 
