@@ -29,7 +29,7 @@ import numpy as np
 from jinja2 import Environment, PackageLoader, select_autoescape,FileSystemLoader
 import os.path
 import struct
-import scipy.signal as sig
+import scipy.signal.windows as sw
 
 def to_q31(v):
     r = int(round(v * 2**31))
@@ -173,9 +173,9 @@ def prepareWindowConfig(configs):
     for config in configs:
         c=configs[config] 
         if c["win"] == "hamming":
-           win = sig.hamming(c["fftlength"], sym=False) 
+           win = sw.hamming(c["fftlength"], sym=False) 
         if c["win"] == "hanning":
-           win = sig.hann(c["fftlength"], sym=False) 
+           win = sw.hann(c["fftlength"], sym=False) 
 
         cvt=ConvertArray(c["type"])
         c["ctype"]=ctype(c["type"])
