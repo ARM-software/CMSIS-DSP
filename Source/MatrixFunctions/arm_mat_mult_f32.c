@@ -574,7 +574,12 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_f32(
 #define VLOAD_AND_WIDEN(DST,PTR) DST = vld1q_f32((PTR))
 #define VSTORE_AND_NARROW(PTR,VAL) vst1q_f32((PTR),(VAL))
 
+#if defined(__ARM_FEATURE_FMA)
 #define VMAC_N(ACC,VEC,SCALAR) ACC = vfmaq_n_f32(ACC,(VEC),(SCALAR))
+#else
+#define VMAC_N(ACC,VEC,SCALAR) ACC = vmlaq_n_f32(ACC,(VEC),(SCALAR))
+#endif
+
 #define MATTYPE arm_matrix_instance_f32
 #define EXT(A) A##_f32
 
