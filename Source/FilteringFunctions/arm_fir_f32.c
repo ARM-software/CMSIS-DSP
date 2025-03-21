@@ -670,6 +670,7 @@ uint32_t blockSize)
     pTempSrc = &pRefStatePtr[blockSize];
     pTempDest = pRefStatePtr;
 
+    numTaps--;
     blkCnt = numTaps >> 2;
     while (blkCnt > 0)
     {
