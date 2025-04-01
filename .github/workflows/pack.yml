@@ -14,7 +14,7 @@ concurrency:
 jobs:
   pack:
     name: Generate pack
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
         with:
@@ -26,8 +26,8 @@ jobs:
 
       - uses: Open-CMSIS-Pack/gen-pack-action@main
         with:
-          doxygen-version: 1.9.6
-          packchk-version: 1.4.1
+          doxygen-version: 1.13.2
+          packchk-version: 1.4.2
           gen-doc-script: ./Documentation/Doxygen/gen_doc.sh
           doc-path: ./Documentation/html
           gen-pack-script: ./gen_pack.sh --no-preprocess

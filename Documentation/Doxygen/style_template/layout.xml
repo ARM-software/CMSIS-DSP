@@ -4,7 +4,7 @@
   <navindex>
     <tab type="mainpage" visible="yes" title=""/>
     <tab type="pages" visible="yes" title="Usage and Description" intro=""/>
-    <tab type="modules" visible="yes" title="API Reference" intro=""/>
+    <tab type="topics" visible="yes" title="API Reference" intro=""/>    
     <tab type="namespaces" visible="no" title="Namespaces">
       <tab type="namespacelist" visible="no" title="Namespace list" intro=""/>
       <tab type="namespacemembers" visible="no" title="Namespace members" intro=""/>
