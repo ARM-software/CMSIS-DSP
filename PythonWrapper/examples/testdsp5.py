@@ -123,10 +123,10 @@ class TestStatsMethods_Test5(unittest.TestCase):
 
         assert_allclose(ref,res,rtol=1e-2)
 
-    def test_weighted_sum_f32(self):
+    def test_weighted_average_f32(self):
         ref=np.dot(self.s,self.wb)/np.sum(self.wb)
    
-        res=dsp.arm_weighted_sum_f32(self.s,self.wb)
+        res=dsp.arm_weighted_average_f32(self.s,self.wb)
    
         assert_allclose(ref,res,2e-5)
 
