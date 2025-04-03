@@ -1576,7 +1576,7 @@ void arm_ne10_fft_r2c_1d_int16_neon (q15_t *fout,
 {
     q15_t * tmpbuf1 = buffer;
     q15_t * tmpbuf2 = buffer + 2*S->ncfft;
-    arm_cfft_instance_q15 c2c_state;
+    arm_cfft_instance_q15 c2c_state={0};
 
     c2c_state.fftLen = S->ncfft;
     c2c_state.factors = S->factors;
@@ -1604,7 +1604,7 @@ void arm_ne10_fft_c2r_1d_int16_neon (q15_t *fout,
 {
     q15_t * tmpbuf1 = buffer;
     q15_t * tmpbuf2 = buffer + 2*S->ncfft;
-    arm_cfft_instance_q15 c2c_state;
+    arm_cfft_instance_q15 c2c_state={0};
 
     c2c_state.fftLen = S->ncfft;
     c2c_state.factors = S->factors;

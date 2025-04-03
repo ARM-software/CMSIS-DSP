@@ -46,3 +46,5 @@ linkchecker-out.csv
 .cache/
 
 Testing/Patterns/DSP/MatrixNeon
+*.so
+*.egg-info
