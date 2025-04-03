@@ -43,6 +43,14 @@
 #define ARM_MIXED_RADIX_FFT 1
 #endif
 
+#if !defined(ARM_MATH_NEON) || defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MFCC_CFFT_BASED)
+#if !defined(ARM_MFCC_USE_CFFT)
+#define ARM_MFCC_USE_CFFT
+#endif
+#endif
+#endif
+
 #ifdef   __cplusplus
 extern "C"
 {
@@ -852,7 +860,7 @@ typedef struct
      uint32_t fftLen; /**< FFT length */
      uint32_t nbMelFilters; /**< Number of Mel filters */
      uint32_t nbDctOutputs; /**< Number of DCT outputs */
-#if defined(ARM_MFCC_CFFT_BASED)
+#if defined(ARM_MFCC_USE_CFFT)
      /* Implementation of the MFCC is using a CFFT */
      arm_cfft_instance_f32 cfft; /**< Internal CFFT instance */
 #else
@@ -999,7 +1007,7 @@ typedef struct
      uint32_t fftLen; /**< FFT length */
      uint32_t nbMelFilters; /**< Number of Mel filters */
      uint32_t nbDctOutputs; /**< Number of DCT outputs */
-#if defined(ARM_MFCC_CFFT_BASED)
+#if defined(ARM_MFCC_USE_CFFT)
      /* Implementation of the MFCC is using a CFFT */
      arm_cfft_instance_q31 cfft; /**< Internal CFFT instance */
 #else
@@ -1147,7 +1155,7 @@ typedef struct
      uint32_t fftLen; /**< FFT length */
      uint32_t nbMelFilters; /**< Number of Mel filters */
      uint32_t nbDctOutputs; /**< Number of DCT outputs */
-#if defined(ARM_MFCC_CFFT_BASED)
+#if defined(ARM_MFCC_USE_CFFT)
      /* Implementation of the MFCC is using a CFFT */
      arm_cfft_instance_q15 cfft; /**< Internal CFFT instance */
 #else

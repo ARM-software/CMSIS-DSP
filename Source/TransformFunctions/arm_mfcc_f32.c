@@ -122,10 +122,10 @@ ARM_DSP_ATTRIBUTE void arm_mfcc_f32(
   arm_rfft_fast_f32(&(S->rfft),pSrc,pTmp,pTmp2,0);
   pTmp[1]=0.0f;
 #else
-#if defined(ARM_MFCC_CFFT_BASED)
+#if defined(ARM_MFCC_USE_CFFT)
   /* some HW accelerator for CMSIS-DSP used in some boards
      are only providing acceleration for CFFT.
-     With ARM_MFCC_CFFT_BASED enabled, CFFT is used and the MFCC
+     With ARM_MFCC_USE_CFFT enabled, CFFT is used and the MFCC
      will be accelerated on those boards.
  
      The default is to use RFFT
@@ -141,7 +141,7 @@ ARM_DSP_ATTRIBUTE void arm_mfcc_f32(
   /* Default RFFT based implementation */
   arm_rfft_fast_f32(&(S->rfft),pSrc,pTmp,0);
   pTmp[1]=0.0f;
-#endif /* ARM_MFCC_CFFT_BASED */
+#endif /* ARM_MFCC_USE_CFFT */
 #endif /* ARM_MATH_NEON */
   arm_cmplx_mag_f32(pTmp,pSrc,S->fftLen);
   if (maxValue != 0.0f)

@@ -515,108 +515,111 @@ NE10_RADIX_BUTTERFLY_INT32_NEON(5,0,0,1)
 NE10_RADIX_BUTTERFLY_INT32_NEON(5,0,1,0)
 NE10_RADIX_BUTTERFLY_INT32_NEON(5,0,1,1)
 
-#define NE10_MIXED_RADIX_GENERIC_BUTTERFLY_INT32_NEON_IMPL(ISINVERSE,ISSCALED)                      \
-static void ne10_mixed_radix_generic_butterfly_int32_neon_impl_##ISINVERSE##_##ISSCALED (CPLX *Fout,\
-        const CPLX *Fin,                                                                            \
+#include <stdio.h>
+
+#define NE10_MIXED_RADIX_GENERIC_BUTTERFLY_INT32_NEON_IMPL(ISINVERSE,ISSCALED)                       \
+static void ne10_mixed_radix_generic_butterfly_int32_neon_impl_##ISINVERSE##_##ISSCALED (CPLX *Fout, \
+        const CPLX *Fin,                                                                             \
         const ne10_uint32_t *factors,                                                                \
-        const ne10_fft_cpx_int32_t *twiddles,                                                       \
-        CPLX *buffer)                                                                               \
-{                                                                                                   \
-    ne10_int32_t fstride, mstride, radix;                                                           \
-    ne10_int32_t stage_count;                                                                       \
-    ne10_int32_t nfft;                                                                              \
-                                                                                                    \
-    /* init fstride, mstride, radix, nfft */                                                          \
-    stage_count = factors[0];                                                                       \
-    fstride = factors[1];                                                                           \
-    mstride = 1;                                                                                    \
-    radix = factors[ stage_count << 1 ]; /* radix of first stage */                                   \
-    nfft = fstride * radix;                                                                         \
-                                                                                                    \
-    /* swap to make sure output to Fout  */                                                           \
-    if (stage_count % 2 == 0)                                                                       \
-    {                                                                                               \
-        arm_ne10_swap_ptr (buffer, Fout);                                                               \
-    }                                                                                               \
-                                                                                                    \
-    /* first stage  */                                                                                 \
-    switch (radix)                                                                                  \
-    {                                                                                               \
-    case 2:                                                                                         \
-        ne10_radix_butterfly_int32_neon_2_1_##ISINVERSE##_##ISSCALED(Fout, Fin,                     \
-                NULL,                                                                               \
-                fstride, 1, nfft);                                                                  \
-        break;                                                                                      \
-    case 4:                                                                                         \
-        ne10_radix_butterfly_int32_neon_4_1_##ISINVERSE##_##ISSCALED (Fout, Fin,                    \
-                NULL,                                                                               \
-                fstride, 1, nfft);                                                                  \
-        break;                                                                                      \
-    case 3:                                                                                         \
-        ne10_radix_butterfly_int32_neon_3_1_##ISINVERSE##_##ISSCALED (Fout, Fin,                    \
-                NULL,                                                                               \
-                fstride, 1, nfft);                                                                  \
-        break;                                                                                      \
-    case 5:                                                                                         \
-        ne10_radix_butterfly_int32_neon_5_1_##ISINVERSE##_##ISSCALED (Fout, Fin,                    \
-                NULL,                                                                               \
-                fstride, 1, nfft);                                                                  \
-        break;                                                                                      \
-    }                                                                                               \
-                                                                                                    \
-    stage_count--;                                                                                  \
-    if (!stage_count) /* finish  */                                                                 \
-    {                                                                                               \
-        return;                                                                                     \
-    }                                                                                               \
-                                                                                                    \
-    mstride *= radix;                                                                               \
-                                                                                                    \
-    /* update radix  */                                                                             \
-    if (radix % 2)                                                                                  \
-    {                                                                                               \
-        twiddles += radix;                                                                          \
-    }                                                                                               \
-    radix = factors[ stage_count << 1 ];                                                            \
-                                                                                                    \
-    /* other stages */                                                                                \
-    while (stage_count > 0)                                                                         \
-    {                                                                                               \
+        const ne10_fft_cpx_int32_t *twiddles,                                                        \
+        CPLX *buffer)                                                                                \
+{                                                                                                    \
+    ne10_int32_t fstride, mstride, radix;                                                            \
+    ne10_int32_t stage_count;                                                                        \
+    ne10_int32_t nfft;                                                                               \
+                                                                                                     \
+    /* init fstride, mstride, radix, nfft */                                                         \
+    stage_count = factors[0];                                                                        \
+    fstride = factors[1];                                                                            \
+    mstride = 1;                                                                                     \
+    radix = factors[ stage_count << 1 ]; /* radix of first stage */                                  \
+    nfft = fstride * radix;                                                                          \
+                                                                                                     \
+    /* swap to make sure output to Fout  */                                                          \
+    if (stage_count % 2 == 0)                                                                        \
+    {                                                                                                \
+        arm_ne10_swap_ptr (buffer, Fout);                                                            \
+    }                                                                                                \
+                                                                                                     \
+    /* first stage  */                                                                               \
+    switch (radix)                                                                                   \
+    {                                                                                                \
+    case 2:                                                                                          \
+        ne10_radix_butterfly_int32_neon_2_1_##ISINVERSE##_##ISSCALED(Fout, Fin,                      \
+                NULL,                                                                                \
+                fstride, 1, nfft);                                                                   \
+        break;                                                                                       \
+    case 4:                                                                                          \
+        ne10_radix_butterfly_int32_neon_4_1_##ISINVERSE##_##ISSCALED (Fout, Fin,                     \
+                NULL,                                                                                \
+                fstride, 1, nfft);                                                                   \
+        break;                                                                                       \
+    case 3:                                                                                          \
+        ne10_radix_butterfly_int32_neon_3_1_##ISINVERSE##_##ISSCALED (Fout, Fin,                     \
+                NULL,                                                                                \
+                fstride, 1, nfft);                                                                   \
+        break;                                                                                       \
+    case 5:                                                                                          \
+        ne10_radix_butterfly_int32_neon_5_1_##ISINVERSE##_##ISSCALED (Fout, Fin,                     \
+                NULL,                                                                                \
+                fstride, 1, nfft);                                                                   \
+        break;                                                                                       \
+    }                                                                                                \
+                                                                                                     \
+    stage_count--;                                                                                   \
+    if (!stage_count) /* finish  */                                                                  \
+    {                                                                                                \
+        return;                                                                                      \
+    }                                                                                                \
+                                                                                                     \
+    mstride *= radix;                                                                                \
+                                                                                                     \
+    /* update radix  */                                                                              \
+    if (radix % 2)                                                                                   \
+    {                                                                                                \
+        twiddles += radix;                                                                           \
+    }                                                                                                \
+    radix = factors[ stage_count << 1 ];                                                             \
+                                                                                                     \
+    /* other stages */                                                                               \
+    while (stage_count > 0)                                                                          \
+    {                                                                                                \
         /* radix of first stage, should be one of {2,3,5,4}  */                                      \
-        assert ((radix > 1) && (radix < 6));                                                        \
-                                                                                                    \
-        arm_ne10_swap_ptr (buffer, Fout);                                                               \
-                                                                                                    \
-        fstride /= radix;                                                                           \
-        switch (radix)                                                                              \
-        {                                                                                           \
-        case 2:                                                                                     \
-            ne10_radix_butterfly_int32_neon_2_0_##ISINVERSE##_##ISSCALED (Fout, buffer,             \
-                    twiddles,                                                                       \
-                    fstride, mstride, nfft);                                                        \
-            break;                                                                                  \
-        case 3:                                                                                     \
-            ne10_radix_butterfly_int32_neon_3_0_##ISINVERSE##_##ISSCALED (Fout, buffer,             \
-                    twiddles,                                                                       \
-                    fstride, mstride, nfft);                                                        \
-            break;                                                                                  \
-        case 4:                                                                                     \
-            ne10_radix_butterfly_int32_neon_4_0_##ISINVERSE##_##ISSCALED (Fout, buffer,             \
-                    twiddles,                                                                       \
-                    fstride, mstride, nfft);                                                        \
-            break;                                                                                  \
-        case 5:                                                                                     \
-            ne10_radix_butterfly_int32_neon_5_0_##ISINVERSE##_##ISSCALED (Fout, buffer,             \
-                    twiddles, fstride, mstride, nfft);                                              \
-            break;                                                                                  \
-        } /* switch (radix)  */                                                                       \
-                                                                                                    \
-        twiddles += mstride * (radix - 1);                                                          \
-        mstride *= radix;                                                                           \
-                                                                                                    \
-        stage_count--;                                                                              \
-        radix = factors[ stage_count << 1 ];                                                        \
-    } /* while (stage_count)  */                                                                      \
+        printf("Radix %d, index %d\n",radix,stage_count << 1);                                                                  \
+        assert ((radix > 1) && (radix < 6));                                                         \
+                                                                                                     \
+        arm_ne10_swap_ptr (buffer, Fout);                                                            \
+                                                                                                     \
+        fstride /= radix;                                                                            \
+        switch (radix)                                                                               \
+        {                                                                                            \
+        case 2:                                                                                      \
+            ne10_radix_butterfly_int32_neon_2_0_##ISINVERSE##_##ISSCALED (Fout, buffer,              \
+                    twiddles,                                                                        \
+                    fstride, mstride, nfft);                                                         \
+            break;                                                                                   \
+        case 3:                                                                                      \
+            ne10_radix_butterfly_int32_neon_3_0_##ISINVERSE##_##ISSCALED (Fout, buffer,              \
+                    twiddles,                                                                        \
+                    fstride, mstride, nfft);                                                         \
+            break;                                                                                   \
+        case 4:                                                                                      \
+            ne10_radix_butterfly_int32_neon_4_0_##ISINVERSE##_##ISSCALED (Fout, buffer,              \
+                    twiddles,                                                                        \
+                    fstride, mstride, nfft);                                                         \
+            break;                                                                                   \
+        case 5:                                                                                      \
+            ne10_radix_butterfly_int32_neon_5_0_##ISINVERSE##_##ISSCALED (Fout, buffer,              \
+                    twiddles, fstride, mstride, nfft);                                               \
+            break;                                                                                   \
+        } /* switch (radix)  */                                                                      \
+                                                                                                     \
+        twiddles += mstride * (radix - 1);                                                           \
+        mstride *= radix;                                                                            \
+                                                                                                     \
+        stage_count--;                                                                               \
+        radix = factors[ stage_count << 1 ];                                                         \
+    } /* while (stage_count)  */                                                                     \
 }
 
 NE10_MIXED_RADIX_GENERIC_BUTTERFLY_INT32_NEON_IMPL(0,0)

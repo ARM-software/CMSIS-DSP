@@ -1841,6 +1841,16 @@ cmsis_clz(PyObject *obj, PyObject *args)
   return(NULL);
 }
 
+static PyObject * cmsis_has_neon(PyObject *obj,
+  PyObject *Py_UNUSED(args))
+{
+#if defined(ARM_MATH_NEON)
+  Py_RETURN_TRUE;
+#else
+  Py_RETURN_FALSE;
+#endif
+}
+
 static PyMethodDef CMSISDSPMethods[] = {
 
 {"arm_recip_q31",  cmsis_arm_recip_q31, METH_VARARGS,""},
@@ -1927,6 +1937,7 @@ static PyMethodDef CMSISDSPMethods[] = {
     {"ssat",  cmsis_ssat, METH_VARARGS,""},
     {"usat",  cmsis_usat, METH_VARARGS,""},
     {"clz",  cmsis_clz, METH_VARARGS,""},
+    {"has_neon", cmsis_has_neon,METH_NOARGS,""},
     {"error_out", (PyCFunction)error_out, METH_NOARGS, NULL},
     {NULL, NULL, 0, NULL}        /* Sentinel */
 };

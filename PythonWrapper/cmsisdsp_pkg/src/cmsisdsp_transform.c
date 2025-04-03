@@ -606,8 +606,10 @@ arm_cfft_instance_q15_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
 
         self->instance = PyMem_Malloc(sizeof(arm_cfft_instance_q15));
 
+        #if !defined(ARM_MATH_NEON)
         self->instance->pTwiddle = NULL;
         self->instance->pBitRevTable = NULL;
+        #endif
 
     }
 
@@ -619,6 +621,7 @@ static int
 arm_cfft_instance_q15_init(dsp_arm_cfft_instance_q15Object *self, PyObject *args, PyObject *kwds)
 {
 
+  #if !defined(ARM_MATH_NEON) 
     PyObject *pTwiddle=NULL;
     PyObject *pBitRevTable=NULL;
 char *kwlist[] = {
@@ -632,18 +635,21 @@ if (PyArg_ParseTupleAndKeywords(args, kwds, "|hh", kwlist,&self->instance->fftLe
 
 
     }
+#endif
     return 0;
 }
 
 GETFIELD(arm_cfft_instance_q15,fftLen,"h");
+#if !defined(ARM_MATH_NEON)
 GETFIELD(arm_cfft_instance_q15,bitRevLength,"h");
-
+#endif
 
 static PyMethodDef arm_cfft_instance_q15_methods[] = {
 
     {"fftLen", (PyCFunction) Method_arm_cfft_instance_q15_fftLen,METH_NOARGS,"fftLen"},
+#if !defined(ARM_MATH_NEON)
     {"bitRevLength", (PyCFunction) Method_arm_cfft_instance_q15_bitRevLength,METH_NOARGS,"bitRevLength"},
-
+#endif
     {NULL}  /* Sentinel */
 };
 
@@ -684,10 +690,11 @@ arm_cfft_instance_q31_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
     if (self != NULL) {
 
         self->instance = PyMem_Malloc(sizeof(arm_cfft_instance_q31));
+        #if !defined(ARM_MATH_NEON)
 
         self->instance->pTwiddle = NULL;
         self->instance->pBitRevTable = NULL;
-
+        #endif
     }
 
 
@@ -697,6 +704,7 @@ arm_cfft_instance_q31_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
 static int
 arm_cfft_instance_q31_init(dsp_arm_cfft_instance_q31Object *self, PyObject *args, PyObject *kwds)
 {
+#if !defined(ARM_MATH_NEON)
 
     PyObject *pTwiddle=NULL;
     PyObject *pBitRevTable=NULL;
@@ -711,18 +719,21 @@ if (PyArg_ParseTupleAndKeywords(args, kwds, "|hh", kwlist,&self->instance->fftLe
 
 
     }
+#endif
     return 0;
 }
 
 GETFIELD(arm_cfft_instance_q31,fftLen,"h");
+#if !defined(ARM_MATH_NEON)
 GETFIELD(arm_cfft_instance_q31,bitRevLength,"h");
-
+#endif
 
 static PyMethodDef arm_cfft_instance_q31_methods[] = {
 
     {"fftLen", (PyCFunction) Method_arm_cfft_instance_q31_fftLen,METH_NOARGS,"fftLen"},
+#if !defined(ARM_MATH_NEON)   
     {"bitRevLength", (PyCFunction) Method_arm_cfft_instance_q31_bitRevLength,METH_NOARGS,"bitRevLength"},
-
+#endif
     {NULL}  /* Sentinel */
 };
 
@@ -762,10 +773,10 @@ arm_cfft_instance_f64_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
     if (self != NULL) {
 
         self->instance = PyMem_Malloc(sizeof(arm_cfft_instance_f64));
-
+        #if !defined(ARM_MATH_NEON)
         self->instance->pTwiddle = NULL;
         self->instance->pBitRevTable = NULL;
-
+        #endif
     }
 
     return (PyObject *)self;
@@ -774,7 +785,7 @@ arm_cfft_instance_f64_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
 static int
 arm_cfft_instance_f64_init(dsp_arm_cfft_instance_f64Object *self, PyObject *args, PyObject *kwds)
 {
-
+  #if !defined(ARM_MATH_NEON)
     PyObject *pTwiddle=NULL;
     PyObject *pBitRevTable=NULL;
     char *kwlist[] = {
@@ -788,18 +799,21 @@ if (PyArg_ParseTupleAndKeywords(args, kwds, "|hh", kwlist,&self->instance->fftLe
 
 
     }
+#endif
     return 0;
 }
 
 GETFIELD(arm_cfft_instance_f64,fftLen,"h");
+#if !defined(ARM_MATH_NEON)
 GETFIELD(arm_cfft_instance_f64,bitRevLength,"h");
-
+#endif
 
 static PyMethodDef arm_cfft_instance_f64_methods[] = {
 
     {"fftLen", (PyCFunction) Method_arm_cfft_instance_f64_fftLen,METH_NOARGS,"fftLen"},
+#if !defined(ARM_MATH_NEON)
     {"bitRevLength", (PyCFunction) Method_arm_cfft_instance_f64_bitRevLength,METH_NOARGS,"bitRevLength"},
-
+#endif
     {NULL}  /* Sentinel */
 };
 
@@ -840,10 +854,10 @@ arm_cfft_instance_f32_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
     if (self != NULL) {
 
         self->instance = PyMem_Malloc(sizeof(arm_cfft_instance_f32));
-
+        #if !defined(ARM_MATH_NEON)
         self->instance->pTwiddle = NULL;
         self->instance->pBitRevTable = NULL;
-
+        #endif
     }
 
 
@@ -853,7 +867,7 @@ arm_cfft_instance_f32_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
 static int
 arm_cfft_instance_f32_init(dsp_arm_cfft_instance_f32Object *self, PyObject *args, PyObject *kwds)
 {
-
+  #if !defined(ARM_MATH_NEON)
     PyObject *pTwiddle=NULL;
     PyObject *pBitRevTable=NULL;
 char *kwlist[] = {
@@ -867,18 +881,21 @@ if (PyArg_ParseTupleAndKeywords(args, kwds, "|hh", kwlist,&self->instance->fftLe
 
 
     }
+#endif
     return 0;
 }
 
 GETFIELD(arm_cfft_instance_f32,fftLen,"h");
+#if !defined(ARM_MATH_NEON)
 GETFIELD(arm_cfft_instance_f32,bitRevLength,"h");
-
+#endif
 
 static PyMethodDef arm_cfft_instance_f32_methods[] = {
 
     {"fftLen", (PyCFunction) Method_arm_cfft_instance_f32_fftLen,METH_NOARGS,"fftLen"},
+#if !defined(ARM_MATH_NEON)
     {"bitRevLength", (PyCFunction) Method_arm_cfft_instance_f32_bitRevLength,METH_NOARGS,"bitRevLength"},
-
+#endif
     {NULL}  /* Sentinel */
 };
 
@@ -919,11 +936,11 @@ arm_rfft_instance_q15_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
     if (self != NULL) {
 
         self->instance = PyMem_Malloc(sizeof(arm_rfft_instance_q15));
-
+        #if !defined(ARM_MATH_NEON)
         self->instance->pTwiddleAReal = NULL;
         self->instance->pTwiddleBReal = NULL;
         self->instance->pCfft = NULL;
-
+        #endif
     }
 
 
@@ -933,7 +950,7 @@ arm_rfft_instance_q15_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
 static int
 arm_rfft_instance_q15_init(dsp_arm_rfft_instance_q15Object *self, PyObject *args, PyObject *kwds)
 {
-
+  #if !defined(ARM_MATH_NEON)
     PyObject *pTwiddleAReal=NULL;
     PyObject *pTwiddleBReal=NULL;
     PyObject *pCfft=NULL;
@@ -950,22 +967,25 @@ if (PyArg_ParseTupleAndKeywords(args, kwds, "|iiii", kwlist,&self->instance->fft
 
 
     }
+#endif
     return 0;
 }
 
+#if !defined(ARM_MATH_NEON)
 GETFIELD(arm_rfft_instance_q15,fftLenReal,"i");
 GETFIELD(arm_rfft_instance_q15,ifftFlagR,"i");
 GETFIELD(arm_rfft_instance_q15,bitReverseFlagR,"i");
 GETFIELD(arm_rfft_instance_q15,twidCoefRModifier,"i");
-
+#endif
 
 static PyMethodDef arm_rfft_instance_q15_methods[] = {
 
+#if !defined(ARM_MATH_NEON)
     {"fftLenReal", (PyCFunction) Method_arm_rfft_instance_q15_fftLenReal,METH_NOARGS,"fftLenReal"},
     {"ifftFlagR", (PyCFunction) Method_arm_rfft_instance_q15_ifftFlagR,METH_NOARGS,"ifftFlagR"},
     {"bitReverseFlagR", (PyCFunction) Method_arm_rfft_instance_q15_bitReverseFlagR,METH_NOARGS,"bitReverseFlagR"},
     {"twidCoefRModifier", (PyCFunction) Method_arm_rfft_instance_q15_twidCoefRModifier,METH_NOARGS,"twidCoefRModifier"},
-
+#endif
     {NULL}  /* Sentinel */
 };
 
@@ -1006,11 +1026,11 @@ arm_rfft_instance_q31_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
     if (self != NULL) {
 
         self->instance = PyMem_Malloc(sizeof(arm_rfft_instance_q31));
-
+        #if !defined(ARM_MATH_NEON)
         self->instance->pTwiddleAReal = NULL;
         self->instance->pTwiddleBReal = NULL;
         self->instance->pCfft = NULL;
-
+        #endif
     }
 
 
@@ -1020,7 +1040,7 @@ arm_rfft_instance_q31_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
 static int
 arm_rfft_instance_q31_init(dsp_arm_rfft_instance_q31Object *self, PyObject *args, PyObject *kwds)
 {
-
+#if !defined(ARM_MATH_NEON)
     PyObject *pTwiddleAReal=NULL;
     PyObject *pTwiddleBReal=NULL;
     PyObject *pCfft=NULL;
@@ -1037,22 +1057,25 @@ if (PyArg_ParseTupleAndKeywords(args, kwds, "|iiii", kwlist,&self->instance->fft
 
 
     }
+#endif
     return 0;
 }
 
+#if !defined(ARM_MATH_NEON)
 GETFIELD(arm_rfft_instance_q31,fftLenReal,"i");
 GETFIELD(arm_rfft_instance_q31,ifftFlagR,"i");
 GETFIELD(arm_rfft_instance_q31,bitReverseFlagR,"i");
 GETFIELD(arm_rfft_instance_q31,twidCoefRModifier,"i");
-
+#endif
 
 static PyMethodDef arm_rfft_instance_q31_methods[] = {
 
+#if !defined(ARM_MATH_NEON)
     {"fftLenReal", (PyCFunction) Method_arm_rfft_instance_q31_fftLenReal,METH_NOARGS,"fftLenReal"},
     {"ifftFlagR", (PyCFunction) Method_arm_rfft_instance_q31_ifftFlagR,METH_NOARGS,"ifftFlagR"},
     {"bitReverseFlagR", (PyCFunction) Method_arm_rfft_instance_q31_bitReverseFlagR,METH_NOARGS,"bitReverseFlagR"},
     {"twidCoefRModifier", (PyCFunction) Method_arm_rfft_instance_q31_twidCoefRModifier,METH_NOARGS,"twidCoefRModifier"},
-
+#endif
     {NULL}  /* Sentinel */
 };
 
@@ -1093,11 +1116,11 @@ arm_rfft_instance_f32_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
     if (self != NULL) {
 
         self->instance = PyMem_Malloc(sizeof(arm_rfft_instance_f32));
-
+        #if !defined(ARM_MATH_NEON)
         self->instance->pTwiddleAReal = NULL;
         self->instance->pTwiddleBReal = NULL;
         self->instance->pCfft = NULL;
-
+        #endif
     }
 
 
@@ -1107,7 +1130,7 @@ arm_rfft_instance_f32_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
 static int
 arm_rfft_instance_f32_init(dsp_arm_rfft_instance_f32Object *self, PyObject *args, PyObject *kwds)
 {
-
+#if !defined(ARM_MATH_NEON)
     PyObject *pTwiddleAReal=NULL;
     PyObject *pTwiddleBReal=NULL;
     PyObject *pCfft=NULL;
@@ -1125,24 +1148,27 @@ if (PyArg_ParseTupleAndKeywords(args, kwds, "|ihiii", kwlist,&self->instance->ff
 
 
     }
+#endif
     return 0;
 }
 
+#if !defined(ARM_MATH_NEON)
 GETFIELD(arm_rfft_instance_f32,fftLenReal,"i");
 GETFIELD(arm_rfft_instance_f32,fftLenBy2,"h");
 GETFIELD(arm_rfft_instance_f32,ifftFlagR,"i");
 GETFIELD(arm_rfft_instance_f32,bitReverseFlagR,"i");
 GETFIELD(arm_rfft_instance_f32,twidCoefRModifier,"i");
-
+#endif
 
 static PyMethodDef arm_rfft_instance_f32_methods[] = {
 
+    #if !defined(ARM_MATH_NEON)
     {"fftLenReal", (PyCFunction) Method_arm_rfft_instance_f32_fftLenReal,METH_NOARGS,"fftLenReal"},
     {"fftLenBy2", (PyCFunction) Method_arm_rfft_instance_f32_fftLenBy2,METH_NOARGS,"fftLenBy2"},
     {"ifftFlagR", (PyCFunction) Method_arm_rfft_instance_f32_ifftFlagR,METH_NOARGS,"ifftFlagR"},
     {"bitReverseFlagR", (PyCFunction) Method_arm_rfft_instance_f32_bitReverseFlagR,METH_NOARGS,"bitReverseFlagR"},
     {"twidCoefRModifier", (PyCFunction) Method_arm_rfft_instance_f32_twidCoefRModifier,METH_NOARGS,"twidCoefRModifier"},
-
+    #endif
     {NULL}  /* Sentinel */
 };
 
@@ -1183,9 +1209,9 @@ arm_rfft_fast_instance_f64_new(PyTypeObject *type, PyObject *args, PyObject *kwd
     if (self != NULL) {
 
         self->instance = PyMem_Malloc(sizeof(arm_rfft_fast_instance_f64));
-
+        #if !defined(ARM_MATH_NEON)
         self->instance->pTwiddleRFFT = NULL;
-
+        #endif
     }
 
 
@@ -1195,7 +1221,7 @@ arm_rfft_fast_instance_f64_new(PyTypeObject *type, PyObject *args, PyObject *kwd
 static int
 arm_rfft_fast_instance_f64_init(dsp_arm_rfft_fast_instance_f64Object *self, PyObject *args, PyObject *kwds)
 {
-
+  #if !defined(ARM_MATH_NEON)
     PyObject *pTwiddleRFFT=NULL;
 char *kwlist[] = {
 "Sint","fftLenRFFT",NULL
@@ -1208,18 +1234,21 @@ if (PyArg_ParseTupleAndKeywords(args, kwds, "|?h", kwlist,&self->instance->Sint
 
 
     }
+#endif
     return 0;
 }
 
+#if !defined(ARM_MATH_NEON)
 GETFIELD(arm_rfft_fast_instance_f64,Sint,"?");
 GETFIELD(arm_rfft_fast_instance_f64,fftLenRFFT,"h");
-
+#endif
 
 static PyMethodDef arm_rfft_fast_instance_f64_methods[] = {
 
+  #if !defined(ARM_MATH_NEON)
     {"Sint", (PyCFunction) Method_arm_rfft_fast_instance_f64_Sint,METH_NOARGS,"Sint"},
     {"fftLenRFFT", (PyCFunction) Method_arm_rfft_fast_instance_f64_fftLenRFFT,METH_NOARGS,"fftLenRFFT"},
-
+  #endif
     {NULL}  /* Sentinel */
 };
 
@@ -1260,9 +1289,9 @@ arm_rfft_fast_instance_f32_new(PyTypeObject *type, PyObject *args, PyObject *kwd
     if (self != NULL) {
 
         self->instance = PyMem_Malloc(sizeof(arm_rfft_fast_instance_f32));
-
+        #if !defined(ARM_MATH_NEON)
         self->instance->pTwiddleRFFT = NULL;
-
+        #endif
     }
 
 
@@ -1272,7 +1301,7 @@ arm_rfft_fast_instance_f32_new(PyTypeObject *type, PyObject *args, PyObject *kwd
 static int
 arm_rfft_fast_instance_f32_init(dsp_arm_rfft_fast_instance_f32Object *self, PyObject *args, PyObject *kwds)
 {
-
+  #if !defined(ARM_MATH_NEON)
     PyObject *pTwiddleRFFT=NULL;
 char *kwlist[] = {
 "Sint","fftLenRFFT",NULL
@@ -1285,18 +1314,21 @@ if (PyArg_ParseTupleAndKeywords(args, kwds, "|?h", kwlist,&self->instance->Sint
 
 
     }
+#endif
     return 0;
 }
 
+#if !defined(ARM_MATH_NEON)
 GETFIELD(arm_rfft_fast_instance_f32,Sint,"?");
 GETFIELD(arm_rfft_fast_instance_f32,fftLenRFFT,"h");
-
+#endif
 
 static PyMethodDef arm_rfft_fast_instance_f32_methods[] = {
 
+#if !defined(ARM_MATH_NEON)
     {"Sint", (PyCFunction) Method_arm_rfft_fast_instance_f32_Sint,METH_NOARGS,"Sint"},
     {"fftLenRFFT", (PyCFunction) Method_arm_rfft_fast_instance_f32_fftLenRFFT,METH_NOARGS,"fftLenRFFT"},
-
+#endif
     {NULL}  /* Sentinel */
 };
 
@@ -1886,8 +1918,26 @@ cmsis_arm_cfft_q15(PyObject *obj, PyObject *args)
     dsp_arm_cfft_instance_q15Object *selfS = (dsp_arm_cfft_instance_q15Object *)S;
     GETARGUMENT(p1,NPY_INT16,int16_t,int16_t);
 
+#if defined(ARM_MATH_NEON)
+q15_t *out=PyMem_Malloc(2*selfS->instance->fftLen*sizeof(q15_t));
+q15_t *tmp=PyMem_Malloc(2*selfS->instance->fftLen*sizeof(q15_t));
+
+arm_cfft_q15(selfS->instance,
+  p1_converted,
+  out,
+  tmp,
+  (uint8_t)ifftFlag);
+#else
     arm_cfft_q15(selfS->instance,p1_converted,(uint8_t)ifftFlag,(uint8_t)bitReverseFlag);
- INT16ARRAY1(p1OBJ,2*selfS->instance->fftLen,p1_converted);
+#endif
+
+#if defined(ARM_MATH_NEON)
+  PyMem_Free(tmp);
+  PyMem_Free(p1_converted);
+  INT16ARRAY1(p1OBJ,2*selfS->instance->fftLen,out);
+#else
+  INT16ARRAY1(p1OBJ,2*selfS->instance->fftLen,p1_converted);
+#endif
 
     PyObject *pythonResult = Py_BuildValue("O",p1OBJ);
 
@@ -1914,9 +1964,26 @@ cmsis_arm_cfft_q31(PyObject *obj, PyObject *args)
     dsp_arm_cfft_instance_q31Object *selfS = (dsp_arm_cfft_instance_q31Object *)S;
     GETARGUMENT(p1,NPY_INT32,int32_t,int32_t);
 
+#if defined(ARM_MATH_NEON)
+    q31_t *out=PyMem_Malloc(2*selfS->instance->fftLen*sizeof(q31_t));
+    q31_t *tmp=PyMem_Malloc(2*selfS->instance->fftLen*sizeof(q31_t));
+    
+    arm_cfft_q31(selfS->instance,
+      p1_converted,
+      out,
+      tmp,
+      (uint8_t)ifftFlag);
+#else
     arm_cfft_q31(selfS->instance,p1_converted,(uint8_t)ifftFlag,(uint8_t)bitReverseFlag);
- INT32ARRAY1(p1OBJ,2*selfS->instance->fftLen,p1_converted);
+#endif
 
+#if defined(ARM_MATH_NEON)
+  PyMem_Free(tmp);
+  PyMem_Free(p1_converted);
+  INT32ARRAY1(p1OBJ,2*selfS->instance->fftLen,out);
+#else
+  INT32ARRAY1(p1OBJ,2*selfS->instance->fftLen,p1_converted);
+#endif
     PyObject *pythonResult = Py_BuildValue("O",p1OBJ);
 
     return(pythonResult);
@@ -1971,8 +2038,24 @@ cmsis_arm_cfft_f32(PyObject *obj, PyObject *args)
     dsp_arm_cfft_instance_f32Object *selfS = (dsp_arm_cfft_instance_f32Object *)S;
     GETARGUMENT(p1,NPY_DOUBLE,double,float32_t);
 
+#if defined(ARM_MATH_NEON)
+    float32_t *out=PyMem_Malloc(2*selfS->instance->fftLen*sizeof(float32_t));
+    float32_t *tmp=PyMem_Malloc(2*selfS->instance->fftLen*sizeof(float32_t));
+    arm_cfft_f32(selfS->instance,
+      p1_converted,
+      out,
+      tmp,
+      (uint8_t)ifftFlag);
+#else
     arm_cfft_f32(selfS->instance,p1_converted,(uint8_t)ifftFlag,(uint8_t)bitReverseFlag);
+#endif
+#if defined(ARM_MATH_NEON)
+  PyMem_Free(tmp);
+  PyMem_Free(p1_converted);
+  FLOATARRAY1(p1OBJ,2*selfS->instance->fftLen,out);
+#else
  FLOATARRAY1(p1OBJ,2*selfS->instance->fftLen,p1_converted);
+#endif
 
     PyObject *pythonResult = Py_BuildValue("O",p1OBJ);
 
@@ -1989,15 +2072,19 @@ cmsis_arm_rfft_init_q15(PyObject *obj, PyObject *args)
 
   PyObject *S=NULL; // input
   uint32_t fftLenReal; // input
-  uint32_t ifftFlagR; // input
-  uint32_t bitReverseFlag; // input
+  uint32_t ifftFlagR=0; // input
+  uint32_t bitReverseFlag=0; // input
 
-  if (PyArg_ParseTuple(args,"Oiii",&S,&fftLenReal,&ifftFlagR,&bitReverseFlag))
+  if (PyArg_ParseTuple(args,"Oi|ii",&S,&fftLenReal,&ifftFlagR,&bitReverseFlag))
   {
 
     dsp_arm_rfft_instance_q15Object *selfS = (dsp_arm_rfft_instance_q15Object *)S;
 
+    #if defined(ARM_MATH_NEON)
+    arm_status returnValue = arm_rfft_init_q15(selfS->instance,fftLenReal);
+    #else
     arm_status returnValue = arm_rfft_init_q15(selfS->instance,fftLenReal,ifftFlagR,bitReverseFlag);
+    #endif
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
 
     PyObject *pythonResult = Py_BuildValue("O",theReturnOBJ);
@@ -2019,30 +2106,54 @@ cmsis_arm_rfft_q15(PyObject *obj, PyObject *args)
   q15_t *pSrc_converted=NULL; // input
   q15_t *pDst=NULL; // output
 
-  if (PyArg_ParseTuple(args,"OO",&S,&pSrc))
+  uint32_t ifft=0; // Only needed when using Neon API
+  if (PyArg_ParseTuple(args,"OO|i",&S,&pSrc,&ifft))
   {
      int inputSize;
      int outputSize;
 
      dsp_arm_rfft_instance_q15Object *selfS = (dsp_arm_rfft_instance_q15Object *)S;
 
-     inputSize=selfS->instance->fftLenReal;
+     #if defined(ARM_MATH_NEON)
+     if (ifft)
+     {
+        inputSize=selfS->instance->nfft+2;
+        outputSize = selfS->instance->nfft;
+     }
+     else 
+     {
+       inputSize=selfS->instance->nfft;
+       outputSize = selfS->instance->nfft+2;
+
+     }
+     #else
+     
      if (selfS->instance->ifftFlagR)
      {
-        outputSize = inputSize;
+        inputSize=selfS->instance->fftLenReal+2;
+        outputSize = selfS->instance->fftLenReal;
      }
      else
      {
+        inputSize=selfS->instance->fftLenReal;
         outputSize = 2*inputSize;
      }
+     #endif
 
     GETARGUMENT(pSrc,NPY_INT16,int16_t,int16_t);
 
     pDst=PyMem_Malloc(sizeof(q15_t)*outputSize);
 
-
+#if defined(ARM_MATH_NEON)
+    q15_t *tmp=PyMem_Malloc(2*selfS->instance->nfft*sizeof(q15_t));
+    arm_rfft_q15(selfS->instance,pSrc_converted,pDst,tmp,ifft);
+#else
     arm_rfft_q15(selfS->instance,pSrc_converted,pDst);
+#endif
  INT16ARRAY1(pDstOBJ,outputSize,pDst);
+ #if defined(ARM_MATH_NEON)
+ PyMem_Free(tmp);
+ #endif
 
     PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
 
@@ -2061,15 +2172,19 @@ cmsis_arm_rfft_init_q31(PyObject *obj, PyObject *args)
 
   PyObject *S=NULL; // input
   uint32_t fftLenReal; // input
-  uint32_t ifftFlagR; // input
-  uint32_t bitReverseFlag; // input
+  uint32_t ifftFlagR=0; // input
+  uint32_t bitReverseFlag=0; // input
 
-  if (PyArg_ParseTuple(args,"Oiii",&S,&fftLenReal,&ifftFlagR,&bitReverseFlag))
+  if (PyArg_ParseTuple(args,"Oi|ii",&S,&fftLenReal,&ifftFlagR,&bitReverseFlag))
   {
 
     dsp_arm_rfft_instance_q31Object *selfS = (dsp_arm_rfft_instance_q31Object *)S;
 
+    #if defined(ARM_MATH_NEON)
+    arm_status returnValue = arm_rfft_init_q31(selfS->instance,fftLenReal);
+    #else
     arm_status returnValue = arm_rfft_init_q31(selfS->instance,fftLenReal,ifftFlagR,bitReverseFlag);
+    #endif
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
 
     PyObject *pythonResult = Py_BuildValue("O",theReturnOBJ);
@@ -2090,94 +2205,56 @@ cmsis_arm_rfft_q31(PyObject *obj, PyObject *args)
   PyObject *pSrc=NULL; // input
   q31_t *pSrc_converted=NULL; // input
   q31_t *pDst=NULL; // output
+  uint32_t ifft=0; // Only needed when using Neon API
 
-
-
-  if (PyArg_ParseTuple(args,"OO",&S,&pSrc))
+  if (PyArg_ParseTuple(args,"OO|i",&S,&pSrc,&ifft))
   {
      int inputSize;
      int outputSize;
 
      dsp_arm_rfft_instance_q31Object *selfS = (dsp_arm_rfft_instance_q31Object *)S;
 
-     inputSize=selfS->instance->fftLenReal;
+     
+#if defined(ARM_MATH_NEON)
+      if (ifft)
+      {
+          inputSize=selfS->instance->nfft+2;
+          outputSize = selfS->instance->nfft;
+      }
+      else 
+      {
+        inputSize=selfS->instance->nfft;
+        outputSize = selfS->instance->nfft+2;
+  
+      }
+#else
      if (selfS->instance->ifftFlagR)
      {
-        outputSize = inputSize;
+        inputSize=selfS->instance->fftLenReal+2;
+        outputSize = selfS->instance->fftLenReal;
+        
      }
      else
      {
-        outputSize = 2*inputSize;
+        inputSize=selfS->instance->fftLenReal;
+        outputSize = 2*selfS->instance->fftLenReal;
      }
-  
+#endif
     GETARGUMENT(pSrc,NPY_INT32,int32_t,int32_t);
 
     pDst=PyMem_Malloc(sizeof(q31_t)*outputSize);
 
-
+#if defined(ARM_MATH_NEON)
+    q31_t *tmp=PyMem_Malloc(2*selfS->instance->nfft*sizeof(q31_t));
+    arm_rfft_q31(selfS->instance,pSrc_converted,pDst,tmp,ifft);
+#else
     arm_rfft_q31(selfS->instance,pSrc_converted,pDst);
+#endif
  INT32ARRAY1(pDstOBJ,outputSize,pDst);
 
-    PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
-
-    FREEARGUMENT(pSrc_converted);
-    Py_DECREF(pDstOBJ);
-    return(pythonResult);
-
-  }
-  return(NULL);
-}
-
-
-static PyObject *
-cmsis_arm_rfft_init_f32(PyObject *obj, PyObject *args)
-{
-
-  PyObject *S=NULL; // input
-  PyObject *S_CFFT=NULL; // input
-  uint32_t fftLenReal; // input
-  uint32_t ifftFlagR; // input
-  uint32_t bitReverseFlag; // input
-
-  if (PyArg_ParseTuple(args,"OOiii",&S,&S_CFFT,&fftLenReal,&ifftFlagR,&bitReverseFlag))
-  {
-
-    dsp_arm_rfft_instance_f32Object *selfS = (dsp_arm_rfft_instance_f32Object *)S;
-    dsp_arm_cfft_radix4_instance_f32Object *selfS_CFFT = (dsp_arm_cfft_radix4_instance_f32Object *)S_CFFT;
-
-    arm_status returnValue = arm_rfft_init_f32(selfS->instance,selfS_CFFT->instance,fftLenReal,ifftFlagR,bitReverseFlag);
-    PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-
-    PyObject *pythonResult = Py_BuildValue("O",theReturnOBJ);
-
-    Py_DECREF(theReturnOBJ);
-    return(pythonResult);
-
-  }
-  return(NULL);
-}
-
-
-static PyObject *
-cmsis_arm_rfft_f32(PyObject *obj, PyObject *args)
-{
-
-  PyObject *S=NULL; // input
-  PyObject *pSrc=NULL; // input
-  float32_t *pSrc_converted=NULL; // input
-  float32_t *pDst=NULL; // output
-
-  if (PyArg_ParseTuple(args,"OO",&S,&pSrc))
-  {
-
-    dsp_arm_rfft_instance_f32Object *selfS = (dsp_arm_rfft_instance_f32Object *)S;
-    GETARGUMENT(pSrc,NPY_DOUBLE,double,float32_t);
-
-    pDst=PyMem_Malloc(sizeof(float32_t)*2*selfS->instance->fftLenReal);
-
-
-    arm_rfft_f32(selfS->instance,pSrc_converted,pDst);
- FLOATARRAY1(pDstOBJ,selfS->instance->fftLenReal+1,pDst);
+#if defined(ARM_MATH_NEON)
+PyMem_Free(tmp);
+#endif
 
     PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
 
@@ -2188,6 +2265,7 @@ cmsis_arm_rfft_f32(PyObject *obj, PyObject *args)
   }
   return(NULL);
 }
+
 
 static PyObject *
 cmsis_arm_rfft_fast_init_f64(PyObject *obj, PyObject *args)
@@ -2284,6 +2362,7 @@ cmsis_arm_rfft_fast_f32(PyObject *obj, PyObject *args)
   float32_t *p_converted=NULL; // input
   float32_t *pOut=NULL; // output
   uint32_t ifftFlag; // input
+  uint32_t fftLen; // input
 
   if (PyArg_ParseTuple(args,"OOi",&S,&p,&ifftFlag))
   {
@@ -2291,11 +2370,22 @@ cmsis_arm_rfft_fast_f32(PyObject *obj, PyObject *args)
     dsp_arm_rfft_fast_instance_f32Object *selfS = (dsp_arm_rfft_fast_instance_f32Object *)S;
     GETARGUMENT(p,NPY_DOUBLE,double,float32_t);
 
-    pOut=PyMem_Malloc(sizeof(float32_t)*(selfS->instance->fftLenRFFT));
+    #if defined(ARM_MATH_NEON)
+     fftLen = selfS->instance->nfft;
+    #else
+     fftLen = selfS->instance->fftLenRFFT;
+    #endif
 
+    pOut=PyMem_Malloc(sizeof(float32_t)*(fftLen));
 
+#if defined(ARM_MATH_NEON)
+    float32_t *tmp=PyMem_Malloc(fftLen*sizeof(float32_t));
+    arm_rfft_fast_f32(selfS->instance,p_converted,pOut,tmp,(uint8_t)ifftFlag);
+    PyMem_Free(tmp);
+#else
     arm_rfft_fast_f32(selfS->instance,p_converted,pOut,(uint8_t)ifftFlag);
- FLOATARRAY1(pOutOBJ,(selfS->instance->fftLenRFFT),pOut);
+#endif
+ FLOATARRAY1(pOutOBJ,(fftLen),pOut);
 
     PyObject *pythonResult = Py_BuildValue("O",pOutOBJ);
 
@@ -2488,7 +2578,13 @@ cmsis_arm_mfcc_f32(PyObject *obj, PyObject *args)
 
     pDst=PyMem_Malloc(sizeof(float32_t)*selfS->instance->nbDctOutputs);
 
+    #if defined(ARM_MATH_NEON)
+    float32_t *tmp2=PyMem_Malloc(selfS->instance->fftLen*sizeof(float32_t));
+    arm_mfcc_f32(selfS->instance,p1_converted,pDst,tmp_converted,tmp2);
+    PyMem_Free(tmp2);
+    #else
     arm_mfcc_f32(selfS->instance,p1_converted,pDst,tmp_converted);
+    #endif
 
     FLOATARRAY1(pDstOBJ,selfS->instance->nbDctOutputs,pDst);
 
@@ -2579,7 +2675,13 @@ cmsis_arm_mfcc_q15(PyObject *obj, PyObject *args)
 
     pDst=PyMem_Malloc(sizeof(q15_t)*selfS->instance->nbDctOutputs);
 
+    #if defined(ARM_MATH_NEON)
+    q15_t *tmp2=PyMem_Malloc(2*selfS->instance->fftLen*sizeof(q15_t));
+    arm_status status = arm_mfcc_q15(selfS->instance,p1_converted,pDst,tmp_converted,tmp2);
+    PyMem_Free(tmp2);
+    #else
     arm_status status = arm_mfcc_q15(selfS->instance,p1_converted,pDst,tmp_converted);
+    #endif
 
     INT16ARRAY1(pDstOBJ,selfS->instance->nbDctOutputs,pDst);
 
@@ -2671,7 +2773,13 @@ cmsis_arm_mfcc_q31(PyObject *obj, PyObject *args)
 
     pDst=PyMem_Malloc(sizeof(q31_t)*selfS->instance->nbDctOutputs);
 
+    #if defined(ARM_MATH_NEON)
+    q31_t *tmp2=PyMem_Malloc(2*selfS->instance->fftLen*sizeof(q31_t));
+    arm_status status = arm_mfcc_q31(selfS->instance,p1_converted,pDst,tmp_converted,tmp2);
+    PyMem_Free(tmp2);
+    #else
     arm_status status = arm_mfcc_q31(selfS->instance,p1_converted,pDst,tmp_converted);
+    #endif
 
     INT32ARRAY1(pDstOBJ,selfS->instance->nbDctOutputs,pDst);
 

@@ -145,10 +145,10 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_q15(
     /* Default RFFT based implementation */
     arm_rfft_q15(&(S->rfft),pSrc,pTmp2,pTmp_rfft,0);
 #else
-#if defined(ARM_MFCC_CFFT_BASED)
+#if defined(ARM_MFCC_USE_CFFT)
     /* some HW accelerator for CMSIS-DSP used in some boards
        are only providing acceleration for CFFT.
-       With ARM_MFCC_CFFT_BASED enabled, CFFT is used and the MFCC
+       With ARM_MFCC_USE_CFFT enabled, CFFT is used and the MFCC
        will be accelerated on those boards.
  
        The default is to use RFFT
