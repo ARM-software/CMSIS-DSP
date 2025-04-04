@@ -1901,9 +1901,16 @@ cmsis_arm_cfft_radix4_f32(PyObject *obj, PyObject *args)
   return(NULL);
 }
 
+#define NEON_WARN(FUNC,DETAIL)                                                                    \
+PyErr_WarnEx(PyExc_RuntimeWarning, "This extension was build with Neon acceleration.\n"           \
+  "Neon API is a bit different and you should change the arguments of the " FUNC " call.\n"       \
+  DETAIL                                                                                          \
+  "You can use has_neon() in your Python to check if the extension is built with Neon support.\n" \
+  "Please refer to the documentation of CMSIS-DSP C library for the API details.", 1);
+
 
 static PyObject *
-cmsis_arm_cfft_q15(PyObject *obj, PyObject *args)
+cmsis_arm_cfft_q15(PyObject *obj, PyObject *args,PyObject *kwds)
 {
 
   PyObject *S=NULL; // input
@@ -1911,32 +1918,52 @@ cmsis_arm_cfft_q15(PyObject *obj, PyObject *args)
   q15_t *p1_converted=NULL; // input
   uint32_t ifftFlag; // input
   uint32_t bitReverseFlag; // input
+  
+  PyObject *tmpBuf=NULL;
 
-  if (PyArg_ParseTuple(args,"OOii",&S,&p1,&ifftFlag,&bitReverseFlag))
+  static const char * kwlist[] = {
+    "","","","","tmp",NULL
+    };
+    
+
+
+#if defined(ARM_MATH_NEON)
+  Py_ssize_t nargs = PyTuple_Size(args);
+
+  if (nargs == 4)
+  {
+    NEON_WARN("arm_cfft_q15","The bit reverse flag is not needed with Neon.\n" 
+      "A temporary buffer can be used like in the Neon C version.\n");
+  }
+#endif
+
+  if (PyArg_ParseTupleAndKeywords(args,kwds,"OOi|i$O", kwlist,&S,&p1,&ifftFlag,&bitReverseFlag,&tmpBuf))
   {
 
     dsp_arm_cfft_instance_q15Object *selfS = (dsp_arm_cfft_instance_q15Object *)S;
     GETARGUMENT(p1,NPY_INT16,int16_t,int16_t);
 
 #if defined(ARM_MATH_NEON)
-q15_t *out=PyMem_Malloc(2*selfS->instance->fftLen*sizeof(q15_t));
-q15_t *tmp=PyMem_Malloc(2*selfS->instance->fftLen*sizeof(q15_t));
+  q15_t *out=PyMem_Malloc(2*selfS->instance->fftLen*sizeof(q15_t));
+  
+  ALLOC_OR_GET_TMP(tmp,tmpBuf,2*selfS->instance->fftLen,NPY_INT16,q15_t)
 
-arm_cfft_q15(selfS->instance,
-  p1_converted,
-  out,
-  tmp,
-  (uint8_t)ifftFlag);
-#else
-    arm_cfft_q15(selfS->instance,p1_converted,(uint8_t)ifftFlag,(uint8_t)bitReverseFlag);
-#endif
+  
+  arm_cfft_q15(selfS->instance,
+    p1_converted,
+    out,
+    tmp,
+    (uint8_t)ifftFlag);
 
-#if defined(ARM_MATH_NEON)
-  PyMem_Free(tmp);
+  FREE_OR_RELEASE(tmp,tmpBuf);
+
   PyMem_Free(p1_converted);
   INT16ARRAY1(p1OBJ,2*selfS->instance->fftLen,out);
+
 #else
-  INT16ARRAY1(p1OBJ,2*selfS->instance->fftLen,p1_converted);
+    arm_cfft_q15(selfS->instance,p1_converted,(uint8_t)ifftFlag,(uint8_t)bitReverseFlag);
+    INT16ARRAY1(p1OBJ,2*selfS->instance->fftLen,p1_converted);
+
 #endif
 
     PyObject *pythonResult = Py_BuildValue("O",p1OBJ);
@@ -1948,8 +1975,9 @@ arm_cfft_q15(selfS->instance,
 }
 
 
+
 static PyObject *
-cmsis_arm_cfft_q31(PyObject *obj, PyObject *args)
+cmsis_arm_cfft_q31(PyObject *obj, PyObject *args,PyObject *kwds)
 {
 
   PyObject *S=NULL; // input
@@ -1958,32 +1986,52 @@ cmsis_arm_cfft_q31(PyObject *obj, PyObject *args)
   uint32_t ifftFlag; // input
   uint32_t bitReverseFlag; // input
 
-  if (PyArg_ParseTuple(args,"OOii",&S,&p1,&ifftFlag,&bitReverseFlag))
+  PyObject *tmpBuf=NULL;
+
+  static const char * kwlist[] = {
+    "","","","","tmp",NULL
+    };
+    
+
+
+#if defined(ARM_MATH_NEON)
+  Py_ssize_t nargs = PyTuple_Size(args);
+
+  if (nargs == 4)
   {
+    NEON_WARN("arm_cfft_q31","The bit reverse flag is not needed with Neon.\n" 
+      "A temporary buffer can be used like in the Neon C version.\n");
+  }
+#endif
+
+if (PyArg_ParseTupleAndKeywords(args,kwds,"OOi|i$O", kwlist,&S,&p1,&ifftFlag,&bitReverseFlag,&tmpBuf))
+{
 
     dsp_arm_cfft_instance_q31Object *selfS = (dsp_arm_cfft_instance_q31Object *)S;
     GETARGUMENT(p1,NPY_INT32,int32_t,int32_t);
 
 #if defined(ARM_MATH_NEON)
     q31_t *out=PyMem_Malloc(2*selfS->instance->fftLen*sizeof(q31_t));
-    q31_t *tmp=PyMem_Malloc(2*selfS->instance->fftLen*sizeof(q31_t));
+
+    ALLOC_OR_GET_TMP(tmp,tmpBuf,2*selfS->instance->fftLen,NPY_INT32,q31_t)
     
     arm_cfft_q31(selfS->instance,
       p1_converted,
       out,
       tmp,
       (uint8_t)ifftFlag);
+
+    FREE_OR_RELEASE(tmp,tmpBuf);
+    PyMem_Free(p1_converted);
+    INT32ARRAY1(p1OBJ,2*selfS->instance->fftLen,out);
+
 #else
     arm_cfft_q31(selfS->instance,p1_converted,(uint8_t)ifftFlag,(uint8_t)bitReverseFlag);
+    INT32ARRAY1(p1OBJ,2*selfS->instance->fftLen,p1_converted);
+
 #endif
 
-#if defined(ARM_MATH_NEON)
-  PyMem_Free(tmp);
-  PyMem_Free(p1_converted);
-  INT32ARRAY1(p1OBJ,2*selfS->instance->fftLen,out);
-#else
-  INT32ARRAY1(p1OBJ,2*selfS->instance->fftLen,p1_converted);
-#endif
+
     PyObject *pythonResult = Py_BuildValue("O",p1OBJ);
 
     return(pythonResult);
@@ -2023,7 +2071,7 @@ cmsis_arm_cfft_f64(PyObject *obj, PyObject *args)
 
 
 static PyObject *
-cmsis_arm_cfft_f32(PyObject *obj, PyObject *args)
+cmsis_arm_cfft_f32(PyObject *obj, PyObject *args,PyObject *kwds)
 {
 
   PyObject *S=NULL; // input
@@ -2031,8 +2079,26 @@ cmsis_arm_cfft_f32(PyObject *obj, PyObject *args)
   float32_t *p1_converted=NULL; // input
   uint32_t ifftFlag; // input
   uint32_t bitReverseFlag; // input
+  PyObject *tmpBuf=NULL;
 
-  if (PyArg_ParseTuple(args,"OOii",&S,&p1,&ifftFlag,&bitReverseFlag))
+  static const char * kwlist[] = {
+    "","","","","tmp",NULL
+    };
+    
+  
+  
+  
+  #if defined(ARM_MATH_NEON)
+    Py_ssize_t nargs = PyTuple_Size(args);
+
+    if (nargs == 4)
+    {
+      NEON_WARN("arm_cfft_f32","The bit reverse flag is not needed with Neon.\n" 
+        "A temporary buffer can be used like in the Neon C version.\n");
+    }
+  #endif
+
+  if (PyArg_ParseTupleAndKeywords(args,kwds,"OOi|i$O", kwlist,&S,&p1,&ifftFlag,&bitReverseFlag,&tmpBuf))
   {
 
     dsp_arm_cfft_instance_f32Object *selfS = (dsp_arm_cfft_instance_f32Object *)S;
@@ -2040,22 +2106,24 @@ cmsis_arm_cfft_f32(PyObject *obj, PyObject *args)
 
 #if defined(ARM_MATH_NEON)
     float32_t *out=PyMem_Malloc(2*selfS->instance->fftLen*sizeof(float32_t));
-    float32_t *tmp=PyMem_Malloc(2*selfS->instance->fftLen*sizeof(float32_t));
+    ALLOC_OR_GET_TMP(tmp,tmpBuf,2*selfS->instance->fftLen,NPY_DOUBLE,float32_t)
+
     arm_cfft_f32(selfS->instance,
       p1_converted,
       out,
       tmp,
       (uint8_t)ifftFlag);
+
+    FREE_OR_RELEASE(tmp,tmpBuf);
+
+    PyMem_Free(p1_converted);
+    FLOATARRAY1(p1OBJ,2*selfS->instance->fftLen,out);
 #else
     arm_cfft_f32(selfS->instance,p1_converted,(uint8_t)ifftFlag,(uint8_t)bitReverseFlag);
+    FLOATARRAY1(p1OBJ,2*selfS->instance->fftLen,p1_converted);
+
 #endif
-#if defined(ARM_MATH_NEON)
-  PyMem_Free(tmp);
-  PyMem_Free(p1_converted);
-  FLOATARRAY1(p1OBJ,2*selfS->instance->fftLen,out);
-#else
- FLOATARRAY1(p1OBJ,2*selfS->instance->fftLen,p1_converted);
-#endif
+
 
     PyObject *pythonResult = Py_BuildValue("O",p1OBJ);
 
@@ -2074,6 +2142,17 @@ cmsis_arm_rfft_init_q15(PyObject *obj, PyObject *args)
   uint32_t fftLenReal; // input
   uint32_t ifftFlagR=0; // input
   uint32_t bitReverseFlag=0; // input
+
+
+  #if defined(ARM_MATH_NEON)
+  Py_ssize_t nargs = PyTuple_Size(args);
+
+  if (nargs == 4)
+  {
+    NEON_WARN("arm_rfft_init_q15","The bit reverse and ifft flags are not needed with Neon.\n" 
+      "The ifft flag is instead used when calling the rfft.\n");
+  }
+  #endif
 
   if (PyArg_ParseTuple(args,"Oi|ii",&S,&fftLenReal,&ifftFlagR,&bitReverseFlag))
   {
@@ -2098,16 +2177,33 @@ cmsis_arm_rfft_init_q15(PyObject *obj, PyObject *args)
 
 
 static PyObject *
-cmsis_arm_rfft_q15(PyObject *obj, PyObject *args)
+cmsis_arm_rfft_q15(PyObject *obj, PyObject *args,PyObject *kwds)
 {
 
   PyObject *S=NULL; // input
   PyObject *pSrc=NULL; // input
   q15_t *pSrc_converted=NULL; // input
   q15_t *pDst=NULL; // output
-
   uint32_t ifft=0; // Only needed when using Neon API
-  if (PyArg_ParseTuple(args,"OO|i",&S,&pSrc,&ifft))
+  PyObject *tmpBuf=NULL;
+
+  static const char * kwlist[] = {
+    "","","","tmp",NULL
+    };
+
+#if defined(ARM_MATH_NEON)
+  Py_ssize_t nargs = PyTuple_Size(args);
+
+  if (nargs == 2)
+  {
+    
+    NEON_WARN("arm_rfft_q15","The ifft flag is required with Neon version.\n" 
+      "Since it is missing, a value of 0 is assumed : direct RFFT.\n" 
+      "A temporary buffer can be used like in the Neon C version.\n");
+  }
+#endif
+
+  if (PyArg_ParseTupleAndKeywords(args,kwds,"OO|i$O",kwlist,&S,&pSrc,&ifft,&tmpBuf))
   {
      int inputSize;
      int outputSize;
@@ -2140,24 +2236,30 @@ cmsis_arm_rfft_q15(PyObject *obj, PyObject *args)
      }
      #endif
 
-    GETARGUMENT(pSrc,NPY_INT16,int16_t,int16_t);
 
     pDst=PyMem_Malloc(sizeof(q15_t)*outputSize);
 
 #if defined(ARM_MATH_NEON)
-    q15_t *tmp=PyMem_Malloc(2*selfS->instance->nfft*sizeof(q15_t));
+    //GETARGUMENT(pSrc,NPY_INT16,int16_t,int16_t);
+    ACCESSARRAY(pSrc_converted,pSrc,NPY_INT16,int16_t);
+
+    ALLOC_OR_GET_TMP(tmp,tmpBuf,2*selfS->instance->nfft,NPY_INT16,q15_t)
+
     arm_rfft_q15(selfS->instance,pSrc_converted,pDst,tmp,ifft);
+    FREE_OR_RELEASE(tmp,tmpBuf);
+    ARRAYNOMOREUSED(pSrc);
+
 #else
+    GETARGUMENT(pSrc,NPY_INT16,int16_t,int16_t);
     arm_rfft_q15(selfS->instance,pSrc_converted,pDst);
+    FREEARGUMENT(pSrc_converted);
+
 #endif
  INT16ARRAY1(pDstOBJ,outputSize,pDst);
- #if defined(ARM_MATH_NEON)
- PyMem_Free(tmp);
- #endif
+ 
 
     PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
 
-    FREEARGUMENT(pSrc_converted);
     Py_DECREF(pDstOBJ);
     return(pythonResult);
 
@@ -2174,6 +2276,17 @@ cmsis_arm_rfft_init_q31(PyObject *obj, PyObject *args)
   uint32_t fftLenReal; // input
   uint32_t ifftFlagR=0; // input
   uint32_t bitReverseFlag=0; // input
+
+
+  #if defined(ARM_MATH_NEON)
+  Py_ssize_t nargs = PyTuple_Size(args);
+
+  if (nargs == 4)
+  {
+    NEON_WARN("arm_rfft_init_q31","The bit reverse and ifft flags are not needed with Neon.\n" 
+      "The ifft flag is instead used when calling the rfft.\n");
+  }
+  #endif
 
   if (PyArg_ParseTuple(args,"Oi|ii",&S,&fftLenReal,&ifftFlagR,&bitReverseFlag))
   {
@@ -2198,7 +2311,7 @@ cmsis_arm_rfft_init_q31(PyObject *obj, PyObject *args)
 
 
 static PyObject *
-cmsis_arm_rfft_q31(PyObject *obj, PyObject *args)
+cmsis_arm_rfft_q31(PyObject *obj, PyObject *args,PyObject *kwds)
 {
 
   PyObject *S=NULL; // input
@@ -2207,7 +2320,25 @@ cmsis_arm_rfft_q31(PyObject *obj, PyObject *args)
   q31_t *pDst=NULL; // output
   uint32_t ifft=0; // Only needed when using Neon API
 
-  if (PyArg_ParseTuple(args,"OO|i",&S,&pSrc,&ifft))
+  PyObject *tmpBuf=NULL;
+
+  static const char * kwlist[] = {
+    "","","","tmp",NULL
+    };
+
+#if defined(ARM_MATH_NEON)
+  Py_ssize_t nargs = PyTuple_Size(args);
+
+  if (nargs == 2)
+  {
+    
+    NEON_WARN("arm_rfft_q31","The ifft flag is required with Neon version.\n" 
+      "Since it is missing, a value of 0 is assumed : direct RFFT.\n" 
+      "A temporary buffer can be used like in the Neon C version.\n");
+  }
+#endif
+
+  if (PyArg_ParseTupleAndKeywords(args,kwds,"OO|i$O",kwlist,&S,&pSrc,&ifft,&tmpBuf))
   {
      int inputSize;
      int outputSize;
@@ -2240,25 +2371,31 @@ cmsis_arm_rfft_q31(PyObject *obj, PyObject *args)
         outputSize = 2*selfS->instance->fftLenReal;
      }
 #endif
-    GETARGUMENT(pSrc,NPY_INT32,int32_t,int32_t);
 
     pDst=PyMem_Malloc(sizeof(q31_t)*outputSize);
 
 #if defined(ARM_MATH_NEON)
-    q31_t *tmp=PyMem_Malloc(2*selfS->instance->nfft*sizeof(q31_t));
+    //GETARGUMENT(pSrc,NPY_INT32,int32_t,int32_t);
+    ACCESSARRAY(pSrc_converted,pSrc,NPY_INT32,int32_t);
+
+    ALLOC_OR_GET_TMP(tmp,tmpBuf,2*selfS->instance->nfft,NPY_INT32,q31_t)
+
     arm_rfft_q31(selfS->instance,pSrc_converted,pDst,tmp,ifft);
+    FREE_OR_RELEASE(tmp,tmpBuf);
+    ARRAYNOMOREUSED(pSrc);
+
 #else
+    GETARGUMENT(pSrc,NPY_INT32,int32_t,int32_t);
     arm_rfft_q31(selfS->instance,pSrc_converted,pDst);
+    FREEARGUMENT(pSrc_converted);
+
 #endif
  INT32ARRAY1(pDstOBJ,outputSize,pDst);
 
-#if defined(ARM_MATH_NEON)
-PyMem_Free(tmp);
-#endif
+
 
     PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
 
-    FREEARGUMENT(pSrc_converted);
     Py_DECREF(pDstOBJ);
     return(pythonResult);
 
@@ -2354,7 +2491,7 @@ cmsis_arm_rfft_fast_init_f32(PyObject *obj, PyObject *args)
 
 
 static PyObject *
-cmsis_arm_rfft_fast_f32(PyObject *obj, PyObject *args)
+cmsis_arm_rfft_fast_f32(PyObject *obj, PyObject *args,PyObject *kwds)
 {
 
   PyObject *S=NULL; // input
@@ -2363,12 +2500,16 @@ cmsis_arm_rfft_fast_f32(PyObject *obj, PyObject *args)
   float32_t *pOut=NULL; // output
   uint32_t ifftFlag; // input
   uint32_t fftLen; // input
+  PyObject *tmpBuf=NULL;
 
-  if (PyArg_ParseTuple(args,"OOi",&S,&p,&ifftFlag))
+  static const char * kwlist[] = {
+    "","","","tmp",NULL
+  };
+
+  if (PyArg_ParseTupleAndKeywords(args,kwds,"OOi|$O",kwlist,&S,&p,&ifftFlag,&tmpBuf))
   {
 
     dsp_arm_rfft_fast_instance_f32Object *selfS = (dsp_arm_rfft_fast_instance_f32Object *)S;
-    GETARGUMENT(p,NPY_DOUBLE,double,float32_t);
 
     #if defined(ARM_MATH_NEON)
      fftLen = selfS->instance->nfft;
@@ -2379,17 +2520,27 @@ cmsis_arm_rfft_fast_f32(PyObject *obj, PyObject *args)
     pOut=PyMem_Malloc(sizeof(float32_t)*(fftLen));
 
 #if defined(ARM_MATH_NEON)
-    float32_t *tmp=PyMem_Malloc(fftLen*sizeof(float32_t));
+    GETARGUMENT(p,NPY_DOUBLE,double,float32_t);
+    //ACCESSARRAY(p_converted,p,NPY_FLOAT,float32_t);
+
+    ALLOC_OR_GET_TMP(tmp,tmpBuf,fftLen,NPY_FLOAT,float32_t)
+
     arm_rfft_fast_f32(selfS->instance,p_converted,pOut,tmp,(uint8_t)ifftFlag);
-    PyMem_Free(tmp);
+    FREE_OR_RELEASE(tmp,tmpBuf);
+
+    FREEARGUMENT(p_converted);
+    //ARRAYNOMOREUSED(p);
+
 #else
+    GETARGUMENT(p,NPY_DOUBLE,double,float32_t);
     arm_rfft_fast_f32(selfS->instance,p_converted,pOut,(uint8_t)ifftFlag);
+    FREEARGUMENT(p_converted);
+
 #endif
  FLOATARRAY1(pOutOBJ,(fftLen),pOut);
 
     PyObject *pythonResult = Py_BuildValue("O",pOutOBJ);
 
-    FREEARGUMENT(p_converted);
     Py_DECREF(pOutOBJ);
     return(pythonResult);
 
@@ -2558,7 +2709,7 @@ cmsis_arm_mfcc_init_f32(PyObject *obj, PyObject *args)
 }
 
 static PyObject *
-cmsis_arm_mfcc_f32(PyObject *obj, PyObject *args)
+cmsis_arm_mfcc_f32(PyObject *obj, PyObject *args,PyObject *kwds)
 {
 
   PyObject *S=NULL; // input
@@ -2567,9 +2718,15 @@ cmsis_arm_mfcc_f32(PyObject *obj, PyObject *args)
 
   PyObject *tmp=NULL; // input
   float32_t *tmp_converted=NULL; // input
-
   float32_t *pDst;
-  if (PyArg_ParseTuple(args,"OOO",&S,&p1,&tmp))
+  PyObject *tmpBuf=NULL; // neon tmp buffer
+
+
+  static const char * kwlist[] = {
+    "","","","tmp2",NULL
+   };
+
+  if (PyArg_ParseTupleAndKeywords(args,kwds,"OOO|$O",kwlist,&S,&p1,&tmp,&tmpBuf))
   {
 
     dsp_arm_mfcc_instance_f32Object *selfS = (dsp_arm_mfcc_instance_f32Object *)S;
@@ -2579,9 +2736,10 @@ cmsis_arm_mfcc_f32(PyObject *obj, PyObject *args)
     pDst=PyMem_Malloc(sizeof(float32_t)*selfS->instance->nbDctOutputs);
 
     #if defined(ARM_MATH_NEON)
-    float32_t *tmp2=PyMem_Malloc(selfS->instance->fftLen*sizeof(float32_t));
+    ALLOC_OR_GET_TMP(tmp2,tmpBuf,selfS->instance->fftLen,NPY_FLOAT,float32_t)
+
     arm_mfcc_f32(selfS->instance,p1_converted,pDst,tmp_converted,tmp2);
-    PyMem_Free(tmp2);
+    FREE_OR_RELEASE(tmp2,tmpBuf);
     #else
     arm_mfcc_f32(selfS->instance,p1_converted,pDst,tmp_converted);
     #endif
@@ -2655,7 +2813,7 @@ cmsis_arm_mfcc_init_q15(PyObject *obj, PyObject *args)
 }
 
 static PyObject *
-cmsis_arm_mfcc_q15(PyObject *obj, PyObject *args)
+cmsis_arm_mfcc_q15(PyObject *obj, PyObject *args,PyObject *kwds)
 {
 
   PyObject *S=NULL; // input
@@ -2666,7 +2824,14 @@ cmsis_arm_mfcc_q15(PyObject *obj, PyObject *args)
   q31_t *tmp_converted=NULL; // input
 
   q15_t *pDst;
-  if (PyArg_ParseTuple(args,"OOO",&S,&p1,&tmp))
+  PyObject *tmpBuf=NULL; // neon tmp buffer
+
+
+  static const char * kwlist[] = {
+    "","","","tmp2",NULL
+   };
+
+  if (PyArg_ParseTupleAndKeywords(args,kwds,"OOO|$O",kwlist,&S,&p1,&tmp,&tmpBuf))
   {
 
     dsp_arm_mfcc_instance_q15Object *selfS = (dsp_arm_mfcc_instance_q15Object *)S;
@@ -2676,9 +2841,9 @@ cmsis_arm_mfcc_q15(PyObject *obj, PyObject *args)
     pDst=PyMem_Malloc(sizeof(q15_t)*selfS->instance->nbDctOutputs);
 
     #if defined(ARM_MATH_NEON)
-    q15_t *tmp2=PyMem_Malloc(2*selfS->instance->fftLen*sizeof(q15_t));
+    ALLOC_OR_GET_TMP(tmp2,tmpBuf,2*selfS->instance->fftLen,NPY_INT16,q15_t)
     arm_status status = arm_mfcc_q15(selfS->instance,p1_converted,pDst,tmp_converted,tmp2);
-    PyMem_Free(tmp2);
+    FREE_OR_RELEASE(tmp2,tmpBuf);
     #else
     arm_status status = arm_mfcc_q15(selfS->instance,p1_converted,pDst,tmp_converted);
     #endif
@@ -2753,7 +2918,7 @@ cmsis_arm_mfcc_init_q31(PyObject *obj, PyObject *args)
 }
 
 static PyObject *
-cmsis_arm_mfcc_q31(PyObject *obj, PyObject *args)
+cmsis_arm_mfcc_q31(PyObject *obj, PyObject *args,PyObject *kwds)
 {
 
   PyObject *S=NULL; // input
@@ -2764,7 +2929,14 @@ cmsis_arm_mfcc_q31(PyObject *obj, PyObject *args)
   q31_t *tmp_converted=NULL; // input
 
   q31_t *pDst;
-  if (PyArg_ParseTuple(args,"OOO",&S,&p1,&tmp))
+  PyObject *tmpBuf=NULL; // neon tmp buffer
+
+
+  static const char * kwlist[] = {
+    "","","","tmp2",NULL
+   };
+
+  if (PyArg_ParseTupleAndKeywords(args,kwds,"OOO|$O",kwlist,&S,&p1,&tmp,&tmpBuf))
   {
 
     dsp_arm_mfcc_instance_q31Object *selfS = (dsp_arm_mfcc_instance_q31Object *)S;
@@ -2774,9 +2946,9 @@ cmsis_arm_mfcc_q31(PyObject *obj, PyObject *args)
     pDst=PyMem_Malloc(sizeof(q31_t)*selfS->instance->nbDctOutputs);
 
     #if defined(ARM_MATH_NEON)
-    q31_t *tmp2=PyMem_Malloc(2*selfS->instance->fftLen*sizeof(q31_t));
+    ALLOC_OR_GET_TMP(tmp2,tmpBuf,2*selfS->instance->fftLen,NPY_INT32,q31_t)
     arm_status status = arm_mfcc_q31(selfS->instance,p1_converted,pDst,tmp_converted,tmp2);
-    PyMem_Free(tmp2);
+    FREE_OR_RELEASE(tmp2,tmpBuf);
     #else
     arm_status status = arm_mfcc_q31(selfS->instance,p1_converted,pDst,tmp_converted);
     #endif
@@ -2799,12 +2971,7 @@ cmsis_arm_mfcc_q31(PyObject *obj, PyObject *args)
   return(NULL);
 }
 
-
 static PyMethodDef CMSISDSPMethods[] = {
-
-
-
-
 {"arm_cfft_radix2_init_q15",  cmsis_arm_cfft_radix2_init_q15, METH_VARARGS,""},
 {"arm_cfft_radix2_q15",  cmsis_arm_cfft_radix2_q15, METH_VARARGS,""},
 {"arm_cfft_radix4_init_q15",  cmsis_arm_cfft_radix4_init_q15, METH_VARARGS,""},
@@ -2817,33 +2984,28 @@ static PyMethodDef CMSISDSPMethods[] = {
 {"arm_cfft_radix2_f32",  cmsis_arm_cfft_radix2_f32, METH_VARARGS,""},
 {"arm_cfft_radix4_init_f32",  cmsis_arm_cfft_radix4_init_f32, METH_VARARGS,""},
 {"arm_cfft_radix4_f32",  cmsis_arm_cfft_radix4_f32, METH_VARARGS,""},
-{"arm_cfft_q15",  cmsis_arm_cfft_q15, METH_VARARGS,""},
-{"arm_cfft_q31",  cmsis_arm_cfft_q31, METH_VARARGS,""},
+{"arm_cfft_q15",  cmsis_arm_cfft_q15, METH_VARARGS | METH_KEYWORDS,PyDoc_STR("CFFT Q15")},
+{"arm_cfft_q31",  cmsis_arm_cfft_q31, METH_VARARGS | METH_KEYWORDS,""},
 {"arm_cfft_f64",  cmsis_arm_cfft_f64, METH_VARARGS,""},
-{"arm_cfft_f32",  cmsis_arm_cfft_f32, METH_VARARGS,""},
+{"arm_cfft_f32",  cmsis_arm_cfft_f32, METH_VARARGS | METH_KEYWORDS,""},
 {"arm_rfft_init_q15",  cmsis_arm_rfft_init_q15, METH_VARARGS,""},
-{"arm_rfft_q15",  cmsis_arm_rfft_q15, METH_VARARGS,""},
+{"arm_rfft_q15",  cmsis_arm_rfft_q15, METH_VARARGS | METH_KEYWORDS,""},
 {"arm_rfft_init_q31",  cmsis_arm_rfft_init_q31, METH_VARARGS,""},
-{"arm_rfft_q31",  cmsis_arm_rfft_q31, METH_VARARGS,""},
+{"arm_rfft_q31",  cmsis_arm_rfft_q31, METH_VARARGS | METH_KEYWORDS,""},
 {"arm_rfft_fast_init_f64",  cmsis_arm_rfft_fast_init_f64, METH_VARARGS,""},
 {"arm_rfft_fast_f64",  cmsis_arm_rfft_fast_f64, METH_VARARGS,""},
-{"arm_rfft_fast_f32",  cmsis_arm_rfft_fast_f32, METH_VARARGS,""},
+{"arm_rfft_fast_f32",  cmsis_arm_rfft_fast_f32, METH_VARARGS | METH_KEYWORDS,""},
 {"arm_rfft_fast_init_f32",  cmsis_arm_rfft_fast_init_f32, METH_VARARGS,""},
-{"arm_rfft_fast_f32",  cmsis_arm_rfft_fast_f32, METH_VARARGS,""},
-
-
 {"arm_cfft_init_f32",  cmsis_arm_cfft_init_f32, METH_VARARGS,""},
 {"arm_cfft_init_f64",  cmsis_arm_cfft_init_f64, METH_VARARGS,""},
 {"arm_cfft_init_q31",  cmsis_arm_cfft_init_q31, METH_VARARGS,""},
 {"arm_cfft_init_q15",  cmsis_arm_cfft_init_q15, METH_VARARGS,""},
-
-
     {"arm_mfcc_init_f32",  cmsis_arm_mfcc_init_f32, METH_VARARGS,""},
-    {"arm_mfcc_f32",  cmsis_arm_mfcc_f32, METH_VARARGS,""},
+    {"arm_mfcc_f32",  cmsis_arm_mfcc_f32, METH_VARARGS | METH_KEYWORDS,""},
     {"arm_mfcc_init_q15",  cmsis_arm_mfcc_init_q15, METH_VARARGS,""},
-    {"arm_mfcc_q15",  cmsis_arm_mfcc_q15, METH_VARARGS,""},
+    {"arm_mfcc_q15",  cmsis_arm_mfcc_q15, METH_VARARGS | METH_KEYWORDS,""},
     {"arm_mfcc_init_q31",  cmsis_arm_mfcc_init_q31, METH_VARARGS,""},
-    {"arm_mfcc_q31",  cmsis_arm_mfcc_q31, METH_VARARGS,""},
+    {"arm_mfcc_q31",  cmsis_arm_mfcc_q31, METH_VARARGS | METH_KEYWORDS,""},
    
     {"error_out", (PyCFunction)error_out, METH_NOARGS, NULL},
     {NULL, NULL, 0, NULL}        /* Sentinel */

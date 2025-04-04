@@ -62,10 +62,7 @@ a double precision computation.
                     mfcc_filter_pos_config3_f32,mfcc_filter_len_config3_f32,
                     mfcc_filter_coefs_config3_f32,
                     mfcc_window_coefs_config3_f32);
-            tmp.create(nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
-            tmp2.create(nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
-
-            tmpin.create(nb,MFCCF32::TMPIN_MFCC_F32_ID,mgr);
+           
           }
           break;
 
@@ -80,9 +77,7 @@ a double precision computation.
                       mfcc_filter_pos_config2_f32,mfcc_filter_len_config2_f32,
                       mfcc_filter_coefs_config2_f32,
                       mfcc_window_coefs_config2_f32);
-            tmp.create(nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
-            tmp2.create(nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
-            tmpin.create(nb,MFCCF32::TMPIN_MFCC_F32_ID,mgr);
+            
           }
           break;
         case MFCCF32::TEST_MFCC_F32_3:
@@ -96,9 +91,7 @@ a double precision computation.
                       mfcc_filter_pos_config1_f32,mfcc_filter_len_config1_f32,
                       mfcc_filter_coefs_config1_f32,
                       mfcc_window_coefs_config1_f32);
-            tmp.create(nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
-            tmp2.create(nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
-            tmpin.create(nb,MFCCF32::TMPIN_MFCC_F32_ID,mgr);
+           
 
           }
           break;
@@ -114,9 +107,7 @@ a double precision computation.
                     mfcc_filter_pos_config3_f32,mfcc_filter_len_config3_f32,
                     mfcc_filter_coefs_config3_f32,
                     mfcc_window_coefs_config3_f32);
-            tmp.create(nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
-            tmp2.create(nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
-            tmpin.create(nb,MFCCF32::TMPIN_MFCC_F32_ID,mgr);
+            
           }
           break;
 
@@ -131,9 +122,7 @@ a double precision computation.
                       mfcc_filter_pos_config2_f32,mfcc_filter_len_config2_f32,
                       mfcc_filter_coefs_config2_f32,
                       mfcc_window_coefs_config2_f32);
-            tmp.create(nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
-            tmp2.create(nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
-            tmpin.create(nb,MFCCF32::TMPIN_MFCC_F32_ID,mgr);
+            
           }
           break;
         case MFCCF32::TEST_MFCC_F32_6:
@@ -147,17 +136,22 @@ a double precision computation.
                       mfcc_filter_pos_config1_f32,mfcc_filter_len_config1_f32,
                       mfcc_filter_coefs_config1_f32,
                       mfcc_window_coefs_config1_f32);
-            tmp.create(nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
-            tmp2.create(nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
-            tmpin.create(nb,MFCCF32::TMPIN_MFCC_F32_ID,mgr);
+           
 
           }
           break;
 
        }
       
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+      tmp.create(nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
+#else
+      tmp.create(2*nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
+#endif
+      tmp2.create(nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
 
-       output.create(ref.nbSamples(),MFCCF32::OUTPUT_MFCC_F32_ID,mgr);
+      tmpin.create(nb,MFCCF32::TMPIN_MFCC_F32_ID,mgr);
+      output.create(ref.nbSamples(),MFCCF32::OUTPUT_MFCC_F32_ID,mgr);
 
     }
 

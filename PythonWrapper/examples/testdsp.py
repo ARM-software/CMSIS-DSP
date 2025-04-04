@@ -358,7 +358,11 @@ class TestTransformMethods_Test1(unittest.TestCase):
           cfftf32=dsp.arm_cfft_instance_f32()
           status=dsp.arm_cfft_init_f32(cfftf32,self.nb)
           self.assertTrue(status==0)
-          resultR = dsp.arm_cfft_f32(cfftf32,signalR,0,1)
+          if dsp.has_neon():
+             tmp = np.zeros(2*self.nb,dtype=np.int32)
+             resultR = dsp.arm_cfft_f32(cfftf32,signalR,0,tmp=tmp)
+          else:
+             resultR = dsp.arm_cfft_f32(cfftf32,signalR,0,1)
           resultI = realToIm(resultR)
           assert_allclose(resultI,result,rtol=3e-6,atol=3e-6)
 
@@ -370,7 +374,11 @@ class TestTransformMethods_Test1(unittest.TestCase):
           cfftq31=dsp.arm_cfft_instance_q31()
           status=dsp.arm_cfft_init_q31(cfftq31,self.nb)
           self.assertTrue(status==0)
-          resultR = dsp.arm_cfft_q31(cfftq31,signalRQ31,0,1)
+          if dsp.has_neon():
+             tmp = np.zeros(2*self.nb,dtype=np.int32)
+             resultR = dsp.arm_cfft_q31(cfftq31,signalRQ31,0,tmp=tmp)
+          else:
+             resultR = dsp.arm_cfft_q31(cfftq31,signalRQ31,0,1)
           resultI = realToIm(Q31toF32(resultR))*self.nb
           assert_allclose(resultI,result,rtol=3e-6,atol=3e-6)
 
@@ -382,7 +390,11 @@ class TestTransformMethods_Test1(unittest.TestCase):
           cfftq15=dsp.arm_cfft_instance_q15()
           status=dsp.arm_cfft_init_q15(cfftq15,self.nb)
           self.assertTrue(status==0)
-          resultR = dsp.arm_cfft_q15(cfftq15,signalRQ15,0,1)
+          if dsp.has_neon():
+             tmp = np.zeros(2*self.nb,dtype=np.int16)
+             resultR = dsp.arm_cfft_q15(cfftq15,signalRQ15,0,tmp=tmp)
+          else:
+             resultR = dsp.arm_cfft_q15(cfftq15,signalRQ15,0,1)
           resultR=Q15toF32(resultR)
           resultI = realToIm(resultR)*self.nb
           assert_allclose(resultI,result,rtol=5e-3,atol=4e-2)

@@ -104,7 +104,11 @@ class TestRFFTMethods_RFFT(unittest.TestCase):
             rfftf32=dsp.arm_rfft_fast_instance_f32()
             status=dsp.arm_rfft_fast_init_f32(rfftf32,self.nb)
             self.assertTrue(status == 0)
-            result = dsp.arm_rfft_fast_f32(rfftf32,self.signal,0)
+            if dsp.has_neon():
+               tmp = np.zeros(self.nb,dtype=np.float32)
+               result = dsp.arm_rfft_fast_f32(rfftf32,self.signal,0,tmp=tmp)
+            else:
+               result = dsp.arm_rfft_fast_f32(rfftf32,self.signal,0)
             self.assertTrue(len(self.signal) == self.RFFT_F_IN_LENGTH)
             self.assertTrue(len(result) == self.RFFT_F_OUT_LENGTH)
             
@@ -114,7 +118,11 @@ class TestRFFTMethods_RFFT(unittest.TestCase):
             rifftf32=dsp.arm_rfft_fast_instance_f32()
             status=dsp.arm_rfft_fast_init_f32(rifftf32,self.nb)
             self.assertTrue(status == 0)
-            result = dsp.arm_rfft_fast_f32(rifftf32,self.referenceFloat,1)
+            if dsp.has_neon():
+                tmp = np.zeros(self.nb,dtype=np.float32)
+                result = dsp.arm_rfft_fast_f32(rifftf32,self.referenceFloat,1,tmp=tmp)
+            else:
+                result = dsp.arm_rfft_fast_f32(rifftf32,self.referenceFloat,1)
             self.assertTrue(len(self.referenceFloat) == self.RIFFT_F_IN_LENGTH)
             self.assertTrue(len(result) == self.RIFFT_F_OUT_LENGTH)
             assert_allclose(self.invref,result,atol=1e-7)
@@ -122,11 +130,14 @@ class TestRFFTMethods_RFFT(unittest.TestCase):
      def test_rfft_q31(self):
             signalQ31 = toQ31(self.signal)
             rfftQ31=dsp.arm_rfft_instance_q31()
-            status=dsp.arm_rfft_init_q31(rfftQ31,self.nb,0,1)
+            
             if dsp.has_neon():
+               status=dsp.arm_rfft_init_q31(rfftQ31,self.nb)
                result = dsp.arm_rfft_q31(rfftQ31,signalQ31,0)
             else:
+               status=dsp.arm_rfft_init_q31(rfftQ31,self.nb,0,1)
                result = dsp.arm_rfft_q31(rfftQ31,signalQ31)
+            self.assertTrue(status == 0)
             self.assertTrue(len(signalQ31) == self.RFFT_Q_IN_LENGTH)
             self.assertTrue(len(result) == self.RFFT_Q_OUT_LENGTH)
             if not dsp.has_neon():
@@ -143,14 +154,16 @@ class TestRFFTMethods_RFFT(unittest.TestCase):
 
      def test_rifft_q31(self):
             rifftQ31=dsp.arm_rfft_instance_q31()
-            status=dsp.arm_rfft_init_q31(rifftQ31,self.nb,1,1)
             # Apply CMSIS-DSP scaling
             referenceQ31 = toQ31(self.referenceFixed / self.nb) 
             if dsp.has_neon():
+               status=dsp.arm_rfft_init_q31(rifftQ31,self.nb)
                result = dsp.arm_rfft_q31(rifftQ31,referenceQ31,1)
             else:
+               status=dsp.arm_rfft_init_q31(rifftQ31,self.nb,1,1)
                result = dsp.arm_rfft_q31(rifftQ31,referenceQ31)
             resultF = Q31toF32(result)
+            self.assertTrue(status == 0)
             self.assertTrue(len(referenceQ31) == self.RIFFT_Q_IN_LENGTH)
             self.assertTrue(len(result) == self.RIFFT_Q_OUT_LENGTH)
             
@@ -159,11 +172,14 @@ class TestRFFTMethods_RFFT(unittest.TestCase):
      def test_rfft_q15(self):
             signalQ15 = toQ15(self.signal)
             rfftQ15=dsp.arm_rfft_instance_q15()
-            status=dsp.arm_rfft_init_q15(rfftQ15,self.nb,0,1)
             if dsp.has_neon():
-               result = dsp.arm_rfft_q15(rfftQ15,signalQ15,0)
+               tmp = np.zeros(2*self.nb,dtype=np.int16)
+               status=dsp.arm_rfft_init_q15(rfftQ15,self.nb)
+               result = dsp.arm_rfft_q15(rfftQ15,signalQ15,0,tmp=tmp)
             else:
+               status=dsp.arm_rfft_init_q15(rfftQ15,self.nb,0,1)
                result = dsp.arm_rfft_q15(rfftQ15,signalQ15)
+            self.assertTrue(status == 0)
             self.assertTrue(len(signalQ15) == self.RFFT_Q_IN_LENGTH)
             self.assertTrue(len(result) == self.RFFT_Q_OUT_LENGTH)
             if not dsp.has_neon():
@@ -181,14 +197,16 @@ class TestRFFTMethods_RFFT(unittest.TestCase):
 
      def test_rifft_q15(self):
             rifftQ15=dsp.arm_rfft_instance_q15()
-            status=dsp.arm_rfft_init_q15(rifftQ15,self.nb,1,1)
             # Apply CMSIS-DSP scaling
             referenceQ15 = toQ15(self.referenceFixed / self.nb) 
             if dsp.has_neon():
+               status=dsp.arm_rfft_init_q15(rifftQ15,self.nb)
                result = dsp.arm_rfft_q15(rifftQ15,referenceQ15,1)
             else:
+               status=dsp.arm_rfft_init_q15(rifftQ15,self.nb,1,1)
                result = dsp.arm_rfft_q15(rifftQ15,referenceQ15)
             resultF = Q15toF32(result)
+            self.assertTrue(status == 0)
             self.assertTrue(len(referenceQ15) == self.RIFFT_Q_IN_LENGTH)
 
             self.assertTrue(len(result) == self.RIFFT_Q_OUT_LENGTH)

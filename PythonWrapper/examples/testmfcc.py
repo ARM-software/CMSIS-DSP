@@ -49,9 +49,15 @@ class TestMFCC_MFCC(unittest.TestCase):
                                      dctMatrixFilters,
                                      filtPos,filtLen,packedFilters,window)
 
-        tmp=np.zeros(self.FFTSize + 2)
-
-        res=dsp.arm_mfcc_f32(mfccf32,debug,tmp)
+        
+     
+        if dsp.has_neon():
+           tmp=np.zeros(self.FFTSize)
+           tmp2=np.zeros(self.FFTSize)
+           res=dsp.arm_mfcc_f32(mfccf32,debug,tmp,tmp2=tmp2)
+        else:
+           tmp=np.zeros(2*self.FFTSize)
+           res=dsp.arm_mfcc_f32(mfccf32,debug,tmp)
         assert_allclose(res,ref,3e-6,3e-6)
 
 
@@ -78,10 +84,15 @@ class TestMFCC_MFCC(unittest.TestCase):
             filtPos,filtLen,packedFiltersQ31,windowQ31)
         self.assertEqual(status,0)
 
-        tmp=np.zeros(2*self.FFTSize,dtype=np.int32)
 
         debugQ31 = toQ31(debug)
-        errorStatus,resQ31=dsp.arm_mfcc_q31(mfccq31,debugQ31,tmp)
+        if dsp.has_neon():
+           tmp=np.zeros(self.FFTSize+2,dtype=np.int32)
+           tmp2=np.zeros(2*self.FFTSize,dtype=np.int32)
+           errorStatus,resQ31=dsp.arm_mfcc_q31(mfccq31,debugQ31,tmp,tmp2=tmp2)
+        else:
+           tmp=np.zeros(2*self.FFTSize,dtype=np.int32)
+           errorStatus,resQ31=dsp.arm_mfcc_q31(mfccq31,debugQ31,tmp)
         res=self.FFTSize*Q31toF32(resQ31)
 
         assert_allclose(res,ref,4e-5,4e-5)
@@ -111,10 +122,16 @@ class TestMFCC_MFCC(unittest.TestCase):
             filtPos,filtLen,packedFiltersQ15,windowQ15)
         self.assertEqual(status,0)
 
-        tmp=np.zeros(2*self.FFTSize,dtype=np.int32)
+        
 
         debugQ15 = toQ15(debug)
-        errorStatus,resQ15=dsp.arm_mfcc_q15(mfccq15,debugQ15,tmp)
+        if dsp.has_neon():
+           tmp=np.zeros(self.FFTSize+2,dtype=np.int32)
+           tmp2=np.zeros(2*self.FFTSize,dtype=np.int32)
+           errorStatus,resQ15=dsp.arm_mfcc_q15(mfccq15,debugQ15,tmp,tmp2=tmp2)
+        else:
+           tmp=np.zeros(2*self.FFTSize,dtype=np.int32)
+           errorStatus,resQ15=dsp.arm_mfcc_q15(mfccq15,debugQ15,tmp)
         res=self.FFTSize*Q15toF32(resQ15)
 
         assert_allclose(res,ref,3e-3,1e-2)
