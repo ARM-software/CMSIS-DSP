@@ -1290,6 +1290,77 @@ arm_status arm_mfcc_init_q15(
   );
 #endif
 
+/**
+  @brief Calculate required length in samples for the temporary buffer
+  @param dt Data type of the input data
+  @param nb_samples Number of samples in the input data
+  @param buf_id Identification for the temporary buffer
+  @return Length in samples (real numbers) for the temporary buffer
+*/
+extern uint32_t arm_cfft_tmp_buffer_size(arm_math_datatype dt,
+                                         uint32_t nb_samples,
+                                         uint32_t buf_id);
+
+/**                                      
+  @brief Calculate required length in samples for the output buffer
+  @param dt Data type of the input data
+  @param nb_samples Number of samples in the input data
+  @return Length in samples (real numbers) for the output buffer
+*/
+extern uint32_t arm_cfft_output_buffer_size(arm_math_datatype dt,
+                                            uint32_t nb_samples);
+
+/**
+  @brief Calculate required length in samples for the output buffer
+  @param dt Data type of the input data
+  @param nb_samples Number of samples in the input data
+  @return Length in samples (real numbers) for the output buffer
+*/
+extern uint32_t arm_cifft_output_buffer_size(arm_math_datatype dt,
+                                             uint32_t nb_samples);
+
+/**
+   @brief Calculate required length in samples for the temporary buffer
+   @param dt Data type of the input data
+   @param nb_samples Number of samples in the input data
+   @param buf_id Identification for the temporary buffer
+   @return Length in samples (real numbers) for the temporary buffer
+*/
+extern uint32_t arm_rfft_tmp_buffer_size(arm_math_datatype dt,
+                                         uint32_t nb_samples,
+                                         uint32_t buf_id);
+
+/**
+   @brief Calculate required length in samples for the output buffer
+   @param dt Data type of the input data
+   @param nb_samples Number of samples in the input data
+   @return Length in samples (real numbers) for the output buffer
+*/
+extern uint32_t arm_rfft_output_buffer_size(arm_math_datatype dt,
+                                            uint32_t nb_samples);
+
+
+/** 
+ * @brief Calculate required length in samples for the input buffer
+ * @param dt Data type of the input data
+ * @param nb_samples RFFT length in samples
+ * @param buf_id Identification for the temporary buffer
+ * @return Length in samples (real numbers) for the input buffer
+ */
+extern uint32_t arm_rifft_input_buffer_size(arm_math_datatype dt,
+                                             uint32_t nb_samples);
+
+/**
+   @brief Calculate required length in samples for the temporary buffer
+   @param dt Data type of the input data
+   @param nb_samples Number of samples in the input data
+   @param buf_id Identification for the temporary buffer
+   @return Length in samples (real numbers) for the temporary buffer
+*/
+extern uint32_t arm_mfcc_tmp_buffer_size(arm_math_datatype dt,
+                                         uint32_t nb_samples,
+                                         uint32_t buf_id);
+
 #ifdef   __cplusplus
 }
 #endif

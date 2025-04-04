@@ -65,6 +65,8 @@
 #include "arm_rfft_init_q15.c"
 #include "arm_rfft_init_q31.c"
 
+#include "arm_transform_buffer_sizes.c"
+
 /* Deprecated */
 #include "arm_cfft_radix4_init_f32.c"
 #include "arm_cfft_radix4_init_q15.c"

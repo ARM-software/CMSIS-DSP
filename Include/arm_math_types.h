@@ -649,6 +649,18 @@ extern "C"
   /* Dimension C vector space */
   #define CMPLX_DIM 2
 
+/**
+  * @brief Datatype identifier
+  */
+typedef enum {
+  ARM_MATH_F16 = 16,
+  ARM_MATH_F32 = 32,
+  ARM_MATH_F64 = 64,
+  ARM_MATH_Q7 = 7,
+  ARM_MATH_Q15 = 15,
+  ARM_MATH_Q31 = 31
+} arm_math_datatype;
+
 #ifdef   __cplusplus
 }
 #endif
