@@ -39,3 +39,10 @@ DEFAULT_HOUSEHOLDER_THRESHOLD_F32=1.0e-12
 # DTW Window Types
 ARM_DTW_SAKOE_CHIBA_WINDOW = 1
 ARM_DTW_SLANTED_BAND_WINDOW = 3
+
+# Target architectures to compute the size of temporary or output buffers
+# for the transform functions
+ARM_MATH_SCALAR_ARCH = 1
+ARM_MATH_DSP_EXTENSIONS_ARCH = 2
+ARM_MATH_HELIUM_ARCH = 3
+ARM_MATH_NEON_ARCH = 4

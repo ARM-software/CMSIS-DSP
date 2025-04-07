@@ -2971,6 +2971,182 @@ cmsis_arm_mfcc_q31(PyObject *obj, PyObject *args,PyObject *kwds)
   return(NULL);
 }
 
+static PyObject * cmsis_current_arch(PyObject *obj,
+  PyObject *Py_UNUSED(args))
+{
+   return(Py_BuildValue("i", ARM_MATH_DEFAULT_TARGET_ARCH));
+}
+
+static PyObject * cmsis_arm_cfft_tmp_buffer_size(PyObject *obj,
+  PyObject *args,PyObject *kwds)
+{
+    uint32_t arch = ARM_MATH_DEFAULT_TARGET_ARCH;
+    uint32_t dt;
+    uint32_t nb_samples;
+    uint32_t buf_id;
+
+    static const char * kwlist[] = {
+      "","","","arch",NULL
+    };
+
+    if (PyArg_ParseTupleAndKeywords(args,kwds,"III|$I",kwlist,&dt,&nb_samples,&buf_id,&arch))
+    {
+      uint32_t res = arm_cfft_tmp_buffer_size(arch, dt, nb_samples, buf_id);
+      return Py_BuildValue("I", res);
+    }
+    else
+    {
+      Py_RETURN_NONE;
+    }
+   
+}
+
+static PyObject * cmsis_arm_cfft_output_buffer_size(PyObject *obj,
+  PyObject *args,PyObject *kwds)
+{
+    uint32_t arch = ARM_MATH_DEFAULT_TARGET_ARCH;
+    uint32_t dt;
+    uint32_t nb_samples;
+
+    static const char * kwlist[] = {
+      "","","arch",NULL
+    };
+
+    if (PyArg_ParseTupleAndKeywords(args,kwds,"II|$I",kwlist,&dt,&nb_samples,&arch))
+    {
+      uint32_t res = arm_cfft_output_buffer_size(arch, dt, nb_samples);
+      return Py_BuildValue("I", res);
+    }
+    else
+    {
+      Py_RETURN_NONE;
+    }
+   
+}
+
+static PyObject * cmsis_arm_cifft_output_buffer_size(PyObject *obj,
+  PyObject *args,PyObject *kwds)
+{
+    uint32_t arch = ARM_MATH_DEFAULT_TARGET_ARCH;
+    uint32_t dt;
+    uint32_t nb_samples;
+
+    static const char * kwlist[] = {
+      "","","arch",NULL
+    };
+
+    if (PyArg_ParseTupleAndKeywords(args,kwds,"II|$I",kwlist,&dt,&nb_samples,&arch))
+    {
+      uint32_t res = arm_cifft_output_buffer_size(arch, dt, nb_samples);
+      return Py_BuildValue("I", res);
+    }
+    else
+    {
+      Py_RETURN_NONE;
+    }
+   
+}
+
+static PyObject * cmsis_arm_rfft_tmp_buffer_size(PyObject *obj,
+  PyObject *args,PyObject *kwds)
+{
+    uint32_t arch = ARM_MATH_DEFAULT_TARGET_ARCH;
+    uint32_t dt;
+    uint32_t nb_samples;
+    uint32_t buf_id;
+
+    static const char * kwlist[] = {
+      "","","","arch",NULL
+    };
+
+    if (PyArg_ParseTupleAndKeywords(args,kwds,"III|$I",kwlist,&dt,&nb_samples,&buf_id,&arch))
+    {
+      uint32_t res = arm_rfft_tmp_buffer_size(arch, dt, nb_samples, buf_id);
+      return Py_BuildValue("I", res);
+    }
+    else
+    {
+      Py_RETURN_NONE;
+    }
+   
+}
+
+static PyObject * cmsis_arm_rfft_output_buffer_size(PyObject *obj,
+  PyObject *args,PyObject *kwds)
+{
+    uint32_t arch = ARM_MATH_DEFAULT_TARGET_ARCH;
+    uint32_t dt;
+    uint32_t nb_samples;
+
+    static const char * kwlist[] = {
+      "","","arch",NULL
+    };
+
+    if (PyArg_ParseTupleAndKeywords(args,kwds,"II|$I",kwlist,&dt,&nb_samples,&arch))
+    {
+      uint32_t res = arm_rfft_output_buffer_size(arch, dt, nb_samples);
+      return Py_BuildValue("I", res);
+    }
+    else
+    {
+      Py_RETURN_NONE;
+    }
+   
+}
+
+static PyObject * cmsis_arm_rifft_input_buffer_size(PyObject *obj,
+  PyObject *args,PyObject *kwds)
+{
+    uint32_t arch = ARM_MATH_DEFAULT_TARGET_ARCH;
+    uint32_t dt;
+    uint32_t nb_samples;
+
+    static const char * kwlist[] = {
+      "","","arch",NULL
+    };
+
+    if (PyArg_ParseTupleAndKeywords(args,kwds,"II|$I",kwlist,&dt,&nb_samples,&arch))
+    {
+      uint32_t res = arm_rifft_input_buffer_size(arch, dt, nb_samples);
+      return Py_BuildValue("I", res);
+    }
+    else
+    {
+      Py_RETURN_NONE;
+    }
+   
+}
+
+static PyObject * cmsis_arm_mfcc_tmp_buffer_size(PyObject *obj,
+  PyObject *args,PyObject *kwds)
+{
+    uint32_t arch = ARM_MATH_DEFAULT_TARGET_ARCH;
+    uint32_t dt;
+    uint32_t nb_samples;
+    uint32_t buf_id;
+    // Default value for current build
+#if defined(ARM_MFCC_USE_CFFT)
+    uint32_t use_cfft=1;
+#else 
+    uint32_t use_cfft=0;
+#endif
+
+    static const char * kwlist[] = {
+      "","","","","arch",NULL
+    };
+
+    if (PyArg_ParseTupleAndKeywords(args,kwds,"III|I$I",kwlist,&dt,&nb_samples,&buf_id,&use_cfft,&arch))
+    {
+      uint32_t res = arm_mfcc_tmp_buffer_size(arch, dt, nb_samples, buf_id,use_cfft);
+      return Py_BuildValue("I", res);
+    }
+    else
+    {
+      Py_RETURN_NONE;
+    }
+   
+}
+
 static PyMethodDef CMSISDSPMethods[] = {
 {"arm_cfft_radix2_init_q15",  cmsis_arm_cfft_radix2_init_q15, METH_VARARGS,""},
 {"arm_cfft_radix2_q15",  cmsis_arm_cfft_radix2_q15, METH_VARARGS,""},
@@ -2984,29 +3160,37 @@ static PyMethodDef CMSISDSPMethods[] = {
 {"arm_cfft_radix2_f32",  cmsis_arm_cfft_radix2_f32, METH_VARARGS,""},
 {"arm_cfft_radix4_init_f32",  cmsis_arm_cfft_radix4_init_f32, METH_VARARGS,""},
 {"arm_cfft_radix4_f32",  cmsis_arm_cfft_radix4_f32, METH_VARARGS,""},
-{"arm_cfft_q15",  cmsis_arm_cfft_q15, METH_VARARGS | METH_KEYWORDS,PyDoc_STR("CFFT Q15")},
-{"arm_cfft_q31",  cmsis_arm_cfft_q31, METH_VARARGS | METH_KEYWORDS,""},
+{"arm_cfft_q15",  (PyCFunction)cmsis_arm_cfft_q15, METH_VARARGS | METH_KEYWORDS,PyDoc_STR("CFFT Q15")},
+{"arm_cfft_q31",  (PyCFunction)cmsis_arm_cfft_q31, METH_VARARGS | METH_KEYWORDS,""},
 {"arm_cfft_f64",  cmsis_arm_cfft_f64, METH_VARARGS,""},
-{"arm_cfft_f32",  cmsis_arm_cfft_f32, METH_VARARGS | METH_KEYWORDS,""},
+{"arm_cfft_f32",  (PyCFunction)cmsis_arm_cfft_f32, METH_VARARGS | METH_KEYWORDS,""},
 {"arm_rfft_init_q15",  cmsis_arm_rfft_init_q15, METH_VARARGS,""},
-{"arm_rfft_q15",  cmsis_arm_rfft_q15, METH_VARARGS | METH_KEYWORDS,""},
+{"arm_rfft_q15",  (PyCFunction)cmsis_arm_rfft_q15, METH_VARARGS | METH_KEYWORDS,""},
 {"arm_rfft_init_q31",  cmsis_arm_rfft_init_q31, METH_VARARGS,""},
-{"arm_rfft_q31",  cmsis_arm_rfft_q31, METH_VARARGS | METH_KEYWORDS,""},
+{"arm_rfft_q31",  (PyCFunction)cmsis_arm_rfft_q31, METH_VARARGS | METH_KEYWORDS,""},
 {"arm_rfft_fast_init_f64",  cmsis_arm_rfft_fast_init_f64, METH_VARARGS,""},
 {"arm_rfft_fast_f64",  cmsis_arm_rfft_fast_f64, METH_VARARGS,""},
-{"arm_rfft_fast_f32",  cmsis_arm_rfft_fast_f32, METH_VARARGS | METH_KEYWORDS,""},
+{"arm_rfft_fast_f32",  (PyCFunction)cmsis_arm_rfft_fast_f32, METH_VARARGS | METH_KEYWORDS,""},
 {"arm_rfft_fast_init_f32",  cmsis_arm_rfft_fast_init_f32, METH_VARARGS,""},
 {"arm_cfft_init_f32",  cmsis_arm_cfft_init_f32, METH_VARARGS,""},
 {"arm_cfft_init_f64",  cmsis_arm_cfft_init_f64, METH_VARARGS,""},
 {"arm_cfft_init_q31",  cmsis_arm_cfft_init_q31, METH_VARARGS,""},
 {"arm_cfft_init_q15",  cmsis_arm_cfft_init_q15, METH_VARARGS,""},
     {"arm_mfcc_init_f32",  cmsis_arm_mfcc_init_f32, METH_VARARGS,""},
-    {"arm_mfcc_f32",  cmsis_arm_mfcc_f32, METH_VARARGS | METH_KEYWORDS,""},
+    {"arm_mfcc_f32",  (PyCFunction)cmsis_arm_mfcc_f32, METH_VARARGS | METH_KEYWORDS,""},
     {"arm_mfcc_init_q15",  cmsis_arm_mfcc_init_q15, METH_VARARGS,""},
-    {"arm_mfcc_q15",  cmsis_arm_mfcc_q15, METH_VARARGS | METH_KEYWORDS,""},
+    {"arm_mfcc_q15",  (PyCFunction)cmsis_arm_mfcc_q15, METH_VARARGS | METH_KEYWORDS,""},
     {"arm_mfcc_init_q31",  cmsis_arm_mfcc_init_q31, METH_VARARGS,""},
-    {"arm_mfcc_q31",  cmsis_arm_mfcc_q31, METH_VARARGS | METH_KEYWORDS,""},
-   
+    {"arm_mfcc_q31",  (PyCFunction)cmsis_arm_mfcc_q31, METH_VARARGS | METH_KEYWORDS,""},
+    {"current_arch", cmsis_current_arch,METH_NOARGS,""},
+    {"arm_cfft_tmp_buffer_size", (PyCFunction)cmsis_arm_cfft_tmp_buffer_size,METH_VARARGS | METH_KEYWORDS,""},
+    {"arm_cfft_output_buffer_size", (PyCFunction)cmsis_arm_cfft_output_buffer_size,METH_VARARGS | METH_KEYWORDS,""},
+    {"arm_cifft_output_buffer_size", (PyCFunction)cmsis_arm_cifft_output_buffer_size,METH_VARARGS | METH_KEYWORDS,""},
+    {"arm_rfft_tmp_buffer_size", (PyCFunction)cmsis_arm_rfft_tmp_buffer_size,METH_VARARGS | METH_KEYWORDS,""},
+    {"arm_rfft_output_buffer_size", (PyCFunction)cmsis_arm_rfft_output_buffer_size,METH_VARARGS | METH_KEYWORDS,""},
+    {"arm_rifft_input_buffer_size", (PyCFunction)cmsis_arm_rifft_input_buffer_size,METH_VARARGS | METH_KEYWORDS,""},
+    {"arm_mfcc_tmp_buffer_size", (PyCFunction)cmsis_arm_mfcc_tmp_buffer_size,METH_VARARGS | METH_KEYWORDS,""},
+
     {"error_out", (PyCFunction)error_out, METH_NOARGS, NULL},
     {NULL, NULL, 0, NULL}        /* Sentinel */
 };

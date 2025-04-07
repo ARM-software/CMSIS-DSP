@@ -16,6 +16,7 @@ from testdsp8 import *
 from testdsp9 import *
 from testdsp10 import *
 from testdsp11 import *
+from testdsp12 import *
 
 if __name__ == '__main__':
     unittest.main()

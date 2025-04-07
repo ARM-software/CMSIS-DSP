@@ -661,6 +661,31 @@ typedef enum {
   ARM_MATH_Q31 = 31
 } arm_math_datatype;
 
+/**
+  * @brief Architecture target identifier
+  */
+ typedef enum {
+  ARM_MATH_SCALAR_ARCH = 1,
+  ARM_MATH_DSP_EXTENSIONS_ARCH = 2,
+  ARM_MATH_HELIUM_ARCH = 3,
+  ARM_MATH_NEON_ARCH = 4
+} arm_math_target_arch;
+
+#if !defined(ARM_MATH_AUTOVECTORIZE)
+  #if defined(ARM_MATH_MVEI) || defined(ARM_MATH_MVEF)
+    #define ARM_MATH_DEFAULT_TARGET_ARCH ARM_MATH_HELIUM_ARCH
+  #elif defined(ARM_MATH_NEON) || defined(ARM_MATH_NEON_EXPERIMENTAL)
+    #define ARM_MATH_DEFAULT_TARGET_ARCH ARM_MATH_NEON_ARCH
+  #elif defined(ARM_MATH_DSP)
+    #define ARM_MATH_DEFAULT_TARGET_ARCH ARM_MATH_DSP_EXTENSIONS_ARCH
+  #else
+    #define ARM_MATH_DEFAULT_TARGET_ARCH ARM_MATH_SCALAR_ARCH 
+  #endif
+#else
+  #define ARM_MATH_DEFAULT_TARGET_ARCH ARM_MATH_SCALAR_ARCH 
+#endif
+
+
 #ifdef   __cplusplus
 }
 #endif
