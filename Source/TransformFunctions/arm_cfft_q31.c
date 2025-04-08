@@ -636,7 +636,7 @@ ARM_DSP_ATTRIBUTE void arm_cfft_radix4by2_inverse_q31(
 /**
   @brief         Processing function for the Q31 complex FFT.
   @param[in]     S               points to an instance of the fixed-point CFFT structure
-  @param[in,out] p1              points to the complex data buffer of size <code>2*fftLen</code>. Processing occurs in-place
+  @param[in,out] p1              points to the complex data buffer. Processing occurs in-place
   @param[in]     ifftFlag       flag that selects transform direction
                    - value = 0: forward transform
                    - value = 1: inverse transform
@@ -668,8 +668,6 @@ ARM_DSP_ATTRIBUTE void arm_cfft_radix4by2_inverse_q31(
                      The input and output buffers must be
                      different.
                      There is a temporary buffer.
-                     The temporary buffer has same size as
-                     input or output buffer.
                      The bit reverse flag is not more 
                      available in Neon version.
 
@@ -682,6 +680,9 @@ ARM_DSP_ATTRIBUTE void arm_cfft_radix4by2_inverse_q31(
         uint8_t ifftFlag
         )
   @endcode
+
+  @par Size of buffers according to the target architecture and datatype:
+       They are described on the page \ref transformbuffers "transform buffers".
   
  */
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)

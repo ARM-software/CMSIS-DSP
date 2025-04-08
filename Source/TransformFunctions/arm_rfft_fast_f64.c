@@ -195,6 +195,9 @@ static void merge_rfft_f64(
   @param[in]     ifftFlag
                    - value = 0: RFFT
                    - value = 1: RIFFT
+
+  @par Size of buffers according to the target architecture and datatype:
+       They are described on the page \ref transformbuffers "transform buffers".
 */
 
 ARM_DSP_ATTRIBUTE void arm_rfft_fast_f64(

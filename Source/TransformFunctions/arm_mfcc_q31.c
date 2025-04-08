@@ -62,8 +62,6 @@
                    The number of input samples is the FFT length used
                    when initializing the instance data structure.
 
-                   The temporary buffer has a 2*fft length.
-
                    The source buffer is modified by this function.
 
                    The function may saturate. If the FFT length is too
@@ -72,7 +70,6 @@
 
   @par Neon implementation
        There is an additional temporary buffer used for the RFFT.
-       It has 2*fftLength size.
 
 
   @code 
@@ -84,6 +81,9 @@
   q31_t *pTmp_rfft
   )
   @endcode
+
+  @par Size of buffers according to the target architecture and datatype:
+       They are described on the page \ref transformbuffers "transform buffers".
 
  */
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)

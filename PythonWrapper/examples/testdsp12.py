@@ -135,17 +135,11 @@ class TestBufferSizeMethods_Test12(unittest.TestCase):
 
     def test_arm_rifft_input_buffer_size_q31(self):
         res = dsp.arm_rifft_input_buffer_size(dt.Q31,self.NBSAMPLES)
-        if dsp.has_neon():
-            self.assertEqual(res, self.NBSAMPLES+2)
-        else:
-            self.assertEqual(res, 2*self.NBSAMPLES)
+        self.assertEqual(res, self.NBSAMPLES+2)
 
     def test_arm_rifft_input_buffer_size_q15(self):
         res = dsp.arm_rifft_input_buffer_size(dt.Q15,self.NBSAMPLES)
-        if dsp.has_neon():
-            self.assertEqual(res, self.NBSAMPLES+2)
-        else:
-            self.assertEqual(res, 2*self.NBSAMPLES)
+        self.assertEqual(res, self.NBSAMPLES+2)
 
     def test_arm_mfcc_tmp_buffer_size_f32(self):
         res = dsp.arm_mfcc_tmp_buffer_size(dt.F32,self.NBSAMPLES,1)

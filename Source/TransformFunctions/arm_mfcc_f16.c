@@ -67,13 +67,10 @@
                    The number of input samples if the FFT length used
                    when initializing the instance data structure.
 
-                   The temporary buffer has a 2*fft length size when MFCC
-                   is implemented with CFFT.
-                   It has length FFT Length + 2 when implemented with RFFT
-                   (default implementation).
-
                    The source buffer is modified by this function.
 
+  @par Size of buffers according to the target architecture and datatype:
+       They are described on the page \ref transformbuffers "transform buffers".
  */
 #if defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 ARM_DSP_ATTRIBUTE void arm_mfcc_f16(

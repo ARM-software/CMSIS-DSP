@@ -2991,8 +2991,8 @@ static PyObject * cmsis_arm_cfft_tmp_buffer_size(PyObject *obj,
 
     if (PyArg_ParseTupleAndKeywords(args,kwds,"III|$I",kwlist,&dt,&nb_samples,&buf_id,&arch))
     {
-      uint32_t res = arm_cfft_tmp_buffer_size(arch, dt, nb_samples, buf_id);
-      return Py_BuildValue("I", res);
+      int32_t res = arm_cfft_tmp_buffer_size(arch, dt, nb_samples, buf_id);
+      return Py_BuildValue("i", res);
     }
     else
     {
@@ -3014,8 +3014,8 @@ static PyObject * cmsis_arm_cfft_output_buffer_size(PyObject *obj,
 
     if (PyArg_ParseTupleAndKeywords(args,kwds,"II|$I",kwlist,&dt,&nb_samples,&arch))
     {
-      uint32_t res = arm_cfft_output_buffer_size(arch, dt, nb_samples);
-      return Py_BuildValue("I", res);
+      int32_t res = arm_cfft_output_buffer_size(arch, dt, nb_samples);
+      return Py_BuildValue("i", res);
     }
     else
     {
@@ -3037,8 +3037,8 @@ static PyObject * cmsis_arm_cifft_output_buffer_size(PyObject *obj,
 
     if (PyArg_ParseTupleAndKeywords(args,kwds,"II|$I",kwlist,&dt,&nb_samples,&arch))
     {
-      uint32_t res = arm_cifft_output_buffer_size(arch, dt, nb_samples);
-      return Py_BuildValue("I", res);
+      int32_t res = arm_cifft_output_buffer_size(arch, dt, nb_samples);
+      return Py_BuildValue("i", res);
     }
     else
     {
@@ -3061,8 +3061,8 @@ static PyObject * cmsis_arm_rfft_tmp_buffer_size(PyObject *obj,
 
     if (PyArg_ParseTupleAndKeywords(args,kwds,"III|$I",kwlist,&dt,&nb_samples,&buf_id,&arch))
     {
-      uint32_t res = arm_rfft_tmp_buffer_size(arch, dt, nb_samples, buf_id);
-      return Py_BuildValue("I", res);
+      int32_t res = arm_rfft_tmp_buffer_size(arch, dt, nb_samples, buf_id);
+      return Py_BuildValue("i", res);
     }
     else
     {
@@ -3084,8 +3084,8 @@ static PyObject * cmsis_arm_rfft_output_buffer_size(PyObject *obj,
 
     if (PyArg_ParseTupleAndKeywords(args,kwds,"II|$I",kwlist,&dt,&nb_samples,&arch))
     {
-      uint32_t res = arm_rfft_output_buffer_size(arch, dt, nb_samples);
-      return Py_BuildValue("I", res);
+      int32_t res = arm_rfft_output_buffer_size(arch, dt, nb_samples);
+      return Py_BuildValue("i", res);
     }
     else
     {
@@ -3107,8 +3107,8 @@ static PyObject * cmsis_arm_rifft_input_buffer_size(PyObject *obj,
 
     if (PyArg_ParseTupleAndKeywords(args,kwds,"II|$I",kwlist,&dt,&nb_samples,&arch))
     {
-      uint32_t res = arm_rifft_input_buffer_size(arch, dt, nb_samples);
-      return Py_BuildValue("I", res);
+      int32_t res = arm_rifft_input_buffer_size(arch, dt, nb_samples);
+      return Py_BuildValue("i", res);
     }
     else
     {
@@ -3132,13 +3132,13 @@ static PyObject * cmsis_arm_mfcc_tmp_buffer_size(PyObject *obj,
 #endif
 
     static const char * kwlist[] = {
-      "","","","","arch",NULL
+      "","","","use_cfft","arch",NULL
     };
 
-    if (PyArg_ParseTupleAndKeywords(args,kwds,"III|I$I",kwlist,&dt,&nb_samples,&buf_id,&use_cfft,&arch))
+    if (PyArg_ParseTupleAndKeywords(args,kwds,"III|$II",kwlist,&dt,&nb_samples,&buf_id,&use_cfft,&arch))
     {
-      uint32_t res = arm_mfcc_tmp_buffer_size(arch, dt, nb_samples, buf_id,use_cfft);
-      return Py_BuildValue("I", res);
+      int32_t res = arm_mfcc_tmp_buffer_size(arch, dt, nb_samples, buf_id,use_cfft);
+      return Py_BuildValue("i", res);
     }
     else
     {

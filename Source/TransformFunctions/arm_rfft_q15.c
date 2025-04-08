@@ -94,19 +94,10 @@ ARM_DSP_ATTRIBUTE void arm_split_rifft_q15(
 | 4096        | 1.15          | 13.3           | 0                         |
 | 8192        | 1.15          | 14.2           | 0                         |
   
-  @par
-                   If the input buffer is of length N (fftLenReal), the output buffer must have length 2N
-                   since it is containing the conjugate part (except for MVE version where N+2 is enough).
-                   The input buffer is modified by this function.
-  @par
-                   For the RIFFT, the source buffer must have length N+2 since the Nyquist frequency value
-                   is needed but conjugate part is ignored. 
-                   It is not using the packing trick of the float version.
+
   
   @par Neon implementation
-       The temporary buffer has size fftLength * 2
-       The RFFT output buffer has size fftLen + 2
-       The RIFFT output buffer has size fftLen
+       A temporary buffer is required
 
   @code 
        void arm_rfft_q15(
@@ -118,12 +109,8 @@ ARM_DSP_ATTRIBUTE void arm_split_rifft_q15(
         )
   @endcode
 
-  @par RFFT Output buffer sizes
-       They are also the input sizes for the RIFFT
-
-| Scalar     | Helium        | Neon           |
-| ---------: | ------------: | -------------: | 
-| 2*fftSize  | fftSize + 2   | fftSize + 2    |  
+  @par Size of buffers according to the target architecture and datatype:
+       They are described on the page \ref transformbuffers "transform buffers".  
 
  */
 

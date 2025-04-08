@@ -241,13 +241,16 @@ static void arm_cfft_radix4by2_f64(
 /**
   @brief         Processing function for the Double Precision floating-point complex FFT.
   @param[in]     S              points to an instance of the Double Precision floating-point CFFT structure
-  @param[in,out] p1             points to the complex data buffer of size <code>2*fftLen</code>. Processing occurs in-place
+  @param[in,out] p1             points to the complex data buffer. Processing occurs in-place
   @param[in]     ifftFlag       flag that selects transform direction
                    - value = 0: forward transform
                    - value = 1: inverse transform
   @param[in]     bitReverseFlag flag that enables / disables bit reversal of output
                    - value = 0: disables bit reversal of output
                    - value = 1: enables bit reversal of output
+
+  @par Size of buffers according to the target architecture and datatype:
+       They are described on the page \ref transformbuffers "transform buffers".
  */
 
 ARM_DSP_ATTRIBUTE void arm_cfft_f64(

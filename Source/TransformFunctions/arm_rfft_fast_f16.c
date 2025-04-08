@@ -490,6 +490,9 @@ static void merge_rfft_f16(
   @param[in]     ifftFlag
                    - value = 0: RFFT
                    - value = 1: RIFFT
+
+  @par Size of buffers according to the target architecture and datatype:
+       They are described on the page \ref transformbuffers "transform buffers".
 */
 #if defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 

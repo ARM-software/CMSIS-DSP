@@ -514,7 +514,7 @@ static void arm_cfft_radix4by2_inverse_f16_mve(const arm_cfft_instance_f16 * S,f
 /**
   @brief         Processing function for the floating-point complex FFT.
   @param[in]     S              points to an instance of the floating-point CFFT structure
-  @param[in,out] p1             points to the complex data buffer of size <code>2*fftLen</code>. Processing occurs in-place
+  @param[in,out] p1             points to the complex data buffer. Processing occurs in-place
   @param[in]     ifftFlag       flag that selects transform direction
                    - value = 0: forward transform
                    - value = 1: inverse transform
@@ -527,8 +527,6 @@ static void arm_cfft_radix4by2_inverse_f16_mve(const arm_cfft_instance_f16 * S,f
                      The input and output buffers must be
                      different.
                      There is a temporary buffer.
-                     The temporary buffer has same size as
-                     input or output buffer.
                      The bit reverse flag is not more 
                      available in Neon version.
 
@@ -540,6 +538,9 @@ static void arm_cfft_radix4by2_inverse_f16_mve(const arm_cfft_instance_f16 * S,f
                       float16_t * pBuffer, 
                       uint8_t ifftFlag);
   @endcode
+
+  @par Size of buffers according to the target architecture and datatype:
+       They are described on the page \ref transformbuffers "transform buffers".
  */
 
 
@@ -673,13 +674,16 @@ extern void arm_radix4_butterfly_f16(
 /**
   @brief         Processing function for the floating-point complex FFT.
   @param[in]     S              points to an instance of the floating-point CFFT structure
-  @param[in,out] p1             points to the complex data buffer of size <code>2*fftLen</code>. Processing occurs in-place
+  @param[in,out] p1             points to the complex data buffer. Processing occurs in-place
   @param[in]     ifftFlag       flag that selects transform direction
                    - value = 0: forward transform
                    - value = 1: inverse transform
   @param[in]     bitReverseFlag flag that enables / disables bit reversal of output
                    - value = 0: disables bit reversal of output
                    - value = 1: enables bit reversal of output
+
+  @par Size of buffers according to the target architecture and datatype:
+       They are described on the page \ref transformbuffers "transform buffers".
  */
 
 ARM_DSP_ATTRIBUTE void arm_cfft_f16(
