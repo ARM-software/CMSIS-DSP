@@ -91,6 +91,7 @@ int32_t arm_cfft_tmp_buffer_size(arm_math_target_arch arch,arm_math_datatype dt,
 int32_t arm_cfft_output_buffer_size(arm_math_target_arch arch,arm_math_datatype dt,
     uint32_t nb_samples)
 {
+    (void)arch;
     switch(dt)
     {
         default:
@@ -111,6 +112,7 @@ int32_t arm_cfft_output_buffer_size(arm_math_target_arch arch,arm_math_datatype 
 int32_t arm_cifft_output_buffer_size(arm_math_target_arch arch,arm_math_datatype dt,
     uint32_t nb_samples)
 {
+    (void)arch;
     switch(dt)
     {
         default:
@@ -243,6 +245,7 @@ int32_t arm_rfft_output_buffer_size(arm_math_target_arch arch,arm_math_datatype 
 int32_t arm_rifft_input_buffer_size(arm_math_target_arch arch,arm_math_datatype dt,
     uint32_t nb_samples)
 {
+    (void)arch;
     switch(dt)
     {
         case ARM_MATH_F64:
