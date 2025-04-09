@@ -10,5 +10,8 @@ var searchData=
   ['biquad_20cascade_20iir_20filters_20using_20direct_20form_20i_20structure_7',['Biquad Cascade IIR Filters Using Direct Form I Structure',['../group__BiquadCascadeDF1.html',1,'']]],
   ['blackman_20harris_20window_20function_20_2892_20db_29_8',['Blackman Harris window function (92 dB)',['../group__WindowBLACKMAN__HARRIS__92DB.html',1,'']]],
   ['boolean_20distances_9',['Boolean Distances',['../group__BoolDist.html',1,'']]],
-  ['bray_2dcurtis_20distance_10',['Bray-Curtis distance',['../group__braycurtis.html',1,'']]]
+  ['bray_2dcurtis_20distance_10',['Bray-Curtis distance',['../group__braycurtis.html',1,'']]],
+  ['buffer_20sizes_20for_20cfft_11',['Buffer Sizes for CFFT',['../group__CFFTBuffers.html',1,'']]],
+  ['buffer_20sizes_20for_20mfcc_12',['Buffer Sizes for MFCC',['../group__MFCCBuffers.html',1,'']]],
+  ['buffer_20sizes_20for_20rfft_13',['Buffer Sizes for RFFT',['../group__RFFTBuffers.html',1,'']]]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CMSIS-DSP: Usage and Description</title>
+<title>CMSIS-DSP: Buffer Sizes for MFCC</title>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -102,7 +102,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('pages.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('group__MFCCBuffers.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -128,29 +128,85 @@ $(document).ready(function(){initNavTree('pages.html',''); initResizable(); });
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">Usage and Description</div></div>
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
+  <div class="headertitle"><div class="title">Buffer Sizes for MFCC<div class="ingroups"><a class="el" href="group__groupTransforms.html">Transform Functions</a> &raquo; <a class="el" href="group__TransformBuffers.html">Transform Buffer Sizes</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock">Here is a list of all related documentation pages:</div><div class="directory">
-<div class="levels">[detail level <span onclick="javascript:toggleLevel(1);">1</span><span onclick="javascript:toggleLevel(2);">2</span>]</div><table class="directory">
-<tr id="row_0_" class="even"><td class="entry"><span style="width:0px;display:inline-block;">&#160;</span><span id="arr_0_" class="arrow" onclick="toggleFolder('0_')">&#9658;</span><a class="el" href="dsppp_main.html" target="_self">DSP++ extension</a></td><td class="desc"></td></tr>
-<tr id="row_0_0_" class="odd" style="display:none;"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span id="arr_0_0_" class="arrow" onclick="toggleFolder('0_0_')">&#9658;</span><a class="el" href="dsppp_intro.html" target="_self">Introduction</a></td><td class="desc"></td></tr>
-<tr id="row_0_1_" class="odd" style="display:none;"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span id="arr_0_1_" class="arrow" onclick="toggleFolder('0_1_')">&#9658;</span><a class="el" href="dsppp_template.html" target="_self">What you need to know about C++ templates</a></td><td class="desc"></td></tr>
-<tr id="row_0_2_" class="odd" style="display:none;"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span id="arr_0_2_" class="arrow" onclick="toggleFolder('0_2_')">&#9658;</span><a class="el" href="dsppp_vector_example.html" target="_self">Vector operation example</a></td><td class="desc"></td></tr>
-<tr id="row_0_3_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="dsppp_memory_allocator.html" target="_self">Memory allocation</a></td><td class="desc"></td></tr>
-<tr id="row_0_4_" class="odd" style="display:none;"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span id="arr_0_4_" class="arrow" onclick="toggleFolder('0_4_')">&#9658;</span><a class="el" href="dsppp_memory_static_dynamic.html" target="_self">Static / dynamic</a></td><td class="desc"></td></tr>
-<tr id="row_0_5_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="dsppp_code_size.html" target="_self">Code size</a></td><td class="desc"></td></tr>
-<tr id="row_0_6_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="dsppp_fusion.html" target="_self">Fusion</a></td><td class="desc"></td></tr>
-<tr id="row_0_7_" class="odd" style="display:none;"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span id="arr_0_7_" class="arrow" onclick="toggleFolder('0_7_')">&#9658;</span><a class="el" href="dsppp_vector.html" target="_self">Vector</a></td><td class="desc"></td></tr>
-<tr id="row_0_8_" class="odd" style="display:none;"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span id="arr_0_8_" class="arrow" onclick="toggleFolder('0_8_')">&#9658;</span><a class="el" href="dsppp_matrix.html" target="_self">Matrix</a></td><td class="desc"></td></tr>
-<tr id="row_0_9_" class="odd" style="display:none;"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span id="arr_0_9_" class="arrow" onclick="toggleFolder('0_9_')">&#9658;</span><a class="el" href="dsppp_building.html" target="_self">Building and running examples</a></td><td class="desc"></td></tr>
-<tr id="row_0_10_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="dsppp_guidelines.html" target="_self">Guidelines</a></td><td class="desc"></td></tr>
-<tr id="row_0_11_" class="odd" style="display:none;"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="dsppp_complex.html" target="_self">Complex numbers</a></td><td class="desc"></td></tr>
-<tr id="row_1_" class="odd"><td class="entry"><span style="width:0px;display:inline-block;">&#160;</span><span id="arr_1_" class="arrow" onclick="toggleFolder('1_')">&#9658;</span><a class="el" href="transformbuffers.html" target="_self">Transform buffer sizes</a></td><td class="desc"></td></tr>
-<tr id="row_2_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="rev_hist.html" target="_self">Revision History</a></td><td class="desc"></td></tr>
-<tr id="row_3_" class="odd"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="deprecated.html" target="_self">Deprecated List</a></td><td class="desc"></td></tr>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gaa3b175be940b55a45532fdd7ac09ff8f"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MFCCBuffers.html#gaa3b175be940b55a45532fdd7ac09ff8f">arm_mfcc_tmp_buffer_size</a> (<a class="el" href="group__bufferSizeTypes.html#gabd13b7aa526441f486f66bb6a5b97432">arm_math_target_arch</a> arch, <a class="el" href="group__bufferSizeTypes.html#ga1a6c0bef7315f99a0d15b9349512e451">arm_math_datatype</a> dt, uint32_t nb_samples, uint32_t buf_id, uint32_t use_cfft)</td></tr>
+<tr class="memdesc:gaa3b175be940b55a45532fdd7ac09ff8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate required length for the temporary buffer.  <br /></td></tr>
+<tr class="separator:gaa3b175be940b55a45532fdd7ac09ff8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-</div><!-- directory -->
+<a name="details" id="details"></a><h2 class="groupheader">Description</h2>
+<p>end of RFFTBuffers group </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="gaa3b175be940b55a45532fdd7ac09ff8f" name="gaa3b175be940b55a45532fdd7ac09ff8f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa3b175be940b55a45532fdd7ac09ff8f">&#9670;&#160;</a></span>arm_mfcc_tmp_buffer_size()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t arm_mfcc_tmp_buffer_size </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__bufferSizeTypes.html#gabd13b7aa526441f486f66bb6a5b97432">arm_math_target_arch</a>&#160;</td>
+          <td class="paramname"><em>arch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__bufferSizeTypes.html#ga1a6c0bef7315f99a0d15b9349512e451">arm_math_datatype</a>&#160;</td>
+          <td class="paramname"><em>dt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>nb_samples</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>buf_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>use_cfft</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculate required length for the temporary buffer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">arch</td><td>Target architecture identification </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dt</td><td>Data type of the input data </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">nb_samples</td><td>Number of samples in the input data </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">buf_id</td><td>Identification for the temporary buffer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">use_cfft</td><td>1 if implementastion uses CFFT, 0 if RFFT </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Length in datatype elements (real numbers) for the temporary buffer</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>0 means not applicable (temporary buffer not needed) </dd>
+<dd>
+-1 means error : configuration not supported </dd>
+<dd>
+The define <code>ARM_MFCC_USE_CFFT</code> can be checked to know the current MFCC mode (CFFT or RFFT) for the build </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

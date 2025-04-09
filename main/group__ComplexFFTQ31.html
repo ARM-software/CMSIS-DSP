@@ -580,7 +580,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">S</td><td>points to an instance of the fixed-point CFFT structure </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p1</td><td>points to the complex data buffer of size <code>2*fftLen</code>. Processing occurs in-place </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p1</td><td>points to the complex data buffer. Processing occurs in-place </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">ifftFlag</td><td>flag that selects transform direction<ul>
 <li>value = 0: forward transform</li>
 <li>value = 1: inverse transform </li>
@@ -620,7 +620,7 @@ Functions</h2></td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyRight">1024   </td><td class="markdownTableBodyRight">1.31   </td><td class="markdownTableBodyRight">11.21   </td><td class="markdownTableBodyRight">0   </td></tr>
 </table>
-<dl class="section user"><dt>Neon version</dt><dd>The neon version has a different API. The input and output buffers must be different. There is a temporary buffer. The temporary buffer has same size as input or output buffer. The bit reverse flag is not more available in Neon version.</dd></dl>
+<dl class="section user"><dt>Neon version</dt><dd>The neon version has a different API. The input and output buffers must be different. There is a temporary buffer. The bit reverse flag is not more available in Neon version.</dd></dl>
 <div class="fragment"><div class="line">      <span class="keywordtype">void</span> <a class="code hl_function" href="group__ComplexFFTQ31.html#ga5a0008bd997ab6e2e299ef2fb272fb4b" title="Processing function for the Q31 complex FFT.">arm_cfft_q31</a>(</div>
 <div class="line"><span class="keyword">const</span> <a class="code hl_struct" href="structarm__cfft__instance__q31.html" title="Instance structure for the fixed-point CFFT/CIFFT function.">arm_cfft_instance_q31</a> * S,</div>
 <div class="line">      <span class="keyword">const</span> <a class="code hl_typedef" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0" title="32-bit fractional data type in 1.31 format.">q31_t</a> * src,</div>
@@ -628,7 +628,8 @@ Functions</h2></td></tr>
 <div class="line">      <a class="code hl_typedef" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0" title="32-bit fractional data type in 1.31 format.">q31_t</a> *buffer,</div>
 <div class="line">      uint8_t ifftFlag</div>
 <div class="line">      )</div>
-</div><!-- fragment --> 
+</div><!-- fragment --><dl class="section user"><dt>Size of buffers according to the target architecture and datatype:</dt><dd>They are described on the page <a class="el" href="transformbuffers.html">transform buffers</a>. </dd></dl>
+
 </div>
 </div>
 </div><!-- contents -->

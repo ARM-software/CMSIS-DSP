@@ -190,20 +190,13 @@ Real Inverse Fast Fourier Transform</div></div>
 <dl class="section user"><dt></dt><dd>Note that with MVE versions you can't initialize instance structures directly and <b>must use the initialization function</b>.</dd></dl>
 <dl class="section user"><dt>Neon version</dt><dd>The neon version has a different API. The input and output buffers must be different. There is a temporary buffer that is not optional.</dd></dl>
 <p>The bit reverse flag is not more available in Neon version.</p>
-<p>The size of the temporary buffer is fftSize float.</p>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code hl_function" href="group__RealFFTF32.html#ga5d2ec62f3e35575eba467d09ddcd98b5" title="Processing function for the floating-point real FFT.">arm_rfft_fast_f32</a>(</div>
 <div class="line">        <span class="keyword">const</span> <a class="code hl_struct" href="structarm__rfft__fast__instance__f32.html" title="Instance structure for the floating-point RFFT/RIFFT function.">arm_rfft_fast_instance_f32</a> * S,</div>
 <div class="line">        <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> * p, </div>
 <div class="line">        <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> * pOut,</div>
 <div class="line">        <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> *tmpbuf,</div>
 <div class="line">        uint8_t ifftFlag);</div>
-</div><!-- fragment --><dl class="section user"><dt>RFFT Output buffer sizes</dt><dd>They are also the input sizes for the RIFFT</dd></dl>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadRight">Scalar   </th><th class="markdownTableHeadRight">Helium   </th><th class="markdownTableHeadRight">Neon    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyRight">fftSize   </td><td class="markdownTableBodyRight">fftSize   </td><td class="markdownTableBodyRight">fftSize   </td></tr>
-</table>
+</div><!-- fragment --><dl class="section user"><dt>Size of buffers according to the target architecture and datatype:</dt><dd>They are described on the page <a class="el" href="transformbuffers.html">transform buffers</a>. </dd></dl>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

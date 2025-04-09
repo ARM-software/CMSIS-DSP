@@ -142,6 +142,8 @@ Content</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group__RealFFT"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RealFFT.html">Real FFT Functions</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:group__TransformBuffers"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__TransformBuffers.html">Transform Buffer Sizes</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>CMSIS-DSP provides CFFT and RFFT for different architectures. The implementation of those transforms may be different for the different architectures : different algorithms, different capabilities of the instruction set.</p>
@@ -155,7 +157,8 @@ Content</h2></td></tr>
 <p>By using a specific initialization function, you give an hint to the linker and it will be able to remove all unused initialization tables (some compilation and link flags must be used for the linker to be able to do this optimization. It is compiler dependent).</p>
 <p>If you don't know the size you'll need at runtime, you need to use a function like arm_cfft_init_q15. If you use such a function, all the tables for all FFT sizes (up to the CMSIS-DSP maximum of 4096) will be included in the build !</p>
 <p>On Neon, there is another possibility. You can use arm_cfft_init_dynamic_q15. This function will allocate a buffer at runtime and compute at runtime all the tables that are required for a specific FFT size. This initialization is also supported by RFFT. The computation to initialize all the tables can take lot of cycles (since several cos and sin must be computed)</p>
-<p>With this new Neon specific initialization you can use longer lengths. With CFFT, you can also use lengths containing radix 3 and/or 5 (but the length must still be a multiple of 4). </p>
+<p>With this new Neon specific initialization you can use longer lengths. With CFFT, you can also use lengths containing radix 3 and/or 5 (but the length must still be a multiple of 4).</p>
+<dl class="section user"><dt>Size of buffers according to the target architecture and datatype:</dt><dd>They are described on the page <a class="el" href="transformbuffers.html">transform buffers</a>. </dd></dl>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

@@ -233,14 +233,15 @@ Content</h2></td></tr>
 <div class="line">      <span class="keywordflow">break</span>;</div>
 <div class="line">  }</div>
 </div><!-- fragment --></dd></dl>
-<dl class="section user"><dt>Neon version</dt><dd>The neon version has a different API. The input and output buffers must be different. There is a temporary buffer. The temporary buffer has same size as input or output buffer. The bit reverse flag is not more available in Neon version.</dd></dl>
+<dl class="section user"><dt>Neon version</dt><dd>The neon version has a different API. The input and output buffers must be different. There is a temporary buffer. The bit reverse flag is not more available in Neon version.</dd></dl>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code hl_function" href="group__ComplexFFTF32.html#gade0f9c4ff157b6b9c72a1eafd86ebf80" title="Processing function for the floating-point complex FFT.">arm_cfft_f32</a>(</div>
 <div class="line">        <span class="keyword">const</span> <a class="code hl_struct" href="structarm__cfft__instance__f32.html" title="Instance structure for the floating-point CFFT/CIFFT function.">arm_cfft_instance_f32</a> * S,</div>
 <div class="line">              <span class="keyword">const</span> <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> * pIn,</div>
 <div class="line">              <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> * pOut,</div>
 <div class="line">              <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> * pBuffer, </div>
 <div class="line">              uint8_t ifftFlag);</div>
-</div><!-- fragment --> </div><!-- contents -->
+</div><!-- fragment --><dl class="section user"><dt>Size of buffers according to the target architecture and datatype:</dt><dd>They are described on the page <a class="el" href="transformbuffers.html">transform buffers</a>. </dd></dl>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

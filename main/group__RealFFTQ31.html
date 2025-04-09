@@ -902,9 +902,7 @@ Functions</h2></td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyRight">8192   </td><td class="markdownTableBodyRight">1.31   </td><td class="markdownTableBodyRight">14.18   </td><td class="markdownTableBodyRight">0   </td></tr>
 </table>
-<dl class="section user"><dt></dt><dd>If the input buffer is of length N (fftLenReal), the output buffer must have length 2N since it is containing the conjugate part (except for MVE version where N+2 is enough). The input buffer is modified by this function. </dd></dl>
-<dl class="section user"><dt></dt><dd>For the RIFFT, the source buffer must have length N+2 since the Nyquist frequency value is needed but conjugate part is ignored. It is not using the packing trick of the float version.</dd></dl>
-<dl class="section user"><dt>Neon implementation</dt><dd>The temporary buffer has size fftLength * 2 The RFFT output buffer has size fftLen + 2 The RIFFT output buffer has size fftLen</dd></dl>
+<dl class="section user"><dt>Neon implementation</dt><dd>A temporary buffer is needed</dd></dl>
 <div class="fragment"><div class="line">     <span class="keywordtype">void</span> <a class="code hl_function" href="group__RealFFTQ31.html#gabaeab5646aeea9844e6d42ca8c73fe3a" title="Processing function for the Q31 RFFT/RIFFT.">arm_rfft_q31</a>(</div>
 <div class="line"><span class="keyword">const</span> <a class="code hl_struct" href="structarm__rfft__instance__q31.html" title="Instance structure for the Q31 RFFT/RIFFT function.">arm_rfft_instance_q31</a> * S,</div>
 <div class="line">      <span class="keyword">const</span> <a class="code hl_typedef" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0" title="32-bit fractional data type in 1.31 format.">q31_t</a> * pSrc,</div>
@@ -912,13 +910,7 @@ Functions</h2></td></tr>
 <div class="line">      <a class="code hl_typedef" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0" title="32-bit fractional data type in 1.31 format.">q31_t</a> *tmp,</div>
 <div class="line">      uint8_t ifftFlag</div>
 <div class="line">      )</div>
-</div><!-- fragment --><dl class="section user"><dt>RFFT Output buffer sizes</dt><dd>They are also the input sizes for the RIFFT</dd></dl>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadRight">Scalar   </th><th class="markdownTableHeadRight">Helium   </th><th class="markdownTableHeadRight">Neon    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyRight">2*fftSize   </td><td class="markdownTableBodyRight">fftSize + 2   </td><td class="markdownTableBodyRight">fftSize + 2   </td></tr>
-</table>
+</div><!-- fragment --><dl class="section user"><dt>Size of buffers according to the target architecture and datatype:</dt><dd>They are described on the page <a class="el" href="transformbuffers.html">transform buffers</a>. </dd></dl>
 
 </div>
 </div>

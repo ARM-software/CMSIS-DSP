@@ -1,5 +1,6 @@
 var group__genericTypes =
 [
+    [ "Enumerations for transform buffer size functions", "group__bufferSizeTypes.html", "group__bufferSizeTypes" ],
     [ "float32_t", "group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715", null ],
     [ "float64_t", "group__genericTypes.html#gac55f3ae81b5bc9053760baacf57e47f4", null ],
     [ "q15_t", "group__genericTypes.html#gab5a8fb21a5b3b983d5f54f31614052ea", null ],

@@ -218,16 +218,16 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section user"><dt>Description</dt><dd>The number of input samples if the FFT length used when initializing the instance data structure.</dd></dl>
-<p>The temporary buffer pTmp has a 2*fft length size when MFCC is implemented with CFFT. It has length FFT Length when implemented with RFFT (default implementation).</p>
 <p>The source buffer is modified by this function.</p>
-<dl class="section user"><dt>Neon implementation</dt><dd>The Neon implementation has a different API. There is an additional temporary buffer pTmp2 of size FFT Length and only the RFFT based implementation is supported (it is the default one on Cortex-M). The source buffer is modified. <div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code hl_function" href="group__MFCCF32.html#gada3ab681711c96cc8b39394a42614678" title="MFCC F32.">arm_mfcc_f32</a>(</div>
+<dl class="section user"><dt>Neon implementation</dt><dd>The Neon implementation has a different API. There is an additional temporary buffer pTmp2. The source buffer is modified. <div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code hl_function" href="group__MFCCF32.html#gada3ab681711c96cc8b39394a42614678" title="MFCC F32.">arm_mfcc_f32</a>(</div>
 <div class="line">     <span class="keyword">const</span> <a class="code hl_struct" href="structarm__mfcc__instance__f32.html" title="Instance structure for the Floating-point MFCC function.">arm_mfcc_instance_f32</a> * S,</div>
 <div class="line">           <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> *pSrc,</div>
 <div class="line">           <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> *pDst,</div>
 <div class="line">           <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> *pTmp,</div>
 <div class="line">           <a class="code hl_typedef" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715" title="32-bit floating-point type definition.">float32_t</a> *pTmp2</div>
 <div class="line">  );</div>
-</div><!-- fragment --> </dd></dl>
+</div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Size of buffers according to the target architecture and datatype:</dt><dd>They are described on the page <a class="el" href="transformbuffers.html">transform buffers</a>. </dd></dl>
 
 </div>
 </div>

@@ -975,10 +975,9 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>error status</dd></dl>
 <dl class="section user"><dt>Description</dt><dd>The number of input samples is the FFT length used when initializing the instance data structure.</dd></dl>
-<p>The temporary buffer has a 2*fft length.</p>
 <p>The source buffer is modified by this function.</p>
 <p>The function may saturate. If the FFT length is too big and the number of MEL filters too small then the fixed point computations may saturate.</p>
-<dl class="section user"><dt>Neon implementation</dt><dd>There is an additional temporary buffer used for the RFFT. It has 2*fftLength size.</dd></dl>
+<dl class="section user"><dt>Neon implementation</dt><dd>There is an additional temporary buffer used for the RFFT.</dd></dl>
 <div class="fragment"><div class="line">    <a class="code hl_enumeration" href="group__genericTypes.html#ga5e459c6409dfcd2927bb8a57491d7cf6" title="vector types">arm_status</a> <a class="code hl_function" href="group__MFCCQ31.html#ga7ab98731e9e4a7705be0b3ca0c5bd94c" title="MFCC Q31.">arm_mfcc_q31</a>(</div>
 <div class="line"><span class="keyword">const</span> <a class="code hl_struct" href="structarm__mfcc__instance__q31.html" title="Instance structure for the Q31 MFCC function.">arm_mfcc_instance_q31</a> * S,</div>
 <div class="line"><a class="code hl_typedef" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0" title="32-bit fractional data type in 1.31 format.">q31_t</a> *pSrc,</div>
@@ -986,7 +985,8 @@ Functions</h2></td></tr>
 <div class="line"><a class="code hl_typedef" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0" title="32-bit fractional data type in 1.31 format.">q31_t</a> *pTmp,</div>
 <div class="line"><a class="code hl_typedef" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0" title="32-bit fractional data type in 1.31 format.">q31_t</a> *pTmp_rfft</div>
 <div class="line">)</div>
-</div><!-- fragment --> 
+</div><!-- fragment --><dl class="section user"><dt>Size of buffers according to the target architecture and datatype:</dt><dd>They are described on the page <a class="el" href="transformbuffers.html">transform buffers</a>. </dd></dl>
+
 </div>
 </div>
 </div><!-- contents -->

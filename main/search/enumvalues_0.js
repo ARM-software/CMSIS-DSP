@@ -2,10 +2,20 @@ var searchData=
 [
   ['arm_5fmath_5fargument_5ferror_0',['ARM_MATH_ARGUMENT_ERROR',['../group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a74897e18d4b8f62b12a7d8a01dd2bb35',1,'arm_math_types.h']]],
   ['arm_5fmath_5fdecomposition_5ffailure_1',['ARM_MATH_DECOMPOSITION_FAILURE',['../group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6af176673ca62a9fc570f0366808903a31',1,'arm_math_types.h']]],
-  ['arm_5fmath_5flength_5ferror_2',['ARM_MATH_LENGTH_ERROR',['../group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a9ae74d7f8a53aec0512ae8f0a421e0e1',1,'arm_math_types.h']]],
-  ['arm_5fmath_5fnaninf_3',['ARM_MATH_NANINF',['../group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6ac55996aaf19245238a8f57a91aeaefcc',1,'arm_math_types.h']]],
-  ['arm_5fmath_5fsingular_4',['ARM_MATH_SINGULAR',['../group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a91509ea9c819dbd592ac13a6b05382dc',1,'arm_math_types.h']]],
-  ['arm_5fmath_5fsize_5fmismatch_5',['ARM_MATH_SIZE_MISMATCH',['../group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a7071b92f1f6bc3c5c312a237ea91105b',1,'arm_math_types.h']]],
-  ['arm_5fmath_5fsuccess_6',['ARM_MATH_SUCCESS',['../group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0',1,'arm_math_types.h']]],
-  ['arm_5fmath_5ftest_5ffailure_7',['ARM_MATH_TEST_FAILURE',['../group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a09457f2be656b35015fd6d36202fa376',1,'arm_math_types.h']]]
+  ['arm_5fmath_5fdsp_5fextensions_5farch_2',['ARM_MATH_DSP_EXTENSIONS_ARCH',['../group__bufferSizeTypes.html#ggabd13b7aa526441f486f66bb6a5b97432a466e082a0b4c5c67219f14029158989d',1,'arm_math_types.h']]],
+  ['arm_5fmath_5ff16_3',['ARM_MATH_F16',['../group__bufferSizeTypes.html#gga1a6c0bef7315f99a0d15b9349512e451a0200e0661ae54026a9d09934f7ade22f',1,'arm_math_types.h']]],
+  ['arm_5fmath_5ff32_4',['ARM_MATH_F32',['../group__bufferSizeTypes.html#gga1a6c0bef7315f99a0d15b9349512e451a2530d952657b4847bced055022c380b5',1,'arm_math_types.h']]],
+  ['arm_5fmath_5ff64_5',['ARM_MATH_F64',['../group__bufferSizeTypes.html#gga1a6c0bef7315f99a0d15b9349512e451ae2fe5278821f3ed23ddf5cf7ee807487',1,'arm_math_types.h']]],
+  ['arm_5fmath_5fhelium_5farch_6',['ARM_MATH_HELIUM_ARCH',['../group__bufferSizeTypes.html#ggabd13b7aa526441f486f66bb6a5b97432a411b06518e2276171f2efe583a79cf15',1,'arm_math_types.h']]],
+  ['arm_5fmath_5flength_5ferror_7',['ARM_MATH_LENGTH_ERROR',['../group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a9ae74d7f8a53aec0512ae8f0a421e0e1',1,'arm_math_types.h']]],
+  ['arm_5fmath_5fnaninf_8',['ARM_MATH_NANINF',['../group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6ac55996aaf19245238a8f57a91aeaefcc',1,'arm_math_types.h']]],
+  ['arm_5fmath_5fneon_5farch_9',['ARM_MATH_NEON_ARCH',['../group__bufferSizeTypes.html#ggabd13b7aa526441f486f66bb6a5b97432a4ec27e1f76c8bc56b7a040ce6a52e794',1,'arm_math_types.h']]],
+  ['arm_5fmath_5fq15_10',['ARM_MATH_Q15',['../group__bufferSizeTypes.html#gga1a6c0bef7315f99a0d15b9349512e451a1fedcfdb663def5ad5a1061543382b7c',1,'arm_math_types.h']]],
+  ['arm_5fmath_5fq31_11',['ARM_MATH_Q31',['../group__bufferSizeTypes.html#gga1a6c0bef7315f99a0d15b9349512e451a69ad1e8014a8cd6d66995f30390a8647',1,'arm_math_types.h']]],
+  ['arm_5fmath_5fq7_12',['ARM_MATH_Q7',['../group__bufferSizeTypes.html#gga1a6c0bef7315f99a0d15b9349512e451aa8c7488d85ccaa883867d2425ceb1f0b',1,'arm_math_types.h']]],
+  ['arm_5fmath_5fscalar_5farch_13',['ARM_MATH_SCALAR_ARCH',['../group__bufferSizeTypes.html#ggabd13b7aa526441f486f66bb6a5b97432a66d36a8634aa6a80d002111e5732ab3c',1,'arm_math_types.h']]],
+  ['arm_5fmath_5fsingular_14',['ARM_MATH_SINGULAR',['../group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a91509ea9c819dbd592ac13a6b05382dc',1,'arm_math_types.h']]],
+  ['arm_5fmath_5fsize_5fmismatch_15',['ARM_MATH_SIZE_MISMATCH',['../group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a7071b92f1f6bc3c5c312a237ea91105b',1,'arm_math_types.h']]],
+  ['arm_5fmath_5fsuccess_16',['ARM_MATH_SUCCESS',['../group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0',1,'arm_math_types.h']]],
+  ['arm_5fmath_5ftest_5ffailure_17',['ARM_MATH_TEST_FAILURE',['../group__genericTypes.html#gga5e459c6409dfcd2927bb8a57491d7cf6a09457f2be656b35015fd6d36202fa376',1,'arm_math_types.h']]]
 ];

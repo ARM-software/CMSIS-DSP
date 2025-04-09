@@ -217,7 +217,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">S</td><td>points to an instance of the floating-point CFFT structure </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p1</td><td>points to the complex data buffer of size <code>2*fftLen</code>. Processing occurs in-place </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p1</td><td>points to the complex data buffer. Processing occurs in-place </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">ifftFlag</td><td>flag that selects transform direction<ul>
 <li>value = 0: forward transform</li>
 <li>value = 1: inverse transform </li>
@@ -225,12 +225,13 @@ Functions</h2></td></tr>
 </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">bitReverseFlag</td><td>flag that enables / disables bit reversal of output<ul>
 <li>value = 0: disables bit reversal of output</li>
-<li>value = 1: enables bit reversal of output </li>
+<li>value = 1: enables bit reversal of output</li>
 </ul>
 </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section user"><dt>Size of buffers according to the target architecture and datatype:</dt><dd>They are described on the page <a class="el" href="transformbuffers.html">transform buffers</a>. </dd></dl>
 
 </div>
 </div>
