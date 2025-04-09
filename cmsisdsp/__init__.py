@@ -30,7 +30,7 @@ commit_hash="04c0b534edf16bd2898ecc66c1c660c27158f286"
 # (So several CMSIS-DSP versions may have same version number hence the commit hash)
 developmentVersion=True
 
-__all__ = ["datatype", "fixedpoint", "mfcc"]
+__all__ = ["datatype", "fixedpoint", "mfcc","demo"]
 
 # Default values
 DEFAULT_HOUSEHOLDER_THRESHOLD_F64=1.0e-16

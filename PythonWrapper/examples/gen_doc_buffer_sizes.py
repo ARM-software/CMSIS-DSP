@@ -76,8 +76,10 @@ def arch_header():
     
 
 
-def gen_buffer_size(name,f):
+def gen_buffer_size(name,f,comment=None):
     print(f"### {name}\n")
+    if comment is not None:
+        print(f"{comment}\n")
     nbs=arch_header()
 
     for d in DT:
@@ -135,7 +137,7 @@ print("## RFFT\n")
 print("RFFT of length N\n")
 
 f = lambda d,arch: dsp.arm_rfft_tmp_buffer_size(d,NBSAMPLES,1,arch=arch)
-gen_buffer_size("RFFT Temporary Buffer Size",f)
+gen_buffer_size("RFFT/RIFFT Temporary Buffer Size",f,comment="Apply to both RFFT and RIFFT")
 
 f = lambda d,arch: dsp.arm_rfft_output_buffer_size(d,NBSAMPLES,arch=arch)
 gen_buffer_size("RFFT Output Buffer Size",f)

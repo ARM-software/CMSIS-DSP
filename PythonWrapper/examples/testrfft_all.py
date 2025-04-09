@@ -1,4 +1,5 @@
 import cmsisdsp as dsp
+import cmsisdsp.datatype as dt
 
 import numpy as np
 from scipy import signal
@@ -40,22 +41,18 @@ class TestRFFTMethods_RFFT(unittest.TestCase):
         # when the samples are complex)
         
         self.RFFT_F_IN_LENGTH = self.nb # real
-        self.RFFT_F_OUT_LENGTH = self.nb # complex (so nb // 2 complex)
+        self.RFFT_F_OUT_LENGTH = dsp.arm_rfft_output_buffer_size(dt.F32,self.nb)
         
-        self.RIFFT_F_IN_LENGTH = self.nb # complex
+        self.RIFFT_F_IN_LENGTH = dsp.arm_rifft_input_buffer_size(dt.F32,self.nb)
         self.RIFFT_F_OUT_LENGTH = self.nb # real
         
         # Length of arrays for the fixed point implementation
         # of the RFFT
-        if dsp.has_neon():
-           self.RFFT_Q_IN_LENGTH = self.nb 
-           self.RFFT_Q_OUT_LENGTH = self.nb + 2
-        else:
-           self.RFFT_Q_IN_LENGTH = self.nb 
-           self.RFFT_Q_OUT_LENGTH = 2*self.nb 
+        self.RFFT_Q_IN_LENGTH = self.nb 
+        self.RFFT_Q_OUT_LENGTH = dsp.arm_rfft_output_buffer_size(dt.Q15,self.nb) 
         
         # Conjugate part ignored
-        self.RIFFT_Q_IN_LENGTH = self.nb + 2
+        self.RIFFT_Q_IN_LENGTH = dsp.arm_rifft_input_buffer_size(dt.Q15,self.nb) # complex
         self.RIFFT_Q_OUT_LENGTH = self.nb
 
         # Convert ref to CMSIS-DSP format 
@@ -105,7 +102,8 @@ class TestRFFTMethods_RFFT(unittest.TestCase):
             status=dsp.arm_rfft_fast_init_f32(rfftf32,self.nb)
             self.assertTrue(status == 0)
             if dsp.has_neon():
-               tmp = np.zeros(self.nb,dtype=np.float32)
+               tmp_nb = dsp.arm_rfft_tmp_buffer_size(dt.F32,self.nb,1)
+               tmp = np.zeros(tmp_nb,dtype=np.float32)
                result = dsp.arm_rfft_fast_f32(rfftf32,self.signal,0,tmp=tmp)
             else:
                result = dsp.arm_rfft_fast_f32(rfftf32,self.signal,0)
@@ -119,7 +117,8 @@ class TestRFFTMethods_RFFT(unittest.TestCase):
             status=dsp.arm_rfft_fast_init_f32(rifftf32,self.nb)
             self.assertTrue(status == 0)
             if dsp.has_neon():
-                tmp = np.zeros(self.nb,dtype=np.float32)
+                tmp_nb = dsp.arm_rfft_tmp_buffer_size(dt.F32,self.nb,1)
+                tmp = np.zeros(tmp_nb,dtype=np.float32)
                 result = dsp.arm_rfft_fast_f32(rifftf32,self.referenceFloat,1,tmp=tmp)
             else:
                 result = dsp.arm_rfft_fast_f32(rifftf32,self.referenceFloat,1)
@@ -133,7 +132,9 @@ class TestRFFTMethods_RFFT(unittest.TestCase):
             
             if dsp.has_neon():
                status=dsp.arm_rfft_init_q31(rfftQ31,self.nb)
-               result = dsp.arm_rfft_q31(rfftQ31,signalQ31,0)
+               tmp_nb = dsp.arm_rfft_tmp_buffer_size(dt.Q31,self.nb,1)
+               tmp = np.zeros(tmp_nb,dtype=np.int32)
+               result = dsp.arm_rfft_q31(rfftQ31,signalQ31,0,tmp=tmp)
             else:
                status=dsp.arm_rfft_init_q31(rfftQ31,self.nb,0,1)
                result = dsp.arm_rfft_q31(rfftQ31,signalQ31)
@@ -158,7 +159,9 @@ class TestRFFTMethods_RFFT(unittest.TestCase):
             referenceQ31 = toQ31(self.referenceFixed / self.nb) 
             if dsp.has_neon():
                status=dsp.arm_rfft_init_q31(rifftQ31,self.nb)
-               result = dsp.arm_rfft_q31(rifftQ31,referenceQ31,1)
+               tmp_nb = dsp.arm_rfft_tmp_buffer_size(dt.Q31,self.nb,1)
+               tmp = np.zeros(tmp_nb,dtype=np.int32)
+               result = dsp.arm_rfft_q31(rifftQ31,referenceQ31,1,tmp=tmp)
             else:
                status=dsp.arm_rfft_init_q31(rifftQ31,self.nb,1,1)
                result = dsp.arm_rfft_q31(rifftQ31,referenceQ31)
@@ -173,8 +176,9 @@ class TestRFFTMethods_RFFT(unittest.TestCase):
             signalQ15 = toQ15(self.signal)
             rfftQ15=dsp.arm_rfft_instance_q15()
             if dsp.has_neon():
-               tmp = np.zeros(2*self.nb,dtype=np.int16)
                status=dsp.arm_rfft_init_q15(rfftQ15,self.nb)
+               tmp_nb = dsp.arm_rfft_tmp_buffer_size(dt.Q15,self.nb,1)
+               tmp = np.zeros(tmp_nb,dtype=np.int16)
                result = dsp.arm_rfft_q15(rfftQ15,signalQ15,0,tmp=tmp)
             else:
                status=dsp.arm_rfft_init_q15(rfftQ15,self.nb,0,1)
@@ -201,7 +205,9 @@ class TestRFFTMethods_RFFT(unittest.TestCase):
             referenceQ15 = toQ15(self.referenceFixed / self.nb) 
             if dsp.has_neon():
                status=dsp.arm_rfft_init_q15(rifftQ15,self.nb)
-               result = dsp.arm_rfft_q15(rifftQ15,referenceQ15,1)
+               tmp_nb = dsp.arm_rfft_tmp_buffer_size(dt.Q15,self.nb,1)
+               tmp = np.zeros(tmp_nb,dtype=np.int16)
+               result = dsp.arm_rfft_q15(rifftQ15,referenceQ15,1,tmp=tmp)
             else:
                status=dsp.arm_rfft_init_q15(rifftQ15,self.nb,1,1)
                result = dsp.arm_rfft_q15(rifftQ15,referenceQ15)

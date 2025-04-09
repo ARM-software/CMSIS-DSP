@@ -1338,7 +1338,7 @@ extern int32_t arm_cifft_output_buffer_size(arm_math_target_arch arch,
                                              uint32_t nb_samples);
 
 /**
-   @brief Calculate required length for the temporary buffer
+   @brief Calculate required length for the temporary buffer for both RFFT and RIFFT
    @param[in] arch Target architecture identification
    @param[in] dt Data type of the input data
    @param[in] nb_samples Number of samples in the input data

@@ -341,7 +341,7 @@ extern "C"
   /**
    * @brief 32-bit floating-point type definition.
    */
-#if !defined(__ICCARM__) || !(__ARM_FEATURE_MVE & 2)
+#if !defined(__ICCARM__) || !defined(__ARM_FEATURE_MVE) || !(__ARM_FEATURE_MVE & 2)
   typedef float float32_t;
 #endif
 

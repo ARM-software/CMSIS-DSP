@@ -51,12 +51,14 @@ class TestMFCC_MFCC(unittest.TestCase):
 
         
      
+        tmp_nb = dsp.arm_mfcc_tmp_buffer_size(dt.F32,self.FFTSize,1)
+        tmp = np.zeros(tmp_nb,dtype=np.float32)
         if dsp.has_neon():
-           tmp=np.zeros(self.FFTSize)
-           tmp2=np.zeros(self.FFTSize)
+           tmp2_nb = dsp.arm_mfcc_tmp_buffer_size(dt.F32,self.FFTSize,2)
+           tmp2 = np.zeros(tmp2_nb,dtype=np.float32)
+           
            res=dsp.arm_mfcc_f32(mfccf32,debug,tmp,tmp2=tmp2)
         else:
-           tmp=np.zeros(2*self.FFTSize)
            res=dsp.arm_mfcc_f32(mfccf32,debug,tmp)
         assert_allclose(res,ref,3e-6,3e-6)
 
@@ -86,12 +88,15 @@ class TestMFCC_MFCC(unittest.TestCase):
 
 
         debugQ31 = toQ31(debug)
+
+        tmp_nb = dsp.arm_mfcc_tmp_buffer_size(dt.Q31,self.FFTSize,1)
+        tmp = np.zeros(tmp_nb,dtype=np.int32)
+
         if dsp.has_neon():
-           tmp=np.zeros(self.FFTSize+2,dtype=np.int32)
-           tmp2=np.zeros(2*self.FFTSize,dtype=np.int32)
+           tmp2_nb = dsp.arm_mfcc_tmp_buffer_size(dt.Q31,self.FFTSize,2)
+           tmp2 = np.zeros(tmp2_nb,dtype=np.int32)
            errorStatus,resQ31=dsp.arm_mfcc_q31(mfccq31,debugQ31,tmp,tmp2=tmp2)
         else:
-           tmp=np.zeros(2*self.FFTSize,dtype=np.int32)
            errorStatus,resQ31=dsp.arm_mfcc_q31(mfccq31,debugQ31,tmp)
         res=self.FFTSize*Q31toF32(resQ31)
 
@@ -125,12 +130,15 @@ class TestMFCC_MFCC(unittest.TestCase):
         
 
         debugQ15 = toQ15(debug)
+
+        tmp_nb = dsp.arm_mfcc_tmp_buffer_size(dt.Q15,self.FFTSize,1)
+        tmp = np.zeros(tmp_nb,dtype=np.int16)
+
         if dsp.has_neon():
-           tmp=np.zeros(self.FFTSize+2,dtype=np.int32)
-           tmp2=np.zeros(2*self.FFTSize,dtype=np.int32)
+           tmp2_nb = dsp.arm_mfcc_tmp_buffer_size(dt.Q15,self.FFTSize,2)
+           tmp2 = np.zeros(tmp2_nb,dtype=np.int16)
            errorStatus,resQ15=dsp.arm_mfcc_q15(mfccq15,debugQ15,tmp,tmp2=tmp2)
         else:
-           tmp=np.zeros(2*self.FFTSize,dtype=np.int32)
            errorStatus,resQ15=dsp.arm_mfcc_q15(mfccq15,debugQ15,tmp)
         res=self.FFTSize*Q15toF32(resQ15)
 
