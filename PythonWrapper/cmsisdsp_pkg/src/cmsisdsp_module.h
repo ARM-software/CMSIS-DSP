@@ -34,7 +34,10 @@
 // Check it is built with right version
 // (should be backward compatible down to 1.23.5)
 // https://github.com/numpy/numpy/blob/main/numpy/_core/include/numpy/numpyconfig.h
-#if (NPY_API_VERSION != NPY_2_1_API_VERSION  )
+#if (NPY_API_VERSION != NPY_2_1_API_VERSION   )
+#define STR_HELPER(x) #x
+#define STR(x) STR_HELPER(x)
+#pragma message "Building with numpy version " STR(NPY_API_VERSION)
 #error("Error building with wrong NumPy API version")
 #endif
 

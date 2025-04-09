@@ -1,7 +1,7 @@
 import cmsisdsp as dsp
 import numpy as np
 from scipy import signal
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 from scipy.fftpack import dct 
 from scipy.signal import lfilter
 import unittest
