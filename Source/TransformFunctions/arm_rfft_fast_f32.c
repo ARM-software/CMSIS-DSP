@@ -584,8 +584,6 @@ static void merge_rfft_f32(
                      The bit reverse flag is not more 
                      available in Neon version.
 
-                     The size of the temporary buffer is
-                     fftSize float.
 
   @code
         void arm_rfft_fast_f32(
@@ -596,13 +594,8 @@ static void merge_rfft_f32(
                 uint8_t ifftFlag);
   @endcode
 
-  @par RFFT Output buffer sizes
-       They are also the input sizes for the RIFFT
-
-| Scalar     | Helium        | Neon           |
-| ---------: | ------------: | -------------: | 
-| fftSize    | fftSize       | fftSize        |  
-
+  @par Size of buffers according to the target architecture and datatype:
+       They are described on the page \ref transformbuffers "transform buffers".
  */
 
 /**
@@ -636,10 +629,6 @@ static void merge_rfft_f32(
                      available in Neon version.
 
   @par
-                     The size of the temporary buffer is
-                     fftSize float.
-
-  @par
    @code
         void arm_rfft_fast_f32(
                 const arm_rfft_fast_instance_f32 * S,
@@ -648,6 +637,9 @@ static void merge_rfft_f32(
                 float32_t *tmpbuf,
                 uint8_t ifftFlag);
   @endcode
+
+  @par Size of buffers according to the target architecture and datatype:
+       They are described on the page \ref transformbuffers "transform buffers".
 */
 
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
@@ -707,5 +699,5 @@ ARM_DSP_ATTRIBUTE void arm_rfft_fast_f32(
 }
 #endif
 /**
-* @} end of RRealFFTF16ealFFT group
+* @} end of RealFFTF32 group
 */

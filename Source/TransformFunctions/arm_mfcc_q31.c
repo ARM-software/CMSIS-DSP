@@ -62,8 +62,6 @@
                    The number of input samples is the FFT length used
                    when initializing the instance data structure.
 
-                   The temporary buffer has a 2*fft length.
-
                    The source buffer is modified by this function.
 
                    The function may saturate. If the FFT length is too
@@ -72,7 +70,6 @@
 
   @par Neon implementation
        There is an additional temporary buffer used for the RFFT.
-       It has 2*fftLength size.
 
 
   @code 
@@ -85,8 +82,10 @@
   )
   @endcode
 
- */
+  @par Size of buffers according to the target architecture and datatype:
+       They are described on the page \ref transformbuffers "transform buffers".
 
+ */
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 ARM_DSP_ATTRIBUTE arm_status arm_mfcc_q31(
   const arm_mfcc_instance_q31 * S,
@@ -146,10 +145,10 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_q31(
     /* Default RFFT based implementation */
     arm_rfft_q31(&(S->rfft),pSrc,pTmp2,pTmp_rfft,0);
 #else
-#if defined(ARM_MFCC_CFFT_BASED)
+#if defined(ARM_MFCC_USE_CFFT)
     /* some HW accelerator for CMSIS-DSP used in some boards
        are only providing acceleration for CFFT.
-       With ARM_MFCC_CFFT_BASED enabled, CFFT is used and the MFCC
+       With ARM_MFCC_USE_CFFT enabled, CFFT is used and the MFCC
        will be accelerated on those boards.
  
        The default is to use RFFT

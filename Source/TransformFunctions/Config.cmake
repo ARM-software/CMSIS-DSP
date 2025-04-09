@@ -131,6 +131,9 @@ target_sources(CMSISDSP PRIVATE TransformFunctions/arm_mfcc_init_f16.c)
 target_sources(CMSISDSP PRIVATE TransformFunctions/arm_mfcc_f16.c)
 endif()
 
+
+target_sources(CMSISDSP PRIVATE TransformFunctions/arm_transform_buffer_sizes.c)
+
 endif()
 
 if (NEON OR NEONEXPERIMENTAL)

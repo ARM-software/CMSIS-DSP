@@ -54,7 +54,7 @@ Since the [CMSIS-DSP](https://github.com/ARM-software/CMSIS-DSP) wrapper is usin
 
     > pip install numpy
 
-Once `NumPy` is installed, you can build the [CMSIS-DSP](https://github.com/ARM-software/CMSIS-DSP) python wrapper. Go to folder `CMSIS/DSP`.
+Once `NumPy` is installed, you can build the [CMSIS-DSP](https://github.com/ARM-software/CMSIS-DSP) python wrapper. Go to folder `CMSIS-DSP`.
 
 Now, you can install the cmsisdsp package in editable mode:
 
@@ -233,6 +233,9 @@ MEL filters are represented as 3 arrays to encode a sparse array.
 
 
 # Change history
+
+## Version 1.10.0:
+* Some Neon acceleration on Arm aarch64 (with small API differences for FFT)
 
 ## Version 1.9.9:
 * Supports Python 3.12

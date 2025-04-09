@@ -38,6 +38,8 @@
   status=arm_rfft_init_##L##_q15(&(S->rfft),0,1);
 #endif 
 
+
+
 /**
  * @defgroup MFCCQ15 MFCC Q15
  */
@@ -121,7 +123,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_q15(
  S->filterCoefs=filterCoefs;
  S->windowCoefs=windowCoefs;
 
- #if defined(ARM_MFCC_CFFT_BASED)
+ #if defined(ARM_MFCC_USE_CFFT)
  status=arm_cfft_init_q15(&(S->cfft),fftLen);
  #else
  RFFT_INIT(fftLen);
@@ -130,7 +132,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_q15(
  return(status);
 }
 
-#if defined(ARM_MFCC_CFFT_BASED)
+#if defined(ARM_MFCC_USE_CFFT)
 #define MFCC_INIT_Q15(LEN)                    \
 ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_##LEN##_q15(         \
   arm_mfcc_instance_q15 * S,                  \

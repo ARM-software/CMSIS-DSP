@@ -43,6 +43,14 @@
 #define ARM_MIXED_RADIX_FFT 1
 #endif
 
+#if !defined(ARM_MATH_NEON) || defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MFCC_CFFT_BASED)
+#if !defined(ARM_MFCC_USE_CFFT)
+#define ARM_MFCC_USE_CFFT
+#endif
+#endif
+#endif
+
 #ifdef   __cplusplus
 extern "C"
 {
@@ -90,6 +98,9 @@ extern "C"
  *  With this new Neon specific initialization you can use longer lengths.
  *  With CFFT, you can also use lengths containing radix 3 and/or 5 (but
  *  the length must still be a multiple of 4).
+ * 
+ * @par Size of buffers according to the target architecture and datatype:
+ *      They are described on the page \ref transformbuffers "transform buffers".
  */
 
 
@@ -852,7 +863,7 @@ typedef struct
      uint32_t fftLen; /**< FFT length */
      uint32_t nbMelFilters; /**< Number of Mel filters */
      uint32_t nbDctOutputs; /**< Number of DCT outputs */
-#if defined(ARM_MFCC_CFFT_BASED)
+#if defined(ARM_MFCC_USE_CFFT)
      /* Implementation of the MFCC is using a CFFT */
      arm_cfft_instance_f32 cfft; /**< Internal CFFT instance */
 #else
@@ -999,7 +1010,7 @@ typedef struct
      uint32_t fftLen; /**< FFT length */
      uint32_t nbMelFilters; /**< Number of Mel filters */
      uint32_t nbDctOutputs; /**< Number of DCT outputs */
-#if defined(ARM_MFCC_CFFT_BASED)
+#if defined(ARM_MFCC_USE_CFFT)
      /* Implementation of the MFCC is using a CFFT */
      arm_cfft_instance_q31 cfft; /**< Internal CFFT instance */
 #else
@@ -1147,7 +1158,7 @@ typedef struct
      uint32_t fftLen; /**< FFT length */
      uint32_t nbMelFilters; /**< Number of Mel filters */
      uint32_t nbDctOutputs; /**< Number of DCT outputs */
-#if defined(ARM_MFCC_CFFT_BASED)
+#if defined(ARM_MFCC_USE_CFFT)
      /* Implementation of the MFCC is using a CFFT */
      arm_cfft_instance_q15 cfft; /**< Internal CFFT instance */
 #else
@@ -1281,6 +1292,114 @@ arm_status arm_mfcc_init_q15(
   q31_t *pTmp
   );
 #endif
+
+/**
+  @brief Calculate required length for the temporary buffer
+  @param[in] arch Target architecture identification
+  @param[in] dt Data type of the input data
+  @param[in] nb_samples Number of samples in the input data
+  @param[in] buf_id Identification for the temporary buffer
+  @return Length in datatype elements (real numbers) for the temporary buffer
+
+  @note 0 means not applicable (temporary buffer not needed)
+  @note -1 means error : configuration not supported
+*/
+extern int32_t arm_cfft_tmp_buffer_size(arm_math_target_arch arch,
+                                         arm_math_datatype dt,
+                                         uint32_t nb_samples,
+                                         uint32_t buf_id);
+
+/**                                      
+  @brief Calculate required length for the output buffer
+  @param[in] arch Target architecture identification
+  @param[in] dt Data type of the input data
+  @param[in] nb_samples Number of samples in the input data
+  @return Length in datatype elements (real numbers) for the temporary buffer
+
+  @note 0 means not applicable (temporary buffer not needed)
+  @note -1 means error : configuration not supported
+*/
+extern int32_t arm_cfft_output_buffer_size(arm_math_target_arch arch,
+                                            arm_math_datatype dt,
+                                            uint32_t nb_samples);
+
+/**
+  @brief Calculate required length for the output buffer
+  @param[in] arch Target architecture identification
+  @param[in] dt Data type of the input data
+  @param[in] nb_samples Number of samples in the input data
+  @return Length in datatype elements (real numbers) for the temporary buffer
+
+  @note 0 means not applicable (temporary buffer not needed)
+  @note -1 means error : configuration not supported
+*/
+extern int32_t arm_cifft_output_buffer_size(arm_math_target_arch arch,
+                                             arm_math_datatype dt,
+                                             uint32_t nb_samples);
+
+/**
+   @brief Calculate required length for the temporary buffer for both RFFT and RIFFT
+   @param[in] arch Target architecture identification
+   @param[in] dt Data type of the input data
+   @param[in] nb_samples Number of samples in the input data
+   @param[in] buf_id Identification for the temporary buffer
+   @return Length in datatype elements (real numbers) for the temporary buffer
+
+   @note 0 means not applicable (temporary buffer not needed)
+   @note -1 means error : configuration not supported
+*/
+extern int32_t arm_rfft_tmp_buffer_size(arm_math_target_arch arch,
+                                         arm_math_datatype dt,
+                                         uint32_t nb_samples,
+                                         uint32_t buf_id);
+
+/**
+   @brief Calculate required length for the output buffer
+   @param[in] arch Target architecture identification
+   @param[in] dt Data type of the input data
+   @param[in] nb_samples Number of samples in the input data
+   @return Length in datatype elements (real numbers) for the output buffer
+
+   @note 0 means not applicable (temporary buffer not needed)
+   @note -1 means error : configuration not supported
+*/
+extern int32_t arm_rfft_output_buffer_size(arm_math_target_arch arch,
+                                            arm_math_datatype dt,
+                                            uint32_t nb_samples);
+
+
+/** 
+ * @brief Calculate required length for the input buffer
+ * @param[in] arch Target architecture identification
+ * @param[in] dt Data type of the input data
+ * @param[in] nb_samples RFFT length in samples
+ * @param[in] buf_id Identification for the temporary buffer
+ * @return Length in datatype elements (real numbers) for the input buffer
+ * 
+ * @note 0 means not applicable (temporary buffer not needed)
+ * @note -1 means error : configuration not supported
+ */
+extern int32_t arm_rifft_input_buffer_size(arm_math_target_arch arch,
+                                            arm_math_datatype dt,
+                                            uint32_t nb_samples);
+
+/**
+   @brief Calculate required length for the temporary buffer
+   @param[in] arch Target architecture identification
+   @param[in] dt Data type of the input data
+   @param[in] nb_samples Number of samples in the input data
+   @param[in] buf_id Identification for the temporary buffer
+   @param[in] use_cfft 1 if implementastion uses CFFT, 0 if RFFT
+   @return Length in datatype elements (real numbers) for the temporary buffer
+
+   @note 0 means not applicable (temporary buffer not needed)
+   @note -1 means error : configuration not supported
+*/
+extern int32_t arm_mfcc_tmp_buffer_size(arm_math_target_arch arch,
+                                         arm_math_datatype dt,
+                                         uint32_t nb_samples,
+                                         uint32_t buf_id,
+                                         uint32_t use_cfft);
 
 #ifdef   __cplusplus
 }

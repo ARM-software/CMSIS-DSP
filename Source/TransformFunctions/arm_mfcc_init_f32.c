@@ -26,6 +26,7 @@
  * limitations under the License.
  */
 
+
 /**
  * @defgroup MFCCF32 MFCC F32
  */
@@ -110,7 +111,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_f32(
  S->filterCoefs=filterCoefs;
  S->windowCoefs=windowCoefs;
 
- #if defined(ARM_MFCC_CFFT_BASED)
+ #if defined(ARM_MFCC_USE_CFFT)
  status=arm_cfft_init_f32(&(S->cfft),fftLen);
  #else
  status=arm_rfft_fast_init_f32(&(S->rfft),fftLen);
@@ -119,7 +120,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_f32(
  return(status);
 }
 
-#if defined(ARM_MFCC_CFFT_BASED)
+#if defined(ARM_MFCC_USE_CFFT)
 #define MFCC_INIT_F32(LEN)                    \
 ARM_DSP_ATTRIBUTE arm_status arm_mfcc_init_##LEN##_f32(         \
   arm_mfcc_instance_f32 * S,                  \

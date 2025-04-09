@@ -26,9 +26,17 @@ __version__ = re.search(
 includes = [os.path.join(ROOT,"Include"),os.path.join(ROOT,"PrivateInclude"),os.path.join("PythonWrapper","cmsisdsp_pkg","src")]
 
 if sys.platform == 'win32':
-  cflags = ["-DWIN","-DCMSISDSP","-DUNALIGNED_SUPPORT_DISABLE"] 
+  cflags = ["-DWIN",
+            "-DCMSISDSP",
+            "-DUNALIGNED_SUPPORT_DISABLE"] 
 else:
-  cflags = ["-Wno-attributes","-Wno-unused-function","-Wno-unused-variable","-Wno-implicit-function-declaration","-DCMSISDSP","-D__GNUC_PYTHON__"]
+  cflags = ["-DARM_MATH_NEON",
+            "-Wno-attributes",
+            "-Wno-unused-function",
+            "-Wno-unused-variable",
+            "-Wno-implicit-function-declaration",
+            "-DCMSISDSP",
+            "-D__GNUC_PYTHON__"]
 
 # Add dependencies
 transformMod = [] # transform + common + basic + complexf + fastmath + matrix + statistics
@@ -134,9 +142,7 @@ def mkModule(name,srcs,funcDir):
                     extra_objects=extraobjs
                               ))
 
-flagsForCommonWithoutFFT=["-DARM_DSP_CONFIG_TABLES", 
-    "-DARM_FAST_ALLOW_TABLES", 
-    "-DARM_ALL_FAST_TABLES"]
+flagsForCommonWithoutFFT=[]
 
 moduleFiltering = mkModule('cmsisdsp_filtering',filtering,"FilteringFunctions")
 moduleMatrix = mkModule('cmsisdsp_matrix',matrix,"MatrixFunctions")
@@ -185,7 +191,7 @@ def build():
                         moduleWindow
                         ],
          include_package_data=True,
-         author = 'Copyright (C) 2010-2024 ARM Limited or its affiliates. All rights reserved.',
+         author = 'Copyright (C) 2010-2025 ARM Limited or its affiliates. All rights reserved.',
          author_email = 'christophe.favergeon@arm.com',
          url="https://github.com/ARM-software/CMSIS-DSP",
          python_requires='>=3.9',

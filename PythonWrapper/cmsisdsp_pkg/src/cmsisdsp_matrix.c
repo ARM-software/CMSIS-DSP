@@ -1909,9 +1909,9 @@ cmsis_arm_mat_cholesky_f32(PyObject *obj, PyObject *args)
     createf32Matrix(&dst_converted,row,column);
 
     float32_t *p=dst_converted.pData;
-    for(int r=0;r<row;r++)
+    for(uint32_t r=0;r<row;r++)
     {
-        for(int c =0; c < column;c++)
+        for(uint32_t c =0; c < column;c++)
         {
           *p++=0.0f;
         }
@@ -1949,9 +1949,9 @@ cmsis_arm_mat_cholesky_f64(PyObject *obj, PyObject *args)
     createf64Matrix(&dst_converted,row,column);
 
     float64_t *p=dst_converted.pData;
-    for(int r=0;r<row;r++)
+    for(uint32_t r=0;r<row;r++)
     {
-        for(int c =0; c < column;c++)
+        for(uint32_t c =0; c < column;c++)
         {
           *p++=0.0f;
         }

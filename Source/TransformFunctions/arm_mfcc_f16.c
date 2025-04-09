@@ -67,13 +67,10 @@
                    The number of input samples if the FFT length used
                    when initializing the instance data structure.
 
-                   The temporary buffer has a 2*fft length size when MFCC
-                   is implemented with CFFT.
-                   It has length FFT Length + 2 when implemented with RFFT
-                   (default implementation).
-
                    The source buffer is modified by this function.
 
+  @par Size of buffers according to the target architecture and datatype:
+       They are described on the page \ref transformbuffers "transform buffers".
  */
 #if defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 ARM_DSP_ATTRIBUTE void arm_mfcc_f16(
@@ -116,10 +113,10 @@ ARM_DSP_ATTRIBUTE void arm_mfcc_f16(
   arm_rfft_fast_f16(&(S->rfft),pSrc,pTmp,pTmp2,0);
   pTmp[1]=0.0f16;
 #else
-#if defined(ARM_MFCC_CFFT_BASED)
+#if defined(ARM_MFCC_USE_CFFT)
   /* some HW accelerator for CMSIS-DSP used in some boards
      are only providing acceleration for CFFT.
-     With ARM_MFCC_CFFT_BASED enabled, CFFT is used and the MFCC
+     With ARM_MFCC_USE_CFFT enabled, CFFT is used and the MFCC
      will be accelerated on those boards.
  
      The default is to use RFFT

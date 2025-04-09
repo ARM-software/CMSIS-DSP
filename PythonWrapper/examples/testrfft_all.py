@@ -1,22 +1,17 @@
 import cmsisdsp as dsp
-import cmsisdsp.fixedpoint as f
+import cmsisdsp.datatype as dt
 
 import numpy as np
 from scipy import signal
 #import matplotlib.pyplot as plt
 import scipy.fft
 
-import colorama
-from colorama import init,Fore, Back, Style
-from numpy.testing import assert_allclose
 
-init()
+import unittest
+from numpy.testing import assert_allclose,assert_equal
 
-def printTitle(s):
-    print("\n" + Fore.GREEN + Style.BRIGHT +  s + Style.RESET_ALL)
+from testtools import *
 
-def printSubTitle(s):
-    print("\n" + Style.BRIGHT + s + Style.RESET_ALL)
 
 
 def chop(A, eps = 1e-6):
@@ -26,171 +21,206 @@ def chop(A, eps = 1e-6):
 
 # For fixed point version, compare that
 # the conjugate part is really the conjugate part
-def compareWithConjugatePart(r):
+def compareWithConjugatePart(nb,r):
     res = r[0::2] + 1j * r[1::2]
     conjPart = res[nb:nb//2:-1].conj()
     refPart = res[1:nb//2]
     assert(np.equal(refPart , conjPart).all())
 
-nb = 32
-signal = np.cos(2 * np.pi * np.arange(nb) / nb)*np.cos(0.2*2 * np.pi * np.arange(nb) / nb)
 
-ref=scipy.fft.rfft(signal)
-invref = scipy.fft.irfft(ref)
+class TestRFFTMethods_RFFT(unittest.TestCase):
 
-assert(len(ref) == (nb // 2) + 1)
-assert(len(invref) == nb)
+     def setUp(self):
+        self.nb = 32
+        self.signal = np.cos(2 * np.pi * np.arange(self.nb) / self.nb)*np.cos(0.2*2 * np.pi * np.arange(self.nb) / self.nb)
+        
+        self.ref=scipy.fft.rfft(self.signal)
+        self.invref = scipy.fft.irfft(self.ref)
+        # Length of arrays for the float implementation
+        # of the RFFT (in float so there is a factor 2
+        # when the samples are complex)
+        
+        self.RFFT_F_IN_LENGTH = self.nb # real
+        self.RFFT_F_OUT_LENGTH = dsp.arm_rfft_output_buffer_size(dt.F32,self.nb)
+        
+        self.RIFFT_F_IN_LENGTH = dsp.arm_rifft_input_buffer_size(dt.F32,self.nb)
+        self.RIFFT_F_OUT_LENGTH = self.nb # real
+        
+        # Length of arrays for the fixed point implementation
+        # of the RFFT
+        self.RFFT_Q_IN_LENGTH = self.nb 
+        self.RFFT_Q_OUT_LENGTH = dsp.arm_rfft_output_buffer_size(dt.Q15,self.nb) 
+        
+        # Conjugate part ignored
+        self.RIFFT_Q_IN_LENGTH = dsp.arm_rifft_input_buffer_size(dt.Q15,self.nb) # complex
+        self.RIFFT_Q_OUT_LENGTH = self.nb
 
-# Length of arrays for the float implementation
-# of the RFFT (in float so there is a factor 2
-# when the samples are complex)
+        # Convert ref to CMSIS-DSP format 
+        self.referenceFloat=np.zeros(self.nb)
+        # Replace complex datatype by real datatype
+        self.referenceFloat[0::2] = np.real(self.ref)[:-1]
+        self.referenceFloat[1::2] = np.imag(self.ref)[:-1]
+        # Copy Nyquist frequency value into first 
+        # sample.This is just a storage trick so that the
+        # output of the RFFT has same length as input
+        # It is legacy behavior that we need to keep
+        # for backward compatibility but it is not
+        # very pretty
+        self.referenceFloat[1] = np.real(self.ref[-1])
 
-RFFT_F_IN_LENGTH = nb # real
-RFFT_F_OUT_LENGTH = nb # complex (so nb // 2 complex)
+        self.referenceFixed=np.zeros(2*len(self.ref))
+        self.referenceFixed[0::2] = np.real(self.ref)
+        self.referenceFixed[1::2] = np.imag(self.ref)
 
-RIFFT_F_IN_LENGTH = nb # complex
-RIFFT_F_OUT_LENGTH = nb # real
+        self.assertTrue(len(self.ref) == (self.nb // 2) + 1)
+        self.assertTrue(len(self.invref) == self.nb)
 
-# Length of arrays for the fixed point implementation
-# of the RFFT
-RFFT_Q_IN_LENGTH = nb 
-RFFT_Q_OUT_LENGTH = 2*nb 
+        return super().setUp()
+     
+     def test_rfft_f64(self):
+        rfftf64=dsp.arm_rfft_fast_instance_f64()
+        status=dsp.arm_rfft_fast_init_f64(rfftf64,self.nb)
+        self.assertTrue(status == 0)
+        result = dsp.arm_rfft_fast_f64(rfftf64,self.signal,0)
+        self.assertTrue(len(self.signal) == self.RFFT_F_IN_LENGTH)
+        self.assertTrue(len(result) == self.RFFT_F_OUT_LENGTH)
+        
+        assert_allclose(self.referenceFloat,result)
 
-# Conjugate part ignored
-RIFFT_Q_IN_LENGTH = nb + 2
-RIFFT_Q_OUT_LENGTH = nb
-
-# Convert ref to CMSIS-DSP format 
-referenceFloat=np.zeros(nb)
-# Replace complex datatype by real datatype
-referenceFloat[0::2] = np.real(ref)[:-1]
-referenceFloat[1::2] = np.imag(ref)[:-1]
-# Copy Nyquist frequency value into first 
-# sample.This is just a storage trick so that the
-# output of the RFFT has same length as input
-# It is legacy behavior that we need to keep
-# for backward compatibility but it is not
-# very pretty
-referenceFloat[1] = np.real(ref[-1])
-
-referenceFixed=np.zeros(2*len(ref))
-referenceFixed[0::2] = np.real(ref)
-referenceFixed[1::2] = np.imag(ref)
-
-printTitle("RFFT FAST F64")
-
-printSubTitle("RFFT")
-
-
-rfftf64=dsp.arm_rfft_fast_instance_f64()
-status=dsp.arm_rfft_fast_init_f64(rfftf64,nb)
-result = dsp.arm_rfft_fast_f64(rfftf64,signal,0)
-assert(len(signal) == RFFT_F_IN_LENGTH)
-assert(len(result) == RFFT_F_OUT_LENGTH)
-
-assert_allclose(referenceFloat,result)
-
-printSubTitle("RIFFT")
-
-rifftf64=dsp.arm_rfft_fast_instance_f64()
-status=dsp.arm_rfft_fast_init_f64(rifftf64,nb)
-result = dsp.arm_rfft_fast_f64(rifftf64,referenceFloat,1)
-assert(len(referenceFloat) == RIFFT_F_IN_LENGTH)
-assert(len(result) == RIFFT_F_OUT_LENGTH)
-
-assert_allclose(invref,result,atol=1e-15)
-
-printTitle("RFFT FAST F32")
-
-printSubTitle("RFFT")
+     def test_rifft_f64(self):
+        rifftf64=dsp.arm_rfft_fast_instance_f64()
+        status=dsp.arm_rfft_fast_init_f64(rifftf64,self.nb)
+        self.assertTrue(status == 0)
+        result = dsp.arm_rfft_fast_f64(rifftf64,self.referenceFloat,1)
+        self.assertTrue(len(self.referenceFloat) == self.RIFFT_F_IN_LENGTH)
+        self.assertTrue(len(result) == self.RIFFT_F_OUT_LENGTH)
+        assert_allclose(self.invref,result,atol=1e-15)
 
 
-rfftf32=dsp.arm_rfft_fast_instance_f32()
-status=dsp.arm_rfft_fast_init_f32(rfftf32,nb)
-result = dsp.arm_rfft_fast_f32(rfftf32,signal,0)
-assert(len(signal) == RFFT_F_IN_LENGTH)
-assert(len(result) == RFFT_F_OUT_LENGTH)
+     def test_rfft_f32(self):
+            rfftf32=dsp.arm_rfft_fast_instance_f32()
+            status=dsp.arm_rfft_fast_init_f32(rfftf32,self.nb)
+            self.assertTrue(status == 0)
+            if dsp.has_neon():
+               tmp_nb = dsp.arm_rfft_tmp_buffer_size(dt.F32,self.nb,1)
+               tmp = np.zeros(tmp_nb,dtype=np.float32)
+               result = dsp.arm_rfft_fast_f32(rfftf32,self.signal,0,tmp=tmp)
+            else:
+               result = dsp.arm_rfft_fast_f32(rfftf32,self.signal,0)
+            self.assertTrue(len(self.signal) == self.RFFT_F_IN_LENGTH)
+            self.assertTrue(len(result) == self.RFFT_F_OUT_LENGTH)
+            
+            assert_allclose(self.referenceFloat,result,rtol=3e-6,atol=1e-6)
+
+     def test_rifft_f32(self):
+            rifftf32=dsp.arm_rfft_fast_instance_f32()
+            status=dsp.arm_rfft_fast_init_f32(rifftf32,self.nb)
+            self.assertTrue(status == 0)
+            if dsp.has_neon():
+                tmp_nb = dsp.arm_rfft_tmp_buffer_size(dt.F32,self.nb,1)
+                tmp = np.zeros(tmp_nb,dtype=np.float32)
+                result = dsp.arm_rfft_fast_f32(rifftf32,self.referenceFloat,1,tmp=tmp)
+            else:
+                result = dsp.arm_rfft_fast_f32(rifftf32,self.referenceFloat,1)
+            self.assertTrue(len(self.referenceFloat) == self.RIFFT_F_IN_LENGTH)
+            self.assertTrue(len(result) == self.RIFFT_F_OUT_LENGTH)
+            assert_allclose(self.invref,result,atol=1e-7)
+
+     def test_rfft_q31(self):
+            signalQ31 = toQ31(self.signal)
+            rfftQ31=dsp.arm_rfft_instance_q31()
+            
+            if dsp.has_neon():
+               status=dsp.arm_rfft_init_q31(rfftQ31,self.nb)
+               tmp_nb = dsp.arm_rfft_tmp_buffer_size(dt.Q31,self.nb,1)
+               tmp = np.zeros(tmp_nb,dtype=np.int32)
+               result = dsp.arm_rfft_q31(rfftQ31,signalQ31,0,tmp=tmp)
+            else:
+               status=dsp.arm_rfft_init_q31(rfftQ31,self.nb,0,1)
+               result = dsp.arm_rfft_q31(rfftQ31,signalQ31)
+            self.assertTrue(status == 0)
+            self.assertTrue(len(signalQ31) == self.RFFT_Q_IN_LENGTH)
+            self.assertTrue(len(result) == self.RFFT_Q_OUT_LENGTH)
+            if not dsp.has_neon():
+               compareWithConjugatePart(self.nb,result)
+               # Drop the conjugate part which is not computed by scipy
+               result = result[:self.nb+2]
+            
+            
+            self.assertTrue(len(result) == self.RIFFT_Q_IN_LENGTH)
+            
+            resultF = Q31toF32(result) * self.nb
+            
+            assert_allclose(self.referenceFixed,resultF,rtol=1e-6,atol=1e-6)
+
+     def test_rifft_q31(self):
+            rifftQ31=dsp.arm_rfft_instance_q31()
+            # Apply CMSIS-DSP scaling
+            referenceQ31 = toQ31(self.referenceFixed / self.nb) 
+            if dsp.has_neon():
+               status=dsp.arm_rfft_init_q31(rifftQ31,self.nb)
+               tmp_nb = dsp.arm_rfft_tmp_buffer_size(dt.Q31,self.nb,1)
+               tmp = np.zeros(tmp_nb,dtype=np.int32)
+               result = dsp.arm_rfft_q31(rifftQ31,referenceQ31,1,tmp=tmp)
+            else:
+               status=dsp.arm_rfft_init_q31(rifftQ31,self.nb,1,1)
+               result = dsp.arm_rfft_q31(rifftQ31,referenceQ31)
+            resultF = Q31toF32(result)
+            self.assertTrue(status == 0)
+            self.assertTrue(len(referenceQ31) == self.RIFFT_Q_IN_LENGTH)
+            self.assertTrue(len(result) == self.RIFFT_Q_OUT_LENGTH)
+            
+            assert_allclose(self.invref/self.nb,resultF,atol=1e-6)
+
+     def test_rfft_q15(self):
+            signalQ15 = toQ15(self.signal)
+            rfftQ15=dsp.arm_rfft_instance_q15()
+            if dsp.has_neon():
+               status=dsp.arm_rfft_init_q15(rfftQ15,self.nb)
+               tmp_nb = dsp.arm_rfft_tmp_buffer_size(dt.Q15,self.nb,1)
+               tmp = np.zeros(tmp_nb,dtype=np.int16)
+               result = dsp.arm_rfft_q15(rfftQ15,signalQ15,0,tmp=tmp)
+            else:
+               status=dsp.arm_rfft_init_q15(rfftQ15,self.nb,0,1)
+               result = dsp.arm_rfft_q15(rfftQ15,signalQ15)
+            self.assertTrue(status == 0)
+            self.assertTrue(len(signalQ15) == self.RFFT_Q_IN_LENGTH)
+            self.assertTrue(len(result) == self.RFFT_Q_OUT_LENGTH)
+            if not dsp.has_neon():
+               compareWithConjugatePart(self.nb,result)
+               # Drop the conjugate part which is not computed by scipy
+               result = result[:self.nb+2]
+
+            self.assertTrue(len(result) == self.RIFFT_Q_IN_LENGTH)
+            
+            resultF = Q15toF32(result) * self.nb
+            
+            assert_allclose(self.referenceFixed,resultF,rtol=1e-6,atol=1e-2)
 
 
-assert_allclose(referenceFloat,result,rtol=3e-6)
 
-printSubTitle("RIFFT")
+     def test_rifft_q15(self):
+            rifftQ15=dsp.arm_rfft_instance_q15()
+            # Apply CMSIS-DSP scaling
+            referenceQ15 = toQ15(self.referenceFixed / self.nb) 
+            if dsp.has_neon():
+               status=dsp.arm_rfft_init_q15(rifftQ15,self.nb)
+               tmp_nb = dsp.arm_rfft_tmp_buffer_size(dt.Q15,self.nb,1)
+               tmp = np.zeros(tmp_nb,dtype=np.int16)
+               result = dsp.arm_rfft_q15(rifftQ15,referenceQ15,1,tmp=tmp)
+            else:
+               status=dsp.arm_rfft_init_q15(rifftQ15,self.nb,1,1)
+               result = dsp.arm_rfft_q15(rifftQ15,referenceQ15)
+            resultF = Q15toF32(result)
+            self.assertTrue(status == 0)
+            self.assertTrue(len(referenceQ15) == self.RIFFT_Q_IN_LENGTH)
 
-rifftf32=dsp.arm_rfft_fast_instance_f32()
-status=dsp.arm_rfft_fast_init_f32(rifftf32,nb)
-result = dsp.arm_rfft_fast_f32(rifftf32,referenceFloat,1)
-assert(len(referenceFloat) == RIFFT_F_IN_LENGTH)
-assert(len(result) == RIFFT_F_OUT_LENGTH)
-
-assert_allclose(invref,result,atol=1e-7)
-
-# Fixed point
-
-printTitle("RFFT Q31")
-
-printSubTitle("RFFT")
-
-signalQ31 = f.toQ31(signal)
-rfftQ31=dsp.arm_rfft_instance_q31()
-status=dsp.arm_rfft_init_q31(rfftQ31,nb,0,1)
-resultQ31 = dsp.arm_rfft_q31(rfftQ31,signalQ31)
-assert(len(signalQ31) == RFFT_Q_IN_LENGTH)
-assert(len(resultQ31) == RFFT_Q_OUT_LENGTH)
-compareWithConjugatePart(resultQ31)
-
-# Drop the conjugate part which is not computed by scipy
-resultQ31 = resultQ31[:nb+2]
-assert(len(resultQ31) == RIFFT_Q_IN_LENGTH)
-
-resultF = f.Q31toF32(resultQ31) * nb
-
-assert_allclose(referenceFixed,resultF,rtol=1e-6,atol=1e-6)
+            self.assertTrue(len(result) == self.RIFFT_Q_OUT_LENGTH)
+            
+            assert_allclose(self.invref/self.nb,resultF,atol=1e-3)
 
 
-printSubTitle("RIFFT")
+if __name__ == '__main__':
+    unittest.main()
 
-rifftQ31=dsp.arm_rfft_instance_q31()
-status=dsp.arm_rfft_init_q31(rifftQ31,nb,1,1)
-# Apply CMSIS-DSP scaling
-referenceQ31 = f.toQ31(referenceFixed/ nb) 
-resultQ31 = dsp.arm_rfft_q31(rifftQ31,referenceQ31)
-resultF = f.Q31toF32(resultQ31)
-assert(len(referenceQ31) == RIFFT_Q_IN_LENGTH)
-assert(len(resultQ31) == RIFFT_Q_OUT_LENGTH)
-
-assert_allclose(invref/nb,resultF,atol=1e-6)
-
-printTitle("RFFT Q15")
-
-printSubTitle("RFFT")
-
-signalQ15 = f.toQ15(signal)
-rfftQ15=dsp.arm_rfft_instance_q15()
-status=dsp.arm_rfft_init_q15(rfftQ15,nb,0,1)
-resultQ15 = dsp.arm_rfft_q15(rfftQ15,signalQ15)
-assert(len(signalQ15) == RFFT_Q_IN_LENGTH)
-assert(len(resultQ15) == RFFT_Q_OUT_LENGTH)
-compareWithConjugatePart(resultQ15)
-
-# Drop the conjugate part which is not computed by scipy
-resultQ15 = resultQ15[:nb+2]
-assert(len(resultQ15) == RIFFT_Q_IN_LENGTH)
-
-resultF = f.Q15toF32(resultQ15) * nb
-
-assert_allclose(referenceFixed,resultF,rtol=1e-6,atol=1e-2)
-
-
-printSubTitle("RIFFT")
-
-rifftQ15=dsp.arm_rfft_instance_q15()
-status=dsp.arm_rfft_init_q15(rifftQ15,nb,1,1)
-# Apply CMSIS-DSP scaling
-referenceQ15 = f.toQ15(referenceFixed / nb) 
-resultQ15 = dsp.arm_rfft_q15(rifftQ15,referenceQ15)
-resultF = f.Q15toF32(resultQ15)
-assert(len(referenceQ15) == RIFFT_Q_IN_LENGTH)
-assert(len(resultQ15) == RIFFT_Q_OUT_LENGTH)
-
-assert_allclose(invref/nb,resultF,atol=1e-3)
 

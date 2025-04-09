@@ -932,6 +932,7 @@ INPUT                  = ./src/mainpage.md   \
                          ./src/vector.md   \
                          ./src/matrix.md   \
                          ./src/building.md   \
+                         ./src/transformbuffers.md   \
                          ./src/history.md    \
                          ./src/history.txt   \
                          ../../Examples/ARM  \

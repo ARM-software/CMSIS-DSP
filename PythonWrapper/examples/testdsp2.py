@@ -2,467 +2,575 @@ import cmsisdsp as dsp
 import numpy as np
 from scipy import signal
 from scipy.fftpack import dct 
-import cmsisdsp.fixedpoint as f
 from pyquaternion import Quaternion
 
-import colorama
-from colorama import init,Fore, Back, Style
 import statsmodels.tsa.stattools
 
 import scipy.spatial
 
+import unittest
+from numpy.testing import assert_allclose,assert_equal
 
-init()
+from testtools import *
+
+
 
 def printTitle(s):
-    print("\n" + Fore.GREEN + Style.BRIGHT +  s + Style.RESET_ALL)
+    pass
 
 def printSubTitle(s):
-    print("\n" + Style.BRIGHT + s + Style.RESET_ALL)
+    pass
 
+def genBitvectors(nb,format):
+      if format == 31:
+         maxVal = 0xffffffff
+         dt = np.uint32
+      if format == 15:
+         maxVal = 0xffff
+         dt = np.uint16
+      if format == 7:
+         maxVal = 0xff 
+         dt = np.uint8
+  
+      #minVal = -maxVal-1
+      
+      return(np.random.randint(0, maxVal, size=nb,dtype=dt))
 
-def imToReal2D(a):
-    ar=np.zeros(np.array(a.shape) * [1,2])
-    ar[::,0::2]=a.real
-    ar[::,1::2]=a.imag
-    return(ar)
-
-def realToIm2D(ar):
-    return(ar[::,0::2] + 1j * ar[::,1::2])
-
-def normalize(a):
-  return(a/np.max(np.abs(a)))
 
 def autocorr(x):
     result = np.correlate(x, x, mode='full')
     return result[result.size//2:]
 
-#################### MAX AND ABSMAX ##################################
-printTitle("Max and AbsMax")
-a=np.array([1.,-3.,4.,0.,-10.,8.])
+class TestStatsMethods_Test2(unittest.TestCase):
 
-printSubTitle("Float tests")
-i=dsp.arm_max_f32(a)
-print(i)
+    def setUp(self):
+        return super().setUp()
+     
+    def test_absmax_f32(self):
+        a=np.array([1.,-3.,4.,0.,-10.,8.])
+        self.assertEqual(dsp.arm_absmax_f32(a), (10.0, 4))
 
-i=dsp.arm_absmax_f32(a)
-print(i)
+    def test_max_q31(self):
+        a=normalize(np.array([0.9,-3.,4.,0.,-10.,8.]))/2.0
+        a31 = toQ31(a)
+        self.assertEqual(dsp.arm_max_q31(a31), (0x33333333, 5))
 
-printSubTitle("Fixed point tests")
+    def test_absmax_q31(self):
+        a=normalize(np.array([0.9,-3.,4.,0.,-10.,8.]))/2.0
+        a31 = toQ31(a)
+        self.assertEqual(dsp.arm_absmax_q31(a31), (0x40000000, 4))
 
-# Normalize for fixed point tests
-a = a / i[0]
+    def test_max_q15(self):
+        a=normalize(np.array([0.9,-3.,4.,0.,-10.,8.]))/2.0
+        a15 = toQ15(a)
+        self.assertEqual(dsp.arm_max_q15(a15), (0x3333, 5))
 
-a31 = f.toQ31(a)
-i=dsp.arm_absmax_q31(a31)
-print(f.Q31toF32(i[0]),i[1])
+    def test_absmax_q15(self):
+        a=normalize(np.array([0.9,-3.,4.,0.,-10.,8.]))/2.0
+        a15 = toQ15(a)
+        self.assertEqual(dsp.arm_absmax_q15(a15), (0x4000, 4))
 
-a15 = f.toQ15(a)
-i=dsp.arm_absmax_q15(a15)
-print(f.Q15toF32(i[0]),i[1])
+    def test_max_q7(self):
+        a=normalize(np.array([0.9,-3.,4.,0.,-10.,8.]))/2.0
+        a7 = toQ7(a)
+        self.assertEqual(dsp.arm_max_q7(a7), (0x33, 5))
 
-a7 = f.toQ7(a)
-i=dsp.arm_absmax_q7(a7)
-print(f.Q7toF32(i[0]),i[1])
+    def test_absmax_q7(self):
+        a=normalize(np.array([0.9,-3.,4.,0.,-10.,8.]))/2.0
+        a7 = toQ7(a)
+        self.assertEqual(dsp.arm_absmax_q7(a7), (0x40, 4))
 
-################### MIN AND ABSMIN ################################
+    def test_min_f32(self):
+        a = np.array([1., -3., 4., 0., -10., 8.])
+        self.assertEqual(dsp.arm_min_f32(a), (-10.0, 4))
 
-printTitle("Min and AbsMin")
-a=np.array([1.,-3.,4.,0.5,-10.,8.])
+    def test_min_q31(self):
+        a = normalize(np.array([0.9, -3., 4., 0., -10., 8.])) / 2.0
+        a31 = toQ31(a)
+        self.assertEqual(dsp.arm_min_q31(a31), (-0x40000000, 4))
 
-printSubTitle("Float tests")
-i=dsp.arm_min_f32(a)
-print(i)
+    def test_min_q15(self):
+        a = normalize(np.array([0.9, -3., 4., 0., -10., 8.])) / 2.0
+        a15 = toQ15(a)
+        self.assertEqual(dsp.arm_min_q15(a15), (-0x4000, 4))
 
-i=dsp.arm_absmin_f32(a)
-print(i)
+    def test_min_q7(self):
+        a = normalize(np.array([0.9, -3., 4., 0., -10., 8.])) / 2.0
+        a7 = toQ7(a)
+        self.assertEqual(dsp.arm_min_q7(a7), (-0x40, 4))
 
-printSubTitle("Fixed point tests")
+    def test_absmin_f32(self):
+        a = np.array([1., -3., 4., 0., -10., 8.])
+        self.assertEqual(dsp.arm_absmin_f32(a), (0.0, 3))
 
-# Normalize for fixed point tests
-idx=i[1]
-i=dsp.arm_absmax_f32(a)
-a = a / i[0]
-print(a)
-print(a[idx])
+    def test_absmin_q31(self):
+        a = normalize(np.array([0.9, -3., 4., 0., -10., 8.])) / 2.0
+        a31 = toQ31(a)
+        self.assertEqual(dsp.arm_absmin_q31(a31), (0x0, 3))
 
-a31 = f.toQ31(a)
-i=dsp.arm_absmin_q31(a31)
-print(f.Q31toF32(i[0]),i[1])
+    def test_absmin_q15(self):
+        a = normalize(np.array([0.9, -3., 4., 0., -10., 8.])) / 2.0
+        a15 = toQ15(a)
+        self.assertEqual(dsp.arm_absmin_q15(a15), (0x0, 3))
 
-a8 = f.toQ15(a)
-i=dsp.arm_absmin_q15(a8)
-print(f.Q15toF32(i[0]),i[1])
+    def test_absmin_q7(self):
+        a = normalize(np.array([0.9, -3., 4., 0., -10., 8.])) / 2.0
+        a7 = toQ7(a)
+        self.assertEqual(dsp.arm_absmin_q7(a7), (0x0, 3))
 
-a7 = f.toQ7(a)
-i=dsp.arm_absmin_q7(a7)
-print(f.Q7toF32(i[0]),i[1])
+class TestBasicMethods_Test2(unittest.TestCase):
 
-##################### CLIPPING ###################
-printTitle("Clipping tests tests")
-a=np.array([1.,-3.,4.,0.5,-10.,8.])
-i=dsp.arm_absmax_f32(a)
-
-minBound =-5.0 
-maxBound =6.0
-b=dsp.arm_clip_f32(a,minBound,maxBound)
-print(a)
-print(b)
-
-a = a / i[0]
-print(a)
-minBound = minBound / i[0]
-maxBound = maxBound / i[0]
-print(minBound,maxBound)
-
-b=dsp.arm_clip_q31(f.toQ31(a),f.toQ31(minBound),f.toQ31(maxBound))
-print(f.Q31toF32(b))
-
-b=dsp.arm_clip_q15(f.toQ15(a),f.toQ15(minBound),f.toQ15(maxBound))
-print(f.Q15toF32(b))
-
-b=dsp.arm_clip_q7(f.toQ7(a),f.toQ7(minBound),f.toQ7(maxBound))
-print(f.Q7toF32(b))
-
-############### MAT VECTOR MULT
-
-printTitle("Matrix x Vector")
-a=np.array([[1.,2,3,4],[5,6,7,8],[9,10,11,12]])
-b=np.array([-2,-1,3,4])
-
-c = np.dot(a,b)
-print(c)
-c = dsp.arm_mat_vec_mult_f32(a,b)
-print(c)
-
-printSubTitle("Fixed point")
-normalizationFactor=2.0*np.sqrt(np.max(np.abs(c)))
-a=a/normalizationFactor
-b=b/normalizationFactor
-print(np.dot(a,b))
-
-c=dsp.arm_mat_vec_mult_q31(f.toQ31(a),f.toQ31(b))
-print(f.Q31toF32(c))
-
-c=dsp.arm_mat_vec_mult_q15(f.toQ15(a),f.toQ15(b))
-print(f.Q15toF32(c))
-
-c=dsp.arm_mat_vec_mult_q7(f.toQ7(a),f.toQ7(b))
-print(f.Q7toF32(c))
-
-############### MATRIX MULTIPLY
-
-printTitle("Matrix x Matrix")
-
-a=np.array([[1.,2,3,4],[5,6,7,8],[9,10,11,12]])
-b=np.array([[1.,2,3],[5.1,6,7],[9.1,10,11],[5,8,4]])
-print(np.dot(a , b))
-c=dsp.arm_mat_mult_f32(a,b)
-print(c[1])
-
-printSubTitle("Fixed point")
-
-printSubTitle(" F32")
-normalizationFactor=2.0*np.sqrt(np.max(np.abs(c[1])))
-a = a / normalizationFactor
-b = b / normalizationFactor
-c=dsp.arm_mat_mult_f32(a,b)
-print(c[1])
-
-print("")
-af = f.toQ31(a)
-bf = f.toQ31(b)
-nbSamples = a.size
-tmp=np.zeros(nbSamples)
-c1 = dsp.arm_mat_mult_q31(af,bf)
-c2 = dsp.arm_mat_mult_opt_q31(af,bf,tmp)
-printSubTitle(" Q31")
-print(f.Q31toF32(c1[1]))
-print(f.Q31toF32(c2[1]))
-
-
-printSubTitle(" Q15")
-print("")
-af = f.toQ15(a)
-bf = f.toQ15(b)
-s=bf.shape 
-nb=s[0]*s[1]
-tmp=np.zeros(nb)
-c = dsp.arm_mat_mult_q15(af,bf,tmp)
-print(f.Q15toF32(c[1]))
-
-printSubTitle(" Q7")
-print("")
-af = f.toQ7(a)
-bf = f.toQ7(b)
-s=bf.shape 
-nb=s[0]*s[1]
-tmp=np.zeros(nb)
-c = dsp.arm_mat_mult_q7(af,bf,tmp)
-print(f.Q7toF32(c[1]))
-
-################# MAT TRANSPOSE #################
-
-printTitle("Transposition")
-a=np.array([[1.,2,3,4],[5,6,7,8],[9,10,11,12]])
-normalizationFactor=np.max(np.abs(c[1]))
-a = a / normalizationFactor
-
-print(np.transpose(a))
-print("")
-r=dsp.arm_mat_trans_f32(a)
-print(r[1])
-print("")
-
-r=dsp.arm_mat_trans_q31(f.toQ31(a))
-print(f.Q31toF32(r[1]))
-print("")
-
-r=dsp.arm_mat_trans_q15(f.toQ15(a))
-print(f.Q15toF32(r[1]))
-print("")
-
-r=dsp.arm_mat_trans_q7(f.toQ7(a))
-print(f.Q7toF32(r[1]))
-print("")
-
-################## FILL FUNCTIONS #################
-
-v=0.22 
-nb=10 
-a=np.full((nb,),v)
-print(a)
-
-a=dsp.arm_fill_f32(v,nb)
-print(a)
-
-a=f.Q31toF32(dsp.arm_fill_q31(f.toQ31(v),nb))
-print(a)
-
-a=f.Q15toF32(dsp.arm_fill_q15(f.toQ15(v),nb))
-print(a)
-
-a=f.Q7toF32(dsp.arm_fill_q7(f.toQ7(v),nb))
-print(a)
-
-################# COMPLEX MAT TRANSPOSE #################
-
-printTitle("Complex Transposition")
-a=np.array([[1. + 0.0j ,2 + 1.0j,3 + 0.0j,4 + 2.0j],
-            [5 + 1.0j,6 + 2.0j,7 + 3.0j,8 + 1.0j],
-            [9 - 2.0j,10 + 1.0j,11 - 4.0j,12 + 1.0j]])
-normalizationFactor=np.max(np.abs(c[1]))
-a = a / normalizationFactor
-
-print(np.transpose(a))
-print("")
-r=dsp.arm_mat_cmplx_trans_f32(imToReal2D(a))
-print(realToIm2D(r[1]))
-print("")
-
-r=dsp.arm_mat_cmplx_trans_q31(f.toQ31(imToReal2D(a)))
-print(realToIm2D(f.Q31toF32(r[1])))
-print("")
-
-r=dsp.arm_mat_cmplx_trans_q15(f.toQ15(imToReal2D(a)))
-print(realToIm2D(f.Q15toF32(r[1])))
-print("")
-
-################ Levinson ##################
-
-printTitle("Levinson Durbin")
-na=5
-s = np.random.randn(na+1)
-s = normalize(s)
-phi = autocorr(s)
-phi = normalize(phi)
-
-sigmav,arcoef,pacf,sigma,phi1=statsmodels.tsa.stattools.levinson_durbin(phi,nlags=na,isacov=True)
-      
-print(arcoef)
-print(sigmav)
-
-(a,err)=dsp.arm_levinson_durbin_f32(phi,na)
-print(a)
-print(err)
-
-phiQ31 = f.toQ31(phi)
-(aQ31,errQ31)=dsp.arm_levinson_durbin_q31(phiQ31,na)
-print(f.Q31toF32(aQ31))
-print(f.Q31toF32(errQ31))
-
-################## Bitwise operations #################
-
-printTitle("Bitwise operations")
-def genBitvectors(nb,format):
-    if format == 31:
-       maxVal = 0x7fffffff
-    if format == 15:
-       maxVal = 0x7fff
-    if format == 7:
-       maxVal = 0x7f 
-
-    minVal = -maxVal-1
+    def setUp(self):
+        return super().setUp()
     
-    return(np.random.randint(minVal, maxVal, size=nb))
+    def test_clip_f32(self):
+        a = np.array([1., -3., 4., 0.5, -10., 8.])
+        minBound = -5.0
+        maxBound = 6.0
+        b = dsp.arm_clip_f32(a, minBound, maxBound)
+        ref = np.clip(a,minBound,maxBound)
+        assert_allclose(b, ref, rtol=1e-5)
 
-NBSAMPLES=10
+    def test_clip_q31(self):
+        a = normalize(np.array([1., -3., 4., 0.5, -10., 8.])) / 2.0
+        minBound = -0.2
+        maxBound = 0.3
+        b = Q31toF32(dsp.arm_clip_q31(toQ31(a), toQ31(minBound), toQ31(maxBound)))
+        ref = np.clip(a,minBound,maxBound)
+        assert_allclose(b, ref, rtol=1e-5)
+
+    def test_clip_q15(self):
+        a = normalize(np.array([1., -3., 4., 0.5, -10., 8.]))
+        minBound = -0.2
+        maxBound = 0.3
+        b = Q15toF32(dsp.arm_clip_q15(toQ15(a), toQ15(minBound), toQ15(maxBound)))
+        ref = np.clip(a,minBound,maxBound)
+        assert_allclose(b, ref, rtol=3e-4)
+
+    def test_clip_q7(self):
+        a = normalize(np.array([1., -3., 4., 0.5, -10., 8.]))
+        minBound = -0.2
+        maxBound = 0.3
+        b = Q7toF32(dsp.arm_clip_q7(toQ7(a), toQ7(minBound), toQ7(maxBound)))
+        ref = np.clip(a,minBound,maxBound)
+        assert_allclose(b, ref, rtol=1e-1)
+
+    def test_fill_f32(self):
+        v = 0.22
+        nb = 10
+        a = np.full((nb,), v)
+        b = dsp.arm_fill_f32(v, nb)
+        assert_allclose(a, b, rtol=1e-5)
+
+    def test_fill_q31(self):
+        v = 0.22
+        nb = 10
+        a = toQ31(np.full((nb,), v))
+        b = dsp.arm_fill_q31(toQ31(v), nb)
+        assert_equal(a, b)
+
+    def test_fill_q15(self):
+        v = 0.22
+        nb = 10
+        a = toQ15(np.full((nb,), v))
+        b = dsp.arm_fill_q15(toQ15(v), nb)
+        assert_equal(a, b)
+
+    def test_fill_q7(self):
+        v = 0.22
+        nb = 10
+        a = toQ7(np.full((nb,), v))
+        b = dsp.arm_fill_q7(toQ7(v), nb)
+        assert_equal(a, b)
 
 
 
-printSubTitle("u32")
-su32A=genBitvectors(NBSAMPLES,31)
-su32B=genBitvectors(NBSAMPLES,31)
-ffff = (np.ones(NBSAMPLES)*(-1)).astype(int)
+class TestMatrixMethods_Test2(unittest.TestCase):
+
+    def setUp(self):
+        return super().setUp()
+    
+    def test_mat_vec_mult_f32(self):
+        a = np.array([[1., 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]])
+        b = np.array([-2, -1, 3, 4])
+        c = dsp.arm_mat_vec_mult_f32(a, b)
+        ref = np.dot(a, b)
+        assert_allclose(c, ref, rtol=1e-5)
+
+    def test_mat_vec_mult_q31(self):
+        a = normalize(np.array([[1., 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]]))/2.0
+        b = normalize(np.array([-2, -1, 3, 4]))/2.0
+        c = Q31toF32(dsp.arm_mat_vec_mult_q31(toQ31(a), toQ31(b)))
+        ref = np.dot(a, b)
+        assert_allclose(c, ref, rtol=1e-5)
+
+    def test_mat_vec_mult_q15(self):
+        a = normalize(np.array([[1., 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]]))/2.0
+        b = normalize(np.array([-2, -1, 3, 4]))/2.0
+        c = Q15toF32(dsp.arm_mat_vec_mult_q15(toQ15(a), toQ15(b)))
+        ref = np.dot(a, b)
+        assert_allclose(c, ref, rtol=3e-4)
+
+    def test_mat_vec_mult_q7(self):
+        a = normalize(np.array([[1., 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]]))/2.0
+        b = normalize(np.array([-2, -1, 3, 4]))/2.0
+        c = Q7toF32(dsp.arm_mat_vec_mult_q7(toQ7(a), toQ7(b)))
+        ref = np.dot(a, b)
+        assert_allclose(c, ref, rtol=1e-1)
+
+    def test_arm_mat_mult_q31(self):
+        a = normalize(np.array([[1., 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]]))/2.0
+        b = normalize(np.array([[1., 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]))/2.0
+        err,c = dsp.arm_mat_mult_q31(toQ31(a), toQ31(b))
+        self.assertTrue(err == 0)
+        c = Q31toF32(c)
+        ref = np.dot(a, b)
+        assert_allclose(c, ref, rtol=1e-5)
+
+    def test_arm_mat_mult_opt_q31(self):
+        a = normalize(np.array([[1., 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]]))/2.0
+        b = normalize(np.array([[1., 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]))/2.0
+        s=b.shape 
+        nb=s[0]*s[1]
+        tmp=np.zeros(nb,dtype=np.int32)
+        err,c = dsp.arm_mat_mult_opt_q31(toQ31(a), toQ31(b),tmp)
+        self.assertTrue(err == 0)
+        c = Q31toF32(c)
+        ref = np.dot(a, b)
+        assert_allclose(c, ref, rtol=1e-5)
+
+    def test_arm_mat_mult_fast_q31(self):
+        a = normalize(np.array([[1., 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]]))/2.0
+        b = normalize(np.array([[1., 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]))/2.0
+        s=b.shape 
+        nb=s[0]*s[1]
+        tmp=np.zeros(nb,dtype=np.int32)
+        err,c = dsp.arm_mat_mult_fast_q31(toQ31(a), toQ31(b))
+        self.assertTrue(err == 0)
+        c = Q31toF32(c)
+        ref = np.dot(a, b)
+        assert_allclose(c, ref, rtol=1e-5)
+
+    def test_arm_mat_mult_q15(self):
+        a = normalize(np.array([[1., 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]]))/2.0
+        b = normalize(np.array([[1., 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]))/2.0
+        s=b.shape 
+        nb=s[0]*s[1]
+        tmp=np.zeros(nb,dtype=np.int16)
+        err,c = dsp.arm_mat_mult_q15(toQ15(a), toQ15(b),tmp)
+        self.assertTrue(err == 0)
+        c = Q15toF32(c)
+        ref = np.dot(a, b)
+        assert_allclose(c, ref, rtol=4e-4)
+
+    def test_arm_mat_mult_fast_q15(self):
+        a = normalize(np.array([[1., 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]]))/2.0
+        b = normalize(np.array([[1., 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]))/2.0
+        s=b.shape 
+        nb=s[0]*s[1]
+        tmp=np.zeros(nb,dtype=np.int16)
+        err,c = dsp.arm_mat_mult_fast_q15(toQ15(a), toQ15(b),tmp)
+        self.assertTrue(err == 0)
+        c = Q15toF32(c)
+        ref = np.dot(a, b)
+        assert_allclose(c, ref, rtol=4e-4)
+
+    def test_arm_mat_mult_q7(self):
+        a = normalize(np.array([[1., 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]]))/2.0
+        b = normalize(np.array([[1., 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]))/2.0
+        s=b.shape 
+        nb=s[0]*s[1]
+        tmp=np.zeros(nb,dtype=np.int16)
+        err,c = dsp.arm_mat_mult_q7(toQ7(a), toQ7(b),tmp)
+        self.assertTrue(err == 0)
+        c = Q7toF32(c)
+        ref = np.dot(a, b)
+        assert_allclose(c, ref, rtol=5e-2)
+
+    def test_mat_trans_f32(self):
+        a = normalize(np.array([[1., 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]],dtype=np.float32))/2.0
+        err,res=dsp.arm_mat_trans_f32(a)
+        self.assertTrue(err == 0)
+        ref=np.transpose(a)
+        assert_equal(res, ref)
+
+    def test_mat_trans_q31(self):
+        a = toQ31(normalize(np.array([[1., 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]],dtype=np.float32))/2.0)
+        err,res=dsp.arm_mat_trans_q31(a)
+        self.assertTrue(err == 0)
+        ref=np.transpose(a)
+        assert_equal(res, ref)
+
+    def test_mat_trans_q15(self):
+        a = toQ15(normalize(np.array([[1., 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]],dtype=np.float32))/2.0)
+        err,res=dsp.arm_mat_trans_q15(a)
+        self.assertTrue(err == 0)
+        ref=np.transpose(a)
+        assert_equal(res, ref)
+
+    def test_mat_trans_q7(self):
+        a = toQ7(normalize(np.array([[1., 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]],dtype=np.float32))/2.0)
+        err,res=dsp.arm_mat_trans_q7(a)
+        self.assertTrue(err == 0)
+        ref=np.transpose(a)
+        assert_equal(res, ref)
+
+    def test_mat_cmplx_trans_f32(self):
+        a=np.array([[1. + 0.0j ,2 + 1.0j,3 + 0.0j,4 + 2.0j],
+              [5 + 1.0j,6 + 2.0j,7 + 3.0j,8 + 1.0j],
+              [9 - 2.0j,10 + 1.0j,11 - 4.0j,12 + 1.0j]],dtype=np.csingle)
+        a = normalize(a)
+        err,res=dsp.arm_mat_cmplx_trans_f32(imToReal2D(a))
+        self.assertTrue(err == 0)
+        ref=imToReal2D(np.transpose(a))
+        assert_equal(res, ref)
+
+    def test_mat_cmplx_trans_q31(self):
+        a=np.array([[1. + 0.0j ,2 + 1.0j,3 + 0.0j,4 + 2.0j],
+              [5 + 1.0j,6 + 2.0j,7 + 3.0j,8 + 1.0j],
+              [9 - 2.0j,10 + 1.0j,11 - 4.0j,12 + 1.0j]],dtype=np.csingle)
+        a = toQ31(imToReal2D(normalize(a)))
+        err,res=dsp.arm_mat_cmplx_trans_q31(a)
+        self.assertTrue(err == 0)
+        ref=imToReal2D(np.transpose(realToIm2D(a)))
+        assert_equal(res, ref)
+
+    def test_mat_cmplx_trans_q15(self):
+        a=np.array([[1. + 0.0j ,2 + 1.0j,3 + 0.0j,4 + 2.0j],
+              [5 + 1.0j,6 + 2.0j,7 + 3.0j,8 + 1.0j],
+              [9 - 2.0j,10 + 1.0j,11 - 4.0j,12 + 1.0j]],dtype=np.csingle)
+        a = toQ15(imToReal2D(normalize(a)))
+        err,res=dsp.arm_mat_cmplx_trans_q15(a)
+        self.assertTrue(err == 0)
+        ref=imToReal2D(np.transpose(realToIm2D(a)))
+        assert_equal(res, ref)
+
+    def test_levinson_durbin(self):
+        na=5
+        s = np.random.randn(na+1)
+        s = normalize(s)
+        phi = autocorr(s)
+        phi = normalize(phi)
+        
+        _,arcoef,_,_,_=statsmodels.tsa.stattools.levinson_durbin(phi,nlags=na,isacov=True)
+       
+        
+        (a,_)=dsp.arm_levinson_durbin_f32(phi,na)
+        assert_allclose(arcoef,a,rtol=2e-5)
+
+    def test_levinson_durbin_q31(self):
+        na=5
+        s = np.random.randn(na+1)
+        s = normalize(s)
+        phi = autocorr(s)
+        phi = normalize(phi)
+
+        _,arcoef,_,_,_=statsmodels.tsa.stattools.levinson_durbin(phi,nlags=na,isacov=True)
+
+        
+        phiQ31 = toQ31(phi)
+        (aQ31,_)=dsp.arm_levinson_durbin_q31(phiQ31,na)
+        assert_allclose(Q31toF32(aQ31),arcoef,rtol=1e-5,atol=1e-5)
 
 
-ref=np.bitwise_and(su32A, su32B)
-#print(ref)
-result=dsp.arm_and_u32(su32A, su32B).astype(int)
-print(result-ref)
+class TestBitwiseMethods_Test2(unittest.TestCase):
 
-ref=np.bitwise_or(su32A, su32B)
-#print(ref)
-result=dsp.arm_or_u32(su32A, su32B).astype(int)
-print(result-ref)
+    def setUp(self):
+        self.NBSAMPLES=10
+        return super().setUp()
+    
+    def test_and_u32(self):
+        su32A=genBitvectors(self.NBSAMPLES,31)
+        su32B=genBitvectors(self.NBSAMPLES,31)
+        
+        ref=np.bitwise_and(su32A, su32B)
+        result=dsp.arm_and_u32(su32A, su32B)
+        assert_equal(result,ref)
 
-ref=np.bitwise_xor(su32A, su32B)
-#print(ref)
-result=dsp.arm_xor_u32(su32A, su32B).astype(int)
-print(result-ref)
+    def test_or_u32(self):
+        su32A=genBitvectors(self.NBSAMPLES,31)
+        su32B=genBitvectors(self.NBSAMPLES,31)        
+        
+        ref=np.bitwise_or(su32A, su32B)
+        result=dsp.arm_or_u32(su32A, su32B)
+        assert_equal(result,ref)
 
-ref=np.bitwise_xor(ffff, su32A)
-#print(ref)
-result=dsp.arm_not_u32(su32A).astype(int)
-print(result-ref)
+    
+    def test_xor_u32(self):
+        su32A=genBitvectors(self.NBSAMPLES,31)
+        su32B=genBitvectors(self.NBSAMPLES,31)        
+        
+        ref=np.bitwise_xor(su32A, su32B)
+        result=dsp.arm_xor_u32(su32A, su32B)
+        assert_equal(result,ref)
 
-printSubTitle("u16")
-su16A=genBitvectors(NBSAMPLES,15)
-su16B=genBitvectors(NBSAMPLES,15)
+    def test_not_u32(self):
+        su32A=genBitvectors(self.NBSAMPLES,31)
+        
+        ref=np.invert(su32A)
+        result=dsp.arm_not_u32(su32A)
+        assert_equal(result,ref)
 
-ffff = (np.ones(NBSAMPLES)*(-1)).astype(int)
+    def test_and_u16(self):
+        su16A=genBitvectors(self.NBSAMPLES,15)
+        su16B=genBitvectors(self.NBSAMPLES,15)        
+        
+        ref=np.bitwise_and(su16A, su16B)
+        result=dsp.arm_and_u16(su16A, su16B)
+        assert_equal(result,ref)
 
+    def test_or_u16(self):
+        su16A=genBitvectors(self.NBSAMPLES,15)
+        su16B=genBitvectors(self.NBSAMPLES,15)        
+        
+        ref=np.bitwise_or(su16A, su16B)
+        result=dsp.arm_or_u16(su16A, su16B)
+        assert_equal(result,ref)
 
-ref=np.bitwise_and(su16A, su16B)
-#print(ref)
-result=dsp.arm_and_u16(su16A, su16B).astype(np.short)
-print(result-ref)
+    def test_xor_u16(self):
+        su16A=genBitvectors(self.NBSAMPLES,15)
+        su16B=genBitvectors(self.NBSAMPLES,15)        
+        
+        ref=np.bitwise_xor(su16A, su16B)
+        result=dsp.arm_xor_u16(su16A, su16B)
+        assert_equal(result,ref)
 
-ref=np.bitwise_or(su16A, su16B)
-#print(ref)
-result=dsp.arm_or_u16(su16A, su16B).astype(np.short)
-print(result-ref)
+    def test_not_u16(self):
+        su16A=genBitvectors(self.NBSAMPLES,15)
+        
+        ref=np.invert(su16A)
+        result=dsp.arm_not_u16(su16A)
+        assert_equal(result,ref)
 
-ref=np.bitwise_xor(su16A, su16B)
-#print(ref)
-result=dsp.arm_xor_u16(su16A, su16B).astype(np.short)
-print(result-ref)
+    def test_and_u8(self):
+        su8A = genBitvectors(self.NBSAMPLES, 7)
+        su8B = genBitvectors(self.NBSAMPLES, 7)
 
-ref=np.bitwise_xor(ffff, su16A)
-#print(ref)
-result=dsp.arm_not_u16(su16A).astype(np.short)
-print(result-ref)
+        ref = np.bitwise_and(su8A, su8B)
+        result = dsp.arm_and_u8(su8A, su8B)
+        assert_equal(result, ref)
 
-printSubTitle("u8")
+    def test_or_u8(self):
+        su8A = genBitvectors(self.NBSAMPLES, 7)
+        su8B = genBitvectors(self.NBSAMPLES, 7)
 
-su8A=genBitvectors(NBSAMPLES,7)
-su8B=genBitvectors(NBSAMPLES,7)
+        ref = np.bitwise_or(su8A, su8B)
+        result = dsp.arm_or_u8(su8A, su8B)
+        assert_equal(result, ref)
 
-ref=np.bitwise_and(su8A, su8B)
-#print(ref)
-result=dsp.arm_and_u8(su8A, su8B).astype(np.byte)
-print(result-ref)
+    def test_xor_u8(self):
+        su8A = genBitvectors(self.NBSAMPLES, 7)
+        su8B = genBitvectors(self.NBSAMPLES, 7)
 
-ref=np.bitwise_or(su8A, su8B)
-#print(ref)
-result=dsp.arm_or_u8(su8A, su8B).astype(np.byte)
-print(result-ref)
+        ref = np.bitwise_xor(su8A, su8B)
+        result = dsp.arm_xor_u8(su8A, su8B)
+        assert_equal(result, ref)
 
-ref=np.bitwise_xor(su8A, su8B)
-#print(ref)
-result=dsp.arm_xor_u8(su8A, su8B).astype(np.byte)
-print(result-ref)
+    def test_not_u8(self):
+        su8A = genBitvectors(self.NBSAMPLES, 7)
 
-ref=np.bitwise_xor(ffff, su8A)
-#print(ref)
-result=dsp.arm_not_u8(su8A).astype(np.byte)
-print(result-ref)
-
-#################### Quaternion tests ##################
-NBSAMPLES=3
+        ref = np.invert(su8A)
+        result = dsp.arm_not_u8(su8A)
+        assert_equal(result, ref)
 
 def flattenQuat(l):
     return(np.array([list(x) for x in l]).reshape(4*len(l)))
-
+  
 def flattenRot(l):
     return(np.array([list(x) for x in l]).reshape(9*len(l)))
-
+  
 # q and -q are representing the same rotation.
 # So there is an ambiguity for the tests.
 # We force the real part of be positive.
-def mkQuaternion(mat):
-    q=Quaternion(matrix=mat)
+def standardizeQuat(q):
     if q.scalar < 0:
-        return(-q)
+          return(-q)
     else:
-        return(q)
+          return(q)
+    
+def mkQuaternion(mat):
+      q=Quaternion(matrix=mat)
+      return standardizeQuat(q)
+      
 
-a=[2.0*Quaternion.random() for x in range(NBSAMPLES)]
-src=flattenQuat(a)
+      
+class TestQuaternionMethods_Test2(unittest.TestCase):
+
+    def setUp(self):
+        self.NBSAMPLES=3
+        self.a=[2.0*Quaternion.random() for x in range(self.NBSAMPLES)]
+        return super().setUp()
+    
+    def test_quaternion_normalize(self):
+  
+        ref=flattenQuat([x.normalised for x in self.a])
+
+        src=flattenQuat(self.a)
+        res=dsp.arm_quaternion_normalize_f32(src)
+
+        assert_allclose(res, ref, rtol=1e-6)
+
+    def test_quaternion_conjugate(self):
+        ref=flattenQuat([x.conjugate for x in self.a])
+
+        src=flattenQuat(self.a)
+        res=dsp.arm_quaternion_conjugate_f32(src)
+
+        assert_allclose(res, ref, rtol=1e-6)
+
+    def test_quaternion_inverse(self):
+        ref=flattenQuat([x.inverse for x in self.a])
+
+        src=flattenQuat(self.a)
+        res=dsp.arm_quaternion_inverse_f32(src)
+
+        assert_allclose(res, ref, rtol=1e-6)
+
+    def test_quaternion_norm(self):
+        ref=[x.norm for x in self.a]
+
+        src=flattenQuat(self.a)
+        res=dsp.arm_quaternion_norm_f32(src)
+
+        assert_allclose(res, ref, rtol=1e-6)
+
+    def test_quaternion_rotation(self):
+         na=[x.normalised for x in self.a]
+         refa=[x.rotation_matrix for x in na]
+         refb=[mkQuaternion(x) for x in refa]
+
+         srca=flattenQuat(na)
+         resa=dsp.arm_quaternion2rotation_f32(srca)
+         resb=dsp.arm_rotation2quaternion_f32(resa).astype(np.float32)
+
+         resb=np.array([standardizeQuat(Quaternion(x)) for x in resb.reshape(self.NBSAMPLES,4)])
+         resb=flattenQuat(resb)
+
+         assert_allclose(resa, np.array(refa).reshape(3*3*self.NBSAMPLES), rtol=1e-4)
+         assert_allclose(resb, flattenQuat(refb), rtol=1e-4)
+
+    def test_quaternion_multiply(self):
+        a=[2.0*Quaternion.random() for x in range(self.NBSAMPLES)]
+        b=[2.0*Quaternion.random() for x in range(self.NBSAMPLES)]
+  
+        refc = flattenQuat(np.array(a) * np.array(b))
+  
+        srca=flattenQuat(a)
+        srcb=flattenQuat(b)
+        resc=dsp.arm_quaternion_product_f32(srca,srcb)
+        assert_allclose(resc,refc,rtol=2e-5)
+
+    def test_quaternion_multiply_single(self):
+        a=2.0*Quaternion.random() 
+        b=2.0*Quaternion.random()
+  
+        refc = flattenQuat([a * b])
+  
+        srca=flattenQuat([a])
+        srcb=flattenQuat([b])
+        resc=dsp.arm_quaternion_product_single_f32(srca,srcb)
+        assert_allclose(resc,refc,rtol=1e-5)
 
 
-res=flattenQuat([x.normalised for x in a])
-print(res)
-output=dsp.arm_quaternion_normalize_f32(src)
-print(output)
-print("")
-
-res=flattenQuat([x.conjugate for x in a])
-print(res)
-output=dsp.arm_quaternion_conjugate_f32(src)
-print(output)
-print("")
-
-res=flattenQuat([x.inverse for x in a])
-print(res)
-output=dsp.arm_quaternion_inverse_f32(src)
-print(output)
-print("")
-
-res=[x.norm for x in a]
-print(res)
-output=dsp.arm_quaternion_norm_f32(src)
-print(output)
-print("")
-
-a=[x.normalised for x in a]
-ra=[x.rotation_matrix for x in a]
-rb=[mkQuaternion(x) for x in ra]
-
-srca=flattenQuat(a)
-resa=dsp.arm_quaternion2rotation_f32(srca)
-resb=dsp.arm_rotation2quaternion_f32(resa)
-
-
-print(ra)
-print(resa)
-print("")
-print(rb)
-print(resb)#
-
-a=[2.0*Quaternion.random() for x in range(NBSAMPLES)]
-b=[2.0*Quaternion.random() for x in range(NBSAMPLES)]
-
-c = np.array(a) * np.array(b)
-print(c)
-
-srca=flattenQuat(a)
-srcb=flattenQuat(b)
-resc=dsp.arm_quaternion_product_f32(srca,srcb)
-
-print(resc)
-
-print(a[0]*b[0])
-res=dsp.arm_quaternion_product_single_f32(srca[0:4],srcb[0:4])
-print(res)
-
+if __name__ == '__main__':
+    unittest.main()

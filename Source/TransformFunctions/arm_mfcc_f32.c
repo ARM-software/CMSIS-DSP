@@ -57,19 +57,11 @@
                    The number of input samples if the FFT length used
                    when initializing the instance data structure.
 
-                   The temporary buffer pTmp has a 2*fft length size when MFCC
-                   is implemented with CFFT.
-                   It has length FFT Length when implemented with RFFT
-                   (default implementation).
-
                    The source buffer is modified by this function.
 
  @par   Neon implementation
                  The Neon implementation has a different API.
-                 There is an additional temporary buffer pTmp2 of
-                 size FFT Length and only the RFFT based
-                 implementation is supported (it is the default
-                 one on Cortex-M).
+                 There is an additional temporary buffer pTmp2.
                  The source buffer is  modified.
  @code
         void arm_mfcc_f32(
@@ -80,6 +72,9 @@
                    float32_t *pTmp2
           );
   @endcode
+
+  @par Size of buffers according to the target architecture and datatype:
+       They are described on the page \ref transformbuffers "transform buffers".
  */
 #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 ARM_DSP_ATTRIBUTE void arm_mfcc_f32(
@@ -122,10 +117,10 @@ ARM_DSP_ATTRIBUTE void arm_mfcc_f32(
   arm_rfft_fast_f32(&(S->rfft),pSrc,pTmp,pTmp2,0);
   pTmp[1]=0.0f;
 #else
-#if defined(ARM_MFCC_CFFT_BASED)
+#if defined(ARM_MFCC_USE_CFFT)
   /* some HW accelerator for CMSIS-DSP used in some boards
      are only providing acceleration for CFFT.
-     With ARM_MFCC_CFFT_BASED enabled, CFFT is used and the MFCC
+     With ARM_MFCC_USE_CFFT enabled, CFFT is used and the MFCC
      will be accelerated on those boards.
  
      The default is to use RFFT
@@ -141,7 +136,7 @@ ARM_DSP_ATTRIBUTE void arm_mfcc_f32(
   /* Default RFFT based implementation */
   arm_rfft_fast_f32(&(S->rfft),pSrc,pTmp,0);
   pTmp[1]=0.0f;
-#endif /* ARM_MFCC_CFFT_BASED */
+#endif /* ARM_MFCC_USE_CFFT */
 #endif /* ARM_MATH_NEON */
   arm_cmplx_mag_f32(pTmp,pSrc,S->fftLen);
   if (maxValue != 0.0f)

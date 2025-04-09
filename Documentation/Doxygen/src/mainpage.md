@@ -170,7 +170,6 @@ Also, when targeting Helium or Neon, some functions have  different APIs.
 * FIR F32, F16, Q31, Q15 and Q7 : Coefficient array must be padded with zeros
 
 ### Different API for Neon
-* Biquad F32 initialization : An additional function must be used for initialization
 * MFCC F32, F16, Q31 and Q15 : Additional temporary buffer required for the functions
 * CFFT F32, F16, Q31 and Q15 : Additional temporary buffer required for the functions
 * RFFT F32, F16, Q31 and Q15 : Additional temporary buffer required for the functions. Different arguments for the init function of Q31 and Q15 RFFT
@@ -178,13 +177,6 @@ Also, when targeting Helium or Neon, some functions have  different APIs.
 For CFFT and RFFT, a new Neon specific initialization function is available to be able to use longer FFTs.
 
 For CFFT, this new Neon specific initialization allows to use FFT lengths with factor of 3 and 5 in the length (but must still be a multiple of 4 length).
-
-Note that matrix multiply for Q15 and Q7 is using accumulators on 32 bits (Q15) and 16 bits (Q7) for Neon. Other versions (scalar and Helium) are using 64 bits (Q15) and 32 bits (Q7).
-
-You should not try to multiply too big Q15/Q7 matrixes with Neon because you'll likely get saturation issues.
-If you scale down the data to avoid the saturation issues, the loss of accuracy may be too big.
-
-An implementation accumulating on more bits would give better results but would also be slower.
 
 
 ## License {#license}

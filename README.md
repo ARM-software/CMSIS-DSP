@@ -198,7 +198,6 @@ cmake is automatically including the `ComputeLibrary` folder. If you are using a
 
 Some APIs are a different on Neon:
 
-* Biquad f32 initialization is done differently
 * CFFT and RFFT F32 have different APIs. They are no more in-place and require use of an additional temporary buffer
 * MFCC F32 requires the use of a second temporary buffer
 

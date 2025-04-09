@@ -4,7 +4,7 @@ def q31sat(x):
      if x > 0x7FFFFFFF:
           return(np.int32(0x7FFFFFFF))
      elif x < -0x80000000:
-          return(np.int32(0x80000000))
+          return(np.int32(-0x80000000))
      else:
           return(np.int32(x))
 
@@ -26,7 +26,7 @@ def q15sat(x):
      if x > 0x7FFF:
           return(np.int16(0x7FFF))
      elif x < -0x8000:
-          return(np.int16(0x8000))
+          return(np.int16(-0x8000))
      else:
           return(np.int16(x))
 
@@ -48,7 +48,7 @@ def q7sat(x):
      if x > 0x7F:
           return(np.int8(0x7F))
      elif x < -0x80:
-          return(np.int8(0x80))
+          return(np.int8(-0x80))
      else:
           return(np.int8(x))
 

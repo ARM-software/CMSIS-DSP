@@ -341,7 +341,7 @@ extern "C"
   /**
    * @brief 32-bit floating-point type definition.
    */
-#if !defined(__ICCARM__) || !(__ARM_FEATURE_MVE & 2)
+#if !defined(__ICCARM__) || !defined(__ARM_FEATURE_MVE) || !(__ARM_FEATURE_MVE & 2)
   typedef float float32_t;
 #endif
 
@@ -594,6 +594,10 @@ extern "C"
 #endif
 
   /**
+   * @ingroup genericTypes
+   */
+
+  /**
    * @brief Error status returned by some functions in the library.
    */
   typedef enum
@@ -648,6 +652,57 @@ extern "C"
 
   /* Dimension C vector space */
   #define CMPLX_DIM 2
+
+  /**
+   * @ingroup genericTypes
+   */
+  /**
+ * @defgroup bufferSizeTypes Enumerations for transform buffer size functions
+ * @{
+*/
+
+/**
+  * @brief Datatype identifier
+  */
+typedef enum {
+  ARM_MATH_F16 = 16, /**< f16 datatype identifier */
+  ARM_MATH_F32 = 32, /**< f32 datatype identifier */
+  ARM_MATH_F64 = 64, /**< f64 datatype identifier */
+  ARM_MATH_Q7 = 7, /**< Q7 datatype identifier */
+  ARM_MATH_Q15 = 15, /**< Q15 datatype identifier */
+  ARM_MATH_Q31 = 31 /**< Q31 datatype identifier */
+} arm_math_datatype;
+
+/**
+  * @brief Architecture target identifier
+  * 
+  * @note In case the target supports both DSP extensions and Neon extensions, only Neon extensions
+  *       should be used as identification in the corresponding buffer functions.
+  */
+ typedef enum {
+  ARM_MATH_SCALAR_ARCH = 1, /**< Identifier for Scalar build mode */
+  ARM_MATH_DSP_EXTENSIONS_ARCH = 2, /**< Identifier for build mode with dsp extensions */
+  ARM_MATH_HELIUM_ARCH = 3, /**< Identifier for build mode with Helium extensions */
+  ARM_MATH_NEON_ARCH = 4 /**< Identifier for build mode with Neon extensions */
+} arm_math_target_arch;
+
+#if !defined(ARM_MATH_AUTOVECTORIZE)
+  #if defined(ARM_MATH_MVEI) || defined(ARM_MATH_MVEF)
+    #define ARM_MATH_DEFAULT_TARGET_ARCH ARM_MATH_HELIUM_ARCH
+  #elif defined(ARM_MATH_NEON) || defined(ARM_MATH_NEON_EXPERIMENTAL)
+    #define ARM_MATH_DEFAULT_TARGET_ARCH ARM_MATH_NEON_ARCH
+  #elif defined(ARM_MATH_DSP)
+    #define ARM_MATH_DEFAULT_TARGET_ARCH ARM_MATH_DSP_EXTENSIONS_ARCH
+  #else
+    #define ARM_MATH_DEFAULT_TARGET_ARCH ARM_MATH_SCALAR_ARCH 
+  #endif
+#else
+  #define ARM_MATH_DEFAULT_TARGET_ARCH ARM_MATH_SCALAR_ARCH 
+#endif
+
+/**
+ * @} // endgroup bufferSizeTypes
+*/
 
 #ifdef   __cplusplus
 }
