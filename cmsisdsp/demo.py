@@ -1,10 +1,10 @@
 import numpy as np
 import cmsisdsp.datatype as dt 
 import cmsisdsp as dsp
-import matplotlib.animation as animation
 
 try:
     import matplotlib.pyplot as plt
+    import matplotlib.animation as animation
 except ImportError:
     print("matplotlib is not installed. Please install it to visualize the results.")
     print("You can install it using: pip install matplotlib")

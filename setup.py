@@ -203,7 +203,7 @@ def build():
                 "Programming Language :: C",
                 "License :: OSI Approved :: Apache Software License",
                 "Operating System :: OS Independent",
-                "Development Status :: 4 - Beta",
+                "Development Status :: 5 - Production/Stable",
                 "Topic :: Software Development :: Embedded Systems",
                 "Topic :: Scientific/Engineering :: Mathematics",
                 "Environment :: Console",
