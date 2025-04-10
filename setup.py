@@ -25,10 +25,23 @@ __version__ = re.search(
 
 includes = [os.path.join(ROOT,"Include"),os.path.join(ROOT,"PrivateInclude"),os.path.join("PythonWrapper","cmsisdsp_pkg","src")]
 
+linkargs=[]
+
 if sys.platform == 'win32':
   cflags = ["-DWIN",
             "-DCMSISDSP",
             "-DUNALIGNED_SUPPORT_DISABLE"] 
+elif sys.platform == 'darwin':
+  os.environ["ARCHFLAGS"] = "-arch arm64"
+  linkargs = ["-arch", "arm64"]
+  cflags = ["-DARM_MATH_NEON",
+            "-Wno-attributes",
+            "-Wno-unused-function",
+            "-Wno-unused-variable",
+            "-Wno-implicit-function-declaration",
+            "-DCMSISDSP",
+            "-arch", "arm64",
+            "-D__GNUC_PYTHON__"]
 else:
   cflags = ["-DARM_MATH_NEON",
             "-Wno-attributes",
@@ -137,6 +150,7 @@ def mkModule(name,srcs,funcDir):
                               ,
                     include_dirs =  [localinc] + includes + [numpy.get_include()],
                     extra_compile_args = cflags,
+                    extra_link_args = linkargs,
                     library_dirs = libdir,
                     libraries=lib,
                     extra_objects=extraobjs

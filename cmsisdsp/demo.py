@@ -1,6 +1,7 @@
 import numpy as np
 import cmsisdsp.datatype as dt 
 import cmsisdsp as dsp
+import platform 
 
 try:
     import matplotlib.pyplot as plt
@@ -10,10 +11,11 @@ except ImportError:
     print("You can install it using: pip install matplotlib")
     raise ImportError
 
-print("On Linux, if you get an error like this:")
-print("  UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown")
-print("You may need to install the Python interface to Tk with :")
-print("  sudo apt-get install python3-tk")
+if platform.system() == "Linux":
+   print("On Linux, if you get an error like this:")
+   print("  UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown")
+   print("You may need to install the Python interface to Tk with :")
+   print("  sudo apt-get install python3-tk")
 
 # sudo apt-get install python3-tk
 # UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
@@ -67,6 +69,7 @@ def extract_nyquist(r):
 def compute_fft(sig):
     if dsp.has_neon():
         res = dsp.arm_rfft_fast_f32(rfftf32,sig,0,tmp=tmp)
+        #res = dsp.arm_rfft_fast_f32(rfftf32,sig,0)
     else:
         res = dsp.arm_rfft_fast_f32(rfftf32,sig,0)
     fft = extract_nyquist(to_complex(res))
@@ -89,18 +92,25 @@ plt.title("Filtered Signal")
 line_filtered=a.plot(times, filtered)[0]
 a.set_xlabel("s")
 
+
+
 a=plt.subplot(2, 2, 3)
 plt.title("Original Spectrum")
 line_fft_sig=a.plot(np.fft.rfftfreq(len(sig), 1/FFT_SIZE), compute_fft(sig))[0]
 a.set_xlabel("Hz")
+
+
 
 a=plt.subplot(2, 2, 4)
 plt.title("Filtered Spectrum")
 line_fft_filtered=a.plot(np.fft.rfftfreq(len(filtered), 1/FFT_SIZE), compute_fft(filtered))[0]
 a.set_xlabel("Hz")
 
+
+
 plt.tight_layout()
 #plt.show()
+
 
 def update(frame):
     times=t.astype(np.float32)[nb*frame:nb*(frame+1)]

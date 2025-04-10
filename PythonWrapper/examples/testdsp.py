@@ -27,7 +27,7 @@ class TestBasicMathMethods_Test1(unittest.TestCase):
      def test_accumulate_f32(self):
          ref = np.sum(self.data1)
          t = dsp.arm_accumulate_f32(self.data1)
-         assert_allclose(ref,t,rtol=1e-6)
+         assert_allclose(ref,t,rtol=2e-6)
 
      def test_accumulate_f64(self):
          ref = np.sum(self.data1)

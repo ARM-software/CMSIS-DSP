@@ -66,6 +66,22 @@ There is a `CMakeLists.txt` in the `PythonWrapper` folder for this. The `build` 
 
 This library is then used by the `setup.py` script to build the Python extension.
 
+During development,you can rebuild only the object for the
+extension using : 
+    > python setup.py build_ext --inplace
+
+It is faster than just using `pip install`
+
+To build a wheel you can do:
+    >  pip wheel . -w dist
+
+For Darwin with Neon, to force an arm64 build and not an
+universal build, use:
+    > python setup.py bdist_wheel --plat-name macosx_11_0_arm64 -d dist
+
+The wheel package may have to be installed.
+
+
 ## Running the examples
 
 Install some packages to be able to run the examples

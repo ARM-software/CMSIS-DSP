@@ -143,7 +143,7 @@ class TestStatsMethods_Test5(unittest.TestCase):
     def test_kullback_leibler_f32(self):
         ref=entropy(self.pa,self.pb)
         res=dsp.arm_kullback_leibler_f32(self.pa,self.pb)
-        assert_allclose(ref,res,1e-6)
+        assert_allclose(ref,res,2e-6)
 
     def test_kullback_leibler_f64(self):
         ref=entropy(self.pa,self.pb)

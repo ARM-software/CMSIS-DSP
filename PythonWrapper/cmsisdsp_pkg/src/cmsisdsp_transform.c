@@ -1921,7 +1921,7 @@ cmsis_arm_cfft_q15(PyObject *obj, PyObject *args,PyObject *kwds)
   
   PyObject *tmpBuf=NULL;
 
-  static const char * kwlist[] = {
+  static char * kwlist[] = {
     "","","","","tmp",NULL
     };
     
@@ -1988,7 +1988,7 @@ cmsis_arm_cfft_q31(PyObject *obj, PyObject *args,PyObject *kwds)
 
   PyObject *tmpBuf=NULL;
 
-  static const char * kwlist[] = {
+  static char * kwlist[] = {
     "","","","","tmp",NULL
     };
     
@@ -2081,7 +2081,7 @@ cmsis_arm_cfft_f32(PyObject *obj, PyObject *args,PyObject *kwds)
   uint32_t bitReverseFlag; // input
   PyObject *tmpBuf=NULL;
 
-  static const char * kwlist[] = {
+  static char * kwlist[] = {
     "","","","","tmp",NULL
     };
     
@@ -2187,7 +2187,7 @@ cmsis_arm_rfft_q15(PyObject *obj, PyObject *args,PyObject *kwds)
   uint32_t ifft=0; // Only needed when using Neon API
   PyObject *tmpBuf=NULL;
 
-  static const char * kwlist[] = {
+  static char * kwlist[] = {
     "","","","tmp",NULL
     };
 
@@ -2207,6 +2207,8 @@ cmsis_arm_rfft_q15(PyObject *obj, PyObject *args,PyObject *kwds)
   {
      int inputSize;
      int outputSize;
+
+     (void)inputSize;
 
      dsp_arm_rfft_instance_q15Object *selfS = (dsp_arm_rfft_instance_q15Object *)S;
 
@@ -2241,6 +2243,7 @@ cmsis_arm_rfft_q15(PyObject *obj, PyObject *args,PyObject *kwds)
 
 #if defined(ARM_MATH_NEON)
     //GETARGUMENT(pSrc,NPY_INT16,int16_t,int16_t);
+    PyObject *pSrcc=NULL;
     ACCESSARRAY(pSrc_converted,pSrc,NPY_INT16,int16_t);
 
     ALLOC_OR_GET_TMP(tmp,tmpBuf,2*selfS->instance->nfft,NPY_INT16,q15_t)
@@ -2322,7 +2325,7 @@ cmsis_arm_rfft_q31(PyObject *obj, PyObject *args,PyObject *kwds)
 
   PyObject *tmpBuf=NULL;
 
-  static const char * kwlist[] = {
+  static char * kwlist[] = {
     "","","","tmp",NULL
     };
 
@@ -2342,6 +2345,7 @@ cmsis_arm_rfft_q31(PyObject *obj, PyObject *args,PyObject *kwds)
   {
      int inputSize;
      int outputSize;
+     (void)inputSize;
 
      dsp_arm_rfft_instance_q31Object *selfS = (dsp_arm_rfft_instance_q31Object *)S;
 
@@ -2376,6 +2380,7 @@ cmsis_arm_rfft_q31(PyObject *obj, PyObject *args,PyObject *kwds)
 
 #if defined(ARM_MATH_NEON)
     //GETARGUMENT(pSrc,NPY_INT32,int32_t,int32_t);
+    PyObject *pSrcc=NULL;
     ACCESSARRAY(pSrc_converted,pSrc,NPY_INT32,int32_t);
 
     ALLOC_OR_GET_TMP(tmp,tmpBuf,2*selfS->instance->nfft,NPY_INT32,q31_t)
@@ -2502,7 +2507,7 @@ cmsis_arm_rfft_fast_f32(PyObject *obj, PyObject *args,PyObject *kwds)
   uint32_t fftLen; // input
   PyObject *tmpBuf=NULL;
 
-  static const char * kwlist[] = {
+  static char * kwlist[] = {
     "","","","tmp",NULL
   };
 
@@ -2523,8 +2528,8 @@ cmsis_arm_rfft_fast_f32(PyObject *obj, PyObject *args,PyObject *kwds)
     GETARGUMENT(p,NPY_DOUBLE,double,float32_t);
     //ACCESSARRAY(p_converted,p,NPY_FLOAT,float32_t);
 
-    ALLOC_OR_GET_TMP(tmp,tmpBuf,fftLen,NPY_FLOAT,float32_t)
-
+    ALLOC_OR_GET_TMP(tmp,tmpBuf,fftLen,NPY_FLOAT,float32_t);
+    
     arm_rfft_fast_f32(selfS->instance,p_converted,pOut,tmp,(uint8_t)ifftFlag);
     FREE_OR_RELEASE(tmp,tmpBuf);
 
@@ -2722,7 +2727,7 @@ cmsis_arm_mfcc_f32(PyObject *obj, PyObject *args,PyObject *kwds)
   PyObject *tmpBuf=NULL; // neon tmp buffer
 
 
-  static const char * kwlist[] = {
+  static char * kwlist[] = {
     "","","","tmp2",NULL
    };
 
@@ -2827,7 +2832,7 @@ cmsis_arm_mfcc_q15(PyObject *obj, PyObject *args,PyObject *kwds)
   PyObject *tmpBuf=NULL; // neon tmp buffer
 
 
-  static const char * kwlist[] = {
+  static char * kwlist[] = {
     "","","","tmp2",NULL
    };
 
@@ -2932,7 +2937,7 @@ cmsis_arm_mfcc_q31(PyObject *obj, PyObject *args,PyObject *kwds)
   PyObject *tmpBuf=NULL; // neon tmp buffer
 
 
-  static const char * kwlist[] = {
+  static char * kwlist[] = {
     "","","","tmp2",NULL
    };
 
@@ -2985,7 +2990,7 @@ static PyObject * cmsis_arm_cfft_tmp_buffer_size(PyObject *obj,
     uint32_t nb_samples;
     uint32_t buf_id;
 
-    static const char * kwlist[] = {
+    static char * kwlist[] = {
       "","","","arch",NULL
     };
 
@@ -3008,7 +3013,7 @@ static PyObject * cmsis_arm_cfft_output_buffer_size(PyObject *obj,
     uint32_t dt;
     uint32_t nb_samples;
 
-    static const char * kwlist[] = {
+    static char * kwlist[] = {
       "","","arch",NULL
     };
 
@@ -3031,7 +3036,7 @@ static PyObject * cmsis_arm_cifft_output_buffer_size(PyObject *obj,
     uint32_t dt;
     uint32_t nb_samples;
 
-    static const char * kwlist[] = {
+    static char * kwlist[] = {
       "","","arch",NULL
     };
 
@@ -3055,7 +3060,7 @@ static PyObject * cmsis_arm_rfft_tmp_buffer_size(PyObject *obj,
     uint32_t nb_samples;
     uint32_t buf_id;
 
-    static const char * kwlist[] = {
+    static char * kwlist[] = {
       "","","","arch",NULL
     };
 
@@ -3078,7 +3083,7 @@ static PyObject * cmsis_arm_rfft_output_buffer_size(PyObject *obj,
     uint32_t dt;
     uint32_t nb_samples;
 
-    static const char * kwlist[] = {
+    static char * kwlist[] = {
       "","","arch",NULL
     };
 
@@ -3101,7 +3106,7 @@ static PyObject * cmsis_arm_rifft_input_buffer_size(PyObject *obj,
     uint32_t dt;
     uint32_t nb_samples;
 
-    static const char * kwlist[] = {
+    static char * kwlist[] = {
       "","","arch",NULL
     };
 
@@ -3131,7 +3136,7 @@ static PyObject * cmsis_arm_mfcc_tmp_buffer_size(PyObject *obj,
     uint32_t use_cfft=0;
 #endif
 
-    static const char * kwlist[] = {
+    static char * kwlist[] = {
       "","","","use_cfft","arch",NULL
     };
 

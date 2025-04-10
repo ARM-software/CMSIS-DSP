@@ -175,20 +175,22 @@ Method_##NAME##_##FIELD(dsp_##NAME##Object *self, PyObject *ignored)\
        }                                                                       \
     }
 
-#define ACCESSARRAY(DST,FIELD,FORMAT,SRCFORMAT)                                \
-       PyArray_Descr *desct=PyArray_DescrFromType(FORMAT);                     \
-       PyArrayObject *FIELD##c = (PyArrayObject *)PyArray_FromAny(FIELD,desct, \
-        1,0,NPY_ARRAY_C_CONTIGUOUS | NPY_ARRAY_ALIGNED | NPY_ARRAY_FORCECAST,  \
-        NULL);                                                                 \
-       if (FIELD##c)                                                           \
-       {                                                                       \
-           DST=(SRCFORMAT*)PyArray_DATA(FIELD##c);                             \
-       } 
+#define ACCESSARRAY(DST,FIELD,FORMAT,SRCFORMAT)                               \
+   {                                                                          \
+       PyArray_Descr *desct=PyArray_DescrFromType(FORMAT);                    \
+       FIELD##c = PyArray_FromAny(FIELD,desct,                                \
+        1,0,NPY_ARRAY_C_CONTIGUOUS | NPY_ARRAY_ALIGNED | NPY_ARRAY_FORCECAST, \
+        NULL);                                                                \
+       if (FIELD##c != NULL)                                                  \
+       {                                                                      \
+           DST=(SRCFORMAT*)PyArray_DATA((PyArrayObject*)FIELD##c);            \
+       }                                                                      \
+    }
        
 #define ARRAYNOMOREUSED(FIELD)  \
        if (FIELD##c)            \
        {                        \
-           Py_DECREF(FIELD##c); \
+        Py_DECREF((PyObject*)FIELD##c); \
        }
 
 /*
@@ -202,8 +204,8 @@ Neon version of the extension.
 */
 
 #define ALLOC_OR_GET_TMP(TMP,PYTMP,NBSAMPLES,NUMPY_DT,CMSIS_DT) \
-       q31_t *TMP;                                              \
-       PyArrayObject *PYTMP##c;                                 \
+       CMSIS_DT *TMP=NULL;                                              \
+       PyObject *PYTMP##c=NULL;                                 \
                                                                 \
        if (PYTMP)                                               \
        {                                                        \
