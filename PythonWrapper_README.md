@@ -250,8 +250,9 @@ MEL filters are represented as 3 arrays to encode a sparse array.
 
 # Change history
 
-## Version 1.10.0:
+## Version 1.10.1:
 * Some Neon acceleration on Arm aarch64 (with small API differences for FFT)
+* Version 1.10 was removed because of issues in some buffer management
 
 ## Version 1.9.9:
 * Supports Python 3.12
