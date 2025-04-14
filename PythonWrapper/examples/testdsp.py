@@ -359,7 +359,7 @@ class TestTransformMethods_Test1(unittest.TestCase):
           status=dsp.arm_cfft_init_f32(cfftf32,self.nb)
           self.assertTrue(status==0)
           if dsp.has_neon():
-             tmp = np.zeros(2*self.nb,dtype=np.int32)
+             tmp = np.zeros(2*self.nb,dtype=np.float32)
              resultR = dsp.arm_cfft_f32(cfftf32,signalR,0,tmp=tmp)
           else:
              resultR = dsp.arm_cfft_f32(cfftf32,signalR,0,1)
