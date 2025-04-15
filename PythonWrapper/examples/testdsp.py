@@ -1,4 +1,5 @@
 import cmsisdsp as dsp
+import cmsisdsp.datatype as dt
 import numpy as np
 from scipy import signal
 #import matplotlib.pyplot as plt
@@ -359,7 +360,8 @@ class TestTransformMethods_Test1(unittest.TestCase):
           status=dsp.arm_cfft_init_f32(cfftf32,self.nb)
           self.assertTrue(status==0)
           if dsp.has_neon():
-             tmp = np.zeros(2*self.nb,dtype=np.float32)
+             tmp_nb = dsp.arm_cfft_tmp_buffer_size(dt.F32,self.nb,1)
+             tmp = np.zeros(tmp_nb,dtype=np.float32)
              resultR = dsp.arm_cfft_f32(cfftf32,signalR,0,tmp=tmp)
           else:
              resultR = dsp.arm_cfft_f32(cfftf32,signalR,0,1)
@@ -375,7 +377,8 @@ class TestTransformMethods_Test1(unittest.TestCase):
           status=dsp.arm_cfft_init_q31(cfftq31,self.nb)
           self.assertTrue(status==0)
           if dsp.has_neon():
-             tmp = np.zeros(2*self.nb,dtype=np.int32)
+             tmp_nb = dsp.arm_cfft_tmp_buffer_size(dt.Q31,self.nb,1)
+             tmp = np.zeros(tmp_nb,dtype=np.int32)
              resultR = dsp.arm_cfft_q31(cfftq31,signalRQ31,0,tmp=tmp)
           else:
              resultR = dsp.arm_cfft_q31(cfftq31,signalRQ31,0,1)
@@ -391,7 +394,8 @@ class TestTransformMethods_Test1(unittest.TestCase):
           status=dsp.arm_cfft_init_q15(cfftq15,self.nb)
           self.assertTrue(status==0)
           if dsp.has_neon():
-             tmp = np.zeros(2*self.nb,dtype=np.int16)
+             tmp_nb = dsp.arm_cfft_tmp_buffer_size(dt.Q15,self.nb,1)
+             tmp = np.zeros(tmp_nb,dtype=np.int16)
              resultR = dsp.arm_cfft_q15(cfftq15,signalRQ15,0,tmp=tmp)
           else:
              resultR = dsp.arm_cfft_q15(cfftq15,signalRQ15,0,1)
