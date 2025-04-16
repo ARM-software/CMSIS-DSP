@@ -250,6 +250,9 @@ MEL filters are represented as 3 arrays to encode a sparse array.
 
 # Change history
 
+## Version 1.10.2:
+* Release build of CMSIS-DSP for the Neon versions
+
 ## Version 1.10.1:
 * Some Neon acceleration on Arm aarch64 (with small API differences for FFT)
 * Version 1.10 was removed because of issues in some buffer management
