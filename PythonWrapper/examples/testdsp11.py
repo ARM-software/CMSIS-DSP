@@ -210,7 +210,7 @@ class TestWindowMethods_Test11(unittest.TestCase):
         wf32 = dsp.arm_nuttall4a_f32(128)
         assert_allclose(ref, wf32, rtol=1e-6, atol=2e-6)
         wf64 = dsp.arm_nuttall4a_f64(128)
-        assert_allclose(ref, wf64)
+        assert_allclose(ref, wf64, rtol=3e-16, atol=1e-16)
 
     def test_blackman_harris(self):
         ref = genblackman_harris_92db(128)
@@ -224,7 +224,7 @@ class TestWindowMethods_Test11(unittest.TestCase):
         wf32 = dsp.arm_nuttall4b_f32(128)
         assert_allclose(ref, wf32, rtol=1e-6, atol=2e-6)
         wf64 = dsp.arm_nuttall4b_f64(128)
-        assert_allclose(ref, wf64)
+        assert_allclose(ref, wf64, rtol=3e-16, atol=1e-16)
 
     def test_nuttall4c(self):
         ref = gennuttall4c(128)
@@ -238,7 +238,7 @@ class TestWindowMethods_Test11(unittest.TestCase):
         wf32 = dsp.arm_hft90d_f32(128)
         assert_allclose(ref, wf32, rtol=1e-6, atol=2e-6)
         wf64 = dsp.arm_hft90d_f64(128)
-        assert_allclose(ref, wf64)
+        assert_allclose(ref, wf64, rtol=1e-15, atol=1e-15)
 
     def test_hft95(self):
         ref = genhft95(128)
@@ -252,28 +252,28 @@ class TestWindowMethods_Test11(unittest.TestCase):
         wf32 = dsp.arm_hft116d_f32(128)
         assert_allclose(ref, wf32, rtol=1e-6, atol=2e-6)
         wf64 = dsp.arm_hft116d_f64(128)
-        assert_allclose(ref, wf64)
+        assert_allclose(ref, wf64, rtol=3e-15, atol=3e-15)
 
     def test_hft144d(self):
         ref = genhft144d(128)
         wf32 = dsp.arm_hft144d_f32(128)
         assert_allclose(ref, wf32, rtol=1e-6, atol=2e-6)
         wf64 = dsp.arm_hft144d_f64(128)
-        assert_allclose(ref, wf64)
+        assert_allclose(ref, wf64, rtol=3e-15, atol=3e-15)
 
     def test_hft196d(self):
         ref = genhft196d(128)
         wf32 = dsp.arm_hft196d_f32(128)
         assert_allclose(ref, wf32, rtol=1e-6, atol=2e-6)
         wf64 = dsp.arm_hft196d_f64(128)
-        assert_allclose(ref, wf64)
+        assert_allclose(ref, wf64, rtol=2e-15, atol=2e-15)
 
     def test_hft223d(self):
         ref = genhft223d(128)
         wf32 = dsp.arm_hft223d_f32(128)
         assert_allclose(ref, wf32, rtol=1e-6, atol=2e-6)
         wf64 = dsp.arm_hft223d_f64(128)
-        assert_allclose(ref, wf64)
+        assert_allclose(ref, wf64, rtol=2e-15, atol=2e-15)
 
     def test_hft248d(self):
         ref = genhft248d(128)
