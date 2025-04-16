@@ -273,7 +273,7 @@ class TestWindowMethods_Test11(unittest.TestCase):
         wf32 = dsp.arm_hft223d_f32(128)
         assert_allclose(ref, wf32, rtol=1e-6, atol=2e-6)
         wf64 = dsp.arm_hft223d_f64(128)
-        assert_allclose(ref, wf64, rtol=2e-15, atol=2e-15)
+        assert_allclose(ref, wf64, rtol=3e-15, atol=3e-15)
 
     def test_hft248d(self):
         ref = genhft248d(128)

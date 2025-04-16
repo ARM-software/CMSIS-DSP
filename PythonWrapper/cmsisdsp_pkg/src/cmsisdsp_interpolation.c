@@ -51,7 +51,7 @@ arm_linear_interp_instance_f32_dealloc(dsp_arm_linear_interp_instance_f32Object*
 
        if (self->instance->pYData)
        {
-          PyMem_Free(self->instance->pYData);
+          PyMem_Free((void*)self->instance->pYData);
        }
 
 
@@ -139,7 +139,7 @@ arm_bilinear_interp_instance_f32_dealloc(dsp_arm_bilinear_interp_instance_f32Obj
 
        if (self->instance->pData)
        {
-          PyMem_Free(self->instance->pData);
+          PyMem_Free((void*)self->instance->pData);
        }
 
 
@@ -224,7 +224,7 @@ arm_bilinear_interp_instance_q31_dealloc(dsp_arm_bilinear_interp_instance_q31Obj
 
        if (self->instance->pData)
        {
-          PyMem_Free(self->instance->pData);
+          PyMem_Free((void*)self->instance->pData);
        }
 
 
@@ -309,7 +309,7 @@ arm_bilinear_interp_instance_q15_dealloc(dsp_arm_bilinear_interp_instance_q15Obj
 
        if (self->instance->pData)
        {
-          PyMem_Free(self->instance->pData);
+          PyMem_Free((void*)self->instance->pData);
        }
 
 
@@ -394,7 +394,7 @@ arm_bilinear_interp_instance_q7_dealloc(dsp_arm_bilinear_interp_instance_q7Objec
 
        if (self->instance->pData)
        {
-          PyMem_Free(self->instance->pData);
+          PyMem_Free((void*)self->instance->pData);
        }
 
 
