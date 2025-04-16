@@ -28,10 +28,17 @@ t = np.linspace(0, duration, FFT_SIZE*duration, endpoint=False)
 signal = (duration-t)/duration*(np.sin(2 * np.pi * 10 * t) + 0.5 * np.random.randn(len(t)))  # 50 Hz sine + noise
 
 # 2. Design simple low-pass FIR filter
-from scipy.signal import firwin
+#from scipy.signal import firwin
 cutoff = 25  # Hz
 num_taps = 29
-fir_coeffs = firwin(num_taps, cutoff / (FFT_SIZE / 2))
+#fir_coeffs = firwin(num_taps, cutoff / (FFT_SIZE / 2))
+fir_coeffs = np.array([-0.00173373,  -0.00175053, -0.00178515, -0.00125729,  0.00061816,  0.00466105,
+  0.01151756,  0.02146004,  0.03424345,  0.04905677,  0.06458896,  0.07920401,
+  0.09119551,  0.09907224,  0.10181794,  0.09907224,  0.09119551,  0.07920401,
+  0.06458896,  0.04905677,  0.03424345,  0.02146004,  0.01151756,  0.00466105,
+  0.00061816, -0.00125729, -0.00178515, -0.00175053, -0.00173373])
+
+
 
 # 3. Prepare FIR filter
 firf32 = dsp.arm_fir_instance_f32()
