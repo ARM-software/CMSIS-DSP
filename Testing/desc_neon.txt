@@ -3012,6 +3012,28 @@ group Root {
               folder = Binary 
 
               suite Binary F32 {
+                class = BinaryComplexTestsNeonF32 
+                folder = BinaryF32
+
+                Pattern INPUTS1_F32_ID : InputAC1_f32.txt 
+                Pattern INPUTS2_F32_ID : InputBC1_f32.txt 
+
+
+                Pattern REFMUL1_F32_ID : RefCmplxMul1_f32.txt
+                Pattern DIMSBINARY1_S16_ID : DimsBinary1_s16.txt 
+
+
+                Output  OUT_F32_ID : Output
+                Output  TMPA_F32_ID : TmpA
+                Output  TMPB_F32_ID : TmpB
+
+                Functions {
+                  test mult:test_mat_cmplx_mult_f32
+                }
+
+              }
+
+              suite Binary Complex F32 {
                 class = BinaryTestsNeonF32 
                 folder = BinaryF32
 
@@ -3031,7 +3053,7 @@ group Root {
                   test mult:test_mat_mult_f32
                 }
 
-             }
+              }
 
               suite Binary F16 {
                 class = BinaryTestsNeonF16 

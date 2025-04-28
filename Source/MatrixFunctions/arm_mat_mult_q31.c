@@ -638,6 +638,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q31(
 
 #define LANE 4
 #define DTYPE q31_t
+#define HEADERTYPE DTYPE
 #define VEC int32x4_t
 #define VECACC int32x4_t
 

@@ -10,6 +10,12 @@ ninja
 ./test > result_binaryf32_neon.txt
 python ../processResult.py --noerr -e -f ../Output_neon.pickle -r result_binaryf32_neon.txt -html > result_binaryf32_neon.html 
 
+echo "Binary Complex F32 Tests"
+python ../processTests.py -p ../Patterns -d ../Parameters -gen .. -e -f ../Output_neon.pickle BinaryComplexTestsNeonF32
+ninja 
+./test > result_binary_complexf32_neon.txt
+python ../processResult.py --noerr -e -f ../Output_neon.pickle -r result_binary_complexf32_neon.txt -html > result_binary_complexf32_neon.html 
+
 echo "Binary F16 Tests"
 python ../processTests.py -p ../Patterns -d ../Parameters -gen .. -e -f ../Output_neon.pickle BinaryTestsNeonF16
 ninja 

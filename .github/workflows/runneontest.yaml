@@ -120,6 +120,7 @@ jobs:
           test "$(grep "FAILED" result.html | wc -l)" -eq 0
           test "$(grep "FAILED" result_transform_neon.html | wc -l)" -eq 0
           test "$(grep "FAILED" result_binaryf32_neon.html | wc -l)" -eq 0
+          test "$(grep "FAILED" result_binary_complexf32_neon.html | wc -l)" -eq 0
           test "$(grep "FAILED" result_binaryf16_neon.html | wc -l)" -eq 0
           test "$(grep "FAILED" result_binaryq31_neon.html | wc -l)" -eq 0
           test "$(grep "FAILED" result_binaryq15_neon.html | wc -l)" -eq 0
