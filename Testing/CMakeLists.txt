@@ -127,6 +127,7 @@ if (NEON)
         Source/Tests/TransformNeonCQ31.cpp
         Source/Tests/TransformNeonCQ15.cpp
         Source/Tests/BinaryTestsNeonF32.cpp
+        Source/Tests/BinaryComplexTestsNeonF32.cpp
         Source/Tests/BinaryTestsNeonQ31.cpp
         Source/Tests/BinaryTestsNeonQ15.cpp
         Source/Tests/BinaryTestsNeonQ7.cpp
