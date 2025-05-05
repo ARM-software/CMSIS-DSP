@@ -150,10 +150,12 @@ def writeBinaryTests(config,format,desc):
     with Progress() as progress:
         for (a,b,c) in progress.track(binarySizes, description=desc):
            progress.console.print(f"{a} x {b} x {c}")
+           # Compute a shift to avoid pverflow for veru big matrices
            m = int(np.log2(np.max([a,b,c])))
            dims.append(a)
            dims.append(b)
            dims.append(c)
+           # Shift is part of parameters
            if format == Tools.Q31 or format == Tools.Q15 or format == Tools.Q7:
               dims.append(m)
     

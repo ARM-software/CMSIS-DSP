@@ -3011,7 +3011,7 @@ group Root {
               class = BinaryTests 
               folder = Binary 
 
-              suite Binary F32 {
+              suite Binary Complex F32 {
                 class = BinaryComplexTestsNeonF32 
                 folder = BinaryF32
 
@@ -3033,7 +3033,7 @@ group Root {
 
               }
 
-              suite Binary Complex F32 {
+              suite Binary F32 {
                 class = BinaryTestsNeonF32 
                 folder = BinaryF32
 
@@ -3055,6 +3055,28 @@ group Root {
 
               }
 
+              suite Binary Complex F16 {
+                class = BinaryComplexTestsNeonF16 
+                folder = BinaryF16
+
+                Pattern INPUTS1_F16_ID : InputAC1_f16.txt 
+                Pattern INPUTS2_F16_ID : InputBC1_f16.txt 
+
+
+                Pattern REFMUL1_F16_ID : RefCmplxMul1_f16.txt
+                Pattern DIMSBINARY1_S16_ID : DimsBinary1_s16.txt 
+
+
+                Output  OUT_F16_ID : Output
+                Output  TMPA_F16_ID : TmpA
+                Output  TMPB_F16_ID : TmpB
+
+                Functions {
+                  test mult:test_mat_cmplx_mult_f16
+                }
+
+             }
+
               suite Binary F16 {
                 class = BinaryTestsNeonF16 
                 folder = BinaryF16
@@ -3073,6 +3095,28 @@ group Root {
 
                 Functions {
                   test mult:test_mat_mult_f16
+                }
+
+             }
+
+              suite Binary Complex Q31 {
+                class = BinaryComplexTestsNeonQ31 
+                folder = BinaryQ31
+
+                Pattern INPUTS1_Q31_ID : InputAC1_q31.txt 
+                Pattern INPUTS2_Q31_ID : InputBC1_q31.txt 
+
+
+                Pattern REFMUL1_Q31_ID : RefCmplxMul1_q31.txt
+                Pattern DIMSBINARY1_S16_ID : DimsBinary1_s16.txt 
+
+
+                Output  OUT_Q31_ID : Output
+                Output  TMPA_Q31_ID : TmpA
+                Output  TMPB_Q31_ID : TmpB
+
+                Functions {
+                  test mult:test_mat_cmplx_mult_q31
                 }
 
              }
@@ -3099,6 +3143,32 @@ group Root {
 
              }
 
+              suite Binary Complex Q15 {
+                class = BinaryComplexTestsNeonQ15 
+                folder = BinaryQ15
+
+                Pattern INPUTS1_Q15_ID : InputAC1_q15.txt 
+                Pattern INPUTS2_Q15_ID : InputBC1_q15.txt 
+
+
+                Pattern REFMUL1_Q15_ID : RefCmplxMul1_q15.txt
+                Pattern DIMSBINARY1_S16_ID : DimsBinary1_s16.txt 
+
+                Pattern REFLIMITEDMUL1_Q15_ID : RefCmplxLimitedMul1_q15.txt
+                Pattern DIMSLIMITEDBINARY1_S16_ID : DimsLimitedBinary1_s16.txt 
+
+
+                Output  OUT_Q15_ID : Output
+                Output  TMPA_Q15_ID : TmpA
+                Output  TMPB_Q15_ID : TmpB
+                Output  TMP_Q15_ID : Tmp
+
+                Functions {
+                  test complex mult:test_mat_cmplx_mult_q15
+                }
+
+             }
+
               suite Binary Q15 {
                 class = BinaryTestsNeonQ15 
                 folder = BinaryQ15
@@ -3121,7 +3191,6 @@ group Root {
 
                 Functions {
                   test mult:test_mat_mult_q15
-                  disabled {test complex mult:test_mat_cmplx_mult_q15}
                   test fast mult:test_mat_mult_fast_q15
                 }
 
