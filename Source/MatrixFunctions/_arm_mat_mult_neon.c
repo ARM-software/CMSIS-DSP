@@ -36,12 +36,12 @@
 #define ROWS_BLOCK ((((ARM_MATH_L2_CACHE_SIZE>>2) >> 0) / INNER_BLOCK + DR - 1) & ~(DR-1) ) 
 #define COLS_BLOCK (((ARM_MATH_L3_CACHE_SIZE>>2) / INNER_BLOCK + DC - 1) & ~(DC-1)) 
 
-// Max size is a complex vector so 8 bytes
+// Max size is a complex scalar so 8 bytes
 #define MAXDT_PACKEDA 8
-// Max size is a complex vector so 8 bytes
+// Max size is a complex scalar so 8 bytes
 #define MAXDT_PACKEDB 8
-// Max size is int64 for q15 acc or a complex so two float
-#define MAXDT_PACKEDC 8
+// Max size is 2*int64 for complex q15 acc or a complex so two float
+#define MAXDT_PACKEDC 16
 
 #if !defined(PACKEDARRAY)
 #define PACKEDARRAY
@@ -1639,36 +1639,6 @@ __STATIC_INLINE void EXT(kernel_1rxc)(SCALARACC *packedc,int col,int max_cols,in
     }                                                    \
 }
 
-#define PACK_AND_WIDEN(BUF,PACKED,WIDTH,HEIGHT,RB,CB,ROW,COL) \
-{                                                             \
-    TMPLD                                                     \
-    const DTYPE *p = &(BUF)[(COL)+(ROW)*(WIDTH)];             \
-    SCALARACC *packed=(SCALARACC*)(PACKED);                       \
-    const int nb_rows = MIN((HEIGHT),(ROW)+(RB))-(ROW);       \
-    const int nb_cols = MIN((WIDTH),(COL)+(CB)) - (COL);      \
-    for(int i=0;i<nb_rows;i++)                                \
-    {                                                         \
-        int j=0;                                              \
-        for(;j<=(nb_cols-LANE);j+=LANE)                       \
-        {                                                     \
-            VECACC tmp ;                                      \
-            VLOAD_AND_WIDEN(tmp,p);                     \
-            p += LANE;                                        \
-            VSTORE_ACC(packed,tmp);                               \
-            packed += LANE;                                   \
-        }                                                     \
-        for(;j<nb_cols;j++)                                   \
-        {                                                     \
-            SCALARACC tmp;                                            \
-            SCALAR_LOAD_AND_WIDEN(tmp,p);                     \
-            p++;                                              \
-            *packed++ = tmp;                                  \
-        }                                                     \
-        packed += (CB) - nb_cols;                             \
-        p += WIDTH - nb_cols;                                 \
-    }                                                         \
-}
-
 #define CLEAR_PACKED(PACKED,WIDTH,HEIGHT,RB,CB,ROW,COL)  \
 {                                                        \
     SCALARACC *packed=(SCALARACC*)(PACKED);              \
@@ -1964,10 +1934,14 @@ ARM_DSP_ATTRIBUTE arm_status FUNCNAME (
 #undef SCALARACC
 #undef VLOAD
 #undef VSTORE
+#if defined(SCALAR_LOAD_AND_WIDEN)
 #undef SCALAR_LOAD_AND_WIDEN
+#endif
 #undef SCALAR_STORE_AND_NARROW
 #undef SCALAR_MAC_N
+#if defined(VLOAD_AND_WIDEN)
 #undef VLOAD_AND_WIDEN
+#endif
 #undef VSTORE_AND_NARROW
 #undef EXT
 #undef CLEAR_ACC

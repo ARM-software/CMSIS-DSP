@@ -651,7 +651,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q31(
 #define SCALARACC int32_t 
 #define SCALAR_LOAD_AND_WIDEN(DST,PTR) DST = (SCALARACC)(*(PTR))
 #define SCALAR_STORE_AND_NARROW(PTR,VAL) *(PTR) = (VAL)
-#define SCALAR_MAC_N(ACC,VEC,SCALAR) ACC += __SSAT((((int64_t)(VEC) * (int64_t)(SCALAR)) >> 32),31) << 1U
+#define SCALAR_MAC_N(ACC,VEC,SCALAR) ACC = __SSAT(((((int64_t)ACC << 31) + (int64_t)(VEC) * (int64_t)(SCALAR)) >> 32),31) << 1U
 
 #define VLOAD(DST,PTR) DST = vld1q_s32((PTR))
 #define VSTORE(PTR,VAL) vst1q_s32((PTR),(VAL))

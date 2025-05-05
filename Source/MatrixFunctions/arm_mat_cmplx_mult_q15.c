@@ -311,6 +311,157 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_q15(
   /* Return to application */
   return (status);
 }
+
+
+#else
+#if defined(ARM_MATH_NEON)
+
+/**
+  @brief         Q15 Complex matrix multiplication.
+  @param[in]     pSrcA      points to first input complex matrix structure
+  @param[in]     pSrcB      points to second input complex matrix structure
+  @param[out]    pDst       points to output complex matrix structure
+  @param[in]     pScratch   points to an array for storing intermediate results
+  @return        execution status
+                   - \ref ARM_MATH_SUCCESS       : Operation successful
+                   - \ref ARM_MATH_SIZE_MISMATCH : Matrix size check failed
+*/
+
+struct _arm_complex_q15 { \
+  q15_t re;       \
+  q15_t im;       \
+};
+
+struct _arm_complex_q15_acc { \
+  int64_t re;       \
+  int64_t im;       \
+};
+
+#define LANE 8
+
+#define DTYPE struct _arm_complex_q15
+#define HEADERTYPE q15_t
+#define VEC int16x8x2_t
+#define VECACC struct { \
+    int64x2x2_t val[4];   \
+}
+
+#define CLEAR_ACC(tmp) \
+    tmp.val[0].val[0] = vdupq_n_s64(0); \
+    tmp.val[1].val[0] = vdupq_n_s64(0); \
+    tmp.val[2].val[0] = vdupq_n_s64(0); \
+    tmp.val[3].val[0] = vdupq_n_s64(0); \
+    tmp.val[0].val[1] = vdupq_n_s64(0); \
+    tmp.val[1].val[1] = vdupq_n_s64(0); \
+    tmp.val[2].val[1] = vdupq_n_s64(0); \
+    tmp.val[3].val[1] = vdupq_n_s64(0);
+
+
+#define TMPMAC \
+int32x4_t tmp;
+
+#define TMPLD         \
+  int16x8x2_t tmp1;   \
+  int32x4x2_t tmp2re; \
+  int32x4x2_t tmp2im;
+
+#define TMPST                 \
+  int32x2_t tlow;             \
+  int32x2_t thigh;            \
+  int16x4x2_t  htmplo,htmphigh;\
+  int16x8x2_t htmp;
+
+#define SCALARACC struct _arm_complex_q15_acc 
+
+#define DEF_AND_CLEAR_SCALARACC(tmp) const SCALARACC tmp={.re=0, .im = 0}
+
+
+#define SCALAR_STORE_AND_NARROW(PTR,VAL) {      \
+  struct _arm_complex_q15 tmpl;                 \
+  tmpl.re = (q15_t) __SSAT(((VAL).re) >> 15, 16); \
+  tmpl.im = (q15_t) __SSAT(((VAL).im) >> 15, 16); \
+  *(PTR) = tmpl;                                \
+}
+
+#define SCALAR_MAC_N(ACC,VEC,SCALAR) ACC.re = ACC.re + \
+   (int64_t)(VEC.re) * (int64_t)(SCALAR.re) -          \
+   (int64_t)(VEC.im) * (int64_t)(SCALAR.im);           \
+   ACC.im = ACC.im +                                   \
+   (int64_t)(VEC.re) * (int64_t)(SCALAR.im) +          \
+   (int64_t)(VEC.im) * (int64_t)(SCALAR.re);
+
+#define VLOAD(DST,PTR) DST = vld2q_s16((q15_t*)(PTR))
+#define VSTORE(PTR,VAL) vst2q_s16((q15_t*)(PTR),(VAL))
+
+#define VLOAD_ACC(DST,PTR)         \
+  DST.val[0] = vld2q_s64(((int64_t*)PTR)+4*0); \
+  DST.val[1] = vld2q_s64(((int64_t*)PTR)+4*1); \
+  DST.val[2] = vld2q_s64(((int64_t*)PTR)+4*2); \
+  DST.val[3] = vld2q_s64(((int64_t*)PTR)+4*3);
+
+#define VSTORE_ACC(PTR,VAL)        \
+  vst2q_s64(((int64_t*)PTR)+4*0,(VAL).val[0]); \
+  vst2q_s64(((int64_t*)PTR)+4*1,(VAL).val[1]); \
+  vst2q_s64(((int64_t*)PTR)+4*2,(VAL).val[2]); \
+  vst2q_s64(((int64_t*)PTR)+4*3,(VAL).val[3]);
+
+
+#define VSTORE_AND_NARROW(PTR,VAL)                            \
+    tlow = vqshrn_n_s64(VAL.val[0].val[0],15);                \
+    thigh = vqshrn_n_s64(VAL.val[1].val[0],15);               \
+    htmplo.val[0] = vqmovn_s32(vcombine_s32(tlow,thigh));     \
+    tlow = vqshrn_n_s64(VAL.val[2].val[0],15);                \
+    thigh = vqshrn_n_s64(VAL.val[3].val[0],15);               \
+    htmphigh.val[0] = vqmovn_s32(vcombine_s32(tlow,thigh));   \
+    htmp.val[0]=vcombine_s16(htmplo.val[0],htmphigh.val[0]); \
+                                                              \
+    tlow = vqshrn_n_s64(VAL.val[0].val[1],15);                \
+    thigh = vqshrn_n_s64(VAL.val[1].val[1],15);               \
+    htmplo.val[1] = vqmovn_s32(vcombine_s32(tlow,thigh));     \
+    tlow = vqshrn_n_s64(VAL.val[2].val[1],15);                \
+    thigh = vqshrn_n_s64(VAL.val[3].val[1],15);               \
+    htmphigh.val[1] = vqmovn_s32(vcombine_s32(tlow,thigh));   \
+    htmp.val[1]=vcombine_s16(htmplo.val[1],htmphigh.val[1]); \
+    vst2q_s16((q15_t*)PTR,htmp);
+
+  #define VMAC_N(ACC,VEC,SCALAR)                                                     \
+    tmp = vmull_s16(vget_low_s16(VEC.val[0]),vdup_n_s16(SCALAR.re));                     \
+    ACC.val[0].val[0] = vqaddq_s64(ACC.val[0].val[0],vmovl_s32(vget_low_s32(tmp)));  \
+    ACC.val[1].val[0] = vqaddq_s64(ACC.val[1].val[0],vmovl_s32(vget_high_s32(tmp))); \
+    tmp = vmull_s16(vget_high_s16(VEC.val[0]),vdup_n_s16(SCALAR.re));                    \
+    ACC.val[2].val[0] = vqaddq_s64(ACC.val[2].val[0],vmovl_s32(vget_low_s32(tmp)));  \
+    ACC.val[3].val[0] = vqaddq_s64(ACC.val[3].val[0],vmovl_s32(vget_high_s32(tmp))); \
+                                                                                     \
+    tmp = vmull_s16(vget_low_s16(VEC.val[1]),vdup_n_s16(SCALAR.im));                     \
+    ACC.val[0].val[0] = vqsubq_s64(ACC.val[0].val[0],vmovl_s32(vget_low_s32(tmp)));  \
+    ACC.val[1].val[0] = vqsubq_s64(ACC.val[1].val[0],vmovl_s32(vget_high_s32(tmp))); \
+    tmp = vmull_s16(vget_high_s16(VEC.val[1]),vdup_n_s16(SCALAR.im));                    \
+    ACC.val[2].val[0] = vqsubq_s64(ACC.val[2].val[0],vmovl_s32(vget_low_s32(tmp)));  \
+    ACC.val[3].val[0] = vqsubq_s64(ACC.val[3].val[0],vmovl_s32(vget_high_s32(tmp))); \
+                                                                                     \
+    tmp = vmull_s16(vget_low_s16(VEC.val[0]),vdup_n_s16(SCALAR.im));                     \
+    ACC.val[0].val[1] = vqaddq_s64(ACC.val[0].val[1],vmovl_s32(vget_low_s32(tmp)));  \
+    ACC.val[1].val[1] = vqaddq_s64(ACC.val[1].val[1],vmovl_s32(vget_high_s32(tmp))); \
+    tmp = vmull_s16(vget_high_s16(VEC.val[0]),vdup_n_s16(SCALAR.im));                    \
+    ACC.val[2].val[1] = vqaddq_s64(ACC.val[2].val[1],vmovl_s32(vget_low_s32(tmp)));  \
+    ACC.val[3].val[1] = vqaddq_s64(ACC.val[3].val[1],vmovl_s32(vget_high_s32(tmp))); \
+                                                                                     \
+    tmp = vmull_s16(vget_low_s16(VEC.val[1]),vdup_n_s16(SCALAR.re));                     \
+    ACC.val[0].val[1] = vqaddq_s64(ACC.val[0].val[1],vmovl_s32(vget_low_s32(tmp)));  \
+    ACC.val[1].val[1] = vqaddq_s64(ACC.val[1].val[1],vmovl_s32(vget_high_s32(tmp))); \
+    tmp = vmull_s16(vget_high_s16(VEC.val[1]),vdup_n_s16(SCALAR.re));                    \
+    ACC.val[2].val[1] = vqaddq_s64(ACC.val[2].val[1],vmovl_s32(vget_low_s32(tmp)));  \
+    ACC.val[3].val[1] = vqaddq_s64(ACC.val[3].val[1],vmovl_s32(vget_high_s32(tmp)));
+
+#define MATTYPE arm_matrix_instance_q15
+#define EXT(A) A##_cq15
+#define HAS_TEMP_BUFFER
+#define USE_TMP_REGISTER
+
+#define FUNCNAME arm_mat_cmplx_mult_q15
+
+#include "_arm_mat_mult_neon.c"
+
 #else
 ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_q15(
   const arm_matrix_instance_q15 * pSrcA,
@@ -588,6 +739,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_q15(
   /* Return to application */
   return (status);
 }
+#endif /* #if defined (ARM_MATH_NEON) */
 #endif /* defined(ARM_MATH_MVEI) */
 
 /**

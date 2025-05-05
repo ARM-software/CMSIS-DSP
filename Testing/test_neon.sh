@@ -22,6 +22,12 @@ ninja
 ./test > result_binaryf16_neon.txt
 python ../processResult.py --noerr -e -f ../Output_neon.pickle -r result_binaryf16_neon.txt -html > result_binaryf16_neon.html 
 
+echo "Binary Complex F16 Tests"
+python ../processTests.py -p ../Patterns -d ../Parameters -gen .. -e -f ../Output_neon.pickle BinaryComplexTestsNeonF16
+ninja 
+./test > result_binary_complexf16_neon.txt
+python ../processResult.py --noerr -e -f ../Output_neon.pickle -r result_binary_complexf16_neon.txt -html > result_binary_complexf16_neon.html 
+
 echo "Binary Q31 Tests"
 python ../processTests.py -p ../Patterns -d ../Parameters -gen .. -e -f ../Output_neon.pickle BinaryTestsNeonQ31
 ninja 
