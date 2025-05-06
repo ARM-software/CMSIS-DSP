@@ -1,10 +1,10 @@
-python-matrix-runner~=1.1.0
-arm-avhclient~=0.1.10
-PyYAML~=6.0
-pyparsing~=3.0.9 
-colorama~=0.4.6
-statsmodels~=0.13.5 
-numpy~=1.24.3 
-panda~=0.3.1
-rich~=13.9.4
+python-matrix-runner >=1.1.0, <2.0.0
+arm-avhclient >=0.1.10, <1.0.0
+PyYAML >=6.0, <7.0.0
+pyparsing >=3.0.9, <4.0.0
+colorama >=0.4.6, <1.0.0
+statsmodels >=0.13.5, <1.0.0 
+numpy >=1.24.3, <2.0.0 
+panda >=0.3.1, <1.0.0
+rich >=13.9.4, <14.0.0
 
