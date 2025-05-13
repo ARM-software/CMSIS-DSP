@@ -287,6 +287,272 @@ ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_f32(
 }
 #else
 
+#if defined(ARM_MATH_NEON)
+
+#if defined(__aarch64__)
+#define vecAccrossF32Neon(sum,accum) \
+    sum = vpadds_f32(vpadd_f32(vget_low_f32(accum), vget_high_f32(accum)));
+#else
+#define vecAccrossF32Neon(sum,accum)                                \
+    tmp = vpadd_f32(vget_low_f32(accum), vget_high_f32(accum)); \
+    sum = vget_lane_f32(tmp, 0) + vget_lane_f32(tmp, 1);
+#endif 
+
+ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_f32(const arm_matrix_instance_f32 *pSrcMat, 
+                                            const float32_t *pSrcVec, 
+                                            float32_t *pDstVec)
+{
+    uint32_t         numRows = pSrcMat->numRows;
+    uint32_t         numCols = pSrcMat->numCols;
+    const float32_t *pSrcA = pSrcMat->pData;
+    const float32_t *pInA0;
+    const float32_t *pInA1;
+    int32_t          row;
+    uint32_t         blkCnt;           /* loop counters */
+#if !defined(__aarch64__)
+    float32x2_t tmp = vdup_n_f32(0); 
+#endif  
+    
+
+    row = numRows;
+
+    /*
+     * compute 4 rows in parallel
+     */
+    while (row >= 4)
+    {
+        const float32_t     *pInA2, *pInA3;
+        float32_t const     *pSrcA0, *pSrcA1, *pSrcA2, *pSrcA3, *pInVec;
+        float32x4_t         vecIn, acc0, acc1, acc2, acc3;
+        float32_t           tmpScalarAcc0;
+        float32_t           tmpScalarAcc1;
+        float32_t           tmpScalarAcc2;
+        float32_t           tmpScalarAcc3;
+
+        /*
+         * Initialize the pointers to 4 consecutive MatrixA rows
+         */
+        pInA0 = pSrcA;
+        pInA1 = pInA0 + numCols;
+        pInA2 = pInA1 + numCols;
+        pInA3 = pInA2 + numCols;
+        /*
+         * Initialize the vector pointer
+         */
+        pInVec =  pSrcVec;
+        /*
+         * reset accumulators
+         */
+        acc0 = vdupq_n_f32(0.0f);
+        acc1 = vdupq_n_f32(0.0f);
+        acc2 = vdupq_n_f32(0.0f);
+        acc3 = vdupq_n_f32(0.0f);
+
+        tmpScalarAcc0 = 0.0f;
+        tmpScalarAcc1 = 0.0f;
+        tmpScalarAcc2 = 0.0f;
+        tmpScalarAcc3 = 0.0f;
+
+        pSrcA0 = pInA0;
+        pSrcA1 = pInA1;
+        pSrcA2 = pInA2;
+        pSrcA3 = pInA3;
+
+        blkCnt = numCols >> 2;
+        while (blkCnt > 0U)
+        {
+            float32x4_t vecA0, vecA1, vecA2, vecA3;
+
+            vecIn = vld1q_f32(pInVec);      
+            pInVec += 4;
+
+            vecA0 = vld1q_f32(pSrcA0);    
+            pSrcA0 += 4;
+            vecA1 = vld1q_f32(pSrcA1);  
+            pSrcA1 += 4;
+            vecA2 = vld1q_f32(pSrcA2);  
+            pSrcA2 += 4;
+            vecA3 = vld1q_f32(pSrcA3);  
+            pSrcA3 += 4;
+
+            acc0 = vmlaq_f32(acc0, vecIn, vecA0);
+            acc1 = vmlaq_f32(acc1, vecIn, vecA1);
+            acc2 = vmlaq_f32(acc2, vecIn, vecA2);
+            acc3 = vmlaq_f32(acc3, vecIn, vecA3);
+
+            blkCnt--;
+        }
+
+        vecAccrossF32Neon(tmpScalarAcc0 , acc0);
+        vecAccrossF32Neon(tmpScalarAcc1 , acc1);
+        vecAccrossF32Neon(tmpScalarAcc2 , acc2);
+        vecAccrossF32Neon(tmpScalarAcc3 , acc3);
+        /*
+         * tail
+         * (will be merged thru tail predication)
+         */
+        blkCnt = numCols & 3;
+        while (blkCnt > 0U)
+        {
+            tmpScalarAcc0 += *pSrcA0++ * *pInVec;
+            tmpScalarAcc1 += *pSrcA1++ * *pInVec;
+            tmpScalarAcc2 += *pSrcA2++ * *pInVec;
+            tmpScalarAcc3 += *pSrcA3++ * *pInVec;
+            pInVec++;
+
+            blkCnt--;
+        }
+        /*
+         * Sum the partial parts
+         */
+        *pDstVec++ = tmpScalarAcc0;
+        *pDstVec++ = tmpScalarAcc1;
+        *pDstVec++ = tmpScalarAcc2;
+        *pDstVec++ = tmpScalarAcc3;
+
+        pSrcA += numCols * 4;
+        /*
+         * Decrement the row loop counter
+         */
+        row -= 4;
+    }
+
+    /*
+     * compute 2 rows in parallel
+     */
+    if (row >= 2)
+    {
+        float32_t const    *pSrcA0, *pSrcA1, *pInVec;
+        float32x4_t         vecIn, acc0, acc1;
+        float32_t           tmpScalarAcc0;
+        float32_t           tmpScalarAcc1;
+
+        /*
+         * Initialize the pointers to 2 consecutive MatrixA rows
+         */
+        pInA0 = pSrcA;
+        pInA1 = pInA0 + numCols;
+        /*
+         * Initialize the vector pointer
+         */
+        pInVec = pSrcVec;
+        /*
+         * reset accumulators
+         */
+        acc0 = vdupq_n_f32(0.0f);
+        acc1 = vdupq_n_f32(0.0f);
+
+        tmpScalarAcc0 = 0.0f;
+        tmpScalarAcc1 = 0.0f;
+
+        pSrcA0 = pInA0;
+        pSrcA1 = pInA1;
+
+        blkCnt = numCols >> 2;
+        while (blkCnt > 0U)
+        {
+            float32x4_t vecA0, vecA1;
+
+            vecIn = vld1q_f32(pInVec);      
+            pInVec += 4;
+
+            vecA0 = vld1q_f32(pSrcA0);    
+            pSrcA0 += 4;
+            vecA1 = vld1q_f32(pSrcA1);    
+            pSrcA1 += 4;
+
+            acc0 = vmlaq_f32(acc0, vecIn, vecA0);
+            acc1 = vmlaq_f32(acc1, vecIn, vecA1);
+
+            blkCnt--;
+        }
+
+        vecAccrossF32Neon(tmpScalarAcc0 , acc0);
+        vecAccrossF32Neon(tmpScalarAcc1 , acc1);
+
+        /*
+         * tail
+         * (will be merged thru tail predication)
+         */
+        blkCnt = numCols & 3;
+        while (blkCnt > 0U)
+        {
+            tmpScalarAcc0 += *pSrcA0++ * *pInVec;
+            tmpScalarAcc1 += *pSrcA1++ * *pInVec;
+           
+            pInVec++;
+
+            blkCnt--;
+        }
+        /*
+         * Sum the partial parts
+         */
+        *pDstVec++ = tmpScalarAcc0;
+        *pDstVec++ = tmpScalarAcc1;
+
+        pSrcA += numCols * 2;
+        row -= 2;
+    }
+
+    if (row >= 1)
+    {
+        float32x4_t             vecIn, acc0;
+        float32_t const         *pSrcA0, *pInVec;
+        float32_t               tmpScalarAcc0;
+
+        /*
+         * Initialize the pointers to last MatrixA row
+         */
+        pInA0 = pSrcA;
+        /*
+         * Initialize the vector pointer
+         */
+        pInVec = pSrcVec;
+        /*
+         * reset accumulators
+         */
+        acc0 = vdupq_n_f32(0.0f);
+        tmpScalarAcc0 = 0.0f;
+
+        pSrcA0 = pInA0;
+
+        blkCnt = numCols >> 2;
+        while (blkCnt > 0U)
+        {
+            float32x4_t vecA0;
+
+            vecIn = vld1q_f32(pInVec);      
+            pInVec += 4;
+
+            vecA0 = vld1q_f32(pSrcA0);    
+            pSrcA0 += 4;
+
+            acc0 = vmlaq_f32(acc0, vecIn, vecA0);
+
+            blkCnt--;
+        }
+        vecAccrossF32Neon(tmpScalarAcc0 , acc0);
+
+        /*
+         * tail
+         * (will be merged thru tail predication)
+         */
+        blkCnt = numCols & 3;
+        while (blkCnt > 0U)
+        {
+
+            tmpScalarAcc0 += *pSrcA0++ * *pInVec++;
+            
+            blkCnt--;
+        }
+        /*
+         * Sum the partial parts
+         */
+        *pDstVec++ = tmpScalarAcc0;
+    }
+}
+
+#else
 ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_f32(const arm_matrix_instance_f32 *pSrcMat, const float32_t *pVec, float32_t *pDst)
 {
     uint32_t numRows = pSrcMat->numRows;
@@ -393,6 +659,7 @@ ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_f32(const arm_matrix_instance_f32 *pSrcM
         row--;
     }
 }
+#endif /* defined(ARM_MATH_NEON) */
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**
