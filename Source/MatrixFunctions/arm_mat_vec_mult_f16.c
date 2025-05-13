@@ -282,6 +282,54 @@ ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_f16(
     }
 }
 #else
+
+#if defined(ARM_MATH_NEON)
+
+#define TMP_DEFINE_AND_INIT(TMP) \
+    float16x4_t TMP = vdup_n_f16(0.0f16);
+
+#define REDUCE(sum,accum)                                       \
+    tmp = vpadd_f16(vget_low_f16(accum), vget_high_f16(accum)); \
+    tmp = vpadd_f16(tmp,tmp);                                   \
+    tmp = vpadd_f16(tmp,tmp);                                   \
+    sum = vget_lane_f16(tmp, 0);
+
+
+#define MAT_SCALAR_DT float16_t 
+#define VEC_SCALAR_DT float16_t 
+#define VECTOR_ACC float16x8_t
+#define VECTOR_DT float16x8_t
+#define SCALAR_ACC float16_t
+#define HALF_VECTOR_ACC float16x8_t
+#define NBLANE 8
+#define NBLANE_SHIFT 3
+
+
+#define VECTOR_ACC_INIT(acc) \
+    acc = vdupq_n_f16(0.0f16) 
+
+#define SCALAR_ACC_INIT(acc) \
+    acc = 0.0f16
+  
+#define VEC_LOAD(v,p) \
+    v = vld1q_f16((p))
+
+
+#define VMAC(ACC,VA,VB) ACC = vfmaq_f16(ACC,(VA),(VB))
+
+
+#define SCALAR_MAC(ACC,MAT,VEC) \
+    ACC = (_Float16)ACC + (_Float16)(MAT) * (_Float16)(VEC)
+
+#define STORE_SCALAR_ACC(DST,ACC) \
+  DST = ACC
+
+#define FUNCNAME arm_mat_vec_mult_f16
+#define MATRIX_TYPE arm_matrix_instance_f16
+
+#include "_arm_mat_vec_mult_neon.c"
+
+#else
 ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_f16(const arm_matrix_instance_f16 *pSrcMat, const float16_t *pVec, float16_t *pDst)
 {
     uint32_t numRows = pSrcMat->numRows;
@@ -393,5 +441,6 @@ ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_f16(const arm_matrix_instance_f16 *pSrcM
  * @} end of MatrixMult group
  */
 
+#endif /* if defined(ARM_MATH_NEON)*/
 #endif /* #if defined(ARM_FLOAT16_SUPPORTED) */ 
 
