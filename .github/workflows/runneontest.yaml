@@ -105,9 +105,13 @@ jobs:
              Testing/build/result.html
              Testing/build/result_transform_neon.html
              Testing/build/result_binaryf32_neon.html
+             Testing/build/result_binary_complexf32_neon.html
              Testing/build/result_binaryf16_neon.html
+             Testing/build/result_binary_complexf16_neon.html
              Testing/build/result_binaryq31_neon.html
+             Testing/build/result_binary_complexq31_neon.html
              Testing/build/result_binaryq15_neon.html
+             Testing/build/result_binary_complexq15_neon.html
              Testing/build/result_binaryq7_neon.html
              Testing/build/result_f16.html
 
@@ -120,9 +124,13 @@ jobs:
           test "$(grep "FAILED" result.html | wc -l)" -eq 0
           test "$(grep "FAILED" result_transform_neon.html | wc -l)" -eq 0
           test "$(grep "FAILED" result_binaryf32_neon.html | wc -l)" -eq 0
+          test "$(grep "FAILED" result_binary_complexf32_neon.html | wc -l)" -eq 0
           test "$(grep "FAILED" result_binaryf16_neon.html | wc -l)" -eq 0
+          test "$(grep "FAILED" result_binary_complexf16_neon.html | wc -l)" -eq 0
           test "$(grep "FAILED" result_binaryq31_neon.html | wc -l)" -eq 0
+          test "$(grep "FAILED" result_binary_complexq31_neon.html | wc -l)" -eq 0
           test "$(grep "FAILED" result_binaryq15_neon.html | wc -l)" -eq 0
+          test "$(grep "FAILED" result_binary_complexq15_neon.html | wc -l)" -eq 0
           test "$(grep "FAILED" result_binaryq7_neon.html | wc -l)" -eq 0
           test "$(grep "FAILED" result_f16.html | wc -l)" -eq 0
 

@@ -548,6 +548,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_f32(
 
 #define LANE 4
 #define DTYPE float32_t
+#define HEADERTYPE DTYPE
 #define VEC float32x4_t
 #define VECACC float32x4_t
 #define FLOATALGO

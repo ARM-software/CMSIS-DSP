@@ -239,7 +239,7 @@ static void checkInnerTail(q15_t *b)
          break;
       
 
-         case TEST_MAT_MULT_FAST_Q15_3:
+         case TEST_MAT_MULT_FAST_Q15_2:
             input1.reload(BinaryTestsNeonQ15::INPUTS1_Q15_ID,mgr);
             input2.reload(BinaryTestsNeonQ15::INPUTS2_Q15_ID,mgr);
             dims.reload(BinaryTestsNeonQ15::DIMSLIMITEDBINARY1_S16_ID,mgr);

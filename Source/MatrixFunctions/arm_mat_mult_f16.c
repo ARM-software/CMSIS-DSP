@@ -633,6 +633,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_f16(
 
  #define LANE 8
  #define DTYPE float16_t
+ #define HEADERTYPE DTYPE
  #define VEC float16x8_t
  #define VECACC float16x8_t
  #define FLOATALGO
