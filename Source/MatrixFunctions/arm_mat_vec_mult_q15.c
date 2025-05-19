@@ -270,13 +270,14 @@ ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_q15(
 #if defined(ARM_MATH_NEON)
 
 #define TMP_DEFINE_AND_INIT(TMP) \
-   int32x4_t TMP = vdupq_n_s32(0); 
+   int32x4_t TMP##1 = vdupq_n_s32(0); 
+   
 
-#define REDUCE(sum,accum)                                                          \
-    sum = vgetq_lane_s64(accum.val[0],0) +   vgetq_lane_s64(accum.val[0],1);       \
-    sum = sum + vgetq_lane_s64(accum.val[1],0) +   vgetq_lane_s64(accum.val[1],1); \
-    sum = sum + vgetq_lane_s64(accum.val[2],0) +   vgetq_lane_s64(accum.val[2],1); \
-    sum = sum + vgetq_lane_s64(accum.val[3],0) +   vgetq_lane_s64(accum.val[3],1); 
+#define REDUCE(sum,accum)                                    \
+    tmp1 = vqaddq_s64(accum.val[0],accum.val[1]);            \
+    tmp1 = vqaddq_s64(tmp1,accum.val[2]);                    \
+    tmp1 = vqaddq_s64(tmp1,accum.val[3]);                    \
+    sum = vgetq_lane_s64(tmp1,0) +   vgetq_lane_s64(tmp1,1);
 
 
 #define MAT_SCALAR_DT q15_t 
@@ -305,14 +306,12 @@ ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_q15(
 
 
 #define VMAC(ACC,VA,VB)                                               \
-   tmp = vmull_s16(vget_low_s32(VA),vget_low_s32(VB));                \
-   ACC.val[0] = vaddq_s64(ACC.val[0],vmovl_s32(vget_low_s32(tmp)));   \
-   tmp = vmull_s16(vget_low_s32(VA),vget_low_s32(VB));                \
-   ACC.val[1] = vaddq_s64(ACC.val[1],vmovl_s32(vget_high_s32(tmp)));  \
-   tmp = vmull_s16(vget_high_s32(VA),vget_high_s32(VB));              \
-   ACC.val[2] = vaddq_s64(ACC.val[2],vmovl_s32(vget_low_s32(tmp)));   \
-   tmp = vmull_s16(vget_high_s32(VA),vget_high_s32(VB));              \
-   ACC.val[3] = vaddq_s64(ACC.val[3],vmovl_s32(vget_high_s32(tmp)));
+   tmp1 = vmull_s16(vget_low_s32(VA),vget_low_s32(VB));                \
+   ACC.val[0] = vaddq_s64(ACC.val[0],vmovl_s32(vget_low_s32(tmp1)));   \
+   ACC.val[1] = vaddq_s64(ACC.val[1],vmovl_s32(vget_high_s32(tmp1)));  \
+   tmp1 = vmull_s16(vget_high_s32(VA),vget_high_s32(VB));              \
+   ACC.val[2] = vaddq_s64(ACC.val[2],vmovl_s32(vget_low_s32(tmp1)));   \
+   ACC.val[3] = vaddq_s64(ACC.val[3],vmovl_s32(vget_high_s32(tmp1)));
 
 
 
