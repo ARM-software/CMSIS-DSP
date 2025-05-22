@@ -266,6 +266,68 @@ ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_q15(
 }
 
 #else
+
+#if defined(ARM_MATH_NEON)
+
+#define TMP_DEFINE_AND_INIT(TMP) \
+   int32x4_t TMP##1 = vdupq_n_s32(0); 
+   
+
+#define REDUCE(sum,accum)                                    \
+    tmp1 = vqaddq_s64(accum.val[0],accum.val[1]);            \
+    tmp1 = vqaddq_s64(tmp1,accum.val[2]);                    \
+    tmp1 = vqaddq_s64(tmp1,accum.val[3]);                    \
+    sum = vgetq_lane_s64(tmp1,0) +   vgetq_lane_s64(tmp1,1);
+
+
+#define MAT_SCALAR_DT q15_t 
+#define VEC_SCALAR_DT q15_t 
+#define VECTOR_ACC struct { \
+    int64x2_t val[4];       \
+}
+
+#define VECTOR_DT int16x8_t
+#define SCALAR_ACC int64_t
+#define HALF_VECTOR_ACC int16x4_t
+#define NBLANE 8
+#define NBLANE_SHIFT 3
+
+#define VECTOR_ACC_INIT(acc)      \
+    acc.val[0] = vdupq_n_s64(0) ; \
+    acc.val[1] = vdupq_n_s64(0) ; \
+    acc.val[2] = vdupq_n_s64(0) ; \
+    acc.val[3] = vdupq_n_s64(0) ;
+
+#define SCALAR_ACC_INIT(acc) \
+    acc = 0
+  
+#define VEC_LOAD(v,p) \
+    v = vld1q_s16((p))
+
+
+#define VMAC(ACC,VA,VB)                                               \
+   tmp1 = vmull_s16(vget_low_s32(VA),vget_low_s32(VB));                \
+   ACC.val[0] = vaddq_s64(ACC.val[0],vmovl_s32(vget_low_s32(tmp1)));   \
+   ACC.val[1] = vaddq_s64(ACC.val[1],vmovl_s32(vget_high_s32(tmp1)));  \
+   tmp1 = vmull_s16(vget_high_s32(VA),vget_high_s32(VB));              \
+   ACC.val[2] = vaddq_s64(ACC.val[2],vmovl_s32(vget_low_s32(tmp1)));   \
+   ACC.val[3] = vaddq_s64(ACC.val[3],vmovl_s32(vget_high_s32(tmp1)));
+
+
+
+#define SCALAR_MAC(ACC,MAT,VEC) \
+    ACC = ACC + (int64_t)(MAT) * (int64_t)(VEC)
+
+#define STORE_SCALAR_ACC(DST,ACC) \
+  DST = __SSAT(ACC>>15,16)
+
+#define FUNCNAME arm_mat_vec_mult_q15
+#define MATRIX_TYPE arm_matrix_instance_q15
+
+#include "_arm_mat_vec_mult_neon.c"
+
+
+#else
 ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_q15(const arm_matrix_instance_q15 *pSrcMat, const q15_t *pVec, q15_t *pDst)
 {
     uint32_t numRows = pSrcMat->numRows;
@@ -381,6 +443,7 @@ ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_q15(const arm_matrix_instance_q15 *pSrcM
         row--;
     }
 }
+#endif /* ARM_MATH_NEON */
 #endif /* defined(ARM_MATH_MVEI) */
 
 /**

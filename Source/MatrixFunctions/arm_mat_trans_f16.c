@@ -98,6 +98,57 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_trans_f16(
 
 #else
 
+#if defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+#define BLOCK_ROWS 8
+#define BLOCK_ROWS_SHIFT 3
+#define LANE 8
+#define LANE_SHIFT 3
+
+#include "_arm_mat_trans_neon.c"
+
+
+ARM_DSP_ATTRIBUTE arm_status arm_mat_trans_f16(
+  const arm_matrix_instance_f16 * pSrc,
+  arm_matrix_instance_f16 * pDst)
+{
+  ARM_MAT_TRANS_NEON_INIT_U16
+
+#ifdef ARM_MATH_MATRIX_CHECK
+
+  /* Check for matrix mismatch condition */
+  if ((pSrc->numRows != pDst->numCols) || (pSrc->numCols != pDst->numRows))
+  {
+    /* Set status as ARM_MATH_SIZE_MISMATCH */
+    status = ARM_MATH_SIZE_MISMATCH;
+  }
+  else
+#endif /*    #ifdef ARM_MATH_MATRIX_CHECK    */
+
+  {
+    ARM_MAT_TRANS_NEON_U16
+
+    /* Set status as ARM_MATH_SUCCESS */
+    status = ARM_MATH_SUCCESS;
+  }
+
+  /* Return to application */
+  return (status);
+}
+
+#undef BLOCK_ROWS
+#undef BLOCK_ROWS_SHIFT
+#undef LANE
+#undef LANE_SHIFT 
+#undef ARM_MAT_TRANS_NEON_U32
+#undef ARM_MAT_TRANS_NEON_INIT_U32
+#undef ARM_MAT_TRANS_NEON_INIT_U16
+#undef ARM_MAT_TRANS_NEON_U16 
+#undef ARM_MAT_TRANS_NEON_INIT_U8
+#undef ARM_MAT_TRANS_NEON_U8 
+
+#else
+
 ARM_DSP_ATTRIBUTE arm_status arm_mat_trans_f16(
   const arm_matrix_instance_f16 * pSrc,
         arm_matrix_instance_f16 * pDst)
@@ -198,5 +249,6 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_trans_f16(
  * @} end of MatrixTrans group
  */
 
+#endif /* #if defined(ARM_MATH_NEON) */
 #endif /* #if defined(ARM_FLOAT16_SUPPORTED) */ 
 

@@ -66,6 +66,7 @@
 #if defined(ARM_MATH_NEON)
 #define LANE 8
 #define DTYPE q15_t
+#define HEADERTYPE DTYPE
 #define VEC int16x8_t
 #define VECACC int32x4x2_t
 

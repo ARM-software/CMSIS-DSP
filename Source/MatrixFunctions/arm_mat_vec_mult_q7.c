@@ -276,6 +276,71 @@ ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_q7(
 }
 
 #else
+
+#if defined(ARM_MATH_NEON)
+
+#define TMP_DEFINE_AND_INIT(TMP) \
+   int32x4_t TMP = vdupq_n_s32(0); \
+   int16x8_t TMP##16 = vdupq_n_s32(0);
+
+#define REDUCE(sum,accum)                        \
+    tmp = vqaddq_s32(accum.val[0],accum.val[1]); \
+    tmp = vqaddq_s32(tmp,accum.val[2]);          \
+    tmp = vqaddq_s32(tmp,accum.val[3]);          \
+    sum = vgetq_lane_s32(tmp,0) +          \
+    vgetq_lane_s32(tmp,1) +                      \
+    vgetq_lane_s32(tmp,2) +                      \
+    vgetq_lane_s32(tmp,3) 
+
+#define MAT_SCALAR_DT q7_t 
+#define VEC_SCALAR_DT q7_t 
+#define VECTOR_ACC struct { \
+    int32x4_t val[4];       \
+}
+
+#define VECTOR_DT int8x16_t
+#define SCALAR_ACC int32_t
+#define HALF_VECTOR_ACC int8x4_t
+#define NBLANE 16
+#define NBLANE_SHIFT 4
+
+#define VECTOR_ACC_INIT(acc)      \
+    acc.val[0] = vdupq_n_s32(0) ; \
+    acc.val[1] = vdupq_n_s32(0) ; \
+    acc.val[2] = vdupq_n_s32(0) ; \
+    acc.val[3] = vdupq_n_s32(0) ;
+
+#define SCALAR_ACC_INIT(acc) \
+    acc = 0
+  
+#define VEC_LOAD(v,p) \
+    v = vld1q_s8((p))
+
+
+#define VMAC(ACC,VA,VB)                                              \
+   tmp16 = vmull_s8(vget_low_s8(VA),vget_low_s8(VB));                 \
+   ACC.val[0] = vaddq_s32(ACC.val[0],vmovl_s16(vget_low_s16(tmp16)));  \
+   ACC.val[1] = vaddq_s32(ACC.val[1],vmovl_s16(vget_high_s16(tmp16))); \
+   tmp16 = vmull_s8(vget_high_s8(VA),vget_high_s8(VB));               \
+   ACC.val[2] = vaddq_s32(ACC.val[2],vmovl_s16(vget_low_s16(tmp16)));  \
+   ACC.val[3] = vaddq_s32(ACC.val[3],vmovl_s16(vget_high_s16(tmp16)));
+
+
+
+#define SCALAR_MAC(ACC,MAT,VEC) \
+    ACC = ACC + (int32_t)(MAT) * (int32_t)(VEC)
+
+#define STORE_SCALAR_ACC(DST,ACC) \
+  DST = __SSAT(ACC>>7,8)
+
+#define FUNCNAME arm_mat_vec_mult_q7
+#define MATRIX_TYPE arm_matrix_instance_q7
+
+#include "_arm_mat_vec_mult_neon.c"
+
+
+#else
+
 ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_q7(const arm_matrix_instance_q7 *pSrcMat, const q7_t *pVec, q7_t *pDst)
 {
     uint32_t numRows = pSrcMat->numRows;
@@ -413,6 +478,7 @@ ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_q7(const arm_matrix_instance_q7 *pSrcMat
         row--;
     }
 }
+#endif /* defined(ARM_MATH_NEON) */
 #endif /* defined(ARM_MATH_MVEI) */
 
 /**
