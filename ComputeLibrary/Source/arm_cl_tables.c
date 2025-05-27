@@ -24,7 +24,7 @@
 #include "arm_math.h"
 #include "NEMath.h"
 
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 /** Exponent polynomial coefficients */
 const float32_t exp_tab[4*8] =

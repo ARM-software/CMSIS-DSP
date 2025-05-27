@@ -328,9 +328,9 @@ ARM_DSP_ATTRIBUTE void arm_correlate_f32(
         uint32_t outBlockSize;                         /* Loop counter */
         int32_t inc = 1;                               /* Destination address modifier */
 
-#if defined (ARM_MATH_LOOPUNROLL) || defined(ARM_MATH_NEON)
+#if defined (ARM_MATH_LOOPUNROLL) || (defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE))
     float32_t acc0, acc1, acc2, acc3,c0;                    /* Accumulators */
-#if !defined(ARM_MATH_NEON)
+#if !defined(ARM_MATH_NEON) || defined(ARM_MATH_AUTOVECTORIZE)
     float32_t x0, x1, x2, x3;                        /* temporary variables for holding input and coefficient values */
 #endif
 #endif
@@ -434,12 +434,12 @@ ARM_DSP_ATTRIBUTE void arm_correlate_f32(
     /* Accumulator is made zero for every iteration */
     sum = 0.0f;
 
-#if defined (ARM_MATH_LOOPUNROLL) || defined(ARM_MATH_NEON)
+#if defined (ARM_MATH_LOOPUNROLL) || (defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE))
 
     /* Loop unrolling: Compute 4 outputs at a time */
     k = count >> 2U;
 
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
     float32x4_t x,y;
     float32x4_t res = vdupq_n_f32(0) ;
     float32x2_t accum = vdup_n_f32(0);
@@ -548,12 +548,12 @@ ARM_DSP_ATTRIBUTE void arm_correlate_f32(
    * srcBLen should be greater than or equal to 4 */
   if (srcBLen >= 4U)
   {
-#if defined (ARM_MATH_LOOPUNROLL) || defined(ARM_MATH_NEON)
+#if defined (ARM_MATH_LOOPUNROLL) || (defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE))
 
     /* Loop unrolling: Compute 4 outputs at a time */
     blkCnt = blockSize2 >> 2U;
 
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
       float32x4_t c;
       float32x4_t x1v;
       float32x4_t x2v;
@@ -569,7 +569,7 @@ ARM_DSP_ATTRIBUTE void arm_correlate_f32(
       acc2 = 0.0f;
       acc3 = 0.0f;
 
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
       /* Compute 4 MACs simultaneously. */
       k = srcBLen >> 2U;
 
@@ -778,12 +778,12 @@ ARM_DSP_ATTRIBUTE void arm_correlate_f32(
       /* Accumulator is made zero for every iteration */
       sum = 0.0f;
 
-#if defined (ARM_MATH_LOOPUNROLL) || defined(ARM_MATH_NEON)
+#if defined (ARM_MATH_LOOPUNROLL) || (defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE))
 
     /* Loop unrolling: Compute 4 outputs at a time */
       k = srcBLen >> 2U;
 
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
     float32x4_t x,y;
     float32x4_t res = vdupq_n_f32(0) ;
     float32x2_t accum = vdup_n_f32(0);
@@ -926,12 +926,12 @@ ARM_DSP_ATTRIBUTE void arm_correlate_f32(
     /* Accumulator is made zero for every iteration */
     sum = 0.0f;
 
-#if defined (ARM_MATH_LOOPUNROLL) || defined(ARM_MATH_NEON)
+#if defined (ARM_MATH_LOOPUNROLL) || (defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE))
 
     /* Loop unrolling: Compute 4 outputs at a time */
     k = count >> 2U;
 
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
     float32x4_t x,y;
     float32x4_t res = vdupq_n_f32(0) ;
     float32x2_t accum = vdup_n_f32(0);

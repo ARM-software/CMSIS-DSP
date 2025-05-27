@@ -44,7 +44,7 @@
   @param[in]     blockSize  number of samples in each vector.
   @param[out]    result     output result returned here.
  */
-#if defined(ARM_MATH_NEON) && defined(__aarch64__)
+#if defined(ARM_MATH_NEON) && defined(__aarch64__)  && !defined(ARM_MATH_AUTOVECTORIZE)
 ARM_DSP_ATTRIBUTE void arm_dot_prod_f64(
     const float64_t * pSrcA,
     const float64_t * pSrcB,

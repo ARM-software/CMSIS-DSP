@@ -103,7 +103,7 @@ ARM_DSP_ATTRIBUTE void arm_abs_q31(
         uint32_t blkCnt;                               /* Loop counter */
         q31_t in;                                      /* Temporary variable */
 
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
     int32x4_t vec1;
     int32x4_t res;
 

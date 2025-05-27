@@ -60,7 +60,7 @@ ARM_DSP_ATTRIBUTE void arm_var_f64(
         return;
     }
     arm_mean_f64(pInput, blockSize, &fMean);
-#if defined(ARM_MATH_NEON) && defined(__aarch64__)
+#if defined(ARM_MATH_NEON) && defined(__aarch64__) && !defined(ARM_MATH_AUTOVECTORIZE)
     float64x2_t fValueV ,fsumV , pInputV , fMeanV;
     fsumV = vdupq_n_f64(0.0);
     fMeanV = vdupq_n_f64(fMean);

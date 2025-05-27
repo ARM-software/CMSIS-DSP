@@ -454,3 +454,305 @@
       pOut++;                                                                         \
       rowCnt -- ;                                                                     \
     }
+
+#define ARM_MAT_TRANS_NEON_INIT_COMPLEX_U32                                                              \
+  const uint32_t *pIn =  (const uint32_t *)pSrc->pData;                  /* input data matrix pointer */ \
+  uint32_t *pOut = (uint32_t *)pDst->pData;                 /* output data matrix pointer */             \
+  uint32_t *pCol;                                 /* Temporary output data matrix pointer */             \
+  uint16_t nRows = pSrc->numRows;                /* number of rows */                                    \
+  uint16_t nColumns = pSrc->numCols;             /* number of columns */                                 \
+                                                                                                         \
+  uint16_t blkCnt, rowCnt, row = nRows;          /* loop counters */                                     \
+  arm_status status;                             /* status of matrix transpose  */                       \
+                                                                                                         \
+  const uint32_t *pIn2 = pIn + 2*nColumns;                                                                 \
+  const uint32_t *pIn3 = pIn2 + 2*nColumns;                                                                \
+  const uint32_t *pIn4 = pIn3 + 2*nColumns;
+
+#define ARM_MAT_TRANS_NEON_COMPLEX_U32                                                \
+    /* Matrix transpose by exchanging the rows with columns */                        \
+    /* Row loop */                                                                    \
+    rowCnt = row >> BLOCK_ROWS_SHIFT;                                                 \
+    while (rowCnt > 0U)                                                               \
+    {                                                                                 \
+      uint32x4x2_t row0V,row1V,row2V,row3V;                                             \
+      uint32x4x2_t res[4] ;                                                          \
+                                                                                      \
+      uint32x4x2_t tmpa[2],tmpb[2];                                                  \
+                                                                                      \
+      blkCnt = nColumns >> LANE_SHIFT;                                                \
+                                                                                      \
+      /* The pointer px is set to starting address of the column being processed */   \
+      pCol = pOut;                                                                    \
+                                                                                      \
+      /* Compute 4 outputs at a time.  */                                             \
+      /** a second loop below computes the remaining 1 to 3 samples. */               \
+      while (blkCnt > 0U)        /* Column loop */                                    \
+      {                                                                               \
+        row0V = vld2q_u32(pIn);                                                       \
+        pIn  += 2*LANE;                                                               \
+        row1V = vld2q_u32(pIn2);                                                      \
+        pIn2 += 2*LANE;                                                               \
+        row2V = vld2q_u32(pIn3);                                                      \
+        pIn3 += 2*LANE;                                                               \
+        row3V = vld2q_u32(pIn4);                                                      \
+        pIn4 += 2*LANE;                                                               \
+                                                                                      \
+                                                                                      \
+        tmpa[0]=vuzpq_u32(row0V.val[0],row1V.val[0]);                                 \
+        tmpa[1]=vuzpq_u32(row2V.val[0],row3V.val[0]);                                 \
+                                                                                      \
+        tmpb[0]=vuzpq_u32(tmpa[0].val[0],tmpa[1].val[0]);                             \
+        tmpb[1]=vuzpq_u32(tmpa[0].val[1],tmpa[1].val[1]);                             \
+                                                                                      \
+        res[0].val[0] = tmpb[0].val[0];                                               \
+        res[1].val[0] = tmpb[1].val[0];                                               \
+        res[2].val[0] = tmpb[0].val[1];                                               \
+        res[3].val[0] = tmpb[1].val[1];                                               \
+                                                                                      \
+        tmpa[0]=vuzpq_u32(row0V.val[1],row1V.val[1]);                                 \
+        tmpa[1]=vuzpq_u32(row2V.val[1],row3V.val[1]);                                 \
+                                                                                      \
+        tmpb[0]=vuzpq_u32(tmpa[0].val[0],tmpa[1].val[0]);                             \
+        tmpb[1]=vuzpq_u32(tmpa[0].val[1],tmpa[1].val[1]);                             \
+                                                                                      \
+        res[0].val[1] = tmpb[0].val[0];                                               \
+        res[1].val[1] = tmpb[1].val[0];                                               \
+        res[2].val[1] = tmpb[0].val[1];                                               \
+        res[3].val[1] = tmpb[1].val[1];                                               \
+                                                                                      \
+        vst2q_u32(pCol,res[0]);                                                       \
+        pCol += 2*nRows;                                                              \
+                                                                                      \
+        vst2q_u32(pCol,res[1]);                                                       \
+        pCol += 2*nRows;                                                              \
+                                                                                      \
+        vst2q_u32(pCol,res[2]);                                                       \
+        pCol += 2*nRows;                                                              \
+                                                                                      \
+        vst2q_u32(pCol,res[3]);                                                       \
+        pCol += 2*nRows;                                                              \
+                                                                                      \
+        /* Decrement the column loop counter */                                       \
+        blkCnt--;                                                                     \
+      }                                                                               \
+                                                                                      \
+      /* Perform matrix transpose for last <=3 samples here. */                       \
+      blkCnt = nColumns & (LANE - 1);                                                 \
+                                                                                      \
+      while (blkCnt > 0U)                                                             \
+      {                                                                               \
+        /* Read and store the input element in the destination */                     \
+        *pCol++ = *pIn++;                                                             \
+        *pCol++ = *pIn++;                                                             \
+        *pCol++ = *pIn2++;                                                            \
+        *pCol++ = *pIn2++;                                                            \
+        *pCol++ = *pIn3++;                                                            \
+        *pCol++ = *pIn3++;                                                            \
+        *pCol++ = *pIn4++;                                                            \
+        *pCol++ = *pIn4++;                                                            \
+                                                                                      \
+        pCol += 2*(nRows - BLOCK_ROWS);                                               \
+                                                                                      \
+        /* Decrement the column loop counter */                                       \
+        blkCnt--;                                                                     \
+      }                                                                               \
+                                                                                      \
+      pOut += 2*BLOCK_ROWS;                                                           \
+      pIn  += 2*(BLOCK_ROWS-1) * nColumns;                                             \
+      pIn2 += 2*(BLOCK_ROWS-1) * nColumns;                                            \
+      pIn3 += 2*(BLOCK_ROWS-1) * nColumns;                                            \
+      pIn4 += 2*(BLOCK_ROWS-1) * nColumns;                                            \
+                                                                                      \
+      /* Decrement the row loop counter */                                            \
+      rowCnt--;                                                                       \
+                                                                                      \
+    }         /* Row loop end  */                                                     \
+                                                                                      \
+    rowCnt = row & (BLOCK_ROWS - 1);                                                  \
+    while (rowCnt > 0U)                                                               \
+    {                                                                                 \
+      blkCnt = nColumns ;                                                             \
+      /* The pointer px is set to starting address of the column being processed */   \
+      pCol = pOut;                                                                    \
+                                                                                      \
+      while (blkCnt > 0U)                                                             \
+      {                                                                               \
+        /* Read and store the input element in the destination */                     \
+        pCol[0] = *pIn++;                                                             \
+        pCol[1] = *pIn++;                                                             \
+                                                                                      \
+        /* Update the pointer px to point to the next row of the transposed matrix */ \
+        pCol += 2*nRows;                                                              \
+                                                                                      \
+        /* Decrement the column loop counter */                                       \
+        blkCnt--;                                                                     \
+      }                                                                               \
+      pOut += 2;                                                                        \
+      rowCnt -- ;                                                                     \
+    }                                                                            \
+
+#define ARM_MAT_TRANS_NEON_INIT_COMPLEX_U16                                                  \
+  const uint16_t *pIn[8];                   /* input data matrix pointer */                  \
+  uint16_t *pOut = (uint16_t*)pDst->pData;                 /* output data matrix pointer */  \
+  uint16_t *pCol;                                 /* Temporary output data matrix pointer */ \
+  uint16_t nRows = pSrc->numRows;                /* number of rows */                        \
+  uint16_t nColumns = pSrc->numCols;             /* number of columns */                     \
+                                                                                             \
+  uint16_t blkCnt, rowCnt, row = nRows;          /* loop counters */                         \
+  arm_status status;                             /* status of matrix transpose  */           \
+                                                                                             \
+  pIn[0] = (const uint16_t*)pSrc->pData;                  /* input data matrix pointer */    \
+  for(int i=0;i<7;i++) {                                                                     \
+    pIn[i+1] = pIn[i] + 2*nColumns;                                                          \
+  }
+
+
+#define ARM_MAT_TRANS_NEON_COMPLEX_U16                                                \
+    /* Matrix transpose by exchanging the rows with columns */                        \
+    /* Row loop */                                                                    \
+    rowCnt = row >> BLOCK_ROWS_SHIFT;                                                 \
+    while (rowCnt > 0U)                                                               \
+    {                                                                                 \
+      uint16x8x2_t rowV[8];                                                           \
+      uint16x8x2_t tmpa[4];                                                           \
+      uint16x8x2_t tmpb[4];                                                           \
+      uint16x8x2_t res[8];                                                            \
+                                                                                      \
+                                                                                      \
+      blkCnt = nColumns >> LANE_SHIFT;                                                \
+                                                                                      \
+      /* The pointer px is set to starting address of the column being processed */   \
+      pCol = pOut;                                                                    \
+                                                                                      \
+      /* Compute 4 outputs at a time.  */                                             \
+       /* a second loop below computes the remaining 1 to 3 samples. */               \
+      while (blkCnt > 0U)        /* Column loop */                                    \
+      {                                                                               \
+        for(int i=0;i<8;i++) {                                                        \
+          rowV[i] = vld2q_u16(pIn[i]);                                                \
+          pIn[i] += 2*LANE;                                                           \
+        }                                                                             \
+                                                                                      \
+        /* We must go from a00 a01 */                                                 \
+        /* to a00 a08 so an offset of 8 */                                            \
+        /* Each unzip, taking the even numbered */                                    \
+        /* if multipliying the offset per 2. */                                       \
+        /* We need to multiply per 8 hence three sequences of */                      \
+        /* uzpq */                                                                    \
+        /* First sequence gives a00 a02 */                                            \
+        tmpa[0]=vuzpq_u16(rowV[0].val[0],rowV[1].val[0]);                             \
+        tmpa[1]=vuzpq_u16(rowV[2].val[0],rowV[3].val[0]);                             \
+        tmpa[2]=vuzpq_u16(rowV[4].val[0],rowV[5].val[0]);                             \
+        tmpa[3]=vuzpq_u16(rowV[6].val[0],rowV[7].val[0]);                             \
+                                                                                      \
+        /* Second sequences gives a00 a04 */                                          \
+        /*                     a02 06 */                                              \
+        tmpb[0]=vuzpq_u16(tmpa[0].val[0],tmpa[1].val[0]);                             \
+        tmpb[1]=vuzpq_u16(tmpa[2].val[0],tmpa[3].val[0]);                             \
+        tmpb[2]=vuzpq_u16(tmpa[0].val[1],tmpa[1].val[1]);                             \
+        tmpb[3]=vuzpq_u16(tmpa[2].val[1],tmpa[3].val[1]);                             \
+                                                                                      \
+        /* Third sequence gives a00 a08  */                                           \
+        tmpa[0]=vuzpq_u16(tmpb[0].val[0],tmpb[1].val[0]);                             \
+        tmpa[1]=vuzpq_u16(tmpb[2].val[0],tmpb[3].val[0]);                             \
+        tmpa[2]=vuzpq_u16(tmpb[0].val[1],tmpb[1].val[1]);                             \
+        tmpa[3]=vuzpq_u16(tmpb[2].val[1],tmpb[3].val[1]);                             \
+                                                                                      \
+        res[0].val[0] = tmpa[0].val[0];                                               \
+        res[1].val[0] = tmpa[1].val[0];                                               \
+        res[2].val[0] = tmpa[2].val[0];                                               \
+        res[3].val[0] = tmpa[3].val[0];                                               \
+        res[4].val[0] = tmpa[0].val[1];                                               \
+        res[5].val[0] = tmpa[1].val[1];                                               \
+        res[6].val[0] = tmpa[2].val[1];                                               \
+        res[7].val[0] = tmpa[3].val[1];                                               \
+                                                                                      \
+                                                                                      \
+                                                                                      \
+        tmpa[0]=vuzpq_u16(rowV[0].val[1],rowV[1].val[1]);                             \
+        tmpa[1]=vuzpq_u16(rowV[2].val[1],rowV[3].val[1]);                             \
+        tmpa[2]=vuzpq_u16(rowV[4].val[1],rowV[5].val[1]);                             \
+        tmpa[3]=vuzpq_u16(rowV[6].val[1],rowV[7].val[1]);                             \
+                                                                                      \
+        /* Second sequences gives a00 a04 */                                          \
+        /*                     a02 06 */                                              \
+        tmpb[0]=vuzpq_u16(tmpa[0].val[0],tmpa[1].val[0]);                             \
+        tmpb[1]=vuzpq_u16(tmpa[2].val[0],tmpa[3].val[0]);                             \
+        tmpb[2]=vuzpq_u16(tmpa[0].val[1],tmpa[1].val[1]);                             \
+        tmpb[3]=vuzpq_u16(tmpa[2].val[1],tmpa[3].val[1]);                             \
+                                                                                      \
+        /* Third sequence gives a00 a08  */                                           \
+        tmpa[0]=vuzpq_u16(tmpb[0].val[0],tmpb[1].val[0]);                             \
+        tmpa[1]=vuzpq_u16(tmpb[2].val[0],tmpb[3].val[0]);                             \
+        tmpa[2]=vuzpq_u16(tmpb[0].val[1],tmpb[1].val[1]);                             \
+        tmpa[3]=vuzpq_u16(tmpb[2].val[1],tmpb[3].val[1]);                             \
+                                                                                      \
+        res[0].val[1] = tmpa[0].val[0];                                               \
+        res[1].val[1] = tmpa[1].val[0];                                               \
+        res[2].val[1] = tmpa[2].val[0];                                               \
+        res[3].val[1] = tmpa[3].val[0];                                               \
+        res[4].val[1] = tmpa[0].val[1];                                               \
+        res[5].val[1] = tmpa[1].val[1];                                               \
+        res[6].val[1] = tmpa[2].val[1];                                               \
+        res[7].val[1] = tmpa[3].val[1];                                               \
+                                                                                      \
+        for(int i=0;i<8;i++) {                                                        \
+          vst2q_u16(pCol,res[i]);                                                     \
+          pCol += 2*nRows;                                                            \
+        }                                                                             \
+                                                                                      \
+        /* Decrement the column loop counter */                                       \
+        blkCnt--;                                                                     \
+      }                                                                               \
+                                                                                      \
+      /* Perform matrix transpose for last 3 samples here. */                         \
+      blkCnt = nColumns & (LANE - 1);                                                 \
+                                                                                      \
+      while (blkCnt > 0U)                                                             \
+      {                                                                               \
+        /* Read and store the input element in the destination */                     \
+        for(int i=0;i<8;i++) {                                                        \
+          *pCol++ = *pIn[i]++;                                                        \
+          *pCol++ = *pIn[i]++;                                                        \
+        }                                                                             \
+                                                                                      \
+        pCol += 2*(nRows - BLOCK_ROWS);                                               \
+                                                                                      \
+        /* Decrement the column loop counter */                                       \
+        blkCnt--;                                                                     \
+      }                                                                               \
+                                                                                      \
+      pOut += 2*BLOCK_ROWS;                                                             \
+      for(int i=0;i<8;i++) {                                                          \
+        pIn[i] += 2*(BLOCK_ROWS-1) * nColumns;                                        \
+      }                                                                               \
+                                                                                      \
+                                                                                      \
+      /* Decrement the row loop counter */                                            \
+      rowCnt--;                                                                       \
+                                                                                      \
+    }         /* Row loop end  */                                                     \
+                                                                                      \
+    rowCnt = row & (BLOCK_ROWS - 1);                                                  \
+    while (rowCnt > 0U)                                                               \
+    {                                                                                 \
+      blkCnt = nColumns ;                                                             \
+      /* The pointer px is set to starting address of the column being processed */   \
+      pCol = pOut;                                                                    \
+                                                                                      \
+      while (blkCnt > 0U)                                                             \
+      {                                                                               \
+        /* Read and store the input element in the destination */                     \
+        pCol[0] = *pIn[0]++;                                                          \
+        pCol[1] = *pIn[0]++;                                                          \
+                                                                                      \
+        /* Update the pointer px to point to the next row of the transposed matrix */ \
+        pCol += 2*nRows;                                                              \
+                                                                                      \
+        /* Decrement the column loop counter */                                       \
+        blkCnt--;                                                                     \
+      }                                                                               \
+      pOut += 2;                                                                      \
+      rowCnt -- ;                                                                     \
+    }

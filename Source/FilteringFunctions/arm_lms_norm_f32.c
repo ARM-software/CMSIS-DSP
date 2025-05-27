@@ -155,7 +155,7 @@
   @param[in]     blockSize number of samples to process
  */
 
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 ARM_DSP_ATTRIBUTE void arm_lms_norm_f32(
   arm_lms_norm_instance_f32 * S,
   const float32_t * pSrc,

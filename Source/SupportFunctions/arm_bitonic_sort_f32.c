@@ -30,7 +30,7 @@
 #include "arm_sorting.h"
 
 
-#if !defined(ARM_MATH_NEON)
+#if !defined(ARM_MATH_NEON) || defined(ARM_MATH_AUTOVECTORIZE)
 
 static void arm_bitonic_sort_core_f32(float32_t *pSrc, uint32_t n, uint8_t dir)
 {
@@ -83,7 +83,7 @@ static void arm_bitonic_sort_core_f32(float32_t *pSrc, uint32_t n, uint8_t dir)
 }
 #endif
 
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 
 static float32x4x2_t arm_bitonic_resort_8_f32(float32x4_t a, float32x4_t b, uint8_t dir)
@@ -918,7 +918,7 @@ const arm_sort_instance_f32 * S,
     uint16_t s, i;
     uint8_t dir = S->dir;
 
-#ifdef ARM_MATH_NEON
+#if defined(ARM_MATH_NEON)  && !defined(ARM_MATH_AUTOVECTORIZE)
     (void)s;
 
     float32_t * pOut;

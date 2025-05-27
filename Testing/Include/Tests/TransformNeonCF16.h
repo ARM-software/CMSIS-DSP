@@ -1,4 +1,4 @@
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "Test.h"
 #include "Pattern.h"

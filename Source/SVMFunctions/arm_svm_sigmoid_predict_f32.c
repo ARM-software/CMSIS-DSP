@@ -297,7 +297,7 @@ ARM_DSP_ATTRIBUTE void arm_svm_sigmoid_predict_f32(
 }
 
 #else
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 #include "NEMath.h"
 
 ARM_DSP_ATTRIBUTE void arm_svm_sigmoid_predict_f32(

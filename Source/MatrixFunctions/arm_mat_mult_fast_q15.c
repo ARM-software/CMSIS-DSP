@@ -63,7 +63,7 @@
                    Refer to \ref arm_mat_mult_q15() for a slower implementation of this function
                    which uses 64-bit accumulation to provide higher precision.
  */
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 #define LANE 8
 #define DTYPE q15_t
 #define HEADERTYPE DTYPE

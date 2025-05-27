@@ -624,7 +624,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q31(
 
 #else
 
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 /**
   @brief         Q31 matrix multiplication.

@@ -56,7 +56,7 @@ static double abs_err,rel_err;
          tmp[i] = (float)inp[i] / (float)6000.0f;
        }
    
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
         float16_t *bufp = bufferfft.ptr();
 
         arm_rfft_fast_f16(

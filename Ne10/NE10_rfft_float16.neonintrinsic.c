@@ -55,7 +55,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 #include "dsp/transform_functions_f16.h"
 
-#if defined(ARM_MATH_NEON_FLOAT16)
+#if defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 static void arm_ne10_radix8x4_r2c_neon (
     ne10_fft_cpx_float16_t *Fout,

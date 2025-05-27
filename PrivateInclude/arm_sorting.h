@@ -104,7 +104,7 @@ extern "C"
           float32_t * pDst,
           uint32_t blockSize);
 
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #define vtrn256_128q(a, b)                   \
 do {                                         \

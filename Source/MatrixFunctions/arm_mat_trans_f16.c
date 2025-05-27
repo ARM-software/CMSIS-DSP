@@ -136,16 +136,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_trans_f16(
   return (status);
 }
 
-#undef BLOCK_ROWS
-#undef BLOCK_ROWS_SHIFT
-#undef LANE
-#undef LANE_SHIFT 
-#undef ARM_MAT_TRANS_NEON_U32
-#undef ARM_MAT_TRANS_NEON_INIT_U32
-#undef ARM_MAT_TRANS_NEON_INIT_U16
-#undef ARM_MAT_TRANS_NEON_U16 
-#undef ARM_MAT_TRANS_NEON_INIT_U8
-#undef ARM_MAT_TRANS_NEON_U8 
+#include "_arm_mat_trans_undef_neon.c"
 
 #else
 

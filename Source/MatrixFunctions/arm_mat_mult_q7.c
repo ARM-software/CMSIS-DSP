@@ -589,7 +589,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q7(
 }
 #else
 
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 /**
  * @brief Q7 matrix multiplication

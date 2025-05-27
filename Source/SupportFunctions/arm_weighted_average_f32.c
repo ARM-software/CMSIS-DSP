@@ -98,7 +98,7 @@ ARM_DSP_ATTRIBUTE float32_t arm_weighted_average_f32(const float32_t *in,const f
 }
 
 #else
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "NEMath.h"
 ARM_DSP_ATTRIBUTE float32_t arm_weighted_average_f32(const float32_t *in,const float32_t *weights, uint32_t blockSize)

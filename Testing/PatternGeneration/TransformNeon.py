@@ -244,7 +244,7 @@ if args.c:
     for d in DATATYPES:
         path=os.path.join(args.others[0],f"TransformNeonC{d}.cpp")
         with open(path,"w") as c:
-             print(f"""#if defined(ARM_MATH_NEON)
+             print(f"""#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 #include "TransformNeonC{d}.h"
 #include <stdio.h>
 #include "Error.h"

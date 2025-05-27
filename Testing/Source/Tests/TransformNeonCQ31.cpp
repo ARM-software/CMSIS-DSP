@@ -1,4 +1,4 @@
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 #include "TransformNeonCQ31.h"
 #include <stdio.h>
 #include "Error.h"

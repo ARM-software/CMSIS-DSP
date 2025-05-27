@@ -835,7 +835,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_f32(
 }
 
 #else
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 /**
   @brief         Floating-point Complex matrix multiplication.

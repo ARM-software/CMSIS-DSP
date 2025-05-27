@@ -148,7 +148,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_scale_f32(
 
 }
 #else
-#if defined(ARM_MATH_NEON_EXPERIMENTAL)
+#if defined(ARM_MATH_NEON_EXPERIMENTAL) && !defined(ARM_MATH_AUTOVECTORIZE)
 ARM_DSP_ATTRIBUTE arm_status arm_mat_scale_f32(
   const arm_matrix_instance_f32 * pSrc,
   float32_t scale,

@@ -110,7 +110,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_trans_q7(const arm_matrix_instance_q7 *pSrc
     return (ARM_MATH_SUCCESS);
 }
 #else
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #define BLOCK_ROWS 16
 #define BLOCK_ROWS_SHIFT 4
@@ -148,16 +148,8 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_trans_q7(const arm_matrix_instance_q7 *pSrc
   return (status);
 }
 
-#undef BLOCK_ROWS
-#undef BLOCK_ROWS_SHIFT
-#undef LANE
-#undef LANE_SHIFT 
-#undef ARM_MAT_TRANS_NEON_U32
-#undef ARM_MAT_TRANS_NEON_INIT_U32
-#undef ARM_MAT_TRANS_NEON_INIT_U16
-#undef ARM_MAT_TRANS_NEON_U16 
-#undef ARM_MAT_TRANS_NEON_INIT_U8
-#undef ARM_MAT_TRANS_NEON_U8 
+#include "_arm_mat_trans_undef_neon.c"
+
 #else
 ARM_DSP_ATTRIBUTE arm_status arm_mat_trans_q7(const arm_matrix_instance_q7 *pSrc, arm_matrix_instance_q7 *pDst)
 {

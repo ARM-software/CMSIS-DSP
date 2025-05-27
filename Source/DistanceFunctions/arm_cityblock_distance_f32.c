@@ -89,7 +89,7 @@ ARM_DSP_ATTRIBUTE float32_t arm_cityblock_distance_f32(const float32_t *pA,const
 }
 
 #else
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "NEMath.h"
 

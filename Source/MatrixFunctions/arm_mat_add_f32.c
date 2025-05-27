@@ -150,7 +150,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_add_f32(
   return (status);
 }
 #else
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 /*
 
 Neon version is assuming the matrix is small enough.

@@ -27,7 +27,7 @@
  */
 
 #include "dsp/matrix_functions.h"
-#if defined(ARM_MATH_NEON) && defined(__aarch64__)
+#if defined(ARM_MATH_NEON) && defined(__aarch64__) && !defined(ARM_MATH_AUTOVECTORIZE)
 #define GROUPOFROWS 8
 #endif
 
@@ -66,7 +66,7 @@
  * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
  */
 
-#if defined(ARM_MATH_NEON) && defined(__aarch64__)
+#if defined(ARM_MATH_NEON) && defined(__aarch64__) && !defined(ARM_MATH_AUTOVECTORIZE)
 ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_f64(
   const arm_matrix_instance_f64 * pSrcA,
   const arm_matrix_instance_f64 * pSrcB,

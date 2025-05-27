@@ -43,7 +43,7 @@
   @param[in]     blockSize  number of samples in input vector
   @param[out]    pResult    sum of the squares value returned here
  */
-#if defined(ARM_MATH_NEON) && defined(__aarch64__)
+#if defined(ARM_MATH_NEON) && defined(__aarch64__) && !defined(ARM_MATH_AUTOVECTORIZE)
 ARM_DSP_ATTRIBUTE void arm_power_f64(
     const float64_t * pSrc,
     uint32_t blockSize,

@@ -51,7 +51,7 @@ ARM_DSP_ATTRIBUTE float64_t arm_euclidean_distance_f64(const float64_t *pA,const
 {
     float64_t accum=0.,tmp;
     uint32_t blkCnt;
-#if defined(ARM_MATH_NEON) && defined(__aarch64__)
+#if defined(ARM_MATH_NEON) && defined(__aarch64__) && !defined(ARM_MATH_AUTOVECTORIZE)
     float64x2_t accumV,tmpV , pAV ,pBV;
     accumV = vdupq_n_f64(0.0);
     blkCnt = blockSize >> 1U;

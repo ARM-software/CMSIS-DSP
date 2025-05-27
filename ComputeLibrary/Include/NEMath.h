@@ -25,7 +25,7 @@
 #define ARM_COMPUTE_NEMATH_H__
 
 
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #if defined(__aarch64__)
 

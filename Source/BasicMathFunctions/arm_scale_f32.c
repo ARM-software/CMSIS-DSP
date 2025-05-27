@@ -128,7 +128,7 @@ ARM_DSP_ATTRIBUTE void arm_scale_f32(
         uint32_t blockSize)
 {
   uint32_t blkCnt;                               /* Loop counter */
-#if defined(ARM_MATH_NEON_EXPERIMENTAL)
+#if defined(ARM_MATH_NEON_EXPERIMENTAL) && !defined(ARM_MATH_AUTOVECTORIZE)
     f32x4_t vec1;
     f32x4_t res;
 

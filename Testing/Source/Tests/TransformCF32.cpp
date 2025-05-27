@@ -18,7 +18,7 @@
         memcpy(infftp,inp,sizeof(float32_t)*input.nbSamples());
 
    
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
         float32_t *bufferp = bufferfft.ptr();
         arm_cfft_f32(
              &(this->varInstCfftF32),

@@ -56,7 +56,7 @@ ARM_DSP_ATTRIBUTE void arm_mse_f64(
     uint32_t blkCnt;                               /* Loop counter */
     float64_t inA, inB;
     float64_t sum = 0.0;
-#if defined(ARM_MATH_NEON) && defined(__aarch64__)
+#if defined(ARM_MATH_NEON) && defined(__aarch64__) && !defined(ARM_MATH_AUTOVECTORIZE)
     
     float64x2_t inAV , inBV , subV, sumV;
     sumV = vdupq_n_f64(0.0);
@@ -110,7 +110,7 @@ ARM_DSP_ATTRIBUTE void arm_mse_f64(
 #endif
 #endif
 
-#if defined(__clang__) && defined(ARM_MATH_NEON) && defined(__aarch64__)
+#if defined(__clang__) && defined(ARM_MATH_NEON) && defined(__aarch64__) && !defined(ARM_MATH_AUTOVECTORIZE)
     #pragma clang loop vectorize(enable) unroll(disable)
 #endif
     while (blkCnt > 0U)

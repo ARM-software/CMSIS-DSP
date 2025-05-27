@@ -697,7 +697,7 @@ arm_cfft_instance_q15 *arm_cfft_init_dynamic_q15(uint32_t fftLen)
  */
 
 
-#if defined(ARM_MATH_NEON_FLOAT16) || defined(DOXYGEN)
+#if (defined(ARM_MATH_NEON_FLOAT16) || defined(DOXYGEN))  && !defined(ARM_MATH_AUTOVECTORIZE)
 
 typedef void (*line_generator_float16)(ne10_fft_cpx_float16_t*,
       const ne10_int32_t,
