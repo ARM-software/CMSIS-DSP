@@ -232,7 +232,7 @@ void FUNC(EXT)(const uint32_t *pA
 }
 
 #else
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON) 
 
 
 void FUNC(EXT)(const uint32_t *pA

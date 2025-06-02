@@ -54,7 +54,7 @@
                state.create(2*this->numStages,BIQUADF32::STATE_F32_ID,mgr);
 
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
                // For Neon, neonCoefs is the coef array and is bigger
                neonCoefs.create(8*this->numStages,BIQUADF32::STATE_F32_ID,mgr);
 

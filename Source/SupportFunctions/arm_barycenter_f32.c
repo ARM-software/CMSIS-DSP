@@ -193,7 +193,7 @@ ARM_DSP_ATTRIBUTE void arm_barycenter_f32(const float32_t *in,
     }
 }
 #else
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
 
 #include "NEMath.h"
 ARM_DSP_ATTRIBUTE void arm_barycenter_f32(const float32_t *in, const float32_t *weights, float32_t *out, uint32_t nbVectors,uint32_t vecDim)

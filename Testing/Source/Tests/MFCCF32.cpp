@@ -25,7 +25,7 @@ a double precision computation.
 
 
         memcpy((void*)tmpinp,(void*)inp1,sizeof(float32_t)*this->fftLen);
-        #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+        #if defined(ARM_MATH_NEON)
         float32_t *tmp2p=tmp2.ptr();
         arm_mfcc_f32(&mfcc,tmpinp,outp,tmpp,tmp2p);
         #else
@@ -143,7 +143,7 @@ a double precision computation.
 
        }
       
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
       tmp.create(nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
 #else
       tmp.create(2*nb,MFCCF32::TMP_MFCC_F32_ID,mgr);

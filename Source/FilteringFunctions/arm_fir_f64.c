@@ -44,7 +44,7 @@
   @param[out]    pDst       points to the block of output data
   @param[in]     blockSize  number of samples to process
  */
-#if defined(ARM_MATH_NEON) && defined(__aarch64__) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON) && defined(__aarch64__) 
 ARM_DSP_ATTRIBUTE void arm_fir_f64(
     const arm_fir_instance_f64 * S,
     const float64_t * pSrc,

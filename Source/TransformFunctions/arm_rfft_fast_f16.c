@@ -312,7 +312,7 @@ static void merge_rfft_f16(
    }
 
 }
-#elif defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
+#elif defined(ARM_MATH_NEON_FLOAT16) 
 /*
 
 No stage merge functions defined here for Neon.
@@ -494,7 +494,7 @@ static void merge_rfft_f16(
   @par Size of buffers according to the target architecture and datatype:
        They are described on the page \ref transformbuffers "transform buffers".
 */
-#if defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON_FLOAT16) 
 
 #include "CMSIS_NE10_types.h"
 #include "CMSIS_NE10_fft.h"

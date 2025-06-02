@@ -19,7 +19,7 @@
 
        memcpy(tmp,inp,sizeof(float32_t)*input.nbSamples());
    
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
         float32_t *bufp = bufferfft.ptr();
 
         arm_rfft_fast_f32(

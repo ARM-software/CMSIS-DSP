@@ -190,7 +190,7 @@ ARM_DSP_ATTRIBUTE void arm_cmplx_dot_prod_f32(
         float32_t real_sum = 0.0f, imag_sum = 0.0f;    /* Temporary result variables */
         float32_t a0,b0,c0,d0;
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON) 
     float32x4x2_t vec1,vec2,vec3,vec4;
     float32x4_t accR,accI;
     float32x2_t accum = vdup_n_f32(0);

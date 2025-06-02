@@ -104,7 +104,7 @@ ARM_DSP_ATTRIBUTE void arm_abs_f16(
 {
         uint32_t blkCnt;                               /* Loop counter */
 
-#if defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON_FLOAT16) 
     f16x8_t vec1;
     f16x8_t res;
 

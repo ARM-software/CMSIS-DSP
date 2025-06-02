@@ -277,7 +277,7 @@ ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_q7(
 
 #else
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
 
 #define TMP_DEFINE_AND_INIT(TMP) \
    int32x4_t TMP = vdupq_n_s32(0); \

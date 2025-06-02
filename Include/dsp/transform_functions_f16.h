@@ -37,7 +37,7 @@
 #define ARM_MIXED_RADIX_FFT 1
 #endif
 
-#if !defined(ARM_MATH_NEON) || defined(ARM_MATH_AUTOVECTORIZE)
+#if !defined(ARM_MATH_NEON)
 #if defined(ARM_MFCC_CFFT_BASED)
 #if !defined(ARM_MFCC_USE_CFFT)
 #define ARM_MFCC_USE_CFFT
@@ -88,7 +88,7 @@ extern "C"
   /**
    * @brief Instance structure for the floating-point CFFT/CIFFT function.
    */
-#if defined(ARM_MATH_NEON_FLOAT16)  && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON_FLOAT16)
 typedef struct
 {
           uint32_t fftLen;                   /**< length of the FFT. */
@@ -130,7 +130,7 @@ arm_status arm_cfft_init_16_f16(arm_cfft_instance_f16 * S);
   arm_cfft_instance_f16 * S,
   uint16_t fftLen);
 
-#if defined(ARM_MATH_NEON_FLOAT16)  && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON_FLOAT16)
 
 extern arm_cfft_instance_f16 *arm_cfft_init_dynamic_f16(uint32_t fftLen);
 
@@ -150,7 +150,7 @@ void arm_cfft_f16(
   /**
    * @brief Instance structure for the floating-point RFFT/RIFFT function.
    */
-#if defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON_FLOAT16)
   typedef struct
   {
     uint32_t nfft;
@@ -184,7 +184,7 @@ arm_status arm_rfft_fast_init_f16 (
          arm_rfft_fast_instance_f16 * S,
          uint16_t fftLen);
 
-#if defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON_FLOAT16)
 
 extern arm_rfft_fast_instance_f16 *arm_rfft_fast_init_dynamic_f16 (uint32_t fftLen);
 
@@ -357,7 +357,7 @@ arm_status arm_mfcc_init_f16(
   @param[out]     pDst  points to the output MFCC values
   @param[inout]     pTmp  points to a temporary buffer of complex
  */
-#if defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON_FLOAT16)
 void arm_mfcc_f16(
   const arm_mfcc_instance_f16 * S,
   float16_t *pSrc,

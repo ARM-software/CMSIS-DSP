@@ -43,7 +43,7 @@
 #define ARM_MIXED_RADIX_FFT 1
 #endif
 
-#if !defined(ARM_MATH_NEON) || defined(ARM_MATH_AUTOVECTORIZE)
+#if !defined(ARM_MATH_NEON)
 #if defined(ARM_MFCC_CFFT_BASED)
 #if !defined(ARM_MFCC_USE_CFFT)
 #define ARM_MFCC_USE_CFFT
@@ -269,7 +269,7 @@ extern "C"
   /**
    * @brief Instance structure for the fixed-point CFFT/CIFFT function.
    */
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
 typedef struct
 {
           uint32_t fftLen;                   /**< length of the FFT. */
@@ -312,7 +312,7 @@ arm_status arm_cfft_init_q15(
 
 
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
 
 extern arm_cfft_instance_q15 *arm_cfft_init_dynamic_q15(uint32_t fftLen);
 
@@ -334,7 +334,7 @@ void arm_cfft_q15(
   /**
    * @brief Instance structure for the fixed-point CFFT/CIFFT function.
    */
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
 typedef struct
 {
           uint32_t fftLen;                   /**< length of the FFT. */
@@ -375,7 +375,7 @@ arm_status arm_cfft_init_q31(
   arm_cfft_instance_q31 * S,
   uint16_t fftLen);
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
 
 extern arm_cfft_instance_q31 *arm_cfft_init_dynamic_q31(uint32_t fftLen);
 
@@ -394,7 +394,7 @@ void arm_cfft_q31(
           uint8_t bitReverseFlag);
 #endif
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
 typedef struct
 {
           uint32_t fftLen;                   /**< length of the FFT. */
@@ -439,7 +439,7 @@ arm_status arm_cfft_init_16_f32(arm_cfft_instance_f32 * S);
   arm_cfft_instance_f32 * S,
   uint16_t fftLen);
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
 
 extern arm_cfft_instance_f32 *arm_cfft_init_dynamic_f32(uint32_t fftLen);
 
@@ -495,7 +495,7 @@ arm_status arm_cfft_init_16_f64(arm_cfft_instance_f64 * S);
   /**
    * @brief Instance structure for the Q15 RFFT/RIFFT function.
    */
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
   typedef struct
   {
     uint32_t nfft;
@@ -521,7 +521,7 @@ arm_status arm_cfft_init_16_f64(arm_cfft_instance_f64 * S);
   } arm_rfft_instance_q15;
 #endif 
   
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
 
 extern arm_rfft_instance_q15 *arm_rfft_init_dynamic_q15(uint32_t fftLenReal);
 
@@ -623,7 +623,7 @@ arm_status arm_rfft_init_8192_q15(
   /**
    * @brief Instance structure for the Q31 RFFT/RIFFT function.
    */
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
   typedef struct
   {
     uint32_t nfft;
@@ -650,7 +650,7 @@ arm_status arm_rfft_init_8192_q15(
 #endif 
 
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
 
 extern arm_rfft_instance_q31 *arm_rfft_init_dynamic_q31(uint32_t fftLenReal);
 
@@ -797,7 +797,7 @@ void arm_rfft_fast_f64(
   /**
    * @brief Instance structure for the floating-point RFFT/RIFFT function.
    */
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
   typedef struct
   {
     uint32_t nfft;
@@ -832,7 +832,7 @@ arm_status arm_rfft_fast_init_f32 (
          arm_rfft_fast_instance_f32 * S,
          uint16_t fftLen);
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
 
 extern arm_rfft_fast_instance_f32 *arm_rfft_fast_init_dynamic_f32 (uint32_t fftLen);
 
@@ -980,7 +980,7 @@ arm_status arm_mfcc_init_f32(
   @param[out]     pDst  points to the output MFCC values
   @param[inout]     pTmp  points to a temporary buffer of complex
  */
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
 void arm_mfcc_f32(
   const arm_mfcc_instance_f32 * S,
   float32_t *pSrc,
@@ -1128,7 +1128,7 @@ arm_status arm_mfcc_init_q31(
   @param[inout]     pTmp  points to a temporary buffer of complex
   @return        error status
  */
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
   arm_status arm_mfcc_q31(
   const arm_mfcc_instance_q31 * S,
   q31_t *pSrc,
@@ -1276,7 +1276,7 @@ arm_status arm_mfcc_init_q15(
   @param[inout]     pTmp  points to a temporary buffer of complex
   @return        error status
  */
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
   arm_status arm_mfcc_q15(
   const arm_mfcc_instance_q15 * S,
   q15_t *pSrc,

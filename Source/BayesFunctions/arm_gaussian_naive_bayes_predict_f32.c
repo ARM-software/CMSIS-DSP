@@ -141,7 +141,7 @@ ARM_DSP_ATTRIBUTE uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussi
 
 #else
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
 
 #include "NEMath.h"
 

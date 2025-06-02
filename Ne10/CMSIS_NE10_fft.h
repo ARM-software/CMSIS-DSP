@@ -33,7 +33,7 @@
 #include "CMSIS_NE10_types.h"
 #include "dsp/transform_functions.h"
 
-#if defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON_FLOAT16) && defined(ARM_FLOAT16_SUPPORTED)
 #include "dsp/transform_functions_f16.h"
 #endif
 
@@ -66,7 +66,7 @@ extern void arm_ne10_fft_c2r_1d_float32_neon (const arm_rfft_fast_instance_f32 *
                                               float32_t *out,
                                               float32_t *buffer);
 
-#if defined(ARM_MATH_NEON_FLOAT16) && defined(ARM_FLOAT16_SUPPORTED) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON_FLOAT16) && defined(ARM_FLOAT16_SUPPORTED)
 
 extern void arm_ne10_mixed_radix_fft_forward_float16_neon (const arm_cfft_instance_f16 *S,
         const ne10_fft_cpx_float16_t *in,
@@ -139,7 +139,7 @@ extern void arm_ne10_mixed_radix_generic_butterfly_float32_neon (
         ne10_fft_cpx_float32_t *out,
         ne10_fft_cpx_float32_t *buffer);
 
-#if defined(ARM_MATH_NEON_FLOAT16) && defined(ARM_FLOAT16_SUPPORTED) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON_FLOAT16) && defined(ARM_FLOAT16_SUPPORTED)
 
 extern void arm_ne10_mixed_radix_generic_butterfly_inverse_float16_neon (
         const arm_cfft_instance_f16 *S,

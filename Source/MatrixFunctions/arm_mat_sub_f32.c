@@ -150,7 +150,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_sub_f32(
 }
 
 #else
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
 ARM_DSP_ATTRIBUTE arm_status arm_mat_sub_f32(
   const arm_matrix_instance_f32 * pSrcA,
   const arm_matrix_instance_f32 * pSrcB,

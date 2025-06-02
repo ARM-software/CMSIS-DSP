@@ -36,7 +36,7 @@
 
 #include "dsp/transform_functions_f16.h"
 
-#if defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON_FLOAT16) && defined(ARM_FLOAT16_SUPPORTED)
 
 
 __STATIC_INLINE void ne10_radix8x4_neon (ne10_fft_cpx_float16_t *out,

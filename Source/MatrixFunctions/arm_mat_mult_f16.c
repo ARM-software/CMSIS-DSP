@@ -620,7 +620,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_f16(
 }
 #else
 
-#if defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON_FLOAT16)
 
 /**
  * @brief Floating-point matrix multiplication.

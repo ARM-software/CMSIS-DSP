@@ -835,7 +835,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_q31(
 
 #else
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
 /**
   @brief         Q31 Complex matrix multiplication.
   @param[in]     pSrcA      points to first input complex matrix structure

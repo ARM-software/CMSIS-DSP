@@ -28,7 +28,7 @@
 
 #include "dsp/matrix_functions.h"
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
 #define GROUPOFROWS 8
 #endif
 
@@ -536,7 +536,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_f32(
 }
 #else
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
 /**
  * @brief Floating-point matrix multiplication.
  * @param[in]       *pSrcA points to the first input matrix structure

@@ -76,7 +76,7 @@
   @par Size of buffers according to the target architecture and datatype:
        They are described on the page \ref transformbuffers "transform buffers".
  */
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
 ARM_DSP_ATTRIBUTE void arm_mfcc_f32(
   const arm_mfcc_instance_f32 * S,
   float32_t *pSrc,
@@ -113,7 +113,7 @@ ARM_DSP_ATTRIBUTE void arm_mfcc_f32(
 
   /* Compute spectrum magnitude 
   */
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON) 
   arm_rfft_fast_f32(&(S->rfft),pSrc,pTmp,pTmp2,0);
   pTmp[1]=0.0f;
 #else

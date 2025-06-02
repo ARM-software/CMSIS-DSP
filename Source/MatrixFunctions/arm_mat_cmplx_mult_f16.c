@@ -700,7 +700,7 @@ if ((pSrcA->numCols != pSrcB->numRows) ||
 }
 #else
 
-#if defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON_FLOAT16)
 
 /**
   @brief         Floating-point Complex matrix multiplication.

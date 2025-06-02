@@ -136,7 +136,7 @@ target_sources(CMSISDSP PRIVATE TransformFunctions/arm_transform_buffer_sizes.c)
 
 endif()
 
-if (NEON OR NEONEXPERIMENTAL AND (NOT AUTOVECTORIZE))
+if (NEON OR NEONEXPERIMENTAL)
     target_sources(CMSISDSP PRIVATE "${DSP}/Ne10/NE10_fft_float32.neonintrinsic.c")
     target_sources(CMSISDSP PRIVATE "${DSP}/Ne10/NE10_fft_int32.neonintrinsic.c")
     target_sources(CMSISDSP PRIVATE "${DSP}/Ne10/NE10_fft_int16.neonintrinsic.c")

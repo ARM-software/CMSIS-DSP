@@ -39,7 +39,7 @@ extern "C"
 
  
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
 
 
 #define ARM_NEON_RFFT_TWIDDLES_16_F32_LEN 24
@@ -456,7 +456,7 @@ extern const uint32_t arm_neon_factors_4096_q15[ARM_NEON_FACTORS_4096_Q15_LEN];
 #define ARM_NE10_OFFSET_BACKWARD_TWID_4096_Q15 4092
 
 
-#endif /* defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE) */
+#endif /* defined(ARM_MATH_NEON) */
 
 
 

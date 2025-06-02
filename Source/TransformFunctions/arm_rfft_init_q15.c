@@ -76,7 +76,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_##LEN##_q15( arm_rfft_instance_q15 * 
     /* return the status of RFFT Init function */                 \
     return (status);                                              \
 }
-#elif defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#elif defined(ARM_MATH_NEON) 
 #define RFFTINIT_Q15(LEN,CFFTLEN,TWIDMOD)                                          \
 ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_##LEN##_q15( arm_rfft_instance_q15 * S )\
 {                                                                                  \
@@ -381,7 +381,7 @@ RFFTINIT_Q15(32,16,256)
                    functions defined for each FFT size.
 
  */
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON) 
 ARM_DSP_ATTRIBUTE arm_status arm_rfft_init_q15(
     arm_rfft_instance_q15 * S,
     uint32_t fftLenReal)

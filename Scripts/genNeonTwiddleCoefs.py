@@ -499,13 +499,13 @@ cheader="""/* ------------------------------------------------------------------
 
 cifdeNEON="""
 
-#if defined(%s) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(%s)
 
 """
 
 cfooterNEON="""
 
-#endif /* defined(%s) && !defined(ARM_MATH_AUTOVECTORIZE) */
+#endif /* defined(%s) */
 """
 
 
@@ -551,13 +551,13 @@ extern "C"
  """ 
 
 hifdefNEON="""
-#if defined(%s) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(%s) 
 
 """
 
 hfooterNEON="""
 
-#endif /* defined(%s) && !defined(ARM_MATH_AUTOVECTORIZE) */
+#endif /* defined(%s)  */
 
 """
 

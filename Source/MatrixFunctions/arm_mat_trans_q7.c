@@ -110,7 +110,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_trans_q7(const arm_matrix_instance_q7 *pSrc
     return (ARM_MATH_SUCCESS);
 }
 #else
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
 
 #define BLOCK_ROWS 16
 #define BLOCK_ROWS_SHIFT 4

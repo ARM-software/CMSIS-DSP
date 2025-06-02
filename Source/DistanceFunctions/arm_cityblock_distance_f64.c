@@ -51,7 +51,7 @@ ARM_DSP_ATTRIBUTE float64_t arm_cityblock_distance_f64(const float64_t *pA,const
     uint32_t blkCnt;
     accum = 0.;
     
-#if defined(ARM_MATH_NEON) && defined(__aarch64__) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON) && defined(__aarch64__) 
     float64x2_t tmpAV, tmpBV,accumV , subV;
     accumV = vdupq_n_f64(0.0);
     blkCnt = blockSize >> 1U;

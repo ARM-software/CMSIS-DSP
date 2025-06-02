@@ -34,7 +34,7 @@
 
 
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON) 
 
 #include "NEMath.h"
 

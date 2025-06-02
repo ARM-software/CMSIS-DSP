@@ -50,7 +50,7 @@
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
-#if defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON_FLOAT16)
 #include "arm_neon_tables_f16.h"
 #define RFFT_INIT(LEN)                                                                              \
   S->nfft = LEN;                                                                                    \
@@ -78,7 +78,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_##LEN##_f16( arm_rfft_fast_insta
 
 #endif 
 
-#if defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON_FLOAT16) 
 
 FAST_INIT_FUNC(32)
 
@@ -110,7 +110,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_32_f16( arm_rfft_fast_instance_f
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
-#if defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON_FLOAT16) 
 
 FAST_INIT_FUNC(64)
 
@@ -142,7 +142,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_64_f16( arm_rfft_fast_instance_f
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
-#if defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON_FLOAT16) 
 
 FAST_INIT_FUNC(128)
 
@@ -173,7 +173,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_128_f16( arm_rfft_fast_instance_
                    - \ref ARM_MATH_SUCCESS        : Operation successful
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
 */
-#if defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON_FLOAT16) 
 
 FAST_INIT_FUNC(256)
 
@@ -204,7 +204,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_256_f16( arm_rfft_fast_instance_
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
-#if defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON_FLOAT16) 
 
 FAST_INIT_FUNC(512)
 
@@ -236,7 +236,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_512_f16( arm_rfft_fast_instance_
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
 
-#if defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON_FLOAT16) 
 
 FAST_INIT_FUNC(1024)
 
@@ -266,7 +266,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_1024_f16( arm_rfft_fast_instance
                    - \ref ARM_MATH_SUCCESS        : Operation successful
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
-#if defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON_FLOAT16) 
 
 FAST_INIT_FUNC(2048)
 
@@ -296,7 +296,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_rfft_fast_init_2048_f16( arm_rfft_fast_instance
                    - \ref ARM_MATH_SUCCESS        : Operation successful
                    - \ref ARM_MATH_ARGUMENT_ERROR : an error is detected
  */
-#if defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON_FLOAT16) 
 
 FAST_INIT_FUNC(4096)
 

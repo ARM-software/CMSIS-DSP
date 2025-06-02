@@ -92,7 +92,7 @@ ARM_DSP_ATTRIBUTE void arm_fill_f32(
 
 }
 #else
-#if defined(ARM_MATH_NEON_EXPERIMENTAL) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON_EXPERIMENTAL)
 ARM_DSP_ATTRIBUTE void arm_fill_f32(
   float32_t value,
   float32_t * pDst,

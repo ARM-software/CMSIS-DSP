@@ -314,7 +314,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_q15(
 
 
 #else
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
 
 /**
   @brief         Q15 Complex matrix multiplication.

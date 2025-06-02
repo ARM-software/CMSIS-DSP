@@ -128,7 +128,7 @@ extern "C"
 #endif
 #endif
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
   #if defined(_MSC_VER) && defined(_M_ARM64EC)
     #include <arm64_neon.h>
   #else
@@ -354,7 +354,7 @@ extern "C"
   /**
    * @brief vector types
    */
-#if (defined(ARM_MATH_NEON) || defined (ARM_MATH_MVEI))  && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON) || (defined (ARM_MATH_MVEI)  && !defined(ARM_MATH_AUTOVECTORIZE))
 
   /**
    * @brief 64-bit fractional 128-bit vector data type in 1.63 format
@@ -439,7 +439,7 @@ extern "C"
 
 #endif
 
-#if (defined(ARM_MATH_NEON) || defined(ARM_MATH_MVEF))  && !defined(ARM_MATH_AUTOVECTORIZE) /* floating point vector*/
+#if defined(ARM_MATH_NEON) || (defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)) /* floating point vector*/
 
   /**
    * @brief 32-bit floating-point 128-bit vector type
@@ -467,7 +467,7 @@ extern "C"
 
 #endif
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON) 
   /**
    * @brief 32-bit fractional 64-bit vector data type in 1.31 format.
    */

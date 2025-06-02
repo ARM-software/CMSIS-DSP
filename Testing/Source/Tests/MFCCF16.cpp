@@ -26,7 +26,7 @@ a double precision computation.
 
 
         memcpy((void*)tmpinp,(void*)inp1,sizeof(float16_t)*this->fftLen);
-        #if defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
+        #if defined(ARM_MATH_NEON_FLOAT16) && defined(ARM_FLOAT16_SUPPORTED)
         float16_t *tmp2p=tmp2.ptr();
         arm_mfcc_f16(&mfcc,tmpinp,outp,tmpp,tmp2p);
         #else

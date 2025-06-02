@@ -129,7 +129,7 @@ ARM_DSP_ATTRIBUTE void arm_float_to_q31(
   }
 }
 #else
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
 ARM_DSP_ATTRIBUTE void arm_float_to_q31(
   const float32_t * pSrc,
   q31_t * pDst,

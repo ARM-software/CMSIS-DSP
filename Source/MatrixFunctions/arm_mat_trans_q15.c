@@ -97,7 +97,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_trans_q15(
 }
 #else
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
 
 #define BLOCK_ROWS 8
 #define BLOCK_ROWS_SHIFT 3

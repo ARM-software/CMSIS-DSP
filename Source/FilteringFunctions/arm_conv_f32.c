@@ -258,7 +258,7 @@ ARM_DSP_ATTRIBUTE void arm_conv_f32(
         float32_t * pDst)
 {
 
-#if defined(ARM_MATH_DSP)
+#if defined(ARM_MATH_DSP) || defined(ARM_MATH_NEON) 
 
   const float32_t *pIn1;                               /* InputA pointer */
   const float32_t *pIn2;                               /* InputB pointer */
@@ -271,9 +271,9 @@ ARM_DSP_ATTRIBUTE void arm_conv_f32(
         uint32_t j, k, count, blkCnt;                  /* Loop counters */
 
 
-#if defined (ARM_MATH_LOOPUNROLL) || (defined(ARM_MATH_NEON)  && !defined(ARM_MATH_AUTOVECTORIZE))
+#if defined (ARM_MATH_LOOPUNROLL) || defined(ARM_MATH_NEON) 
         float32_t acc0, acc1, acc2, acc3, c0;              /* Accumulators */
-#if !defined(ARM_MATH_NEON) || defined(ARM_MATH_AUTOVECTORIZE)
+#if !defined(ARM_MATH_NEON)
         float32_t x0, x1, x2, x3;                  /* Temporary variables to hold state and coefficient values */
 #endif
 #endif
@@ -342,7 +342,7 @@ ARM_DSP_ATTRIBUTE void arm_conv_f32(
   /* ------------------------
    * Stage1 process
    * ----------------------*/
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON) 
     float32x4_t vec1;
     float32x4_t vec2;
     float32x4_t res = vdupq_n_f32(0) ;
@@ -355,11 +355,11 @@ ARM_DSP_ATTRIBUTE void arm_conv_f32(
     /* Accumulator is made zero for every iteration */
     sum = 0.0f;
 
-#if defined (ARM_MATH_LOOPUNROLL) || (defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE))
+#if defined (ARM_MATH_LOOPUNROLL) || defined(ARM_MATH_NEON) 
     /* Loop unrolling: Compute 4 outputs at a time */
     k = count >> 2U;
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON) 
     res = vdupq_n_f32(0) ;
     accum = vdup_n_f32(0);
 
@@ -475,7 +475,7 @@ ARM_DSP_ATTRIBUTE void arm_conv_f32(
   if (srcBLen >= 4U)
   {
    
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON) 
       float32x4_t c;
       float32x4_t x1v;
       float32x4_t x2v;
@@ -499,7 +499,7 @@ ARM_DSP_ATTRIBUTE void arm_conv_f32(
        /* Apply loop unrolling and compute 4 MACs simultaneously. */
       k = srcBLen >> 2U;
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON) 
       res = vdupq_n_f32(0) ;
 
       x1v = vld1q_f32(px);
@@ -700,11 +700,11 @@ ARM_DSP_ATTRIBUTE void arm_conv_f32(
       /* Accumulator is made zero for every iteration */
       sum = 0.0f;
 
-#if (defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)) || defined (ARM_MATH_LOOPUNROLL)
+#if defined(ARM_MATH_NEON)  || defined (ARM_MATH_LOOPUNROLL)
       /* Loop unrolling: Compute 4 outputs at a time */
       k = srcBLen >> 2U;
 
-#if defined (ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined (ARM_MATH_NEON) 
       float32x4_t res = vdupq_n_f32(0) ;
       float32x4_t x = vdupq_n_f32(0) ;
       float32x4_t y = vdupq_n_f32(0) ;
@@ -851,11 +851,11 @@ ARM_DSP_ATTRIBUTE void arm_conv_f32(
     /* Accumulator is made zero for every iteration */
     sum = 0.0f;
 
-#if defined (ARM_MATH_LOOPUNROLL) || (defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE))
+#if defined (ARM_MATH_LOOPUNROLL) || defined(ARM_MATH_NEON)
     /* Loop unrolling: Compute 4 outputs at a time */
     k = blockSize3 >> 2U;
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
     float32x4_t res = vdupq_n_f32(0) ;
     float32x4_t x = vdupq_n_f32(0) ;
     float32x4_t y = vdupq_n_f32(0) ;

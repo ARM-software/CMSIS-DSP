@@ -98,7 +98,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_trans_f16(
 
 #else
 
-#if defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON_FLOAT16)
 
 #define BLOCK_ROWS 8
 #define BLOCK_ROWS_SHIFT 3

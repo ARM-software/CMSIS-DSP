@@ -46,7 +46,7 @@
   @param[out]    pResult    maximum value returned here
  */
 
-#if defined(ARM_MATH_NEON) && defined(__aarch64__) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON) && defined(__aarch64__)
 ARM_DSP_ATTRIBUTE void arm_absmax_no_idx_f64(
     const float64_t * pSrc,
     uint32_t blockSize,

@@ -468,7 +468,7 @@ ARM_DSP_ATTRIBUTE void arm_fir_interpolate_f32(
 }
 
 #else
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON) 
 ARM_DSP_ATTRIBUTE void arm_fir_interpolate_f32(
   const arm_fir_interpolate_instance_f32 * S,
   const float32_t * pSrc,

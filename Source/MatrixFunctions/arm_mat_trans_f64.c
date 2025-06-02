@@ -54,7 +54,7 @@
                    - \ref ARM_MATH_SUCCESS       : Operation successful
                    - \ref ARM_MATH_SIZE_MISMATCH : Matrix size check failed
  */
-#if defined(ARM_MATH_NEON) && defined(__aarch64__) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON) && defined(__aarch64__)
 
 ARM_DSP_ATTRIBUTE arm_status arm_mat_trans_f64(
     const arm_matrix_instance_f64 * pSrc,
