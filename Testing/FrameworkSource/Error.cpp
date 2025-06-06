@@ -101,7 +101,7 @@ void assert_near_equal(unsigned long nb,q63_t pa, q63_t pb, q63_t threshold)
     {
          char details[200];
          #if __SIZEOF_LONG__ == 8
-         snprintf(details,200,"diff %ld > %ld (0x%016lX,0x%016lX)",abs(pa - pb) , threshold,pa,pb);
+         snprintf(details,200,"diff %ld > %ld (0x%016lX,0x%016lX)",(long)abs(pa - pb) , (long)threshold,(long)pa,(long)pb);
          #else 
          snprintf(details,200,"diff %lld > %lld (0x%016llX,0x%016llX)",abs(pa - pb) , threshold,pa,pb);
          #endif

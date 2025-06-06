@@ -8,6 +8,9 @@ set(CMAKE_C_STANDARD_REQUIRED True)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+
 project(Tests)
 
 option(NOAUTOVEC "Disable auto-vectorization" OFF)
@@ -221,7 +224,7 @@ target_compile_options(CMSISDSP PRIVATE -Wsign-compare
 
 else()
 
-target_compile_option(CMSISDSP PRIVATE -Wsign-compare
+target_compile_options(CMSISDSP PRIVATE -Wsign-compare
   -Wdouble-promotion
   -Wfloat-conversion
   -DNDEBUG

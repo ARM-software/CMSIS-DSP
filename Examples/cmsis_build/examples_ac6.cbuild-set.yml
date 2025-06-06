@@ -1,0 +1,4 @@
+cbuild-set:
+  generated-by: vscode-cmsis-csolution version 1.54.0
+  contexts:
+    - context: bayes.Release+VHT-Corstone-310

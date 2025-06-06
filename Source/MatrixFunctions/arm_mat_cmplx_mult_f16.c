@@ -741,8 +741,8 @@ tmp.val[1] = vdupq_n_f16(0.0f16)
 
 #define SCALAR_STORE_AND_NARROW(PTR,VAL) *(PTR) = (VAL)
 
-#define SCALAR_MAC_N(ACC,VEC,SCALAR) ACC.re = (_Float16)((_Float16)ACC.re + (_Float16)(VEC).re * (SCALAR).re - (_Float16)(VEC).im * (SCALAR).im); \
-ACC.im = (_Float16)((_Float16)ACC.im + (_Float16)(VEC).re * (SCALAR).im + (_Float16)(VEC).im * (SCALAR).re); 
+#define SCALAR_MAC_N(ACC,VEC,SCALAR) ACC.re = (_Float16)((_Float16)ACC.re + (_Float16)(VEC).re * (_Float16)(SCALAR).re - (_Float16)(VEC).im * (_Float16)(SCALAR).im); \
+ACC.im = (_Float16)((_Float16)ACC.im + (_Float16)(VEC).re * (_Float16)(SCALAR).im + (_Float16)(VEC).im * (_Float16)(SCALAR).re); 
 #define HVEC float16x4_t
 #define VLOAD(DST,PTR) DST = vld2q_f16((float16_t*)(PTR))
 #define VSTORE(PTR,VAL) vst2q_f16((float16_t*)(PTR),(VAL))
