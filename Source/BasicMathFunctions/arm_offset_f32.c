@@ -115,7 +115,7 @@ ARM_DSP_ATTRIBUTE void arm_offset_f32(
 {
         uint32_t blkCnt;                               /* Loop counter */
 
-#if defined(ARM_MATH_NEON_EXPERIMENTAL) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON_EXPERIMENTAL)
     f32x4_t vec1;
     f32x4_t res;
 

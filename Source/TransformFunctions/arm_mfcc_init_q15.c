@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
 #define RFFT_INIT(L) \
   status=arm_rfft_init_q15(&(S->rfft),L);
 #define RFFT_INIT_WITH_LEN(L) \

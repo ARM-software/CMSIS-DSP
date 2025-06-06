@@ -88,7 +88,7 @@ ARM_DSP_ATTRIBUTE void arm_not_u16(
         vstrhq_p(pDst, vmvnq_u16(vecSrc), p0);
     }
 #else
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON) 
     uint16x8_t inV;
 
     /* Compute 8 outputs at a time */

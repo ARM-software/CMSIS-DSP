@@ -31,7 +31,7 @@
  
 
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
 
 
 #include "arm_neon_tables.h"
@@ -24167,5 +24167,5 @@ const uint32_t arm_neon_factors_4096_q15[ARM_NEON_FACTORS_4096_Q15_LEN]={
 
 
 
-#endif /* defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE) */
+#endif /* defined(ARM_MATH_NEON) */
 

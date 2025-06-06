@@ -14,7 +14,7 @@
 
         memcpy(outfftp,inp,sizeof(q31_t)*input.nbSamples());
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
           q31_t *tmp2p = tmp2.ptr();
 
           arm_cfft_q31(
@@ -47,7 +47,7 @@
         memcpy(outfftp,inp,sizeof(q31_t)*input.nbSamples());
 
    
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
           q31_t *tmp2p = tmp2.ptr();
 
           arm_cfft_q31(

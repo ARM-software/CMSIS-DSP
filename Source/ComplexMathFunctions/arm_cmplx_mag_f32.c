@@ -68,7 +68,7 @@
   @param[in]     numSamples  number of samples in each vector
  */
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON) 
 #include "arm_vec_math.h"
 #endif
 
@@ -160,7 +160,7 @@ ARM_DSP_ATTRIBUTE void arm_cmplx_mag_f32(
   uint32_t blkCnt;                               /* loop counter */
   float32_t real, imag;                      /* Temporary variables to hold input values */
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON) 
 
   float32x4x2_t vecA;
   float32x4_t vRealA;

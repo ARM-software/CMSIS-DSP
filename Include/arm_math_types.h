@@ -120,8 +120,9 @@ extern "C"
  * 
  * ARM_MATH_NEON is used to enable the Neon variants. 
  * When Neon variants are enabled, the DSP extension are disabled
+ * 
  */
-#if !defined(__GNUC_PYTHON__) && !defined(ARM_MATH_NEON) && !defined(ARM_MATH_NEON_EXPERIMENTAL)
+#if (!defined(__GNUC_PYTHON__) && !defined(ARM_MATH_NEON) && !defined(ARM_MATH_NEON_EXPERIMENTAL)) 
 #if (defined (__ARM_FEATURE_DSP) && (__ARM_FEATURE_DSP == 1))
   #define ARM_MATH_DSP                   1
 #endif
@@ -438,7 +439,7 @@ extern "C"
 
 #endif
 
-#if defined(ARM_MATH_NEON) || (defined(ARM_MATH_MVEF)  && !defined(ARM_MATH_AUTOVECTORIZE)) /* floating point vector*/
+#if defined(ARM_MATH_NEON) || (defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)) /* floating point vector*/
 
   /**
    * @brief 32-bit floating-point 128-bit vector type
@@ -466,7 +467,7 @@ extern "C"
 
 #endif
 
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) 
   /**
    * @brief 32-bit fractional 64-bit vector data type in 1.31 format.
    */

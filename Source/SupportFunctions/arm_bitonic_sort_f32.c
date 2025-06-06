@@ -918,7 +918,7 @@ const arm_sort_instance_f32 * S,
     uint16_t s, i;
     uint8_t dir = S->dir;
 
-#ifdef ARM_MATH_NEON
+#if defined(ARM_MATH_NEON) 
     (void)s;
 
     float32_t * pOut;

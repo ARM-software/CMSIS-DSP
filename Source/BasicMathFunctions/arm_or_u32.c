@@ -85,7 +85,7 @@ ARM_DSP_ATTRIBUTE void arm_or_u32(
         vstrwq_p(pDst, vorrq_u32(vecSrcA, vecSrcB), p0);
     }
 #else
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
     uint32x4_t vecA, vecB;
 
     /* Compute 4 outputs at a time */

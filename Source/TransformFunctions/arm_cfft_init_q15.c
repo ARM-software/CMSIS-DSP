@@ -96,7 +96,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_cfft_init_##LEN##_q15(                         
     return (status);                                                   \
 }
 
-#elif defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#elif defined(ARM_MATH_NEON)
 
 #include "arm_neon_tables.h"
 

@@ -597,7 +597,7 @@ ARM_DSP_ATTRIBUTE void arm_cfft_f16(
 
         }
 }
-#elif defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
+#elif defined(ARM_MATH_NEON_FLOAT16) && defined(ARM_FLOAT16_SUPPORTED)
 #include "CMSIS_NE10_types.h"
 #include "CMSIS_NE10_fft.h"
 

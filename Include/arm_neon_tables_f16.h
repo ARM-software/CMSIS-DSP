@@ -39,7 +39,7 @@ extern "C"
 
  
 
-#if defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON_FLOAT16) && defined(ARM_FLOAT16_SUPPORTED)
 
 
 #define ARM_NEON_TWIDDLES_16_F16_LEN 24
@@ -206,7 +206,7 @@ extern const float16_t arm_neon_rfft_super_twiddles_neon_4096_f16[ARM_NEON_RFFT_
 
 
 
-#endif /* defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE) */
+#endif /* defined(ARM_MATH_NEON_FLOAT16) */
 
 
 

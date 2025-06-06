@@ -43,7 +43,7 @@ static double abs_err,rel_err;
         memcpy(infftp,inp,sizeof(float32_t)*input.nbSamples());
 
    
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON_FLOAT16) && defined(ARM_FLOAT16_SUPPORTED)
         float16_t *bufferp = bufferfft.ptr();
 
         arm_cfft_f16(

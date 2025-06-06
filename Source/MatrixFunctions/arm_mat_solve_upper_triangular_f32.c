@@ -147,7 +147,7 @@ arm_status status;                             /* status of matrix inverse */
 }
 
 #else
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
   arm_status arm_mat_solve_upper_triangular_f32(
   const arm_matrix_instance_f32 * ut,
   const arm_matrix_instance_f32 * a,

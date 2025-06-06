@@ -33,7 +33,7 @@
 #include "CMSIS_NE10_types.h"
 #include "dsp/transform_functions.h"
 
-#if defined(ARM_MATH_NEON_FLOAT16)
+#if defined(ARM_MATH_NEON_FLOAT16) && defined(ARM_FLOAT16_SUPPORTED)
 #include "dsp/transform_functions_f16.h"
 #endif
 

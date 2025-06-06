@@ -151,7 +151,7 @@
   return (status);
 }
 #else
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
   arm_status arm_mat_solve_lower_triangular_f32(
   const arm_matrix_instance_f32 * lt,
   const arm_matrix_instance_f32 * a,

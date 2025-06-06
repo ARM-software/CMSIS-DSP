@@ -27,7 +27,7 @@
  */
 
 #include "dsp/statistics_functions.h"
-#if (defined(ARM_MATH_NEON) || defined(ARM_MATH_MVEF)) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON) || defined(ARM_MATH_MVEF) 
 #include <limits.h>
 #endif
 
@@ -141,7 +141,7 @@ ARM_DSP_ATTRIBUTE void arm_max_f32(
 }
 
 #else
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON) 
 ARM_DSP_ATTRIBUTE void arm_max_f32(
   const float32_t * pSrc,
   uint32_t blockSize,

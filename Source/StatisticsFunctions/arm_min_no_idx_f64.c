@@ -52,7 +52,7 @@ ARM_DSP_ATTRIBUTE void arm_min_no_idx_f64(
     float64_t   minValue = F64_MAX;
     float64_t   newVal;
     uint32_t blkCnt ;
-#if defined(ARM_MATH_NEON) && defined(__aarch64__)
+#if defined(ARM_MATH_NEON) && defined(__aarch64__) 
     float64x2_t minValueV , newValV ;
     minValueV = vdupq_n_f64(F64_MAX);
     blkCnt = blockSize >> 1U;

@@ -19,7 +19,7 @@
 
 
         memcpy((void*)tmpinp,(void*)inp1,sizeof(q15_t)*this->fftLen);
-        #if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+        #if defined(ARM_MATH_NEON)
         q15_t *tmp2p=tmp2.ptr();
         arm_mfcc_q15(&mfcc,tmpinp,outp,tmpp,tmp2p);
         #else
@@ -129,7 +129,7 @@
           break;
 
        }
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
             tmp.create(nb+2,MFCCQ15::TMP_MFCC_Q15_ID,mgr);
 #else
             tmp.create(2*nb,MFCCQ15::TMP_MFCC_Q15_ID,mgr);

@@ -306,7 +306,7 @@ static void merge_rfft_f32(
    }
 
 }
-#elif defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#elif defined(ARM_MATH_NEON) 
 /*
 
 No stage merge functions defined here for Neon.
@@ -642,7 +642,7 @@ static void merge_rfft_f32(
        They are described on the page \ref transformbuffers "transform buffers".
 */
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON) 
 
 #include "CMSIS_NE10_types.h"
 #include "CMSIS_NE10_fft.h"

@@ -32,7 +32,7 @@
 #if defined(ARM_FLOAT16_SUPPORTED)
 
 
-#if defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON_FLOAT16)
 
 
 #include "arm_neon_tables_f16.h"
@@ -21505,6 +21505,6 @@ __ALIGNED(16) const float16_t arm_neon_rfft_super_twiddles_neon_4096_f16[ARM_NEO
 
 
 
-#endif /* defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE) */
+#endif /* defined(ARM_MATH_NEON_FLOAT16) */
 
 #endif /* if defined(ARM_FLOAT16_SUPPORTED) */

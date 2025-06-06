@@ -29,7 +29,7 @@
 #include "dsp/fast_math_functions.h"
 #include "arm_common_tables.h"
 
-#if (defined(ARM_MATH_MVEF) || defined(ARM_MATH_HELIUM) || defined(ARM_MATH_NEON) || defined(ARM_MATH_NEON_EXPERIMENTAL)) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if ((defined(ARM_MATH_MVEF) || defined(ARM_MATH_HELIUM)) && !defined(ARM_MATH_AUTOVECTORIZE)) || defined(ARM_MATH_NEON) || defined(ARM_MATH_NEON_EXPERIMENTAL)
 #include "arm_vec_math.h"
 #endif
 
@@ -81,7 +81,7 @@ ARM_DSP_ATTRIBUTE void arm_vexp_f32(
 
    blkCnt = blockSize & 3;
 #else
-#if (defined(ARM_MATH_NEON) || defined(ARM_MATH_NEON_EXPERIMENTAL)) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON) || defined(ARM_MATH_NEON_EXPERIMENTAL)
    f32x4_t src;
    f32x4_t dst;
 

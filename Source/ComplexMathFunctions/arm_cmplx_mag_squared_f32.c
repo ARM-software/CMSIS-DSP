@@ -126,7 +126,7 @@ ARM_DSP_ATTRIBUTE void arm_cmplx_mag_squared_f32(
         uint32_t blkCnt;                               /* Loop counter */
         float32_t real, imag;                          /* Temporary input variables */
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON) 
   float32x4x2_t vecA;
   float32x4_t vRealA;
   float32x4_t vImagA;

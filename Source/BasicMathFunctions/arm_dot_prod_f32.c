@@ -127,7 +127,7 @@ ARM_DSP_ATTRIBUTE void arm_dot_prod_f32(
         uint32_t blkCnt;                               /* Loop counter */
         float32_t sum = 0.0f;                          /* Temporary return variable */
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
     f32x4_t vec1;
     f32x4_t vec2;
     f32x4_t accum = vdupq_n_f32(0);   

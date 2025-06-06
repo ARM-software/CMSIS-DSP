@@ -299,7 +299,7 @@ __STATIC_INLINE f32x4_t vpowq_f32(
 #if (defined(ARM_MATH_MVEI) || defined(ARM_MATH_HELIUM)) && !defined(ARM_MATH_AUTOVECTORIZE)
 #endif /* (defined(ARM_MATH_MVEI) || defined(ARM_MATH_HELIUM)) */
 
-#if (defined(ARM_MATH_NEON) || defined(ARM_MATH_NEON_EXPERIMENTAL)) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON) || defined(ARM_MATH_NEON_EXPERIMENTAL)
 
 #include "NEMath.h"
 /**
@@ -358,7 +358,7 @@ __STATIC_INLINE int32x4_t __arm_vec_sqrt_q31_neon(int32x4_t vec)
   return(vcvtq_n_s32_f32(temp,31));
 }
 
-#endif /*  (defined(ARM_MATH_NEON) || defined(ARM_MATH_NEON_EXPERIMENTAL)) && !defined(ARM_MATH_AUTOVECTORIZE) */
+#endif /*  defined(ARM_MATH_NEON) || defined(ARM_MATH_NEON_EXPERIMENTAL)*/
 
 #ifdef   __cplusplus
 }

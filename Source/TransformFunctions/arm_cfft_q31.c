@@ -599,7 +599,7 @@ ARM_DSP_ATTRIBUTE void arm_cfft_q31(
 }
 #else
 
-#if !defined(ARM_MATH_NEON) || defined(ARM_MATH_AUTOVECTORIZE)
+#if !defined(ARM_MATH_NEON)
 extern void arm_radix4_butterfly_q31(
         q31_t * pSrc,
         uint32_t fftLen,
@@ -685,7 +685,7 @@ ARM_DSP_ATTRIBUTE void arm_cfft_radix4by2_inverse_q31(
        They are described on the page \ref transformbuffers "transform buffers".
   
  */
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON) 
 #include "CMSIS_NE10_types.h"
 #include "CMSIS_NE10_fft.h"
 
@@ -759,7 +759,7 @@ ARM_DSP_ATTRIBUTE void arm_cfft_q31(
   @} end of ComplexFFTQ31 group
  */
 
-#if !defined(ARM_MATH_NEON) || defined(ARM_MATH_AUTOVECTORIZE)
+#if !defined(ARM_MATH_NEON)
 ARM_DSP_ATTRIBUTE void arm_cfft_radix4by2_q31(
         q31_t * pSrc,
         uint32_t fftLen,

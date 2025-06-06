@@ -27,7 +27,7 @@
  */
 
 #include "dsp/statistics_functions.h"
-#if (defined(ARM_MATH_NEON) || defined(ARM_MATH_MVEF)) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON) || defined(ARM_MATH_MVEF)
 #include <limits.h>
 #endif
 

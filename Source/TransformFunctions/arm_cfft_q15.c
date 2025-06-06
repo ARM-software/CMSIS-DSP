@@ -566,7 +566,7 @@ ARM_DSP_ATTRIBUTE void arm_cfft_q15(
 
 #else
 
-#if !defined(ARM_MATH_NEON) || defined(ARM_MATH_AUTOVECTORIZE)
+#if !defined(ARM_MATH_NEON)
 
 extern void arm_radix4_butterfly_q15(
         q15_t * pSrc,
@@ -653,7 +653,7 @@ ARM_DSP_ATTRIBUTE void arm_cfft_radix4by2_inverse_q15(
 
  */
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
 #include "CMSIS_NE10_types.h"
 #include "CMSIS_NE10_fft.h"
 
@@ -727,7 +727,7 @@ ARM_DSP_ATTRIBUTE void arm_cfft_q15(
   @} end of ComplexFFTQ15 group
  */
 
-#if !defined(ARM_MATH_NEON) || defined(ARM_MATH_AUTOVECTORIZE)
+#if !defined(ARM_MATH_NEON)
 
 ARM_DSP_ATTRIBUTE void arm_cfft_radix4by2_q15(
         q15_t * pSrc,

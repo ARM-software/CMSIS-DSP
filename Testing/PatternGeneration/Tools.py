@@ -202,6 +202,10 @@ class Config:
     def setOverwrite(self,v):
         self._overwrite=v
 
+    @property 
+    def overwrite(self):
+       return(self._overwrite)
+    
     def canOverwrite(self,path):
         return(self._overwrite or not os.path.exists(path))
 

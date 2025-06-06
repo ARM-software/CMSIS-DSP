@@ -127,7 +127,7 @@ ARM_DSP_ATTRIBUTE float32_t arm_canberra_distance_f32(const float32_t *pA,const 
 }
 
 #else
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) 
 
 #include "NEMath.h"
 

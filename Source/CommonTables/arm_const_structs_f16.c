@@ -37,7 +37,7 @@
 
 
 /* Floating-point structs */
-#if (!defined(ARM_MATH_MVE_FLOAT16)  && !defined(ARM_MATH_NEON_FLOAT16))  || defined(ARM_MATH_AUTOVECTORIZE)
+#if !defined(ARM_MATH_MVE_FLOAT16)  && !defined(ARM_MATH_NEON_FLOAT16)
 
 
 /* 

@@ -131,7 +131,7 @@ ARM_DSP_ATTRIBUTE void arm_cmplx_mult_real_f32(
         uint32_t blkCnt;                               /* Loop counter */
         float32_t in;                                  /* Temporary variable */
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON) 
     float32x4_t r;
     float32x4x2_t ab,outCplx;
 

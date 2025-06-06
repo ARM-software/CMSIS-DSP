@@ -621,7 +621,7 @@ static int
 arm_cfft_instance_q15_init(dsp_arm_cfft_instance_q15Object *self, PyObject *args, PyObject *kwds)
 {
 
-  #if !defined(ARM_MATH_NEON) 
+  #if !defined(ARM_MATH_NEON)
     PyObject *pTwiddle=NULL;
     PyObject *pBitRevTable=NULL;
 char *kwlist[] = {

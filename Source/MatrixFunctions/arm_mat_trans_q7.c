@@ -110,6 +110,47 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_trans_q7(const arm_matrix_instance_q7 *pSrc
     return (ARM_MATH_SUCCESS);
 }
 #else
+#if defined(ARM_MATH_NEON)
+
+#define BLOCK_ROWS 16
+#define BLOCK_ROWS_SHIFT 4
+#define LANE 16
+#define LANE_SHIFT 4
+
+#include "_arm_mat_trans_neon.c"
+
+
+ARM_DSP_ATTRIBUTE arm_status arm_mat_trans_q7(const arm_matrix_instance_q7 *pSrc, 
+                                                    arm_matrix_instance_q7 *pDst)
+
+{
+  ARM_MAT_TRANS_NEON_INIT_U8
+
+#ifdef ARM_MATH_MATRIX_CHECK
+
+  /* Check for matrix mismatch condition */
+  if ((pSrc->numRows != pDst->numCols) || (pSrc->numCols != pDst->numRows))
+  {
+    /* Set status as ARM_MATH_SIZE_MISMATCH */
+    status = ARM_MATH_SIZE_MISMATCH;
+  }
+  else
+#endif /*    #ifdef ARM_MATH_MATRIX_CHECK    */
+
+  {
+    ARM_MAT_TRANS_NEON_U8
+
+    /* Set status as ARM_MATH_SUCCESS */
+    status = ARM_MATH_SUCCESS;
+  }
+
+  /* Return to application */
+  return (status);
+}
+
+#include "_arm_mat_trans_undef_neon.c"
+
+#else
 ARM_DSP_ATTRIBUTE arm_status arm_mat_trans_q7(const arm_matrix_instance_q7 *pSrc, arm_matrix_instance_q7 *pDst)
 {
     q7_t *pSrcA = pSrc->pData;         /* input data matrix pointer */
@@ -163,6 +204,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_trans_q7(const arm_matrix_instance_q7 *pSrc
     /* Return to application */
     return (status);
 }
+#endif /* defined(ARM_MATH_NEON) */
 #endif /* defined(ARM_MATH_MVEI) */
 
 

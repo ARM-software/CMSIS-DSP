@@ -645,6 +645,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q15(
 #define LANE 8
 
 #define DTYPE q15_t
+#define HEADERTYPE DTYPE
 #define VEC int16x8_t
 #define VECACC struct { \
     int64x2_t val[4];   \

@@ -687,7 +687,7 @@ uint32_t blockSize)
 }
 
 #else
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) 
 
 ARM_DSP_ATTRIBUTE void arm_fir_f32(
 const arm_fir_instance_f32 * S,
