@@ -88,19 +88,23 @@ extern "C"
 #define __STATIC_INLINE static __inline
 #define __ALIGNED(x) __declspec(align(x))
 #define __WEAK
+#define SECTION_NOINIT
 #elif defined ( __APPLE_CC__ )
 #include <stdint.h>
 #define  __ALIGNED(x) __attribute__((aligned(x)))
 #define __STATIC_FORCEINLINE static inline __attribute__((always_inline)) 
 #define __STATIC_INLINE static inline
 #define __WEAK
+#define SECTION_NOINIT
 #elif defined (__GNUC_PYTHON__)
 #include <stdint.h>
 #define  __ALIGNED(x) __attribute__((aligned(x)))
 #define __STATIC_FORCEINLINE static inline __attribute__((always_inline)) 
 #define __STATIC_INLINE static inline
 #define __WEAK
+#define SECTION_NOINIT __attribute__((section(".noinit")))
 #else
+#define SECTION_NOINIT
 #include "cmsis_compiler.h"
 #endif
 
