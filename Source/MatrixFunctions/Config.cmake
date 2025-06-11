@@ -80,6 +80,10 @@ target_sources(CMSISDSP PRIVATE ${SRCQ31})
 target_sources(CMSISDSP PRIVATE ${SRCQ15})
 target_sources(CMSISDSP PRIVATE ${SRCQ7})
 
+if (NEON OR NEONEXPERIMENTAL)
+target_sources(CMSISDSP PRIVATE MatrixFunctions/_arm_mat_mult_neon_buffers.c)
+
+endif()
 
 if ((NOT ARMAC5) AND (NOT DISABLEFLOAT16))
 target_sources(CMSISDSP PRIVATE MatrixFunctions/arm_mat_add_f16.c

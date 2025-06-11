@@ -78,3 +78,6 @@
 #include "arm_mat_qr_f64.c"
 #include "arm_householder_f64.c"
 #include "arm_householder_f32.c"
+#if defined(ARM_MATH_NEON)
+#include "_arm_mat_mult_neon_buffers.c"
+#endif

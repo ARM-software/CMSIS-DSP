@@ -862,6 +862,8 @@ float64_t arm_householder_f64(
     float64_t * pOut
     );
 
+
+
 #ifdef   __cplusplus
 }
 #endif

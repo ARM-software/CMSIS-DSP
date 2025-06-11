@@ -5,6 +5,13 @@ import numpy as np
 from rich.progress import track
 from rich.table import Column
 from rich.progress import Progress, BarColumn, TextColumn
+import argparse
+
+parser = argparse.ArgumentParser(description='Generate more matrix multiplication patterns for Neon tests')
+
+parser.add_argument('-d', action='store_true', help="Dry run")
+
+args = parser.parse_args()
 
 def cartesian(*somelists):
    r=[]
@@ -140,6 +147,13 @@ def writeBinaryTests(config,format,desc):
        limited_bytes=25*np.sum(limited_dims)
        print(f"Estimated size of limited result text file : {limited_bytes} bytes")
 
+    if args.d:
+         print("Dry run, no file generated")
+         print("rows",rows)
+         print("inners",inners)
+         print("cols",cols)
+         exit(0)
+         
     dims=[] 
     vals=[]
     valsC=[]
