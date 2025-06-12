@@ -1,4 +1,4 @@
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON_FLOAT16) && defined(ARM_FLOAT16_SUPPORTED)
 #include "TransformNeonCF16.h"
 #include <stdio.h>
 #include "Error.h"

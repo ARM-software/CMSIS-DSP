@@ -287,6 +287,61 @@ ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_f32(
 }
 #else
 
+#if defined(ARM_MATH_NEON)
+
+#if defined(__aarch64__)
+#define TMP_DEFINE_AND_INIT(acc)
+
+#define REDUCE(sum,accum) \
+    sum = vpadds_f32(vpadd_f32(vget_low_f32(accum), vget_high_f32(accum)));
+#else
+#define TMP_DEFINE_AND_INIT(tmp) \
+    float32x2_t tmp = vdup_n_f32(0.0f);
+    
+#define REDUCE(sum,accum)                                \
+    tmp = vpadd_f32(vget_low_f32(accum), vget_high_f32(accum)); \
+    sum = vget_lane_f32(tmp, 0) + vget_lane_f32(tmp, 1);
+#endif 
+
+#define MAT_SCALAR_DT float32_t 
+#define VEC_SCALAR_DT float32_t 
+#define VECTOR_ACC float32x4_t
+#define VECTOR_DT float32x4_t
+#define SCALAR_ACC float32_t
+#define HALF_VECTOR_ACC float32x2_t
+#define NBLANE 4
+#define NBLANE_SHIFT 2
+
+#define VECTOR_ACC_INIT(acc) \
+    acc = vdupq_n_f32(0.0f) 
+
+#define SCALAR_ACC_INIT(acc) \
+    acc = 0.0f
+  
+#define VEC_LOAD(v,p) \
+    v = vld1q_f32((p))
+
+
+#if defined(__ARM_FEATURE_FMA)
+#define VMAC(ACC,VA,VB) ACC = vfmaq_f32(ACC,(VA),(VB))
+#else
+#define VMAC(ACC,VA,VB) ACC = vmlaq_f32(ACC,(VA),(VB))
+#endif
+
+#define SCALAR_MAC(ACC,MAT,VEC) \
+    ACC = ACC + (MAT) * (VEC)
+
+#define STORE_SCALAR_ACC(DST,ACC) \
+  DST = ACC
+
+#define FUNCNAME arm_mat_vec_mult_f32
+#define MATRIX_TYPE arm_matrix_instance_f32
+
+#include "_arm_mat_vec_mult_neon.c"
+
+
+
+#else
 ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_f32(const arm_matrix_instance_f32 *pSrcMat, const float32_t *pVec, float32_t *pDst)
 {
     uint32_t numRows = pSrcMat->numRows;
@@ -393,6 +448,7 @@ ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_f32(const arm_matrix_instance_f32 *pSrcM
         row--;
     }
 }
+#endif /* defined(ARM_MATH_NEON) */
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**

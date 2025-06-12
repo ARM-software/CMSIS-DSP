@@ -42,6 +42,14 @@
 #define ARM_MATH_L3_CACHE_SIZE (512*1024)
 #endif
 
+#if defined(ARM_MATH_NEON)
+
+
+extern char ARM_CACHE_PACKEDB[];
+extern char ARM_CACHE_PACKEDA[];
+// PACKEDC contains the accumulators
+extern char ARM_CACHE_PACKEDC[];
+#endif
 
 #ifdef   __cplusplus
 extern "C"

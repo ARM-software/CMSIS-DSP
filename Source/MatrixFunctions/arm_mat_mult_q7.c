@@ -589,7 +589,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q7(
 }
 #else
 
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) 
 
 /**
  * @brief Q7 matrix multiplication
@@ -603,6 +603,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_q7(
 
 #define LANE 16
 #define DTYPE q7_t
+#define HEADERTYPE DTYPE
 #define VEC int8x16_t
 #define VECACC struct { \
     int32x4_t val[4];   \

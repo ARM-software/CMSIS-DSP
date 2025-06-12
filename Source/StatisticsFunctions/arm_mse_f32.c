@@ -103,7 +103,7 @@ ARM_DSP_ATTRIBUTE void arm_mse_f32(
 
 #endif
 
-#if defined(ARM_MATH_NEON) 
+#if defined(ARM_MATH_NEON)  
 ARM_DSP_ATTRIBUTE void arm_mse_f32(
     const float32_t * pSrcA,
     const float32_t * pSrcB,

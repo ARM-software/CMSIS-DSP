@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include "arm_neon_private.h"
 
 #if !defined(DEBUGV)
 #define DEBUGV(A)
@@ -20,31 +20,18 @@
 #define LOGKERNEL(A,B)
 #endif
 
-#define DCS 4 // Max number of vectors for columns (can't be changed)
-#define DC (LANE*DCS) // Must be multiple of lane
-#define DR 4 // Max number rows in kernels (can't be changed)
-#define HDR 2 // Max number rows by half
-
-// INNER * DC < L1/2
-// INNER * ROWS < L2 
-// INNER * COLS < L3
-#define INNER_BLOCK ((((ARM_MATH_L1_CACHE_SIZE>>2) >> 1)/DC+DC-1) & ~(DC-1))
-#define ROWS_BLOCK ((((ARM_MATH_L2_CACHE_SIZE>>2) >> 0) / INNER_BLOCK + DR - 1) & ~(DR-1) ) 
-#define COLS_BLOCK (((ARM_MATH_L3_CACHE_SIZE>>2) / INNER_BLOCK + DC - 1) & ~(DC-1)) 
-
-#if !defined(PACKEDARRAY)
-#define PACKEDARRAY
-static __ALIGNED(16) char PACKEDB[4*INNER_BLOCK*DC];
-static __ALIGNED(16) char PACKEDA[4*ROWS_BLOCK*INNER_BLOCK];
-static __ALIGNED(16) char PACKEDC[8*ROWS_BLOCK*COLS_BLOCK];
+#if !defined(DEF_AND_CLEAR_SCALARACC)
+#define DEF_AND_CLEAR_SCALARACC(tmp) const SCALARACC tmp = 0
 #endif
+
+#define DC (LANE*DCS) // Must be multiple of lane
 
 // 4 row and 4 column VECtors
 __STATIC_INLINE void EXT(kernel_4rx4cv)(SCALARACC *packedc,int col,int max_cols,int xp,int r) {
 
   LOGKERNEL("kernel_4rx4cv\n",0);
-  const DTYPE *pB0 = (DTYPE*)PACKEDB;
-  const DTYPE *packedA = (DTYPE*)PACKEDA;
+  const DTYPE *pB0 = (DTYPE*)ARM_CACHE_PACKEDB;
+  const DTYPE *packedA = (DTYPE*)ARM_CACHE_PACKEDA;
 
   VEC tmp00,tmp01,tmp02,tmp03;
 
@@ -199,8 +186,8 @@ __STATIC_INLINE void EXT(kernel_4rx4cv)(SCALARACC *packedc,int col,int max_cols,
 __STATIC_INLINE void EXT(kernel_4rx3cv)(SCALARACC *packedc,int col,int max_cols,int xp,int r) {
 
   LOGKERNEL("kernel_4rx3cv\n",1);
-  const DTYPE *pB0 = (DTYPE*)PACKEDB;
-  const DTYPE *packedA = (DTYPE*)PACKEDA;
+  const DTYPE *pB0 = (DTYPE*)ARM_CACHE_PACKEDB;
+  const DTYPE *packedA = (DTYPE*)ARM_CACHE_PACKEDA;
 
   VEC tmp00,tmp01,tmp02;
   TMPMAC
@@ -325,8 +312,8 @@ __STATIC_INLINE void EXT(kernel_4rx3cv)(SCALARACC *packedc,int col,int max_cols,
 __STATIC_INLINE void EXT(kernel_4rx2cv)(SCALARACC *packedc,int col,int max_cols,int xp,int r) {
 
   LOGKERNEL("kernel_4rx2cv\n",2);
-  const DTYPE *pB0 = (DTYPE*)PACKEDB;
-  const DTYPE *packedA = (DTYPE*)PACKEDA;
+  const DTYPE *pB0 = (DTYPE*)ARM_CACHE_PACKEDB;
+  const DTYPE *packedA = (DTYPE*)ARM_CACHE_PACKEDA;
   VEC tmp00,tmp01;
   TMPMAC
    
@@ -423,8 +410,8 @@ __STATIC_INLINE void EXT(kernel_4rx2cv)(SCALARACC *packedc,int col,int max_cols,
 __STATIC_INLINE void EXT(kernel_4rx1cv)(SCALARACC *packedc,int col,int max_cols,int xp,int r) {
 
   LOGKERNEL("kernel_4rx1cv\n",3);
-  const DTYPE *pB0 = (DTYPE*)PACKEDB;
-  const DTYPE *packedA = (DTYPE*)PACKEDA;
+  const DTYPE *pB0 = (DTYPE*)ARM_CACHE_PACKEDB;
+  const DTYPE *packedA = (DTYPE*)ARM_CACHE_PACKEDA;
   VEC tmp00;
   TMPMAC
    
@@ -486,8 +473,8 @@ __STATIC_INLINE void EXT(kernel_4rx1cv)(SCALARACC *packedc,int col,int max_cols,
 __STATIC_INLINE void EXT(kernel_3rx4cv)(SCALARACC *packedc,int col,int max_cols,int xp,int r) {
 
   LOGKERNEL("kernel_3rx4cv\n",4);
-  const DTYPE *pB0 = (DTYPE*)PACKEDB;
-  const DTYPE *packedA = (DTYPE*)PACKEDA;
+  const DTYPE *pB0 = (DTYPE*)ARM_CACHE_PACKEDB;
+  const DTYPE *packedA = (DTYPE*)ARM_CACHE_PACKEDA;
   VEC tmp00,tmp01,tmp02,tmp03;
   TMPMAC
    
@@ -616,8 +603,8 @@ __STATIC_INLINE void EXT(kernel_3rx4cv)(SCALARACC *packedc,int col,int max_cols,
 __STATIC_INLINE void EXT(kernel_3rx3cv)(SCALARACC *packedc,int col,int max_cols,int xp,int r) {
 
   LOGKERNEL("kernel_3rx3cv\n",5);
-  const DTYPE *pB0 = (DTYPE*)PACKEDB;
-  const DTYPE *packedA = (DTYPE*)PACKEDA;
+  const DTYPE *pB0 = (DTYPE*)ARM_CACHE_PACKEDB;
+  const DTYPE *packedA = (DTYPE*)ARM_CACHE_PACKEDA;
   VEC tmp00,tmp01,tmp02;
   TMPMAC
    
@@ -726,8 +713,8 @@ __STATIC_INLINE void EXT(kernel_3rx3cv)(SCALARACC *packedc,int col,int max_cols,
 __STATIC_INLINE void EXT(kernel_3rx2cv)(SCALARACC *packedc,int col,int max_cols,int xp,int r) {
 
   LOGKERNEL("kernel_3rx2cv\n",6);
-  const DTYPE *pB0 = (DTYPE*)PACKEDB;
-  const DTYPE *packedA = (DTYPE*)PACKEDA;
+  const DTYPE *pB0 = (DTYPE*)ARM_CACHE_PACKEDB;
+  const DTYPE *packedA = (DTYPE*)ARM_CACHE_PACKEDA;
   VEC tmp00,tmp01;
   TMPMAC
    
@@ -814,8 +801,8 @@ __STATIC_INLINE void EXT(kernel_3rx2cv)(SCALARACC *packedc,int col,int max_cols,
 __STATIC_INLINE void EXT(kernel_3rx1cv)(SCALARACC *packedc,int col,int max_cols,int xp,int r) {
 
   LOGKERNEL("kernel_3rx1cv\n",7);
-  const DTYPE *pB0 = (DTYPE*)PACKEDB;
-  const DTYPE *packedA = (DTYPE*)PACKEDA;
+  const DTYPE *pB0 = (DTYPE*)ARM_CACHE_PACKEDB;
+  const DTYPE *packedA = (DTYPE*)ARM_CACHE_PACKEDA;
   VEC tmp00;
   TMPMAC
    
@@ -881,8 +868,8 @@ __STATIC_INLINE void EXT(kernel_3rx1cv)(SCALARACC *packedc,int col,int max_cols,
 __STATIC_INLINE void EXT(kernel_2rx4cv)(SCALARACC *packedc,int col,int max_cols,int xp,int r) {
 
   LOGKERNEL("kernel_2rx4cv\n",8);
-  const DTYPE *pB0 = (DTYPE*)PACKEDB;
-  const DTYPE *packedA = (DTYPE*)PACKEDA;
+  const DTYPE *pB0 = (DTYPE*)ARM_CACHE_PACKEDB;
+  const DTYPE *packedA = (DTYPE*)ARM_CACHE_PACKEDA;
   VEC tmp00,tmp01,tmp02,tmp03;
   TMPMAC
    
@@ -981,8 +968,8 @@ __STATIC_INLINE void EXT(kernel_2rx4cv)(SCALARACC *packedc,int col,int max_cols,
 __STATIC_INLINE void EXT(kernel_2rx3cv)(SCALARACC *packedc,int col,int max_cols,int xp,int r) {
 
   LOGKERNEL("kernel_2rx3cv\n",9);
-  const DTYPE *pB0 = (DTYPE*)PACKEDB;
-  const DTYPE *packedA = (DTYPE*)PACKEDA;
+  const DTYPE *pB0 = (DTYPE*)ARM_CACHE_PACKEDB;
+  const DTYPE *packedA = (DTYPE*)ARM_CACHE_PACKEDA;
   VEC tmp00,tmp01,tmp02;
   TMPMAC
    
@@ -1066,8 +1053,8 @@ __STATIC_INLINE void EXT(kernel_2rx3cv)(SCALARACC *packedc,int col,int max_cols,
 __STATIC_INLINE void EXT(kernel_2rx2cv)(SCALARACC *packedc,int col,int max_cols,int xp,int r) {
 
   LOGKERNEL("kernel_2rx2cv\n",10);
-  const DTYPE *pB0 = (DTYPE*)PACKEDB;
-  const DTYPE *packedA = (DTYPE*)PACKEDA;
+  const DTYPE *pB0 = (DTYPE*)ARM_CACHE_PACKEDB;
+  const DTYPE *packedA = (DTYPE*)ARM_CACHE_PACKEDA;
   VEC tmp00,tmp01;
   TMPMAC
    
@@ -1134,8 +1121,8 @@ __STATIC_INLINE void EXT(kernel_2rx2cv)(SCALARACC *packedc,int col,int max_cols,
 __STATIC_INLINE void EXT(kernel_2rx1cv)(SCALARACC *packedc,int col,int max_cols,int xp,int r) {
 
   LOGKERNEL("kernel_2rx1cv\n",11);
-  const DTYPE *pB0 = (DTYPE*)PACKEDB;
-  const DTYPE *packedA = (DTYPE*)PACKEDA;
+  const DTYPE *pB0 = (DTYPE*)ARM_CACHE_PACKEDB;
+  const DTYPE *packedA = (DTYPE*)ARM_CACHE_PACKEDA;
   VEC tmp00;
 
   TMPMAC
@@ -1187,8 +1174,8 @@ __STATIC_INLINE void EXT(kernel_2rx1cv)(SCALARACC *packedc,int col,int max_cols,
 __STATIC_INLINE void EXT(kernel_1rx4cv)(SCALARACC *packedc,int col,int max_cols,int xp,int r) {
 
   LOGKERNEL("kernel_1rx4cv\n",12);
-  const DTYPE *pB0 = (DTYPE*)PACKEDB;
-  const DTYPE *packedA = (DTYPE*)PACKEDA;
+  const DTYPE *pB0 = (DTYPE*)ARM_CACHE_PACKEDB;
+  const DTYPE *packedA = (DTYPE*)ARM_CACHE_PACKEDA;
   VEC tmp00,tmp01,tmp02,tmp03;
 
   TMPMAC
@@ -1246,8 +1233,8 @@ __STATIC_INLINE void EXT(kernel_1rx4cv)(SCALARACC *packedc,int col,int max_cols,
 __STATIC_INLINE void EXT(kernel_1rx3cv)(SCALARACC *packedc,int col,int max_cols,int xp,int r) {
 
   LOGKERNEL("kernel_1rx3cv\n",13);
-  const DTYPE *pB0 = (DTYPE*)PACKEDB;
-  const DTYPE *packedA = (DTYPE*)PACKEDA;
+  const DTYPE *pB0 = (DTYPE*)ARM_CACHE_PACKEDB;
+  const DTYPE *packedA = (DTYPE*)ARM_CACHE_PACKEDA;
   VEC tmp00,tmp01,tmp02;
   TMPMAC
    
@@ -1312,8 +1299,8 @@ __STATIC_INLINE void EXT(kernel_1rx2cv)(SCALARACC *packedc,int col,int max_cols,
   VEC tmp00,tmp01;
   TMPMAC
 
-  const DTYPE *pB0 = (DTYPE*)PACKEDB;
-  const DTYPE *packedA = (DTYPE*)PACKEDA;
+  const DTYPE *pB0 = (DTYPE*)ARM_CACHE_PACKEDB;
+  const DTYPE *packedA = (DTYPE*)ARM_CACHE_PACKEDA;
    
   SCALARACC *pC = &packedc[xp*max_cols+col];
   const SCALARACC *p = pC;
@@ -1367,8 +1354,8 @@ __STATIC_INLINE void EXT(kernel_1rx1cv)(SCALARACC *packedc,int col,int max_cols,
   VEC tmp00,tmp01;
   TMPMAC
 
-  const DTYPE *pB0 = (DTYPE*)PACKEDB;
-  const DTYPE *packedA = (DTYPE*)PACKEDA;
+  const DTYPE *pB0 = (DTYPE*)ARM_CACHE_PACKEDB;
+  const DTYPE *packedA = (DTYPE*)ARM_CACHE_PACKEDA;
    
   SCALARACC *pC = &packedc[xp*max_cols+col];
   const SCALARACC *p = pC;
@@ -1413,8 +1400,8 @@ __STATIC_INLINE void EXT(kernel_1rx1cv)(SCALARACC *packedc,int col,int max_cols,
 __STATIC_INLINE void EXT(kernel_4rxc)(SCALARACC *packedc,int col,int max_cols,int xp,int r,int nbc) {
 
   LOGKERNEL("kernel_4rxc\n",16);
-  const DTYPE *pB0 = (DTYPE*)PACKEDB;
-  const DTYPE *packedA = (DTYPE*)PACKEDA;
+  const DTYPE *pB0 = (DTYPE*)ARM_CACHE_PACKEDB;
+  const DTYPE *packedA = (DTYPE*)ARM_CACHE_PACKEDA;
   SCALARACC *p0 = &packedc[xp*max_cols+col];
   SCALARACC *p1 = p0+max_cols;
   SCALARACC *p2 = p1+max_cols;
@@ -1469,8 +1456,8 @@ __STATIC_INLINE void EXT(kernel_4rxc)(SCALARACC *packedc,int col,int max_cols,in
 __STATIC_INLINE void EXT(kernel_3rxc)(SCALARACC *packedc,int col,int max_cols,int xp,int r,int nbc) {
 
   LOGKERNEL("kernel_3rxc\n",17);
-  const DTYPE *pB0 = (DTYPE*)PACKEDB;
-  const DTYPE *packedA = (DTYPE*)PACKEDA;
+  const DTYPE *pB0 = (DTYPE*)ARM_CACHE_PACKEDB;
+  const DTYPE *packedA = (DTYPE*)ARM_CACHE_PACKEDA;
   SCALARACC *p0 = &packedc[xp*max_cols+col];
   SCALARACC *p1 = p0+max_cols;
   SCALARACC *p2 = p1+max_cols;
@@ -1520,8 +1507,8 @@ __STATIC_INLINE void EXT(kernel_3rxc)(SCALARACC *packedc,int col,int max_cols,in
 __STATIC_INLINE void EXT(kernel_2rxc)(SCALARACC *packedc,int col,int max_cols,int xp,int r,int nbc) {
 
   LOGKERNEL("kernel_2rxc\n",18);
-  const DTYPE *pB0 = (DTYPE*)PACKEDB;
-  const DTYPE *packedA = (DTYPE*)PACKEDA;
+  const DTYPE *pB0 = (DTYPE*)ARM_CACHE_PACKEDB;
+  const DTYPE *packedA = (DTYPE*)ARM_CACHE_PACKEDA;
   SCALARACC *p0 = &packedc[xp*max_cols+col];
   SCALARACC *p1 = p0+max_cols;
 
@@ -1566,8 +1553,8 @@ __STATIC_INLINE void EXT(kernel_2rxc)(SCALARACC *packedc,int col,int max_cols,in
 __STATIC_INLINE void EXT(kernel_1rxc)(SCALARACC *packedc,int col,int max_cols,int xp,int r,int nbc) {
 
   LOGKERNEL("kernel_1rxc\n",19);
-  const DTYPE *pB0 = (DTYPE*)PACKEDB;
-  const DTYPE *packedA = (DTYPE*)PACKEDA;
+  const DTYPE *pB0 = (DTYPE*)ARM_CACHE_PACKEDB;
+  const DTYPE *packedA = (DTYPE*)ARM_CACHE_PACKEDA;
   SCALARACC *p0 = &packedc[xp*max_cols+col];
 
 
@@ -1601,10 +1588,10 @@ __STATIC_INLINE void EXT(kernel_1rxc)(SCALARACC *packedc,int col,int max_cols,in
   
 }
 
-#define PACK(BUF,PACKED,WIDTH,HEIGHT,RB,CB,ROW,COL)      \
+#define PACK(BUF,ARM_CACHE_PACKED,WIDTH,HEIGHT,RB,CB,ROW,COL)      \
 {                                                        \
     const DTYPE *p = &(BUF)[(COL)+(ROW)*(WIDTH)];        \
-    DTYPE *packed=(DTYPE*)(PACKED);                      \
+    DTYPE *packed=(DTYPE*)(ARM_CACHE_PACKED);                      \
     const int nb_rows = MIN((HEIGHT),(ROW)+(RB))-(ROW);  \
     const int nb_cols = MIN((WIDTH),(COL)+(CB)) - (COL); \
     for(int i=0;i<nb_rows;i++)                           \
@@ -1627,65 +1614,41 @@ __STATIC_INLINE void EXT(kernel_1rxc)(SCALARACC *packedc,int col,int max_cols,in
     }                                                    \
 }
 
-#define PACK_AND_WIDEN(BUF,PACKED,WIDTH,HEIGHT,RB,CB,ROW,COL) \
-{                                                             \
-    TMPLD                                                     \
-    const DTYPE *p = &(BUF)[(COL)+(ROW)*(WIDTH)];             \
-    SCALARACC *packed=(SCALARACC*)(PACKED);                       \
-    const int nb_rows = MIN((HEIGHT),(ROW)+(RB))-(ROW);       \
-    const int nb_cols = MIN((WIDTH),(COL)+(CB)) - (COL);      \
-    for(int i=0;i<nb_rows;i++)                                \
-    {                                                         \
-        int j=0;                                              \
-        for(;j<=(nb_cols-LANE);j+=LANE)                       \
-        {                                                     \
-            VECACC tmp ;                                      \
-            VLOAD_AND_WIDEN(tmp,p);                     \
-            p += LANE;                                        \
-            VSTORE_ACC(packed,tmp);                               \
-            packed += LANE;                                   \
-        }                                                     \
-        for(;j<nb_cols;j++)                                   \
-        {                                                     \
-            SCALARACC tmp;                                            \
-            SCALAR_LOAD_AND_WIDEN(tmp,p);                     \
-            p++;                                              \
-            *packed++ = tmp;                                  \
-        }                                                     \
-        packed += (CB) - nb_cols;                             \
-        p += WIDTH - nb_cols;                                 \
-    }                                                         \
+#define CONCAT2(a, b) a##b
+#define CONCAT(a, b) CONCAT2(a, b)
+#define CLEARFUNC CONCAT(clearpacked_, FUNCNAME)
+
+static void CLEARFUNC (char *ARM_CACHE_PACKED,int WIDTH,int HEIGHT,int RB,int CB,int ROW,int COL)
+{                                                        
+    volatile SCALARACC *packed=(SCALARACC*)(ARM_CACHE_PACKED);              
+    const int nb_rows = MIN((HEIGHT),(ROW)+(RB))-(ROW);  
+    const int nb_cols = MIN((WIDTH),(COL)+(CB)) - (COL); 
+    /*memset(packed,0,sizeof(SCALARACC)*((CB)*nb_rows)); }*/ 
+    for(int i=0;i<nb_rows;i++)                           
+    {                                                    
+        int j=0;                                         
+        VECACC vtmp ;                                    
+        CLEAR_ACC(vtmp);                                 
+        for(;j<=(nb_cols-LANE);j+=LANE)                  
+        {                                                
+            VSTORE_ACC((SCALARACC *)packed,vtmp);                     
+            packed += LANE;                              
+        }                                                
+        DEF_AND_CLEAR_SCALARACC(tmp);                    
+        for(;j<nb_cols;j++)                              
+        {                                                
+            *packed++ = tmp;                             
+        }                                                
+        packed += (CB) - nb_cols;                        
+    }                                                    
 }
 
-#define CLEAR_PACKED(PACKED,WIDTH,HEIGHT,RB,CB,ROW,COL)     \
-{                                                        \
-    SCALARACC *packed=(SCALARACC*)(PACKED);              \
-    const int nb_rows = MIN((HEIGHT),(ROW)+(RB))-(ROW);  \
-    const int nb_cols = MIN((WIDTH),(COL)+(CB)) - (COL); \
-    for(int i=0;i<nb_rows;i++)                           \
-    {                                                    \
-        int j=0;                                         \
-        VECACC vtmp ;                                     \
-        CLEAR_ACC(vtmp);                                  \
-        for(;j<=(nb_cols-LANE);j+=LANE)                  \
-        {                                                \
-            VSTORE_ACC(packed,vtmp);                      \
-            packed += LANE;                              \
-        }                                                \
-        const SCALARACC tmp=0;                           \
-        for(;j<nb_cols;j++)                              \
-        {                                                \
-            *packed++ = tmp;                             \
-        }                                                \
-        packed += (CB) - nb_cols;                        \
-    }                                                    \
-}
 
-#define UNPACK_AND_NARROW(BUF,PACKED,WIDTH,HEIGHT,RB,CB,ROW,COL) \
+#define UNPACK_AND_NARROW(BUF,ARM_CACHE_PACKED,WIDTH,HEIGHT,RB,CB,ROW,COL) \
 {                                                                \
     TMPST;                                                       \
     DTYPE *p = &(BUF)[(COL)+(ROW)*(WIDTH)];                      \
-    const SCALARACC *packed=(SCALARACC*)(PACKED);                \
+    const SCALARACC *packed=(const SCALARACC*)(ARM_CACHE_PACKED);          \
     const int nb_rows = MIN((HEIGHT),(ROW)+(RB))-(ROW);          \
     const int nb_cols = MIN((WIDTH),(COL)+(CB)) - (COL);         \
     for(int i=0;i<nb_rows;i++)                                   \
@@ -1701,7 +1664,8 @@ __STATIC_INLINE void EXT(kernel_1rxc)(SCALARACC *packedc,int col,int max_cols,in
         }                                                        \
         for(;j<nb_cols;j++)                                      \
         {                                                        \
-          SCALAR_STORE_AND_NARROW(p,*packed++);                  \
+          SCALAR_STORE_AND_NARROW(p,*packed);                    \
+          packed++;                                              \
           p++;                                                   \
         }                                                        \
         packed += (CB) - nb_cols;                                \
@@ -1715,7 +1679,7 @@ ARM_DSP_ATTRIBUTE arm_status FUNCNAME (
   const MATTYPE * pSrcA,
   const MATTYPE * pSrcB,
   MATTYPE * pDst,
-  DTYPE   * pState)
+  HEADERTYPE   * pState)
 #else
   const MATTYPE * pSrcA,
   const MATTYPE * pSrcB,
@@ -1725,10 +1689,10 @@ ARM_DSP_ATTRIBUTE arm_status FUNCNAME (
   #if defined(HAS_TEMP_BUFFER)
   (void)pState;
   #endif
-  const DTYPE *a = pSrcA->pData;
-  const DTYPE *b = pSrcB->pData;
-  DTYPE *c = pDst->pData;
-  SCALARACC *packedc = (SCALARACC*)PACKEDC;
+  const DTYPE *a = (const DTYPE *)pSrcA->pData;
+  const DTYPE *b = (const DTYPE *)pSrcB->pData;
+  DTYPE *c = (DTYPE *)pDst->pData;
+  SCALARACC *packedc = (SCALARACC*)ARM_CACHE_PACKEDC;
   #if defined(FLOATALGO)
   int mustcopy=0;
   #endif
@@ -1771,27 +1735,28 @@ ARM_DSP_ATTRIBUTE arm_status FUNCNAME (
         #if defined(FLOATALGO)
         if (mustcopy)
         {
-           CLEAR_PACKED(PACKEDC,cols,rows,max_rows,max_cols,block_row,block_col);
-           packedc = (SCALARACC*)PACKEDC;
+           CLEARFUNC (ARM_CACHE_PACKEDC,cols,rows,max_rows,max_cols,block_row,block_col);
+           packedc = (SCALARACC*)ARM_CACHE_PACKEDC;
         }
         else 
         {
           packedc = (SCALARACC*)c;
         }
         #else
-        CLEAR_PACKED(PACKEDC,cols,rows,max_rows,max_cols,block_row,block_col);
+
+        CLEARFUNC (ARM_CACHE_PACKEDC,cols,rows,max_rows,max_cols,block_row,block_col);
         #endif
         for (int block_inner = 0; block_inner < inners; block_inner += INNER_BLOCK)
         {
           int max_inner = MIN(INNER_BLOCK, inners-block_inner);
-          PACK(a,PACKEDA,inners,rows,max_rows,max_inner,block_row,block_inner);
+          PACK(a,ARM_CACHE_PACKEDA,inners,rows,max_rows,max_inner,block_row,block_inner);
 
           int col=0;
 
           for (; col <= (MIN(0 + COLS_BLOCK, cols - block_col)-(4*LANE)); col += (4*LANE))
           {
             int row=0;
-            PACK(b,PACKEDB,cols,inners,max_inner,(4*LANE),block_inner,block_col+col);
+            PACK(b,ARM_CACHE_PACKEDB,cols,inners,max_inner,(4*LANE),block_inner,block_col+col);
 
             for (; row <= (max_rows-DR); row += DR)
             {
@@ -1820,7 +1785,7 @@ ARM_DSP_ATTRIBUTE arm_status FUNCNAME (
           for (; col <= (MIN(0 + COLS_BLOCK, cols - block_col)-(3*LANE)); col += (3*LANE))
           {
              int row=0;
-             PACK(b,PACKEDB,cols,inners,max_inner,(3*LANE),block_inner,block_col+col);
+             PACK(b,ARM_CACHE_PACKEDB,cols,inners,max_inner,(3*LANE),block_inner,block_col+col);
 
              for (; row <= (max_rows-DR); row += DR)
              {
@@ -1846,7 +1811,7 @@ ARM_DSP_ATTRIBUTE arm_status FUNCNAME (
           for (; col <= (MIN(0 + COLS_BLOCK, cols - block_col)-(2*LANE)); col += (2*LANE))
           {
             int row=0;
-            PACK(b,PACKEDB,cols,inners,max_inner,(2*LANE),block_inner,block_col+col);
+            PACK(b,ARM_CACHE_PACKEDB,cols,inners,max_inner,(2*LANE),block_inner,block_col+col);
 
             for (; row <= (max_rows-DR); row += DR)
             {
@@ -1872,7 +1837,7 @@ ARM_DSP_ATTRIBUTE arm_status FUNCNAME (
           for (; col <= (MIN(0 + COLS_BLOCK, cols - block_col)-(1*LANE)); col += (1*LANE))
           {
             int row=0;
-            PACK(b,PACKEDB,cols,inners,max_inner,(1*LANE),block_inner,block_col+col);
+            PACK(b,ARM_CACHE_PACKEDB,cols,inners,max_inner,(1*LANE),block_inner,block_col+col);
 
             for (; row <= (max_rows-DR); row += DR)
             {
@@ -1899,7 +1864,7 @@ ARM_DSP_ATTRIBUTE arm_status FUNCNAME (
           if (maxnc > 0)
           {
              int row=0;
-             PACK(b,PACKEDB,cols,inners,max_inner,maxnc,block_inner,block_col+col);
+             PACK(b,ARM_CACHE_PACKEDB,cols,inners,max_inner,maxnc,block_inner,block_col+col);
 
              for (; row <= (max_rows-DR); row += DR)
              {
@@ -1925,10 +1890,10 @@ ARM_DSP_ATTRIBUTE arm_status FUNCNAME (
         #if defined(FLOATALGO)
         if (mustcopy)
         {
-          UNPACK_AND_NARROW(c,PACKEDC,cols,rows,max_rows,max_cols,block_row,block_col);
+          UNPACK_AND_NARROW(c,ARM_CACHE_PACKEDC,cols,rows,max_rows,max_cols,block_row,block_col);
         }
         #else
-        UNPACK_AND_NARROW(c,PACKEDC,cols,rows,max_rows,max_cols,block_row,block_col);
+        UNPACK_AND_NARROW(c,ARM_CACHE_PACKEDC,cols,rows,max_rows,max_cols,block_row,block_col);
         #endif
      } // end row loop
    } // end col loop
@@ -1939,6 +1904,7 @@ ARM_DSP_ATTRIBUTE arm_status FUNCNAME (
 
 #undef LANE 
 #undef DTYPE 
+#undef HEADERTYPE
 #undef VEC 
 #undef VECACC
 #undef HVEC 
@@ -1950,13 +1916,18 @@ ARM_DSP_ATTRIBUTE arm_status FUNCNAME (
 #undef SCALARACC
 #undef VLOAD
 #undef VSTORE
+#if defined(SCALAR_LOAD_AND_WIDEN)
 #undef SCALAR_LOAD_AND_WIDEN
+#endif
 #undef SCALAR_STORE_AND_NARROW
 #undef SCALAR_MAC_N
+#if defined(VLOAD_AND_WIDEN)
 #undef VLOAD_AND_WIDEN
+#endif
 #undef VSTORE_AND_NARROW
 #undef EXT
 #undef CLEAR_ACC
+#undef DEF_AND_CLEAR_SCALARACC
 
 #undef VLOAD_ACC
 #undef VSTORE_ACC
@@ -2004,13 +1975,3 @@ ARM_DSP_ATTRIBUTE arm_status FUNCNAME (
 
 
 #undef DC 
-#undef DR 
-#undef HDR 
-#undef DCS 
-
-
-#undef INNER_BLOCK
-#undef ROWS_BLOCK
-#undef COLS_BLOCK 
-
-

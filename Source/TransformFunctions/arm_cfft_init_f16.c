@@ -101,7 +101,7 @@ arm_status arm_cfft_init_##LEN##_f16(                                  \
     return (status);                                                   \
 }
 
-#elif defined(ARM_MATH_NEON_FLOAT16)  && !defined(ARM_MATH_AUTOVECTORIZE)
+#elif defined(ARM_MATH_NEON_FLOAT16) && defined(ARM_FLOAT16_SUPPORTED)
 #include "arm_neon_tables_f16.h"
 
 #define CFFTINIT_F16(LEN,LENTWIDDLE)                                             \

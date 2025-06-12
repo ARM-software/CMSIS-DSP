@@ -32,7 +32,7 @@
  * Internal functions prototypes
  * -------------------------------------------------------------------- */
 
-#if !defined(ARM_MATH_NEON) || defined(ARM_MATH_AUTOVECTORIZE)
+#if !defined(ARM_MATH_NEON) 
 
 ARM_DSP_ATTRIBUTE void arm_split_rfft_q15(
         q15_t * pSrc,
@@ -114,7 +114,7 @@ ARM_DSP_ATTRIBUTE void arm_split_rifft_q15(
 
  */
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON) 
 #include "CMSIS_NE10_types.h"
 #include "CMSIS_NE10_fft.h"
 
@@ -263,7 +263,7 @@ ARM_DSP_ATTRIBUTE void arm_split_rfft_q15(
     pDst[0] = (pSrc[0] + pSrc[1]) >> 1U;
     pDst[1] = 0;
 }
-#elif !defined(ARM_MATH_NEON) || defined(ARM_MATH_AUTOVECTORIZE)
+#elif !defined(ARM_MATH_NEON) 
 ARM_DSP_ATTRIBUTE void arm_split_rfft_q15(
         q15_t * pSrc,
         uint32_t fftLen,
@@ -482,7 +482,7 @@ ARM_DSP_ATTRIBUTE void arm_split_rifft_q15(
         i -= 1;
     }
 }
-#elif !defined(ARM_MATH_NEON) || defined(ARM_MATH_AUTOVECTORIZE)
+#elif !defined(ARM_MATH_NEON) 
 ARM_DSP_ATTRIBUTE void arm_split_rifft_q15(
         q15_t * pSrc,
         uint32_t fftLen,

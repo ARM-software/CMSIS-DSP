@@ -585,7 +585,7 @@ ARM_DSP_ATTRIBUTE void arm_cfft_f32(
 }
 
 
-#elif defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#elif defined(ARM_MATH_NEON)
 #include "CMSIS_NE10_types.h"
 #include "CMSIS_NE10_fft.h"
 

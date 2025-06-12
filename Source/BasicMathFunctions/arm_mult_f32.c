@@ -116,7 +116,7 @@ ARM_DSP_ATTRIBUTE void arm_mult_f32(
 {
     uint32_t blkCnt;                               /* Loop counter */
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
     f32x4_t vec1;
     f32x4_t vec2;
     f32x4_t res;

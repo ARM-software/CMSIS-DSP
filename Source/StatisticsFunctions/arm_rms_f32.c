@@ -71,7 +71,7 @@ ARM_DSP_ATTRIBUTE void arm_rms_f32(
     arm_sqrt_f32(pow / (float32_t) blockSize, pResult);
 }
 #else
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
 ARM_DSP_ATTRIBUTE void arm_rms_f32(
   const float32_t * pSrc,
   uint32_t blockSize,

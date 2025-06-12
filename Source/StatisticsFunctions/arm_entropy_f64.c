@@ -29,7 +29,7 @@
 #include "dsp/statistics_functions.h"
 #include <limits.h>
 #include <math.h>
-#if defined(ARM_MATH_NEON) && defined(__aarch64__)
+#if defined(ARM_MATH_NEON) && defined(__aarch64__) 
 #include "arm_vec_math.h"
 #endif
 

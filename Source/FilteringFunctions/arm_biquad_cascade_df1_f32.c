@@ -339,7 +339,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df1_f32(
     while (stage > 0U);
 }
 #else
-#if defined(ARM_MATH_NEON)  && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)  
 ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df1_f32(
   const arm_biquad_casd_df1_inst_f32 * S,
   const float32_t * pSrc,

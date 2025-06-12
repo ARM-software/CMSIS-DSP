@@ -1,34 +1,26 @@
 import cmsisdsp as dsp 
+import cmsisdsp.fixedpoint as f 
+
 import numpy as np
 from numpy.testing import assert_allclose
-from scipy.stats import entropy,tstd, tvar
-from scipy.special import logsumexp
-from scipy.linalg import cholesky,ldl,solve_triangular
-from scipy import signal
 
+def normalize(a):
+    return(2*a-1.0)
 
-import colorama
-from colorama import init,Fore, Back, Style
+NBR = 500
+NBI = 400 
+NBC = 600
+m = max(NBR, NBI, NBC)
+a = np.random.rand(NBR,NBI).astype(np.float32)
+b = np.random.rand(NBI,NBC).astype(np.float32)
+a= normalize(a)/m
+b= normalize(b)/m
 
-init()
+aQ15 = f.toQ15(a)
+bQ15 = f.toQ15(b)
 
-def printTitle(s):
-    print("\n" + Fore.GREEN + Style.BRIGHT +  s + Style.RESET_ALL)
+tmp=np.zeros(NBI*NBC,dtype=np.int8)
+cQ15 = dsp.arm_mat_mult_q15(aQ15, bQ15,tmp)[1]
+c = f.Q15toF32(cQ15)
 
-def printSubTitle(s):
-    print("\n" + Style.BRIGHT + s + Style.RESET_ALL)
-
-
-print("Cholesky")
-
-a=np.array([[4,12,-16],[12,37,-43],[-16,-43,98]])
-ref=cholesky(a,lower=True)
-print(ref)
-
-status,res=dsp.arm_mat_cholesky_f32(a)
-print(res)
-assert_allclose(ref,res,1e-6,1e-6)
-
-status,res=dsp.arm_mat_cholesky_f64(a)
-print(res)
-assert_allclose(ref,res,1e-10,1e-10)
+#assert_allclose(c, np.dot(a,b), rtol=1e-4, atol=1e-4)

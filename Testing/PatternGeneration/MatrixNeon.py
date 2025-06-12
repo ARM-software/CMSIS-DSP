@@ -5,6 +5,13 @@ import numpy as np
 from rich.progress import track
 from rich.table import Column
 from rich.progress import Progress, BarColumn, TextColumn
+import argparse
+
+parser = argparse.ArgumentParser(description='Generate more matrix multiplication patterns for Neon tests')
+
+parser.add_argument('-d', action='store_true', help="Dry run")
+
+args = parser.parse_args()
 
 def cartesian(*somelists):
    r=[]
@@ -12,6 +19,15 @@ def cartesian(*somelists):
        r.append(element)
    return(r)
 
+def randComplex(nb):
+    data = np.random.randn(2*nb)
+    data = Tools.normalize(data)
+    data_comp = data.view(dtype=np.complex128)
+    return(data_comp)
+
+def asReal(a):
+    #return(a.view(dtype=np.float64))
+    return(a.reshape(np.size(a)).view(dtype=np.float64))
 
 col_block=768
 row_block=256
@@ -100,8 +116,17 @@ def writeBinaryTests(config,format,desc):
     data1 = Tools.normalize(data1)
     data2 = Tools.normalize(data2)
 
+    data1C=randComplex(maxnb*maxnb)
+    data2C=randComplex(maxnb*maxnb)
+
     config.writeInput(1, data1,"InputA")
     config.writeInput(1, data2,"InputB")
+
+    config.setOverwrite(True)
+    config.writeInput(1, asReal(data1C),"InputAC")
+    config.writeInput(1, asReal(data2C),"InputBC")
+    config.setOverwrite(False)
+
     #
     binarySizes = sorted(rows)+sorted(inners)+sorted(cols)
     if format == Tools.Q15 or format == Tools.Q7:
@@ -122,21 +147,33 @@ def writeBinaryTests(config,format,desc):
        limited_bytes=25*np.sum(limited_dims)
        print(f"Estimated size of limited result text file : {limited_bytes} bytes")
 
+    if args.d:
+         print("Dry run, no file generated")
+         print("rows",rows)
+         print("inners",inners)
+         print("cols",cols)
+         exit(0)
+         
     dims=[] 
     vals=[]
+    valsC=[]
+    valsCR=[]
 
 
     nb = 0
     with Progress() as progress:
         for (a,b,c) in progress.track(binarySizes, description=desc):
            progress.console.print(f"{a} x {b} x {c}")
+           # Compute a shift to avoid pverflow for veru big matrices
            m = int(np.log2(np.max([a,b,c])))
            dims.append(a)
            dims.append(b)
            dims.append(c)
+           # Shift is part of parameters
            if format == Tools.Q31 or format == Tools.Q15 or format == Tools.Q7:
               dims.append(m)
     
+           # Real matrixes
            ma = np.copy(data1[0:a*b]).reshape(a,b)
            mb = np.copy(data2[0:b*c]).reshape(b,c)
            #if nb == 0 and format == Tools.F32:
@@ -146,13 +183,43 @@ def writeBinaryTests(config,format,desc):
            r = list(r.reshape(a*c))
            vals = vals + r
 
+           # Complex matrixes
+           ma = np.copy(data1C[0:a*b]).reshape(a,b)
+           mb = np.copy(data2C[0:b*c]).reshape(b,c)
+           #if nb == 0 and format == Tools.F32:
+           #      np.savetxt('ma.txt', ma, delimiter=',')   # X is an array
+           #      np.savetxt('mb.txt', mb.T, delimiter=',')   # X is an array
+           r = np.matmul(ma , mb) 
+           r = list(asReal(r.reshape(a*c)))
+           valsC = valsC + r
+
+           # Complex times real
+           ma = np.copy(data1C[0:a*b]).reshape(a,b)
+           mb = np.copy(data2[0:b*c]).reshape(b,c)
+           #if nb == 0 and format == Tools.F32:
+           #      np.savetxt('ma.txt', ma, delimiter=',')   # X is an array
+           #      np.savetxt('mb.txt', mb.T, delimiter=',')   # X is an array
+           r = np.matmul(ma , mb) 
+           r = list(asReal(r.reshape(a*c)))
+           valsCR = valsCR + r
+
+
+
            nb = nb + 1
     
     config.writeInputS16(1, dims,"DimsBinary")
     config.writeReference(1, vals,"RefMul")
 
+    config.setOverwrite(True)
+    config.writeReference(1, valsC,"RefCmplxMul")
+    config.writeReference(1, valsCR,"RefCmplxRealMul")
+    config.setOverwrite(False)
+
     dims=[] 
     vals=[]
+    valsC=[]
+    valsCR=[]
+
 
     # Limited sizes for the mult_fast version (less accuracy)
     # or the normal version (q7) when no fast version is provided and the
@@ -168,15 +235,35 @@ def writeBinaryTests(config,format,desc):
               if format == Tools.Q31 or format == Tools.Q15 or format == Tools.Q7:
                  dims.append(m)
        
+              # Real matrixes
               ma = np.copy(data1[0:a*b]).reshape(a,b)
               mb = np.copy(data2[0:b*c]).reshape(b,c)
               r = np.matmul(ma , mb) 
               r = list(r.reshape(a*c))
               vals = vals + r
+
+              # Complex matrixes
+              ma = np.copy(data1C[0:a*b]).reshape(a,b)
+              mb = np.copy(data2C[0:b*c]).reshape(b,c)
+              r = np.matmul(ma , mb) 
+              r = list(asReal(r.reshape(a*c)))
+              valsC = valsC + r
+
+              # Complex times real matrixes
+              ma = np.copy(data1C[0:a*b]).reshape(a,b)
+              mb = np.copy(data2[0:b*c]).reshape(b,c)
+              r = np.matmul(ma , mb) 
+              r = list(asReal(r.reshape(a*c)))
+              valsCR = valsCR + r
        
        
        config.writeInputS16(1, dims,"DimsLimitedBinary")
        config.writeReference(1, vals,"RefLimitedMul")
+
+       config.setOverwrite(True)
+       config.writeReference(1, valsC,"RefCmplxLimitedMul")
+       config.writeReference(1, valsCR,"RefCmplxRealLimitedMul")
+       config.setOverwrite(False)
 
     
 
@@ -192,12 +279,12 @@ def generatePatterns():
     configBinaryq15=Tools.Config(PATTERNBINDIR,PARAMBINDIR,"q15")
     configBinaryq7=Tools.Config(PATTERNBINDIR,PARAMBINDIR,"q7")
 
-    configBinaryf64.setOverwrite(True)
-    configBinaryf32.setOverwrite(True)
-    configBinaryf16.setOverwrite(True)
-    configBinaryq31.setOverwrite(True)
-    configBinaryq15.setOverwrite(True)
-    configBinaryq7.setOverwrite(True)
+    configBinaryf64.setOverwrite(False)
+    configBinaryf32.setOverwrite(False)
+    configBinaryf16.setOverwrite(False)
+    configBinaryq31.setOverwrite(False)
+    configBinaryq15.setOverwrite(False)
+    configBinaryq7.setOverwrite(False)
 
     writeBinaryTests(configBinaryf64,Tools.F64,"F64")
     writeBinaryTests(configBinaryf32,Tools.F32,"F32")

@@ -88,19 +88,23 @@ extern "C"
 #define __STATIC_INLINE static __inline
 #define __ALIGNED(x) __declspec(align(x))
 #define __WEAK
+#define SECTION_NOINIT
 #elif defined ( __APPLE_CC__ )
 #include <stdint.h>
 #define  __ALIGNED(x) __attribute__((aligned(x)))
 #define __STATIC_FORCEINLINE static inline __attribute__((always_inline)) 
 #define __STATIC_INLINE static inline
 #define __WEAK
+#define SECTION_NOINIT
 #elif defined (__GNUC_PYTHON__)
 #include <stdint.h>
 #define  __ALIGNED(x) __attribute__((aligned(x)))
 #define __STATIC_FORCEINLINE static inline __attribute__((always_inline)) 
 #define __STATIC_INLINE static inline
 #define __WEAK
+#define SECTION_NOINIT __attribute__((section(".noinit")))
 #else
+#define SECTION_NOINIT
 #include "cmsis_compiler.h"
 #endif
 
@@ -120,8 +124,9 @@ extern "C"
  * 
  * ARM_MATH_NEON is used to enable the Neon variants. 
  * When Neon variants are enabled, the DSP extension are disabled
+ * 
  */
-#if !defined(__GNUC_PYTHON__) && !defined(ARM_MATH_NEON) && !defined(ARM_MATH_NEON_EXPERIMENTAL)
+#if (!defined(__GNUC_PYTHON__) && !defined(ARM_MATH_NEON) && !defined(ARM_MATH_NEON_EXPERIMENTAL)) 
 #if (defined (__ARM_FEATURE_DSP) && (__ARM_FEATURE_DSP == 1))
   #define ARM_MATH_DSP                   1
 #endif
@@ -438,7 +443,7 @@ extern "C"
 
 #endif
 
-#if defined(ARM_MATH_NEON) || (defined(ARM_MATH_MVEF)  && !defined(ARM_MATH_AUTOVECTORIZE)) /* floating point vector*/
+#if defined(ARM_MATH_NEON) || (defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)) /* floating point vector*/
 
   /**
    * @brief 32-bit floating-point 128-bit vector type
@@ -466,7 +471,7 @@ extern "C"
 
 #endif
 
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) 
   /**
    * @brief 32-bit fractional 64-bit vector data type in 1.31 format.
    */

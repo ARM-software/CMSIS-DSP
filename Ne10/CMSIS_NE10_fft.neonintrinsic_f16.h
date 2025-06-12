@@ -35,7 +35,7 @@
 #include "CMSIS_NE10_fft.h"
 #include <arm_neon.h>
 
-#if defined(ARM_MATH_NEON_FLOAT16)
+#if defined(ARM_MATH_NEON_FLOAT16) && defined(ARM_FLOAT16_SUPPORTED)
 
 #define NE10_CPX_ADD_NEON_F16(Z,A,B) do {           \
     Z.val[0] = A.val[0] + B.val[0];    \

@@ -700,6 +700,74 @@ if ((pSrcA->numCols != pSrcB->numRows) ||
 }
 #else
 
+#if defined(ARM_MATH_NEON_FLOAT16)
+
+/**
+  @brief         Floating-point Complex matrix multiplication.
+  @param[in]     pSrcA      points to first input complex matrix structure
+  @param[in]     pSrcB      points to second input complex matrix structure
+  @param[out]    pDst       points to output complex matrix structure
+  @return        execution status
+                   - \ref ARM_MATH_SUCCESS       : Operation successful
+                   - \ref ARM_MATH_SIZE_MISMATCH : Matrix size check failed
+ */
+struct _arm_complex_f16 { \
+  float16_t re;       \
+  float16_t im;       \
+};
+
+#define LANE 8
+#define DTYPE struct _arm_complex_f16
+#define HEADERTYPE float16_t
+#define VEC float16x8x2_t
+#define VECACC float16x8x2_t
+#define FLOATALGO
+
+//#define LOGKERNEL(A,B) printf("%s\n", A)
+
+#define CLEAR_ACC(tmp) tmp.val[0] = vdupq_n_f16(0.0f16); \
+tmp.val[1] = vdupq_n_f16(0.0f16)
+
+#define SCALARACC struct _arm_complex_f16
+
+#define DEF_AND_CLEAR_SCALARACC(tmp) const SCALARACC tmp={.re=0.0f16, .im = 0.0f16}
+
+#define TMPLD
+#define TMPST
+#define TMPMAC
+
+
+#define SCALAR_LOAD_AND_WIDEN(DST,PTR) DST = *(PTR)
+
+#define SCALAR_STORE_AND_NARROW(PTR,VAL) *(PTR) = (VAL)
+
+#define SCALAR_MAC_N(ACC,VEC,SCALAR) ACC.re = (_Float16)((_Float16)ACC.re + (_Float16)(VEC).re * (_Float16)(SCALAR).re - (_Float16)(VEC).im * (_Float16)(SCALAR).im); \
+ACC.im = (_Float16)((_Float16)ACC.im + (_Float16)(VEC).re * (_Float16)(SCALAR).im + (_Float16)(VEC).im * (_Float16)(SCALAR).re); 
+#define HVEC float16x4_t
+#define VLOAD(DST,PTR) DST = vld2q_f16((float16_t*)(PTR))
+#define VSTORE(PTR,VAL) vst2q_f16((float16_t*)(PTR),(VAL))
+
+#define VLOAD_ACC(DST,PTR) DST = vld2q_f16((float16_t*)(PTR))
+#define VSTORE_ACC(PTR,VAL) vst2q_f16((float16_t*)(PTR),(VAL))
+
+#define VLOAD_AND_WIDEN(DST,PTR) DST = vld2q_f16((float16_t*)(PTR))
+#define VSTORE_AND_NARROW(PTR,VAL) vst2q_f16((float16_t*)(PTR),(VAL))
+
+#define VMAC_N(ACC,VEC,SCALAR) ACC.val[0] = vfmaq_n_f16(ACC.val[0],(VEC).val[0],(SCALAR).re); \
+                               ACC.val[0] = vfmsq_n_f16(ACC.val[0], (VEC).val[1], (SCALAR).im);                   \
+                               ACC.val[1] = vfmaq_n_f16(ACC.val[1],(VEC).val[0],(SCALAR).im);                                \
+                               ACC.val[1] = vfmaq_n_f16(ACC.val[1], (VEC).val[1], (SCALAR).re); 
+
+
+#define MATTYPE arm_matrix_instance_f16
+#define EXT(A) A##_cf16
+
+#define FUNCNAME arm_mat_cmplx_mult_f16
+
+
+#include "_arm_mat_mult_neon.c"
+#else
+
 ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_f16(
   const arm_matrix_instance_f16 * pSrcA,
   const arm_matrix_instance_f16 * pSrcB,
@@ -927,5 +995,6 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_cmplx_mult_f16(
   @} end of MatrixMult group
  */
 
+#endif /* #if defined(ARM_MATH_NEON_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE) */
 #endif /* #if defined(ARM_FLOAT16_SUPPORTED) */ 
 

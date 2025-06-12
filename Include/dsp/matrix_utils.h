@@ -334,7 +334,7 @@ extern "C"
                                                     \
 }
 
-#elif defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#elif defined(ARM_MATH_NEON)
 
 #define SWAP_ROWS_F32(A,COL,i,j)       \
 {                                      \

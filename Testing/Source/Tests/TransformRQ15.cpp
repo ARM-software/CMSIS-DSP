@@ -10,7 +10,7 @@
 #define ABS_FFT_ERROR_Q15 ((q15_t)14)
 #define ABS_IFFT_ERROR_Q15 ((q15_t)1250)
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
 #define RFFT_INIT(L) \
   arm_rfft_init_q15(&this->instRfftQ15 ,L);
 #define RIFFT_INIT(L) \
@@ -35,7 +35,7 @@
        
        memcpy(tmp,inp,sizeof(q15_t)*input.nbSamples());
 
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
       q15_t *tmp2p = tmp2.ptr();
       arm_rfft_q15(
              &this->instRfftQ15,
@@ -530,7 +530,7 @@
       This is a temporary buffer allowing the test to pass.
 
       */
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
       overheadoutputfft.create(ref.nbSamples(),TransformRQ15::FULLOUTPUT_Q15_ID,mgr);
 #else 
       overheadoutputfft.create(2*ref.nbSamples(),TransformRQ15::FULLOUTPUT_Q15_ID,mgr);

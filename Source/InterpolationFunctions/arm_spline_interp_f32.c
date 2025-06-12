@@ -164,7 +164,7 @@ ARM_DSP_ATTRIBUTE void arm_spline_f32(
     int32_t i;
     float32_t x_sc;
 
-#ifdef ARM_MATH_NEON
+#if defined(ARM_MATH_NEON)
     float32x4_t xiv = {0.0f, 0.0f, 0.0f, 0.0f};
     float32x4_t aiv = {0.0f, 0.0f, 0.0f, 0.0f};
     float32x4_t biv = {0.0f, 0.0f, 0.0f, 0.0f};
@@ -181,7 +181,7 @@ ARM_DSP_ATTRIBUTE void arm_spline_f32(
     /* Create output for x(i)<x<x(i+1) */
     for (i=0; i<n-1; i++)
     {
-#ifdef ARM_MATH_NEON
+#if defined(ARM_MATH_NEON)
         xiv = vdupq_n_f32(x[i]);
 
         aiv = vdupq_n_f32(y[i]);
@@ -229,7 +229,7 @@ ARM_DSP_ATTRIBUTE void arm_spline_f32(
     }
 
     /* Create output for remaining samples (x>=x(n)) */
-#ifdef ARM_MATH_NEON
+#if defined(ARM_MATH_NEON)
     /* Compute 4 outputs at a time */
     blkCnt2 = blkCnt >> 2;
 

@@ -67,7 +67,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 //#include <stdio.h>
 
-#if defined(ARM_MATH_NEON_FLOAT16)
+#if defined(ARM_MATH_NEON_FLOAT16) && defined(ARM_FLOAT16_SUPPORTED)
 
 
 #define NE10_DSP_CFFT_SCALING

@@ -86,7 +86,7 @@
        They are described on the page \ref transformbuffers "transform buffers".
 
  */
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON)
 ARM_DSP_ATTRIBUTE arm_status arm_mfcc_q15(
   const arm_mfcc_instance_q15 * S,
   q15_t *pSrc,
@@ -141,7 +141,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mfcc_q15(
     /* Compute spectrum magnitude 
     */
     fftShift = 31 - __CLZ(S->fftLen);
-#if defined(ARM_MATH_NEON) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_NEON) 
     /* Default RFFT based implementation */
     arm_rfft_q15(&(S->rfft),pSrc,pTmp2,pTmp_rfft,0);
 #else

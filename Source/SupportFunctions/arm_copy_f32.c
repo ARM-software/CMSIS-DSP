@@ -94,7 +94,7 @@ ARM_DSP_ATTRIBUTE void arm_copy_f32(
 }
 
 #else
-#if defined(ARM_MATH_NEON_EXPERIMENTAL)
+#if defined(ARM_MATH_NEON_EXPERIMENTAL) 
 ARM_DSP_ATTRIBUTE void arm_copy_f32(
   const float32_t * pSrc,
   float32_t * pDst,

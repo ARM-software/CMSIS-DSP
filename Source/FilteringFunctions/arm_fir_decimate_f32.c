@@ -372,7 +372,7 @@ ARM_DSP_ATTRIBUTE void arm_fir_decimate_f32(
     }
 }
 #else
-#if defined(ARM_MATH_NEON)
+#if defined(ARM_MATH_NEON) 
 ARM_DSP_ATTRIBUTE void arm_fir_decimate_f32(
   const arm_fir_decimate_instance_f32 * S,
   const float32_t * pSrc,
