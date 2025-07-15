@@ -68,7 +68,7 @@ __STATIC_INLINE f16x8_t vrecip_medprec_f16(
     b = 2.0f16 - xinv.f * ax;
     xinv.f = xinv.f * b;
 
-    xinv.f = vdupq_m_n_f16(xinv.f, F16INFINITY, vcmpeqq_n_f16(x, 0.0f));
+    xinv.f = vdupq_m_n_f16(xinv.f, F16_MAX, vcmpeqq_n_f16(x, 0.0f));
     /*
      * restore sign
      */
@@ -105,7 +105,7 @@ __STATIC_INLINE f16x8_t vrecip_hiprec_f16(
     b = 2.0f16 - xinv.f * ax;
     xinv.f = xinv.f * b;
 
-    xinv.f = vdupq_m_n_f16(xinv.f, F16INFINITY, vcmpeqq_n_f16(x, 0.0f));
+    xinv.f = vdupq_m_n_f16(xinv.f, F16_MAX, vcmpeqq_n_f16(x, 0.0f));
     /*
      * restore sign
      */
@@ -211,7 +211,7 @@ __STATIC_INLINE float16x8_t vlogq_f16(float16x8_t vecIn)
      */
     vecAcc0 = vfmaq(vecAcc0, vecExpUnBiasedFlt, __logf_rng_f16);
     // set log0 down to -inf
-    vecAcc0 = vdupq_m_n_f16(vecAcc0, -(_Float16)F16INFINITY, vcmpeqq_n_f16(vecIn, 0.0f));
+    vecAcc0 = vdupq_m_n_f16(vecAcc0, F16_MIN, vcmpeqq_n_f16(vecIn, 0.0f));
     return vecAcc0;
 }
 
@@ -274,7 +274,7 @@ __STATIC_INLINE f16x8_t vrecip_f16(f16x8_t vecIn)
     vecTmp = vfmasq_n_f16(vecW, vecTmp, 8.0f16);
     v.f = vmulq(v.f,  vecTmp);
 
-    v.f = vdupq_m_n_f16(v.f, F16INFINITY, vcmpeqq_n_f16(vecIn, 0.0f));
+    v.f = vdupq_m_n_f16(v.f, F16_MAX, vcmpeqq_n_f16(vecIn, 0.0f));
     /*
      * restore sign
      */
