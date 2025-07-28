@@ -448,7 +448,7 @@ struct MatrixView
             compatible_element<VA,T>(),bool>::type = true>
     void fill_diagonal(const VA& a)
     {
-       _fill_diagonal(*this,a,this->length());
+       _fill_diagonal(*this,a,a->length());
     }
 
     /** @brief Create the transposed matrix
@@ -933,7 +933,7 @@ struct MatrixView<T,DYNAMIC>
             compatible_element<VA,T>(),bool>::type = true>
     void fill_diagonal(const VA& a)
     {
-       _fill_diagonal(*this,a,this->length());
+       _fill_diagonal(*this,a,a->length());
     }
 
     /** @brief Create the transposed matrix
@@ -1420,7 +1420,7 @@ struct MatrixView<T,CONSTRAINED_DYNAMIC>:VectorView<T,1>
             compatible_element<VA,T>(),bool>::type = true>
     void fill_diagonal(const VA& a)
     {
-       _fill_diagonal(*this,a,this->length());
+       _fill_diagonal(*this,a,a->length());
     }
 
      /** @brief Create the transposed matrix

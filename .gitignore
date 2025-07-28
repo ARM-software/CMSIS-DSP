@@ -48,3 +48,4 @@ linkchecker-out.csv
 Testing/Patterns/DSP/MatrixNeon
 *.so
 *.egg-info
+boost.tar.gz
