@@ -7,10 +7,10 @@
   }
  ],
  "requires": {
-  "arm:tools/open-cmsis-pack/cmsis-toolbox": "2.10.0",
+  "arm:tools/open-cmsis-pack/cmsis-toolbox": "^2.10.0",
   "arm:tools/kitware/cmake": "3.28.4",
   "arm:tools/ninja-build/ninja": "1.12.0",
-  "arm:compilers/arm/armclang": "6.24.0",
+  "arm:compilers/arm/armclang": "^6.24.0",
   "arm:compilers/arm/arm-none-eabi-gcc": "^14.3.1",
   "arm:compilers/arm/llvm-embedded": "^19.1.5",
   "arm:models/arm/avh-fvp": "^11.22.39",

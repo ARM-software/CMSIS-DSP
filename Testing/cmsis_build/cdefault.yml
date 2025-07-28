@@ -13,7 +13,7 @@ default:
         - -Wextra  
         - -Werror
         - -std=c11 
-        - -Ofast 
+        - -O3 
         - -ffast-math
         - -Wno-packed 
         - -Wno-missing-variable-declarations 
@@ -37,7 +37,7 @@ default:
         - -Wall 
         - -Wextra  
         - -std=c++17
-        - -Ofast 
+        - -O3 
         - -ffast-math
         - -Wno-unused-function
         - -ffunction-sections
@@ -60,7 +60,7 @@ default:
         - -Wall 
         - -Wextra  
         - -std=c11 
-        - -Ofast 
+        - -O3 
         - -ffast-math
         - -Wno-packed 
         - -Wno-missing-prototypes 
@@ -80,7 +80,7 @@ default:
         - -Wall 
         - -Wextra  
         - -std=c++17
-        - -Ofast 
+        - -O3 
         - -ffast-math
         - -Wno-unused-function
         - -ffunction-sections
@@ -108,7 +108,7 @@ default:
          - -Wextra  
          - -Werror
          - -std=c11 
-         - -Ofast 
+         - -O3 
          - -ffast-math
          - -Wno-packed 
          - -Wno-missing-variable-declarations 
@@ -131,7 +131,7 @@ default:
         - -Wall 
         - -Wextra  
         - -std=c++17
-        - -Ofast 
+        - -O3 
         - -ffast-math
         - -Wno-unused-function
         - -ffunction-sections
