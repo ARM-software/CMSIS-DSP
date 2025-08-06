@@ -50,6 +50,25 @@ PACK_BASE_FILES="
 PACK_DELETE_FILES="
   Documentation/Doxygen
   Documentation/README.md
+  Source/CMakeLists.txt
+  Source/configDsp.cmake
+  Source/Makefile
+  Source/BasicMathFunctions/Config.cmake
+  Source/BayesFunctions/Config.cmake
+  Source/CommonTables/Config.cmake
+  Source/ComplexMathFunctions/Config.cmake
+  Source/ControllerFunctions/Config.cmake
+  Source/DistanceFunctions/Config.cmake
+  Source/FastMathFunctions/Config.cmake
+  Source/FilteringFunctions/Config.cmake
+  Source/InterpolationFunctions/Config.cmake
+  Source/MatrixFunctions/Config.cmake
+  Source/QuaternionMathFunctions/Config.cmake
+  Source/StatisticsFunctions/Config.cmake
+  Source/SupportFunctions/Config.cmake
+  Source/SVMFunctions/Config.cmake
+  Source/TransformFunctions/Config.cmake
+  Source/WindowFunctions/Config.cmake
 "
 
 # Specify patches to be applied
@@ -77,7 +96,7 @@ PACKCHK_DEPS="
 # - release   Tag annotations, or release descriptions (in order)
 # - tag       Tag annotations only
 #
-PACK_CHANGELOG_MODE="tag"
+PACK_CHANGELOG_MODE="release"
 
 #
 # custom pre-processing steps

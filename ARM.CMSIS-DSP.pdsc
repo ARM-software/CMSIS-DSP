@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<package schemaVersion="1.7.27" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="https://raw.githubusercontent.com/Open-CMSIS-Pack/Open-CMSIS-Pack-Spec/v1.7.27/schema/PACK.xsd">
+<package schemaVersion="1.7.40" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="https://raw.githubusercontent.com/Open-CMSIS-Pack/Open-CMSIS-Pack-Spec/v1.7.40/schema/PACK.xsd">
   <name>CMSIS-DSP</name>
-  <description>CMSIS Embedded Compute Library</description>
+  <description overview="README.md">CMSIS Embedded Compute Library</description>
   <vendor>ARM</vendor>
   <license>LICENSE</license>
   <licenseSets>
@@ -41,7 +41,7 @@
 
   <components>
     <!-- CMSIS-DSP component -->
-    <component Cclass="CMSIS" Cgroup="DSP" Cvariant="Source"  Cversion="1.16.3" isDefaultVariant="true" condition="CMSISCORE">
+    <component Cclass="CMSIS" Cgroup="DSP" Cvariant="Source"  Cversion="1.17.0" isDefaultVariant="true" condition="CMSISCORE">
       <description>CMSIS-DSP Library for Cortex-M and Cortex-A</description>
       <files>
         <!-- CPU independent -->

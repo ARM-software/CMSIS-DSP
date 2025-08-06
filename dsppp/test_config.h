@@ -3,7 +3,7 @@
 
 #define M55
 
-
+#define TESTMODE
 #define POOL_ALLOCATOR
 //#define ONLY_BENCHMARKS
 
