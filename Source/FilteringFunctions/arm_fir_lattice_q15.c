@@ -33,6 +33,13 @@
  */
 
 /**
+
+  @deprecated Those functions are no more tested nor maintained and will be
+              removed in a future version.
+*/
+
+
+/**
   @addtogroup FIR_Lattice
   @{
  */
