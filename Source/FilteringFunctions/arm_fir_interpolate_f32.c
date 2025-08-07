@@ -489,7 +489,7 @@ ARM_DSP_ATTRIBUTE void arm_fir_interpolate_f32(
 
   float32x4_t sum0v;
   float32x4_t accV0,accV1;
-  float32x4_t x0v,x1v,x2v,xa,xb;
+  float32x4_t x0v,x1v = { 0 },x2v,xa,xb;
   float32x2_t tempV;
 
   /* S->pState buffer contains previous frame (phaseLen - 1) samples */
