@@ -33,6 +33,13 @@
  */
 
 /**
+  @defgroup FIR_Lattice Finite Impulse Response (FIR) Lattice Filters
+
+  @deprecated Those functions are no more tested nor maintained and will be removed in
+              a future version.
+*/
+
+/**
   @addtogroup FIR_Sparse
   @{
  */
@@ -52,7 +59,7 @@
                    <code>pState</code> holds the filter's state variables and must be of length
                    <code>maxDelay + blockSize</code>, where <code>maxDelay</code>
                    is the maximum number of delay line values.
-                   <code>blockSize</code> is the 
+                   <code>blockSize</code> is the
                    number of samples processed by the <code>arm_fir_sparse_f32()</code> function.
  */
 
