@@ -1,6 +1,5 @@
 default:
 
-  compiler: AC6
   
   misc:
     - for-compiler: AC6

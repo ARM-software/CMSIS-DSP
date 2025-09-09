@@ -102,9 +102,9 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df1_q15(
         bCoeffs1[6] = a1;
 
         bCoeffs2 =
-            vsetq_lane_s32(vgetq_lane_s32((q31x4_t) bCoeffs0, 3), (q31x4_t) bCoeffs2, 3);
+            (q15x8_t)vsetq_lane_s32(vgetq_lane_s32((q31x4_t) bCoeffs0, 3), (q31x4_t) bCoeffs2, 3);
         bCoeffs3 =
-            vsetq_lane_s32(vgetq_lane_s32((q31x4_t) bCoeffs1, 3), (q31x4_t) bCoeffs3, 3);
+            (q15x8_t)vsetq_lane_s32(vgetq_lane_s32((q31x4_t) bCoeffs1, 3), (q31x4_t) bCoeffs3, 3);
 
 
         /* 2 first elements are garbage, will be updated with history */

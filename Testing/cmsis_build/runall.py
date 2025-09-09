@@ -204,8 +204,8 @@ for t in tests:
 #allSuites=[
 #("MISCF32","../Output.pickle"),
 #("MISCQ31","../Output.pickle"),
-#("SupportTestsF16","../Output_f16.pickle"),
-###("BasicTestsF32","../Output.pickle"),
+#("SupportTestsF32","../Output.pickle"),
+#("BasicTestsF32","../Output.pickle"),
 ##("BasicTestsF16","../Output_f16.pickle"),
 #]
 
@@ -225,6 +225,7 @@ compil_config={
       ("VHT_M0P","M0plus")
     ],
     'GCC':[
+      #("VHT-Corstone-310","CS310"),
       ("VHT-Corstone-300","CS300"),
       #("VHT-Corstone-300-NOMVE","CS300"),
       ("VHT_M33","M33_DSP_FP"),
@@ -244,6 +245,13 @@ compil_config={
     ],
 }
 
+# Latest version by default
+compil_version = {}
+
+#compil_version = {
+#    'GCC': '13.3.1'
+#}
+
 #Override previous solutions for more restricted testing.
 #compil_config={
 #    'AC6':[
@@ -251,9 +259,10 @@ compil_config={
 #      ("VHT_M33","M33_DSP_FP"),
 #    ],
 #    'GCC':[
-#      ("VHT-Corstone-300","CS300"),
+#        ("VHT-Corstone-310","CS310"),
+      #("VHT-Corstone-300","CS300"),
 #      ("VHT_M33","M33_DSP_FP"),
-#    ],
+#   ],
 #    'CLANG':[
 #      ("VHT-Corstone-300","CS300"),
 #      ("VHT_M33","M33_DSP_FP"),
@@ -292,8 +301,13 @@ with open(results_file,"w") as f:
     for comp_nb,compiler in enumerate(compilers):
         if compiler in compil_config:
             solutions = compil_config[compiler]
-            printTitle("Process compiler %s (%d / %d)" % (compiler,comp_nb+1,len(compilers)))
-            print("<h1>Compiler %s</h1>" % compiler,file=f)
+            compiler_name = compiler
+            if compiler in compil_version:
+                version = compil_version[compiler]
+                compiler_name = f"{compiler}@{version}"
+            
+            printTitle("Process compiler %s (%d / %d)" % (compiler_name,comp_nb+1,len(compilers)))
+            print("<h1>Compiler %s</h1>" % compiler_name,file=f)
             maxNbBuilds=len(solutions)
             buildNb=0
             for build,core in solutions:
@@ -320,11 +334,11 @@ with open(results_file,"w") as f:
                        # (Like one using AC6 and the other
                        # using gcc)
                        if args.n:
-                          res=run("cbuild","-O", "cprj","test.csolution.yml","-c",buildFile,"--toolchain",compiler)
+                          res=run("cbuild","-O", "cprj","test.csolution.yml","-c",buildFile,"--toolchain",compiler_name)
                        else:
-                          res=run("cbuild","-O", "cprj","test.csolution.yml","-r","--update-rte","-c",buildFile,"--toolchain",compiler)
+                          res=run("cbuild","-O", "cprj","test.csolution.yml","-r","--update-rte","-c",buildFile,"--toolchain",compiler_name)
                     else:
-                       res=run("cbuild","-O", "cprj","test.csolution.yml","-c",buildFile,"--toolchain",compiler)
+                       res=run("cbuild","-O", "cprj","test.csolution.yml","-c",buildFile,"--toolchain",compiler_name)
                     if res.error:
                         printError("Error cbuild")
                         print("<p><font color=\"red\">Error building %s</font></p><PRE>" % s,file=f)
