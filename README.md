@@ -68,8 +68,8 @@ CMSIS-DSP is used when you need performance. As consequence CMSIS-DSP should be 
 
 ### Options to use
 
-* `-Ofast` must be used for best performances.
-* When using Helium it is strongly advised to use `-Ofast`
+* `-O3 -ffast-math` must be used for best performances.
+* When using Helium it is strongly advised to use `-O3 -ffast-math`
 * `GCC` is currently not giving good performances when targeting Helium. You should use the Arm compiler
 
 When float are used, then the fpu should be selected to ensure that the compiler is not using a software float emulation.

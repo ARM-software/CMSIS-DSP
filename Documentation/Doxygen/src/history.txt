@@ -6,6 +6,27 @@
   <th>Description</th>
 </tr>
 <tr>
+  <td>v1.17.0</td>
+  <td>
+    * New transform APIs to get the required size of buffers depending on the target architecture
+    * Fix a small bug regarding copying history samples in taps_5-8 processing of FIRF32 when targetting Helium (#245)
+    * Fix issue #270 : Vector type casting issues for Helium
+    * Corrected problem in arm_biquad_cascade_df1_32x64_q31: Workaround because of gcc bug when targetting Helium (#265)
+    * Adding "deprecated" comments (#263)
+    * FilteringFunctions: Avoid uninitialized value warnings from GCC 14.3 (#262)
+    * Correction of issue #258 : Remove use of INFINITY from the float code
+    * Fix the issues in Controller benchmark testing (#239)
+    * Fix typos discovered by codespell (#236)
+    * Fix compile issue caused by the incorrect name of round-up macro (#237)
+    * Add support for running tests for Support benchmarks (#238)
+    * Create arm_mat_init_q7 (#235)
+    * Improve float representation accuracy by increasing precision from 8 to 9 decimal digits (#226)
+    * Correct issue #217 : vector type issues when targetting Helium
+    * Correct issue #214 : Missing file in MatrixFunctions cmake
+    * Internal rework of lots of files to be able to build Neon versions when targetting Cortex-A (it should not impact Cortex-M)
+  </td>
+</tr>
+<tr>
   <td>v1.16.2</td>
   <td>
     * Improvements to documentation
