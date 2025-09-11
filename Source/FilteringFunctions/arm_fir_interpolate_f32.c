@@ -357,13 +357,15 @@ ARM_DSP_ATTRIBUTE void arm_fir_interpolate_f32(
                 if (tapCnt > 0U)
                 {
                     mve_pred16_t p0 = vctp32q(tapCnt);
-                    f32x4_t vecCoef;
+                    f32x4_t vecCoef,vecState;
                     const float32_t *pCoef = ptr2;
 
-                    state0 = ptr1[0];
-                    state1 = ptr1[1];
-                    state2 = ptr1[2];
-                    state3 = ptr1[3];
+                    
+                    vecState = vldrwq_z_f32(ptr1, p0);
+                    state0 = vgetq_lane_f32(vecState, 0);
+                    state1 = vgetq_lane_f32(vecState, 1);
+                    state2 = vgetq_lane_f32(vecState, 2);
+                    state3 = vgetq_lane_f32(vecState, 3);
 
                     vecCoef = vldrwq_gather_shifted_offset_z_f32(pCoef, vec_stridesM, p0);
                     pCoef += S->L;
