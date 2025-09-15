@@ -12,3 +12,6 @@ cbuild-pack:
     - resolved-pack: ARM::V2M_MPS3_SSE_300_BSP@1.4.0
       selected-by-pack:
         - ARM::V2M_MPS3_SSE_300_BSP@1.4.0
+    - resolved-pack: ARM::V2M_MPS3_SSE_310_BSP@1.3.0
+      selected-by-pack:
+        - ARM::V2M_MPS3_SSE_310_BSP@1.3.0

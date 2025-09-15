@@ -78,7 +78,7 @@ ARM_DSP_ATTRIBUTE void arm_dot_prod_f16(
         vecB = vld1q(pSrcB);
         pSrcB += 8;
 
-        vecSum = vfmaq(vecSum, vecA, vecB);
+        vecSum = vfmaq_f16(vecSum, vecA, vecB);
         /*
          * Decrement the blockSize loop counter
          */
@@ -94,7 +94,7 @@ ARM_DSP_ATTRIBUTE void arm_dot_prod_f16(
         mve_pred16_t p0 = vctp16q(blkCnt);
         vecA = vld1q(pSrcA);
         vecB = vld1q(pSrcB);
-        vecSum = vfmaq_m(vecSum, vecA, vecB, p0);
+        vecSum = vfmaq_m_f16(vecSum, vecA, vecB, p0);
     }
 
     sum = vecAddAcrossF16Mve(vecSum);

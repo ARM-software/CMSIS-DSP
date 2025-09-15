@@ -67,7 +67,6 @@ default:
         - -Wno-sign-conversion 
         - -Wno-unused-macros 
         - -ffunction-sections
-        - -flax-vector-conversions
         - -Wno-maybe-uninitialized
         - -fdata-sections
         - -mfp16-format=ieee

@@ -41,7 +41,7 @@ MEMORY
   ROM3  (rx)  : ORIGIN = __ROM3_BASE, LENGTH = __ROM3_SIZE
 #endif
 
-  RAM0  (rwx) : ORIGIN = S_DATA_START, LENGTH = S_DATA_SIZE
+  RAM0  (rwx) : ORIGIN = S_DDR4_START, LENGTH = S_DDR4_SIZE
 #if __RAM1_SIZE > 0
   RAM1  (rwx) : ORIGIN = __RAM1_BASE, LENGTH = __RAM1_SIZE
 #endif
@@ -149,7 +149,7 @@ SECTIONS
     LONG (SIZEOF(.data2) / 4)
 */
     __copy_table_end__ = .;
-  } > ROM0
+  } > RAM0
 
   .zero.table :
   {
@@ -167,7 +167,7 @@ SECTIONS
     LONG (SIZEOF(.bss2) / 4)
 */
     __zero_table_end__ = .;
-  } > ROM0
+  } > RAM0
 
   /*
    * This __etext variable is kept for backward compatibility with older,
@@ -208,7 +208,7 @@ SECTIONS
     /* All data end */
     __data_end__ = .;
 
-  } > RAM0 AT > ROM0
+  } > RAM0
 
   /*
    * Secondary data section, optional
@@ -239,7 +239,7 @@ SECTIONS
     *(COMMON)
     . = ALIGN(4);
     __bss_end__ = .;
-  } > RAM0 AT > RAM0
+  } > RAM0
 
   /*
    * Secondary bss section, optional

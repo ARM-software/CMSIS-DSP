@@ -15,6 +15,7 @@ parser.add_argument('-r', action='store_true', help="Raw results only")
 parser.add_argument('-c', action='store_true', help="Display cycles (so passing test are displayed)")
 parser.add_argument('-g', nargs='?',type = str,help="AC6 / CLANG / GCC")
 parser.add_argument('-s', action='store_true', help="Take into account AVH error code")
+parser.add_argument('-no', action='store_true', help="No run")
 
 args = parser.parse_args()
 
@@ -153,6 +154,10 @@ AVHROOT = args.avh
 
 # Run AVH
 def runAVH(build,core,compiler):
+    if args.no:
+       print("No AVH run")
+       return(Result("No run",error=False))
+    avh = None
     axf="cprj/out/test/%s/Release/test.axf" % (build,)
     elf="cprj/out/test/%s/Release/test.elf" % (build,)
     app = axf 
@@ -176,7 +181,8 @@ def runAVH(build,core,compiler):
     else:
        avh = avhUnixExe[core]
 
-
+    if avh is None:
+        return(Result("AVH executable not found",error=True))
     
     res=run(avh,"-f",config,app,withExitCodeCheck=args.s)
     return(res)
@@ -248,9 +254,9 @@ compil_config={
 # Latest version by default
 compil_version = {}
 
-#compil_version = {
-#    'GCC': '13.3.1'
-#}
+compil_version = {
+    'GCC': '13.3.1'
+}
 
 #Override previous solutions for more restricted testing.
 #compil_config={
@@ -345,6 +351,10 @@ with open(results_file,"w") as f:
                         print(res.msg,file=f)
                         print("</PRE>",file=f)
                         continue
+                    elif DEBUG:
+                        print("<PRE>",file=f)
+                        print(res.msg,file=f)
+                        print("</PRE>",file=f)
                     printSubTitle("Run AVH")
                     res=runAVH(build,core,compiler)
                     if res.error:

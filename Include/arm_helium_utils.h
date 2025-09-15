@@ -364,7 +364,7 @@ __STATIC_INLINE arm_status arm_mat_cmplx_trans_32bit(
             vecIn = vldrwq_gather_shifted_offset(pDataC, vecOffsCur);
             vstrwq(pDataDestR, vecIn); 
             pDataDestR += 4;
-            vecOffsCur = vaddq(vecOffsCur, (srcCols << 2));
+            vecOffsCur = vaddq_n_u32(vecOffsCur, (srcCols << 2));
             /*
              * Decrement the blockSize loop counter
              */
@@ -551,7 +551,7 @@ __STATIC_INLINE arm_status arm_mat_cmplx_trans_16bit(
      * build  [0, 1, 2xcol, 2xcol+1, 4xcol, 4xcol+1, 6xcol, 6xcol+1]
      */
     vecOffsRef = vldrhq_u16((uint16_t const *) loadCmplxCol);
-    vecOffsRef = vmulq(vecOffsRef, (uint16_t) (srcCols * CMPLX_DIM))
+    vecOffsRef = vmulq_n_u16(vecOffsRef, (uint16_t) (srcCols * CMPLX_DIM))
                     + viwdupq_u16((uint32_t)0, (uint16_t) 2, 1);
 
     pDataRow = pDataSrc;
@@ -569,7 +569,7 @@ __STATIC_INLINE arm_status arm_mat_cmplx_trans_16bit(
             vecIn = vldrhq_gather_shifted_offset(pDataC, vecOffsCur);
             vstrhq(pDataDestR, vecIn);  
             pDataDestR+= 8; // VEC_LANES_U16
-            vecOffsCur = vaddq(vecOffsCur, (srcCols << 3));
+            vecOffsCur = vaddq_n_u16(vecOffsCur, (srcCols << 3));
             /*
              * Decrement the blockSize loop counter
              */
