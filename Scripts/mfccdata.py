@@ -81,25 +81,46 @@ class ConvertArray:
 
 
 
-def frequencyToMelSpace(freq):
-    return 1127.0 * np.log(1.0 + freq / 700.0)
+def frequencyToMelSpace(freq,htk=True):
+    if htk:
+       return 1127.0 * np.log(1.0 + freq / 700.0)
+    else:
+       freqStep = 200.0 / 3
+       minLogHz = 1000.0
+       logStep = 1.8562979903656 / 27.0 # log(6.4)
+       minLogMel = minLogHz / freqStep
+       mel = freq / freqStep
+       if (freq >= minLogHz):
+          mel = minLogMel + np.log(freq / minLogHz) / logStep
+       else:
+          return mel
 
-def melSpaceToFrequency(mels):
-    return 700.0 * (np.exp(mels / 1127.0) - 1.0)
+def melSpaceToFrequency(mels,htk=True):
+    if htk:
+       return 700.0 * (np.exp(mels / 1127.0) - 1.0)
+    else:
+       freqStep = 200.0 / 3
+       minLogHz = 1000.0
+       logStep = 1.8562979903656 / 27.0 # log(6.4)
+       minLogMel = minLogHz / freqStep
+       freqs = freqStep * mels
+       if (mels >= minLogMel):
+          freqs = minLogHz * np.exp(logStep * (mels - minLogMel))
+       return freqs
 
-def melFilterMatrix(fmin, fmax, numOfMelFilters,fs,FFTSize):
+def melFilterMatrix(fmin, fmax, numOfMelFilters,fs,FFTSize,htk=True):
 
     filters = np.zeros((numOfMelFilters,int(FFTSize/2+1)))
     zeros = np.zeros(int(FFTSize // 2 ))
 
 
-    fmin_mel = frequencyToMelSpace(fmin)
-    fmax_mel = frequencyToMelSpace(fmax)
+    fmin_mel = frequencyToMelSpace(fmin,htk)
+    fmax_mel = frequencyToMelSpace(fmax,htk)
     mels = np.linspace(fmin_mel, fmax_mel, num=numOfMelFilters+2)
 
 
     linearfreqs = np.linspace( 0, fs/2.0, int(FFTSize // 2 + 1) )
-    spectrogrammels = frequencyToMelSpace(linearfreqs)[1:]
+    spectrogrammels = frequencyToMelSpace(linearfreqs,htk)[1:]
 
 
     filtPos=[]
@@ -192,7 +213,11 @@ def prepareMelconfig(configs):
         c["ctype"]=ctype(c["type"])
         c["ext"]=typeext(c["type"])
 
-        filtLen,filtPos,totalLen,packedFilters,filters = melFilterMatrix(c["fmin"], c["fmax"], c["melFilters"],c["samplingRate"],c["fftlength"])
+        if "htk" in c:
+            htk = c["htk"]
+        else:
+            htk = True
+        filtLen,filtPos,totalLen,packedFilters,filters = melFilterMatrix(c["fmin"], c["fmax"], c["melFilters"],c["samplingRate"],c["fftlength"],htk)
     
         c["filtLenArray"]=cvtInt.getArrayContent(filtLen)
         c["filtPosArray"]=cvtInt.getArrayContent(filtPos)
