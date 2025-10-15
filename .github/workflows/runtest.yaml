@@ -11,12 +11,12 @@ permissions:
   security-events: write
 
 jobs:
-   CI_c_test_run: 
+   CI_c_test_run:
     strategy:
       fail-fast: false
       matrix:
         compiler: [AC6, CLANG, GCC]
-    runs-on: ubuntu-22.04    
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout
@@ -34,22 +34,12 @@ jobs:
           sudo add-apt-repository ppa:deadsnakes/ppa
           sudo apt-get install libpython3.9 libtinfo5
 
-      - name: Cache packs
-        uses: actions/cache@v4
-        with:
-          key: packs-cmsis-dsp
-          restore-keys: |
-              packs-
-          path: /home/runner/.cache/arm/packs
-
       - name: Activate vcpkg
         uses: ARM-software/cmsis-actions/vcpkg@v1
-        with:
-          cache: "-cmsis_dsp_vcpkg"
 
       - name: Activate Arm tool license
         uses: ARM-software/cmsis-actions/armlm@v1
-  
+
       - name: Prepare framework
         run: |
           cd Testing
@@ -76,7 +66,7 @@ jobs:
 
           echo "Load missing pack"
           csolution list packs -s  test.csolution.yml -m > required_packs.txt
-          
+
           cat required_packs.txt
           cpackget add -a -f required_packs.txt
 
@@ -84,7 +74,6 @@ jobs:
         run: |
           cd Testing/cmsis_build
           echo "Running tests"
-
           python runall.py -s -g ${{ matrix.compiler }} -avh $AVH_FVP_PLUGINS/../bin
 
       - name: Upload test report
@@ -93,10 +82,8 @@ jobs:
           name: test-report_${{ matrix.compiler }}
           path: Testing/cmsis_build/summary_${{ matrix.compiler }}.html
 
-      
       - name: Check error
         run: |
           cd Testing/cmsis_build
-          
           echo "Checking output..."
           test "$(grep "Error" summary_${{ matrix.compiler }}.html | wc -l)" -eq 0
