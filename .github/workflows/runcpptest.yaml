@@ -6,7 +6,7 @@ on:
   push:
     branches: [main]
 
-permissions: 
+permissions:
   actions: read
   security-events: write
 
@@ -18,7 +18,7 @@ jobs:
         # GCC currently has too many problems with the C++ API
         compiler: [AC6, CLANG]
         core: [M0, M4, M55]
-    runs-on: ubuntu-22.04    
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout
@@ -30,28 +30,18 @@ jobs:
           python-version: '3.10'
           cache: 'pip'
           cache-dependency-path: Testing/requirements.txt
-      
+
       - name: Install system packages
         run: |
           sudo add-apt-repository ppa:deadsnakes/ppa
           sudo apt-get install libpython3.9 libtinfo5
 
-      - name: Cache packs
-        uses: actions/cache@v4
-        with:
-          key: packs-cmsis-dsp
-          restore-keys: |
-              packs-
-          path: /home/runner/.cache/arm/packs
-
       - name: Activate vcpkg
         uses: ARM-software/cmsis-actions/vcpkg@v1
-        with:
-          cache: "-cmsis_dsp_vcpkg"
 
       - name: Activate Arm tool license
         uses: ARM-software/cmsis-actions/armlm@v1
-  
+
       - name: Cache boost
         id: cache-boost
         uses: actions/cache@v4
@@ -67,7 +57,7 @@ jobs:
           echo "Install boost"
           curl -o boost.tar.gz https://archives.boost.io/release/1.84.0/source/boost_1_84_0.tar.gz
           tar -xf boost.tar.gz
-          
+
       - name: Prepare framework
         run: |
           cd dsppp
@@ -81,16 +71,14 @@ jobs:
 
           echo "Load missing pack"
           csolution list packs -s  test.csolution.yml -m > required_packs.txt
-          
+
           cat required_packs.txt
           cpackget add -a -f required_packs.txt
-
 
       - name: Execute
         run: |
           cd dsppp
           echo "Running tests"
-
           python run_all.py -t -g ${{ matrix.compiler }} -c ${{ matrix.core }} -avh $AVH_FVP_PLUGINS/../bin
 
       - name: Upload test report
@@ -99,10 +87,8 @@ jobs:
           name: test-cpp-report_${{ matrix.compiler }}_${{ matrix.core }}
           path: dsppp/${{ matrix.compiler }}_results/errors_${{ matrix.core }}.txt
 
-      
       - name: Check error
         run: |
           cd dsppp
-          
           echo "Checking output..."
           test "$(cat ${{ matrix.compiler }}_results/errors_${{ matrix.core }}.txt | wc -l)" -eq 0
