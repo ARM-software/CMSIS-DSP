@@ -19,7 +19,7 @@ option(NEON "" ON)
 option(DISABLEFLOAT16 "" OFF)
 add_subdirectory(../../Source bin_dsp)
 target_compile_options(CMSISDSP PUBLIC -g)
-target_compile_definitions(CMSISDSP PRIVATE ARM_DSP_CUSTOM_CONFIG)
+#target_compile_definitions(CMSISDSP PRIVATE ARM_DSP_CUSTOM_CONFIG)
 target_include_directories(CMSISDSP PRIVATE .)
 
 target_compile_definitions(CMSISDSP PUBLIC ARM_DSP_TESTING)
@@ -27,4 +27,3 @@ target_compile_definitions(CMSISDSP PUBLIC ARM_DSP_TESTING)
 add_executable(test main.c)
 
 
-target_include_directories(test PUBLIC ..)
