@@ -193,14 +193,21 @@ def prepareWindowConfig(configs):
     # sig.hamming(FFTSize, sym=False) 
     for config in configs:
         c=configs[config] 
+        if "frameLength" in c:
+           frameLength = c["frameLength"]
+        else:
+           frameLength = c["fftlength"]
+           print("Warning: frameLength not specified, using fftlength")
         if c["win"] == "hamming":
-           win = sw.hamming(c["fftlength"], sym=False) 
+           win = sw.hamming(frameLength, sym=False) 
         if c["win"] == "hanning":
-           win = sw.hann(c["fftlength"], sym=False) 
+           win = sw.hann(frameLength, sym=False) 
+
 
         cvt=ConvertArray(c["type"])
         c["ctype"]=ctype(c["type"])
         c["ext"]=typeext(c["type"])
+        c["winLength"] = frameLength
 
         c["winSamples"] = cvt.getArrayContent(win)
 
