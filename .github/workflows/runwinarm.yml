@@ -16,28 +16,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Setup Python 3.10
+      - name: Setup Python 3.12
         uses: actions/setup-python@v6
         with:
-          python-version: '3.10'    
+          python-version: '3.12'
 
-      - name: Install system packages
+      - name: Install standard tools
         run: |
-          sudo add-apt-repository ppa:deadsnakes/ppa
-          sudo apt-get install libpython3.9 libtinfo5
-          sudo apt install build-essential
-          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 60 --slave /usr/bin/g++ g++ /usr/bin/g++-11
-          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 40 --slave /usr/bin/g++ g++ /usr/bin/g++-12
-          sudo update-alternatives --set gcc  /usr/bin/gcc-12
+          choco install gow
 
-
-      - name: Activate vcpkg
-        uses: ARM-software/cmsis-actions/vcpkg@v1
-        with:
-          config: "./vcpkg-neon-configuration.json"
-  
       - name: Prepare framework
         run: |
+          "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat"
           cd Testing
           echo "Create missing folders"
           mkdir FullBenchmark
@@ -73,6 +63,7 @@ jobs:
 
       - name: Execute generic tests
         run: |
+          bash
           cd Testing/build
 
           python ../processTests.py -p ../Patterns -d ../Parameters -gen .. -e -f ../Output.pickle
