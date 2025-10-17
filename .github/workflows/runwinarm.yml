@@ -27,70 +27,11 @@ jobs:
 
       - name: Prepare framework
         run: |
-          "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat"
-          cd Testing
-          echo "Create missing folders"
-          mkdir FullBenchmark
-          mkdir Output
-          mkdir GeneratedInclude
-          mkdir GeneratedSource
-          mkdir GeneratedIncludeBench
-          mkdir GeneratedSourceBench
+          cd Testing/winarm_test
           mkdir build
-
-          echo "Install missing python packages"
-          pip install -r requirements_win.txt
-
-
-          echo "Preprocess test description"
-          python preprocess.py -f desc.txt -o Output.pickle
-          python preprocess.py -f desc_f16.txt -o Output_f16.pickle
-
-          echo "Generate missing CPP headers"
-          python processTests.py -gen . -p Patterns -d Parameters -f Output.pickle -e
-          python processTests.py -gen . -p Patterns -d Parameters -f Output_f16.pickle -e
-
           cd build
-
           cmake -G "Ninja" .. 
-        
-#      - name: Setup tmate session
-#        uses: mxschmitt/action-tmate@v3
-
-      - name: Execute generic tests
-        run: |
-          bash
-          cd Testing/build
-
-          python ../processTests.py -p ../Patterns -d ../Parameters -gen .. -e -f ../Output.pickle
           ninja 
-          ./test > result.txt
-          python ../processResult.py --noerr -e -f ../Output.pickle -r result.txt -html > result.html 
-      
+          ./test.exe 
 
-      - name: Execute f16 C tests
-        run: |
-          cd Testing/build
-
-          python ../processTests.py -p ../Patterns -d ../Parameters -gen .. -e -f ../Output_f16.pickle
-          ninja 
-          ./test > result_f16.txt
-          python ../processResult.py --noerr -e -f ../Output_f16.pickle -r result_f16.txt -html > result_f16.html 
-
-      - name: Upload test report
-        uses: actions/upload-artifact@v4
-        with:
-          name: neon-test-report
-          path: |
-             Testing/build/result.html
-             Testing/build/result_f16.html
-
-      
-      - name: Check error
-        run: |
-          cd Testing/build
-          
-          echo "Checking output..."
-          test "$(grep "FAILED" result.html | wc -l)" -eq 0
-          test "$(grep "FAILED" result_f16.html | wc -l)" -eq 0
-
+    
