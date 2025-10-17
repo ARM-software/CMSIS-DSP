@@ -31,7 +31,7 @@ jobs:
           cd Testing/winarm_test
           mkdir build
           cd build
-          $env:$CC = cmd /c '"C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat"  >nul && where cl'
+          $env:CC = cmd /c '"C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat"  >nul && where cl'
           cmake -G "Ninja" .. 
           ninja 
           ./test.exe 
