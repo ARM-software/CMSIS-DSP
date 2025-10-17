@@ -89,46 +89,46 @@ melfilter:
 
 window:
   config1_f32:
-    fftlength: 1024 
+    winLength: 1024 
     type: "f32"  
     win: "hamming"
 
   config1_q31:
-    fftlength: 1024 
+    winLength: 1024 
     type: "q31"  
     win: "hamming"
 
   config1_q15:
-    fftlength: 1024 
+    winLength: 1024 
     type: "q15"  
     win: "hamming"
 
   config2_f32:
-    fftlength: 512 
+    winLength: 512 
     type: "f32"  
     win: "hamming"
 
   config2_q31:
-    fftlength: 512 
+    winLength: 512 
     type: "q31"  
     win: "hamming"
 
   config2_q15:
-    fftlength: 512 
+    winLength: 512 
     type: "q15"  
     win: "hamming"
 
   config3_f32:
-    fftlength: 256 
+    winLength: 256 
     type: "f32"  
     win: "hamming"
 
   config3_q31:
-    fftlength: 256 
+    winLength: 256 
     type: "q31"  
     win: "hamming"
 
   config3_q15:
-    fftlength: 256 
+    winLength: 256 
     type: "q15"  
     win: "hamming"
