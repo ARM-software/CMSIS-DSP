@@ -1,9 +1,4 @@
-python-matrix-runner
-PyYAML
-pyparsing
-colorama
-statsmodels
-numpy
-panda
-rich
+python-matrix-runner >= 1.2.0, <2.0.0
+PyYAML >= 6.0.3, <7.0.0
+pyparsing == 3.2.5
 
