@@ -1,0 +1,9 @@
+python-matrix-runner
+PyYAML
+pyparsing
+colorama
+statsmodels
+numpy
+panda
+rich
+
