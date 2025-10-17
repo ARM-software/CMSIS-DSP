@@ -28,11 +28,7 @@ jobs:
 
       - name: Prepare framework
         run: |
-          cd Testing/winarm_test
-          mkdir build
-          cd build
-          $env:CC = "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.44.35207\bin\Hostarm64\arm64\cl.exe"
-          cmake -G "Ninja" .. 
-          ninja 
+          cmd /c '"C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat" -arch=arm64 -host_arch=arm64 && C:\a\CMSIS-DSP\CMSIS-DSP\Testing\winarm_test\test.bat'
+         
 
     
