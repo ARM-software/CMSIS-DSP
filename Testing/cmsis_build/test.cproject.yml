@@ -142,6 +142,7 @@ project:
     - component: ARM::Device:Definition
       for-context: 
           - +VHT-Corstone-300
+          - +VHT-Corstone-310
           - +MPS3-Corstone-300
           - +VHT-Corstone-300-NOMVE
     - component: CMSIS-Compiler:CORE
@@ -159,16 +160,19 @@ project:
     - component: ARM::Device:Native Driver:SysCounter
       for-context: 
           - +VHT-Corstone-300
+          - +VHT-Corstone-310
           - +MPS3-Corstone-300
           - +VHT-Corstone-300-NOMVE
     - component: ARM::Device:Native Driver:SysTimer
       for-context: 
           - +VHT-Corstone-300
+          - +VHT-Corstone-310
           - +MPS3-Corstone-300
           - +VHT-Corstone-300-NOMVE
     - component: ARM::Device:Native Driver:Timeout
       for-context: 
           - +VHT-Corstone-300
+          - +VHT-Corstone-310
           - +MPS3-Corstone-300
           - +VHT-Corstone-300-NOMVE
     - component: ARM::Device:Native Driver:UART
@@ -176,6 +180,26 @@ project:
           - +MPS3-Corstone-300
   
   linker:
+  ######################## SSE310
+    - script: linker_scripts/gcc_sse310_mps3.ld
+      for-context:
+        - +VHT-Corstone-310
+      for-compiler: GCC
+
+    - script: linker_scripts/clang_sse310_mps3.sct
+      for-context:
+        - +VHT-Corstone-310
+      for-compiler: CLANG
+
+    - script: linker_scripts/ac6_sse310_mps3_s.sct
+      for-context:
+        - +VHT-Corstone-310
+      for-compiler: AC6
+
+    - regions: linker_scripts/SSE-310-MPS3/region_defs.h
+      for-context:
+        - +VHT-Corstone-310
+
   ######################## SSE300
     - script: linker_scripts/gcc_sse300_mps3.ld
       for-context:

@@ -354,32 +354,18 @@ ARM_DSP_ATTRIBUTE void arm_fir_interpolate_f32(
                 }
 
                 tapCnt = phaseLen & 3;
-                if (tapCnt > 0U)
+                while (tapCnt > 0U)
                 {
-                    mve_pred16_t p0 = vctp32q(tapCnt);
                     f32x4_t vecCoef;
-                    const float32_t *pCoef = ptr2;
 
-                    state0 = ptr1[0];
-                    state1 = ptr1[1];
-                    state2 = ptr1[2];
-                    state3 = ptr1[3];
+                    state0 = *ptr1++;
 
-                    vecCoef = vldrwq_gather_shifted_offset_z_f32(pCoef, vec_stridesM, p0);
-                    pCoef += S->L;
+                    vecCoef = vldrwq_gather_shifted_offset_f32(ptr2, vec_stridesM);
+                    ptr2 += S->L;
                     acc = vfmaq_n_f32(acc, vecCoef, state0);
+                    tapCnt--;
 
-                    vecCoef = vldrwq_gather_shifted_offset_z_f32(pCoef, vec_stridesM, p0);
-                    pCoef += S->L;
-                    acc = vfmaq_n_f32(acc, vecCoef, state1);
-
-                    vecCoef = vldrwq_gather_shifted_offset_z_f32(pCoef, vec_stridesM, p0);
-                    pCoef += S->L;
-                    acc = vfmaq_n_f32(acc, vecCoef, state2);
-
-                    vecCoef = vldrwq_gather_shifted_offset_z_f32(pCoef, vec_stridesM, p0);
-                    pCoef += S->L;
-                    acc = vfmaq_n_f32(acc, vecCoef, state3);
+                   
                 }
 
                 vst1q(pDst,  acc);
@@ -489,7 +475,7 @@ ARM_DSP_ATTRIBUTE void arm_fir_interpolate_f32(
 
   float32x4_t sum0v;
   float32x4_t accV0,accV1;
-  float32x4_t x0v,x1v,x2v,xa,xb;
+  float32x4_t x0v,x1v = { 0 },x2v,xa,xb;
   float32x2_t tempV;
 
   /* S->pState buffer contains previous frame (phaseLen - 1) samples */

@@ -88,11 +88,11 @@ ARM_DSP_ATTRIBUTE float16_t arm_braycurtis_distance_f16(const float16_t *pA,cons
         b = vld1q(pB);
 
         c = vabdq(a, b);
-        accumDiffV = vaddq(accumDiffV, c);
+        accumDiffV = vaddq_f16(accumDiffV, c);
 
         c = vaddq_f16(a, b);
         c = vabsq_f16(c);
-        accumSumV = vaddq(accumSumV, c);
+        accumSumV = vaddq_f16(accumSumV, c);
 
         pA += 8;
         pB += 8;
@@ -107,11 +107,11 @@ ARM_DSP_ATTRIBUTE float16_t arm_braycurtis_distance_f16(const float16_t *pA,cons
         b = vldrhq_z_f16(pB, p0);
 
         c = vabdq(a, b);
-        accumDiffV = vaddq_m(accumDiffV, accumDiffV, c, p0);
+        accumDiffV = vaddq_m_f16(accumDiffV, accumDiffV, c, p0);
 
         c = vaddq_f16(a, b);
         c = vabsq_f16(c);
-        accumSumV = vaddq_m(accumSumV, accumSumV, c, p0);
+        accumSumV = vaddq_m_f16(accumSumV, accumSumV, c, p0);
     }
 
     accumDiff = vecAddAcrossF16Mve(accumDiffV);

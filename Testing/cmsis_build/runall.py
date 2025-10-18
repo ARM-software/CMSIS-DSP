@@ -15,6 +15,7 @@ parser.add_argument('-r', action='store_true', help="Raw results only")
 parser.add_argument('-c', action='store_true', help="Display cycles (so passing test are displayed)")
 parser.add_argument('-g', nargs='?',type = str,help="AC6 / CLANG / GCC")
 parser.add_argument('-s', action='store_true', help="Take into account AVH error code")
+parser.add_argument('-no', action='store_true', help="No run")
 
 args = parser.parse_args()
 
@@ -153,6 +154,10 @@ AVHROOT = args.avh
 
 # Run AVH
 def runAVH(build,core,compiler):
+    if args.no:
+       print("No AVH run")
+       return(Result("No run",error=False))
+    avh = None
     axf="cprj/out/test/%s/Release/test.axf" % (build,)
     elf="cprj/out/test/%s/Release/test.elf" % (build,)
     app = axf 
@@ -176,7 +181,8 @@ def runAVH(build,core,compiler):
     else:
        avh = avhUnixExe[core]
 
-
+    if avh is None:
+        return(Result("AVH executable not found",error=True))
     
     res=run(avh,"-f",config,app,withExitCodeCheck=args.s)
     return(res)
@@ -204,8 +210,8 @@ for t in tests:
 #allSuites=[
 #("MISCF32","../Output.pickle"),
 #("MISCQ31","../Output.pickle"),
-#("SupportTestsF16","../Output_f16.pickle"),
-###("BasicTestsF32","../Output.pickle"),
+#("SupportTestsF32","../Output.pickle"),
+#("BasicTestsF32","../Output.pickle"),
 ##("BasicTestsF16","../Output_f16.pickle"),
 #]
 
@@ -225,6 +231,7 @@ compil_config={
       ("VHT_M0P","M0plus")
     ],
     'GCC':[
+      #("VHT-Corstone-310","CS310"),
       ("VHT-Corstone-300","CS300"),
       #("VHT-Corstone-300-NOMVE","CS300"),
       ("VHT_M33","M33_DSP_FP"),
@@ -244,6 +251,13 @@ compil_config={
     ],
 }
 
+# Latest version by default
+compil_version = {}
+
+#compil_version = {
+#    'GCC': '13.3.1'
+#}
+
 #Override previous solutions for more restricted testing.
 #compil_config={
 #    'AC6':[
@@ -251,9 +265,10 @@ compil_config={
 #      ("VHT_M33","M33_DSP_FP"),
 #    ],
 #    'GCC':[
-#      ("VHT-Corstone-300","CS300"),
+#        ("VHT-Corstone-310","CS310"),
+      #("VHT-Corstone-300","CS300"),
 #      ("VHT_M33","M33_DSP_FP"),
-#    ],
+#   ],
 #    'CLANG':[
 #      ("VHT-Corstone-300","CS300"),
 #      ("VHT_M33","M33_DSP_FP"),
@@ -292,8 +307,13 @@ with open(results_file,"w") as f:
     for comp_nb,compiler in enumerate(compilers):
         if compiler in compil_config:
             solutions = compil_config[compiler]
-            printTitle("Process compiler %s (%d / %d)" % (compiler,comp_nb+1,len(compilers)))
-            print("<h1>Compiler %s</h1>" % compiler,file=f)
+            compiler_name = compiler
+            if compiler in compil_version:
+                version = compil_version[compiler]
+                compiler_name = f"{compiler}@{version}"
+            
+            printTitle("Process compiler %s (%d / %d)" % (compiler_name,comp_nb+1,len(compilers)))
+            print("<h1>Compiler %s</h1>" % compiler_name,file=f)
             maxNbBuilds=len(solutions)
             buildNb=0
             for build,core in solutions:
@@ -320,17 +340,21 @@ with open(results_file,"w") as f:
                        # (Like one using AC6 and the other
                        # using gcc)
                        if args.n:
-                          res=run("cbuild","-O", "cprj","test.csolution.yml","-c",buildFile,"--toolchain",compiler)
+                          res=run("cbuild","-O", "cprj","test.csolution.yml","-c",buildFile,"--toolchain",compiler_name)
                        else:
-                          res=run("cbuild","-O", "cprj","test.csolution.yml","-r","--update-rte","-c",buildFile,"--toolchain",compiler)
+                          res=run("cbuild","-O", "cprj","test.csolution.yml","-r","--update-rte","-c",buildFile,"--toolchain",compiler_name)
                     else:
-                       res=run("cbuild","-O", "cprj","test.csolution.yml","-c",buildFile,"--toolchain",compiler)
+                       res=run("cbuild","-O", "cprj","test.csolution.yml","-c",buildFile,"--toolchain",compiler_name)
                     if res.error:
                         printError("Error cbuild")
                         print("<p><font color=\"red\">Error building %s</font></p><PRE>" % s,file=f)
                         print(res.msg,file=f)
                         print("</PRE>",file=f)
                         continue
+                    elif DEBUG:
+                        print("<PRE>",file=f)
+                        print(res.msg,file=f)
+                        print("</PRE>",file=f)
                     printSubTitle("Run AVH")
                     res=runAVH(build,core,compiler)
                     if res.error:

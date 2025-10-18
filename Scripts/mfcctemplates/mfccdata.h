@@ -47,7 +47,7 @@ extern const {{configs["dct"][config]["ctype"]}} mfcc_dct_coefs_{{config}}[NB_MF
 
 {% for config in configs["window"] %}
 {{iff16("window",config)}}
-#define NB_MFCC_WIN_COEFS_{{config.upper()}} {{configs["window"][config]['fftlength']}}
+#define NB_MFCC_WIN_COEFS_{{config.upper()}} {{configs["window"][config]['winLength']}}
 extern const {{configs["window"][config]["ctype"]}} mfcc_window_coefs_{{config}}[NB_MFCC_WIN_COEFS_{{config.upper()}}];
 {{endiff16("window",config)}}
 

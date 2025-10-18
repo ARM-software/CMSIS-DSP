@@ -348,7 +348,7 @@ __STATIC_INLINE void arm_fir_f32_5_8_mve(const arm_fir_instance_f32 * S,
     pTempSrc = &pState[blockSize];
     pTempDest = pState;
     blkCnt = numTaps;
-    while (blkCnt > 0)
+    while (blkCnt > 1)
     {
         *pTempDest++ = *pTempSrc++;
         blkCnt--;
@@ -670,6 +670,7 @@ uint32_t blockSize)
     pTempSrc = &pRefStatePtr[blockSize];
     pTempDest = pRefStatePtr;
 
+    numTaps--;
     blkCnt = numTaps >> 2;
     while (blkCnt > 0)
     {

@@ -393,7 +393,7 @@ ARM_DSP_ATTRIBUTE void arm_fir_decimate_f32(
   float32_t *px0, *px1, *px2, *px3;
   float32_t x1, x2, x3;
 
-  float32x4_t accv,acc0v,acc1v,acc2v,acc3v;
+  float32x4_t accv = { 0 },acc0v,acc1v,acc2v,acc3v;
   float32x4_t x0v, x1v, x2v, x3v;
   float32x4_t c0v;
   float32x2_t temp;

@@ -40,6 +40,8 @@
 #include "arm_math_types.h"
 #include "arm_math_types_f16.h"
 
+#include <cinttypes>
+
 using namespace std;
 
 namespace Client
@@ -268,7 +270,7 @@ namespace Client
 #ifdef EXTBENCH
             printf("S: %ld 0 0 t Y\n",this->currentId);
 #else
-            printf("S: %ld 0 0 %u Y\n",this->currentId, cycles);
+            printf("S: %ld 0 0 %" PRIu32 " Y\n",this->currentId, cycles);
 #endif
         }
     }
@@ -760,7 +762,7 @@ namespace Client
             {
                v = data[i];
                TOINT32(t,v);
-               printf("D: 0x%08x\n",t);
+               printf("D: 0x%" PRIX32 "\n",t);
             }
             printf("D: END\n");
         }
@@ -823,7 +825,7 @@ namespace Client
            {
               v = data[i];
               t = (uint32_t)v;
-              printf("D: 0x%08x\n",t);
+              printf("D: 0x%" PRIX32 "\n",t);
            }
            printf("D: END\n");
         }
@@ -842,7 +844,7 @@ namespace Client
            {
               v = data[i];
               t = (uint32_t)v;
-              printf("D: 0x%08x\n",t);
+              printf("D: 0x%" PRIX32 "\n",t);
            }
            printf("D: END\n");
         }
@@ -861,7 +863,7 @@ namespace Client
             {
                v = data[i];
                t = (uint32_t)v;
-               printf("D: 0x%08x\n",t);
+               printf("D: 0x%" PRIX32 "\n",t);
             }
             printf("D: END\n");
         }
@@ -904,7 +906,7 @@ namespace Client
            {
               v = data[i];
               t = (uint32_t)v;
-              printf("D: 0x%08x\n",t);
+              printf("D: 0x%" PRIX32 "\n",t);
            }
            printf("D: END\n");
         }
@@ -923,7 +925,7 @@ namespace Client
             {
                v = data[i];
                t = (uint32_t)v;
-               printf("D: 0x%08x\n",t);
+               printf("D: 0x%" PRIX32 "\n",t);
             }
             printf("D: END\n");
         }
@@ -942,7 +944,7 @@ namespace Client
             {
                v = data[i];
                t = (uint32_t)v;
-               printf("D: 0x%08x\n",t);
+               printf("D: 0x%" PRIX32 "\n",t);
             }
             printf("D: END\n");
         }

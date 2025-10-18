@@ -47,9 +47,9 @@
   @param[in]     blockSize  number of samples in each vector
  */
 
-#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE) && defined(ARM_DSP_BUILT_WITH_GCC)
-#pragma GCC warning "Scalar version of arm_float_to_f16 built. Helium version has build issues with gcc."
-#endif 
+//#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE) && defined(ARM_DSP_BUILT_WITH_GCC)
+//pragma GCC warning "Scalar version of arm_float_to_f16 built. Helium version has build issues with gcc."
+//#endif 
 
 #if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE) &&  !defined(ARM_DSP_BUILT_WITH_GCC)
 

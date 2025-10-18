@@ -2459,7 +2459,7 @@ operator*(const complex<arm_cmsis_dsp::Q<M,F,S>>& __z, const complex<arm_cmsis_d
   return(complex<arm_cmsis_dsp::Q<M,F,S>>(re,im));
 };
 
-static complex<arm_cmsis_dsp::Q31>
+static inline complex<arm_cmsis_dsp::Q31>
 operator*(const complex<arm_cmsis_dsp::Q31>& __z, const complex<arm_cmsis_dsp::Q31>& __w) 
 {
   arm_cmsis_dsp::Q31 __a = __z.real();

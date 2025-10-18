@@ -1,5 +1,4 @@
 solution:
-  compiler: AC6
 
   language-C: c11
   language-CPP: c++17
@@ -8,6 +7,7 @@ solution:
   packs:
     - pack: ARM::CMSIS@6.0.0
     - pack: ARM::V2M_MPS3_SSE_300_BSP@1.4.0
+    - pack: ARM::V2M_MPS3_SSE_310_BSP@1.3.0
     - pack: ARM::CMSIS-Compiler@2.0.0
     - pack: ARM::Cortex_DFP@1.0.0
 
@@ -47,6 +47,25 @@ solution:
         - CORTEXM
         - ARMCM55
         - SSE300MPS3
+        - VHT
+      misc:
+        - for-compiler: GCC
+          Link:
+            - --specs=rdimon.specs
+          Library:
+            - -lrdimon
+        - for-compiler: CLANG
+          Link:
+            - -lcrt0-semihost
+            - -lsemihost
+
+    - type: VHT-Corstone-310
+      device: ARM::SSE-310-MPS3_FVP
+      board: ARM::V2M-MPS3-SSE-310
+      define:
+        - CORTEXM
+        - ARMCM55
+        - SSE310MPS3
         - VHT
       misc:
         - for-compiler: GCC

@@ -72,7 +72,7 @@ ARM_DSP_ATTRIBUTE void arm_add_f16(
         /* Add and then store the results in the destination buffer. */
         vec1 = vld1q(pSrcA);
         vec2 = vld1q(pSrcB);
-        res = vaddq(vec1, vec2);
+        res = vaddq_f16(vec1, vec2);
         vst1q(pDst, res);
 
         /* Increment pointers */
@@ -93,7 +93,7 @@ ARM_DSP_ATTRIBUTE void arm_add_f16(
       mve_pred16_t p0 = vctp16q(blkCnt);
       vec1 = vld1q(pSrcA);
       vec2 = vld1q(pSrcB);
-      vstrhq_p(pDst, vaddq(vec1,vec2), p0);
+      vstrhq_p_f16(pDst, vaddq_f16(vec1,vec2), p0);
     }
 
 }

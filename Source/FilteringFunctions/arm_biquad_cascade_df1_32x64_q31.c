@@ -354,7 +354,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cas_df1_32x64_q31(
               vecIn = vld1q(pIn1);
               pIn1 += 1;
               Yn1 = vmlaldavaq(Yn1, vecIn, vecCoef);
-              Yn1 = asrl(Yn1, -shift);
+              Yn1 = lsll(Yn1, shift);
               /*
                * Store the output in the destination buffer in 1.31 format.
                */
@@ -376,7 +376,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cas_df1_32x64_q31(
               Yn1 = vmlaldavaq(Yn1, vecIn0, vecCoef);
               vecIn = vld1q(pIn1);
               pIn1 += 1;
-              Yn1 = asrl(Yn1, -shift);
+              Yn1 = lsll(Yn1, shift);
               /*
                * Store the output in the destination buffer in 1.31 format.
                */
@@ -389,7 +389,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cas_df1_32x64_q31(
               Yn1 = vmlaldavaq(Yn1, vecIn1, vecCoef);
               vecIn0 = vld1q(pIn1);
               pIn1 += 1;
-              Yn1 = asrl(Yn1, -shift);
+              Yn1 = lsll(Yn1, shift);
               *pOut++ = (q31_t) (Yn1 >> 32);
   
               acc = mult32x64(Yn1, a1);
@@ -399,7 +399,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cas_df1_32x64_q31(
               Yn1 = vmlaldavaq(Yn1, vecIn2, vecCoef);
               vecIn1 = vld1q(pIn1);
               pIn1 += 1;
-              Yn1 = asrl(Yn1, -shift);
+              Yn1 = lsll(Yn1, shift);
               *pOut++ = (q31_t) (Yn1 >> 32);
   
               acc = mult32x64(Yn1, a1);
@@ -409,7 +409,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cas_df1_32x64_q31(
               Yn1 = vmlaldavaq(Yn1, vecIn, vecCoef);
               vecIn2 = vld1q(pIn1);
               pIn1 += 1;
-              Yn1 = asrl(Yn1, -shift);
+              Yn1 = lsll(Yn1, shift);
               *pOut++ = (q31_t) (Yn1 >> 32);
               /*
                * Decrement the loop counter
@@ -433,7 +433,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cas_df1_32x64_q31(
               Yn2 = Yn1;
               Yn1 = acc;
               Yn1 = vmlaldavaq(Yn1, vecIn0, vecCoef);
-              Yn1 = asrl(Yn1, -shift);
+              Yn1 = lsll(Yn1, shift);
               *pOut++ = (q31_t) (Yn1 >> 32);
               /*
                * save input state
@@ -449,7 +449,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cas_df1_32x64_q31(
               Yn2 = Yn1;
               Yn1 = acc;
               Yn1 = vmlaldavaq(Yn1, vecIn0, vecCoef);
-              Yn1 = asrl(Yn1, -shift);
+              Yn1 = lsll(Yn1, shift);
               *pOut++ = (q31_t) (Yn1 >> 32);
   
               acc = mult32x64(Yn1, a1);
@@ -457,7 +457,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cas_df1_32x64_q31(
               Yn2 = Yn1;
               Yn1 = acc;
               Yn1 = vmlaldavaq(Yn1, vecIn1, vecCoef);
-              Yn1 = asrl(Yn1, -shift);
+              Yn1 = lsll(Yn1, shift);
               *pOut++ = (q31_t) (Yn1 >> 32);
               /*
                * save input state
@@ -473,7 +473,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cas_df1_32x64_q31(
               Yn2 = Yn1;
               Yn1 = acc;
               Yn1 = vmlaldavaq(Yn1, vecIn0, vecCoef);
-              Yn1 = asrl(Yn1, -shift);
+              Yn1 = lsll(Yn1, shift);
               *pOut++ = (q31_t) (Yn1 >> 32);
   
               acc = mult32x64(Yn1, a1);
@@ -481,7 +481,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cas_df1_32x64_q31(
               Yn2 = Yn1;
               Yn1 = acc;
               Yn1 = vmlaldavaq(Yn1, vecIn1, vecCoef);
-              Yn1 = asrl(Yn1, -shift);
+              Yn1 = lsll(Yn1, shift);
               *pOut++ = (q31_t) (Yn1 >> 32);
   
               acc = mult32x64(Yn1, a1);
@@ -489,7 +489,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cas_df1_32x64_q31(
               Yn2 = Yn1;
               Yn1 = acc;
               Yn1 = vmlaldavaq(Yn1, vecIn2, vecCoef);
-              Yn1 = asrl(Yn1, -shift);
+              Yn1 = lsll(Yn1, shift);
               *pOut++ = (q31_t) (Yn1 >> 32);
               /*
                * save input state

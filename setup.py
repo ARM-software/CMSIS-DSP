@@ -8,6 +8,7 @@ import os
 import os.path
 import re
 import pathlib
+import platform
 
 
 here = pathlib.Path(__file__).parent.resolve()
@@ -27,30 +28,52 @@ includes = [os.path.join(ROOT,"Include"),os.path.join(ROOT,"PrivateInclude"),os.
 
 linkargs=[]
 
+machine = platform.machine().lower()
+ARM = False
+if machine == "aarch64" or machine == "arm64":
+    ARM = True
+
 if sys.platform == 'win32':
   cflags = ["-DWIN",
             "-DCMSISDSP",
             "-DUNALIGNED_SUPPORT_DISABLE"] 
 elif sys.platform == 'darwin':
-  os.environ["ARCHFLAGS"] = "-arch arm64"
-  linkargs = ["-arch", "arm64"]
-  cflags = ["-DARM_MATH_NEON",
-            "-Wno-attributes",
-            "-Wno-unused-function",
-            "-Wno-unused-variable",
-            "-Wno-implicit-function-declaration",
-            "-DCMSISDSP",
-            "-arch", "arm64",
-            "-D__GNUC_PYTHON__"]
-else:
-  cflags = ["-DARM_MATH_NEON",
-            "-Wno-attributes",
-            "-Wno-unused-function",
-            "-Wno-unused-variable",
-            "-Wno-implicit-function-declaration",
-            "-DCMSISDSP",
-            "-D__GNUC_PYTHON__"]
+  if ARM:
+     os.environ["ARCHFLAGS"] = "-arch arm64"
+     linkargs = ["-arch", "arm64"]
+     cflags = ["-DARM_MATH_NEON",
+               "-Wno-attributes",
+               "-Wno-unused-function",
+               "-Wno-unused-variable",
+               "-Wno-implicit-function-declaration",
+               "-DCMSISDSP",
+               "-arch", "arm64",
+               "-D__GNUC_PYTHON__"]
+  else:
+    cflags = ["-Wno-attributes",
+              "-Wno-unused-function",
+              "-Wno-unused-variable",
+              "-Wno-implicit-function-declaration",
+              "-DCMSISDSP",
+              "-D__GNUC_PYTHON__"]
 
+else:
+  if ARM:
+    cflags = ["-DARM_MATH_NEON",
+              "-Wno-attributes",
+              "-Wno-unused-function",
+              "-Wno-unused-variable",
+              "-Wno-implicit-function-declaration",
+              "-DCMSISDSP",
+              "-D__GNUC_PYTHON__"]
+  else:
+    cflags = ["-Wno-attributes",
+              "-Wno-unused-function",
+              "-Wno-unused-variable",
+              "-Wno-implicit-function-declaration",
+              "-DCMSISDSP",
+              "-D__GNUC_PYTHON__"]
+  
 # Add dependencies
 transformMod = [] # transform + common + basic + complexf + fastmath + matrix + statistics
 statisticsMod = [] # statistics + common + fastmath + basic

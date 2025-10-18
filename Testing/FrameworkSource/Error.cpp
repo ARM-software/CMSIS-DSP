@@ -109,13 +109,14 @@ void assert_near_equal(unsigned long nb,q63_t pa, q63_t pb, q63_t threshold)
     }
 };
 
+
 template <> 
 void assert_near_equal(unsigned long nb,q31_t pa, q31_t pb, q31_t threshold)
 {
     if (abs(pa - pb) > threshold)
     {
          char details[200];
-         snprintf(details,200,"diff %d > %d (0x%08X,0x%08X)",abs(pa - pb) , threshold,pa,pb);
+         snprintf(details,200,"diff %" PRId32 " > %" PRId32 " (0x%" PRIX32 ",0x%" PRIX32 ")",abs(pa - pb) , threshold,pa,pb);
          throw (Error(EQUAL_ERROR,nb,details));
     }
 };

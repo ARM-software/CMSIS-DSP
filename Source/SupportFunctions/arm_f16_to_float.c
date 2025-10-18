@@ -52,9 +52,9 @@
 
  */
 
-#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE) && defined(ARM_DSP_BUILT_WITH_GCC)
-#pragma GCC warning "Scalar version of arm_f16_to_float built. Helium version has build issues with gcc."
-#endif 
+//#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE) && defined(ARM_DSP_BUILT_WITH_GCC)
+//#pragma GCC warning "Scalar version of arm_f16_to_float built. Helium version has build issues with gcc."
+//#endif 
 
 #if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE) &&  !defined(ARM_DSP_BUILT_WITH_GCC)
 
