@@ -226,6 +226,10 @@ __STATIC_INLINE int32_t arm_div_int64_to_int32(int64_t num, int32_t den)
     int32_t   normalized;
     int32_t   norm;
 
+    if (den == 0)
+      return 0;
+    if (num == INT64_MIN && den == -1)
+    return INT32_MAX;
     /*
      * if sum fits in 32bits
      * avoid costly 64-bit division
@@ -250,6 +254,8 @@ __STATIC_INLINE int32_t arm_div_int64_to_int32(int64_t num, int32_t den)
          */
         result = (int32_t) (num / den);
 
+    if (result > INT32_MAX) return INT32_MAX;
+    if (result < INT32_MIN) return INT32_MIN;
     return result;
 }
 
