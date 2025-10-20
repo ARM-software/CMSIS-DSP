@@ -112,7 +112,7 @@ __STATIC_FORCEINLINE q15_t arm_atan_q15(q15_t y,q15_t x)
     /* Shift ratio by shift */
     if (shift >=0)
     {
-       ratio = __SSAT(((q31_t) ratio << shift), 16);
+       ratio = (q15_t)__SSAT(((q31_t) ratio << shift), 16);
     }
     else
     {
@@ -132,7 +132,7 @@ __STATIC_FORCEINLINE q15_t arm_atan_q15(q15_t y,q15_t x)
     /* Shift ratio by shift */
     if (shift >=0)
     {
-       ratio = __SSAT(((q31_t) ratio << shift), 16);
+       ratio = (q15_t)__SSAT(((q31_t) ratio << shift), 16);
     }
     else
     {
