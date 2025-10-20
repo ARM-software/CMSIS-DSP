@@ -124,16 +124,16 @@ ARM_DSP_ATTRIBUTE void arm_negate_q15(
     write_q15x2_ia (&pDst, __QSUB16(0, in1));
 #else
     in = *pSrc++;
-    *pDst++ = (in == (q15_t) 0x8000) ? (q15_t) 0x7fff : (q15_t)(-in);
+    *pDst++ = ((q15_t)in == 0x8000) ? 0x7fff : (q15_t)(-in);
 
     in = *pSrc++;
-    *pDst++ = (in == (q15_t) 0x8000) ? (q15_t) 0x7fff : (q15_t)(-in);
+    *pDst++ = ((q15_t)in == 0x8000) ? 0x7fff : (q15_t)(-in);
 
     in = *pSrc++;
-    *pDst++ = (in == (q15_t) 0x8000) ? (q15_t) 0x7fff : (q15_t)(-in);
+    *pDst++ = ((q15_t)in == 0x8000) ? 0x7fff : (q15_t)(-in);
 
     in = *pSrc++;
-    *pDst++ = (in == (q15_t) 0x8000) ? (q15_t) 0x7fff : (q15_t)(-in);
+    *pDst++ = ((q15_t)in == 0x8000) ? 0x7fff : (q15_t)(-in);
 #endif
 
     /* Decrement loop counter */
@@ -156,7 +156,7 @@ ARM_DSP_ATTRIBUTE void arm_negate_q15(
 
     /* Negate and store result in destination buffer. */
     in = *pSrc++;
-    *pDst++ = (in == (q15_t) 0x8000) ? (q15_t) 0x7fff : (q15_t)(-in);
+    *pDst++ = ((q15_t)in == 0x8000) ? 0x7fff : (q15_t)(-in);
 
     /* Decrement loop counter */
     blkCnt--;

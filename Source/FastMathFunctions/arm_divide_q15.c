@@ -100,7 +100,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_divide_q15(q15_t numerator,
     temp = -temp;
   }
 
-  *quotient=temp;
+  *quotient=(q15_t)temp;
 
   return(ARM_MATH_SUCCESS);
 }

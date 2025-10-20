@@ -119,16 +119,16 @@ ARM_DSP_ATTRIBUTE void arm_negate_q7(
     write_q7x4_ia (&pDst, __QSUB8(0, in1));
 #else
     in = *pSrc++;
-    *pDst++ = (in == (q7_t) 0x80) ? (q7_t) 0x7f : -in;
+    *pDst++ = ((q7_t)in == 0x80) ? 0x7f : (q7_t)(-in);
 
     in = *pSrc++;
-    *pDst++ = (in == (q7_t) 0x80) ? (q7_t) 0x7f : -in;
+    *pDst++ = ((q7_t)in == 0x80) ? 0x7f : (q7_t)(-in);
 
     in = *pSrc++;
-    *pDst++ = (in == (q7_t) 0x80) ? (q7_t) 0x7f : -in;
+    *pDst++ = ((q7_t)in == 0x80) ? 0x7f : (q7_t)(-in);
 
     in = *pSrc++;
-    *pDst++ = (in == (q7_t) 0x80) ? (q7_t) 0x7f : -in;
+    *pDst++ = ((q7_t)in == 0x80) ? 0x7f : (q7_t)(-in);
 #endif
 
     /* Decrement loop counter */
@@ -155,7 +155,7 @@ ARM_DSP_ATTRIBUTE void arm_negate_q7(
 #if defined (ARM_MATH_DSP)
     *pDst++ = (q7_t) __QSUB8(0, in);
 #else
-    *pDst++ = (in == (q7_t) 0x80) ? (q7_t) 0x7f : -in;
+    *pDst++ = ((q7_t)in == 0x80) ? 0x7f : (q7_t)(-in);
 #endif
 
     /* Decrement loop counter */
