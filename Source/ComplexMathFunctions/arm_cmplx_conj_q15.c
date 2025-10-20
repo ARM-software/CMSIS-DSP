@@ -151,19 +151,19 @@ ARM_DSP_ATTRIBUTE void arm_cmplx_conj_q15(
 #else
     *pDst++ =  *pSrc++;
     in1 = *pSrc++;
-    *pDst++ = (in1 == (q15_t) 0x8000) ? (q15_t) 0x7fff : (q15_t)(-in1);
+    *pDst++ = ((q15_t)in1 == 0x8000) ? 0x7fff : (q15_t)(-in1);
 
     *pDst++ =  *pSrc++;
     in1 = *pSrc++;
-    *pDst++ = (in1 == (q15_t) 0x8000) ? (q15_t) 0x7fff : (q15_t)(-in1);
+    *pDst++ = ((q15_t)in1 == 0x8000) ? 0x7fff : (q15_t)(-in1);
 
     *pDst++ =  *pSrc++;
     in1 = *pSrc++;
-    *pDst++ = (in1 == (q15_t) 0x8000) ? (q15_t) 0x7fff : (q15_t)(-in1);
+    *pDst++ = ((q15_t)in1 == 0x8000) ? 0x7fff : (q15_t)(-in1);
 
     *pDst++ =  *pSrc++;
     in1 = *pSrc++;
-    *pDst++ = (in1 == (q15_t) 0x8000) ? (q15_t) 0x7fff : (q15_t)(-in1);
+    *pDst++ = ((q15_t)in1 == 0x8000) ? 0x7fff : (q15_t)(-in1);
 
 #endif /* #if defined (ARM_MATH_DSP) */
 
@@ -191,7 +191,7 @@ ARM_DSP_ATTRIBUTE void arm_cmplx_conj_q15(
 #if defined (ARM_MATH_DSP)
     *pDst++ = __SSAT(-in1, 16);
 #else
-    *pDst++ = (in1 == ((q15_t) 0x8000)) ? ((q15_t) 0x7fff) : ((q15_t)-in1);
+    *pDst++ = ((q15_t)in1 == 0x8000) ? 0x7fff : (q15_t)(-in1);
 #endif
 
     /* Decrement loop counter */
