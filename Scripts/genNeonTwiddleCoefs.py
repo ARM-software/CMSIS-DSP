@@ -169,26 +169,44 @@ def write_const(theType,h,n,name,val):
 
 def printHUInt32Array(f,name,arr):
     print(f"#define {name.upper()}_LEN {len(arr)}",file=h)
+    if (len(arr)==0):
+        print(f"extern const uint32_t *{name};\n",file=f)
+        return
     print(f"extern const uint32_t {name}[{name.upper()}_LEN];",file=f)
 
 def printHFloat32Array(f,name,arr):
     print(f"#define {name.upper()}_LEN {len(arr)}",file=h)
+    if (len(arr)==0):
+        print(f"extern const float32_t *{name};\n",file=f)
+        return
     print(f"extern const float32_t {name}[{name.upper()}_LEN];",file=f)
 
 def printHFloat16Array(f,name,arr):
     print(f"#define {name.upper()}_LEN {len(arr)}",file=h)
+    if (len(arr)==0):
+        print(f"extern const float16_t *{name};\n",file=f)
+        return
     print(f"extern const float16_t {name}[{name.upper()}_LEN];",file=f)
 
 def printHQ31Array(f,name,arr):
     print(f"#define {name.upper()}_LEN {len(arr)}",file=h)
+    if (len(arr)==0):
+        print(f"extern const q31_t *{name};\n",file=f)
+        return
     print(f"extern const q31_t {name}[{name.upper()}_LEN];",file=f)
 
 def printHQ15Array(f,name,arr):
     print(f"#define {name.upper()}_LEN {len(arr)}",file=h)
+    if (len(arr)==0):
+        print(f"extern const q15_t *{name};\n",file=f)
+        return
     print(f"extern const q15_t {name}[{name.upper()}_LEN];",file=f)
 
 def printHQ7Array(f,name,arr):
     print(f"#define {name.upper()}_LEN {len(arr)}",file=h)
+    if (len(arr)==0):
+        print(f"extern const q7_t *{name};\n",file=f)
+        return
     print(f"extern const q7_t {name}[{name.upper()}_LEN];",file=f)
 
 

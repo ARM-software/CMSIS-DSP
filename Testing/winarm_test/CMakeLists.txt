@@ -20,6 +20,7 @@ option(DISABLEFLOAT16 "" OFF)
 add_subdirectory(../../Source bin_dsp)
 #target_compile_definitions(CMSISDSP PRIVATE ARM_DSP_CUSTOM_CONFIG)
 target_include_directories(CMSISDSP PRIVATE .)
+target_compile_options(CMSISDSP PUBLIC /O2 /Ob2 /W4 /Oi /WX-)
 
 target_compile_definitions(CMSISDSP PUBLIC ARM_DSP_TESTING)
 

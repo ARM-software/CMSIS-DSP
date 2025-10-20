@@ -92,7 +92,8 @@ extern const float16_t arm_neon_rfft_twiddles_16_f16[ARM_NEON_RFFT_TWIDDLES_16_F
 #define ARM_NEON_RFFT_FACTORS_16_F16_LEN 4
 extern const uint32_t arm_neon_rfft_factors_16_f16[ARM_NEON_RFFT_FACTORS_16_F16_LEN];
 #define ARM_NEON_RFFT_TWIDDLES_NEON_16_F16_LEN 0
-extern const float16_t arm_neon_rfft_twiddles_neon_16_f16[ARM_NEON_RFFT_TWIDDLES_NEON_16_F16_LEN];
+extern const float16_t *arm_neon_rfft_twiddles_neon_16_f16;
+
 #define ARM_NEON_RFFT_FACTORS_NEON_16_F16_LEN 4
 extern const uint32_t arm_neon_rfft_factors_neon_16_f16[ARM_NEON_RFFT_FACTORS_NEON_16_F16_LEN];
 #define ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_16_F16_LEN 24
@@ -105,7 +106,8 @@ extern const float16_t arm_neon_rfft_twiddles_32_f16[ARM_NEON_RFFT_TWIDDLES_32_F
 #define ARM_NEON_RFFT_FACTORS_32_F16_LEN 4
 extern const uint32_t arm_neon_rfft_factors_32_f16[ARM_NEON_RFFT_FACTORS_32_F16_LEN];
 #define ARM_NEON_RFFT_TWIDDLES_NEON_32_F16_LEN 0
-extern const float16_t arm_neon_rfft_twiddles_neon_32_f16[ARM_NEON_RFFT_TWIDDLES_NEON_32_F16_LEN];
+extern const float16_t *arm_neon_rfft_twiddles_neon_32_f16;
+
 #define ARM_NEON_RFFT_FACTORS_NEON_32_F16_LEN 4
 extern const uint32_t arm_neon_rfft_factors_neon_32_f16[ARM_NEON_RFFT_FACTORS_NEON_32_F16_LEN];
 #define ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_32_F16_LEN 24
