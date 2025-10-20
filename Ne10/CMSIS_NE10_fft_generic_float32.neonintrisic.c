@@ -119,10 +119,10 @@ static inline void FFT4_FCU_INPLACE (ne10_fft_cpx_float32_t scratch_out[4])
     NE10_CPX_SUB (scratch_out[2], scratch[0], scratch[2]);
     NE10_CPX_ADD (scratch_out[0], scratch[0], scratch[2]);
 
-    scratch_out[1].r = scratch[1].r + scratch[3].i;
-    scratch_out[1].i = scratch[1].i - scratch[3].r;
-    scratch_out[3].r = scratch[1].r - scratch[3].i;
-    scratch_out[3].i = scratch[1].i + scratch[3].r;
+    scratch_out[1].r = vaddq_f32(scratch[1].r , scratch[3].i);
+    scratch_out[1].i = vsubq_f32(scratch[1].i , scratch[3].r);
+    scratch_out[3].r = vsubq_f32(scratch[1].r , scratch[3].i);
+    scratch_out[3].i = vaddq_f32(scratch[1].i , scratch[3].r);
 }
 
 static inline void NE10_LOAD_TW_AND_MUL (CPLX *scratch_in,
@@ -203,34 +203,34 @@ static inline void NE10_FFT5_MUL_TW_NEON (CPLX scratch_out[5],
 ////////////////
 static inline void NE10_FFT2_CONJ (CPLX scratch_out[2])
 {
-    scratch_out[0].val[1] = -scratch_out[0].val[1];
-    scratch_out[1].val[1] = -scratch_out[1].val[1];
+    scratch_out[0].val[1] = vnegq_f32(scratch_out[0].val[1]);
+    scratch_out[1].val[1] = vnegq_f32(scratch_out[1].val[1]);
 }
 
 static inline void NE10_FFT3_CONJ (CPLX scratch_out[3])
 {
     NE10_FFT2_CONJ (scratch_out);
-    scratch_out[2].val[1] = -scratch_out[2].val[1];
+    scratch_out[2].val[1] = vnegq_f32(scratch_out[2].val[1]);
 }
 
 static inline void NE10_FFT4_CONJ (CPLX scratch_out[4])
 {
     NE10_FFT3_CONJ (scratch_out);
-    scratch_out[3].val[1] = -scratch_out[3].val[1];
+    scratch_out[3].val[1] = vnegq_f32(scratch_out[3].val[1]);
 }
 
 static inline void NE10_FFT5_CONJ (CPLX scratch_out[5])
 {
     NE10_FFT4_CONJ (scratch_out);
-    scratch_out[4].val[1] = -scratch_out[4].val[1];
+    scratch_out[4].val[1] = vnegq_f32(scratch_out[4].val[1]);
 }
 
 static inline void NE10_FFT8_CONJ (CPLX scratch_out[8])
 {
     NE10_FFT5_CONJ (scratch_out);
-    scratch_out[5].val[1] = -scratch_out[5].val[1];
-    scratch_out[6].val[1] = -scratch_out[6].val[1];
-    scratch_out[7].val[1] = -scratch_out[7].val[1];
+    scratch_out[5].val[1] = vnegq_f32(scratch_out[5].val[1]);
+    scratch_out[6].val[1] = vnegq_f32(scratch_out[6].val[1]);
+    scratch_out[7].val[1] = vnegq_f32(scratch_out[7].val[1]);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -241,10 +241,10 @@ static inline void NE10_FFT2_SCALING (CPLX scratch_out[2],
         const REAL one_by_fft_neon)
 {
 #ifdef NE10_DSP_CFFT_SCALING
-    scratch_out[0].val[0] *= one_by_fft_neon;
-    scratch_out[0].val[1] *= one_by_fft_neon;
-    scratch_out[1].val[0] *= one_by_fft_neon;
-    scratch_out[1].val[1] *= one_by_fft_neon;
+    scratch_out[0].val[0] = vmulq_n_f32(scratch_out[0].val[0] , one_by_fft_neon);
+    scratch_out[0].val[1] = vmulq_n_f32(scratch_out[0].val[1] , one_by_fft_neon);
+    scratch_out[1].val[0] = vmulq_n_f32(scratch_out[1].val[0] , one_by_fft_neon);
+    scratch_out[1].val[1] = vmulq_n_f32(scratch_out[1].val[1] , one_by_fft_neon);
 #else
     (void) scratch_out;
     (void) one_by_fft_neon;
@@ -256,8 +256,8 @@ static inline void NE10_FFT3_SCALING (CPLX scratch_out[3],
 {
 #ifdef NE10_DSP_CFFT_SCALING
     NE10_FFT2_SCALING (scratch_out, one_by_fft_neon);
-    scratch_out[2].val[0] *= one_by_fft_neon;
-    scratch_out[2].val[1] *= one_by_fft_neon;
+    scratch_out[2].val[0] = vmulq_n_f32(scratch_out[2].val[0] , one_by_fft_neon);
+    scratch_out[2].val[1] = vmulq_n_f32(scratch_out[2].val[1] , one_by_fft_neon);
 #else
     (void) scratch_out;
     (void) one_by_fft_neon;
@@ -269,8 +269,8 @@ static inline void NE10_FFT4_SCALING (CPLX scratch_out[4],
 {
 #ifdef NE10_DSP_CFFT_SCALING
     NE10_FFT3_SCALING (scratch_out, one_by_fft_neon);
-    scratch_out[3].val[0] *= one_by_fft_neon;
-    scratch_out[3].val[1] *= one_by_fft_neon;
+    scratch_out[3].val[0] = vmulq_n_f32(scratch_out[3].val[0] , one_by_fft_neon);
+    scratch_out[3].val[1] = vmulq_n_f32(scratch_out[3].val[1] , one_by_fft_neon);
 #else
     (void) scratch_out;
     (void) one_by_fft_neon;
@@ -282,8 +282,8 @@ static inline void NE10_FFT5_SCALING (CPLX scratch_out[5],
 {
 #ifdef NE10_DSP_CFFT_SCALING
     NE10_FFT4_SCALING (scratch_out, one_by_fft_neon);
-    scratch_out[4].val[0] *= one_by_fft_neon;
-    scratch_out[4].val[1] *= one_by_fft_neon;
+    scratch_out[4].val[0] = vmulq_n_f32(scratch_out[4].val[0] , one_by_fft_neon);
+    scratch_out[4].val[1] = vmulq_n_f32(scratch_out[4].val[1] , one_by_fft_neon);
 #else
     (void) scratch_out;
     (void) one_by_fft_neon;
@@ -295,12 +295,12 @@ static inline void NE10_FFT8_SCALING (CPLX scratch_out[8],
 {
 #ifdef NE10_DSP_CFFT_SCALING
     NE10_FFT5_SCALING (scratch_out, one_by_fft_neon);
-    scratch_out[5].val[0] *= one_by_fft_neon;
-    scratch_out[5].val[1] *= one_by_fft_neon;
-    scratch_out[6].val[0] *= one_by_fft_neon;
-    scratch_out[6].val[1] *= one_by_fft_neon;
-    scratch_out[7].val[0] *= one_by_fft_neon;
-    scratch_out[7].val[1] *= one_by_fft_neon;
+    scratch_out[5].val[0] = vmulq_n_f32(scratch_out[5].val[0] , one_by_fft_neon);
+    scratch_out[5].val[1] = vmulq_n_f32(scratch_out[5].val[1] , one_by_fft_neon);
+    scratch_out[6].val[0] = vmulq_n_f32(scratch_out[6].val[0] , one_by_fft_neon);
+    scratch_out[6].val[1] = vmulq_n_f32(scratch_out[6].val[1] , one_by_fft_neon);
+    scratch_out[7].val[0] = vmulq_n_f32(scratch_out[7].val[0] , one_by_fft_neon);
+    scratch_out[7].val[1] = vmulq_n_f32(scratch_out[7].val[1] , one_by_fft_neon);
 #else
     (void) scratch_out;
     (void) one_by_fft_neon;
@@ -704,20 +704,20 @@ static void ne10_radix_3_butterfly_float32_neon_##ISFIRSTSTAGE##_##ISINVERSE##_#
             NE10_CPX_SUB_NEON_F32 (s[0], in[1], in[2]);                         \
             s[3] = in[0];                                                       \
                                                                                 \
-            s[1].val[0] = - s[2].val[0] * HALF_NEON_F32;                        \
-            s[1].val[1] = - s[2].val[1] * HALF_NEON_F32;                        \
+            s[1].val[0] = vnegq_f32(vmulq_f32(s[2].val[0] , HALF_NEON_F32));                        \
+            s[1].val[1] = vnegq_f32(vmulq_f32(s[2].val[1] , HALF_NEON_F32));                        \
                                                                                 \
-            s[1].val[0] += s[3].val[0];                                         \
-            s[1].val[1] += s[3].val[1];                                         \
-            s[0].val[0] *= TW_3IN_NEON_F32;                                     \
-            s[0].val[1] *= TW_3IN_NEON_F32;                                     \
+            s[1].val[0] = vaddq_f32(s[1].val[0],s[3].val[0]);                                         \
+            s[1].val[1] = vaddq_f32(s[1].val[1],s[3].val[1]);                                         \
+            s[0].val[0] = vmulq_f32(s[0].val[0],TW_3IN_NEON_F32);                                     \
+            s[0].val[1] = vmulq_f32(s[0].val[1],TW_3IN_NEON_F32);                                     \
                                                                                 \
-            out[0].val[0] = s[3].val[0] + s[2].val[0];                          \
-            out[0].val[1] = s[3].val[1] + s[2].val[1];                          \
-            out[1].val[0] = s[1].val[0] - s[0].val[1];                          \
-            out[1].val[1] = s[1].val[1] + s[0].val[0];                          \
-            out[2].val[0] = s[1].val[0] + s[0].val[1];                          \
-            out[2].val[1] = s[1].val[1] - s[0].val[0];                          \
+            out[0].val[0] = vaddq_f32(s[3].val[0] , s[2].val[0]);                          \
+            out[0].val[1] = vaddq_f32(s[3].val[1] , s[2].val[1]);                          \
+            out[1].val[0] = vsubq_f32(s[1].val[0] , s[0].val[1]);                          \
+            out[1].val[1] = vaddq_f32(s[1].val[1] , s[0].val[0]);                          \
+            out[2].val[0] = vaddq_f32(s[1].val[0] , s[0].val[1]);                          \
+            out[2].val[1] = vsubq_f32(s[1].val[1] , s[0].val[0]);                          \
                                                                                 \
             if (ISINVERSE == 1)                                                \
             {                                                                   \
