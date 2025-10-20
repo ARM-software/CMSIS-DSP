@@ -37,13 +37,13 @@
 #include <arm_neon.h>
 
 #define NE10_CPX_ADD_NEON_F32(Z,A,B) do {           \
-    Z.val[0] = A.val[0] + B.val[0];    \
-    Z.val[1] = A.val[1] + B.val[1];    \
+    Z.val[0] = vaddq_f32(A.val[0] , B.val[0]);    \
+    Z.val[1] = vaddq_f32(A.val[1] , B.val[1]);    \
 } while (0);
 
 #define NE10_CPX_SUB_NEON_F32(Z,A,B) do {           \
-    Z.val[0] = A.val[0] - B.val[0];    \
-    Z.val[1] = A.val[1] - B.val[1];    \
+    Z.val[0] = vsubq_f32(A.val[0] , B.val[0]);    \
+    Z.val[1] = vsubq_f32(A.val[1] , B.val[1]);    \
 } while (0);
 
 #define NE10_CPX_MUL_NEON_F32(Z,A,B) do {           \
