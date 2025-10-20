@@ -48,6 +48,9 @@ def float_to_hex(f):
 
 def printCUInt32Array(f,name,arr):
     nb = 0
+    if (len(arr)==0):
+        print(f"const uint32_t *{name}=NULL;\n",file=f)
+        return
     print(f"const uint32_t {name}[{name.upper()}_LEN]={{",file=f)
 
     for d in arr:
@@ -62,6 +65,9 @@ def printCUInt32Array(f,name,arr):
 
 def printCFloat32Array(f,name,arr):
     nb = 0
+    if (len(arr)==0):
+        print(f"const float32_t *{name}=NULL;\n",file=f)
+        return
     print(f"__ALIGNED(16) const float32_t {name}[{name.upper()}_LEN]={{",file=f)
 
     for d in arr:
@@ -79,6 +85,9 @@ def printCFloat32Array(f,name,arr):
 
 def printCFloat16Array(f,name,arr):
     nb = 0
+    if (len(arr)==0):
+        print(f"const float16_t *{name}=NULL;\n",file=f)
+        return
     print(f"__ALIGNED(16) const float16_t {name}[{name.upper()}_LEN]={{",file=f)
 
     for d in arr:
@@ -94,6 +103,9 @@ def printCFloat16Array(f,name,arr):
 
 def printCQ31Array(f,name,arr):
     nb = 0
+    if (len(arr)==0):
+        print(f"const q31_t *{name}=NULL;\n",file=f)
+        return
     print(f"__ALIGNED(16) const q31_t {name}[{name.upper()}_LEN]={{",file=f)
 
     for d in arr:
@@ -108,6 +120,9 @@ def printCQ31Array(f,name,arr):
 
 def printCQ15Array(f,name,arr):
     nb = 0
+    if (len(arr)==0):
+        print(f"const q15_t *{name}=NULL;\n",file=f)
+        return
     print(f"__ALIGNED(16) const q15_t {name}[{name.upper()}_LEN]={{",file=f)
 
     for d in arr:
@@ -122,6 +137,9 @@ def printCQ15Array(f,name,arr):
 
 def printCQ7Array(f,name,arr):
     nb = 0
+    if (len(arr)==0):
+        print(f"const q7_t *{name}=NULL;\n",file=f)
+        return
     print(f"__ALIGNED(16) const q7_t {name}[{name.upper()}_LEN]={{",file=f)
 
     for d in arr:
@@ -505,7 +523,7 @@ cifdeNEON="""
 
 cfooterNEON="""
 
-#endif /* defined(%s) */
+#endif /* %s */
 """
 
 
@@ -551,13 +569,13 @@ extern "C"
  """ 
 
 hifdefNEON="""
-#if defined(%s) 
+#if %s
 
 """
 
 hfooterNEON="""
 
-#endif /* defined(%s)  */
+#endif /* %s */
 
 """
 
@@ -581,7 +599,7 @@ with open(args.f16,'w') as f:
      print("#if defined(ARM_FLOAT16_SUPPORTED)",file=f)
 
      print(cifdeNEON % ("ARM_MATH_NEON_FLOAT16",),file=f)
-     print(hifdefNEON % "ARM_MATH_NEON_FLOAT16",file=h)
+     print(hifdefNEON % ("defined(ARM_MATH_NEON_FLOAT16) && defined(ARM_FLOAT16_SUPPORTED)"),file=h)
      print('#include "arm_neon_tables_f16.h"',file=f)
      
      for s in SIZES:
@@ -590,10 +608,10 @@ with open(args.f16,'w') as f:
      for s in SIZES:
          neonRFFTTwiddle(F16,f,h,s)
      
-     print(cfooterNEON % ("ARM_MATH_NEON_FLOAT16"),file=f)
-     print(hfooterNEON % "ARM_MATH_NEON_FLOAT16",file=h)
+     print(cfooterNEON % ("defined(ARM_MATH_NEON_FLOAT16) && defined(ARM_FLOAT16_SUPPORTED)"),file=f)
+     print(hfooterNEON % ("defined(ARM_MATH_NEON_FLOAT16) && defined(ARM_FLOAT16_SUPPORTED)"),file=h)
 
-     print("#endif /* if defined(ARM_FLOAT16_SUPPORTED) */",file=f)
+     print("#endif /* if defined(ARM_MATH_NEON_FLOAT16) && defined(ARM_FLOAT16_SUPPORTED) */",file=f)
 
      print(hfooter % "F16_",file=h)
 
@@ -604,7 +622,7 @@ with open(args.f,'w') as f:
 
     
      print(cifdeNEON % ("ARM_MATH_NEON",),file=f)
-     print(hifdefNEON % "ARM_MATH_NEON",file=h)
+     print(hifdefNEON % ("defined(ARM_MATH_NEON)"),file=h)
      print('#include "arm_neon_tables.h"',file=f)
 
      for s in SIZES:
@@ -627,8 +645,8 @@ with open(args.f,'w') as f:
 
     
 
-     print(cfooterNEON % ("ARM_MATH_NEON"),file=f)
-     print(hfooterNEON % "ARM_MATH_NEON",file=h)
+     print(cfooterNEON % ("defined(ARM_MATH_NEON)"),file=f)
+     print(hfooterNEON % ("defined(ARM_MATH_NEON)"),file=h)
 
 
      print(hfooter % "",file=h)

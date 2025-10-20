@@ -8222,8 +8222,7 @@ __ALIGNED(16) const float16_t arm_neon_rfft_twiddles_16_f16[ARM_NEON_RFFT_TWIDDL
 const uint32_t arm_neon_rfft_factors_16_f16[ARM_NEON_RFFT_FACTORS_16_F16_LEN]={
 2,4,4,4,};
 
-__ALIGNED(16) const float16_t arm_neon_rfft_twiddles_neon_16_f16[ARM_NEON_RFFT_TWIDDLES_NEON_16_F16_LEN]={
-};
+const float16_t *arm_neon_rfft_twiddles_neon_16_f16=NULL;
 
 const uint32_t arm_neon_rfft_factors_neon_16_f16[ARM_NEON_RFFT_FACTORS_NEON_16_F16_LEN]={
 1,1,4,1,};
@@ -8271,8 +8270,7 @@ __ALIGNED(16) const float16_t arm_neon_rfft_twiddles_32_f16[ARM_NEON_RFFT_TWIDDL
 const uint32_t arm_neon_rfft_factors_32_f16[ARM_NEON_RFFT_FACTORS_32_F16_LEN]={
 2,4,8,8,};
 
-__ALIGNED(16) const float16_t arm_neon_rfft_twiddles_neon_32_f16[ARM_NEON_RFFT_TWIDDLES_NEON_32_F16_LEN]={
-};
+const float16_t *arm_neon_rfft_twiddles_neon_32_f16=NULL;
 
 const uint32_t arm_neon_rfft_factors_neon_32_f16[ARM_NEON_RFFT_FACTORS_NEON_32_F16_LEN]={
 1,1,8,1,};
@@ -21505,6 +21503,6 @@ __ALIGNED(16) const float16_t arm_neon_rfft_super_twiddles_neon_4096_f16[ARM_NEO
 
 
 
-#endif /* defined(ARM_MATH_NEON_FLOAT16) */
+#endif /* defined(ARM_MATH_NEON_FLOAT16) && defined(ARM_FLOAT16_SUPPORTED) */
 
-#endif /* if defined(ARM_FLOAT16_SUPPORTED) */
+#endif /* if defined(ARM_MATH_NEON_FLOAT16) && defined(ARM_FLOAT16_SUPPORTED) */
