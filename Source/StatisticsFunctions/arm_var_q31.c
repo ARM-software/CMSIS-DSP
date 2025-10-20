@@ -205,7 +205,7 @@ ARM_DSP_ATTRIBUTE void arm_var_q31(
   squareOfMean = ( sum * sum / (q63_t)(blockSize * (blockSize - 1U)));
 
   /* Compute variance and store result in destination */
-  *pResult = (meanOfSquares - squareOfMean) >> 15U;
+  *pResult = (q31_t)((meanOfSquares - squareOfMean) >> 15U);
 }
 #endif
 /**

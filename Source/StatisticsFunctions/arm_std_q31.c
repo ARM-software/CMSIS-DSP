@@ -149,7 +149,7 @@ ARM_DSP_ATTRIBUTE void arm_std_q31(
   squareOfMean = ( sum * sum / (q63_t)(blockSize * (blockSize - 1U)));
 
   /* Compute standard deviation and store result in destination */
-  arm_sqrt_q31((meanOfSquares - squareOfMean) >> 15U, pResult);
+  arm_sqrt_q31((q31_t)((meanOfSquares - squareOfMean) >> 15U), pResult);
 }
 #endif /* defined(ARM_MATH_MVEI) */
 

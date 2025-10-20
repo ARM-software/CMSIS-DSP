@@ -233,7 +233,7 @@ ARM_DSP_ATTRIBUTE void arm_absmin_q15(
   /* Initialise index value to zero. */
   outIndex = 0U;
   /* Load first input value that act as reference value for comparison */
-  out = (*pSrc > 0) ? *pSrc : ((*pSrc == (q15_t) 0x8000) ? 0x7fff : -*pSrc);
+  out = (*pSrc > 0) ? *pSrc : ((*pSrc == 0x8000) ? 0x7fff : -*pSrc);
   pSrc++;
 
   /* Initialize blkCnt with number of samples */
@@ -242,7 +242,7 @@ ARM_DSP_ATTRIBUTE void arm_absmin_q15(
   while (blkCnt > 0U)
   {
     /* Initialize minVal to the next consecutive values one by one */
-    minVal = (*pSrc > 0) ? *pSrc : ((*pSrc == (q15_t) 0x8000) ? 0x7fff : -*pSrc);
+    minVal = (*pSrc > 0) ? *pSrc : ((*pSrc == 0x8000) ? 0x7fff : -*pSrc);
     pSrc++;
 
     /* compare for the minimum value */

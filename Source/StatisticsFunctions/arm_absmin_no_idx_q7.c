@@ -189,7 +189,7 @@ ARM_DSP_ATTRIBUTE void arm_absmin_no_idx_q7(
 
 
   /* Load first input value that act as reference value for comparison */
-  out = (*pSrc > 0) ? *pSrc : ((*pSrc == (q7_t) 0x80) ? (q7_t) 0x7f : -*pSrc);
+  out = (*pSrc > 0) ? *pSrc : ((*pSrc ==  0x80) ?  0x7f : -*pSrc);
   pSrc++;
 
   /* Initialize blkCnt with number of samples */
@@ -198,7 +198,7 @@ ARM_DSP_ATTRIBUTE void arm_absmin_no_idx_q7(
   while (blkCnt > 0U)
   {
     /* Initialize minVal to the next consecutive values one by one */
-    minVal = (*pSrc > 0) ? *pSrc : ((*pSrc == (q7_t) 0x80) ? (q7_t) 0x7f : -*pSrc);
+    minVal = (*pSrc > 0) ? *pSrc : ((*pSrc == 0x80) ? 0x7f : -*pSrc);
     pSrc++;
 
     /* compare for the minimum value */

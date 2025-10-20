@@ -200,7 +200,7 @@ ARM_DSP_ATTRIBUTE void arm_absmax_q15(
   /* Initialise index value to zero. */
   outIndex = 0U;
   /* Load first input value that act as reference value for comparison */
-  out = (*pSrc > 0) ? *pSrc : ((*pSrc == (q15_t) 0x8000) ? 0x7fff : -*pSrc);
+  out = (*pSrc > 0) ? *pSrc : ((*pSrc == 0x8000) ? 0x7fff : -*pSrc);
   pSrc++;
 
   /* Initialize blkCnt with number of samples */
@@ -209,7 +209,7 @@ ARM_DSP_ATTRIBUTE void arm_absmax_q15(
   while (blkCnt > 0U)
   {
     /* Initialize maxVal to the next consecutive values one by one */
-    maxVal = (*pSrc > 0) ? *pSrc : ((*pSrc == (q15_t) 0x8000) ? 0x7fff : -*pSrc);
+    maxVal = (*pSrc > 0) ? *pSrc : ((*pSrc == 0x8000) ? 0x7fff : -*pSrc);
     pSrc++;
 
     /* compare for the maximum value */

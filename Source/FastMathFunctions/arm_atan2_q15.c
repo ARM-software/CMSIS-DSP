@@ -69,7 +69,7 @@ __STATIC_FORCEINLINE q15_t arm_atan_limited_q15(q15_t x)
     res = __SSAT(res>>2,16);
 
     
-    return(res);
+    return((q15_t)res);
 }
 
 
@@ -84,7 +84,7 @@ __STATIC_FORCEINLINE q15_t arm_atan_q15(q15_t y,q15_t x)
 #if defined (ARM_MATH_DSP)
      y = __QSUB16(0, y);
 #else 
-     y = (y == (q15_t) 0x8000) ? (q15_t) 0x7fff : -y;
+     y = ((q15_t)y ==  0x8000) ? 0x7fff : (q15_t)(-y);
 #endif
 
      sign=1-sign;
@@ -98,7 +98,7 @@ __STATIC_FORCEINLINE q15_t arm_atan_q15(q15_t y,q15_t x)
 #if defined (ARM_MATH_DSP)
      x = __QSUB16(0, x);
 #else 
-     x = (x == (q15_t) 0x8000) ? (q15_t) 0x7fff : -x;
+     x = ((q15_t)x ==  0x8000) ? 0x7fff : (q15_t)(-x);
 #endif
    }
 
@@ -151,7 +151,7 @@ __STATIC_FORCEINLINE q15_t arm_atan_q15(q15_t y,q15_t x)
 #if defined (ARM_MATH_DSP)
      res = __QSUB16(0, res);
 #else 
-     res = (res == (q15_t) 0x8000) ? (q15_t) 0x7fff : -res;
+     res = ((q15_t) res == 0x8000) ? 0x7fff : (q15_t)(-res);
 #endif
    }
 
