@@ -89,6 +89,11 @@ extern "C"
 #define __ALIGNED(x) __declspec(align(x))
 #define __WEAK
 #define SECTION_NOINIT
+
+#pragma warning(push)
+#pragma warning(disable:4127)
+#pragma warning(disable:4244)
+
 #elif defined ( __APPLE_CC__ )
 #include <stdint.h>
 #define  __ALIGNED(x) __attribute__((aligned(x)))
