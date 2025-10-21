@@ -328,7 +328,7 @@ ARM_DSP_ATTRIBUTE void arm_svm_rbf_predict_f32(
     float32_t sum = S->intercept;
    
     float32_t dot;
-    float32x4_t dotV; 
+    float32x4_t dotV=vdupq_n_f32(0.0f); 
 
     float32x4_t accuma,accumb,accumc,accumd,accum;
     float32x2_t accum2;

@@ -3,4 +3,4 @@ mkdir build
 cd build
 cmake -G "Ninja" ..
 ninja
-./test.exe
+test.exe
