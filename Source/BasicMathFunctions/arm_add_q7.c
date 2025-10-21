@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 
+
 /* ----------------------------------------------------------------------
  * Project:      CMSIS DSP Library
  * Title:        arm_add_q7.c
@@ -26,6 +27,8 @@
  *
  * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
+#include "arm_compiler_specific.h"
+
 
 #include "dsp/basic_math_functions.h"
 

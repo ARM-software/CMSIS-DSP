@@ -1,4 +1,4 @@
-/* ----------------------------------------------------------------------
+﻿/* ----------------------------------------------------------------------
  * Project:      CMSIS DSP Library
  * Title:        arm_neon_tables_f16.c
  * Description:  common tables like fft twiddle factors, Bitreverse, reciprocal etc
@@ -8,6 +8,7 @@
  *
  * Target Processor: Cortex-A cores
  * -------------------------------------------------------------------- */
+
 /*
  * Copyright (C) 2024 ARM Limited or its affiliates. All rights reserved.
  *
@@ -25,6 +26,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+#include "arm_compiler_specific.h"
+
 
  #include "arm_math_types_f16.h"
 

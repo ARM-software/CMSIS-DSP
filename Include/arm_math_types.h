@@ -91,13 +91,6 @@ extern "C"
 #define SECTION_NOINIT
 #define NO_INLINE __declspec(noinline)
 
-#pragma warning(push)
-#pragma warning(disable:4127)
-#pragma warning(disable:4244)
-#pragma warning(disable:4456)
-#pragma warning(disable:4701)
-#pragma warning(disable:4703)
-#pragma warning(disable:4310)
 
 #elif defined ( __APPLE_CC__ )
 #include <stdint.h>
