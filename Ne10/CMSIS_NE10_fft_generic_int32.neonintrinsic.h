@@ -384,70 +384,70 @@ static inline void NE10_FFT_FCU_NEON_S32_5 (CPLX Fout[5],
 ////////////////////////////////////
 // Following are butterfly functions
 ////////////////////////////////////
-#define NE10_RADIX_BUTTERFLY_INT32_NEON(RADIX,ISFIRSTSTAGE,ISINVERSE,ISSCALED)                                                \
-static __attribute__ ((noinline)) void ne10_radix_butterfly_int32_neon_##RADIX##_##ISFIRSTSTAGE##_##ISINVERSE##_##ISSCALED   (\
-        CPLX *Fout,                                                                                                           \
-        const CPLX *Fin,                                                                                                      \
-        const ne10_fft_cpx_int32_t *twiddles,                                                                                 \
-        const ne10_int32_t fstride,                                                                                           \
-        const ne10_int32_t out_step,                                                                                          \
-        const ne10_int32_t nfft)                                                                                              \
-{                                                                                                                             \
-    const ne10_int32_t in_step = nfft / RADIX;                                                                                \
-    ne10_int32_t f_count;                                                                                                     \
-    ne10_int32_t m_count;                                                                                                     \
-                                                                                                                              \
-    for (f_count = fstride; f_count > 0; f_count--)                                                                           \
-    {                                                                                                                         \
-        for (m_count = out_step; m_count > 0; m_count--)                                                                      \
-        {                                                                                                                     \
-            CPLX in[RADIX];                                                                                                   \
-            CPLX out[RADIX];                                                                                                  \
-                                                                                                                              \
-            NE10_LOAD_BY_STEP_##RADIX (in, Fin, in_step);                                                                \
-                                                                                                                              \
-            if (ISINVERSE)                                                                                                    \
-            {                                                                                                                 \
-                NE10_CONJ_##RADIX (in);                                                                                       \
-            }                                                                                                                 \
-                                                                                                                              \
-            if (ISSCALED)                                                                                                     \
-            {                                                                                                                 \
-                ne10_fft_scaling_##RADIX##_##RADIX (in);                                                                   \
-            }                                                                                                                 \
-                                                                                                                              \
-            if (!ISFIRSTSTAGE)                                                                                                \
-            {                                                                                                                 \
-                NE10_LOAD_TW_AND_MUL_##RADIX (in, twiddles, out_step);                                                        \
-            }                                                                                                                 \
-                                                                                                                              \
-            NE10_FFT_FCU_NEON_S32_##RADIX (out, in);                                                                          \
-                                                                                                                              \
-            if (ISINVERSE)                                                                                                    \
-            {                                                                                                                 \
-                NE10_CONJ_##RADIX (out);                                                                                      \
-            }                                                                                                                 \
-                                                                                                                              \
-            NE10_STORE_BY_STEP_##RADIX (Fout, out, out_step);                                                                 \
-                                                                                                                              \
-            Fin++;                                                                                                            \
-                                                                                                                              \
-            if (!ISFIRSTSTAGE)                                                                                                \
-            {                                                                                                                 \
-                Fout++;                                                                                                       \
-                twiddles++;                                                                                                   \
-            }                                                                                                                 \
-            else                                                                                                              \
-            {                                                                                                                 \
-                Fout += RADIX;                                                                                                \
-            }                                                                                                                 \
-        }                                                                                                                     \
-        if (!ISFIRSTSTAGE)                                                                                                    \
-        {                                                                                                                     \
-            twiddles -= out_step;                                                                                             \
-            Fout += (RADIX - 1) * out_step;                                                                                   \
-        }                                                                                                                     \
-    }                                                                                                                         \
+#define NE10_RADIX_BUTTERFLY_INT32_NEON(RADIX,ISFIRSTSTAGE,ISINVERSE,ISSCALED)                                                 \
+static NO_INLINE void ne10_radix_butterfly_int32_neon_##RADIX##_##ISFIRSTSTAGE##_##ISINVERSE##_##ISSCALED   ( \
+        CPLX *Fout,                                                                                                            \
+        const CPLX *Fin,                                                                                                       \
+        const ne10_fft_cpx_int32_t *twiddles,                                                                                  \
+        const ne10_int32_t fstride,                                                                                            \
+        const ne10_int32_t out_step,                                                                                           \
+        const ne10_int32_t nfft)                                                                                               \
+{                                                                                                                              \
+    const ne10_int32_t in_step = nfft / RADIX;                                                                                 \
+    ne10_int32_t f_count;                                                                                                      \
+    ne10_int32_t m_count;                                                                                                      \
+                                                                                                                               \
+    for (f_count = fstride; f_count > 0; f_count--)                                                                            \
+    {                                                                                                                          \
+        for (m_count = out_step; m_count > 0; m_count--)                                                                       \
+        {                                                                                                                      \
+            CPLX in[RADIX];                                                                                                    \
+            CPLX out[RADIX];                                                                                                   \
+                                                                                                                               \
+            NE10_LOAD_BY_STEP_##RADIX (in, Fin, in_step);                                                                      \
+                                                                                                                               \
+            if (ISINVERSE)                                                                                                     \
+            {                                                                                                                  \
+                NE10_CONJ_##RADIX (in);                                                                                        \
+            }                                                                                                                  \
+                                                                                                                               \
+            if (ISSCALED)                                                                                                      \
+            {                                                                                                                  \
+                ne10_fft_scaling_##RADIX##_##RADIX (in);                                                                       \
+            }                                                                                                                  \
+                                                                                                                               \
+            if (!ISFIRSTSTAGE)                                                                                                 \
+            {                                                                                                                  \
+                NE10_LOAD_TW_AND_MUL_##RADIX (in, twiddles, out_step);                                                         \
+            }                                                                                                                  \
+                                                                                                                               \
+            NE10_FFT_FCU_NEON_S32_##RADIX (out, in);                                                                           \
+                                                                                                                               \
+            if (ISINVERSE)                                                                                                     \
+            {                                                                                                                  \
+                NE10_CONJ_##RADIX (out);                                                                                       \
+            }                                                                                                                  \
+                                                                                                                               \
+            NE10_STORE_BY_STEP_##RADIX (Fout, out, out_step);                                                                  \
+                                                                                                                               \
+            Fin++;                                                                                                             \
+                                                                                                                               \
+            if (!ISFIRSTSTAGE)                                                                                                 \
+            {                                                                                                                  \
+                Fout++;                                                                                                        \
+                twiddles++;                                                                                                    \
+            }                                                                                                                  \
+            else                                                                                                               \
+            {                                                                                                                  \
+                Fout += RADIX;                                                                                                 \
+            }                                                                                                                  \
+        }                                                                                                                      \
+        if (!ISFIRSTSTAGE)                                                                                                     \
+        {                                                                                                                      \
+            twiddles -= out_step;                                                                                              \
+            Fout += (RADIX - 1) * out_step;                                                                                    \
+        }                                                                                                                      \
+    }                                                                                                                          \
 }
 
 NE10_RADIX_BUTTERFLY_INT32_NEON(2,1,0,0)

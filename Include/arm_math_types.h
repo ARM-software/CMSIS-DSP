@@ -89,6 +89,7 @@ extern "C"
 #define __ALIGNED(x) __declspec(align(x))
 #define __WEAK
 #define SECTION_NOINIT
+#define NO_INLINE __declspec(noinline)
 
 #pragma warning(push)
 #pragma warning(disable:4127)
@@ -105,6 +106,7 @@ extern "C"
 #define __STATIC_INLINE static inline
 #define __WEAK
 #define SECTION_NOINIT
+#define NO_INLINE __attribute__ ((noinline))
 #elif defined (__GNUC_PYTHON__)
 #include <stdint.h>
 #define  __ALIGNED(x) __attribute__((aligned(x)))
@@ -112,8 +114,12 @@ extern "C"
 #define __STATIC_INLINE static inline
 #define __WEAK
 #define SECTION_NOINIT __attribute__((section(".noinit")))
+#define NO_INLINE __attribute__ ((noinline))
+
 #else
 #define SECTION_NOINIT
+#define NO_INLINE __attribute__ ((noinline))
+
 #include "cmsis_compiler.h"
 #endif
 
