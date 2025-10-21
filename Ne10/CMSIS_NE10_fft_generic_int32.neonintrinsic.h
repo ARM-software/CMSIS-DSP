@@ -181,7 +181,7 @@ NE10_LOAD_TW_AND_MUL(5,4)
 ////////////////
 static inline void NE10_CONJ_S (CPLX *cplx)
 {
-    cplx->val[1] = -cplx->val[1];
+    cplx->val[1] = vnegq_f32(cplx->val[1]);
 }
 
 static inline void NE10_CONJ_1 (CPLX in[1])
@@ -215,25 +215,19 @@ NE10_CONJ_SCALAR(5,4)
 // Scaling
 // If Macro NE10_DSP_CFFT_SCALING is not defined, these functions do nothing.
 /////////////////////////////////////////////////////////////////////////////
-#define NE10_FFT_SCALING(RADIX,SIZE,SIZEM)                                                  \
-static void ne10_fft_scaling_##RADIX##_##SIZE(CPLX scratch_out[RADIX]) {                    \
-        const int32x4_t one_by_RADIX =                                                      \
-        {                                                                                   \
-            (ne10_int32_t) floorf(1.0f / RADIX * (float)NE10_F2I32_MAX + 0.5f),             \
-            (ne10_int32_t) floorf(1.0f / RADIX * (float)NE10_F2I32_MAX + 0.5f),             \
-            (ne10_int32_t) floorf(1.0f / RADIX * (float)NE10_F2I32_MAX + 0.5f),             \
-            (ne10_int32_t) floorf(1.0f / RADIX * (float)NE10_F2I32_MAX + 0.5f)              \
-        };                                                                                  \
-        scratch_out[SIZEM].val[0] = vqrdmulhq_s32 (scratch_out[SIZEM].val[0], one_by_RADIX);\
-        scratch_out[SIZEM].val[1] = vqrdmulhq_s32 (scratch_out[SIZEM].val[1], one_by_RADIX);\
-        ne10_fft_scaling_##RADIX##_##SIZEM(scratch_out);                                 \
+#define NE10_FFT_SCALING(RADIX,SIZE,SIZEM)                                                                    \
+static void ne10_fft_scaling_##RADIX##_##SIZE(CPLX scratch_out[RADIX]) {                                      \
+        const ne10_int32_t one_by_RADIX = (ne10_int32_t) floorf(1.0f / RADIX * (float)NE10_F2I32_MAX + 0.5f); \
+        scratch_out[SIZEM].val[0] = vqrdmulhq_n_s32 (scratch_out[SIZEM].val[0], one_by_RADIX);                \
+        scratch_out[SIZEM].val[1] = vqrdmulhq_n_s32 (scratch_out[SIZEM].val[1], one_by_RADIX);                \
+        ne10_fft_scaling_##RADIX##_##SIZEM(scratch_out);                                                      \
 };
 
-#define NE10_FFT_SCALING_SIZE1(RADIX)                                               \
-static void ne10_fft_scaling_##RADIX##_1(CPLX scratch_out[1]) {                     \
-        const ne10_int32_t one_by_RADIX =  floorf(1.0f / RADIX * (float)NE10_F2I32_MAX + 0.5f) ; \                                                                         \
-        scratch_out[0].val[0] = vqrdmulhq_n_s32 (scratch_out[0].val[0], one_by_RADIX);\
-        scratch_out[0].val[1] = vqrdmulhq_n_s32 (scratch_out[0].val[1], one_by_RADIX);\
+#define NE10_FFT_SCALING_SIZE1(RADIX)                                                              \
+static void ne10_fft_scaling_##RADIX##_1(CPLX scratch_out[1]) {                                    \
+        const ne10_int32_t one_by_RADIX =  floorf(1.0f / RADIX * (float)NE10_F2I32_MAX + 0.5f) ;   \
+        scratch_out[0].val[0] = vqrdmulhq_n_s32 (scratch_out[0].val[0], one_by_RADIX);             \
+        scratch_out[0].val[1] = vqrdmulhq_n_s32 (scratch_out[0].val[1], one_by_RADIX);             \
 };
 
 NE10_FFT_SCALING_SIZE1(2)

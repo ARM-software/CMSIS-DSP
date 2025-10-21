@@ -140,8 +140,7 @@ static inline void NE10_LOAD_TW_AND_MUL (CPLX *scratch_in,
 static inline REAL NE10_S_MUL_NEON_F32 (const REAL vec,
         const ne10_float32_t scalar)
 {
-    REAL scalar_neon = NE10_REAL_DUP_NEON_F32 (scalar);
-    REAL result = vmulq_n_f32(vec , scalar_neon);
+    REAL result = vmulq_n_f32(vec , scalar);
     return result;
 }
 
@@ -222,7 +221,7 @@ static inline void NE10_FFT4_CONJ (CPLX scratch_out[4])
 static inline void NE10_FFT5_CONJ (CPLX scratch_out[5])
 {
     NE10_FFT4_CONJ (scratch_out);
-    scratch_out[4].val[1] = -scratch_out[4].val[1];
+    scratch_out[4].val[1] = vnegq_f32(scratch_out[4].val[1]);
 }
 
 static inline void NE10_FFT8_CONJ (CPLX scratch_out[8])
@@ -704,8 +703,8 @@ static void ne10_radix_3_butterfly_float32_neon_##ISFIRSTSTAGE##_##ISINVERSE##_#
             NE10_CPX_SUB_NEON_F32 (s[0], in[1], in[2]);                         \
             s[3] = in[0];                                                       \
                                                                                 \
-            s[1].val[0] = vmegq_f32(s[2].val[0] * HALF_NEON_F32);                        \
-            s[1].val[1] = vmegq_f32(s[2].val[1] * HALF_NEON_F32);                        \
+            s[1].val[0] = vmegq_f32(vmulq_n_f32(s[2].val[0], HALF_NEON_F32));                        \
+            s[1].val[1] = vmegq_f32(vmulq_n_f32(s[2].val[1], HALF_NEON_F32));                        \
                                                                                 \
             s[1].val[0] = vaddq_f32(s[1].val[0],s[3].val[0]);                                         \
             s[1].val[1] = vaddq_f32(s[1].val[1],s[3].val[1]);                                         \
@@ -808,8 +807,8 @@ static void ne10_radix_5_butterfly_float32_neon_##ISFIRSTSTAGE##_##ISINVERSE##_#
             s[0] = in[0];                                                             \
             s[5] = in[0];                                                             \
                                                                                       \
-            in[0].val[0] = in[0].val[0] + s[1].val[0] + s[2].val[0];                  \
-            in[0].val[1] = in[0].val[1] + s[1].val[1] + s[2].val[1];                  \
+            in[0].val[0] = vaddq_f32(in[0].val[0] + vaddq_f32(s[1].val[0] + s[2].val[0]));                  \
+            in[0].val[1] = vaddq_f32(in[0].val[1] + vaddq_f32(s[1].val[1] + s[2].val[1]));                  \
                                                                                       \
             s[0].val[0] = NE10_S_MLA_NEON_F32 (s[0].val[0], s[1].val[0], TW_5A_F32.r);\
             s[0].val[1] = NE10_S_MLA_NEON_F32 (s[0].val[1], s[1].val[1], TW_5A_F32.r);\
@@ -825,8 +824,8 @@ static void ne10_radix_5_butterfly_float32_neon_##ISFIRSTSTAGE##_##ISINVERSE##_#
             NE10_CPX_SUB_NEON_F32 (s[3], in[2], in[3]);                               \
                                                                                       \
             s[1].val[0] = NE10_S_MUL_NEON_F32 (s[4].val[1], TW_5A_F32.i);             \
-            s[1].val[1] = -NE10_S_MUL_NEON_F32 (s[4].val[0], TW_5A_F32.i);            \
-            s[2].val[0] = -NE10_S_MUL_NEON_F32 (s[4].val[1], TW_5B_F32.i);            \
+            s[1].val[1] = vnegq_f32(NE10_S_MUL_NEON_F32 (s[4].val[0], TW_5A_F32.i));            \
+            s[2].val[0] = vnegq_f32(NE10_S_MUL_NEON_F32 (s[4].val[1], TW_5B_F32.i));            \
             s[2].val[1] = NE10_S_MUL_NEON_F32 (s[4].val[0], TW_5B_F32.i);             \
                                                                                       \
             s[1].val[0] = NE10_S_MLA_NEON_F32 (s[1].val[0], s[3].val[1], TW_5B_F32.i);\
@@ -1139,10 +1138,10 @@ static void ne10_c2c_1d_last_stage_neon_##INVERSE (CPLX *Fout,                \
             NE10_CPX_ADD_NEON_F32 (scratch_out[0], scratch[0], scratch[2]);   \
             NE10_CPX_SUB_NEON_F32 (scratch_out[2], scratch[0], scratch[2]);   \
                                                                               \
-            scratch_out[1].val[0] = scratch[1].val[0] + scratch[3].val[1];    \
-            scratch_out[1].val[1] = scratch[1].val[1] - scratch[3].val[0];    \
-            scratch_out[3].val[0] = scratch[1].val[0] - scratch[3].val[1];    \
-            scratch_out[3].val[1] = scratch[1].val[1] + scratch[3].val[0];    \
+            scratch_out[1].val[0] = vaddq_f32(scratch[1].val[0] , scratch[3].val[1]);    \
+            scratch_out[1].val[1] = vsubq_f32(scratch[1].val[1] , scratch[3].val[0]);    \
+            scratch_out[3].val[0] = vsubq_f32(scratch[1].val[0] , scratch[3].val[1]);    \
+            scratch_out[3].val[1] = vaddq_f32(scratch[1].val[1] , scratch[3].val[0]);    \
                                                                               \
             if (INVERSE == 1)                                                 \
             {                                                                 \
