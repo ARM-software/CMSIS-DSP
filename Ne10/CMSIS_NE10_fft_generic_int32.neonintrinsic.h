@@ -368,8 +368,8 @@ static inline void NE10_FFT_FCU_NEON_S32_5 (CPLX Fout[5],
     scratch[11].val[0] = vaddq_f32(scratch[0].val[0] , vaddq_f32(NE10_S_MUL_NEON_S32 (scratch[7].val[0], TW_5B_S32.r) , NE10_S_MUL_NEON_S32 (scratch[8].val[0], TW_5A_S32.r)));
     scratch[11].val[1] = vaddq_f32(scratch[0].val[1] , vaddq_f32(NE10_S_MUL_NEON_S32 (scratch[7].val[1], TW_5B_S32.r) , NE10_S_MUL_NEON_S32 (scratch[8].val[1], TW_5A_S32.r)));
 
-    scratch[12].val[0] = -vnegq_f32(vaddq_f32(NE10_S_MUL_NEON_S32 (scratch[10].val[1], TW_5B_S32.i) , NE10_S_MUL_NEON_S32 (scratch[9].val[1], TW_5A_S32.i)));
-    scratch[12].val[1] =            vsubq_f32(NE10_S_MUL_NEON_S32 (scratch[10].val[0], TW_5B_S32.i) , NE10_S_MUL_NEON_S32 (scratch[9].val[0], TW_5A_S32.i));
+    scratch[12].val[0] = vnegq_f32(vaddq_f32(NE10_S_MUL_NEON_S32 (scratch[10].val[1], TW_5B_S32.i) , NE10_S_MUL_NEON_S32 (scratch[9].val[1], TW_5A_S32.i)));
+    scratch[12].val[1] =           vsubq_f32(NE10_S_MUL_NEON_S32 (scratch[10].val[0], TW_5B_S32.i) , NE10_S_MUL_NEON_S32 (scratch[9].val[0], TW_5A_S32.i));
 
     NE10_CPX_ADD_NEON_S32 (&scratch_in[2], scratch[11], scratch[12]);
     NE10_CPX_SUB_NEON_S32 (&scratch_in[3], scratch[11], scratch[12]);

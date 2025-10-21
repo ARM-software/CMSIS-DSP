@@ -703,8 +703,8 @@ static void ne10_radix_3_butterfly_float32_neon_##ISFIRSTSTAGE##_##ISINVERSE##_#
             NE10_CPX_SUB_NEON_F32 (s[0], in[1], in[2]);                         \
             s[3] = in[0];                                                       \
                                                                                 \
-            s[1].val[0] = vmegq_f32(vmulq_n_f32(s[2].val[0], HALF_NEON_F32));                        \
-            s[1].val[1] = vmegq_f32(vmulq_n_f32(s[2].val[1], HALF_NEON_F32));                        \
+            s[1].val[0] = vnegq_f32(vmulq_n_f32(s[2].val[0], HALF_NEON_F32));                        \
+            s[1].val[1] = vnegq_f32(vmulq_n_f32(s[2].val[1], HALF_NEON_F32));                        \
                                                                                 \
             s[1].val[0] = vaddq_f32(s[1].val[0],s[3].val[0]);                                         \
             s[1].val[1] = vaddq_f32(s[1].val[1],s[3].val[1]);                                         \
@@ -807,8 +807,8 @@ static void ne10_radix_5_butterfly_float32_neon_##ISFIRSTSTAGE##_##ISINVERSE##_#
             s[0] = in[0];                                                             \
             s[5] = in[0];                                                             \
                                                                                       \
-            in[0].val[0] = vaddq_f32(in[0].val[0] + vaddq_f32(s[1].val[0] + s[2].val[0]));                  \
-            in[0].val[1] = vaddq_f32(in[0].val[1] + vaddq_f32(s[1].val[1] + s[2].val[1]));                  \
+            in[0].val[0] = vaddq_f32(in[0].val[0] , vaddq_f32(s[1].val[0] , s[2].val[0]));                  \
+            in[0].val[1] = vaddq_f32(in[0].val[1] , vaddq_f32(s[1].val[1] , s[2].val[1]));                  \
                                                                                       \
             s[0].val[0] = NE10_S_MLA_NEON_F32 (s[0].val[0], s[1].val[0], TW_5A_F32.r);\
             s[0].val[1] = NE10_S_MLA_NEON_F32 (s[0].val[1], s[1].val[1], TW_5A_F32.r);\
