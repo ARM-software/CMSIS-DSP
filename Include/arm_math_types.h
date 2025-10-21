@@ -95,6 +95,8 @@ extern "C"
 #pragma warning(disable:4244)
 #pragma warning(disable:4456)
 #pragma warning(disable:4701)
+#pragma warning(disable:4703)
+#pragma warning(disable:4310)
 
 #elif defined ( __APPLE_CC__ )
 #include <stdint.h>

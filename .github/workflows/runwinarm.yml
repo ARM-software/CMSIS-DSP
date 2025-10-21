@@ -25,6 +25,7 @@ jobs:
         run: |
           choco install gow
           refreshenv
+          cat C:/ProgramData/chocolatey/logs/chocolatey.log
 
       - name: Prepare framework
         run: |
