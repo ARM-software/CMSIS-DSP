@@ -65,7 +65,7 @@ ARM_DSP_ATTRIBUTE q15_t arm_cos_q15(
   index = (uint32_t)x >> FAST_MATH_Q15_SHIFT;
 
   /* Calculation of fractional value */
-  fract = (q15_t)((x - (index << FAST_MATH_Q15_SHIFT)) << 9);
+  fract = (x - (index << FAST_MATH_Q15_SHIFT)) << 9;
 
   /* Read two nearest values of input value from the sin table */
   a = sinTable_q15[index];

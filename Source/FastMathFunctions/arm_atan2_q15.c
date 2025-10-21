@@ -69,7 +69,7 @@ __STATIC_FORCEINLINE q15_t arm_atan_limited_q15(q15_t x)
     res = __SSAT(res>>2,16);
 
     
-    return((q15_t)res);
+    return(res);
 }
 
 
@@ -84,7 +84,7 @@ __STATIC_FORCEINLINE q15_t arm_atan_q15(q15_t y,q15_t x)
 #if defined (ARM_MATH_DSP)
      y = __QSUB16(0, y);
 #else 
-     y = ((q15_t)y ==  0x8000) ? 0x7fff : (q15_t)(-y);
+     y = (y == (q15_t) 0x8000) ? (q15_t) 0x7fff : -y;
 #endif
 
      sign=1-sign;
@@ -98,7 +98,7 @@ __STATIC_FORCEINLINE q15_t arm_atan_q15(q15_t y,q15_t x)
 #if defined (ARM_MATH_DSP)
      x = __QSUB16(0, x);
 #else 
-     x = ((q15_t)x ==  0x8000) ? 0x7fff : (q15_t)(-x);
+     x = (x == (q15_t) 0x8000) ? (q15_t) 0x7fff : -x;
 #endif
    }
 
@@ -112,7 +112,7 @@ __STATIC_FORCEINLINE q15_t arm_atan_q15(q15_t y,q15_t x)
     /* Shift ratio by shift */
     if (shift >=0)
     {
-       ratio = (q15_t)__SSAT(((q31_t) ratio << shift), 16);
+       ratio = __SSAT(((q31_t) ratio << shift), 16);
     }
     else
     {
@@ -132,7 +132,7 @@ __STATIC_FORCEINLINE q15_t arm_atan_q15(q15_t y,q15_t x)
     /* Shift ratio by shift */
     if (shift >=0)
     {
-       ratio = (q15_t)__SSAT(((q31_t) ratio << shift), 16);
+       ratio = __SSAT(((q31_t) ratio << shift), 16);
     }
     else
     {
@@ -151,7 +151,7 @@ __STATIC_FORCEINLINE q15_t arm_atan_q15(q15_t y,q15_t x)
 #if defined (ARM_MATH_DSP)
      res = __QSUB16(0, res);
 #else 
-     res = ((q15_t) res == 0x8000) ? 0x7fff : (q15_t)(-res);
+     res = (res == (q15_t) 0x8000) ? (q15_t) 0x7fff : -res;
 #endif
    }
 

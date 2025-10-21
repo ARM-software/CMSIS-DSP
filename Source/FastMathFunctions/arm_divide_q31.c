@@ -83,7 +83,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_divide_q31(q31_t numerator,
 
   temp = ((q63_t)numerator << 31) / ((q63_t)denominator);
 
-  shiftForNormalizing= 32 - __CLZ((uint32_t)(temp >> 31));
+  shiftForNormalizing= 32 - __CLZ(temp >> 31);
   if (shiftForNormalizing > 0)
   {
      *shift = shiftForNormalizing;

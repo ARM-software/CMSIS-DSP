@@ -163,7 +163,7 @@ ARM_DSP_ATTRIBUTE void arm_std_q15(
 
   /* mean of squares minus the square of mean. */
   /* Compute standard deviation and store result in destination */
-  arm_sqrt_q15((q15_t)__SSAT((int32_t)((meanOfSquares - squareOfMean) >> 15U), 16U), pResult);
+  arm_sqrt_q15(__SSAT((meanOfSquares - squareOfMean) >> 15U, 16U), pResult);
 }
 #endif /* defined(ARM_MATH_MVEI) */
 

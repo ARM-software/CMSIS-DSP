@@ -220,7 +220,7 @@ ARM_DSP_ATTRIBUTE void arm_var_q15(
   squareOfMean = (q31_t) ((q63_t) sum * sum / (q63_t)(blockSize * (blockSize - 1U)));
 
   /* mean of squares minus the square of mean. */
-  *pResult = (q15_t)((meanOfSquares - squareOfMean) >> 15U);
+  *pResult = (meanOfSquares - squareOfMean) >> 15U;
 }
 #endif /* defined(ARM_MATH_MVEI) */
 

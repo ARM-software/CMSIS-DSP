@@ -139,7 +139,7 @@ ARM_DSP_ATTRIBUTE void arm_rms_q15(
 
   /* Truncating and saturating the accumulator to 1.15 format */
   /* Store result in destination */
-  arm_sqrt_q15((q15_t)__SSAT((int32_t)((sum / (q63_t)blockSize) >> 15), 16), pResult);
+  arm_sqrt_q15(__SSAT((sum / (q63_t)blockSize) >> 15, 16), pResult);
 }
 #endif /* defined(ARM_MATH_MVEI) */
 

@@ -115,28 +115,28 @@ ARM_DSP_ATTRIBUTE void arm_abs_q15(
 #if defined (ARM_MATH_DSP)
     *pDst++ = (in > 0) ? in : (q15_t)__QSUB16(0, in);
 #else
-    *pDst++ = (in > 0) ? in : ((q15_t)in == 0x8000) ? 0x7fff : (q15_t)(-in);
+    *pDst++ = (in > 0) ? in : ((in == (q15_t) 0x8000) ? 0x7fff : -in);
 #endif
 
     in = *pSrc++;
 #if defined (ARM_MATH_DSP)
     *pDst++ = (in > 0) ? in : (q15_t)__QSUB16(0, in);
 #else
-    *pDst++ = (in > 0) ? in : ((q15_t)in == 0x8000) ? 0x7fff : (q15_t)(-in);
+    *pDst++ = (in > 0) ? in : ((in == (q15_t) 0x8000) ? 0x7fff : -in);
 #endif
 
     in = *pSrc++;
 #if defined (ARM_MATH_DSP)
     *pDst++ = (in > 0) ? in : (q15_t)__QSUB16(0, in);
 #else
-    *pDst++ = (in > 0) ? in : ((q15_t)in == 0x8000) ? 0x7fff : (q15_t)(-in);
+    *pDst++ = (in > 0) ? in : ((in == (q15_t) 0x8000) ? 0x7fff : -in);
 #endif
 
     in = *pSrc++;
 #if defined (ARM_MATH_DSP)
     *pDst++ = (in > 0) ? in : (q15_t)__QSUB16(0, in);
 #else
-    *pDst++ = (in > 0) ? in : ((q15_t)in == 0x8000) ? 0x7fff : (q15_t)(-in);
+    *pDst++ = (in > 0) ? in : ((in == (q15_t) 0x8000) ? 0x7fff : -in);
 #endif
 
     /* Decrement loop counter */
@@ -162,7 +162,7 @@ ARM_DSP_ATTRIBUTE void arm_abs_q15(
 #if defined (ARM_MATH_DSP)
     *pDst++ = (in > 0) ? in : (q15_t)__QSUB16(0, in);
 #else
-    *pDst++ = (in > 0) ? in : ((q15_t)in == 0x8000) ? 0x7fff : (q15_t)(-in);
+    *pDst++ = (in > 0) ? in : ((in == (q15_t) 0x8000) ? 0x7fff : -in);
 #endif
 
     /* Decrement loop counter */

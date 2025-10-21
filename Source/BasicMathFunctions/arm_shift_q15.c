@@ -150,10 +150,10 @@ ARM_DSP_ATTRIBUTE void arm_shift_q15(
 #endif /* #ifndef ARM_MATH_BIG_ENDIAN */
 
 #else
-      *pDst++ = (q15_t)__SSAT(((q31_t) *pSrc++ << shiftBits), 16);
-      *pDst++ = (q15_t)__SSAT(((q31_t) *pSrc++ << shiftBits), 16);
-      *pDst++ = (q15_t)__SSAT(((q31_t) *pSrc++ << shiftBits), 16);
-      *pDst++ = (q15_t)__SSAT(((q31_t) *pSrc++ << shiftBits), 16);
+      *pDst++ = __SSAT(((q31_t) *pSrc++ << shiftBits), 16);
+      *pDst++ = __SSAT(((q31_t) *pSrc++ << shiftBits), 16);
+      *pDst++ = __SSAT(((q31_t) *pSrc++ << shiftBits), 16);
+      *pDst++ = __SSAT(((q31_t) *pSrc++ << shiftBits), 16);
 #endif
 
       /* Decrement loop counter */
@@ -222,7 +222,7 @@ ARM_DSP_ATTRIBUTE void arm_shift_q15(
       /* C = A << shiftBits */
 
       /* Shift input and store result in destination buffer. */
-      *pDst++ = (q15_t)__SSAT(((q31_t) *pSrc++ << shiftBits), 16);
+      *pDst++ = __SSAT(((q31_t) *pSrc++ << shiftBits), 16);
 
       /* Decrement loop counter */
       blkCnt--;

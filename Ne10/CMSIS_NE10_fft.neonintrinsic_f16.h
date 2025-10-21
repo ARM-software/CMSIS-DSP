@@ -117,12 +117,16 @@
 #define VDUPQ_N_F16(VAR) { VAR, VAR,VAR,VAR }
 
 #define CONST_TW_81   0.70710678f16
-#define CONST_TW_81N (-0.70710678f16)
+#define CONST_TW_81N -0.70710678f16
 
+static const float16x4_t Q_TW_81    = VDUPQ_N_F16(CONST_TW_81 );
+static const float16x4_t Q_TW_81N   = VDUPQ_N_F16(CONST_TW_81N);
 
 #define DIV_TW81   1.4142136f16
-#define DIV_TW81N (-1.4142136f16)
+#define DIV_TW81N -1.4142136f16
 
+static const float16x4_t DIV_TW81_NEON  = VDUPQ_N_F16(DIV_TW81);
+static const float16x4_t DIV_TW81N_NEON = VDUPQ_N_F16(DIV_TW81N);
 
 #define NE10_RADIX8x4_R2C_NEON_KERNEL_S1(Q_OUT,Q_IN) do {   \
         Q_OUT ## 0 = vadd_f16 (Q_IN ## 0, Q_IN ## 4);      \
@@ -133,8 +137,8 @@
         Q_OUT ## 5 = vsub_f16 (Q_IN ## 2, Q_IN ## 6);      \
         Q_OUT ## 6 = vadd_f16 (Q_IN ## 3, Q_IN ## 7);      \
         Q_OUT ## 7 = vsub_f16 (Q_IN ## 3, Q_IN ## 7);      \
-        Q_OUT ## 3 = vmul_n_f16 (Q_OUT ## 3, CONST_TW_81 );      \
-        Q_OUT ## 7 = vmul_n_f16 (Q_OUT ## 7, CONST_TW_81N);      \
+        Q_OUT ## 3 = vmul_f16 (Q_OUT ## 3, Q_TW_81 );      \
+        Q_OUT ## 7 = vmul_f16 (Q_OUT ## 7, Q_TW_81N);      \
 } while(0);
 
 #define NE10_RADIX8x4_R2C_NEON_KERNEL_S2(Q_OUT,Q_IN) do {   \
@@ -174,8 +178,8 @@
 } while (0);
 
 #define NE10_RADIX8x4_C2R_NEON_KERNEL_S2(Q_OUT,Q_IN) do {   \
-        Q_IN ## 3 = vmul_n_f16(Q_IN ## 3,DIV_TW81);     \
-        Q_IN ## 7 = vmul_n_f16(Q_IN ## 7,DIV_TW81N);    \
+        Q_IN ## 3 = vmul_f16(Q_IN ## 3,DIV_TW81_NEON);     \
+        Q_IN ## 7 = vmul_f16(Q_IN ## 7,DIV_TW81N_NEON);    \
         Q_OUT ## 0 = vadd_f16(Q_IN ## 0, Q_IN ## 1);       \
         Q_OUT ## 4 = vsub_f16(Q_IN ## 0, Q_IN ## 1);       \
         Q_OUT ## 1 = vadd_f16(Q_IN ## 2, Q_IN ## 3);       \
@@ -332,8 +336,8 @@
 
 #define NE10_RADIX4x4_R2C_TW_NEON_KERNEL_LAST(Q_OUT,Q_IN) do {  \
     float16x4_t Q_TMP;  \
-    Q_IN ## 1 = vmul_n_f16(Q_IN ## 1, CONST_TW_81);  \
-    Q_IN ## 3 = vmul_n_f16(Q_IN ## 3, CONST_TW_81);  \
+    Q_IN ## 1 = vmul_f16(Q_IN ## 1, Q_TW_81);  \
+    Q_IN ## 3 = vmul_f16(Q_IN ## 3, Q_TW_81);  \
     Q_TMP = vsub_f16(Q_IN ## 1, Q_IN ## 3);    \
     Q_IN ## 3 = vadd_f16(Q_IN ## 1, Q_IN ## 3);    \
     Q_IN ## 1 = Q_TMP;                      \
@@ -354,8 +358,8 @@
     Q_TMP = vadd_f16(Q_OUT ## 1, Q_OUT ## 3);  \
     Q_OUT ## 3 = vsub_f16(Q_OUT ## 3, Q_OUT ## 1);  \
     Q_OUT ## 1 = Q_TMP; \
-    Q_OUT ## 1 = vmul_n_f16( Q_OUT ## 1, DIV_TW81); \
-    Q_OUT ## 3 = vmul_n_f16( Q_OUT ## 3, DIV_TW81); \
+    Q_OUT ## 1 = vmul_f16( Q_OUT ## 1, DIV_TW81_NEON); \
+    Q_OUT ## 3 = vmul_f16( Q_OUT ## 3, DIV_TW81_NEON); \
     Q_OUT ## 0 = vadd_f16( Q_OUT ## 0, Q_OUT ## 0 );   \
     Q_OUT ## 2 = vadd_f16( Q_OUT ## 2, Q_OUT ## 2 );   \
 } while(0);
