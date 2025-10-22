@@ -29,6 +29,7 @@
  * CMSIS-DSP f16 implementation based upon the Ne10 f32 one
  */
 
+#include "arm_compiler_specific.h"
 #include <arm_neon.h>
 
 #include "CMSIS_NE10_types.h"
