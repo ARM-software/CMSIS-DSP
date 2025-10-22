@@ -359,7 +359,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df1_f32(
   uint32_t sample, stage = S->numStages;         /*  loop counters             */
 
   float32x4_t Xn;
-  float32x2_t Yn;
+  float32x2_t Yn=vdup_n_f32(0.0f);
   float32x2_t a;
   float32x4_t b;
   
