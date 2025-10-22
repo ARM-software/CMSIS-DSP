@@ -559,7 +559,7 @@ static void ne10_mixed_radix_generic_butterfly_int32_neon_impl_##ISINVERSE##_##I
     while (stage_count > 0)                                                                          \
     {                                                                                                \
         /* radix of first stage, should be one of {2,3,5,4}  */                                      \
-        //printf("Radix %d, index %d\n",radix,stage_count << 1);                                                                  \
+        /* printf("Radix %d, index %d\n",radix,stage_count << 1); */                                 \
         assert ((radix > 1) && (radix < 6));                                                         \
                                                                                                      \
         arm_ne10_swap_ptr (buffer, Fout);                                                            \

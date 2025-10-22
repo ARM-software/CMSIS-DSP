@@ -27,6 +27,7 @@
  * limitations under the License.
  */
 
+#include "arm_compiler_specific.h"
 #include "arm_math_types.h"
 #include "arm_const_structs.h"
 
