@@ -188,7 +188,6 @@ int32_t arm_rfft_tmp_buffer_size(arm_math_target_arch arch,arm_math_datatype dt,
         default:
             return(0);
     }
-    return(0);
 }
 
 /** 
@@ -340,7 +339,6 @@ int32_t arm_mfcc_tmp_buffer_size(arm_math_target_arch arch,
     }
 
 
-    return(0);
 }
 
 /**

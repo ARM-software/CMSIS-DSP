@@ -8,7 +8,7 @@
  ],
  "requires": {
   "arm:tools/kitware/cmake": "3.28.4",
-  "arm:tools/ninja-build/ninja": "1.12.0",
+  "arm:tools/ninja-build/ninja": "1.12.0"
  }
 }
 

@@ -1,4 +1,4 @@
-/* ----------------------------------------------------------------------
+﻿/* ----------------------------------------------------------------------
  * Project:      CMSIS DSP Library
  * Title:        arm_spline_interp_f32.c
  * Description:  Floating-point cubic spline interpolation
@@ -8,6 +8,7 @@
  *
  * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
+
 /*
  * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
@@ -25,6 +26,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+#include "arm_compiler_specific.h"
+
 
 #include "dsp/interpolation_functions.h"
 
@@ -165,17 +168,17 @@ ARM_DSP_ATTRIBUTE void arm_spline_f32(
     float32_t x_sc;
 
 #if defined(ARM_MATH_NEON)
-    float32x4_t xiv = {0.0f, 0.0f, 0.0f, 0.0f};
-    float32x4_t aiv = {0.0f, 0.0f, 0.0f, 0.0f};
-    float32x4_t biv = {0.0f, 0.0f, 0.0f, 0.0f};
-    float32x4_t civ = {0.0f, 0.0f, 0.0f, 0.0f};
-    float32x4_t div = {0.0f, 0.0f, 0.0f, 0.0f};
+    float32x4_t xiv = vdupq_n_f32(0.0f);
+    float32x4_t aiv = vdupq_n_f32(0.0f);
+    float32x4_t biv = vdupq_n_f32(0.0f);
+    float32x4_t civ = vdupq_n_f32(0.0f);
+    float32x4_t div = vdupq_n_f32(0.0f);
 
-    float32x4_t xqv = {0.0f, 0.0f, 0.0f, 0.0f};
+    float32x4_t xqv = vdupq_n_f32(0.0f);
 
-    float32x4_t temp = {0.0f, 0.0f, 0.0f, 0.0f};
-    float32x4_t diff = {0.0f, 0.0f, 0.0f, 0.0f};
-    float32x4_t yv = {0.0f, 0.0f, 0.0f, 0.0f};
+    float32x4_t temp = vdupq_n_f32(0.0f);
+    float32x4_t diff = vdupq_n_f32(0.0f);
+    float32x4_t yv = vdupq_n_f32(0.0f);
 #endif
 
     /* Create output for x(i)<x<x(i+1) */

@@ -27,6 +27,7 @@
  * limitations under the License.
  */
 
+#include "arm_compiler_specific.h"
 #include "dsp/distance_functions.h"
 #include <limits.h>
 #include <math.h>

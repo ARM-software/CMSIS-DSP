@@ -295,7 +295,7 @@ static inline void NE10_CPX_STORE_S_SCALAR (ne10_fft_cpx_int32_t *Fout, const ne
  */
 
 static inline void NE10_LOAD_BY_STEP_SCALAR_1 (
-        ne10_fft_cpx_int32_t out[0],
+        ne10_fft_cpx_int32_t out[1],
         const ne10_fft_cpx_int32_t *Fin,
         const ne10_int32_t ignored)
 {

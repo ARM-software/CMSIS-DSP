@@ -48,6 +48,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
  * reduce branch jump.
  */
 
+#include "arm_compiler_specific.h"
 #include "CMSIS_NE10_fft_generic_int32.neonintrinsic.h"
 #include "CMSIS_NE10_fft.h"
 
