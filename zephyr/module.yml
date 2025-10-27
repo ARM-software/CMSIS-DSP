@@ -1,0 +1,7 @@
+# Copyright (c) 2023 Meta Platforms <ryanmcclelland@meta.com>
+# SPDX-License-Identifier: Apache-2.0
+
+name: cmsis-dsp
+build:
+  cmake-ext: True
+  kconfig-ext: True
