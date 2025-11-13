@@ -47,7 +47,8 @@ extern const float32_t arm_neon_rfft_twiddles_16_f32[ARM_NEON_RFFT_TWIDDLES_16_F
 #define ARM_NEON_RFFT_FACTORS_16_F32_LEN 4
 extern const uint32_t arm_neon_rfft_factors_16_f32[ARM_NEON_RFFT_FACTORS_16_F32_LEN];
 #define ARM_NEON_RFFT_TWIDDLES_NEON_16_F32_LEN 0
-extern const float32_t arm_neon_rfft_twiddles_neon_16_f32[ARM_NEON_RFFT_TWIDDLES_NEON_16_F32_LEN];
+extern const float32_t *arm_neon_rfft_twiddles_neon_16_f32;
+
 #define ARM_NEON_RFFT_FACTORS_NEON_16_F32_LEN 4
 extern const uint32_t arm_neon_rfft_factors_neon_16_f32[ARM_NEON_RFFT_FACTORS_NEON_16_F32_LEN];
 #define ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_16_F32_LEN 24
@@ -60,7 +61,8 @@ extern const float32_t arm_neon_rfft_twiddles_32_f32[ARM_NEON_RFFT_TWIDDLES_32_F
 #define ARM_NEON_RFFT_FACTORS_32_F32_LEN 4
 extern const uint32_t arm_neon_rfft_factors_32_f32[ARM_NEON_RFFT_FACTORS_32_F32_LEN];
 #define ARM_NEON_RFFT_TWIDDLES_NEON_32_F32_LEN 0
-extern const float32_t arm_neon_rfft_twiddles_neon_32_f32[ARM_NEON_RFFT_TWIDDLES_NEON_32_F32_LEN];
+extern const float32_t *arm_neon_rfft_twiddles_neon_32_f32;
+
 #define ARM_NEON_RFFT_FACTORS_NEON_32_F32_LEN 4
 extern const uint32_t arm_neon_rfft_factors_neon_32_f32[ARM_NEON_RFFT_FACTORS_NEON_32_F32_LEN];
 #define ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_32_F32_LEN 24
@@ -160,7 +162,8 @@ extern const float32_t arm_neon_rfft_super_twiddles_neon_4096_f32[ARM_NEON_RFFT_
 #define ARM_NE10_OFFSET_BACKWARD_TWID_NEON_4096_F32 1020
 
 #define ARM_NEON_RFFT_TWIDDLES_16_Q31_LEN 0
-extern const q31_t arm_neon_rfft_twiddles_16_q31[ARM_NEON_RFFT_TWIDDLES_16_Q31_LEN];
+extern const q31_t *arm_neon_rfft_twiddles_16_q31;
+
 #define ARM_NEON_RFFT_FACTORS_16_Q31_LEN 4
 extern const uint32_t arm_neon_rfft_factors_16_q31[ARM_NEON_RFFT_FACTORS_16_Q31_LEN];
 #define ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_16_Q31_LEN 8
@@ -240,7 +243,8 @@ extern const q31_t arm_neon_rfft_super_twiddles_neon_8192_q31[ARM_NEON_RFFT_SUPE
 #define ARM_NE10_OFFSET_BACKWARD_TWID_RFFT_8192_Q31 4092
 
 #define ARM_NEON_RFFT_TWIDDLES_16_Q15_LEN 0
-extern const q15_t arm_neon_rfft_twiddles_16_q15[ARM_NEON_RFFT_TWIDDLES_16_Q15_LEN];
+extern const q15_t *arm_neon_rfft_twiddles_16_q15;
+
 #define ARM_NEON_RFFT_FACTORS_16_Q15_LEN 4
 extern const uint32_t arm_neon_rfft_factors_16_q15[ARM_NEON_RFFT_FACTORS_16_Q15_LEN];
 #define ARM_NEON_RFFT_SUPER_TWIDDLES_NEON_16_Q15_LEN 8

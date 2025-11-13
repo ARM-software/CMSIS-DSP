@@ -45,6 +45,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
  * Small modifications for inclusion in CMSIS-DSP
  */
 
+#include "arm_compiler_specific.h"
 #include <arm_neon.h>
 
 #include "CMSIS_NE10_types.h"

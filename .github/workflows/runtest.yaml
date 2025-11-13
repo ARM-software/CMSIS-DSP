@@ -77,7 +77,7 @@ jobs:
           python runall.py -s -g ${{ matrix.compiler }} -avh $AVH_FVP_PLUGINS/../bin
 
       - name: Upload test report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: test-report_${{ matrix.compiler }}
           path: Testing/cmsis_build/summary_${{ matrix.compiler }}.html

@@ -1,4 +1,4 @@
-/* ----------------------------------------------------------------------
+﻿/* ----------------------------------------------------------------------
  * Project:      CMSIS DSP Library
  * Title:        arm_biquad_cascade_df1_f32.c
  * Description:  Processing function for the floating-point Biquad cascade DirectFormI(DF1) filter
@@ -8,6 +8,7 @@
  *
  * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
+
 /*
  * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
@@ -25,6 +26,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+#include "arm_compiler_specific.h"
+
 
 #include "dsp/filtering_functions.h"
 
@@ -356,7 +359,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df1_f32(
   uint32_t sample, stage = S->numStages;         /*  loop counters             */
 
   float32x4_t Xn;
-  float32x2_t Yn;
+  float32x2_t Yn=vdup_n_f32(0.0f);
   float32x2_t a;
   float32x4_t b;
   

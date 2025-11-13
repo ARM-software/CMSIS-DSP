@@ -1,0 +1,3 @@
+python-matrix-runner >= 1.2.0, <2.0.0
+pyparsing == 3.2.5
+

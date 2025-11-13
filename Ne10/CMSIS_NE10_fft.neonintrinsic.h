@@ -37,13 +37,13 @@
 #include <arm_neon.h>
 
 #define NE10_CPX_ADD_NEON_F32(Z,A,B) do {           \
-    Z.val[0] = A.val[0] + B.val[0];    \
-    Z.val[1] = A.val[1] + B.val[1];    \
+    Z.val[0] = vaddq_f32(A.val[0], B.val[0]);    \
+    Z.val[1] = vaddq_f32(A.val[1], B.val[1]);    \
 } while (0);
 
 #define NE10_CPX_SUB_NEON_F32(Z,A,B) do {           \
-    Z.val[0] = A.val[0] - B.val[0];    \
-    Z.val[1] = A.val[1] - B.val[1];    \
+    Z.val[0] = vsubq_f32(A.val[0] , B.val[0]);    \
+    Z.val[1] = vsubq_f32(A.val[1] , B.val[1]);    \
 } while (0);
 
 #define NE10_CPX_MUL_NEON_F32(Z,A,B) do {           \
@@ -111,16 +111,10 @@
 #define VDUPQ_N_F32(VAR) { VAR, VAR, VAR, VAR }
 
 #define CONST_TW_81   0.70710678f
-#define CONST_TW_81N -0.70710678f
-
-static const float32x4_t Q_TW_81    = VDUPQ_N_F32(CONST_TW_81 );
-static const float32x4_t Q_TW_81N   = VDUPQ_N_F32(CONST_TW_81N);
+#define CONST_TW_81N (-0.70710678f)
 
 #define DIV_TW81   1.4142136f
-#define DIV_TW81N -1.4142136f
-
-static const float32x4_t DIV_TW81_NEON  = VDUPQ_N_F32(DIV_TW81);
-static const float32x4_t DIV_TW81N_NEON = VDUPQ_N_F32(DIV_TW81N);
+#define DIV_TW81N (-1.4142136f)
 
 #define NE10_RADIX8x4_R2C_NEON_KERNEL_S1(Q_OUT,Q_IN) do {   \
         Q_OUT ## 0 = vaddq_f32 (Q_IN ## 0, Q_IN ## 4);      \
@@ -131,8 +125,8 @@ static const float32x4_t DIV_TW81N_NEON = VDUPQ_N_F32(DIV_TW81N);
         Q_OUT ## 5 = vsubq_f32 (Q_IN ## 2, Q_IN ## 6);      \
         Q_OUT ## 6 = vaddq_f32 (Q_IN ## 3, Q_IN ## 7);      \
         Q_OUT ## 7 = vsubq_f32 (Q_IN ## 3, Q_IN ## 7);      \
-        Q_OUT ## 3 = vmulq_f32 (Q_OUT ## 3, Q_TW_81 );      \
-        Q_OUT ## 7 = vmulq_f32 (Q_OUT ## 7, Q_TW_81N);      \
+        Q_OUT ## 3 = vmulq_n_f32 (Q_OUT ## 3, CONST_TW_81 );      \
+        Q_OUT ## 7 = vmulq_n_f32 (Q_OUT ## 7, CONST_TW_81N);      \
 } while(0);
 
 #define NE10_RADIX8x4_R2C_NEON_KERNEL_S2(Q_OUT,Q_IN) do {   \
@@ -172,8 +166,8 @@ static const float32x4_t DIV_TW81N_NEON = VDUPQ_N_F32(DIV_TW81N);
 } while (0);
 
 #define NE10_RADIX8x4_C2R_NEON_KERNEL_S2(Q_OUT,Q_IN) do {   \
-        Q_IN ## 3 = vmulq_f32(Q_IN ## 3,DIV_TW81_NEON);     \
-        Q_IN ## 7 = vmulq_f32(Q_IN ## 7,DIV_TW81N_NEON);    \
+        Q_IN ## 3 = vmulq_n_f32(Q_IN ## 3,DIV_TW81);     \
+        Q_IN ## 7 = vmulq_n_f32(Q_IN ## 7,DIV_TW81N);    \
         Q_OUT ## 0 = vaddq_f32(Q_IN ## 0, Q_IN ## 1);       \
         Q_OUT ## 4 = vsubq_f32(Q_IN ## 0, Q_IN ## 1);       \
         Q_OUT ## 1 = vaddq_f32(Q_IN ## 2, Q_IN ## 3);       \
@@ -330,8 +324,8 @@ static const float32x4_t DIV_TW81N_NEON = VDUPQ_N_F32(DIV_TW81N);
 
 #define NE10_RADIX4x4_R2C_TW_NEON_KERNEL_LAST(Q_OUT,Q_IN) do {  \
     float32x4_t Q_TMP;  \
-    Q_IN ## 1 = vmulq_f32(Q_IN ## 1, Q_TW_81);  \
-    Q_IN ## 3 = vmulq_f32(Q_IN ## 3, Q_TW_81);  \
+    Q_IN ## 1 = vmulq_n_f32(Q_IN ## 1, CONST_TW_81);  \
+    Q_IN ## 3 = vmulq_n_f32(Q_IN ## 3, CONST_TW_81);  \
     Q_TMP = vsubq_f32(Q_IN ## 1, Q_IN ## 3);    \
     Q_IN ## 3 = vaddq_f32(Q_IN ## 1, Q_IN ## 3);    \
     Q_IN ## 1 = Q_TMP;                      \
@@ -352,8 +346,8 @@ static const float32x4_t DIV_TW81N_NEON = VDUPQ_N_F32(DIV_TW81N);
     Q_TMP = vaddq_f32(Q_OUT ## 1, Q_OUT ## 3);  \
     Q_OUT ## 3 = vsubq_f32(Q_OUT ## 3, Q_OUT ## 1);  \
     Q_OUT ## 1 = Q_TMP; \
-    Q_OUT ## 1 = vmulq_f32( Q_OUT ## 1, DIV_TW81_NEON); \
-    Q_OUT ## 3 = vmulq_f32( Q_OUT ## 3, DIV_TW81_NEON); \
+    Q_OUT ## 1 = vmulq_n_f32( Q_OUT ## 1, DIV_TW81); \
+    Q_OUT ## 3 = vmulq_n_f32( Q_OUT ## 3, DIV_TW81); \
     Q_OUT ## 0 = vaddq_f32( Q_OUT ## 0, Q_OUT ## 0 );   \
     Q_OUT ## 2 = vaddq_f32( Q_OUT ## 2, Q_OUT ## 2 );   \
 } while(0);

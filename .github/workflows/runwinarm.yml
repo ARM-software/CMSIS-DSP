@@ -1,0 +1,34 @@
+name: Neon tests
+on:
+  workflow_dispatch:
+  push:
+    branches: [winarm]
+
+permissions: 
+  actions: read
+  security-events: write
+
+jobs:
+   CI_test_run: 
+    runs-on: windows-11-arm
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Python 3.12
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Install standard tools
+        run: |
+          choco install gow
+          refreshenv
+
+      - name: Prepare framework
+        run: |
+          cmd /c '"C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat" -arch=arm64 -host_arch=arm64 && C:\a\CMSIS-DSP\CMSIS-DSP\Testing\winarm_test\test.bat'
+         
+
+    

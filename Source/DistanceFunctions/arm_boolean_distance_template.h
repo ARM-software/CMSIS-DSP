@@ -368,16 +368,16 @@ void FUNC(EXT)(const uint32_t *pA
     }
 
 #ifdef TT
-    _ctt += vgetq_lane_u64(tmp4tt, 0) + vgetq_lane_u64(tmp4tt, 1);
+    _ctt += (uint32_t)vgetq_lane_u64(tmp4tt, 0) +  (uint32_t)vgetq_lane_u64(tmp4tt, 1);
 #endif
 #ifdef FF
-    _cff +=vgetq_lane_u64(tmp4ff, 0) + vgetq_lane_u64(tmp4ff, 1);
+    _cff +=  (uint32_t)vgetq_lane_u64(tmp4ff, 0) +  (uint32_t)vgetq_lane_u64(tmp4ff, 1);
 #endif
 #ifdef TF
-    _ctf += vgetq_lane_u64(tmp4tf, 0) + vgetq_lane_u64(tmp4tf, 1);
+    _ctf +=  (uint32_t)vgetq_lane_u64(tmp4tf, 0) +  (uint32_t)vgetq_lane_u64(tmp4tf, 1);
 #endif
 #ifdef FT
-    _cft += vgetq_lane_u64(tmp4ft, 0) + vgetq_lane_u64(tmp4ft, 1);
+    _cft +=  (uint32_t)vgetq_lane_u64(tmp4ft, 0) + (uint32_t)vgetq_lane_u64(tmp4ft, 1);
 #endif
 
     nbBoolBlock = numberOfBools & 0x7F;

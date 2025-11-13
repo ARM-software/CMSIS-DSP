@@ -72,7 +72,7 @@ compiler file in Core or Core_A would not make sense.
         count += 1U;
         mask = mask >> 1U;
       }
-      return count;
+      return ((uint8_t)count);
     }
 
   __STATIC_FORCEINLINE int32_t __SSAT(int32_t val, uint32_t sat)

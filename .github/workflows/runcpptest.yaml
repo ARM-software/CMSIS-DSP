@@ -82,7 +82,7 @@ jobs:
           python run_all.py -t -g ${{ matrix.compiler }} -c ${{ matrix.core }} -avh $AVH_FVP_PLUGINS/../bin
 
       - name: Upload test report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: test-cpp-report_${{ matrix.compiler }}_${{ matrix.core }}
           path: dsppp/${{ matrix.compiler }}_results/errors_${{ matrix.core }}.txt
