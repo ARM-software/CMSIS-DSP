@@ -5,11 +5,7 @@ optimized compute kernels for Arm Cortex-M and for Cortex-A. Different variants 
 most of the functions are using a vectorized version when the [Helium](https://developer.arm.com/Architectures/Helium)
 or [Neon](https://developer.arm.com/Architectures/Neon) extension is available.
 
-This CMSIS-Pack contains the CMSIS-DSP library and several other projects:
-
-- Test framework for bare-metal usage on Arm Cortex-M or Arm Cortex-A
-- Bare-metal examples for Arm Cortex-M
-- [PythonWrapper](https://pypi.org/project/cmsisdsp/)
+This CMSIS-Pack contains the CMSIS-DSP library.
 
 ## CMSIS-DSP Kernels
 
