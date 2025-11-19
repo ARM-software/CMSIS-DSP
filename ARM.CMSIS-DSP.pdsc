@@ -2,7 +2,7 @@
 
 <package schemaVersion="1.7.40" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="https://raw.githubusercontent.com/Open-CMSIS-Pack/Open-CMSIS-Pack-Spec/v1.7.40/schema/PACK.xsd">
   <name>CMSIS-DSP</name>
-  <description overview="README.md">CMSIS Embedded Compute Library</description>
+  <description overview="overview/README.md">CMSIS Embedded Compute Library</description>
   <vendor>ARM</vendor>
   <license>LICENSE</license>
   <licenseSets>
