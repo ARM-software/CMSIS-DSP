@@ -40,8 +40,19 @@
 #endif
 
 #ifdef   __cplusplus
+#include <cstdint>
+#include <cstring>
+#include <cmath>
+#include <cfloat>
+#include <climits>
 extern "C"
 {
+#else
+#include <stdint.h>
+#include <string.h>
+#include <math.h>
+#include <float.h>
+#include <limits.h>
 #endif
 
 /* Compiler specific diagnostic adjustment */
@@ -83,7 +94,6 @@ extern "C"
 
 /* Included for intrinsics definitions */
 #if defined (_MSC_VER ) 
-#include <stdint.h>
 #define __STATIC_FORCEINLINE static __forceinline
 #define __STATIC_INLINE static __inline
 #define __ALIGNED(x) __declspec(align(x))
@@ -93,7 +103,6 @@ extern "C"
 
 
 #elif defined ( __APPLE_CC__ )
-#include <stdint.h>
 #define  __ALIGNED(x) __attribute__((aligned(x)))
 #define __STATIC_FORCEINLINE static inline __attribute__((always_inline)) 
 #define __STATIC_INLINE static inline
@@ -101,7 +110,6 @@ extern "C"
 #define SECTION_NOINIT
 #define NO_INLINE __attribute__ ((noinline))
 #elif defined (__GNUC_PYTHON__)
-#include <stdint.h>
 #define  __ALIGNED(x) __attribute__((aligned(x)))
 #define __STATIC_FORCEINLINE static inline __attribute__((always_inline)) 
 #define __STATIC_INLINE static inline
@@ -118,10 +126,7 @@ extern "C"
 
 
 
-#include <string.h>
-#include <math.h>
-#include <float.h>
-#include <limits.h>
+
 
 /* evaluate ARM DSP feature */
 /* __GNUC_PYTHON__ is disabling dependency to CMSIS Core.
