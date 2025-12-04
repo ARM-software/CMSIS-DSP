@@ -232,6 +232,13 @@ def cdiv(a,b):
 
     return(d)
 
+def sat_q63_to_q31(v):
+    if v > 0x7FFFFFFF:
+        return(0x7FFFFFFF)
+    if v < -0x80000000:
+        return(-0x80000000)
+    return(v)
+
 def testInt64(config):
     theInput=[0x1000000080000000,
                  0x0000000080000000,
@@ -264,13 +271,14 @@ def testInt64(config):
     ( -0x0000000080000000,2)
     ]
 
-    res = [tocint32(cdiv(x,y))  for (x,y) in allCombinations]
+    res = [sat_q63_to_q31(cdiv(x,y))  for (x,y) in allCombinations]
     
     allCombinations=np.array(allCombinations,dtype=np.int64).flatten()
+    config.setOverwrite(True)
     config.writeInputS64(1,allCombinations[0::2],"DivDenInput")
     config.writeInputS32(1,allCombinations[1::2],"DivNumInput")
 
-    config.writeReferenceU32(1, res,"DivRef")
+    config.writeReferenceS32(1, res,"DivRef")
     config.setOverwrite(False)
 
 
