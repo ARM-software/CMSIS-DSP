@@ -44,7 +44,7 @@ jobs:
 
       - name: Cache boost
         id: cache-boost
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           key: boost-cmsis-dsp
           restore-keys: |
