@@ -98,7 +98,7 @@ jobs:
           python ../processResult.py --noerr -e -f ../Output_f16.pickle -r result_f16.txt -html > result_f16.html 
 
       - name: Upload test report
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: neon-test-report
           path: |
