@@ -94,7 +94,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_add_f32(
     f32x4_t vecA, vecB, vecDst = { 0 };
     float32_t const *pSrcAVec;
     float32_t const *pSrcBVec;
-    uint32_t  blkCnt;           /* loop counters */
+    int32_t  blkCnt;           /* loop counters */
 
     pDataA = pSrcA->pData;
     pDataB = pSrcB->pData;
@@ -118,35 +118,21 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_add_f32(
      * Total number of samples in the input matrix
      */
     numSamples = (uint32_t) pSrcA->numRows * pSrcA->numCols;
-    blkCnt = numSamples >> 2;
-    while (blkCnt > 0U)
-    {
-        /* C(m,n) = A(m,n) + B(m,n) */
-        /* Add and then store the results in the destination buffer. */
-        vecA = vld1q(pSrcAVec); 
-        pSrcAVec += 4;
-        vecB = vld1q(pSrcBVec); 
-        pSrcBVec += 4;
-        vecDst = vaddq(vecA, vecB);
-        vst1q(pDataDst, vecDst);  
-        pDataDst += 4;
-        /*
-         * Decrement the blockSize loop counter
-         */
-        blkCnt--;
-    }
-    /*
-     * tail
-     */
-    blkCnt = numSamples & 3;
-    if (blkCnt > 0U)
+
+    blkCnt = (int32_t) numSamples;
+    do
     {
         mve_pred16_t p0 = vctp32q(blkCnt);
         vecA = vld1q(pSrcAVec); 
         vecB = vld1q(pSrcBVec); 
         vecDst = vaddq_m(vecDst, vecA, vecB, p0);
         vstrwq_p(pDataDst, vecDst, p0);
-    }
+        pSrcAVec += 4;
+        pSrcBVec += 4;
+        pDataDst += 4;
+        blkCnt -= 4;
+    } while (blkCnt > 0);
+
     /* set status as ARM_MATH_SUCCESS */
     status = ARM_MATH_SUCCESS;
   }
