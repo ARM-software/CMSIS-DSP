@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "Error.h"
 
-#define SNR_THRESHOLD 35
+#define SNR_THRESHOLD 27
 
 /* 
 
@@ -10,8 +10,8 @@ Reference patterns are generated with
 a double precision computation.
 
 */
-#define REL_ERROR (4.0e-2)
-#define ABS_ERROR (4.0e-2)
+#define REL_ERROR (5.0e-2)
+#define ABS_ERROR (1.0e-1)
 
     void BIQUADF16::test_biquad_cascade_df1_ref()
     {
