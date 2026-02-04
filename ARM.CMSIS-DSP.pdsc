@@ -89,9 +89,6 @@
         <file category="source"   name="Source/BayesFunctions/BayesFunctionsF16.c"/>
         <file category="source"   name="Source/SVMFunctions/SVMFunctionsF16.c"/>
 
-        <!-- Compute Library for Cortex-A -->
-        <file category="header"   name="ComputeLibrary/Include/NEMath.h"        condition="ARMv7-A Device"/>
-        <file category="source"   name="ComputeLibrary/Source/arm_cl_tables.c"  condition="ARMv7-A Device"/>
       </files>
     </component>
 
