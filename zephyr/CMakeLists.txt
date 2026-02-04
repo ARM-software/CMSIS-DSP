@@ -32,6 +32,7 @@ zephyr_library_compile_definitions_ifdef(CONFIG_CMSIS_DSP_MATRIXCHECK           
 zephyr_library_compile_definitions_ifndef(CONFIG_CMSIS_DSP_FLOAT16              DISABLEFLOAT16)
 zephyr_library_compile_definitions_ifdef(CONFIG_CMSIS_DSP_AUTOVECTORIZE         ARM_MATH_AUTOVECTORIZE)
 zephyr_library_compile_definitions_ifdef(CONFIG_CMSIS_DSP_NE10_DSP_RIFFT_SCALING CMSIS_NE10_DSP_RIFFT_SCALING)
+zephyr_library_compile_definitions_ifdef(CONFIG_CMSIS_DSP_CUSTOM_CONFIG  ARM_DSP_CUSTOM_CONFIG)
 
 zephyr_compile_definitions_ifndef(CONFIG_ARM __GNUC_PYTHON__)
 

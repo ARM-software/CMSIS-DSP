@@ -36,6 +36,17 @@ config CMSIS_DSP_ROUNDING
 	help
 	  This option enables rounding on the support functions.
 
+config CMSIS_DSP_CUSTOM_CONFIG 
+    bool "Custom configuration header"
+    help 
+      This option enables the inclusion of the header 
+	  arm_dsp_config.h. This header can be used to
+	  define ARM_DSP_ATTRIBUTE and ARM_DSP_TABLE_ATTRIBUTE.
+	  ARM_DSP_ATTRIBUTE can be used to define all functions as 
+	  weak or put them in specific memory sections.
+	  ARM_DSP_TABLE_ATTRIBUTE can be used to put CMSIS DSP tables
+	  in specific memory sections.
+
 config CMSIS_DSP_MATRIXCHECK
 	bool "Matrix Check"
 	help
