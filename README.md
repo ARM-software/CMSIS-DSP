@@ -55,6 +55,7 @@ For any questions or to reach the CMSIS-DSP  team, please create a new issue in 
   * [How to build with MDK or Open CMSIS-Pack](#how-to-build-with-mdk-or-open-cmsis-pack)
   * [How to build with Make](#how-to-build-with-make)
   * [How to build with cmake](#how-to-build-with-cmake)
+  * [How to build with Zephyr](#how-to-build-with-zephyr)
   * [How to build with any other build system](#how-to-build-with-any-other-build-system)
   * [How to build for Neon and aarch64](#how-to-build-for-aarch64)
 * [Code size](#code-size)
@@ -154,6 +155,17 @@ If you build for Neon, use `NEON` and/or `NEONEXPERIMENTAL`.
 Once cmake has generated the makefiles, you can use a GNU Make to build.
 
     make VERBOSE=1
+
+### How to build with Zephyr
+
+Add this to your west file:
+
+```
+- name: cmsis-dsp
+      url: https://github.com/ARM-software/CMSIS-DSP
+      revision: main
+      path: modules/lib/cmsis-dsp
+```
 
 ### How to build with any other build system
 
