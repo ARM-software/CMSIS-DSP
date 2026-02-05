@@ -49,3 +49,6 @@ Testing/Patterns/DSP/MatrixNeon
 *.so
 *.egg-info
 boost.tar.gz
+
+compile_commands.json
+
