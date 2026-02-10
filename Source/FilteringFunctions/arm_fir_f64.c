@@ -190,14 +190,14 @@ ARM_DSP_ATTRIBUTE void arm_fir_f64(
     *pStateCurnt++ = *pSrc++;
 
     /* Set all accumulators to zero */
-    acc0 = 0.0f;
-    acc1 = 0.0f;
-    acc2 = 0.0f;
-    acc3 = 0.0f;
-    acc4 = 0.0f;
-    acc5 = 0.0f;
-    acc6 = 0.0f;
-    acc7 = 0.0f;
+    acc0 = 0.0;
+    acc1 = 0.0;
+    acc2 = 0.0;
+    acc3 = 0.0;
+    acc4 = 0.0;
+    acc5 = 0.0;
+    acc6 = 0.0;
+    acc7 = 0.0;
 
     /* Initialize state pointer */
     px = pState;
@@ -440,7 +440,7 @@ ARM_DSP_ATTRIBUTE void arm_fir_f64(
     *pStateCurnt++ = *pSrc++;
 
     /* Set the accumulator to zero */
-    acc0 = 0.0f;
+    acc0 = 0.0;
 
     /* Initialize state pointer */
     px = pState;
