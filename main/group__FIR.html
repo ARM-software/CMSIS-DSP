@@ -204,8 +204,10 @@ Finite Impulse Response filter</div></div>
 <li>Zeros out the values in the state buffer. To do this manually without calling the init function, assign the follow subfields of the instance structure: numTaps, pCoeffs, pState. Also set all of the values in pState to zero.</li>
 </ul>
 </dd></dl>
-<dl class="section user"><dt></dt><dd>Use of the initialization function is optional. However, if the initialization function is used, then the instance structure cannot be placed into a const data section. To place an instance structure into a const data section, the instance structure must be manually initialized. Set the values in the state buffer to zeros before static initialization. The code below statically initializes each of the 4 different data type filter instance structures <pre>
+<dl class="section user"><dt></dt><dd>Use of the initialization function is optional. However, if the initialization function is used, then the instance structure cannot be placed into a const data section. To place an instance structure into a const data section, the instance structure must be manually initialized. Set the values in the state buffer to zeros before static initialization. The code below statically initializes each of the 6 different data type filter instance structures <pre>
+    <a class="el" href="structarm__fir__instance__f64.html" title="Instance structure for the floating-point FIR filter.">arm_fir_instance_f64</a> S = {numTaps, pState, pCoeffs};
     <a class="el" href="structarm__fir__instance__f32.html" title="Instance structure for the floating-point FIR filter.">arm_fir_instance_f32</a> S = {numTaps, pState, pCoeffs};
+    <a class="el" href="structarm__fir__instance__f16.html" title="Instance structure for the floating-point FIR filter.">arm_fir_instance_f16</a> S = {numTaps, pState, pCoeffs};
     <a class="el" href="structarm__fir__instance__q31.html" title="Instance structure for the Q31 FIR filter.">arm_fir_instance_q31</a> S = {numTaps, pState, pCoeffs};
     <a class="el" href="structarm__fir__instance__q15.html" title="Instance structure for the Q15 FIR filter.">arm_fir_instance_q15</a> S = {numTaps, pState, pCoeffs};
     <a class="el" href="structarm__fir__instance__q7.html" title="Instance structure for the Q7 FIR filter.">arm_fir_instance_q7</a> S =  {numTaps, pState, pCoeffs};
