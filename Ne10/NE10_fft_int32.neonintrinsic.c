@@ -1267,7 +1267,7 @@ static void arm_ne10_mixed_radix_fft_forward_int32_##scaled##_neon (ne10_fft_cpx
     ne10_fft_cpx_int32_t *Fout1; \
     ne10_fft_cpx_int32_t   *Fout_ls = Fout; \
     ne10_fft_cpx_int32_t   *Ftmp; \
-    const ne10_fft_cpx_int32_t   *tw;\
+    const ne10_fft_cpx_int32_t   *tw = twiddles;\
     const ne10_fft_cpx_int32_t *tw1; \
  \
     /* init fstride, mstride, N */ \
@@ -1353,7 +1353,7 @@ static void arm_ne10_mixed_radix_fft_backward_int32_##scaled##_neon (ne10_fft_cp
     ne10_fft_cpx_int32_t   *Fout1; \
     ne10_fft_cpx_int32_t   *Fout_ls = Fout; \
     ne10_fft_cpx_int32_t   *Ftmp; \
-    const ne10_fft_cpx_int32_t   *tw; \
+    const ne10_fft_cpx_int32_t   *tw = twiddles; \
     const  ne10_fft_cpx_int32_t *tw1; \
  \
     /* init fstride, mstride, N */ \
