@@ -1,5 +1,6 @@
 #from distutils.core import setup, Extension
 from setuptools import setup, Extension,find_packages
+from setuptools.command.build_ext import build_ext
 import io
 import glob
 import numpy
@@ -9,11 +10,15 @@ import os.path
 import re
 import pathlib
 import platform
+import shutil
+import subprocess
 
 
 here = pathlib.Path(__file__).parent.resolve()
 ROOT = here
 ROOT=""
+
+BUILD_ROOT = here / "build" / "pythonwrapper"
 
 PYTHON_MOD = os.path.join(ROOT,"cmsisdsp")
 version_path = os.path.join(PYTHON_MOD,"version.py")
@@ -151,21 +156,62 @@ window = list(filter(isnotmissing,list(filter(notf16, windowMod))))
 #  print(os.path.basename(l))
 #quit()
 
+def cmsisdsp_library_path():
+  if sys.platform == 'win32':
+    return(BUILD_ROOT / "bin_dsp" / "Release" / "CMSISDSP.lib")
+
+  return(BUILD_ROOT / "bin_dsp" / "libCMSISDSP.a")
+
+
+class BuildCMSISDSPExtensions(build_ext):
+  def run(self):
+    self.build_cmsisdsp_library()
+    super().run()
+
+  def build_cmsisdsp_library(self):
+    library_path = cmsisdsp_library_path()
+    if library_path.exists():
+      return
+
+    BUILD_ROOT.mkdir(parents=True, exist_ok=True)
+
+    configure = [
+      "cmake",
+      "-S", str(here / "PythonWrapper"),
+      "-B", str(BUILD_ROOT),
+      f"-DCMSISDSP={here}",
+      "-DHOST=YES",
+      "-DWRAPPER=YES",
+      "-DLOOPUNROLL=ON",
+      "-DCMAKE_BUILD_TYPE=Release",
+    ]
+
+    if sys.platform != 'win32':
+      configure.append("-DCMAKE_POSITION_INDEPENDENT_CODE=YES")
+
+    if sys.platform == 'darwin' and ARM:
+      configure.extend([
+        "-DNEON=YES",
+        "-DCMAKE_OSX_ARCHITECTURES=arm64",
+        "-DCMAKE_OSX_DEPLOYMENT_TARGET=10.9",
+      ])
+
+    if shutil.which("ninja"):
+      configure.extend(["-G", "Ninja"])
+
+    subprocess.run(configure, check=True)
+    subprocess.run([
+      "cmake",
+      "--build", str(BUILD_ROOT),
+      "--config", "Release",
+    ], check=True)
+
+    if not library_path.exists():
+      raise RuntimeError(f"CMSIS-DSP wrapper library was not generated at {library_path}")
+
+
 def mkModule(name,srcs,funcDir):
   localinc = os.path.join(ROOT,"Source",funcDir)
-  libdir = [os.path.join(ROOT,"PythonWrapper","build","bin_dsp")]
-  lib = ["CMSISDSP"]
-  extraobjs=[]
-  
-  if sys.platform.startswith('linux'):
-    lib = []
-    extraobjs = [os.path.join(ROOT,"PythonWrapper","build_linux","bin_dsp","libCMSISDSP.a")]
-    libdir = []
- 
-  if sys.platform.startswith('darwin'):
-    lib = []
-    extraobjs = [os.path.join(ROOT,"PythonWrapper","build_darwin","bin_dsp","libCMSISDSP.a")]
-    libdir = []
  
   return(Extension(name,
                     sources = (srcs
@@ -174,9 +220,8 @@ def mkModule(name,srcs,funcDir):
                     include_dirs =  [localinc] + includes + [numpy.get_include()],
                     extra_compile_args = cflags,
                     extra_link_args = linkargs,
-                    library_dirs = libdir,
-                    libraries=lib,
-                    extra_objects=extraobjs
+                    libraries=[],
+                    extra_objects=[str(cmsisdsp_library_path())]
                               ))
 
 flagsForCommonWithoutFFT=[]
@@ -250,10 +295,12 @@ def build():
           install_requires=[
           'numpy>=1.23.5',
           ],
-          project_urls={  # Optional
+         project_urls={  # Optional
              'Bug Reports': 'https://github.com/ARM-software/CMSIS-DSP/issues',
              'Source': 'https://github.com/ARM-software/CMSIS-DSP',
             }
+         ,
+         cmdclass={'build_ext': BuildCMSISDSPExtensions}
           )
        
 
