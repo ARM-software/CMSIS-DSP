@@ -163,6 +163,16 @@ def cmsisdsp_library_path():
   return(BUILD_ROOT / "bin_dsp" / "libCMSISDSP.a")
 
 
+def built_cmsisdsp_library_candidates():
+  if sys.platform == 'win32':
+    return([
+      BUILD_ROOT / "bin_dsp" / "Release" / "CMSISDSP.lib",
+      BUILD_ROOT / "bin_dsp" / "CMSISDSP.lib",
+    ])
+
+  return([BUILD_ROOT / "bin_dsp" / "libCMSISDSP.a"])
+
+
 class BuildCMSISDSPExtensions(build_ext):
   def run(self):
     self.build_cmsisdsp_library()
@@ -170,7 +180,9 @@ class BuildCMSISDSPExtensions(build_ext):
 
   def build_cmsisdsp_library(self):
     library_path = cmsisdsp_library_path()
-    if library_path.exists():
+    candidates = built_cmsisdsp_library_candidates()
+    existing = next((path for path in candidates if path.exists()), None)
+    if existing is not None:
       return
 
     BUILD_ROOT.mkdir(parents=True, exist_ok=True)
@@ -206,8 +218,13 @@ class BuildCMSISDSPExtensions(build_ext):
       "--config", "Release",
     ], check=True)
 
-    if not library_path.exists():
-      raise RuntimeError(f"CMSIS-DSP wrapper library was not generated at {library_path}")
+    existing = next((path for path in candidates if path.exists()), None)
+    if existing is None:
+      raise RuntimeError(f"CMSIS-DSP wrapper library was not generated in any expected location under {BUILD_ROOT / 'bin_dsp'}")
+
+    if existing != library_path:
+      library_path.parent.mkdir(parents=True, exist_ok=True)
+      shutil.copyfile(existing, library_path)
 
 
 def mkModule(name,srcs,funcDir):
