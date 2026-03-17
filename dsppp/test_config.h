@@ -8,10 +8,10 @@
 //#define ONLY_BENCHMARKS
 
 
-#define MATRIX_TEST
-#define Q7_DT
-#define DYNAMIC_TEST
-#define SUBTEST20
+#define DOT_TEST
+#define COMPLEX_F32_DT
+#define STATIC_TEST
+
 
 #endif
 

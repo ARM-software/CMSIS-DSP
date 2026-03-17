@@ -173,7 +173,7 @@ const float16_t * pCoef,
 uint16_t twidCoefModifier)
 {
 
-   float16_t co1, co2, co3, si1, si2, si3;
+   _Float16 co1, co2, co3, si1, si2, si3;
    uint32_t ia1, ia2, ia3;
    uint32_t i0, i1, i2, i3;
    uint32_t n1, n2, j, k;
@@ -182,14 +182,14 @@ uint16_t twidCoefModifier)
 
    /* Run the below code for Cortex-M4 and Cortex-M3 */
 
-   float16_t xaIn, yaIn, xbIn, ybIn, xcIn, ycIn, xdIn, ydIn;
-   float16_t Xaplusc, Xbplusd, Yaplusc, Ybplusd, Xaminusc, Xbminusd, Yaminusc,
+   _Float16 xaIn, yaIn, xbIn, ybIn, xcIn, ycIn, xdIn, ydIn;
+   _Float16 Xaplusc, Xbplusd, Yaplusc, Ybplusd, Xaminusc, Xbminusd, Yaminusc,
    Ybminusd;
-   float16_t Xb12C_out, Yb12C_out, Xc12C_out, Yc12C_out, Xd12C_out, Yd12C_out;
-   float16_t Xb12_out, Yb12_out, Xc12_out, Yc12_out, Xd12_out, Yd12_out;
+   _Float16 Xb12C_out, Yb12C_out, Xc12C_out, Yc12C_out, Xd12C_out, Yd12C_out;
+   _Float16 Xb12_out, Yb12_out, Xc12_out, Yc12_out, Xd12_out, Yd12_out;
    float16_t *ptr1;
-   float16_t p0,p1,p2,p3,p4,p5;
-   float16_t a0,a1,a2,a3,a4,a5,a6,a7;
+   _Float16 p0,p1,p2,p3,p4,p5;
+   _Float16 a0,a1,a2,a3,a4,a5,a6,a7;
 
    /*  Initializations for the first stage */
    n2 = fftLen;
@@ -543,7 +543,7 @@ uint16_t twidCoefModifier)
 
 #else
 
-   float16_t t1, t2, r1, r2, s1, s2;
+   _Float16 t1, t2, r1, r2, s1, s2;
 
    /* Run the below code for Cortex-M0 */
 
@@ -676,21 +676,21 @@ const float16_t * pCoef,
 uint16_t twidCoefModifier,
 float16_t onebyfftLen)
 {
-   float16_t co1, co2, co3, si1, si2, si3;
+   _Float16 co1, co2, co3, si1, si2, si3;
    uint32_t ia1, ia2, ia3;
    uint32_t i0, i1, i2, i3;
    uint32_t n1, n2, j, k;
 
 #if defined (ARM_MATH_DSP)
 
-   float16_t xaIn, yaIn, xbIn, ybIn, xcIn, ycIn, xdIn, ydIn;
-   float16_t Xaplusc, Xbplusd, Yaplusc, Ybplusd, Xaminusc, Xbminusd, Yaminusc,
+   _Float16 xaIn, yaIn, xbIn, ybIn, xcIn, ycIn, xdIn, ydIn;
+   _Float16 Xaplusc, Xbplusd, Yaplusc, Ybplusd, Xaminusc, Xbminusd, Yaminusc,
    Ybminusd;
-   float16_t Xb12C_out, Yb12C_out, Xc12C_out, Yc12C_out, Xd12C_out, Yd12C_out;
-   float16_t Xb12_out, Yb12_out, Xc12_out, Yc12_out, Xd12_out, Yd12_out;
+   _Float16 Xb12C_out, Yb12C_out, Xc12C_out, Yc12C_out, Xd12C_out, Yd12C_out;
+   _Float16 Xb12_out, Yb12_out, Xc12_out, Yc12_out, Xd12_out, Yd12_out;
    float16_t *ptr1;
-   float16_t p0,p1,p2,p3,p4,p5,p6,p7;
-   float16_t a0,a1,a2,a3,a4,a5,a6,a7;
+   _Float16 p0,p1,p2,p3,p4,p5,p6,p7;
+   _Float16 a0,a1,a2,a3,a4,a5,a6,a7;
 
 
    /*  Initializations for the first stage */

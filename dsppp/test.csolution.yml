@@ -102,6 +102,6 @@ solution:
 
 
   projects:
-    - project: ./test.cproject.yml
+    - project: ./tests/test.cproject.yml
     - project: ./example.cproject.yml
     

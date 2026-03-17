@@ -70,7 +70,7 @@ jobs:
           pip install -r ../Testing/requirements.txt
 
           echo "Load missing pack"
-          csolution list packs -s  test.csolution.yml -m > required_packs.txt
+          csolution list packs -s test.csolution.yml -m > required_packs.txt
 
           cat required_packs.txt
           cpackget add -a -f required_packs.txt

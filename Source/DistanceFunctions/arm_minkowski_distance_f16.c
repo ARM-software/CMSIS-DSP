@@ -106,7 +106,7 @@ ARM_DSP_ATTRIBUTE float16_t arm_minkowski_distance_f16(const float16_t *pA,const
         sumV = vaddq_m(sumV, sumV, tmpV, p0);
     }
 
-    return (powf((float32_t)vecAddAcrossF16Mve(sumV), (1.0f / (float32_t) order)));
+    return ((float16_t)powf((float32_t)vecAddAcrossF16Mve(sumV), (1.0f / (float32_t) order)));
 }
 
 

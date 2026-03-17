@@ -76,7 +76,7 @@ ARM_DSP_ATTRIBUTE void arm_barycenter_f16(const float16_t *in,
     const float16_t *pIn1, *pIn2, *pIn3, *pIn4;
     float16_t      *pOut;
     uint32_t        blkCntVector, blkCntSample;
-    float16_t       accum, w;
+    _Float16       accum, w;
 
     blkCntVector = nbVectors;
     blkCntSample = vecDim;
@@ -100,7 +100,7 @@ ARM_DSP_ATTRIBUTE void arm_barycenter_f16(const float16_t *in,
     while (blkCntVector > 0) 
     {
         f16x8_t         outV, inV1, inV2, inV3, inV4;
-        float16_t       w1, w2, w3, w4;
+        _Float16       w1, w2, w3, w4;
 
         pOut = out;
         w1 = *pW++;

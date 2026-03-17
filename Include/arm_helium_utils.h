@@ -105,7 +105,7 @@ __STATIC_FORCEINLINE float16_t vecAddAcrossF16Mve(float16x8_t in)
     in = vaddq_f16(tmpVec, in);
     acc = (_Float16)vgetq_lane_f16(in, 0) + (_Float16)vgetq_lane_f16(in, 4);
 
-    return acc;
+    return (float16_t)acc;
 }
 
 __STATIC_FORCEINLINE float16x8_t __mve_cmplx_sum_intra_vec_f16(
