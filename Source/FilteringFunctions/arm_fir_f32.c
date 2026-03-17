@@ -92,9 +92,11 @@
                    However, if the initialization function is used, then the instance structure cannot be placed into a const data section.
                    To place an instance structure into a const data section, the instance structure must be manually initialized.
                    Set the values in the state buffer to zeros before static initialization.
-                   The code below statically initializes each of the 4 different data type filter instance structures
+                   The code below statically initializes each of the 6 different data type filter instance structures
   <pre>
+      arm_fir_instance_f64 S = {numTaps, pState, pCoeffs};
       arm_fir_instance_f32 S = {numTaps, pState, pCoeffs};
+      arm_fir_instance_f16 S = {numTaps, pState, pCoeffs};
       arm_fir_instance_q31 S = {numTaps, pState, pCoeffs};
       arm_fir_instance_q15 S = {numTaps, pState, pCoeffs};
       arm_fir_instance_q7 S =  {numTaps, pState, pCoeffs};
@@ -131,7 +133,6 @@
                  - A is 8*ceil(blockSize/8) for f16
                  - A is 8*ceil(blockSize/4) for q31
                  - A is 0 for other datatypes (q15 and q7)
-
 
   @par           Fixed-Point Behavior
                    Care must be taken when using the fixed-point versions of the FIR filter functions.
