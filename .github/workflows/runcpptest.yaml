@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [main]
   push:
-    branches: [main]
+    branches: [cpp_tests]
 
 permissions:
   actions: read
@@ -12,7 +12,6 @@ permissions:
 
 jobs:
    CI_cpp_test_run: 
-    continue-on-error: true
     strategy:
       max-parallel: 6
       fail-fast: false
