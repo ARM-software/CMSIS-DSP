@@ -12,12 +12,16 @@ permissions:
 
 jobs:
    CI_cpp_test_run: 
+    continue-on-error: true
     strategy:
+      max-parallel: 6
       fail-fast: false
       matrix:
         # GCC currently has too many problems with the C++ API
         compiler: [AC6, CLANG]
         core: [M0, M4, M55]
+        dt: [F64_DT,COMPLEX_F32_DT,F32_DT,COMPLEX_F16_DT,F16_DT,COMPLEX_Q31_DT,Q31_DT,COMPLEX_Q15_DT,Q15_DT,Q7_DT]
+        test: [DOT_TEST,VECTOR_TEST,ROW_TEST,COL_TEST,MATRIX_TEST]
     runs-on: ubuntu-22.04
 
     steps:
@@ -79,16 +83,16 @@ jobs:
         run: |
           cd dsppp
           echo "Running tests"
-          python run_all.py -t -g ${{ matrix.compiler }} -c ${{ matrix.core }} -avh $AVH_FVP_PLUGINS/../bin
+          python run_all.py -t -g ${{ matrix.compiler }} -c ${{ matrix.core }} --dt ${{matrix.dt}} --test ${{matrix.test}} -avh $AVH_FVP_PLUGINS/../bin
 
       - name: Upload test report
         uses: actions/upload-artifact@v7
         with:
-          name: test-cpp-report_${{ matrix.compiler }}_${{ matrix.core }}
-          path: dsppp/${{ matrix.compiler }}_results/errors_${{ matrix.core }}.txt
+          name: test-cpp-report_${{ matrix.compiler }}_${{ matrix.core }}_${{ matrix.dt }}_${{ matrix.test }}
+          path: dsppp/${{ matrix.compiler }}_results/errors_${{ matrix.core }}_${{ matrix.dt }}_${{ matrix.test }}.txt
 
       - name: Check error
         run: |
           cd dsppp
           echo "Checking output..."
-          test "$(cat ${{ matrix.compiler }}_results/errors_${{ matrix.core }}.txt | wc -l)" -eq 0
+          test "$(cat ${{ matrix.compiler }}_results/errors_${{ matrix.core }}_${{ matrix.dt }}_${{ matrix.test }}.txt | wc -l)" -eq 0

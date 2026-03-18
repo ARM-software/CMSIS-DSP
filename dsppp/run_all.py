@@ -106,6 +106,10 @@ parser.add_argument('-avh', nargs='?',type = str, default="C:/Keil_v5/ARM/avh-fv
 parser.add_argument('-dump', action='store_true', help="Dump build output")
 parser.add_argument('-s', nargs='?',type = int,help="Force subtest")
 
+parser.add_argument('--dt', nargs='?',type = str, default="ALL",help="Dataype to run")
+parser.add_argument('--test', nargs='?',type = str, default="ALL",help="Test to run")
+
+
 args = parser.parse_args()
 
 GHACTION = False 
@@ -176,15 +180,22 @@ fvpUnix = {"M55":"FVP_Corstone_SSE-300_Ethos-U55",
 
 AVHROOT = args.avh
 
-
-# Fusion F64 not working. To be analyzed
-TESTS=["DOT_TEST",
+ALL_TESTS=["DOT_TEST",
        "VECTOR_TEST",
        "ROW_TEST",
        "COL_TEST",
        "MATRIX_TEST",
 #       "FUSION_TEST"
        ]
+
+# Fusion F64 not working. To be analyzed
+if args.test != "ALL":
+   if args.test not in ALL_TESTS:
+      print(f"Test {args.test} not known")
+      exit(1)
+   TESTS = [args.test]
+else:
+   TESTS = ALL_TESTS
 
 # Some tests are too big (code size) and needs to be decomposed
 # They contain SUBTEST1, SUBTEST2 ... #if in the code
@@ -201,26 +212,8 @@ def is_only_test(n,i):
        return(i in ONLY_TESTS[n[0]])
     return False
 
-DATATYPES = ["COMPLEX_F64_DT",
-             "F64_DT",
-             "COMPLEX_F32_DT",
-             "F32_DT",
-             "COMPLEX_F16_DT",
-             "F16_DT",
-             "COMPLEX_Q31_DT",
-             "Q31_DT",
-             "COMPLEX_Q15_DT",
-             "Q15_DT",
-             "Q7_DT"
-             ]
 
-MODE = ["STATIC_TEST",
-        "DYNAMIC_TEST"
-        ]
-
-# Restricted tests for debugging
-#TESTS=["DOT_TEST"]
-DATATYPES=[ #"COMPLEX_F64_DT",
+ALL_DATATYPES=[ #"COMPLEX_F64_DT",
             "F64_DT",
             "COMPLEX_F32_DT",
             "F32_DT",
@@ -233,6 +226,22 @@ DATATYPES=[ #"COMPLEX_F64_DT",
             #"COMPLEX_Q7_DT",
             "Q7_DT"
            ]
+
+if args.dt != "ALL":
+    if args.dt not in ALL_DATATYPES:
+        print(f"Datatype {args.dt} not known")
+        exit(1)
+    DATATYPES = [args.dt]
+else:
+    DATATYPES = ALL_DATATYPES
+
+MODE = ["STATIC_TEST",
+        "DYNAMIC_TEST"
+        ]
+
+# Restricted tests for debugging
+#TESTS=["DOT_TEST"]
+
 #DATATYPES=[ 
 #            "COMPLEX_F16_DT",
 #            "Q31_DT",
