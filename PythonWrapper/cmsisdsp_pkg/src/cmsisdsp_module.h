@@ -3,13 +3,11 @@
  * Title:        cmsismodule.c
  * Description:  C code for the CMSIS-DSP Python wrapper
  *
- * $Date:        27 April 2021
- * $Revision:    VV1.0
  *
- * Target Processor: Cortex-M cores
+ * Target Processor: Cortex-M and Cortex-Acores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2026 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *

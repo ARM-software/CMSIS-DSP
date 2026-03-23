@@ -196,20 +196,25 @@ class BuildCMSISDSPExtensions(build_ext):
       "-DWRAPPER=YES",
       "-DLOOPUNROLL=ON",
       "-DCMAKE_BUILD_TYPE=Release",
+      '-DCMAKE_C_FLAGS_RELEASE="-std=c11 -O3 -ffast-math -DNDEBUG -Wall -Wextra"',
+      '-DCMAKE_CXX_FLAGS_RELEASE="-std=c++11 -O3 -ffast-math -DNDEBUG -Wall -Wextra -Wno-unused-parameter"'
     ]
 
     if sys.platform != 'win32':
-      configure.append("-DCMAKE_POSITION_INDEPENDENT_CODE=YES")
+       configure.append("-DCMAKE_POSITION_INDEPENDENT_CODE=YES")
 
     if sys.platform == 'darwin' and ARM:
-      configure.extend([
+       configure.extend([
         "-DNEON=YES",
         "-DCMAKE_OSX_ARCHITECTURES=arm64",
-        "-DCMAKE_OSX_DEPLOYMENT_TARGET=10.9",
+        "-DCMAKE_OSX_DEPLOYMENT_TARGET=10.9"
       ])
 
+    if sys.platform == 'linux' and ARM:
+       configure.extend(["-DNEON=YES"])
+    
     if shutil.which("ninja"):
-      configure.extend(["-G", "Ninja"])
+       configure.extend(["-G", "Ninja"])
 
     subprocess.run(configure, check=True)
     subprocess.run([
@@ -290,17 +295,16 @@ def build():
                         moduleWindow
                         ],
          include_package_data=True,
-         author = 'Copyright (C) 2010-2025 ARM Limited or its affiliates. All rights reserved.',
+         author = 'Copyright (C) 2010-2026 ARM Limited or its affiliates. All rights reserved.',
          author_email = 'christophe.favergeon@arm.com',
          url="https://github.com/ARM-software/CMSIS-DSP",
          python_requires='>=3.9',
-         license="License :: OSI Approved :: Apache Software License",
+         license="Apache-2.0",
          platforms=['any'],
          classifiers=[
                 "Programming Language :: Python :: 3",
                 "Programming Language :: Python :: Implementation :: CPython",
                 "Programming Language :: C",
-                "License :: OSI Approved :: Apache Software License",
                 "Operating System :: OS Independent",
                 "Development Status :: 5 - Production/Stable",
                 "Topic :: Software Development :: Embedded Systems",

@@ -1,10 +1,6 @@
 name: Python Wrapper Windows
 
 on:
-  push:
-    branches:
-      - main
-      - codex/**
   pull_request:
 
 jobs:
