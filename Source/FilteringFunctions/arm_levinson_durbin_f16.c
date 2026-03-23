@@ -133,6 +133,7 @@ ARM_DSP_ATTRIBUTE void arm_levinson_durbin_f16(const float16_t *phi,
 
       uint16x8_t offset,offsetInc,vecTmp;
 
+      vecRevA = vdupq_n_f16(0.0f16);
 
       offset = vld1q_u16((uint16_t*)orgOffsetArray);
       vecTmp = vdupq_n_u16(p);
