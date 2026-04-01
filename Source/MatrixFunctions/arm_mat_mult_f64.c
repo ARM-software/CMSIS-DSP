@@ -170,6 +170,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_f64(
         acc5 = vdupq_n_f64(0.0);
         acc6 = vdupq_n_f64(0.0);
         acc7 = vdupq_n_f64(0.0);
+        temp = vdupq_n_f64(0.0);
 
         /* Compute 2 MACs simultaneously. */
         colCnt = numColsA >> 1U;
@@ -307,6 +308,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_mult_f64(
         pIn1 = pInA;
 
         acc0 = vdupq_n_f64(0.0);
+        temp = vdupq_n_f64(0.0);
 
         /* Compute 4 MACs simultaneously. */
         colCnt = numColsA >> 1U;
