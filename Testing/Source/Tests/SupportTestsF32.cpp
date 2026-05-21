@@ -6,9 +6,9 @@
 
 #define SNR_THRESHOLD 120
 #define REL_ERROR (1.0e-5)
-#define ABS_Q15_ERROR ((q15_t)10)
-#define ABS_Q31_ERROR ((q31_t)80)
-#define ABS_Q7_ERROR ((q7_t)10)
+#define ABS_Q15_ERROR ((q15_t)0)
+#define ABS_Q31_ERROR ((q31_t)0)
+#define ABS_Q7_ERROR ((q7_t)0)
 
 
 void SupportTestsF32::test_weighted_average_f32()
