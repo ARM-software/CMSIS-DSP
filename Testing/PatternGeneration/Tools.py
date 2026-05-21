@@ -695,7 +695,7 @@ class Config:
               #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
               f.write("D\n%d\n" % len(data))
               for v in data:
-                  f.write("// %f\n" % v)
+                  f.write("// %.17f\n" % v)
                   f.write("%s\n" % float64_to_hex(v))
 
     def _writeVectorF32(self,i,data):
@@ -721,7 +721,7 @@ class Config:
               #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
               f.write("W\n%d\n" % len(data))
               for v in data:
-                  f.write("// %f\n" % v)
+                  f.write("// %.17f\n" % v)
                   f.write("%s\n" % float_to_hex(v))
 
     def _writeVectorF16(self,i,data):
@@ -747,7 +747,7 @@ class Config:
               #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
               f.write("H\n%d\n" % len(data))
               for v in data:
-                  f.write("// %f\n" % v)
+                  f.write("// %.17f\n" % v)
                   f.write("%s\n" % float16_to_hex(v))
 
     def _writeVectorQ63(self,i,data):
@@ -773,7 +773,7 @@ class Config:
               #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
               f.write("D\n%d\n" % len(data))
               for v in data:
-                  f.write("// %f\n" % v)
+                  f.write("// %.17f\n" % v)
                   f.write("%s\n" % to_q63(v))
 
     def _writeVectorQ31(self,i,data):
@@ -799,7 +799,7 @@ class Config:
               #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
               f.write("W\n%d\n" % len(data))
               for v in data:
-                  f.write("// %f\n" % v)
+                  f.write("// %.17f\n" % v)
                   f.write("%s\n" % to_q31(v))
 
     def _writeVectorQ15(self,i,data):
@@ -825,7 +825,7 @@ class Config:
               #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
               f.write("H\n%d\n" % len(data))
               for v in data:
-                  f.write("// %f\n" % v)
+                  f.write("// %.17f\n" % v)
                   f.write("%s\n" % to_q15(v))
 
     def _writeVectorS16(self,i,data):
@@ -1008,7 +1008,7 @@ class Config:
               #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
               f.write("B\n%d\n" % len(data))
               for v in data:
-                  f.write("// %f\n" % v)
+                  f.write("// %.17f\n" % v)
                   f.write("%s\n" % to_q7(v))
 
     def _writeVectorS8(self,i,data):

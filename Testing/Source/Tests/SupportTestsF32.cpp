@@ -7,7 +7,15 @@
 #define SNR_THRESHOLD 120
 #define REL_ERROR (1.0e-5)
 #define ABS_Q15_ERROR ((q15_t)0)
-#define ABS_Q31_ERROR ((q31_t)0)
+// Python reference patterns are double precision and generated with a round
+// In Python we do a f64 -> f32 for generating the f32 test pattern and
+// a f64 -> round -> q31 for the q31 patterns
+// 
+// The C code is taking the f32 and converting it to q31.
+// There can be some differences between the two approaches
+// f64 -> f32 -> q31 can be different from f64 -> round -> q31
+// 
+#define ABS_Q31_ERROR ((q31_t)80)
 #define ABS_Q7_ERROR ((q7_t)0)
 
 
@@ -94,7 +102,6 @@ void SupportTestsF32::test_float_to_q31()
  
  
  arm_float_to_q31(inp, outp,this->nbSamples);
- 
  
  ASSERT_NEAR_EQ(refQ31,outputQ31,ABS_Q31_ERROR);
  ASSERT_EMPTY_TAIL(outputQ31);
