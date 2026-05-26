@@ -77,10 +77,13 @@ jobs:
           python runall.py -s -g ${{ matrix.compiler }} -avh $AVH_FVP_PLUGINS/../bin
 
       - name: Upload test report
+        if: always()
         uses: actions/upload-artifact@v7
         with:
           name: test-report_${{ matrix.compiler }}
-          path: Testing/cmsis_build/summary_${{ matrix.compiler }}.html
+          path: |
+            Testing/cmsis_build/summary_${{ matrix.compiler }}.html
+            Testing/cmsis_build/cprj/tmp/**/test.*-database-*.log
 
       - name: Check error
         run: |
