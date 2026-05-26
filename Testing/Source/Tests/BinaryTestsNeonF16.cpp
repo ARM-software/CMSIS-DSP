@@ -20,10 +20,10 @@ a double precision computation.
 
 static void checkInnerTail(float16_t *b)
 {
-    ASSERT_TRUE(b[0] == 0);
-    ASSERT_TRUE(b[1] == 0);
-    ASSERT_TRUE(b[2] == 0);
-    ASSERT_TRUE(b[3] == 0);
+    ASSERT_TRUE((float)b[0] == 0.0f);
+    ASSERT_TRUE((float)b[1] == 0.0f);
+    ASSERT_TRUE((float)b[2] == 0.0f);
+    ASSERT_TRUE((float)b[3] == 0.0f);
 }
 
 #define LOADDATA2()                          \
@@ -85,7 +85,7 @@ static void checkInnerTail(float16_t *b)
 
       ASSERT_CLOSE_ERROR(output,ref,ABS_ERROR,REL_ERROR);
 
-      ASSERT_SNR(output,ref,(float16_t)SNR_THRESHOLD);
+      ASSERT_SNR(output,ref,SNR_THRESHOLD);
 
 
     } 

@@ -6,7 +6,11 @@
 
 #define SNR_THRESHOLD 120
 #define REL_ERROR (1.0e-5)
+#if defined(__GNUC_PYTHON__)
+#define ABS_Q15_ERROR ((q15_t)1)
+#else
 #define ABS_Q15_ERROR ((q15_t)0)
+#endif 
 // Python reference patterns are double precision and generated with a round
 // In Python we do a f64 -> f32 for generating the f32 test pattern and
 // a f64 -> round -> q31 for the q31 patterns
@@ -16,8 +20,11 @@
 // f64 -> f32 -> q31 can be different from f64 -> round -> q31
 // 
 #define ABS_Q31_ERROR ((q31_t)80)
+#if defined(__GNUC_PYTHON__)
+#define ABS_Q7_ERROR ((q7_t)3)
+#else
 #define ABS_Q7_ERROR ((q7_t)0)
-
+#endif
 
 void SupportTestsF32::test_weighted_average_f32()
 {

@@ -223,11 +223,11 @@ static void ne10_fft_scaling_##RADIX##_##SIZE(CPLX scratch_out[RADIX]) {        
         ne10_fft_scaling_##RADIX##_##SIZEM(scratch_out);                                                      \
 };
 
-#define NE10_FFT_SCALING_SIZE1(RADIX)                                                              \
-static void ne10_fft_scaling_##RADIX##_1(CPLX scratch_out[1]) {                                    \
-        const ne10_int32_t one_by_RADIX =  floorf(1.0f / RADIX * (float)NE10_F2I32_MAX + 0.5f) ;   \
-        scratch_out[0].val[0] = vqrdmulhq_n_s32 (scratch_out[0].val[0], one_by_RADIX);             \
-        scratch_out[0].val[1] = vqrdmulhq_n_s32 (scratch_out[0].val[1], one_by_RADIX);             \
+#define NE10_FFT_SCALING_SIZE1(RADIX)                                                                          \
+static void ne10_fft_scaling_##RADIX##_1(CPLX scratch_out[1]) {                                                \
+        const ne10_int32_t one_by_RADIX =  (ne10_int32_t)floorf(1.0f / RADIX * (float)NE10_F2I32_MAX + 0.5f) ; \
+        scratch_out[0].val[0] = vqrdmulhq_n_s32 (scratch_out[0].val[0], one_by_RADIX);                         \
+        scratch_out[0].val[1] = vqrdmulhq_n_s32 (scratch_out[0].val[1], one_by_RADIX);                         \
 };
 
 NE10_FFT_SCALING_SIZE1(2)
