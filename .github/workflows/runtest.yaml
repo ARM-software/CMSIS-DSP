@@ -83,7 +83,6 @@ jobs:
           name: test-report_${{ matrix.compiler }}
           path: |
             Testing/cmsis_build/summary_${{ matrix.compiler }}.html
-            Testing/cmsis_build/cprj/tmp/**/test.*-database-*.log
 
       - name: Check error
         run: |
