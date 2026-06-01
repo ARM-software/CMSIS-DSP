@@ -207,13 +207,13 @@ for t in tests:
 
 
 
-#allSuites=[
+allSuites=[
 #("MISCF32","../Output.pickle"),
 #("MISCQ31","../Output.pickle"),
 #("SupportTestsF32","../Output.pickle"),
 #("BasicTestsF32","../Output.pickle"),
-##("BasicTestsF16","../Output_f16.pickle"),
-#]
+("UnaryTestsF16","../Output_f16.pickle"),
+]
 
 # Solution and build file for all
 # the tests
@@ -254,12 +254,13 @@ compil_config={
 # Latest version by default
 compil_version = {}
 
-#compil_version = {
+compil_version = {
 #    'GCC': '13.3.1'
-#}
+     'CLANG': "22.1.0"
+}
 
 #Override previous solutions for more restricted testing.
-#compil_config={
+compil_config={
 #    'AC6':[
 #      ("VHT-Corstone-300","CS300"),
 #      ("VHT_M33","M33_DSP_FP"),
@@ -269,11 +270,11 @@ compil_version = {}
       #("VHT-Corstone-300","CS300"),
 #      ("VHT_M33","M33_DSP_FP"),
 #   ],
-#    'CLANG':[
-#      ("VHT-Corstone-300","CS300"),
+    'CLANG':[
+      ("VHT-Corstone-300","CS300"),
 #      ("VHT_M33","M33_DSP_FP"),
-#    ]
-#}
+    ]
+}
 
 
 
