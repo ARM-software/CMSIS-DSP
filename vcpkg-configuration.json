@@ -13,8 +13,8 @@
   "arm:compilers/arm/armclang": "6.24.0",
   "arm:compilers/arm/arm-none-eabi-gcc": "14.3.1",
   "arm:compilers/arm/llvm-embedded": "22.1.0",
-  "arm:models/arm/avh-fvp": "11.22.39",
-  "arm:debuggers/arm/armdbg": "6.1.2",
+  "arm:models/arm/avh-fvp": "11.31.28",
+  "arm:debuggers/arm/armdbg": "6.9.0",
   "arm:tools/arm/mdk-toolbox": "1.1.0"
  }
 }
