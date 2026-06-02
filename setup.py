@@ -78,7 +78,7 @@ else: # linux
               "-Wno-implicit-function-declaration",
               "-DCMSISDSP",
               "-D__GNUC_PYTHON__"]
-    linkargs = ["-lmvec", "-lm"],
+    linkargs = ["-lmvec", "-lm"]
   
 # Add dependencies
 transformMod = [] # transform + common + basic + complexf + fastmath + matrix + statistics
