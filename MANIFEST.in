@@ -6,3 +6,5 @@ recursive-include PythonWrapper/cmsisdsp_pkg/src *.h
 include Source/DistanceFunctions/arm_boolean_distance_template.h
 include Source/CMakeLists.txt
 recursive-include Source *.c *.cmake
+recursive-include Ne10 *.h *.c *.cmake
+recursive-include ComputeLibrary *.h *.c *.cmake

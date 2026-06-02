@@ -43,7 +43,7 @@ if sys.platform == 'win32':
             "-DCMSISDSP",
             "-DUNALIGNED_SUPPORT_DISABLE"] 
 elif sys.platform == 'darwin':
-  if ARM:
+  if ARM: # aarch64
      os.environ["ARCHFLAGS"] = "-arch arm64"
      linkargs = ["-arch", "arm64"]
      cflags = ["-DARM_MATH_NEON",
@@ -54,7 +54,7 @@ elif sys.platform == 'darwin':
                "-DCMSISDSP",
                "-arch", "arm64",
                "-D__GNUC_PYTHON__"]
-  else:
+  else: # x86
     cflags = ["-Wno-attributes",
               "-Wno-unused-function",
               "-Wno-unused-variable",
@@ -62,8 +62,8 @@ elif sys.platform == 'darwin':
               "-DCMSISDSP",
               "-D__GNUC_PYTHON__"]
 
-else:
-  if ARM:
+else: # linux
+  if ARM: # aarch64
     cflags = ["-DARM_MATH_NEON",
               "-Wno-attributes",
               "-Wno-unused-function",
@@ -71,13 +71,14 @@ else:
               "-Wno-implicit-function-declaration",
               "-DCMSISDSP",
               "-D__GNUC_PYTHON__"]
-  else:
+  else: # x86
     cflags = ["-Wno-attributes",
               "-Wno-unused-function",
               "-Wno-unused-variable",
               "-Wno-implicit-function-declaration",
               "-DCMSISDSP",
               "-D__GNUC_PYTHON__"]
+    linkargs = ["-lmvec", "-lm"],
   
 # Add dependencies
 transformMod = [] # transform + common + basic + complexf + fastmath + matrix + statistics
