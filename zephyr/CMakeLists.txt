@@ -52,18 +52,22 @@ endif()
   endif()
 
 # Basic math functions
+if (CONFIG_CMSIS_DSP_BASICMATH)
 zephyr_library_sources(${CMSIS_DSP_DIR}/Source/BasicMathFunctions/BasicMathFunctions.c)
 
   if (CONFIG_CMSIS_DSP_FLOAT16)
     zephyr_library_sources(${CMSIS_DSP_DIR}/Source/BasicMathFunctions/BasicMathFunctionsF16.c)
   endif()
+endif()
 
   # Bayes functions
+if (CONFIG_CMSIS_DSP_BAYES)
 zephyr_library_sources(${CMSIS_DSP_DIR}/Source/BayesFunctions/BayesFunctions.c)
 
   if (CONFIG_CMSIS_DSP_FLOAT16)
     zephyr_library_sources(${CMSIS_DSP_DIR}/Source/BayesFunctions/BayesFunctionsF16.c)
   endif()
+endif()
 
 # Common tables
 zephyr_library_sources(${CMSIS_DSP_DIR}/Source/CommonTables/arm_common_tables.c 
@@ -87,77 +91,100 @@ if (CONFIG_ARMV8_1_M_MVEI OR CONFIG_ARMV8_1_M_MVEF)
 endif()
 
 # Complex math functions
+if (CONFIG_CMSIS_DSP_COMPLEXMATH)
   zephyr_library_sources(${CMSIS_DSP_DIR}/Source/ComplexMathFunctions/ComplexMathFunctions.c)
 
   if (CONFIG_CMSIS_DSP_FLOAT16)
     zephyr_library_sources(${CMSIS_DSP_DIR}/Source/ComplexMathFunctions/ComplexMathFunctionsF16.c)
   endif()
+endif()
 
 # Controller functions
+if (CONFIG_CMSIS_DSP_CONTROLLER)
   zephyr_library_sources(${CMSIS_DSP_DIR}/Source/ControllerFunctions/ControllerFunctions.c)
+endif()
 
 # Distance functions
+if (CONFIG_CMSIS_DSP_DISTANCE)
   zephyr_library_sources(${CMSIS_DSP_DIR}/Source/DistanceFunctions/DistanceFunctions.c)
 
   if (CONFIG_CMSIS_DSP_FLOAT16)
     zephyr_library_sources(${CMSIS_DSP_DIR}/Source/DistanceFunctions/DistanceFunctionsF16.c)
   endif()
+endif()
 
 # Fast math functions
+if (CONFIG_CMSIS_DSP_FASTMATH)
   zephyr_library_sources(${CMSIS_DSP_DIR}/Source/FastMathFunctions/FastMathFunctions.c)
 
   if (CONFIG_CMSIS_DSP_FLOAT16)
     zephyr_library_sources(${CMSIS_DSP_DIR}/Source/FastMathFunctions/FastMathFunctionsF16.c)
   endif()
+endif()
 
   # Filtering functions
-
+if (CONFIG_CMSIS_DSP_FILTERING)
 zephyr_library_sources(${CMSIS_DSP_DIR}/Source/FilteringFunctions/FilteringFunctions.c)
     if (CONFIG_CMSIS_DSP_FLOAT16)
         zephyr_library_sources(${CMSIS_DSP_DIR}/Source/FilteringFunctions/FilteringFunctionsF16.c)
     endif()
+endif()
 
 # Interpolation functions
+if (CONFIG_CMSIS_DSP_INTERPOLATION)
   zephyr_library_sources(${CMSIS_DSP_DIR}/Source/InterpolationFunctions/InterpolationFunctions.c)
   if (CONFIG_CMSIS_DSP_FLOAT16)
-    zephyr_library_sources(${CMSIS_DSP_DIR}/Source/InterpolationFunctions/InterpolationFunctionsF16.c)  
+    zephyr_library_sources(${CMSIS_DSP_DIR}/Source/InterpolationFunctions/InterpolationFunctionsF16.c)
   endif()
+endif()
 
 # Matrix functions
+if (CONFIG_CMSIS_DSP_MATRIX)
   zephyr_library_sources(${CMSIS_DSP_DIR}/Source/MatrixFunctions/MatrixFunctions.c)
     if (CONFIG_CMSIS_DSP_FLOAT16)
-        zephyr_library_sources(${CMSIS_DSP_DIR}/Source/MatrixFunctions/MatrixFunctionsF16.c)    
+        zephyr_library_sources(${CMSIS_DSP_DIR}/Source/MatrixFunctions/MatrixFunctionsF16.c)
     endif()
+endif()
 
 # Quaternion functions
+if (CONFIG_CMSIS_DSP_QUATERNIONMATH)
   zephyr_library_sources(${CMSIS_DSP_DIR}/Source/QuaternionMathFunctions/QuaternionMathFunctions.c)
+endif()
 
 # Statistics functions
+if (CONFIG_CMSIS_DSP_STATISTICS)
   zephyr_library_sources(${CMSIS_DSP_DIR}/Source/StatisticsFunctions/StatisticsFunctions.c)
 
   if (CONFIG_CMSIS_DSP_FLOAT16)
     zephyr_library_sources(${CMSIS_DSP_DIR}/Source/StatisticsFunctions/StatisticsFunctionsF16.c)
   endif()
+endif()
 
 # Support functions
+if (CONFIG_CMSIS_DSP_SUPPORT)
   zephyr_library_sources(${CMSIS_DSP_DIR}/Source/SupportFunctions/SupportFunctions.c)
 
   if (CONFIG_CMSIS_DSP_FLOAT16)
-    zephyr_library_sources(${CMSIS_DSP_DIR}/Source/SupportFunctions/SupportFunctionsF16.c)  
+    zephyr_library_sources(${CMSIS_DSP_DIR}/Source/SupportFunctions/SupportFunctionsF16.c)
   endif()
+endif()
 
 # SVM Functions
-  zephyr_library_sources(${CMSIS_DSP_DIR}/Source/SVMFunctions/SVMFunctions.c) 
+if (CONFIG_CMSIS_DSP_SVM)
+  zephyr_library_sources(${CMSIS_DSP_DIR}/Source/SVMFunctions/SVMFunctions.c)
     if (CONFIG_CMSIS_DSP_FLOAT16)
-        zephyr_library_sources(${CMSIS_DSP_DIR}/Source/SVMFunctions/SVMFunctionsF16.c)  
+        zephyr_library_sources(${CMSIS_DSP_DIR}/Source/SVMFunctions/SVMFunctionsF16.c)
     endif()
+endif()
 
 # Transform functions
+if (CONFIG_CMSIS_DSP_TRANSFORM)
 zephyr_library_sources(${CMSIS_DSP_DIR}/Source/TransformFunctions/TransformFunctions.c)
 
   if (CONFIG_CMSIS_DSP_FLOAT16)
     zephyr_library_sources(${CMSIS_DSP_DIR}/Source/TransformFunctions/TransformFunctionsF16.c)
   endif()
+endif()
 
 if (CONFIG_CMSIS_DSP_NEON OR CONFIG_CMSIS_DSP_NEON_EXPERIMENTAL)
     zephyr_library_sources(${CMSIS_DSP_DIR}/Ne10/NE10_fft_float32.neonintrinsic.c)
@@ -178,6 +205,8 @@ if (CONFIG_CMSIS_DSP_NEON OR CONFIG_CMSIS_DSP_NEON_EXPERIMENTAL)
 endif()
 
 # Windows functions
+if (CONFIG_CMSIS_DSP_WINDOW)
 zephyr_library_sources(${CMSIS_DSP_DIR}/Source/WindowFunctions/WindowFunctions.c)
+endif()
 
 endif()
