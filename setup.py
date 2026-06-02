@@ -197,12 +197,12 @@ class BuildCMSISDSPExtensions(build_ext):
       "-DWRAPPER=YES",
       "-DLOOPUNROLL=ON",
       "-DCMAKE_BUILD_TYPE=Release",
-      "-DCMAKE_C_FLAGS_RELEASE=-std=c11 -O3 -ffast-math -DNDEBUG -Wall -Wextra",
-      "-DCMAKE_CXX_FLAGS_RELEASE=-std=c++11 -O3 -ffast-math -DNDEBUG -Wall -Wextra -Wno-unused-parameter"
     ]
 
     if sys.platform != 'win32':
        configure.append("-DCMAKE_POSITION_INDEPENDENT_CODE=YES")
+       configure.append("-DCMAKE_C_FLAGS_RELEASE=-std=c11 -O3 -ffast-math -DNDEBUG -Wall -Wextra")
+       configure.append("-DCMAKE_CXX_FLAGS_RELEASE=-std=c++11 -O3 -ffast-math -DNDEBUG -Wall -Wextra -Wno-unused-parameter")
 
     if sys.platform == 'darwin' and ARM:
        configure.extend([
