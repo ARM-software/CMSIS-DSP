@@ -51,4 +51,5 @@ Testing/Patterns/DSP/MatrixNeon
 boost.tar.gz
 
 compile_commands.json
+build-*
 

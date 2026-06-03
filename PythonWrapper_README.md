@@ -250,6 +250,9 @@ MEL filters are represented as 3 arrays to encode a sparse array.
 
 # Change history
 
+## Version 1.10.3:
+* Corrected the source build of the Python package so that it can build on more platforms
+
 ## Version 1.10.2:
 * Release build of CMSIS-DSP for the Neon versions
 
