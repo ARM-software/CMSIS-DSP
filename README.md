@@ -159,7 +159,7 @@ Once cmake has generated the makefiles, you can use a GNU Make to build.
 
 ### How to install as a cmake package
 
-CMSIS-DSP can be installed as a cmake package for host builds on Windows, macOS, or Linux. Set `CMAKE_INSTALL_PREFIX` to the folder where the package must be installed. The installed package exports the target `CMSISDSP::CMSISDSP`. Package installation is disabled when `CMSISCORE` is set, since `CMSISCORE` is used for Cortex-M builds normally handled by CMSIS Toolbox or Zephyr.
+CMSIS-DSP can be installed as a cmake package for host builds on Windows, macOS, or Linux. Set `CMAKE_INSTALL_PREFIX` to the folder where the package must be installed. The installed package exports the target `CMSISDSP::CMSISDSP`. Headers are installed below `include/CMSIS-DSP` to avoid conflicts with other packages, but applications still include CMSIS-DSP headers with `#include "arm_math.h"` when linking with `CMSISDSP::CMSISDSP`. Package installation is disabled when `CMSISCORE` is set, since `CMSISCORE` is used for Cortex-M builds normally handled by CMSIS Toolbox or Zephyr.
 
 For maximum performance on an Arm host with Neon, build in `Release`, enable `HOST` and `NEON`, and use `-O3 -ffast-math`:
 
