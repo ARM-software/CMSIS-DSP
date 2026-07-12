@@ -157,6 +157,11 @@ ARM_DSP_ATTRIBUTE void arm_fir_sparse_q7(
     blkCnt--;
   }
 
+  /* Remaining taps (2nd tap onward) only exist when numTaps > 1.
+   * Guard against unsigned underflow of tapCnt and the associated
+   * out-of-bounds read of pCoeffs/pTapDelay when numTaps == 1. */
+  if (numTaps > 1U)
+  {
   /* Load the coefficient value and
    * increment the coefficient buffer for the next set of state values */
   coeff = *pCoeffs++;
@@ -303,6 +308,7 @@ ARM_DSP_ATTRIBUTE void arm_fir_sparse_q7(
     /* Decrement loop counter */
     blkCnt--;
   }
+  } /* if (numTaps > 1U) */
 
   /* All the output values are in pScratchOut buffer.
      Convert them into 1.15 format, saturate and store in the destination buffer. */
