@@ -16,6 +16,7 @@ parser.add_argument('-c', action='store_true', help="Display cycles (so passing 
 parser.add_argument('-g', nargs='?',type = str,help="AC6 / CLANG / GCC")
 parser.add_argument('-s', action='store_true', help="Take into account AVH error code")
 parser.add_argument('-no', action='store_true', help="No run")
+parser.add_argument('-pack', action='store_true', help="Run test with with pack instead of dsp layer")
 
 args = parser.parse_args()
 
@@ -158,8 +159,12 @@ def runAVH(build,core,compiler):
        print("No AVH run")
        return(Result("No run",error=False))
     avh = None
-    axf="cprj/out/test/%s/Release/test.axf" % (build,)
-    elf="cprj/out/test/%s/Release/test.elf" % (build,)
+    if args.pack:
+        axf="cprj/out/test/%s/Release/check.axf" % (build,)
+        elf="cprj/out/test/%s/Release/check.elf" % (build,)
+    else:
+      axf="cprj/out/test/%s/Release/test.axf" % (build,)
+      elf="cprj/out/test/%s/Release/test.elf" % (build,)
     app = axf 
     if os.path.exists(axf):
         app = axf 
@@ -321,7 +326,10 @@ with open(results_file,"w") as f:
                 buildNb = buildNb + 1
                 print("<h2>Core %s</h2>" % build,file=f)
                 printTitle("Process core %s (%d/%d)" % (build,buildNb,maxNbBuilds))
-                buildFile="test.Release+%s" % build
+                if args.pack:
+                    buildFile="check.Release+%s" % build
+                else:
+                   buildFile="test.Release+%s" % build
                 nb = 0 
                 maxNb = len(allSuites)
                 for s,pickle in allSuites:

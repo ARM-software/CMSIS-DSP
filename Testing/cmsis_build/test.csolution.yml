@@ -218,4 +218,5 @@ solution:
 
   projects:
     - project: ./test.cproject.yml
+    - project: ./check.cproject.yml
     
