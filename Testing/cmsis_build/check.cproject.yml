@@ -1,6 +1,6 @@
 project:
   packs:
-    - pack: ARM::CMSIS-DSP@1.17.1-dev49
+    - pack: ARM::CMSIS-DSP
 
   groups:
     - group: App

@@ -17,6 +17,7 @@ parser.add_argument('-g', nargs='?',type = str,help="AC6 / CLANG / GCC")
 parser.add_argument('-s', action='store_true', help="Take into account AVH error code")
 parser.add_argument('-no', action='store_true', help="No run")
 parser.add_argument('-pack', action='store_true', help="Run test with with pack instead of dsp layer")
+parser.add_argument('-quick', action='store_true', help="Run a quick sanity check (only a few tests)")
 
 args = parser.parse_args()
 
@@ -220,6 +221,11 @@ for t in tests:
 #("UnaryTestsF16","../Output_f16.pickle"),
 #]
 
+if args.quick:
+    allSuites=[
+        ("BasicTestsF32","../Output.pickle")
+    ]
+
 # Solution and build file for all
 # the tests
 # It is a pair : csolution target type and AVH identification
@@ -263,6 +269,13 @@ compil_version = {}
 #    'GCC': '13.3.1'
 #     'CLANG': "22.1.0"
 #}
+
+if args.quick:
+    compil_config={
+      'AC6':[
+        ("VHT-Corstone-300","CS300"),
+      ]
+    }
 
 #Override previous solutions for more restricted testing.
 #compil_config={

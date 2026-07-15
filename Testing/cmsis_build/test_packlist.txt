@@ -1,6 +1,0 @@
-https://github.com/ARM-software/CMSIS-DSP/releases/download/v1.11.0/ARM.CMSIS-DSP.1.11.0.pack
-ARM::CMSIS@5.9.0
-ARM::V2M_MPS3_SSE_300_BSP@1.3.0
-ARM::V2M_MPS3_SSE_310_BSP@1.1.0
-Keil::ARM_Compiler@1.7.2
-ARM.DMA350
