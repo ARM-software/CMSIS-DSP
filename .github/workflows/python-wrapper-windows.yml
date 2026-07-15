@@ -5,6 +5,7 @@ on:
 
 jobs:
   windows-install:
+    if: startsWith(github.head_ref, 'windows')
     runs-on: windows-latest
     strategy:
       fail-fast: false
