@@ -6,6 +6,17 @@
   <th>Description</th>
 </tr>
 <tr>
+  <td>v1.17.1</td>
+  <td>
+    * Added manual loop unrolling support to the F64 FIR filter.
+    * Corrected MVE float-to-Q15 and float-to-Q31 conversions to better match scalar results.
+    * Fixed IAR compiler warnings in the F16, F32, and Q31 Levinson-Durbin implementations.
+    * Fixed GCC 15 compilation warnings across Helium, F16, FFT, distance, and support code.
+    * Added host-side CMake installation with the exported CMSISDSP::CMSISDSP target and conflict-free header paths.
+    * Added Zephyr integration instructions.
+  </td>
+</tr>
+<tr>
   <td>v1.17.0</td>
   <td>
     * Correction of arm_biquad_cascade_df1_f32 (#290) : out of buffer access with Helium
