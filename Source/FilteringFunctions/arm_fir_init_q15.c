@@ -75,7 +75,7 @@
       {0.3, -0.3, 0, 0}.
   </pre>
                    <code>pState</code> points to the array of state variables.
-                   <code>pState</code> is of length <code>numTaps+blockSize</code>, when ARM_MATH_DSP or ARM_MATH_LOOPUNROLL is defined (arm_fir_q15()'s loop-unrolled path reads up to <code>numTaps+blockSize-1</code>, requiring this larger size regardless of whether ARM_MATH_DSP itself is defined). Otherwise, it is of length <code>numTaps+blockSize-1</code> where <code>blockSize</code> is the number of input samples processed by each call to <code>arm_fir_q15()</code>.
+                   <code>pState</code> is of length <code>numTaps+blockSize</code> when ARM_MATH_LOOPUNROLL is defined. Otherwise, it is of length <code>numTaps+blockSize-1</code> where <code>blockSize</code> is the number of input samples processed by each call to <code>arm_fir_q15()</code>.
  
   @par          Initialization of Helium version
                    For Helium version the array of coefficients must be a multiple of 8 (8a) even if less
@@ -95,7 +95,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_fir_init_q15(
 {
   arm_status status;
 
-#if defined (ARM_MATH_DSP) || defined (ARM_MATH_LOOPUNROLL)
+#if defined (ARM_MATH_LOOPUNROLL)
 
   /* The Number of filter coefficients in the filter must be even and at least 4 */
   if (numTaps & 0x1U)
@@ -139,7 +139,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_fir_init_q15(
 
   return (status);
 
-#endif /* #if defined (ARM_MATH_DSP) || defined (ARM_MATH_LOOPUNROLL) */
+#endif /* #if defined (ARM_MATH_LOOPUNROLL) */
 
 }
 
