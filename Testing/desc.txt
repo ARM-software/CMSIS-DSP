@@ -5,6 +5,20 @@ group Root {
         class = DSPTests
         folder = DSP
 
+        group Dsp Operators Tests {
+           class = DspOp
+           folder = DspOp
+
+           suite Dsp Operators Tests {
+              class = DspOpTests
+              folder = DspOp
+
+              Functions {
+                 SMLALD test saturation:test_smlad_sat
+              }
+           }
+        }
+
         group Statistics Tests {
            class = StatsTests
            folder = Stats

@@ -68,6 +68,7 @@ add_executable(test main.cpp
     Source/Tests/DistanceTestsF32.cpp
     Source/Tests/DistanceTestsF64.cpp
     Source/Tests/DistanceTestsU32.cpp
+    Source/Tests/DspOpTests.cpp
     Source/Tests/ExampleCategoryF32.cpp
     Source/Tests/ExampleCategoryQ7.cpp
     Source/Tests/ExampleCategoryQ15.cpp
