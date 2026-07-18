@@ -136,8 +136,22 @@ __STATIC_FORCEINLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
   __STATIC_FORCEINLINE q31_t clip_q63_to_q31(
   q63_t x)
   {
-    return ((q31_t) (x >> 32) != ((q31_t) x >> 31)) ?
-      ((0x7FFFFFFF ^ ((q31_t) (x >> 63)))) : (q31_t) x;
+    /* The saturation logic below used to rely on right shifts of a signed
+       (possibly negative) value, whose result is implementation-defined
+       (C99 6.5.7/5) and is flagged by static analysers. The equivalent
+       range check is fully defined and keeps the same behaviour. */
+    if (x > (q63_t) Q31_MAX)
+    {
+      return Q31_MAX;
+    }
+    else if (x < (q63_t) Q31_MIN)
+    {
+      return Q31_MIN;
+    }
+    else
+    {
+      return (q31_t) x;
+    }
   }
 
   /**
@@ -146,8 +160,21 @@ __STATIC_FORCEINLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
   __STATIC_FORCEINLINE q15_t clip_q63_to_q15(
   q63_t x)
   {
-    return ((q31_t) (x >> 32) != ((q31_t) x >> 31)) ?
-      ((0x7FFF ^ ((q15_t) (x >> 63)))) : (q15_t) (x >> 15);
+    if (x > (q63_t) Q31_MAX)
+    {
+      return Q15_MAX;
+    }
+    else if (x < (q63_t) Q31_MIN)
+    {
+      return Q15_MIN;
+    }
+    else
+    {
+      /* Keep bits [30:15] as Q15, using an unsigned shift so the operation is
+         well defined for negative inputs (the low 16 bits are identical to the
+         previous implementation-defined signed shift). */
+      return (q15_t) ((uint64_t) x >> 15);
+    }
   }
 
   /**
@@ -156,8 +183,21 @@ __STATIC_FORCEINLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
   __STATIC_FORCEINLINE q7_t clip_q31_to_q7(
   q31_t x)
   {
-    return ((q31_t) (x >> 24) != ((q31_t) x >> 23)) ?
-      ((0x7F ^ ((q7_t) (x >> 31)))) : (q7_t) x;
+    /* The saturation threshold is preserved exactly: the original code
+       saturates outside the signed 24-bit range (not the Q7 range). Only the
+       implementation-defined signed right shifts have been removed. */
+    if (x > (q31_t) 0x007FFFFF)
+    {
+      return Q7_MAX;
+    }
+    else if (x < -(q31_t) 0x00800000)
+    {
+      return Q7_MIN;
+    }
+    else
+    {
+      return (q7_t) x;
+    }
   }
 
   /**
@@ -166,8 +206,18 @@ __STATIC_FORCEINLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
   __STATIC_FORCEINLINE q15_t clip_q31_to_q15(
   q31_t x)
   {
-    return ((q31_t) (x >> 16) != ((q31_t) x >> 15)) ?
-      ((0x7FFF ^ ((q15_t) (x >> 31)))) : (q15_t) x;
+    if (x > (q31_t) Q15_MAX)
+    {
+      return Q15_MAX;
+    }
+    else if (x < (q31_t) Q15_MIN)
+    {
+      return Q15_MIN;
+    }
+    else
+    {
+      return (q15_t) x;
+    }
   }
 
   /**
