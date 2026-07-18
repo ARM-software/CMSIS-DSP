@@ -500,9 +500,13 @@ __STATIC_FORCEINLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
   uint64_t sum)
   {
 /*  return (sum + ((q15_t) (x >> 16) * (q15_t) (y >> 16)) + ((q15_t) x * (q15_t) y)); */
-    return ((uint64_t)(((((q31_t)x << 16) >> 16) * (((q31_t)y << 16) >> 16)) +
-                       ((((q31_t)x      ) >> 16) * (((q31_t)y      ) >> 16)) +
-                       ( ((q63_t)sum    )                                  )   ));
+    /* Both products must be widened to 64-bit before they are summed: with
+     * both operands left as 32-bit `q31_t`, two same-sign near-full-scale
+     * products (each up to 2^30) sum to 2^31, which overflows signed 32-bit
+     * and wraps negative before ever reaching the 64-bit accumulator. */
+    return ((uint64_t)((q63_t)(((q31_t)x << 16) >> 16) * (((q31_t)y << 16) >> 16) +
+                       (q63_t)(((q31_t)x      ) >> 16) * (((q31_t)y      ) >> 16) +
+                       ( (q63_t)sum    )                                          ));
   }
 
 
@@ -515,9 +519,10 @@ __STATIC_FORCEINLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
   uint64_t sum)
   {
 /*  return (sum + ((q15_t) (x >> 16) * (q15_t) y)) + ((q15_t) x * (q15_t) (y >> 16)); */
-    return ((uint64_t)(((((q31_t)x << 16) >> 16) * (((q31_t)y      ) >> 16)) +
-                       ((((q31_t)x      ) >> 16) * (((q31_t)y << 16) >> 16)) +
-                       ( ((q63_t)sum    )                                  )   ));
+    /* See __SMLALD above: widen to 64-bit before summing the two products. */
+    return ((uint64_t)((q63_t)(((q31_t)x << 16) >> 16) * (((q31_t)y      ) >> 16) +
+                       (q63_t)(((q31_t)x      ) >> 16) * (((q31_t)y << 16) >> 16) +
+                       ( (q63_t)sum    )                                          ));
   }
 
 
