@@ -254,8 +254,6 @@ __STATIC_INLINE int32_t arm_div_int64_to_int32(int64_t num, int32_t den)
          */
         result = (int32_t) (num / den);
 
-    if (result > INT32_MAX) return INT32_MAX;
-    if (result < INT32_MIN) return INT32_MIN;
     return result;
 }
 
