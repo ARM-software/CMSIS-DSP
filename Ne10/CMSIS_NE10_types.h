@@ -45,8 +45,13 @@
 #ifndef CMSIS_NE10_TYPES_H
 #define CMSIS_NE10_TYPES_H
 
+#ifdef __cplusplus
+#include <cassert>
+#include <cstdint>
+#else
 #include <assert.h>
 #include <stdint.h>
+#endif
 
 #include "arm_math_types_f16.h"
 

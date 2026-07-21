@@ -38,7 +38,7 @@
           {
               for(int t=0; t < this->templateLength; t++)
               {
-                  *c = fabs(inpA[q] - inpB[t]);
+                  *c = fabsf(inpA[q] - inpB[t]);
                   c++;
               }
           }
@@ -64,7 +64,7 @@
                      the window */
                   if (window.pData[q*this->templateLength+t])
                   {
-                     *c = fabs(inpA[q] - inpB[t]);
+                     *c = fabsf(inpA[q] - inpB[t]);
                   }
                   c++;
               }

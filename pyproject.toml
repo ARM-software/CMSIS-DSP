@@ -1,8 +1,11 @@
 [build-system]
 requires = [
-    "setuptools>=42",
+    "setuptools>=42; python_version < '3.12'",
+    "setuptools>=69; python_version >= '3.12' and python_version < '3.14'",
+    "setuptools>=80; python_version >= '3.14'",
     "wheel",
     "numpy>=2.0.0",
+    "cmake",
+    "packaging>=24.2"
 ]
 build-backend = "setuptools.build_meta"
-

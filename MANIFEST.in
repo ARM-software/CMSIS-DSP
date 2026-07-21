@@ -1,6 +1,11 @@
 include PythonWrapper_README.md
 recursive-include Include *.h 
 recursive-include PrivateInclude *.h 
+include PythonWrapper/CMakeLists.txt
 recursive-include PythonWrapper/cmsisdsp_pkg/src *.h 
-include Source/DistanceFunctions/arm_boolean_distance_template.h
-
+include Source/CMakeLists.txt
+include Source/configDsp.cmake
+recursive-include Source *.h *.c *.cmake
+recursive-include Ne10 *.h *.c 
+recursive-include ComputeLibrary *.h *.c
+include cmake/CMSISDSPConfig.cmake.in

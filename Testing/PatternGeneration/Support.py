@@ -102,6 +102,7 @@ def writeTestsF32(config):
     NBSAMPLES=256
 
     va = genSamples(NBSAMPLES)
+    
     config.writeInput(1,va,"Samples")
     config.writeInputF64(6,va,"Samples")
     config.writeInputQ15(3,va,"Samples")
@@ -210,7 +211,7 @@ def generatePatterns():
     
     configf64.setOverwrite(False)
     configf32.setOverwrite(False)
-    configf16.setOverwrite(True)
+    configf16.setOverwrite(False)
     configq31.setOverwrite(False)
     configq15.setOverwrite(False)
     configq7.setOverwrite(False)
@@ -240,6 +241,9 @@ def generatePatterns():
     
     configBarf32=Tools.Config(PATTERNBARDIR,PARAMBARDIR,"f32")
     configBarf16=Tools.Config(PATTERNBARDIR,PARAMBARDIR,"f16")
+
+    configBarf32.setOverwrite(False)
+    configBarf16.setOverwrite(False)
     
     writeBarTests(configBarf32)
     writeBarTests(configBarf16)

@@ -36,9 +36,12 @@
 #ifndef CMSIS_NE10_MACROS_H
 #define CMSIS_NE10_MACROS_H
 
-#include <stdlib.h>
+
 #ifdef __cplusplus
+#include <cstdlib>
 extern "C" {
+#else
+#include <stdlib.h>
 #endif
 
 /////////////////////////////////////////////////////////

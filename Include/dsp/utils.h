@@ -27,12 +27,15 @@
 #define ARM_MATH_UTILS_H_
 
 #include "arm_math_types.h"
-#include <limits.h>
 
 #ifdef   __cplusplus
+#include <climits>
 extern "C"
 {
+#else
+#include <limits.h>
 #endif
+
 
   /**
    * @brief Macros required for reciprocal calculation in Normalized LMS
@@ -219,6 +222,13 @@ __STATIC_INLINE  void arm_norm_64_to_32u(uint64_t in, int32_t * normalized, int3
     }
 }
 
+/**
+ * arm_div_int64_to_int32 function performs division of a 64-bit integer by a 32-bit integer
+ * and returns a 32-bit integer result. The function saturates the result to fit within the 32-bit integer range.
+ * @param num The 64-bit integer numerator.
+ * @param den The 32-bit integer denominator.
+ * @return The saturated 32-bit integer result of the division.
+ */
 __STATIC_INLINE int32_t arm_div_int64_to_int32(int64_t num, int32_t den)
 {
     int32_t   result;
@@ -230,9 +240,9 @@ __STATIC_INLINE int32_t arm_div_int64_to_int32(int64_t num, int32_t den)
      * if sum fits in 32bits
      * avoid costly 64-bit division
      */
-    if (num == (int64_t)LONG_MIN)
+    if (num == LLONG_MIN)
     {
-        absNum = LONG_MAX;
+        absNum = LLONG_MAX;
     }
     else
     {
@@ -248,7 +258,7 @@ __STATIC_INLINE int32_t arm_div_int64_to_int32(int64_t num, int32_t den)
         /*
          * 64-bit division
          */
-        result = (int32_t) (num / den);
+        result = clip_q63_to_q31(num / den);
 
     return result;
 }

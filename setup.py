@@ -1,5 +1,6 @@
 #from distutils.core import setup, Extension
 from setuptools import setup, Extension,find_packages
+from setuptools.command.build_ext import build_ext
 import io
 import glob
 import numpy
@@ -9,11 +10,15 @@ import os.path
 import re
 import pathlib
 import platform
+import shutil
+import subprocess
 
 
 here = pathlib.Path(__file__).parent.resolve()
 ROOT = here
 ROOT=""
+
+BUILD_ROOT = here / "build" / "pythonwrapper"
 
 PYTHON_MOD = os.path.join(ROOT,"cmsisdsp")
 version_path = os.path.join(PYTHON_MOD,"version.py")
@@ -38,7 +43,7 @@ if sys.platform == 'win32':
             "-DCMSISDSP",
             "-DUNALIGNED_SUPPORT_DISABLE"] 
 elif sys.platform == 'darwin':
-  if ARM:
+  if ARM: # aarch64
      os.environ["ARCHFLAGS"] = "-arch arm64"
      linkargs = ["-arch", "arm64"]
      cflags = ["-DARM_MATH_NEON",
@@ -49,7 +54,7 @@ elif sys.platform == 'darwin':
                "-DCMSISDSP",
                "-arch", "arm64",
                "-D__GNUC_PYTHON__"]
-  else:
+  else: # x86
     cflags = ["-Wno-attributes",
               "-Wno-unused-function",
               "-Wno-unused-variable",
@@ -57,8 +62,8 @@ elif sys.platform == 'darwin':
               "-DCMSISDSP",
               "-D__GNUC_PYTHON__"]
 
-else:
-  if ARM:
+else: # linux
+  if ARM: # aarch64
     cflags = ["-DARM_MATH_NEON",
               "-Wno-attributes",
               "-Wno-unused-function",
@@ -66,13 +71,14 @@ else:
               "-Wno-implicit-function-declaration",
               "-DCMSISDSP",
               "-D__GNUC_PYTHON__"]
-  else:
+  else: # x86
     cflags = ["-Wno-attributes",
               "-Wno-unused-function",
               "-Wno-unused-variable",
               "-Wno-implicit-function-declaration",
               "-DCMSISDSP",
               "-D__GNUC_PYTHON__"]
+    linkargs = ["-lmvec", "-lm"]
   
 # Add dependencies
 transformMod = [] # transform + common + basic + complexf + fastmath + matrix + statistics
@@ -151,21 +157,84 @@ window = list(filter(isnotmissing,list(filter(notf16, windowMod))))
 #  print(os.path.basename(l))
 #quit()
 
+def cmsisdsp_library_path():
+  if sys.platform == 'win32':
+    return(BUILD_ROOT / "bin_dsp" / "Release" / "CMSISDSP.lib")
+
+  return(BUILD_ROOT / "bin_dsp" / "libCMSISDSP.a")
+
+
+def built_cmsisdsp_library_candidates():
+  if sys.platform == 'win32':
+    return([
+      BUILD_ROOT / "bin_dsp" / "Release" / "CMSISDSP.lib",
+      BUILD_ROOT / "bin_dsp" / "CMSISDSP.lib",
+    ])
+
+  return([BUILD_ROOT / "bin_dsp" / "libCMSISDSP.a"])
+
+
+class BuildCMSISDSPExtensions(build_ext):
+  def run(self):
+    self.build_cmsisdsp_library()
+    super().run()
+
+  def build_cmsisdsp_library(self):
+    library_path = cmsisdsp_library_path()
+    candidates = built_cmsisdsp_library_candidates()
+    existing = next((path for path in candidates if path.exists()), None)
+    if existing is not None:
+      return
+
+    BUILD_ROOT.mkdir(parents=True, exist_ok=True)
+
+    configure = [
+      "cmake",
+      "-S", str(here / "PythonWrapper"),
+      "-B", str(BUILD_ROOT),
+      f"-DCMSISDSP={here}",
+      "-DHOST=YES",
+      "-DWRAPPER=YES",
+      "-DLOOPUNROLL=ON",
+      "-DCMAKE_BUILD_TYPE=Release",
+    ]
+
+    if sys.platform != 'win32':
+       configure.append("-DCMAKE_POSITION_INDEPENDENT_CODE=YES")
+       configure.append("-DCMAKE_C_FLAGS_RELEASE=-std=c11 -O3 -ffast-math -DNDEBUG -Wall -Wextra")
+       configure.append("-DCMAKE_CXX_FLAGS_RELEASE=-std=c++11 -O3 -ffast-math -DNDEBUG -Wall -Wextra -Wno-unused-parameter")
+
+    if sys.platform == 'darwin' and ARM:
+       configure.extend([
+        "-DNEON=YES",
+        "-DCMAKE_OSX_ARCHITECTURES=arm64",
+        "-DCMAKE_OSX_DEPLOYMENT_TARGET=10.9"
+      ])
+
+    if sys.platform == 'linux' and ARM:
+       configure.extend(["-DNEON=YES"])
+    
+    if shutil.which("ninja"):
+       configure.extend(["-G", "Ninja"])
+
+    subprocess.run(configure, check=True)
+    subprocess.run([
+      "cmake",
+      "--build", str(BUILD_ROOT),
+      "--config", "Release",
+    ], check=True)
+
+    existing = next((path for path in candidates if path.exists()), None)
+    if existing is None:
+      raise RuntimeError(f"CMSIS-DSP wrapper library was not generated in any expected location under {BUILD_ROOT / 'bin_dsp'}")
+
+    if existing != library_path:
+      library_path.parent.mkdir(parents=True, exist_ok=True)
+      shutil.copyfile(existing, library_path)
+
+
 def mkModule(name,srcs,funcDir):
   localinc = os.path.join(ROOT,"Source",funcDir)
-  libdir = [os.path.join(ROOT,"PythonWrapper","build","bin_dsp")]
-  lib = ["CMSISDSP"]
-  extraobjs=[]
-  
-  if sys.platform.startswith('linux'):
-    lib = []
-    extraobjs = [os.path.join(ROOT,"PythonWrapper","build_linux","bin_dsp","libCMSISDSP.a")]
-    libdir = []
- 
-  if sys.platform.startswith('darwin'):
-    lib = []
-    extraobjs = [os.path.join(ROOT,"PythonWrapper","build_darwin","bin_dsp","libCMSISDSP.a")]
-    libdir = []
  
   return(Extension(name,
                     sources = (srcs
@@ -174,9 +243,8 @@ def mkModule(name,srcs,funcDir):
                     include_dirs =  [localinc] + includes + [numpy.get_include()],
                     extra_compile_args = cflags,
                     extra_link_args = linkargs,
-                    library_dirs = libdir,
-                    libraries=lib,
-                    extra_objects=extraobjs
+                    libraries=[],
+                    extra_objects=[str(cmsisdsp_library_path())]
                               ))
 
 flagsForCommonWithoutFFT=[]
@@ -228,17 +296,16 @@ def build():
                         moduleWindow
                         ],
          include_package_data=True,
-         author = 'Copyright (C) 2010-2025 ARM Limited or its affiliates. All rights reserved.',
+         author = 'Copyright (C) 2010-2026 ARM Limited or its affiliates. All rights reserved.',
          author_email = 'christophe.favergeon@arm.com',
          url="https://github.com/ARM-software/CMSIS-DSP",
          python_requires='>=3.9',
-         license="License :: OSI Approved :: Apache Software License",
+         license="Apache-2.0",
          platforms=['any'],
          classifiers=[
                 "Programming Language :: Python :: 3",
                 "Programming Language :: Python :: Implementation :: CPython",
                 "Programming Language :: C",
-                "License :: OSI Approved :: Apache Software License",
                 "Operating System :: OS Independent",
                 "Development Status :: 5 - Production/Stable",
                 "Topic :: Software Development :: Embedded Systems",
@@ -250,10 +317,12 @@ def build():
           install_requires=[
           'numpy>=1.23.5',
           ],
-          project_urls={  # Optional
+         project_urls={  # Optional
              'Bug Reports': 'https://github.com/ARM-software/CMSIS-DSP/issues',
              'Source': 'https://github.com/ARM-software/CMSIS-DSP',
             }
+         ,
+         cmdclass={'build_ext': BuildCMSISDSPExtensions}
           )
        
 

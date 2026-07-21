@@ -1,0 +1,337 @@
+project:
+  packs:
+    - pack: ARM::CMSIS-DSP
+
+  groups:
+    - group: App
+      files:
+        - file: ../main.cpp
+        - file: ../patterndata.c
+        - file: ../testmain.cpp
+    - group: TestFramework
+      files:
+        - file: ../FrameworkSource/ArrayMemory.cpp
+        - file: ../FrameworkSource/Calibrate.cpp
+        - file: ../FrameworkSource/Error.cpp
+        - file: ../FrameworkSource/FPGA.cpp
+        - file: ../FrameworkSource/Generators.cpp
+        - file: ../FrameworkSource/IORunner.cpp
+        - file: ../FrameworkSource/Pattern.cpp
+        - file: ../FrameworkSource/PatternMgr.cpp
+        - file: ../FrameworkSource/Test.cpp
+        - file: ../FrameworkSource/Timing.cpp
+    - group: GeneratedConfig
+      files:
+        - file: ../GeneratedSource/TestDesc.cpp
+    - group: Tests
+      files:
+        - file: ../Source/Tests/BasicTestsF16.cpp
+        - file: ../Source/Tests/BasicTestsF32.cpp
+        - file: ../Source/Tests/BasicTestsF64.cpp
+        - file: ../Source/Tests/BasicTestsQ7.cpp
+        - file: ../Source/Tests/BasicTestsQ15.cpp
+        - file: ../Source/Tests/BasicTestsQ31.cpp
+        - file: ../Source/Tests/BayesF16.cpp
+        - file: ../Source/Tests/BayesF32.cpp
+        - file: ../Source/Tests/BinaryTestsF16.cpp
+        - file: ../Source/Tests/BinaryTestsF32.cpp
+        - file: ../Source/Tests/BinaryTestsF64.cpp
+        - file: ../Source/Tests/BinaryTestsQ7.cpp
+        - file: ../Source/Tests/BinaryTestsQ15.cpp
+        - file: ../Source/Tests/BinaryTestsQ31.cpp
+        - file: ../Source/Tests/BIQUADF16.cpp
+        - file: ../Source/Tests/BIQUADF32.cpp
+        - file: ../Source/Tests/BIQUADF64.cpp
+        - file: ../Source/Tests/BIQUADQ15.cpp
+        - file: ../Source/Tests/BIQUADQ31.cpp
+        - file: ../Source/Tests/ComplexTestsF16.cpp
+        - file: ../Source/Tests/ComplexTestsF32.cpp
+        - file: ../Source/Tests/ComplexTestsF64.cpp
+        - file: ../Source/Tests/ComplexTestsQ15.cpp
+        - file: ../Source/Tests/ComplexTestsQ31.cpp
+        - file: ../Source/Tests/DECIMF64.cpp
+        - file: ../Source/Tests/DECIMF32.cpp
+        - file: ../Source/Tests/DECIMQ15.cpp
+        - file: ../Source/Tests/DECIMQ31.cpp
+        - file: ../Source/Tests/DistanceTestsF16.cpp
+        - file: ../Source/Tests/DistanceTestsF32.cpp
+        - file: ../Source/Tests/DistanceTestsF64.cpp
+        - file: ../Source/Tests/DistanceTestsU32.cpp
+        - file: ../Source/Tests/ExampleCategoryF32.cpp
+        - file: ../Source/Tests/ExampleCategoryQ7.cpp
+        - file: ../Source/Tests/ExampleCategoryQ15.cpp
+        - file: ../Source/Tests/ExampleCategoryQ31.cpp
+        - file: ../Source/Tests/FastMathF16.cpp
+        - file: ../Source/Tests/FastMathF32.cpp
+        - file: ../Source/Tests/FastMathF64.cpp
+        - file: ../Source/Tests/FastMathQ15.cpp
+        - file: ../Source/Tests/FastMathQ31.cpp
+        - file: ../Source/Tests/FastMathQ63.cpp
+        - file: ../Source/Tests/FIRF16.cpp
+        - file: ../Source/Tests/FIRF32.cpp
+        - file: ../Source/Tests/FIRF64.cpp
+        - file: ../Source/Tests/FIRQ7.cpp
+        - file: ../Source/Tests/FIRQ15.cpp
+        - file: ../Source/Tests/FIRQ31.cpp
+        - file: ../Source/Tests/InterpolationTestsF16.cpp
+        - file: ../Source/Tests/InterpolationTestsF32.cpp
+        - file: ../Source/Tests/InterpolationTestsQ7.cpp
+        - file: ../Source/Tests/InterpolationTestsQ15.cpp
+        - file: ../Source/Tests/InterpolationTestsQ31.cpp
+        - file: ../Source/Tests/mfccdata.c
+        - file: ../Source/Tests/mfccdata_f16.c
+        - file: ../Source/Tests/MFCCF16.cpp
+        - file: ../Source/Tests/MFCCF32.cpp
+        - file: ../Source/Tests/MFCCQ15.cpp
+        - file: ../Source/Tests/MFCCQ31.cpp
+        - file: ../Source/Tests/MISCF16.cpp
+        - file: ../Source/Tests/MISCF32.cpp
+        - file: ../Source/Tests/MISCF64.cpp
+        - file: ../Source/Tests/MISCQ7.cpp
+        - file: ../Source/Tests/MISCQ15.cpp
+        - file: ../Source/Tests/MISCQ31.cpp
+        - file: ../Source/Tests/QuaternionTestsF32.cpp
+        - file: ../Source/Tests/StatsTestsF16.cpp
+        - file: ../Source/Tests/StatsTestsF32.cpp
+        - file: ../Source/Tests/StatsTestsF64.cpp
+        - file: ../Source/Tests/StatsTestsQ7.cpp
+        - file: ../Source/Tests/StatsTestsQ15.cpp
+        - file: ../Source/Tests/StatsTestsQ31.cpp
+        - file: ../Source/Tests/SupportBarTestsF16.cpp
+        - file: ../Source/Tests/SupportBarTestsF32.cpp
+        - file: ../Source/Tests/SupportTestsF16.cpp
+        - file: ../Source/Tests/SupportTestsF32.cpp
+        - file: ../Source/Tests/SupportTestsF64.cpp
+        - file: ../Source/Tests/SupportTestsQ7.cpp
+        - file: ../Source/Tests/SupportTestsQ15.cpp
+        - file: ../Source/Tests/SupportTestsQ31.cpp
+        - file: ../Source/Tests/SVMF16.cpp
+        - file: ../Source/Tests/SVMF32.cpp
+        - file: ../Source/Tests/TransformCF16.cpp
+        - file: ../Source/Tests/TransformCF32.cpp
+        - file: ../Source/Tests/TransformCF64.cpp
+        - file: ../Source/Tests/TransformCQ15.cpp
+        - file: ../Source/Tests/TransformCQ31.cpp
+        - file: ../Source/Tests/TransformRF16.cpp
+        - file: ../Source/Tests/TransformRF32.cpp
+        - file: ../Source/Tests/TransformRF64.cpp
+        - file: ../Source/Tests/TransformRQ15.cpp
+        - file: ../Source/Tests/TransformRQ31.cpp
+        - file: ../Source/Tests/UnaryTestsF16.cpp
+        - file: ../Source/Tests/UnaryTestsF32.cpp
+        - file: ../Source/Tests/UnaryTestsF64.cpp
+        - file: ../Source/Tests/UnaryTestsQ7.cpp
+        - file: ../Source/Tests/UnaryTestsQ15.cpp
+        - file: ../Source/Tests/UnaryTestsQ31.cpp
+        - file: ../Source/Tests/WindowTestsF32.cpp
+        - file: ../Source/Tests/WindowTestsF64.cpp
+  define:
+      - EMBEDDED
+  add-path:
+      - ../FrameworkInclude
+      - ../GeneratedInclude
+      - ../Include/Tests
+      - .
+    
+  components:
+    - component: CMSIS:DSP&Source
+      define:
+        - ARM_MATH_ROUNDING
+    - component: ARM::CMSIS:CORE
+    - component: ARM::Device:Startup&C Startup
+    - component: ARM::Device:Definition
+      for-context: 
+          - +VHT-Corstone-300
+          - +VHT-Corstone-310
+          - +MPS3-Corstone-300
+          - +VHT-Corstone-300-NOMVE
+    - component: CMSIS-Compiler:CORE
+      for-context: 
+          - +MPS3-Corstone-300
+    - component: CMSIS-Compiler:STDOUT:Custom@1.0.0
+      for-context: 
+          - +MPS3-Corstone-300
+    - component: ARM::Device:USART STDOUT
+      for-context: 
+          - +MPS3-Corstone-300
+    - component: ARM::CMSIS Driver:USART
+      for-context: 
+          - +MPS3-Corstone-300
+    - component: ARM::Device:Native Driver:SysCounter
+      for-context: 
+          - +VHT-Corstone-300
+          - +VHT-Corstone-310
+          - +MPS3-Corstone-300
+          - +VHT-Corstone-300-NOMVE
+    - component: ARM::Device:Native Driver:SysTimer
+      for-context: 
+          - +VHT-Corstone-300
+          - +VHT-Corstone-310
+          - +MPS3-Corstone-300
+          - +VHT-Corstone-300-NOMVE
+    - component: ARM::Device:Native Driver:Timeout
+      for-context: 
+          - +VHT-Corstone-300
+          - +VHT-Corstone-310
+          - +MPS3-Corstone-300
+          - +VHT-Corstone-300-NOMVE
+    - component: ARM::Device:Native Driver:UART
+      for-context: 
+          - +MPS3-Corstone-300
+  
+  linker:
+  ######################## SSE310
+    - script: linker_scripts/gcc_sse310_mps3.ld
+      for-context:
+        - +VHT-Corstone-310
+      for-compiler: GCC
+
+    - script: linker_scripts/clang_sse310_mps3.sct
+      for-context:
+        - +VHT-Corstone-310
+      for-compiler: CLANG
+
+    - script: linker_scripts/ac6_sse310_mps3_s.sct
+      for-context:
+        - +VHT-Corstone-310
+      for-compiler: AC6
+
+    - regions: linker_scripts/SSE-310-MPS3/region_defs.h
+      for-context:
+        - +VHT-Corstone-310
+
+  ######################## SSE300
+    - script: linker_scripts/gcc_sse300_mps3.ld
+      for-context:
+        - +MPS3-Corstone-300
+        - +VHT-Corstone-300
+        - +VHT-Corstone-300-NOMVE
+      for-compiler: GCC
+
+    - script: linker_scripts/clang_sse300_mps3.sct
+      for-context:
+        - +MPS3-Corstone-300
+        - +VHT-Corstone-300
+        - +VHT-Corstone-300-NOMVE
+      for-compiler: CLANG
+
+    - script: linker_scripts/ac6_sse300_mps3_s.sct
+      for-context:
+        - +MPS3-Corstone-300
+        - +VHT-Corstone-300
+        - +VHT-Corstone-300-NOMVE
+      for-compiler: AC6
+
+    - regions: linker_scripts/SSE-300-MPS3/region_defs.h
+      for-context:
+        - +MPS3-Corstone-300
+        - +VHT-Corstone-300
+        - +VHT-Corstone-300-NOMVE
+
+  ######################## M33
+    - script: linker_scripts/gcc_m33_mps3.ld
+      for-context:
+        - +VHT_M33
+      for-compiler: GCC
+
+    - script: linker_scripts/clang_m33_mps3.ld
+      for-context:
+        - +VHT_M33
+      for-compiler: CLANG
+
+    - script: linker_scripts/ac6_m33_mps3_s.sct
+      for-context:
+        - +VHT_M33
+      for-compiler: AC6
+
+    - regions: linker_scripts/ARMCM33_DSP_FP/region_defs.h
+      for-context:
+        - +VHT_M33
+
+  ######################## M7
+    - script: linker_scripts/gcc_m7_mps3.ld
+      for-context:
+        - +VHT_M7_UNROLLED
+        - +VHT_M7
+      for-compiler: GCC
+
+    - script: linker_scripts/clang_m7_mps3.ld
+      for-context:
+        - +VHT_M7_UNROLLED
+        - +VHT_M7
+      for-compiler: CLANG
+
+    - script: linker_scripts/ac6_m7_mps3_s.sct
+      for-context:
+        - +VHT_M7_UNROLLED
+        - +VHT_M7
+      for-compiler: AC6
+
+    - regions: linker_scripts/ARMCM7_DP/region_defs.h
+      for-context:
+        - +VHT_M7_UNROLLED
+        - +VHT_M7
+
+  ######################## M4
+    - script: linker_scripts/gcc_m4_mps3.ld
+      for-context:
+        - +VHT_M4
+      for-compiler: GCC
+
+    - script: linker_scripts/clang_m4_mps3.ld
+      for-context:
+        - +VHT_M4
+      for-compiler: CLANG
+
+    - script: linker_scripts/ac6_m4_mps3_s.sct
+      for-context:
+        - +VHT_M4
+      for-compiler: AC6
+
+    - regions: linker_scripts/ARMCM4/region_defs.h
+      for-context:
+        - +VHT_M4
+
+
+
+  ######################## M3
+    - script: linker_scripts/gcc_m3_mps3.ld
+      for-context:
+        - +VHT_M3
+      for-compiler: GCC
+
+    - script: linker_scripts/clang_m3_mps3.ld
+      for-context:
+        - +VHT_M3
+      for-compiler: CLANG
+
+    - script: linker_scripts/ac6_m3_mps3_s.sct
+      for-context:
+        - +VHT_M3
+      for-compiler: AC6
+
+    - regions: linker_scripts/ARMCM3/region_defs.h
+      for-context:
+        - +VHT_M3
+
+
+  ######################## M0P
+    - script: linker_scripts/gcc_m0p_mps3.ld
+      for-context:
+        - +VHT_M0P
+      for-compiler: GCC
+
+    - script: linker_scripts/clang_m0p_mps3.ld
+      for-context:
+        - +VHT_M0P
+      for-compiler: CLANG
+
+    - script: linker_scripts/ac6_m0p_mps3_s.sct
+      for-context:
+        - +VHT_M0P
+      for-compiler: AC6
+
+    - regions: linker_scripts/ARMCM0P/region_defs.h
+      for-context:
+        - +VHT_M0P
+

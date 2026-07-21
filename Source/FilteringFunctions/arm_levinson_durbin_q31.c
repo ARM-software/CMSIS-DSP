@@ -200,6 +200,7 @@ ARM_DSP_ATTRIBUTE void arm_levinson_durbin_q31(const q31_t *phi,
 
       uint32x4_t offset,offsetInc,vecTmp;
 
+      vecRevA = vdupq_n_s32(0);
 
       offset = vld1q_u32((uint32_t*)orgOffsetArray);
       vecTmp = vdupq_n_u32(p);

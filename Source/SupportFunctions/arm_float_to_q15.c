@@ -68,7 +68,7 @@ ARM_DSP_ATTRIBUTE void arm_float_to_q15(
   uint32_t blockSize)
 {
     uint32_t         blkCnt;
-    float32_t       maxQ = (float32_t) Q15_MAX;
+    float32_t       maxQ = (float32_t) (Q15_MAX) + 1.0f;
     f32x4x2_t       tmp;
     q15x8_t         vecDst = { 0 };
 #ifdef ARM_MATH_ROUNDING

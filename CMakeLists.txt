@@ -6,4 +6,6 @@
 # automatically adds CMSIS-DSP as a subdirectory. To maintain compatibility with
 # existing projects that assume CMSIS-DSP's entry point to be Source/, we only
 # add a redirection in the root CMakeLists.txt.
+cmake_minimum_required(VERSION 3.14)
+project(CMSISDSPRoot)
 add_subdirectory(Source)

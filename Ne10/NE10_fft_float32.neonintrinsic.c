@@ -1214,7 +1214,7 @@ void arm_ne10_mixed_radix_fft_forward_float32_neon (
     ne10_int32_t fstride = S->factors[1];
     ne10_int32_t mstride = S->factors[3];
     ne10_int32_t first_radix = S->factors[2];
-    ne10_int32_t step, f_count;
+    ne10_int32_t step = 0, f_count;
     const ne10_fft_cpx_float32_t *src = input;
     ne10_fft_cpx_float32_t *in;
     ne10_fft_cpx_float32_t *dst = out;
@@ -1313,7 +1313,7 @@ void arm_ne10_mixed_radix_fft_backward_float32_neon (
     ne10_int32_t mstride = S->factors[3];
     ne10_int32_t first_radix = S->factors[2];
     ne10_int32_t nfft = fstride * first_radix;
-    ne10_int32_t step, f_count;
+    ne10_int32_t step = 0, f_count;
     const ne10_fft_cpx_float32_t *src = input;
     ne10_fft_cpx_float32_t *in;
     ne10_fft_cpx_float32_t *dst = out;

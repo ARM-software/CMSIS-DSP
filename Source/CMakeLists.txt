@@ -1,6 +1,8 @@
 cmake_minimum_required (VERSION 3.14)
 cmake_policy(SET CMP0077 NEW)
 project(CMSISDSP)
+include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
 
 # DSP Sources
 SET(DSP ${CMAKE_CURRENT_SOURCE_DIR}/..)
@@ -20,7 +22,15 @@ option(HOST "Build for host" OFF)
 option(AUTOVECTORIZE "Prefer autovectorizable code to one using C intrinsics" OFF)
 option(LAXVECTORCONVERSIONS "Lax vector conversions" ON)
 option(NEON_RIFFT_SCALING "Scaling of RIFFT with Neon" ON)
-option(FASTBUILD "Faster build for Cortex-M. Disable it for A" OFF)
+option(FASTBUILD "Use aggregate source files to reduce build time" OFF)
+if (DEFINED CMSISCORE)
+  set(CMSISDSP_INSTALL_DEFAULT OFF)
+else()
+  set(CMSISDSP_INSTALL_DEFAULT ON)
+endif()
+option(CMSISDSP_INSTALL "Install CMSIS-DSP and export a CMake package" ${CMSISDSP_INSTALL_DEFAULT})
+set(CMSISDSP_INSTALL_INCLUDEDIR "${CMAKE_INSTALL_INCLUDEDIR}/CMSIS-DSP"
+    CACHE STRING "CMSIS-DSP headers install directory")
 
 ###########################
 #
@@ -29,6 +39,7 @@ option(FASTBUILD "Faster build for Cortex-M. Disable it for A" OFF)
 ###########################
 
 add_library(CMSISDSP STATIC)
+add_library(CMSISDSP::CMSISDSP ALIAS CMSISDSP)
 
 include(BasicMathFunctions/Config.cmake)
 
@@ -63,11 +74,51 @@ include(InterpolationFunctions/Config.cmake)
 include(WindowFunctions/Config.cmake)
 
 ### Includes
-target_include_directories(CMSISDSP PUBLIC "${DSP}/Include")
+target_include_directories(CMSISDSP PUBLIC
+  $<BUILD_INTERFACE:${DSP}/Include>
+  $<INSTALL_INTERFACE:${CMSISDSP_INSTALL_INCLUDEDIR}>)
 if (DEFINED CMSISCORE)
-target_include_directories(CMSISDSP PUBLIC "${CMSISCORE}/Include")
+target_include_directories(CMSISDSP PUBLIC
+  $<BUILD_INTERFACE:${CMSISCORE}/Include>)
 endif()
 
 include(configDsp.cmake)
 
 configDsp(CMSISDSP)
+
+if (CMSISDSP_INSTALL AND DEFINED CMSISCORE)
+  message(FATAL_ERROR "CMSISDSP_INSTALL is only supported for host builds without CMSISCORE")
+endif()
+
+if (CMSISDSP_INSTALL)
+  set(CMSISDSP_INSTALL_CMAKEDIR "${CMAKE_INSTALL_LIBDIR}/cmake/CMSISDSP"
+      CACHE STRING "CMake package install directory")
+
+  install(TARGETS CMSISDSP
+    EXPORT CMSISDSPTargets
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+
+  install(DIRECTORY "${DSP}/Include/"
+    DESTINATION ${CMSISDSP_INSTALL_INCLUDEDIR}
+    FILES_MATCHING PATTERN "*.h")
+
+  if (NEON OR NEONEXPERIMENTAL)
+    install(DIRECTORY "${DSP}/ComputeLibrary/Include/"
+      DESTINATION ${CMSISDSP_INSTALL_INCLUDEDIR}
+      FILES_MATCHING PATTERN "*.h")
+  endif()
+
+  configure_package_config_file(
+    "${DSP}/cmake/CMSISDSPConfig.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/CMSISDSPConfig.cmake"
+    INSTALL_DESTINATION ${CMSISDSP_INSTALL_CMAKEDIR})
+
+  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/CMSISDSPConfig.cmake"
+    DESTINATION ${CMSISDSP_INSTALL_CMAKEDIR})
+
+  install(EXPORT CMSISDSPTargets
+    NAMESPACE CMSISDSP::
+    DESTINATION ${CMSISDSP_INSTALL_CMAKEDIR})
+endif()

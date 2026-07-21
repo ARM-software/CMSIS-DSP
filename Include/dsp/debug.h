@@ -36,11 +36,14 @@
 #include "dsp/matrix_functions.h"
 #include "dsp/matrix_functions_f16.h"
 
-#include <stdio.h>
+
 
 #ifdef   __cplusplus
+#include <cstdio>
 extern "C"
 {
+#else
+#include <stdio.h>
 #endif
 
 #if defined(ARM_FLOAT16_SUPPORTED)

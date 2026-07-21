@@ -259,25 +259,8 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df1_f32(
             lastX = X3;
             lastY = Yn1;
 
-            X0 = *pIn++;
-            X1 = *pIn++;
-            X2 = *pIn++;
-            X3 = *pIn++;
-
-            coeffs = vld1q(pCoeffs);
-            accVec = vmulq(coeffs, X3);
-
-            coeffs = vld1q(&pCoeffs[4]);
-            accVec = vfmaq(accVec, coeffs, X2);
-
-            coeffs = vld1q(&pCoeffs[8]);
-            accVec = vfmaq(accVec, coeffs, X1);
-
-            coeffs = vld1q(&pCoeffs[12]);
-            accVec = vfmaq(accVec, coeffs, X0);
-
             coeffs = vld1q(&pCoeffs[16]);
-            accVec = vfmaq(accVec, coeffs, Xn1);
+            accVec = vmulq(coeffs, Xn1);
 
             coeffs = vld1q(&pCoeffs[20]);
             accVec = vfmaq(accVec, coeffs, Xn2);
@@ -290,6 +273,11 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df1_f32(
 
             if (sample == 1)
             {
+                X0 = *pIn++;
+
+                coeffs = vld1q(&pCoeffs[12]);
+                accVec = vfmaq(accVec, coeffs, X0);
+
                 *pOut++ = vgetq_lane(accVec, 0);
                 Xn1 = X0;
                 Xn2 = lastX;
@@ -298,6 +286,15 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df1_f32(
             }
             else if (sample == 2)
             {
+                X0 = *pIn++;
+                X1 = *pIn++;
+
+                coeffs = vld1q(&pCoeffs[8]);
+                accVec = vfmaq(accVec, coeffs, X1);
+
+                coeffs = vld1q(&pCoeffs[12]);
+                accVec = vfmaq(accVec, coeffs, X0);
+
                 *pOut++ = vgetq_lane(accVec, 0);
                 *pOut++ = vgetq_lane(accVec, 1);
                 Xn1 = X1;
@@ -307,6 +304,19 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df1_f32(
             }
             else
             {
+                X0 = *pIn++;
+                X1 = *pIn++;
+                X2 = *pIn++;
+
+                coeffs = vld1q(&pCoeffs[4]);
+                accVec = vfmaq(accVec, coeffs, X2);
+
+                coeffs = vld1q(&pCoeffs[8]);
+                accVec = vfmaq(accVec, coeffs, X1);
+
+                coeffs = vld1q(&pCoeffs[12]);
+                accVec = vfmaq(accVec, coeffs, X0);
+                
                 *pOut++ = vgetq_lane(accVec, 0);
                 *pOut++ = vgetq_lane(accVec, 1);
                 *pOut++ = vgetq_lane(accVec, 2);

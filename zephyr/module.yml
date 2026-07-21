@@ -1,0 +1,4 @@
+name: cmsis-dsp
+build:
+  cmake: zephyr
+  kconfig: zephyr/Kconfig

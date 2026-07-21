@@ -3,8 +3,12 @@ on:
   workflow_dispatch:
   pull_request:
     branches: [main]
+    paths:
+      - 'dsppp/**'
   push:
     branches: [main]
+    paths:
+      - 'dsppp/**'
 
 permissions:
   actions: read
@@ -13,16 +17,18 @@ permissions:
 jobs:
    CI_cpp_test_run: 
     strategy:
+      max-parallel: 6
       fail-fast: false
       matrix:
         # GCC currently has too many problems with the C++ API
         compiler: [AC6, CLANG]
         core: [M0, M4, M55]
+        dt: [F64_DT,COMPLEX_F32_DT,F32_DT,COMPLEX_F16_DT,F16_DT,COMPLEX_Q31_DT,Q31_DT,COMPLEX_Q15_DT,Q15_DT,Q7_DT]
     runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
 
       - name: Setup Python 3.10
         uses: actions/setup-python@v6
@@ -44,7 +50,7 @@ jobs:
 
       - name: Cache boost
         id: cache-boost
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           key: boost-cmsis-dsp
           restore-keys: |
@@ -70,7 +76,7 @@ jobs:
           pip install -r ../Testing/requirements.txt
 
           echo "Load missing pack"
-          csolution list packs -s  test.csolution.yml -m > required_packs.txt
+          csolution list packs -s test.csolution.yml -m > required_packs.txt
 
           cat required_packs.txt
           cpackget add -a -f required_packs.txt
@@ -79,16 +85,16 @@ jobs:
         run: |
           cd dsppp
           echo "Running tests"
-          python run_all.py -t -g ${{ matrix.compiler }} -c ${{ matrix.core }} -avh $AVH_FVP_PLUGINS/../bin
+          python run_all.py -t -g ${{ matrix.compiler }} -c ${{ matrix.core }} --dt ${{matrix.dt}} -avh $AVH_FVP_PLUGINS/../bin
 
       - name: Upload test report
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
-          name: test-cpp-report_${{ matrix.compiler }}_${{ matrix.core }}
-          path: dsppp/${{ matrix.compiler }}_results/errors_${{ matrix.core }}.txt
+          name: test-cpp-report_${{ matrix.compiler }}_${{ matrix.core }}_${{ matrix.dt }}
+          path: dsppp/${{ matrix.compiler }}_results/errors_${{ matrix.core }}_${{ matrix.dt }}.txt
 
       - name: Check error
         run: |
           cd dsppp
           echo "Checking output..."
-          test "$(cat ${{ matrix.compiler }}_results/errors_${{ matrix.core }}.txt | wc -l)" -eq 0
+          test "$(cat ${{ matrix.compiler }}_results/errors_${{ matrix.core }}_${{ matrix.dt }}.txt | wc -l)" -eq 0

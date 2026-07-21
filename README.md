@@ -55,6 +55,8 @@ For any questions or to reach the CMSIS-DSP  team, please create a new issue in 
   * [How to build with MDK or Open CMSIS-Pack](#how-to-build-with-mdk-or-open-cmsis-pack)
   * [How to build with Make](#how-to-build-with-make)
   * [How to build with cmake](#how-to-build-with-cmake)
+  * [How to install as a cmake package](#how-to-install-as-a-cmake-package)
+  * [How to build with Zephyr](#how-to-build-with-zephyr)
   * [How to build with any other build system](#how-to-build-with-any-other-build-system)
   * [How to build for Neon and aarch64](#how-to-build-for-aarch64)
 * [Code size](#code-size)
@@ -154,6 +156,82 @@ If you build for Neon, use `NEON` and/or `NEONEXPERIMENTAL`.
 Once cmake has generated the makefiles, you can use a GNU Make to build.
 
     make VERBOSE=1
+
+### How to install as a cmake package
+
+CMSIS-DSP can be installed as a cmake package for host builds on Windows, macOS, or Linux. Set `CMAKE_INSTALL_PREFIX` to the folder where the package must be installed. The installed package exports the target `CMSISDSP::CMSISDSP`. Headers are installed below `include/CMSIS-DSP` to avoid conflicts with other packages, but applications still include CMSIS-DSP headers with `#include "arm_math.h"` when linking with `CMSISDSP::CMSISDSP`. Package installation is disabled when `CMSISCORE` is set, since `CMSISCORE` is used for Cortex-M builds normally handled by CMSIS Toolbox or Zephyr.
+
+For maximum performance on an Arm host with Neon, build in `Release`, enable `HOST` and `NEON`, and use `-O3 -ffast-math`:
+
+```bash
+cmake -S . -B build-cmsisdsp-neon \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=/path/to/cmsis-dsp-install \
+  -DHOST=ON \
+  -DNEON=ON \
+  -DCMAKE_C_FLAGS_RELEASE="-O3 -ffast-math"
+
+cmake --build build-cmsisdsp-neon
+cmake --install build-cmsisdsp-neon
+```
+
+For Windows or x86 host builds, do not enable `NEON`. `HOST=ON` removes the dependency on CMSIS Core intrinsics for host compilers. If float16 support is not needed, `DISABLEFLOAT16=ON` can avoid compiler support issues.
+
+On Linux or macOS x86:
+
+```bash
+cmake -S . -B build-cmsisdsp-host \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=/path/to/cmsis-dsp-install \
+  -DHOST=ON \
+  -DDISABLEFLOAT16=ON \
+  -DCMAKE_C_FLAGS_RELEASE="-O3 -ffast-math"
+
+cmake --build build-cmsisdsp-host
+cmake --install build-cmsisdsp-host
+```
+
+On Windows with Visual Studio:
+
+```powershell
+cmake -S . -B build-cmsisdsp-host `
+  -G "Visual Studio 17 2022" -A x64 `
+  -DCMAKE_INSTALL_PREFIX=C:\cmsis-dsp-install `
+  -DHOST=ON `
+  -DDISABLEFLOAT16=ON `
+  -DCMAKE_C_FLAGS_RELEASE="/O2 /fp:fast"
+
+cmake --build build-cmsisdsp-host --config Release
+cmake --install build-cmsisdsp-host --config Release
+```
+
+For MSVC, `/O2 /fp:fast` is the equivalent high-performance setting to `-O3 -ffast-math`.
+
+An application can then use the installed package with:
+
+```cmake
+find_package(CMSISDSP CONFIG REQUIRED)
+target_link_libraries(my_application PRIVATE CMSISDSP::CMSISDSP)
+```
+
+Configure the application with `CMAKE_PREFIX_PATH` pointing to the install folder:
+
+```bash
+cmake -S my_application -B build-my-application -DCMAKE_PREFIX_PATH=/path/to/cmsis-dsp-install
+```
+
+If the package is not needed, pass `-DCMSISDSP_INSTALL=OFF` when configuring CMSIS-DSP.
+
+### How to build with Zephyr
+
+Add this to your west file:
+
+```
+- name: cmsis-dsp
+      url: https://github.com/ARM-software/CMSIS-DSP
+      revision: main
+      path: modules/lib/cmsis-dsp
+```
 
 ### How to build with any other build system
 

@@ -13,6 +13,7 @@ Reference patterns are generated with
 a double precision computation.
 
 */
+
 #define ABS_ERROR ((q63_t)0)
 
     void FastMathQ63::test_norm_64_to_32u()

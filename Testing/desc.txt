@@ -1955,7 +1955,7 @@ group Root {
 
               Pattern DIV_DEN_INPUT1_S64_ID : DivDenInput1_s64.txt
               Pattern DIV_NUM_INPUT1_S32_ID : DivNumInput1_s32.txt
-              Pattern DIV_REF_S32_ID : DivRef1_u32.txt
+              Pattern DIV_REF_S32_ID : DivRef1_s32.txt
 
               Output  OUT_S32_ID : Output
               Output  NORMS_S16_ID : Output

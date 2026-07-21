@@ -354,7 +354,7 @@ a double precision computation.
 
 
       */
-      ASSERT_TRUE(fabs(5.47723f - (float32_t)result) < 0.32f);
+      ASSERT_TRUE(fabsf(5.47723f - (float32_t)result) < 0.32f);
 
     }
 

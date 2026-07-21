@@ -16,6 +16,8 @@ parser.add_argument('-c', action='store_true', help="Display cycles (so passing 
 parser.add_argument('-g', nargs='?',type = str,help="AC6 / CLANG / GCC")
 parser.add_argument('-s', action='store_true', help="Take into account AVH error code")
 parser.add_argument('-no', action='store_true', help="No run")
+parser.add_argument('-pack', action='store_true', help="Run test with with pack instead of dsp layer")
+parser.add_argument('-quick', action='store_true', help="Run a quick sanity check (only a few tests)")
 
 args = parser.parse_args()
 
@@ -158,8 +160,12 @@ def runAVH(build,core,compiler):
        print("No AVH run")
        return(Result("No run",error=False))
     avh = None
-    axf="cprj/out/test/%s/Release/test.axf" % (build,)
-    elf="cprj/out/test/%s/Release/test.elf" % (build,)
+    if args.pack:
+        axf="cprj/out/test/%s/Release/check.axf" % (build,)
+        elf="cprj/out/test/%s/Release/check.elf" % (build,)
+    else:
+      axf="cprj/out/test/%s/Release/test.axf" % (build,)
+      elf="cprj/out/test/%s/Release/test.elf" % (build,)
     app = axf 
     if os.path.exists(axf):
         app = axf 
@@ -212,8 +218,13 @@ for t in tests:
 #("MISCQ31","../Output.pickle"),
 #("SupportTestsF32","../Output.pickle"),
 #("BasicTestsF32","../Output.pickle"),
-##("BasicTestsF16","../Output_f16.pickle"),
+#("UnaryTestsF16","../Output_f16.pickle"),
 #]
+
+if args.quick:
+    allSuites=[
+        ("BasicTestsF32","../Output.pickle")
+    ]
 
 # Solution and build file for all
 # the tests
@@ -256,7 +267,15 @@ compil_version = {}
 
 #compil_version = {
 #    'GCC': '13.3.1'
+#     'CLANG': "22.1.0"
 #}
+
+if args.quick:
+    compil_config={
+      'AC6':[
+        ("VHT-Corstone-300","CS300"),
+      ]
+    }
 
 #Override previous solutions for more restricted testing.
 #compil_config={
@@ -320,7 +339,10 @@ with open(results_file,"w") as f:
                 buildNb = buildNb + 1
                 print("<h2>Core %s</h2>" % build,file=f)
                 printTitle("Process core %s (%d/%d)" % (build,buildNb,maxNbBuilds))
-                buildFile="test.Release+%s" % build
+                if args.pack:
+                    buildFile="check.Release+%s" % build
+                else:
+                   buildFile="test.Release+%s" % build
                 nb = 0 
                 maxNb = len(allSuites)
                 for s,pickle in allSuites:
