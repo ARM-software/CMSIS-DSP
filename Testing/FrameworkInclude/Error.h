@@ -273,6 +273,16 @@ void assert_equal(unsigned long nb,AnyPattern<T> &pa, AnyPattern<T> &pb)
             {
                 sprintf(details," (nb=%lu) (val=%g,ref=%g)",i,(double)ptrA[i],(double)ptrB[i]);
             }
+            else if constexpr (std::is_integral_v<T> && sizeof(T) > sizeof(int) && std::is_signed_v<T>)
+            {
+                sprintf(details," (nb=%lu) (val=%lld,ref=%lld)",i,
+                        (long long)ptrA[i],(long long)ptrB[i]);
+            }
+            else if constexpr (std::is_integral_v<T> && sizeof(T) > sizeof(int))
+            {
+                sprintf(details," (nb=%lu) (val=%llu,ref=%llu)",i,
+                        (unsigned long long)ptrA[i],(unsigned long long)ptrB[i]);
+            }
             else
             {
                 sprintf(details," (nb=%lu) (val=%d,ref=%d)",i,(int)ptrA[i],(int)ptrB[i]);

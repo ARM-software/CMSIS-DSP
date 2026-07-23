@@ -480,10 +480,7 @@ __STATIC_FORCEINLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
   uint32_t y,
   uint64_t sum)
   {
-/*  return (sum + ((q15_t) (x >> 16) * (q15_t) (y >> 16)) + ((q15_t) x * (q15_t) y)); */
-    return ((uint64_t)(((((q31_t)x << 16) >> 16) * (((q31_t)y << 16) >> 16)) +
-                       ((((q31_t)x      ) >> 16) * (((q31_t)y      ) >> 16)) +
-                       ( ((q63_t)sum    )                                  )   ));
+      return (sum + ((q15_t) (x >> 16) * (q15_t) (y >> 16)) + ((q15_t) x * (q15_t) y));
   }
 
 
@@ -495,10 +492,7 @@ __STATIC_FORCEINLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
   uint32_t y,
   uint64_t sum)
   {
-/*  return (sum + ((q15_t) (x >> 16) * (q15_t) y)) + ((q15_t) x * (q15_t) (y >> 16)); */
-    return ((uint64_t)(((((q31_t)x << 16) >> 16) * (((q31_t)y      ) >> 16)) +
-                       ((((q31_t)x      ) >> 16) * (((q31_t)y << 16) >> 16)) +
-                       ( ((q63_t)sum    )                                  )   ));
+       return (sum + ((q15_t) (x >> 16) * (q15_t) y)) + ((q15_t) x * (q15_t) (y >> 16)); 
   }
 
 

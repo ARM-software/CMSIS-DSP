@@ -5,10 +5,19 @@
 
 void DspOpTests::test_smlad_sat()
 {
-    uint32_t x = 0x80008000u, y = 0x80008000u; 
-    uint32_t res = __SMLALD(x, y, 0);
-   
-    ASSERT_TRUE(res == 2147483648);
+    const q31_t *x = inputSMLALDX.ptr();
+    const q31_t *y = inputSMLALDY.ptr();
+    const q63_t *acc = inputSMLALDAcc.ptr();
+    q63_t *outp = outputSMLALD.ptr();
+
+    for (unsigned long i = 0; i < refSMLALD.nbSamples(); i++)
+    {
+        outp[i] = (q63_t)__SMLALD((uint32_t)x[i],
+                                  (uint32_t)y[i],
+                                  (uint64_t)acc[i]);
+    }
+
+    ASSERT_EQ(outputSMLALD, refSMLALD);
 }
 
 void DspOpTests::test_clip_q63_to_q31()
@@ -53,6 +62,17 @@ void DspOpTests::setUp(Testing::testID_t id,
 
     switch (id)
     {
+        case DspOpTests::TEST_SMLAD_SAT_1:
+        {
+               inputSMLALDX.reload(DspOpTests::INPUT_SMLALD_X_ID,mgr);
+               inputSMLALDY.reload(DspOpTests::INPUT_SMLALD_Y_ID,mgr);
+               inputSMLALDAcc.reload(DspOpTests::INPUT_SMLALD_ACC_ID,mgr);
+               refSMLALD.reload(DspOpTests::REF_SMLALD_ID,mgr);
+               outputSMLALD.create(refSMLALD.nbSamples(),DspOpTests::OUT_SMLALD_ID,mgr);
+        }
+        break;
+
+
         case DspOpTests::TEST_CLIP_Q63_TO_Q31_2:
         {
                inputQ63.reload(DspOpTests::INPUT_Q63_ID,mgr);

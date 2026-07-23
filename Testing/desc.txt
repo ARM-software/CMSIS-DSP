@@ -15,12 +15,17 @@ group Root {
 
               Pattern INPUT_Q63_ID : Input1_s64.txt 
               Pattern INPUT_Q31_ID : Input1_s32.txt 
+              Pattern INPUT_SMLALD_X_ID : Input2_s32.txt
+              Pattern INPUT_SMLALD_Y_ID : Input3_s32.txt
+              Pattern INPUT_SMLALD_ACC_ID : Input2_s64.txt
 
               Pattern REF_Q31_ID : Ref1_s32.txt 
               Pattern REF_Q15_ID : Ref1_s16.txt 
+              Pattern REF_SMLALD_ID : Ref2_s64.txt
 
               Output  OUT_Q31_ID : Output
               Output  OUT_Q15_ID : Output
+              Output  OUT_SMLALD_ID : Output
 
               Functions {
                  SMLALD test saturation:test_smlad_sat

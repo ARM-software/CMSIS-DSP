@@ -31,6 +31,23 @@ def sat_q7(r):
       r = -0x080
     return r
 
+def q15_from_bits(r):
+    # SMLALD treats each 16-bit lane as a signed two's-complement value.
+    r = int(r) & 0xFFFF
+    return r - 0x10000 if r & 0x8000 else r
+
+def smlald_ref(x, y, acc):
+    # Model the Cortex-M DSP SMLALD instruction semantics: multiply the
+    # corresponding signed bottom and top halfwords, then add both products
+    # to the 64-bit accumulator.  This architectural model is intentionally
+    # independent of the C fallback implementation under test.
+    x = int(x)
+    y = int(y)
+    acc = int(acc)
+    return (q15_from_bits(x) * q15_from_bits(y) +
+            q15_from_bits(x >> 16) * q15_from_bits(y >> 16) +
+            acc)
+
 
 def writeTests(config,format):
 
@@ -77,6 +94,46 @@ def writeTests(config,format):
     refQ15 = np.vectorize(sat_q15)(input32)
     ref = np.array(refQ15,dtype=np.int16)
     config.writeReferenceS16(1, ref, "Ref")
+
+    inputSMLALDX = np.array([0x0000_0000,
+                             0x8000_8000,
+                             0x7FFF_7FFF,
+                             0x8000_8000,
+                             0x8000_7FFF,
+                             0x8000_7FFF,
+                             0x0001_0002,
+                             0xFFFF_0001,
+                             0x0001_0001,
+                             0xFFFF_FFFF,
+                             0x4000_C000,
+                             0x1234_FEDC], dtype=np.uint32).view(np.int32)
+
+    inputSMLALDY = np.array([0x0000_0000,
+                             0x8000_8000,
+                             0x7FFF_7FFF,
+                             0x7FFF_7FFF,
+                             0x8000_7FFF,
+                             0x7FFF_8000,
+                             0x0003_0004,
+                             0x0001_FFFF,
+                             0x0001_0001,
+                             0xFFFF_FFFF,
+                             0x4000_C000,
+                             0xFEDC_1234], dtype=np.uint32).view(np.int32)
+
+    inputSMLALDAcc = np.array([0, 0, 0, 0, 0, 0, 0, 5,
+                               0x0000_0001_0000_0000,
+                              -0x0000_0001_0000_0000,
+                               0x0000_0000_7FFF_FFFF,
+                              -0x0000_0000_8000_0000], dtype=np.int64)
+
+    refSMLALD = [smlald_ref(x, y, acc) for x, y, acc in
+                 zip(inputSMLALDX, inputSMLALDY, inputSMLALDAcc)]
+
+    config.writeInputS32(2, inputSMLALDX, "Input")
+    config.writeInputS32(3, inputSMLALDY, "Input")
+    config.writeInputS64(2, inputSMLALDAcc, "Input")
+    config.writeReferenceS64(2, np.array(refSMLALD, dtype=np.int64), "Ref")
 
 
 def generatePatterns():
