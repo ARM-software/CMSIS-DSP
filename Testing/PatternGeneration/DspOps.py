@@ -34,13 +34,20 @@ def sat_q7(r):
 
 def writeTests(config,format):
 
-    NBSAMPLES = 10
+    NBSAMPLES = 16
    
     input64 = np.array([0xFFFF_FFFF_FFFF_FFFF,0,1,
                       0x7FFF_FFFF_FFFF_FFFF,
                       0x8000_0000_0000_0000,
+                      0xFFFF_FFFE_FFFF_FFFF,
+                      0xFFFF_FFFF_8000_0000,
+                      0xFFFF_FFFF_8000_0001,
                       0x0000_0001_1000_0000,
                       0xFFFF_FFFF_7FFF_FFFF,
+                      0x0000_0000_7FFF_FFFE,
+                      0x0000_0000_7FFF_FFFF,
+                      0x0000_0000_8000_0000,
+                      0x0000_0000_FFFF_FFFF,
                       0x0000_0000_7FFF_0000,
                       0xFFFF_FFFF_7FFF_0000],dtype=np.uint64)
     input64 = input64.view(np.int64)
@@ -49,8 +56,15 @@ def writeTests(config,format):
     input32 = np.array([0xFFFF_FFFF,0,1,
                           0x7FFF_FFFF,
                           0x8000_0000,
+                          0xFFFE_FFFF,
+                          0xFFFF_8000,
+                          0xFFFF_8001,
                           0x0001_1000,
                           0xFFFF_7FFF,
+                          0x0000_7FFE,
+                          0x0000_7FFF,
+                          0x0000_8000,
+                          0x0000_FFFF,
                           0x0001_0010,
                           0xFFFF_007F],dtype=np.uint32)
     input32 = input32.astype(np.int32)
