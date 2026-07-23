@@ -16,6 +16,17 @@ public:
 private:
     #include "DspOpTests_decl.h"
 
+    Client::Pattern<q63_t> inputQ63;
+    Client::Pattern<q31_t> inputQ31;
+
+    Client::LocalPattern<q31_t> outputQ31;
+    Client::LocalPattern<q15_t> outputQ15;
+    Client::LocalPattern<q7_t> outputQ7;
+
+    Client::RefPattern<q31_t> refQ31;
+    Client::RefPattern<q15_t> refQ15;
+    Client::RefPattern<q7_t> refQ7;
+
 };
 
 #endif

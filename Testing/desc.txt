@@ -7,14 +7,25 @@ group Root {
 
         group Dsp Operators Tests {
            class = DspOp
-           folder = DspOp
+           folder = DspOps
 
            suite Dsp Operators Tests {
               class = DspOpTests
-              folder = DspOp
+              folder = DspOps
+
+              Pattern INPUT_Q63_ID : Input1_s64.txt 
+              Pattern INPUT_Q31_ID : Input1_s32.txt 
+
+              Pattern REF_Q31_ID : Ref1_s32.txt 
+              Pattern REF_Q15_ID : Ref1_s16.txt 
+
+              Output  OUT_Q31_ID : Output
+              Output  OUT_Q15_ID : Output
 
               Functions {
                  SMLALD test saturation:test_smlad_sat
+                 test clip functions Q63 to Q31:test_clip_q63_to_q31
+                 test clip functions Q31 to Q15:test_clip_q31_to_q15
               }
            }
         }

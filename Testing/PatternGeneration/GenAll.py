@@ -14,6 +14,7 @@ import Stats
 import Support
 import SVM 
 import Transform
+import DspOps
 
 BasicMaths.generatePatterns()
 Bayes.generatePatterns()
@@ -32,3 +33,5 @@ Stats.generatePatterns()
 Support.generatePatterns()
 SVM.generatePatterns() 
 Transform.generatePatterns()
+DspOps.generatePatterns()
+

@@ -140,25 +140,6 @@ __STATIC_FORCEINLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
       ((0x7FFFFFFF ^ ((q31_t) (x >> 63)))) : (q31_t) x;
   }
 
-  /**
-   * @brief Clips Q63 to Q15 values.
-   */
-  __STATIC_FORCEINLINE q15_t clip_q63_to_q15(
-  q63_t x)
-  {
-    return ((q31_t) (x >> 32) != ((q31_t) x >> 31)) ?
-      ((0x7FFF ^ ((q15_t) (x >> 63)))) : (q15_t) (x >> 15);
-  }
-
-  /**
-   * @brief Clips Q31 to Q7 values.
-   */
-  __STATIC_FORCEINLINE q7_t clip_q31_to_q7(
-  q31_t x)
-  {
-    return ((q31_t) (x >> 24) != ((q31_t) x >> 23)) ?
-      ((0x7F ^ ((q7_t) (x >> 31)))) : (q7_t) x;
-  }
 
   /**
    * @brief Clips Q31 to Q15 values.
