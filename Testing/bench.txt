@@ -1821,66 +1821,7 @@ group Root {
 
     }
 
-    group NN Benchmarks
-    {
-       class = NNBenchmarks
-       folder = NN
-
-       suite Fully Connected Benchmarks {
-         class = FullyConnectedBench 
-         folder = FullyConnected
-
-         ParamList {
-                NB
-                Summary NB
-                Names "Repetition"
-                Formula "NB"
-            }
-
-         Pattern INPUT13_S8_ID : TestCase_8_8_5_input_13.txt
-         Pattern BIAS13_S8_ID : TestCase_8_8_5_bias_13.txt
-         Pattern WEIGHT13_S8_ID : TestCase_8_8_5_weights_13.txt
-         Pattern REF13_S8_ID : TestCase_8_8_5_output_13.txt
-
-         Output  OUTPUT_S8_ID : Output
-         Output  TEMP_S16_ID : Temp
-
-         Params PARAM1_ID = {
-                NB = [10,20,40,50]
-            }
-
-         Functions {
-            arm_fully_connected_tflite_s8:test_fully_connected_tflite_s8  -> PARAM1_ID
-         }
-       }
-
-       suite Pooling Benchmarks {
-         class = PoolingBench 
-         folder = Pooling
-
-         ParamList {
-                NB
-                Summary NB
-                Names "Repetition"
-                Formula "NB"
-          }
-
-         Pattern INPUT1_S8_ID : Input1.txt
-         Pattern REF1_S8_ID : Ref1.txt
-
-         Output  OUTPUT_S8_ID : Output
-         Output  TEMP_S8_ID : Temp
-         Output  TEMPINPUT_S8_ID : TempInput
-
-         Params PARAM1_ID = {
-                NB = [1]
-            }
-
-         Functions {
-            arm_avgpool_s8 Test 1:test_avgpool_s8  -> PARAM1_ID
-         }
-       }
-    }
+    
 
     group Compiler Benchmarks {
       class = CompilerBenchmarks
