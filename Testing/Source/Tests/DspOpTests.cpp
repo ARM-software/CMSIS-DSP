@@ -5,8 +5,8 @@
 
 void DspOpTests::test_smlad_sat()
 {
-    const q31_t *x = inputSMLALDX.ptr();
-    const q31_t *y = inputSMLALDY.ptr();
+    const q31_t *x = inputAQ31.ptr();
+    const q31_t *y = inputBQ31.ptr();
     const q63_t *acc = inputSMLALDAcc.ptr();
     q63_t *outp = outputQ63.ptr();
 
@@ -22,8 +22,8 @@ void DspOpTests::test_smlad_sat()
 
 void DspOpTests::test_smlaldx_sat()
 {
-    const q31_t *x = inputSMLALDX.ptr();
-    const q31_t *y = inputSMLALDY.ptr();
+    const q31_t *x = inputAQ31.ptr();
+    const q31_t *y = inputBQ31.ptr();
     const q63_t *acc = inputSMLALDAcc.ptr();
     q63_t *outp = outputQ63.ptr();
 
@@ -56,7 +56,7 @@ void DspOpTests::test_clip_q63_to_q31()
 
 void DspOpTests::test_clip_q31_to_q15()
 {
-    const q31_t *inp  = inputQ31.ptr();
+    const q31_t *inp  = inputAQ31.ptr();
     q15_t *outp  = outputQ15.ptr();
     unsigned long i;
     arm_status status=ARM_MATH_SUCCESS;
@@ -81,8 +81,8 @@ void DspOpTests::setUp(Testing::testID_t id,
     {
         case DspOpTests::TEST_SMLAD_SAT_1:
         {
-               inputSMLALDX.reload(DspOpTests::INPUT_SMLALD_X_ID,mgr);
-               inputSMLALDY.reload(DspOpTests::INPUT_SMLALD_Y_ID,mgr);
+               inputAQ31.reload(DspOpTests::INPUTA_Q31_ID,mgr);
+               inputBQ31.reload(DspOpTests::INPUTB_Q31_ID,mgr);
                inputSMLALDAcc.reload(DspOpTests::INPUT_SMLALD_ACC_ID,mgr);
                refSMLALD.reload(DspOpTests::REF_SMLALD_ID,mgr);
                outputQ63.create(refSMLALD.nbSamples(),DspOpTests::OUT_Q63_ID,mgr);
@@ -92,8 +92,8 @@ void DspOpTests::setUp(Testing::testID_t id,
 
         case DspOpTests::TEST_SMLALDX_SAT_2:
         {
-               inputSMLALDX.reload(DspOpTests::INPUT_SMLALD_X_ID,mgr);
-               inputSMLALDY.reload(DspOpTests::INPUT_SMLALD_Y_ID,mgr);
+               inputAQ31.reload(DspOpTests::INPUTA_Q31_ID,mgr);
+               inputBQ31.reload(DspOpTests::INPUTB_Q31_ID,mgr);
                inputSMLALDAcc.reload(DspOpTests::INPUT_SMLALD_ACC_ID,mgr);
                refSMLALDX.reload(DspOpTests::REF_SMLALDX_ID,mgr);
                outputQ63.create(refSMLALDX.nbSamples(),DspOpTests::OUT_Q63_ID,mgr);
@@ -112,7 +112,7 @@ void DspOpTests::setUp(Testing::testID_t id,
 
         case DspOpTests::TEST_CLIP_Q31_TO_Q15_4:
         {
-               inputQ31.reload(DspOpTests::INPUT_CLIP_Q31_ID,mgr);
+               inputAQ31.reload(DspOpTests::INPUTA_Q31_ID,mgr);
                refQ15.reload(DspOpTests::REF_CLIP_Q15_ID,mgr);
                outputQ15.create(refQ15.nbSamples(),DspOpTests::OUT_Q15_ID,mgr);
         }

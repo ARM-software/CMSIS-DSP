@@ -14,9 +14,8 @@ group Root {
               folder = DspOps
 
               Pattern INPUT_CLIP_Q63_ID : Input1_s64.txt
-              Pattern INPUT_CLIP_Q31_ID : Input1_s32.txt
-              Pattern INPUT_SMLALD_X_ID : Input2_s32.txt
-              Pattern INPUT_SMLALD_Y_ID : Input3_s32.txt
+              Pattern INPUTA_Q31_ID : Input1_s32.txt
+              Pattern INPUTB_Q31_ID : Input2_s32.txt
               Pattern INPUT_SMLALD_ACC_ID : Input2_s64.txt
 
               Pattern REF_CLIP_Q31_ID : Ref1_s32.txt

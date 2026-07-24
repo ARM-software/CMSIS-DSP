@@ -80,30 +80,24 @@ def writeTests(config,format):
     input64 = input64.view(np.int64)
     config.writeInputS64(1,input64,"Input")
 
-    input32 = np.array([0xFFFF_FFFF,0,1,
-                          0x7FFF_FFFF,
-                          0x8000_0000,
-                          0xFFFE_FFFF,
-                          0xFFFF_8000,
-                          0xFFFF_8001,
-                          0x0001_1000,
-                          0xFFFF_7FFF,
-                          0x0000_7FFE,
-                          0x0000_7FFF,
-                          0x0000_8000,
-                          0x0000_FFFF,
-                          0x0001_0010,
-                          0xFFFF_007F],dtype=np.uint32)
-    input32 = input32.astype(np.int32)
-    config.writeInputS32(1,input32,"Input")
+    inputClipQ31 = np.array([0xFFFF_FFFF,0,1,
+                             0x7FFF_FFFF,
+                             0x8000_0000,
+                             0xFFFE_FFFF,
+                             0xFFFF_8000,
+                             0xFFFF_8001,
+                             0x0001_1000,
+                             0xFFFF_7FFF,
+                             0x0000_7FFE,
+                             0x0000_7FFF,
+                             0x0000_8000,
+                             0x0000_FFFF,
+                             0x0001_0010,
+                             0xFFFF_007F],dtype=np.uint32).view(np.int32)
 
     refQ31 = np.vectorize(sat_q31)(input64)
     ref = np.array(refQ31,dtype=np.int32)
     config.writeReferenceS32(1, ref, "Ref")
-
-    refQ15 = np.vectorize(sat_q15)(input32)
-    ref = np.array(refQ15,dtype=np.int16)
-    config.writeReferenceS16(1, ref, "Ref")
 
     inputSMLALDX = np.array([0x0000_0000,
                              0x8000_8000,
@@ -137,13 +131,28 @@ def writeTests(config,format):
                                0x0000_0000_7FFF_FFFF,
                               -0x0000_0000_8000_0000], dtype=np.int64)
 
-    refSMLALD = [smlald_ref(x, y, acc) for x, y, acc in
-                 zip(inputSMLALDX, inputSMLALDY, inputSMLALDAcc)]
-    refSMLALDX = [smlaldx_ref(x, y, acc) for x, y, acc in
-                  zip(inputSMLALDX, inputSMLALDY, inputSMLALDAcc)]
+    # Input A contains every important Q31 value needed by the clip tests and
+    # by the first packed operand of the SMLALD tests. Input B is needed only
+    # by kernels with a second Q31 operand. The original SMLALD pairs are kept
+    # together at the end of the arrays.
+    inputAQ31 = np.concatenate((inputClipQ31, inputSMLALDX))
+    inputBQ31 = np.concatenate((np.resize(inputSMLALDY, inputClipQ31.size),
+                                inputSMLALDY))
+    inputSMLALDAcc = np.concatenate((np.zeros(inputClipQ31.size,
+                                              dtype=np.int64),
+                                     inputSMLALDAcc))
 
-    config.writeInputS32(2, inputSMLALDX, "Input")
-    config.writeInputS32(3, inputSMLALDY, "Input")
+    refQ15 = np.vectorize(sat_q15)(inputAQ31)
+    ref = np.array(refQ15,dtype=np.int16)
+    config.writeReferenceS16(1, ref, "Ref")
+
+    refSMLALD = [smlald_ref(x, y, acc) for x, y, acc in
+                 zip(inputAQ31, inputBQ31, inputSMLALDAcc)]
+    refSMLALDX = [smlaldx_ref(x, y, acc) for x, y, acc in
+                  zip(inputAQ31, inputBQ31, inputSMLALDAcc)]
+
+    config.writeInputS32(1, inputAQ31, "Input")
+    config.writeInputS32(2, inputBQ31, "Input")
     config.writeInputS64(2, inputSMLALDAcc, "Input")
     config.writeReferenceS64(2, np.array(refSMLALD, dtype=np.int64), "Ref")
     config.writeReferenceS64(3, np.array(refSMLALDX, dtype=np.int64), "Ref")
