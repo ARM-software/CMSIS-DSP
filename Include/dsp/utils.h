@@ -166,6 +166,9 @@ extern "C"
 
 /**
  * @brief  64-bit to 32-bit unsigned normalization
+ * @note   The input is the absolute magnitude of a signed 64-bit value and
+ *         must therefore be in the range 0 to INT64_MAX. Bit 63 must not be
+ *         set.
  * @param[in]  in           is input unsigned long long value
  * @param[out] normalized   is the 32-bit normalized value
  * @param[out] norm         is norm scale

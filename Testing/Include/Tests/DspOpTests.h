@@ -16,21 +16,23 @@ public:
 private:
     #include "DspOpTests_decl.h"
 
-    Client::Pattern<q63_t> inputQ63;
+    Client::Pattern<q63_t> inputAQ63;
     Client::Pattern<q31_t> inputAQ31;
     Client::Pattern<q31_t> inputBQ31;
-    Client::Pattern<q63_t> inputSMLALDAcc;
+    Client::Pattern<q31_t> inputCQ31;
+    Client::Pattern<q15_t> inputAQ15;
 
-    Client::LocalPattern<q31_t> outputQ31;
-    Client::LocalPattern<q15_t> outputQ15;
-    Client::LocalPattern<q7_t> outputQ7;
+    Client::LocalPattern<q31_t> outputAQ31;
+    Client::LocalPattern<q31_t> outputBQ31;
+    Client::LocalPattern<q15_t> outputAQ15;
+    Client::LocalPattern<q15_t> outputBQ15;
     Client::LocalPattern<q63_t> outputQ63;
 
-    Client::RefPattern<q31_t> refQ31;
-    Client::RefPattern<q15_t> refQ15;
-    Client::RefPattern<q7_t> refQ7;
-    Client::RefPattern<q63_t> refSMLALD;
-    Client::RefPattern<q63_t> refSMLALDX;
+    Client::RefPattern<q31_t> refAQ31;
+    Client::RefPattern<q31_t> refBQ31;
+    Client::RefPattern<q15_t> refAQ15;
+    Client::RefPattern<q15_t> refBQ15;
+    Client::RefPattern<q63_t> refQ63;
 
 };
 

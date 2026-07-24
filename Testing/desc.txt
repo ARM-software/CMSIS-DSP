@@ -13,18 +13,61 @@ group Root {
               class = DspOpTests
               folder = DspOps
 
-              Pattern INPUT_CLIP_Q63_ID : Input1_s64.txt
+              Pattern INPUTA_Q63_ID : Input1_s64.txt
+              Pattern INPUTB_Q63_ID : Input2_s64.txt
               Pattern INPUTA_Q31_ID : Input1_s32.txt
               Pattern INPUTB_Q31_ID : Input2_s32.txt
-              Pattern INPUT_SMLALD_ACC_ID : Input2_s64.txt
+              Pattern INPUTC_Q31_ID : Input3_s32.txt
+              Pattern INPUTA_Q15_ID : Input1_s16.txt
 
               Pattern REF_CLIP_Q31_ID : Ref1_s32.txt
               Pattern REF_CLIP_Q15_ID : Ref1_s16.txt
               Pattern REF_SMLALD_ID : Ref2_s64.txt
               Pattern REF_SMLALDX_ID : Ref3_s64.txt
+              Pattern REF_CLZ_ID : Ref2_s32.txt
+              Pattern REF_SSAT_ID : Ref3_s32.txt
+              Pattern REF_USAT_ID : Ref4_s32.txt
+              Pattern REF_ROR_ID : Ref5_s32.txt
+              Pattern REF_MULT32X64_ID : Ref4_s64.txt
+              Pattern REF_QADD8_ID : Ref6_s32.txt
+              Pattern REF_QSUB8_ID : Ref7_s32.txt
+              Pattern REF_QADD16_ID : Ref8_s32.txt
+              Pattern REF_SHADD16_ID : Ref9_s32.txt
+              Pattern REF_QSUB16_ID : Ref10_s32.txt
+              Pattern REF_SHSUB16_ID : Ref11_s32.txt
+              Pattern REF_QASX_ID : Ref12_s32.txt
+              Pattern REF_SHASX_ID : Ref13_s32.txt
+              Pattern REF_QSAX_ID : Ref14_s32.txt
+              Pattern REF_SHSAX_ID : Ref15_s32.txt
+              Pattern REF_SMUSDX_ID : Ref16_s32.txt
+              Pattern REF_SMUADX_ID : Ref17_s32.txt
+              Pattern REF_QADD_ID : Ref18_s32.txt
+              Pattern REF_QSUB_ID : Ref19_s32.txt
+              Pattern REF_SMLAD_ID : Ref20_s32.txt
+              Pattern REF_SMLADX_ID : Ref21_s32.txt
+              Pattern REF_SMLSDX_ID : Ref22_s32.txt
+              Pattern REF_SMUAD_ID : Ref23_s32.txt
+              Pattern REF_SMUSD_ID : Ref24_s32.txt
+              Pattern REF_SXTB16_ID : Ref25_s32.txt
+              Pattern REF_SMMLA_ID : Ref26_s32.txt
+              Pattern REF_RECIP_Q31_ID : Ref27_s32.txt
+              Pattern REF_RECIP_Q31_SHIFT_ID : Ref2_s16.txt
+              Pattern REF_RECIP_Q15_ID : Ref3_s16.txt
+              Pattern REF_RECIP_Q15_SHIFT_ID : Ref4_s16.txt
+              Pattern REF_NORM_VALUE_ID : Ref28_s32.txt
+              Pattern REF_NORM_SHIFT_ID : Ref29_s32.txt
+              Pattern REF_DIV_ID : Ref30_s32.txt
+              Pattern REF_MULTACC_32X32_KEEP32_R_ID : Ref31_s32.txt
+              Pattern REF_MULTSUB_32X32_KEEP32_R_ID : Ref32_s32.txt
+              Pattern REF_MULT_32X32_KEEP32_R_ID : Ref33_s32.txt
+              Pattern REF_MULTACC_32X32_KEEP32_ID : Ref34_s32.txt
+              Pattern REF_MULTSUB_32X32_KEEP32_ID : Ref35_s32.txt
+              Pattern REF_MULT_32X32_KEEP32_ID : Ref36_s32.txt
 
-              Output  OUT_Q31_ID : Output
-              Output  OUT_Q15_ID : Output
+              Output  OUTA_Q31_ID : Output
+              Output  OUTB_Q31_ID : Output
+              Output  OUTA_Q15_ID : Output
+              Output  OUTB_Q15_ID : Output
               Output  OUT_Q63_ID : Output
 
               Functions {
@@ -32,6 +75,42 @@ group Root {
                  SMLALDX test saturation:test_smlaldx_sat
                  test clip functions Q63 to Q31:test_clip_q63_to_q31
                  test clip functions Q31 to Q15:test_clip_q31_to_q15
+                 test CLZ:test_clz
+                 test SSAT:test_ssat
+                 test USAT:test_usat
+                 test ROR:test_ror
+                 test mult32x64:test_mult32x64
+                 test QADD8:test_qadd8
+                 test QSUB8:test_qsub8
+                 test QADD16:test_qadd16
+                 test SHADD16:test_shadd16
+                 test QSUB16:test_qsub16
+                 test SHSUB16:test_shsub16
+                 test QASX:test_qasx
+                 test SHASX:test_shasx
+                 test QSAX:test_qsax
+                 test SHSAX:test_shsax
+                 test SMUSDX:test_smusdx
+                 test SMUADX:test_smuadx
+                 test QADD:test_qadd
+                 test QSUB:test_qsub
+                 test SMLAD:test_smlad
+                 test SMLADX:test_smladx
+                 test SMLSDX:test_smlsdx
+                 test SMUAD:test_smuad
+                 test SMUSD:test_smusd
+                 test SXTB16:test_sxtb16
+                 test SMMLA:test_smmla
+                 test reciprocal Q31:test_recip_q31
+                 test reciprocal Q15:test_recip_q15
+                 test normalize unsigned Q63:test_norm_64_to_32u
+                 test divide Q63 by Q31:test_div_int64_to_int32
+                 test multAcc 32x32 keep32 rounded:test_multacc_32x32_keep32_r
+                 test multSub 32x32 keep32 rounded:test_multsub_32x32_keep32_r
+                 test mult 32x32 keep32 rounded:test_mult_32x32_keep32_r
+                 test multAcc 32x32 keep32:test_multacc_32x32_keep32
+                 test multSub 32x32 keep32:test_multsub_32x32_keep32
+                 test mult 32x32 keep32:test_mult_32x32_keep32
               }
            }
         }
