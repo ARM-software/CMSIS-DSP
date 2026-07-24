@@ -8,7 +8,7 @@ void DspOpTests::test_smlad_sat()
     const q31_t *x = inputSMLALDX.ptr();
     const q31_t *y = inputSMLALDY.ptr();
     const q63_t *acc = inputSMLALDAcc.ptr();
-    q63_t *outp = outputSMLALD.ptr();
+    q63_t *outp = outputQ63.ptr();
 
     for (unsigned long i = 0; i < refSMLALD.nbSamples(); i++)
     {
@@ -17,7 +17,24 @@ void DspOpTests::test_smlad_sat()
                                   (uint64_t)acc[i]);
     }
 
-    ASSERT_EQ(outputSMLALD, refSMLALD);
+    ASSERT_EQ(outputQ63, refSMLALD);
+}
+
+void DspOpTests::test_smlaldx_sat()
+{
+    const q31_t *x = inputSMLALDX.ptr();
+    const q31_t *y = inputSMLALDY.ptr();
+    const q63_t *acc = inputSMLALDAcc.ptr();
+    q63_t *outp = outputQ63.ptr();
+
+    for (unsigned long i = 0; i < refSMLALDX.nbSamples(); i++)
+    {
+        outp[i] = (q63_t)__SMLALDX((uint32_t)x[i],
+                                   (uint32_t)y[i],
+                                   (uint64_t)acc[i]);
+    }
+
+    ASSERT_EQ(outputQ63, refSMLALDX);
 }
 
 void DspOpTests::test_clip_q63_to_q31()
@@ -68,24 +85,35 @@ void DspOpTests::setUp(Testing::testID_t id,
                inputSMLALDY.reload(DspOpTests::INPUT_SMLALD_Y_ID,mgr);
                inputSMLALDAcc.reload(DspOpTests::INPUT_SMLALD_ACC_ID,mgr);
                refSMLALD.reload(DspOpTests::REF_SMLALD_ID,mgr);
-               outputSMLALD.create(refSMLALD.nbSamples(),DspOpTests::OUT_SMLALD_ID,mgr);
+               outputQ63.create(refSMLALD.nbSamples(),DspOpTests::OUT_Q63_ID,mgr);
         }
         break;
 
 
-        case DspOpTests::TEST_CLIP_Q63_TO_Q31_2:
+        case DspOpTests::TEST_SMLALDX_SAT_2:
         {
-               inputQ63.reload(DspOpTests::INPUT_Q63_ID,mgr);
-               refQ31.reload(DspOpTests::REF_Q31_ID,mgr);
+               inputSMLALDX.reload(DspOpTests::INPUT_SMLALD_X_ID,mgr);
+               inputSMLALDY.reload(DspOpTests::INPUT_SMLALD_Y_ID,mgr);
+               inputSMLALDAcc.reload(DspOpTests::INPUT_SMLALD_ACC_ID,mgr);
+               refSMLALDX.reload(DspOpTests::REF_SMLALDX_ID,mgr);
+               outputQ63.create(refSMLALDX.nbSamples(),DspOpTests::OUT_Q63_ID,mgr);
+        }
+        break;
+
+
+        case DspOpTests::TEST_CLIP_Q63_TO_Q31_3:
+        {
+               inputQ63.reload(DspOpTests::INPUT_CLIP_Q63_ID,mgr);
+               refQ31.reload(DspOpTests::REF_CLIP_Q31_ID,mgr);
                outputQ31.create(refQ31.nbSamples(),DspOpTests::OUT_Q31_ID,mgr);
         }
         break;
 
 
-        case DspOpTests::TEST_CLIP_Q31_TO_Q15_3:
+        case DspOpTests::TEST_CLIP_Q31_TO_Q15_4:
         {
-               inputQ31.reload(DspOpTests::INPUT_Q31_ID,mgr);
-               refQ15.reload(DspOpTests::REF_Q15_ID,mgr);
+               inputQ31.reload(DspOpTests::INPUT_CLIP_Q31_ID,mgr);
+               refQ15.reload(DspOpTests::REF_CLIP_Q15_ID,mgr);
                outputQ15.create(refQ15.nbSamples(),DspOpTests::OUT_Q15_ID,mgr);
         }
         break;

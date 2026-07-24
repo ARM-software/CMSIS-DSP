@@ -48,6 +48,16 @@ def smlald_ref(x, y, acc):
             q15_from_bits(x >> 16) * q15_from_bits(y >> 16) +
             acc)
 
+def smlaldx_ref(x, y, acc):
+    # SMLALDX exchanges the halfwords of the second operand before applying
+    # the same signed dual multiply-accumulate operation as SMLALD.
+    x = int(x)
+    y = int(y)
+    acc = int(acc)
+    return (q15_from_bits(x) * q15_from_bits(y >> 16) +
+            q15_from_bits(x >> 16) * q15_from_bits(y) +
+            acc)
+
 
 def writeTests(config,format):
 
@@ -129,11 +139,14 @@ def writeTests(config,format):
 
     refSMLALD = [smlald_ref(x, y, acc) for x, y, acc in
                  zip(inputSMLALDX, inputSMLALDY, inputSMLALDAcc)]
+    refSMLALDX = [smlaldx_ref(x, y, acc) for x, y, acc in
+                  zip(inputSMLALDX, inputSMLALDY, inputSMLALDAcc)]
 
     config.writeInputS32(2, inputSMLALDX, "Input")
     config.writeInputS32(3, inputSMLALDY, "Input")
     config.writeInputS64(2, inputSMLALDAcc, "Input")
     config.writeReferenceS64(2, np.array(refSMLALD, dtype=np.int64), "Ref")
+    config.writeReferenceS64(3, np.array(refSMLALDX, dtype=np.int64), "Ref")
 
 
 def generatePatterns():

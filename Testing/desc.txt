@@ -13,22 +13,24 @@ group Root {
               class = DspOpTests
               folder = DspOps
 
-              Pattern INPUT_Q63_ID : Input1_s64.txt 
-              Pattern INPUT_Q31_ID : Input1_s32.txt 
+              Pattern INPUT_CLIP_Q63_ID : Input1_s64.txt
+              Pattern INPUT_CLIP_Q31_ID : Input1_s32.txt
               Pattern INPUT_SMLALD_X_ID : Input2_s32.txt
               Pattern INPUT_SMLALD_Y_ID : Input3_s32.txt
               Pattern INPUT_SMLALD_ACC_ID : Input2_s64.txt
 
-              Pattern REF_Q31_ID : Ref1_s32.txt 
-              Pattern REF_Q15_ID : Ref1_s16.txt 
+              Pattern REF_CLIP_Q31_ID : Ref1_s32.txt
+              Pattern REF_CLIP_Q15_ID : Ref1_s16.txt
               Pattern REF_SMLALD_ID : Ref2_s64.txt
+              Pattern REF_SMLALDX_ID : Ref3_s64.txt
 
               Output  OUT_Q31_ID : Output
               Output  OUT_Q15_ID : Output
-              Output  OUT_SMLALD_ID : Output
+              Output  OUT_Q63_ID : Output
 
               Functions {
                  SMLALD test saturation:test_smlad_sat
+                 SMLALDX test saturation:test_smlaldx_sat
                  test clip functions Q63 to Q31:test_clip_q63_to_q31
                  test clip functions Q31 to Q15:test_clip_q31_to_q15
               }
