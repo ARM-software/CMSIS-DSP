@@ -9,6 +9,7 @@ ARM_DSP_ATTRIBUTE void FUNCNAME(const MATRIX_TYPE *pSrcMat,
     int32_t          row;
     uint32_t         blkCnt;           /* loop counters */
     TMP_DEFINE_AND_INIT(tmp);
+    BIG_TMP_DEFINE_AND_INIT(bigtmp);
     
 
     row = numRows;
@@ -275,3 +276,4 @@ ARM_DSP_ATTRIBUTE void FUNCNAME(const MATRIX_TYPE *pSrcMat,
 #undef MATRIX_TYPE 
 #undef FUNCNAME
 #undef VECTOR_ACC_INIT 
+#undef BIG_TMP_DEFINE_AND_INIT

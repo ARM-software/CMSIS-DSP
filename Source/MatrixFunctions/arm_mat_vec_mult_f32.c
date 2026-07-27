@@ -306,6 +306,10 @@ ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_f32(
     sum = vget_lane_f32(tmp, 0) + vget_lane_f32(tmp, 1);
 #endif 
 
+// No need of bigger temporary variable for
+// reducing the accumulated value
+#define BIG_TMP_DEFINE_AND_INIT(TMP)
+
 #define MAT_SCALAR_DT float32_t 
 #define VEC_SCALAR_DT float32_t 
 #define VECTOR_ACC float32x4_t

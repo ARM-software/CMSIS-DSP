@@ -15,11 +15,12 @@ project(Tests)
 
 option(NOAUTOVEC "Disable auto-vectorization" OFF)
 
-
+option(FASTBUILD "" ON)
 option(HOST "" ON)
 option(NEON "" ON)
 option(NEONEXPERIMENTAL "" OFF)
 option(DISABLEFLOAT16 "" OFF)
+option(LAXVECTORCONVERSIONS "" OFF)
 set(CMSISDSP_INSTALL OFF CACHE BOOL "Disable CMSIS-DSP package install rules for in-tree tests" FORCE)
 add_subdirectory(../Source bin_dsp)
 target_compile_options(CMSISDSP PUBLIC -g)
@@ -216,7 +217,6 @@ target_compile_options(CMSISDSP PRIVATE -Wsign-compare
  -Wno-missing-noreturn 
  -Wno-sign-conversion 
  -Wno-unused-macros 
- -flax-vector-conversions
  -Wno-maybe-uninitialized
  -ffunction-sections
  -fdata-sections
