@@ -218,6 +218,11 @@ __STATIC_INLINE  void arm_norm_64_to_32u(uint64_t in, int32_t * normalized, int3
          */
         n1 = 1 - n1;
         *norm = -n1;
+        if (n1 == 32)
+        {
+            *normalized = hi;
+            return;
+        }
         /*
          * 64 bit normalization
          */
