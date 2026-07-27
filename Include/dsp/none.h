@@ -155,52 +155,6 @@ __STATIC_FORCEINLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
   }
 
   /**
-   * @brief Clips Q63 to Q15 values.
-   */
-  __STATIC_FORCEINLINE q15_t clip_q63_to_q15(
-  q63_t x)
-  {
-    if (x > (q63_t) Q31_MAX)
-    {
-      return Q15_MAX;
-    }
-    else if (x < (q63_t) Q31_MIN)
-    {
-      return Q15_MIN;
-    }
-    else
-    {
-      /* Keep bits [30:15] as Q15, using an unsigned shift so the operation is
-         well defined for negative inputs (the low 16 bits are identical to the
-         previous implementation-defined signed shift). */
-      return (q15_t) ((uint64_t) x >> 15);
-    }
-  }
-
-  /**
-   * @brief Clips Q31 to Q7 values.
-   */
-  __STATIC_FORCEINLINE q7_t clip_q31_to_q7(
-  q31_t x)
-  {
-    /* The saturation threshold is preserved exactly: the original code
-       saturates outside the signed 24-bit range (not the Q7 range). Only the
-       implementation-defined signed right shifts have been removed. */
-    if (x > (q31_t) 0x007FFFFF)
-    {
-      return Q7_MAX;
-    }
-    else if (x < -(q31_t) 0x00800000)
-    {
-      return Q7_MIN;
-    }
-    else
-    {
-      return (q7_t) x;
-    }
-  }
-
-  /**
    * @brief Clips Q31 to Q15 values.
    */
   __STATIC_FORCEINLINE q15_t clip_q31_to_q15(
