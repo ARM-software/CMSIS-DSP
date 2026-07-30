@@ -627,6 +627,36 @@ class Config:
         else:
           return(os.path.join(self._patternDir,"Reference%d_%s.txt" % (i,"q31")))
 
+    def refQ15P(self,i,name=None):
+            """ Path to a reference pattern from the ID
+          
+            Args:
+              i (int): ID to the reference pattern
+            Raises:
+              Nothing 
+            Returns:
+              str : path to the file where to generate the pattern data
+            """
+            if name:
+              return(os.path.join(self._patternDir,"%s%d_%s.txt" % (name,i,"q15")))
+            else:
+              return(os.path.join(self._patternDir,"Reference%d_%s.txt" % (i,"q15")))
+
+    def refQ7P(self,i,name=None):
+                """ Path to a reference pattern from the ID
+              
+                Args:
+                  i (int): ID to the reference pattern
+                Raises:
+                  Nothing 
+                Returns:
+                  str : path to the file where to generate the pattern data
+                """
+                if name:
+                  return(os.path.join(self._patternDir,"%s%d_%s.txt" % (name,i,"q7")))
+                else:
+                  return(os.path.join(self._patternDir,"Reference%d_%s.txt" % (i,"q7")))
+    
     def refF32P(self,i,name=None):
         """ Path to a reference pattern from the ID
       
@@ -1100,6 +1130,12 @@ class Config:
 
     def writeReferenceQ31(self,j,data,name=None):
         self._writeVectorQ31(self.refQ31P(j,name),data)
+
+    def writeReferenceQ15(self,j,data,name=None):
+        self._writeVectorQ15(self.refQ15P(j,name),data)
+
+    def writeReferenceQ7(self,j,data,name=None):
+        self._writeVectorQ7(self.refQ7P(j,name),data)
 
     def writeReferenceS8(self,j,data,name=None):
         self._writeVectorS8(self.refS8P(j,name),data)

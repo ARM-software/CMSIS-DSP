@@ -270,6 +270,7 @@ ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_q31(
 #if defined(ARM_MATH_NEON)
 
 #define TMP_DEFINE_AND_INIT(acc)
+#define BIG_TMP_DEFINE_AND_INIT(TMP)
 
 #define REDUCE(sum,accum)                                                        \
     sum = vgetq_lane_s64(accum.val[0],0) +   vgetq_lane_s64(accum.val[0],1);       \

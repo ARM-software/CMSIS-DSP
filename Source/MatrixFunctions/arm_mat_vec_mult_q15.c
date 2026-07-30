@@ -275,12 +275,14 @@ ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_q15(
 #define TMP_DEFINE_AND_INIT(TMP) \
    int32x4_t TMP##1 = vdupq_n_s32(0); 
    
+#define BIG_TMP_DEFINE_AND_INIT(TMP) \
+   int64x2_t TMP##1 = vdupq_n_s64(0); 
 
-#define REDUCE(sum,accum)                                    \
-    tmp1 = vqaddq_s64(accum.val[0],accum.val[1]);            \
-    tmp1 = vqaddq_s64(tmp1,accum.val[2]);                    \
-    tmp1 = vqaddq_s64(tmp1,accum.val[3]);                    \
-    sum = vgetq_lane_s64(tmp1,0) +   vgetq_lane_s64(tmp1,1);
+#define REDUCE(sum,accum)                                          \
+    bigtmp1 = vqaddq_s64(accum.val[0],accum.val[1]);               \
+    bigtmp1 = vqaddq_s64(bigtmp1,accum.val[2]);                    \
+    bigtmp1 = vqaddq_s64(bigtmp1,accum.val[3]);                    \
+    sum = vgetq_lane_s64(bigtmp1,0) +   vgetq_lane_s64(bigtmp1,1);
 
 
 #define MAT_SCALAR_DT q15_t 
@@ -309,10 +311,10 @@ ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_q15(
 
 
 #define VMAC(ACC,VA,VB)                                               \
-   tmp1 = vmull_s16(vget_low_s32(VA),vget_low_s32(VB));                \
+   tmp1 = vmull_s16(vget_low_s16(VA),vget_low_s16(VB));                \
    ACC.val[0] = vaddq_s64(ACC.val[0],vmovl_s32(vget_low_s32(tmp1)));   \
    ACC.val[1] = vaddq_s64(ACC.val[1],vmovl_s32(vget_high_s32(tmp1)));  \
-   tmp1 = vmull_s16(vget_high_s32(VA),vget_high_s32(VB));              \
+   tmp1 = vmull_s16(vget_high_s16(VA),vget_high_s16(VB));              \
    ACC.val[2] = vaddq_s64(ACC.val[2],vmovl_s32(vget_low_s32(tmp1)));   \
    ACC.val[3] = vaddq_s64(ACC.val[3],vmovl_s32(vget_high_s32(tmp1)));
 

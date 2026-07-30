@@ -32,6 +32,7 @@
 #include <exception>
 #include "Test.h"
 #include "Pattern.h"
+#include <type_traits>
 
 
 #define UNKNOWN_ERROR 1
@@ -250,7 +251,8 @@ void assert_equal(unsigned long nb,AnyPattern<T> &pa, AnyPattern<T> &pb)
     }
 
     unsigned long i=0;
-    char id[40];
+    char details[200];
+
 
     T *ptrA = pa.ptr();
     T *ptrB = pb.ptr();
@@ -263,8 +265,29 @@ void assert_equal(unsigned long nb,AnyPattern<T> &pa, AnyPattern<T> &pb)
        }
        catch(Error &err)
        {          
-          snprintf(id,40," (nb=%lu)",i);
-          strcat(err.details,id);
+          if constexpr (std::is_same_v<T, float>)
+            {
+                sprintf(details," (nb=%lu) (val=%g,ref=%g)",i,(double)ptrA[i],(double)ptrB[i]);
+            }
+            else if constexpr (std::is_same_v<T, double>)
+            {
+                sprintf(details," (nb=%lu) (val=%g,ref=%g)",i,(double)ptrA[i],(double)ptrB[i]);
+            }
+            else if constexpr (std::is_integral_v<T> && sizeof(T) > sizeof(int) && std::is_signed_v<T>)
+            {
+                sprintf(details," (nb=%lu) (val=%lld,ref=%lld)",i,
+                        (long long)ptrA[i],(long long)ptrB[i]);
+            }
+            else if constexpr (std::is_integral_v<T> && sizeof(T) > sizeof(int))
+            {
+                sprintf(details," (nb=%lu) (val=%llu,ref=%llu)",i,
+                        (unsigned long long)ptrA[i],(unsigned long long)ptrB[i]);
+            }
+            else
+            {
+                sprintf(details," (nb=%lu) (val=%d,ref=%d)",i,(int)ptrA[i],(int)ptrB[i]);
+            }
+          strcat(err.details,details);
           throw(err);
        }
     }

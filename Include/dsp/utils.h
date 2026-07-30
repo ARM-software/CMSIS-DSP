@@ -166,6 +166,9 @@ extern "C"
 
 /**
  * @brief  64-bit to 32-bit unsigned normalization
+ * @note   The input is the absolute magnitude of a signed 64-bit value and
+ *         must therefore be in the range 0 to INT64_MAX. Bit 63 must not be
+ *         set.
  * @param[in]  in           is input unsigned long long value
  * @param[out] normalized   is the 32-bit normalized value
  * @param[out] norm         is norm scale
@@ -215,6 +218,11 @@ __STATIC_INLINE  void arm_norm_64_to_32u(uint64_t in, int32_t * normalized, int3
          */
         n1 = 1 - n1;
         *norm = -n1;
+        if (n1 == 32)
+        {
+            *normalized = hi;
+            return;
+        }
         /*
          * 64 bit normalization
          */
@@ -236,6 +244,10 @@ __STATIC_INLINE int32_t arm_div_int64_to_int32(int64_t num, int32_t den)
     int32_t   normalized;
     int32_t   norm;
 
+    if ((num == INT64_MIN) && (den == -1))
+    {
+        return INT32_MAX;
+    }
     /*
      * if sum fits in 32bits
      * avoid costly 64-bit division

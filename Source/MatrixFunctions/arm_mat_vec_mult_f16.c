@@ -291,6 +291,10 @@ ARM_DSP_ATTRIBUTE void arm_mat_vec_mult_f16(
 #define TMP_DEFINE_AND_INIT(TMP) \
     float16x4_t TMP = vdup_n_f16(0.0f16);
 
+// No need of bigger temporary variable for
+// reducing the accumulated value
+#define BIG_TMP_DEFINE_AND_INIT(TMP)
+
 #define REDUCE(sum,accum)                                       \
     tmp = vpadd_f16(vget_low_f16(accum), vget_high_f16(accum)); \
     tmp = vpadd_f16(tmp,tmp);                                   \

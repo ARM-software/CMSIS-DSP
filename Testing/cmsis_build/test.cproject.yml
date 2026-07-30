@@ -50,6 +50,7 @@ project:
         - file: ../Source/Tests/DECIMF32.cpp
         - file: ../Source/Tests/DECIMQ15.cpp
         - file: ../Source/Tests/DECIMQ31.cpp
+        - file: ../Source/Tests/DspOpTests.cpp
         - file: ../Source/Tests/DistanceTestsF16.cpp
         - file: ../Source/Tests/DistanceTestsF32.cpp
         - file: ../Source/Tests/DistanceTestsF64.cpp

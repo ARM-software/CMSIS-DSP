@@ -136,28 +136,22 @@ __STATIC_FORCEINLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
   __STATIC_FORCEINLINE q31_t clip_q63_to_q31(
   q63_t x)
   {
-    return ((q31_t) (x >> 32) != ((q31_t) x >> 31)) ?
-      ((0x7FFFFFFF ^ ((q31_t) (x >> 63)))) : (q31_t) x;
-  }
-
-  /**
-   * @brief Clips Q63 to Q15 values.
-   */
-  __STATIC_FORCEINLINE q15_t clip_q63_to_q15(
-  q63_t x)
-  {
-    return ((q31_t) (x >> 32) != ((q31_t) x >> 31)) ?
-      ((0x7FFF ^ ((q15_t) (x >> 63)))) : (q15_t) (x >> 15);
-  }
-
-  /**
-   * @brief Clips Q31 to Q7 values.
-   */
-  __STATIC_FORCEINLINE q7_t clip_q31_to_q7(
-  q31_t x)
-  {
-    return ((q31_t) (x >> 24) != ((q31_t) x >> 23)) ?
-      ((0x7F ^ ((q7_t) (x >> 31)))) : (q7_t) x;
+    /* The saturation logic below used to rely on right shifts of a signed
+       (possibly negative) value, whose result is implementation-defined
+       (C99 6.5.7/5) and is flagged by static analysers. The equivalent
+       range check is fully defined and keeps the same behaviour. */
+    if (x > (q63_t) Q31_MAX)
+    {
+      return Q31_MAX;
+    }
+    else if (x < (q63_t) Q31_MIN)
+    {
+      return Q31_MIN;
+    }
+    else
+    {
+      return (q31_t) x;
+    }
   }
 
   /**
@@ -166,8 +160,18 @@ __STATIC_FORCEINLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
   __STATIC_FORCEINLINE q15_t clip_q31_to_q15(
   q31_t x)
   {
-    return ((q31_t) (x >> 16) != ((q31_t) x >> 15)) ?
-      ((0x7FFF ^ ((q15_t) (x >> 31)))) : (q15_t) x;
+    if (x > (q31_t) Q15_MAX)
+    {
+      return Q15_MAX;
+    }
+    else if (x < (q31_t) Q15_MIN)
+    {
+      return Q15_MIN;
+    }
+    else
+    {
+      return (q15_t) x;
+    }
   }
 
   /**
@@ -499,10 +503,7 @@ __STATIC_FORCEINLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
   uint32_t y,
   uint64_t sum)
   {
-/*  return (sum + ((q15_t) (x >> 16) * (q15_t) (y >> 16)) + ((q15_t) x * (q15_t) y)); */
-    return ((uint64_t)(((((q31_t)x << 16) >> 16) * (((q31_t)y << 16) >> 16)) +
-                       ((((q31_t)x      ) >> 16) * (((q31_t)y      ) >> 16)) +
-                       ( ((q63_t)sum    )                                  )   ));
+      return (sum + ((q15_t) (x >> 16) * (q15_t) (y >> 16)) + ((q15_t) x * (q15_t) y));
   }
 
 
@@ -514,10 +515,7 @@ __STATIC_FORCEINLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
   uint32_t y,
   uint64_t sum)
   {
-/*  return (sum + ((q15_t) (x >> 16) * (q15_t) y)) + ((q15_t) x * (q15_t) (y >> 16)); */
-    return ((uint64_t)(((((q31_t)x << 16) >> 16) * (((q31_t)y      ) >> 16)) +
-                       ((((q31_t)x      ) >> 16) * (((q31_t)y << 16) >> 16)) +
-                       ( ((q63_t)sum    )                                  )   ));
+       return (sum + ((q15_t) (x >> 16) * (q15_t) y)) + ((q15_t) x * (q15_t) (y >> 16)); 
   }
 
 
