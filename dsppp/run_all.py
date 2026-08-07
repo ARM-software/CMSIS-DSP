@@ -181,6 +181,7 @@ fvpUnix = {"M55":"FVP_Corstone_SSE-300_Ethos-U55",
 AVHROOT = args.avh
 
 ALL_TESTS=["DOT_TEST",
+       "AUTODIFF_TEST",
        "VECTOR_TEST",
        "ROW_TEST",
        "COL_TEST",
