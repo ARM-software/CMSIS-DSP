@@ -6,10 +6,11 @@ solution:
   cdefault:
 
   packs:
-    - pack: ARM::CMSIS@6.0.0
-    - pack: ARM::V2M_MPS3_SSE_300_BSP@1.4.0
-    - pack: ARM::CMSIS-Compiler@2.0.0
-    - pack: ARM::Cortex_DFP@1.0.0
+    - pack: ARM::CMSIS@6.3.0
+    - pack: ARM::V2M_MPS3_SSE_300_BSP@1.5.0
+    - pack: ARM::CMSIS-Compiler@2.2.0
+    - pack: ARM::Cortex_DFP@1.2.0
+    - pack: ARM::CMSIS-DSP
 
   target-types:
     - type: MPS3-Corstone-300
@@ -29,7 +30,7 @@ solution:
             - -Wno-sign-compare
             - -Wno-unused-parameter
           Link:
-            - --specs=nosys.specs            
+            - --specs=nosys.specs
         - for-compiler: CLANG
           C:
             - -Wno-sign-compare
@@ -39,6 +40,10 @@ solution:
             - -Wno-unused-parameter
           Link:
             - -lcrt0
+      target-set:
+        - set:
+          images:
+            - project-context: test.Release
 
     - type: VHT-Corstone-300
       device: ARM::SSE-300-MPS3
@@ -57,6 +62,14 @@ solution:
           Link:
             - -lcrt0-semihost
             - -lsemihost
+      target-set:
+        - set:
+          images:
+            - project-context: example.Release
+          debugger:
+            name: Arm-FVP
+            model: FVP_Corstone_SSE-300_Ethos-U55
+            config-file: fvp_configs/VHT-Corstone-300.txt
 
     - type: VHT-M0P
       device: ARMCM0P
@@ -76,6 +89,10 @@ solution:
           Link:
             - -lcrt0-semihost
             - -lsemihost
+      target-set:
+        - set:
+          images:
+            - project-context: test.Release
 
     - type: VHT-M4
       device: ARMCM4
@@ -95,13 +112,16 @@ solution:
           Link:
             - -lcrt0-semihost
             - -lsemihost
+      target-set:
+        - set:
+          images:
+            - project-context: test.Release
 
   build-types:
     - type: Release
       debug: on
 
-
   projects:
     - project: ./tests/test.cproject.yml
     - project: ./example.cproject.yml
-    
+  created-for: CMSIS-Toolbox@2.14.1
