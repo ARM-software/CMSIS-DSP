@@ -316,7 +316,8 @@ extern "C"
          The accumulator has a 2.62 format and maintains full precision of the intermediate multiplication results but provides only a single guard bit.
          Thus, if the accumulator result overflows it wraps around rather than clip.
          In order to avoid overflows completely the input signal must be scaled down by 2 bits as there are four additions.
-         After all multiply-accumulates are performed, the 2.62 accumulator is truncated to 1.32 format and then saturated to 1.31 format.
+         After all multiply-accumulates are performed, the 2.62 accumulator is truncated to 1.32 format and then converted to 1.31 format.
+         Neither this conversion nor the following addition of y[n-1] is saturating.
  */
 __STATIC_FORCEINLINE q31_t arm_pid_q31(
   arm_pid_instance_q31 * S,
