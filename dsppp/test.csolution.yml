@@ -124,4 +124,3 @@ solution:
   projects:
     - project: ./tests/test.cproject.yml
     - project: ./example.cproject.yml
-  created-for: CMSIS-Toolbox@2.14.1
