@@ -25,6 +25,105 @@ namespace arm_cmsis_dsp {
  *  @{
  */
 
+/**
+ * @brief Zero-copy transposed view of a matrix.
+ *
+ * The view only swaps matrix indexing and dimensions. Algorithms can
+ * recognize this type and select a kernel which consumes the original
+ * row-major storage without materializing a transposed matrix.
+ *
+ * @tparam M Matrix datatype
+ */
+template<typename M>
+struct TransposeView
+{
+    using Scalar = typename traits<M>::Scalar;
+    using Storage = typename VecRef<M>::type;
+
+    explicit TransposeView(const M &matrix) : matrix_(VecRef<M>::ref(matrix)) {}
+
+    vector_length_t rows() const { return matrix_.columns(); }
+    vector_length_t columns() const { return matrix_.rows(); }
+
+    Scalar operator()(const index_t row, const index_t column) const
+    {
+        return matrix_(column, row);
+    }
+
+    auto row(const index_t row) const { return matrix_.col(row); }
+    auto col(const index_t column) const { return matrix_.row(column); }
+
+    const Storage &original() const { return matrix_; }
+
+private:
+    Storage matrix_;
+};
+
+/**
+ * @brief Create a zero-copy transposed matrix view.
+ *
+ * @tparam M Matrix datatype
+ * @param matrix Matrix whose dimensions and indexing are to be transposed
+ * @return A non-owning transposed view
+ */
+template<typename M,
+         typename std::enable_if<HasMatrixIndexing<M>::value, bool>::type = true>
+inline TransposeView<M> transpose_view(const M &matrix)
+{
+    return TransposeView<M>(matrix);
+}
+
+template<typename M>
+struct traits<TransposeView<M>>
+{
+    using Scalar = typename traits<M>::Scalar;
+#if defined(HAS_VECTOR)
+    using Vector = typename traits<Scalar>::Vector;
+#endif
+};
+
+template<typename M>
+struct HasMatrixIndexing<TransposeView<M>>
+{
+    constexpr static bool value = true;
+};
+
+template<typename M>
+struct ElementType<TransposeView<M>>
+{
+    using type = typename ElementType<M>::type;
+};
+
+template<typename M>
+struct IsDynamic<TransposeView<M>>
+{
+    constexpr static bool value = IsDynamic<M>::value;
+};
+
+template<typename M>
+struct StaticLength<TransposeView<M>>
+{
+    constexpr static vector_length_t value = StaticLength<M>::value;
+};
+
+template<typename M>
+struct NbRows<TransposeView<M>>
+{
+    constexpr static vector_length_t value = NbCols<M>::value;
+};
+
+template<typename M>
+struct NbCols<TransposeView<M>>
+{
+    constexpr static vector_length_t value = NbRows<M>::value;
+};
+
+template<typename M>
+struct OutputVectorDim<TransposeView<M>>
+{
+    constexpr static vector_length_t value = NbCols<M>::value;
+};
+
 template<typename P,int R,int C,
          template<int> typename A>
 struct traits<Matrix<P,R,C,A>>
@@ -454,6 +553,174 @@ struct VecRef<Matrix<P,R,C,A>,((R<0) || (C<0))>
       return(type(a,a.rows(),a.columns()));
    };
 };
+
+/** Lazy transposed-matrix times vector expression. */
+template<typename M, typename V>
+struct _TransposedMatVec: _Expr<_TransposedMatVec<M,V>>
+{
+    using MatrixScalar = typename traits<M>::Scalar;
+    using VectorScalar = typename traits<V>::Scalar;
+    using Scalar = typename MixedRes<MatrixScalar,VectorScalar>::type;
+    using Accumulator = typename number_traits<Scalar>::accumulator;
+#if defined(HAS_VECTOR)
+    using Vector = typename traits<Scalar>::Vector;
+#endif
+
+    _TransposedMatVec(const TransposeView<M> &matrix, const V &vector)
+        : matrix_(matrix), vector_(vector) {}
+
+    vector_length_t length() const { return matrix_.rows(); }
+
+    Scalar operator[](const index_t column) const
+    {
+        Accumulator sum{};
+        const auto &original = matrix_.original();
+        for (index_t row = 0; row < original.rows(); ++row)
+            sum = inner::mac(sum,original(row,column),vector_[row]);
+        return inner::from_accumulator(sum);
+    }
+
+#if defined(HAS_VECTOR)
+    auto vector_op(const index_t column) const
+    {
+        if constexpr (has_vector_inst<M>() && has_vector_inst<V>() &&
+                      same_nb_lanes<M,V>() && is_float<M>())
+        {
+            using VectorAccumulator =
+                typename vector_traits<Scalar>::temp_accumulator;
+            VectorAccumulator sum = vector_traits<Scalar>::temp_acc_zero();
+            const auto &original = matrix_.original();
+            for (index_t row = 0; row < original.rows(); ++row)
+                sum = inner::vmacc(sum,
+                                   original.row(row).vector_op(column),
+                                   vector_[row]);
+            return sum;
+        }
+        else
+        {
+            constexpr int lanes = vector_traits<Scalar>::nb_lanes;
+            Accumulator sums[lanes] = {};
+            Scalar values[lanes] = {};
+            const auto &original = matrix_.original();
+            for (index_t row = 0; row < original.rows(); ++row)
+            {
+                const VectorScalar value = vector_[row];
+                for (index_t lane = 0; lane < lanes; ++lane)
+                    sums[lane] = inner::mac(
+                        sums[lane],original(row,column + lane),value);
+            }
+            for (index_t lane = 0; lane < lanes; ++lane)
+                values[lane] = inner::from_accumulator(sums[lane]);
+            return inner::vload1<1>(values);
+        }
+    }
+
+    auto vector_op_tail(const index_t column,
+                        const vector_length_t remaining) const
+    {
+        if constexpr (has_vector_inst<M>() && has_vector_inst<V>() &&
+                      same_nb_lanes<M,V>() && is_float<M>())
+        {
+            using VectorAccumulator =
+                typename vector_traits<Scalar>::temp_accumulator;
+            VectorAccumulator sum = vector_traits<Scalar>::temp_acc_zero();
+            const auto &original = matrix_.original();
+            for (index_t row = 0; row < original.rows(); ++row)
+                sum = inner::vmacc(
+                    sum,
+                    original.row(row).vector_op_tail(column,remaining),
+                    vector_[row]);
+            return sum;
+        }
+        else
+        {
+            constexpr int lanes = vector_traits<Scalar>::nb_lanes;
+            Accumulator sums[lanes] = {};
+            Scalar values[lanes] = {};
+            const auto &original = matrix_.original();
+            for (index_t row = 0; row < original.rows(); ++row)
+            {
+                const VectorScalar value = vector_[row];
+                for (index_t lane = 0; lane < remaining; ++lane)
+                    sums[lane] = inner::mac(
+                        sums[lane],original(row,column + lane),value);
+            }
+            for (index_t lane = 0; lane < remaining; ++lane)
+                values[lane] = inner::from_accumulator(sums[lane]);
+            return inner::vload1<1>(values);
+        }
+    }
+#endif
+
+private:
+    TransposeView<M> matrix_;
+    V vector_;
+};
+
+template<typename M, typename V>
+struct traits<_TransposedMatVec<M,V>>
+{
+    using Scalar = typename MixedRes<typename traits<M>::Scalar,
+                                     typename traits<V>::Scalar>::type;
+#if defined(HAS_VECTOR)
+    using Vector = typename traits<Scalar>::Vector;
+#endif
+};
+
+template<typename M, typename V>
+struct ElementType<_TransposedMatVec<M,V>>
+{
+    using type = typename MixedRes<typename traits<M>::Scalar,
+                                   typename traits<V>::Scalar>::type;
+};
+
+template<typename M, typename V>
+struct IsVector<_TransposedMatVec<M,V>>
+{
+    constexpr static bool value = true;
+};
+
+template<typename M, typename V>
+struct IsDynamic<_TransposedMatVec<M,V>>
+{
+    constexpr static bool value = IsDynamic<M>::value;
+};
+
+template<typename M, typename V>
+struct StaticLength<_TransposedMatVec<M,V>>
+{
+    constexpr static vector_length_t value = NbCols<M>::value;
+};
+
+template<typename M, typename V>
+struct Complexity<_TransposedMatVec<M,V>>
+{
+    constexpr static int value = 1;
+};
+
+template<typename M, typename V>
+struct VecRef<_TransposedMatVec<M,V>>
+{
+    using type = _TransposedMatVec<M,V>;
+    static type ref(const type &expression) { return expression; }
+};
+
+#if !defined(ARM_MATH_NEON)
+
+template<typename M,
+         typename V,
+         typename std::enable_if<
+             (CompatibleStaticMatVecProduct<TransposeView<M>,V>::value ||
+              CompatibleDynamicMatVecProduct<TransposeView<M>,V>::value),
+             bool>::type = true>
+inline auto dot(const TransposeView<M> &matrix, const V &vector)
+{
+    using VectorRef = VecRef<V>;
+    return _TransposedMatVec<M,typename VectorRef::type>(
+        matrix,VectorRef::ref(vector));
+}
+
+#endif
 
 
 /*****************

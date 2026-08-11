@@ -64,6 +64,65 @@ inline void _dot_m_v(RES &res,
 
 }
 
+#if defined(ARM_MATH_MVEI) || defined(ARM_MATH_MVEF)
+
+template<typename M,
+         typename V,
+         typename RES,
+         typename std::enable_if<
+         has_vector_inst<M>() &&
+         has_vector_inst<V>() &&
+         same_nb_lanes<M,V>() &&
+         same_nb_lanes<M,RES>(),bool>::type = true>
+inline void _dot_m_v(RES &res,
+                     const TransposeView<M> &m,
+                     const V &v,
+                     const Helium* = nullptr)
+{
+    if constexpr (is_float<M>())
+    {
+        using TM = typename traits<M>::Scalar;
+        using TV = typename traits<V>::Scalar;
+        using T = typename MixedRes<TM,TV>::type;
+        using Acc = typename vector_traits<T>::temp_accumulator;
+        constexpr int nb_lanes = vector_traits<T>::nb_lanes;
+
+        const auto &original = m.original();
+        const vector_length_t rows = original.rows();
+        const vector_length_t columns = original.columns();
+        vector_length_t column = 0;
+
+        for (; column <= columns - nb_lanes; column += nb_lanes)
+        {
+            Acc sum = vector_traits<T>::temp_acc_zero();
+            for (index_t row = 0; row < rows; ++row)
+                sum = inner::vmacc(sum,
+                                   original.row(row).vector_op(column),
+                                   v[row]);
+            inner::vstore1<1>(res.ptr() + column,sum);
+        }
+
+        const vector_length_t remaining = columns - column;
+        if (remaining > 0)
+        {
+            const mve_pred16_t predicate = inner::vctpq<T>::mk(remaining);
+            Acc sum = vector_traits<T>::temp_acc_zero();
+            for (index_t row = 0; row < rows; ++row)
+                sum = inner::vmacc(
+                    sum,
+                    original.row(row).vector_op_tail(column,remaining),
+                    v[row]);
+            inner::vstore1_z<1>(res.ptr() + column,sum,remaining,predicate);
+        }
+    }
+    else
+    {
+        detail::dot_transposed_unrolled(res,m,v);
+    }
+}
+
+#endif
+
 #define MATRIX_DIM2 2
 #define MATRIX_DIM3 3
 #define MATRIX_DIM4 4
@@ -411,3 +470,4 @@ __STATIC_INLINE void _dot_m_m(const MA&    pSrcA,
 /*! @} */
 
 #endif
+

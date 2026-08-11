@@ -395,6 +395,145 @@ void test10()
     }
 }
 
+template<typename T>
+static void test_transposed_dot_type()
+{
+    const T one = ::arm_cmsis_dsp::number_traits<T>::one();
+    T matrix_value[2][5] = {};
+    for (std::size_t column = 0; column < 5; ++column)
+        matrix_value[0][column] = one;
+    T vector_value[2] = {one,T{}};
+
+    ::arm_cmsis_dsp::MatrixView<T, ::arm_cmsis_dsp::DYNAMIC> matrix(
+        &matrix_value[0][0], 2, 5, 5);
+    ::arm_cmsis_dsp::VectorView<T> vector(vector_value, 0, 2);
+    ::arm_cmsis_dsp::Matrix<T, ::arm_cmsis_dsp::DYNAMIC,
+                            ::arm_cmsis_dsp::DYNAMIC>
+        materialized_transpose(5,2);
+    ::arm_cmsis_dsp::transposeTo(materialized_transpose,matrix);
+    auto reference = ::arm_cmsis_dsp::dot(materialized_transpose,vector);
+    auto result = ::arm_cmsis_dsp::dot(
+        ::arm_cmsis_dsp::transpose_view(matrix),vector);
+    for (std::size_t column = 0; column < 5; ++column)
+    {
+        if constexpr (std::is_same<T,float16_t>::value)
+            assert(static_cast<float>(result[column]) ==
+                   static_cast<float>(reference[column]));
+        else
+            assert(result[column] == reference[column]);
+    }
+}
+
+template<typename TM, typename TV>
+static void test_transposed_dot_mixed_type()
+{
+    using Result = typename ::arm_cmsis_dsp::MixedRes<TM,TV>::type;
+    const TM matrix_one = ::arm_cmsis_dsp::number_traits<TM>::one();
+    const TV vector_one = ::arm_cmsis_dsp::number_traits<TV>::one();
+    TM matrix_value[2][5] = {};
+    for (std::size_t column = 0; column < 5; ++column)
+        matrix_value[0][column] = matrix_one;
+    TV vector_value[2] = {vector_one,TV{}};
+
+    ::arm_cmsis_dsp::MatrixView<TM, ::arm_cmsis_dsp::DYNAMIC> matrix(
+        &matrix_value[0][0], 2, 5, 5);
+    ::arm_cmsis_dsp::VectorView<TV> vector(vector_value, 0, 2);
+    ::arm_cmsis_dsp::Matrix<TM, ::arm_cmsis_dsp::DYNAMIC,
+                            ::arm_cmsis_dsp::DYNAMIC>
+        materialized_transpose(5,2);
+    ::arm_cmsis_dsp::transposeTo(materialized_transpose,matrix);
+    ::arm_cmsis_dsp::Vector<Result, ::arm_cmsis_dsp::DYNAMIC> reference =
+        ::arm_cmsis_dsp::dot(materialized_transpose,vector);
+    ::arm_cmsis_dsp::Vector<Result, ::arm_cmsis_dsp::DYNAMIC> result =
+        ::arm_cmsis_dsp::dot(::arm_cmsis_dsp::transpose_view(matrix),vector);
+    for (std::size_t column = 0; column < 5; ++column)
+        assert(result[column] == reference[column]);
+}
+
+void test11()
+{
+    // A transposed view selects the fused matrix-vector kernel without
+    // materializing the transpose. Five columns exercise the MVE tail.
+    float matrix_value[3][5] = {
+        {1.0F, 2.0F, 3.0F, 4.0F, 5.0F},
+        {6.0F, 7.0F, 8.0F, 9.0F, 10.0F},
+        {11.0F, 12.0F, 13.0F, 14.0F, 15.0F}};
+    float vector_value[] = {2.0F, -1.0F, 0.5F};
+    const float expected[] = {1.5F, 3.0F, 4.5F, 6.0F, 7.5F};
+
+    ::arm_cmsis_dsp::MatrixView<float, ::arm_cmsis_dsp::DYNAMIC> matrix(
+        &matrix_value[0][0], 3, 5, 5);
+    ::arm_cmsis_dsp::VectorView<float> vector(vector_value, 0, 3);
+    const auto transposed = ::arm_cmsis_dsp::transpose_view(matrix);
+    assert(transposed.rows() == 5);
+    assert(transposed.columns() == 3);
+    assert(transposed(4, 2) == 15.0F);
+
+    auto result = ::arm_cmsis_dsp::dot(transposed, vector);
+    for (std::size_t column = 0; column < 5; ++column)
+        assert(result[column] == expected[column]);
+
+    ::arm_cmsis_dsp::Matrix<float,2,5> static_matrix;
+    ::arm_cmsis_dsp::Vector<float,2> static_vector;
+    for (std::size_t row = 0; row < 2; ++row)
+        for (std::size_t column = 0; column < 5; ++column)
+            static_matrix(row,column) = 1.0F;
+    static_vector = 1.0F;
+    ::arm_cmsis_dsp::Vector<float,5> static_result =
+        ::arm_cmsis_dsp::dot(
+            ::arm_cmsis_dsp::transpose_view(static_matrix),static_vector);
+    for (std::size_t column = 0; column < 5; ++column)
+        assert(static_result[column] == 2.0F);
+
+    test_transposed_dot_type<double>();
+    test_transposed_dot_type<float>();
+    test_transposed_dot_type<std::complex<float>>();
+#if !defined(DISABLEFLOAT16)
+    test_transposed_dot_type<float16_t>();
+    test_transposed_dot_type<std::complex<float16_t>>();
+#endif
+    test_transposed_dot_type<::arm_cmsis_dsp::Q31>();
+    test_transposed_dot_type<std::complex<::arm_cmsis_dsp::Q31>>();
+    test_transposed_dot_type<::arm_cmsis_dsp::Q15>();
+    test_transposed_dot_type<std::complex<::arm_cmsis_dsp::Q15>>();
+    test_transposed_dot_type<::arm_cmsis_dsp::Q7>();
+    test_transposed_dot_mixed_type<std::complex<float>,float>();
+    test_transposed_dot_mixed_type<float,std::complex<float>>();
+#if !defined(DISABLEFLOAT16)
+    test_transposed_dot_mixed_type<std::complex<float16_t>,float16_t>();
+    test_transposed_dot_mixed_type<float16_t,std::complex<float16_t>>();
+#endif
+    test_transposed_dot_mixed_type<
+        std::complex<::arm_cmsis_dsp::Q31>,::arm_cmsis_dsp::Q31>();
+    test_transposed_dot_mixed_type<
+        ::arm_cmsis_dsp::Q31,std::complex<::arm_cmsis_dsp::Q31>>();
+    test_transposed_dot_mixed_type<
+        std::complex<::arm_cmsis_dsp::Q15>,::arm_cmsis_dsp::Q15>();
+    test_transposed_dot_mixed_type<
+        ::arm_cmsis_dsp::Q15,std::complex<::arm_cmsis_dsp::Q15>>();
+
+    // Exercise the same kernel through the fully connected backward pass.
+    Arena<4096> arena;
+    Tape &tape = arena.tape();
+    tape.register_operator<FullyConnectedOperator>();
+    float input_value[5] = {};
+    float input_gradient[5] = {};
+    float weight_gradient[3][5] = {};
+    float bias_value[3] = {};
+    float bias_gradient[3] = {};
+    float output_value[3] = {};
+    float output_gradient[3] = {};
+    BufferView input = tape.view(input_value, input_gradient, 5);
+    MatrixView weights = tape.parameter(
+        &matrix_value[0][0], &weight_gradient[0][0], 3, 5);
+    BufferView bias = tape.parameter(bias_value, bias_gradient, 3);
+    BufferView output = tape.view(output_value, output_gradient, 3);
+    output = fully_connected(input, weights, bias);
+    assert(tape.backward(output, vector_value, 3));
+    for (std::size_t column = 0; column < 5; ++column)
+        assert(input.gradient(column) == expected[column]);
+}
+
 static void run_autodiff_tests()
 {
     test1();
@@ -407,6 +546,7 @@ static void run_autodiff_tests()
     test8();
     test9();
     test10();
+    test11();
     
     // Arena exhaustion is explicit and backward cannot return partial results.
     alignas(std::max_align_t) unsigned char tiny_memory[1];

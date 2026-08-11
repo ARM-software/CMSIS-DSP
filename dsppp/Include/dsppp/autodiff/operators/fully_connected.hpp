@@ -72,19 +72,13 @@ class FullyConnectedOperator
 
             ::arm_cmsis_dsp::VectorView<float> input_gradient(
                 record.input_gradient, 0, record.columns);
-            for (std::size_t column = 0; column < record.columns; ++column)
-            {
-                // A column is strided in the row-major weight matrix. The
-                // C++ dot implementation handles that view directly, so no
-                // transposed matrix or temporary vector is needed.
-                ::arm_cmsis_dsp::VectorView<float,
-                                            ::arm_cmsis_dsp::DYNAMIC>
-                    weight_column(const_cast<float *>(record.weight_value),
-                                  column, record.rows * record.columns,
-                                  record.columns);
-                input_gradient[column] +=
-                    ::arm_cmsis_dsp::dot(weight_column, output_gradient);
-            }
+            ::arm_cmsis_dsp::MatrixView<float,
+                                        ::arm_cmsis_dsp::DYNAMIC>
+                weight_value(const_cast<float *>(record.weight_value),
+                             record.rows, record.columns, record.columns);
+            input_gradient += ::arm_cmsis_dsp::dot(
+                ::arm_cmsis_dsp::transpose_view(weight_value),
+                output_gradient);
         }
     }
 

@@ -253,6 +253,23 @@ inline void _dot_m_v(RES &res,
     }
 }
 
+template<typename M,
+         typename V,
+         typename RES,
+         typename std::enable_if<
+         !is_complex<M>() &&
+         !is_complex<V>() &&
+         !is_complex<RES>() &&
+         !std::is_same<typename traits<M>::Scalar,Q31>::value &&
+         number_traits<typename traits<M>::Scalar>::is_fixed,bool>::type = true>
+inline void _dot_m_v(RES &res,
+                     const TransposeView<M> &m,
+                     const V &v,
+                     const DSP* = nullptr)
+{
+    detail::dot_transposed_unrolled(res,m,v);
+}
+
 template<typename MA,
          typename MB,
          typename RES,

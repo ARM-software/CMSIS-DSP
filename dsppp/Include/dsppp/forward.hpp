@@ -21,6 +21,9 @@ struct Matrix;
 template<typename T,int S>
 struct MatrixView;
 
+template<typename M>
+struct TransposeView;
+
 template<typename T>
 struct NbRows;
 
