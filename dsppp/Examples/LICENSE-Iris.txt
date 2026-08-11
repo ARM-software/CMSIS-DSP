@@ -1,0 +1,16 @@
+Iris dataset license and attribution
+====================================
+
+The data in iris_data.hpp is derived from the Iris dataset distributed by the
+UCI Machine Learning Repository. The dataset is licensed under the Creative
+Commons Attribution 4.0 International license (CC BY 4.0):
+
+https://creativecommons.org/licenses/by/4.0/legalcode
+
+Attribution:
+
+Fisher, R. A. (1936). Iris [Dataset]. UCI Machine Learning Repository.
+https://doi.org/10.24432/C56C76
+
+The CMSIS-DSP source code around the data remains covered by the CMSIS-DSP
+project license.

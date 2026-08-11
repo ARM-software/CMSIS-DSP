@@ -8,6 +8,7 @@ extern "C" {
 
 #include <dsppp/autodiff/reverse.hpp>
 #include <dsppp/autodiff/operators/add.hpp>
+#include <dsppp/autodiff/operators/cross_entropy.hpp>
 #include <dsppp/autodiff/operators/dot.hpp>
 #include <dsppp/autodiff/operators/fully_connected.hpp>
 #include <dsppp/autodiff/operators/multiply.hpp>
@@ -534,6 +535,27 @@ void test11()
         assert(input.gradient(column) == expected[column]);
 }
 
+void test12()
+{
+    // Categorical cross entropy consumes probabilities and a one-hot target.
+    Arena<512> arena;
+    Tape &tape = arena.tape();
+    tape.register_operator<CrossEntropyOperator>();
+    float probability_value[] = {0.1F, 0.7F, 0.2F};
+    float target_value[] = {0.0F, 1.0F, 0.0F};
+    float loss_value = 0.0F;
+    BufferView probability = tape.parameter(probability_value);
+    BufferView target = tape.input(target_value);
+    BufferView loss = tape.output(loss_value);
+    loss = cross_entropy(probability, target);
+    assert(loss_value > 0.3566F && loss_value < 0.3568F);
+    assert(tape.backward(loss));
+    assert(probability.gradient(0) == 0.0F);
+    assert(probability.gradient(1) < -1.4285F &&
+           probability.gradient(1) > -1.4287F);
+    assert(probability.gradient(2) == 0.0F);
+}
+
 static void run_autodiff_tests()
 {
     test1();
@@ -547,6 +569,7 @@ static void run_autodiff_tests()
     test9();
     test10();
     test11();
+    test12();
     
     // Arena exhaustion is explicit and backward cannot return partial results.
     alignas(std::max_align_t) unsigned char tiny_memory[1];

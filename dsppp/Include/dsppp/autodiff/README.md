@@ -89,6 +89,7 @@ record, gradient reset, backward rule, and expression adapter:
 | `operators/fully_connected.hpp` | `FullyConnectedOperator` | `fully_connected(x, m, b)` |
 | `operators/relu.hpp` | `ReluOperator` | `relu(x)` |
 | `operators/softmax.hpp` | `SoftmaxOperator` | `softmax(x)` |
+| `operators/cross_entropy.hpp` | `CrossEntropyOperator` | `cross_entropy(probability, target)` |
 | `operators/quadratic_error.hpp` | `QuadraticErrorOperator` | `quadratic_error(prediction, target)` |
 
 An application includes and registers only the operators it uses. An operator
@@ -416,6 +417,16 @@ d(loss)/d(prediction[i]) = 2 * (prediction[i] - target[i])
 
 The target must be an input view; gradients are retained only for the
 prediction path and ultimately for its parameters.
+
+Categorical cross entropy also returns a scalar sum:
+
+```text
+loss = -sum(target[i] * log(max(probability[i], 1e-7)))
+d(loss)/d(probability[i]) = -target[i] / max(probability[i], 1e-7)
+```
+
+It is intended for a probability vector produced by `softmax` and a one-hot
+target input. The probability floor keeps both the loss and gradient finite.
 
 ### Polynomial sinusoid regression
 
