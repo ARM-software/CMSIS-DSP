@@ -12,6 +12,7 @@ extern "C" {
 #include <dsppp/autodiff/operators/dot.hpp>
 #include <dsppp/autodiff/operators/dropout.hpp>
 #include <dsppp/autodiff/operators/fully_connected.hpp>
+#include <dsppp/autodiff/operators/matrix_multiply.hpp>
 #include <dsppp/autodiff/operators/multiply.hpp>
 #include <dsppp/autodiff/operators/offset.hpp>
 #include <dsppp/autodiff/operators/relu.hpp>
@@ -595,6 +596,38 @@ void test13()
     }
 }
 
+void test14()
+{
+    // Y = W X uses CMSIS-DSP matrix multiplication in the forward pass and
+    // computes only dW = dY X^T in the backward pass.
+    Arena<1024> arena;
+    Tape &tape = arena.tape();
+    tape.register_operator<MatrixMultiplyOperator>();
+    float weight_value[2][3] = {
+        {1.0F, 2.0F, 3.0F}, {4.0F, 5.0F, 6.0F}};
+    float input_value[3][2] = {
+        {1.0F, 2.0F}, {3.0F, 4.0F}, {5.0F, 6.0F}};
+    float output_value[2][2] = {};
+    MatrixView weights = tape.parameter(weight_value);
+    BufferView input = tape.input(&input_value[0][0], 6U);
+    BufferView output = tape.output(&output_value[0][0], 4U);
+    output = matrix_multiply(input, weights);
+    assert(output_value[0][0] == 22.0F);
+    assert(output_value[0][1] == 28.0F);
+    assert(output_value[1][0] == 49.0F);
+    assert(output_value[1][1] == 64.0F);
+
+    const float seed[] = {1.0F, 2.0F, 3.0F, 4.0F};
+    assert(tape.backward(output, seed, 4U));
+    const float expected_gradient[2][3] = {
+        {5.0F, 11.0F, 17.0F}, {11.0F, 25.0F, 39.0F}};
+    for (std::size_t row = 0; row < 2U; ++row)
+        for (std::size_t column = 0; column < 3U; ++column)
+            assert(weights.gradient(row, column) ==
+                   expected_gradient[row][column]);
+    assert(!input.has_gradient());
+}
+
 static void run_autodiff_tests()
 {
     test1();
@@ -610,6 +643,7 @@ static void run_autodiff_tests()
     test11();
     test12();
     test13();
+    test14();
     
     // Arena exhaustion is explicit and backward cannot return partial results.
     alignas(std::max_align_t) unsigned char tiny_memory[1];

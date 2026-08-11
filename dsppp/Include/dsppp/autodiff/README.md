@@ -88,6 +88,7 @@ record, gradient reset, backward rule, and expression adapter:
 | `operators/scale.hpp` | `ScaleOperator` | `scale(x, constant)` |
 | `operators/offset.hpp` | `OffsetOperator` | `offset(x, constant)` |
 | `operators/fully_connected.hpp` | `FullyConnectedOperator` | `fully_connected(x, m, b)` |
+| `operators/matrix_multiply.hpp` | `MatrixMultiplyOperator` | `matrix_multiply(x, w)` |
 | `operators/relu.hpp` | `ReluOperator` | `relu(x)` |
 | `operators/softmax.hpp` | `SoftmaxOperator` | `softmax(x)` |
 | `operators/cross_entropy.hpp` | `CrossEntropyOperator` | `cross_entropy(probability, target)` |
@@ -471,6 +472,20 @@ training with exactly the same optimizer trajectory would additionally require
 persisting RMSProp or Adam state; inference does not need that state.
 
 ### Fully connected and ReLU
+
+The matrix-multiply operator computes `Y = W X`, where `W` is a row-major
+parameter matrix and `X` is a row-major input matrix stored in a `BufferView`.
+The number of rows of `X` is inferred from the number of columns of `W`; its
+number of columns is inferred from the input buffer length. Only `W` receives
+a gradient:
+
+```text
+dW = dY X^T
+```
+
+The forward pass uses `arm_mat_mult_f32`. The backward pass computes every
+element of `dW` with `arm_dot_prod_f32`, using the contiguous rows of `dY` and
+`X` without materializing `X^T`.
 
 A fully connected node computes `y = m * x + b`. `m` is a row-major matrix
 parameter, `b` is a vector parameter, and the number of matrix columns must
