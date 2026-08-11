@@ -3,6 +3,9 @@
 #include <cmath>
 #include <dsppp/autodiff/reverse.hpp>
 #include <dsppp/autodiff/optimizers/common.hpp>
+#include <dsppp/matrix.hpp>
+
+#include <dsp/support_functions.h>
 
 namespace arm_cmsis_dsp {
 namespace autodiff {
@@ -60,8 +63,8 @@ public:
     void zero_grad() noexcept
     {
         for (std::size_t p = 0; p < parameter_count_; ++p)
-            for (std::size_t i = 0; i < entries_[p].length; ++i)
-                entries_[p].gradients[i] = 0.0F;
+            arm_fill_f32(0.0F, entries_[p].gradients,
+                         entries_[p].length);
     }
 
     bool step() noexcept
@@ -75,14 +78,19 @@ public:
         {
             Entry &entry = entries_[p];
             if (!entry.trainable) continue;
+            ::arm_cmsis_dsp::VectorView<float> gradients(
+                entry.gradients, 0, entry.length);
+            ::arm_cmsis_dsp::VectorView<float> first_moment(
+                first_moment_ + entry.offset, 0, entry.length);
+            ::arm_cmsis_dsp::VectorView<float> second_moment(
+                second_moment_ + entry.offset, 0, entry.length);
+            first_moment = first_moment * beta1_ +
+                gradients * (1.0F - beta1_);
+            second_moment = second_moment * beta2_ +
+                gradients * gradients * (1.0F - beta2_);
             for (std::size_t i = 0; i < entry.length; ++i)
             {
                 const std::size_t state = entry.offset + i;
-                const float gradient = entry.gradients[i];
-                first_moment_[state] = beta1_ * first_moment_[state] +
-                    (1.0F - beta1_) * gradient;
-                second_moment_[state] = beta2_ * second_moment_[state] +
-                    (1.0F - beta2_) * gradient * gradient;
                 const float corrected_first =
                     first_moment_[state] / first_correction;
                 const float corrected_second =

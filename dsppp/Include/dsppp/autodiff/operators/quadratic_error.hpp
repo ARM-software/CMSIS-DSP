@@ -2,6 +2,10 @@
 
 #include <dsppp/autodiff/reverse.hpp>
 
+#include <dsppp/matrix.hpp>
+
+#include <dsp/support_functions.h>
+
 namespace arm_cmsis_dsp {
 namespace autodiff {
 
@@ -22,8 +26,7 @@ class QuadraticErrorOperator
     {
         Record &record = reinterpret_cast<Record &>(node);
         record.output_gradient[0] = 0.0F;
-        for (std::size_t i = 0; i < record.length; ++i)
-            record.prediction_gradient[i] = 0.0F;
+        arm_fill_f32(0.0F, record.prediction_gradient, record.length);
     }
 
     static void backward(detail::Node &node) noexcept
@@ -31,9 +34,14 @@ class QuadraticErrorOperator
         Record &record = reinterpret_cast<Record &>(node);
         const float seed = record.output_gradient[0];
         if (seed == 0.0F) return;
-        for (std::size_t i = 0; i < record.length; ++i)
-            record.prediction_gradient[i] += 2.0F * seed *
-                (record.prediction_value[i] - record.target_value[i]);
+        ::arm_cmsis_dsp::VectorView<float> prediction_gradient(
+            record.prediction_gradient, 0, record.length);
+        ::arm_cmsis_dsp::VectorView<float> prediction_value(
+            const_cast<float *>(record.prediction_value), 0, record.length);
+        ::arm_cmsis_dsp::VectorView<float> target_value(
+            const_cast<float *>(record.target_value), 0, record.length);
+        prediction_gradient +=
+            (prediction_value - target_value) * (2.0F * seed);
     }
 
 public:
@@ -56,14 +64,15 @@ public:
             return false;
         }
 
-        float value = 0.0F;
-        for (std::size_t i = 0; i < OperatorAccess::length(prediction); ++i)
-        {
-            const float error = OperatorAccess::values(prediction)[i] -
-                                OperatorAccess::values(target)[i];
-            value += error * error;
-        }
-        OperatorAccess::values(output)[0] = value;
+        const std::size_t length = OperatorAccess::length(prediction);
+        ::arm_cmsis_dsp::VectorView<float> prediction_value(
+            const_cast<float *>(OperatorAccess::values(prediction)), 0,
+            length);
+        ::arm_cmsis_dsp::VectorView<float> target_value(
+            const_cast<float *>(OperatorAccess::values(target)), 0, length);
+        const auto error = prediction_value - target_value;
+        OperatorAccess::values(output)[0] =
+            ::arm_cmsis_dsp::dot(error, error);
         if (!OperatorAccess::recording(*tape))
             return OperatorAccess::status(*tape) == Status::ok;
 

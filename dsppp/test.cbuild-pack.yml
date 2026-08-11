@@ -16,6 +16,9 @@ cbuild-pack:
       selected-by-pack:
         - ARM::CMSIS-DSP
         - ARM::CMSIS-DSP@1.15.0
+    - resolved-pack: ARM::CMSIS-DSP@1.17.1
+      selected-by-pack:
+        - ARM::CMSIS-DSP@1.17.1
     - resolved-pack: ARM::Cortex_DFP@1.0.0
       selected-by-pack:
         - ARM::Cortex_DFP@1.0.0

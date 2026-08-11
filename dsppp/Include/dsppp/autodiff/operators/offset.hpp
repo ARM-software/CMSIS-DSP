@@ -2,24 +2,21 @@
 
 #include <dsppp/autodiff/reverse.hpp>
 
-#include <dsppp/matrix.hpp>
-
 #include <dsp/basic_math_functions.h>
+#include <dsp/statistics_functions.h>
 #include <dsp/support_functions.h>
 
 namespace arm_cmsis_dsp {
 namespace autodiff {
 
-class ScaleOperator
+class OffsetOperator
 {
     struct Record
     {
         detail::Node node;
         float *output_gradient;
-        const float *input_value;
         float *input_gradient;
-        const float *scale_value;
-        float *scale_gradient;
+        float *offset_gradient;
         std::size_t length;
     };
 
@@ -29,54 +26,49 @@ class ScaleOperator
         arm_fill_f32(0.0F, record.output_gradient, record.length);
         if (record.input_gradient != nullptr)
             arm_fill_f32(0.0F, record.input_gradient, record.length);
-        record.scale_gradient[0] = 0.0F;
+        record.offset_gradient[0] = 0.0F;
     }
 
     static void backward(detail::Node &node) noexcept
     {
         Record &record = reinterpret_cast<Record &>(node);
-        ::arm_cmsis_dsp::VectorView<float> output_gradient(
-            record.output_gradient, 0, record.length);
-        ::arm_cmsis_dsp::VectorView<float> input_value(
-            const_cast<float *>(record.input_value), 0, record.length);
-        record.scale_gradient[0] +=
-            ::arm_cmsis_dsp::dot(output_gradient, input_value);
         if (record.input_gradient != nullptr)
-        {
-            ::arm_cmsis_dsp::VectorView<float> input_gradient(
-                record.input_gradient, 0, record.length);
-            input_gradient += output_gradient * record.scale_value[0];
-        }
+            arm_add_f32(record.input_gradient, record.output_gradient,
+                        record.input_gradient, record.length);
+        float gradient_sum = 0.0F;
+        arm_accumulate_f32(record.output_gradient, record.length,
+                           &gradient_sum);
+        record.offset_gradient[0] += gradient_sum;
     }
 
 public:
     static bool evaluate(BufferView &output, const BufferView &input,
-                         const BufferView &scale) noexcept
+                         const BufferView &offset) noexcept
     {
         Tape *tape = OperatorAccess::tape(output);
         OperatorAccess::set_producer(output, nullptr);
-        if (tape == nullptr || !OperatorAccess::require<ScaleOperator>(*tape))
+        if (tape == nullptr || !OperatorAccess::require<OffsetOperator>(*tape))
             return false;
         if (!OperatorAccess::compatible(*tape, output, input) ||
-            !OperatorAccess::valid(*tape, scale) ||
-            OperatorAccess::length(scale) != 1U ||
-            OperatorAccess::role(scale) != BufferRole::parameter ||
+            !OperatorAccess::valid(*tape, offset) ||
+            OperatorAccess::length(offset) != 1U ||
+            OperatorAccess::role(offset) != BufferRole::parameter ||
             OperatorAccess::gradients(output) == nullptr ||
-            OperatorAccess::gradients(scale) == nullptr ||
+            OperatorAccess::gradients(offset) == nullptr ||
             OperatorAccess::values(output) == OperatorAccess::values(input) ||
-            OperatorAccess::values(output) == OperatorAccess::values(scale) ||
+            OperatorAccess::values(output) == OperatorAccess::values(offset) ||
             OperatorAccess::gradients(output) ==
                 OperatorAccess::gradients(input) ||
             OperatorAccess::gradients(output) ==
-                OperatorAccess::gradients(scale))
+                OperatorAccess::gradients(offset))
         {
             OperatorAccess::fail(*tape, Status::tape_mismatch);
             return false;
         }
-        arm_scale_f32(OperatorAccess::values(input),
-                      OperatorAccess::values(scale)[0],
-                      OperatorAccess::values(output),
-                      OperatorAccess::length(output));
+        arm_offset_f32(OperatorAccess::values(input),
+                       OperatorAccess::values(offset)[0],
+                       OperatorAccess::values(output),
+                       OperatorAccess::length(output));
         if (!OperatorAccess::recording(*tape) ||
             OperatorAccess::length(output) == 0U)
             return OperatorAccess::status(*tape) == Status::ok;
@@ -84,34 +76,32 @@ public:
         Record *record = OperatorAccess::append<Record>(*tape, backward, reset);
         if (record == nullptr) return false;
         record->output_gradient = OperatorAccess::gradients(output);
-        record->input_value = OperatorAccess::values(input);
         record->input_gradient = OperatorAccess::gradients(input);
-        record->scale_value = OperatorAccess::values(scale);
-        record->scale_gradient = OperatorAccess::gradients(scale);
+        record->offset_gradient = OperatorAccess::gradients(offset);
         record->length = OperatorAccess::length(output);
         OperatorAccess::set_producer(output, &record->node);
         return true;
     }
 };
 
-class ScaleExpression
+class OffsetExpression
 {
 public:
-    ScaleExpression(const BufferView &input, const BufferView &scale) noexcept
-        : input_(input), scale_(scale) {}
+    OffsetExpression(const BufferView &input, const BufferView &offset) noexcept
+        : input_(input), offset_(offset) {}
     void evaluate(BufferView &output) const noexcept
     {
-        ScaleOperator::evaluate(output, input_, scale_);
+        OffsetOperator::evaluate(output, input_, offset_);
     }
 private:
     BufferView input_;
-    BufferView scale_;
+    BufferView offset_;
 };
 
-inline ScaleExpression scale(const BufferView &input,
-                             const BufferView &constant) noexcept
+inline OffsetExpression offset(const BufferView &input,
+                               const BufferView &constant) noexcept
 {
-    return ScaleExpression(input, constant);
+    return OffsetExpression(input, constant);
 }
 
 } // namespace autodiff

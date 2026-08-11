@@ -3,6 +3,9 @@
 #include <cmath>
 #include <dsppp/autodiff/reverse.hpp>
 #include <dsppp/autodiff/optimizers/common.hpp>
+#include <dsppp/matrix.hpp>
+
+#include <dsp/support_functions.h>
 
 namespace arm_cmsis_dsp {
 namespace autodiff {
@@ -58,8 +61,8 @@ public:
     void zero_grad() noexcept
     {
         for (std::size_t p = 0; p < parameter_count_; ++p)
-            for (std::size_t i = 0; i < entries_[p].length; ++i)
-                entries_[p].gradients[i] = 0.0F;
+            arm_fill_f32(0.0F, entries_[p].gradients,
+                         entries_[p].length);
     }
 
     bool step() noexcept
@@ -69,12 +72,16 @@ public:
         {
             Entry &entry = entries_[p];
             if (!entry.trainable) continue;
+            ::arm_cmsis_dsp::VectorView<float> gradients(
+                entry.gradients, 0, entry.length);
+            ::arm_cmsis_dsp::VectorView<float> square_average(
+                square_average_ + entry.offset, 0, entry.length);
+            square_average = square_average * alpha_ +
+                gradients * gradients * (1.0F - alpha_);
             for (std::size_t i = 0; i < entry.length; ++i)
             {
                 const std::size_t state = entry.offset + i;
                 const float gradient = entry.gradients[i];
-                square_average_[state] = alpha_ * square_average_[state] +
-                    (1.0F - alpha_) * gradient * gradient;
                 entry.values[i] -= learning_rate_ * gradient /
                     (std::sqrt(square_average_[state]) + epsilon_);
             }

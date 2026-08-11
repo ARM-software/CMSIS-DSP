@@ -2,18 +2,15 @@
 
 #include <dsppp/autodiff/reverse.hpp>
 
-#include <dsppp/memory_pool.hpp>
-#include <dsppp/fixed_point.hpp>
 #include <dsppp/matrix.hpp>
 
-#include <dsp/statistics_functions.h>
+#include <dsp/basic_math_functions.h>
 #include <dsp/support_functions.h>
-
 
 namespace arm_cmsis_dsp {
 namespace autodiff {
 
-class DotOperator
+class MultiplyOperator
 {
     struct Record
     {
@@ -29,7 +26,7 @@ class DotOperator
     static void reset(detail::Node &node) noexcept
     {
         Record &record = reinterpret_cast<Record &>(node);
-        record.output_gradient[0] = 0.0F;
+        arm_fill_f32(0.0F, record.output_gradient, record.length);
         if (record.left_gradient != nullptr)
             arm_fill_f32(0.0F, record.left_gradient, record.length);
         if (record.right_gradient != nullptr)
@@ -39,20 +36,23 @@ class DotOperator
     static void backward(detail::Node &node) noexcept
     {
         Record &record = reinterpret_cast<Record &>(node);
-        const float gradient = record.output_gradient[0];
-        if (gradient == 0.0F) return;
-   
+        ::arm_cmsis_dsp::VectorView<float> output_gradient(
+            record.output_gradient, 0, record.length);
         if (record.left_gradient != nullptr)
         {
-            VectorView<float> left_grad(record.left_gradient, 0, record.length);
-            VectorView<float> right_val(const_cast<float *>(record.right_value), 0, record.length);
-            left_grad += right_val * gradient;
+            ::arm_cmsis_dsp::VectorView<float> left_gradient(
+                record.left_gradient, 0, record.length);
+            ::arm_cmsis_dsp::VectorView<float> right_value(
+                const_cast<float *>(record.right_value), 0, record.length);
+            left_gradient += output_gradient * right_value;
         }
         if (record.right_gradient != nullptr)
         {
-            VectorView<float> right_grad(record.right_gradient, 0, record.length);
-            VectorView<float> left_val(const_cast<float *>(record.left_value), 0, record.length);
-            right_grad += left_val * gradient;
+            ::arm_cmsis_dsp::VectorView<float> right_gradient(
+                record.right_gradient, 0, record.length);
+            ::arm_cmsis_dsp::VectorView<float> left_value(
+                const_cast<float *>(record.left_value), 0, record.length);
+            right_gradient += output_gradient * left_value;
         }
     }
 
@@ -62,24 +62,27 @@ public:
     {
         Tape *tape = OperatorAccess::tape(output);
         OperatorAccess::set_producer(output, nullptr);
-        if (tape == nullptr || !OperatorAccess::require<DotOperator>(*tape))
+        if (tape == nullptr || !OperatorAccess::require<MultiplyOperator>(*tape))
             return false;
-        if (!OperatorAccess::valid(*tape, output) ||
-            OperatorAccess::length(output) != 1U ||
+        if (!OperatorAccess::compatible(*tape, output, left) ||
+            !OperatorAccess::compatible(*tape, output, right) ||
             OperatorAccess::gradients(output) == nullptr ||
-            !OperatorAccess::compatible(*tape, left, right) ||
             OperatorAccess::values(output) == OperatorAccess::values(left) ||
-            OperatorAccess::values(output) == OperatorAccess::values(right))
+            OperatorAccess::values(output) == OperatorAccess::values(right) ||
+            OperatorAccess::gradients(output) ==
+                OperatorAccess::gradients(left) ||
+            OperatorAccess::gradients(output) ==
+                OperatorAccess::gradients(right))
         {
             OperatorAccess::fail(*tape, Status::tape_mismatch);
             return false;
         }
-        float value = 0.0F;
-        arm_dot_prod_f32(OperatorAccess::values(left),
-                         OperatorAccess::values(right),
-                         OperatorAccess::length(left), &value);
-        OperatorAccess::values(output)[0] = value;
-        if (!OperatorAccess::recording(*tape))
+        arm_mult_f32(OperatorAccess::values(left),
+                     OperatorAccess::values(right),
+                     OperatorAccess::values(output),
+                     OperatorAccess::length(output));
+        if (!OperatorAccess::recording(*tape) ||
+            OperatorAccess::length(output) == 0U)
             return OperatorAccess::status(*tape) == Status::ok;
 
         Record *record = OperatorAccess::append<Record>(*tape, backward, reset);
@@ -89,29 +92,30 @@ public:
         record->left_gradient = OperatorAccess::gradients(left);
         record->right_value = OperatorAccess::values(right);
         record->right_gradient = OperatorAccess::gradients(right);
-        record->length = OperatorAccess::length(left);
+        record->length = OperatorAccess::length(output);
         OperatorAccess::set_producer(output, &record->node);
         return true;
     }
 };
 
-class DotExpression
+class MultiplyExpression
 {
 public:
-    DotExpression(const BufferView &left, const BufferView &right) noexcept
+    MultiplyExpression(const BufferView &left, const BufferView &right) noexcept
         : left_(left), right_(right) {}
     void evaluate(BufferView &output) const noexcept
     {
-        DotOperator::evaluate(output, left_, right_);
+        MultiplyOperator::evaluate(output, left_, right_);
     }
 private:
     BufferView left_;
     BufferView right_;
 };
 
-inline DotExpression dot(const BufferView &left, const BufferView &right) noexcept
+inline MultiplyExpression operator*(const BufferView &left,
+                                    const BufferView &right) noexcept
 {
-    return DotExpression(left, right);
+    return MultiplyExpression(left, right);
 }
 
 } // namespace autodiff

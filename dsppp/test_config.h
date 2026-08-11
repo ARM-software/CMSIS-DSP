@@ -8,9 +8,9 @@
 //#define ONLY_BENCHMARKS
 
 
-#define DOT_TEST
-#define COMPLEX_F32_DT
-#define STATIC_TEST
+#define AUTODIFF_TEST
+#define F32_DT
+#define DYNAMIC_TEST
 
 
 #endif

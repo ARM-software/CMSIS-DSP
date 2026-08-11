@@ -10,7 +10,7 @@ solution:
     - pack: ARM::V2M_MPS3_SSE_300_BSP@1.5.0
     - pack: ARM::CMSIS-Compiler@2.2.0
     - pack: ARM::Cortex_DFP@1.2.0
-    - pack: ARM::CMSIS-DSP
+    - pack: ARM::CMSIS-DSP@1.17.1
 
   target-types:
     - type: MPS3-Corstone-300

@@ -7,6 +7,7 @@
 #include <dsppp/matrix.hpp>
 
 #include <dsp/matrix_functions.h>
+#include <dsp/support_functions.h>
 
 #include <limits>
 
@@ -31,29 +32,12 @@ class FullyConnectedOperator
     static void reset(detail::Node &node) noexcept
     {
         Record &record = reinterpret_cast<Record &>(node);
-        if (record.rows != 0U)
-        {
-            ::arm_cmsis_dsp::VectorView<float> output_gradient(
-                record.output_gradient, 0, record.rows);
-            ::arm_cmsis_dsp::VectorView<float> bias_gradient(
-                record.bias_gradient, 0, record.rows);
-            output_gradient = 0.0F;
-            bias_gradient = 0.0F;
-        }
-        if (record.rows != 0U && record.columns != 0U)
-        {
-            ::arm_cmsis_dsp::MatrixView<float,
-                                        ::arm_cmsis_dsp::DYNAMIC>
-                weight_gradient(record.weight_gradient, record.rows,
-                                record.columns, record.columns);
-            weight_gradient = 0.0F;
-        }
+        arm_fill_f32(0.0F, record.output_gradient, record.rows);
+        arm_fill_f32(0.0F, record.bias_gradient, record.rows);
+        arm_fill_f32(0.0F, record.weight_gradient,
+                     record.rows * record.columns);
         if (record.input_gradient != nullptr && record.columns != 0U)
-        {
-            ::arm_cmsis_dsp::VectorView<float> input_gradient(
-                record.input_gradient, 0, record.columns);
-            input_gradient = 0.0F;
-        }
+            arm_fill_f32(0.0F, record.input_gradient, record.columns);
     }
 
     static void backward(detail::Node &node) noexcept

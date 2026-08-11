@@ -2,8 +2,8 @@
 
 `reverse.hpp` is a deliberately small reverse-mode automatic differentiation
 (AD) implementation for embedded use. It currently handles `float` buffers,
-vector addition, vector dot products, affine vector scaling
-`alpha * x + beta`, fully connected and ReLU nodes, and a quadratic-error
+vector arithmetic, learnable scalar scale and offset operations, vector dot
+products, fully connected, ReLU, and softmax nodes, and a quadratic-error
 loss. Fixed-storage Adam and RMSProp optimizers support user-written training
 loops. The structure is intended to be extended with tensor operators.
 
@@ -81,10 +81,14 @@ record, gradient reset, backward rule, and expression adapter:
 | Header | Operator class | Expression |
 | --- | --- | --- |
 | `operators/add.hpp` | `AddOperator` | `a + b` |
+| `operators/sub.hpp` | `SubOperator` | `a - b` |
+| `operators/multiply.hpp` | `MultiplyOperator` | `a * b` |
 | `operators/dot.hpp` | `DotOperator` | `dot(a, b)` |
-| `operators/scale.hpp` | `ScaleOperator` | `scale(x, alpha, beta)` |
+| `operators/scale.hpp` | `ScaleOperator` | `scale(x, constant)` |
+| `operators/offset.hpp` | `OffsetOperator` | `offset(x, constant)` |
 | `operators/fully_connected.hpp` | `FullyConnectedOperator` | `fully_connected(x, m, b)` |
 | `operators/relu.hpp` | `ReluOperator` | `relu(x)` |
+| `operators/softmax.hpp` | `SoftmaxOperator` | `softmax(x)` |
 | `operators/quadratic_error.hpp` | `QuadraticErrorOperator` | `quadratic_error(prediction, target)` |
 
 An application includes and registers only the operators it uses. An operator
@@ -150,6 +154,7 @@ output buffer for another operation before `backward()` or `Tape::reset()`.
 #include <dsppp/autodiff/reverse.hpp>
 #include <dsppp/autodiff/operators/add.hpp>
 #include <dsppp/autodiff/operators/dot.hpp>
+#include <dsppp/autodiff/operators/offset.hpp>
 #include <dsppp/autodiff/operators/scale.hpp>
 
 using namespace arm_cmsis_dsp::autodiff;
@@ -159,29 +164,33 @@ Tape &tape = arena.tape();
 tape.register_operator<AddOperator>();
 tape.register_operator<DotOperator>();
 tape.register_operator<ScaleOperator>();
+tape.register_operator<OffsetOperator>();
 
 float x_value[] = {1.0F, 2.0F};
 float alpha_value = 2.0F;
-float beta_value[] = {3.0F, 4.0F};
+float beta_value = 3.0F;
 float scaled_value[2] = {};
+float shifted_value[2] = {};
 float sum_value[2] = {};
 float result_value[1] = {};
 
 BufferView x = tape.input(x_value);             // No gradient for x.
 BufferView alpha = tape.parameter(alpha_value); // Scalar parameter.
-BufferView beta = tape.parameter(beta_value);   // Vector parameter.
+BufferView beta = tape.parameter(beta_value);   // Scalar parameter.
 BufferView scaled = tape.output(scaled_value);
+BufferView shifted = tape.output(shifted_value);
 BufferView sum = tape.output(sum_value);
 BufferView result = tape.output(result_value);
 
-scaled = scale(x, alpha, beta); // scaled = alpha * x + beta
-sum = scaled + x;
-result = dot(sum, x);           // result[0] == 26
+scaled = scale(x, alpha);       // scaled = alpha * x
+shifted = offset(scaled, beta); // shifted = scaled + beta
+sum = shifted + x;
+result = dot(sum, x);           // result[0] == 24
 
 if (tape.backward(result)) {
     // x.has_gradient() == false
     // alpha.gradient(0) == 5
-    // beta gradients are {1, 2}
+    // beta.gradient(0) == 3
 }
 ```
 
@@ -548,8 +557,9 @@ the root of `backward()`:
 const std::size_t before = tape.used();
 {
     RecordingScope no_gradient(tape, false);
-    scaled = scale(x, alpha, beta);
-    sum = scaled + x;
+    scaled = scale(x, alpha);
+    shifted = offset(scaled, beta);
+    sum = shifted + x;
     result = dot(sum, x);
     use(result_value[0]);
 }
@@ -612,16 +622,23 @@ An addition or dot-product operand contributes to a gradient only when it is a
 parameter or intermediate with gradient storage. An `input` has a null gradient
 pointer, so the same backward rule simply skips that contribution.
 
-For vector scaling `z[i] = alpha[0] * x[i] + beta[i]`, `x` is required to be an
-input while `alpha` and `beta` are required to be parameters. Its rule is:
+For vector scaling `z[i] = alpha[0] * x[i]`, `alpha` is a scalar parameter.
+Its rule is:
 
 ```text
 alpha_gradient[0] += z_gradient[i] * x_value[i]  (summed over i)
-beta_gradient[i] += z_gradient[i]
+x_gradient[i]     += alpha[0] * z_gradient[i]
 ```
 
-There is intentionally no `x_gradient`: the role declared by `tape.input(x)`
-states that the caller does not request it.
+For vector offset `z[i] = x[i] + beta[0]`, `beta` is also a scalar parameter:
+
+```text
+beta_gradient[0] += z_gradient[i]  (summed over i)
+x_gradient[i]    += z_gradient[i]
+```
+
+The input-gradient contribution is skipped when `x` was declared with
+`tape.input(x)` and therefore has no gradient storage.
 
 All operators follow the same ownership rule: inputs and outputs stay in
 caller storage, while their records retain non-owning pointers. Future matrix

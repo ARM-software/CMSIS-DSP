@@ -2,6 +2,9 @@
 
 #include <dsppp/autodiff/reverse.hpp>
 
+#include <dsp/basic_math_functions.h>
+#include <dsp/support_functions.h>
+
 namespace arm_cmsis_dsp {
 namespace autodiff {
 
@@ -19,24 +22,22 @@ class AddOperator
     static void reset(detail::Node &node) noexcept
     {
         Record &record = reinterpret_cast<Record &>(node);
-        for (std::size_t i = 0; i < record.length; ++i)
-        {
-            record.output_gradient[i] = 0.0F;
-            if (record.left_gradient != nullptr) record.left_gradient[i] = 0.0F;
-            if (record.right_gradient != nullptr) record.right_gradient[i] = 0.0F;
-        }
+        arm_fill_f32(0.0F, record.output_gradient, record.length);
+        if (record.left_gradient != nullptr)
+            arm_fill_f32(0.0F, record.left_gradient, record.length);
+        if (record.right_gradient != nullptr)
+            arm_fill_f32(0.0F, record.right_gradient, record.length);
     }
 
     static void backward(detail::Node &node) noexcept
     {
         Record &record = reinterpret_cast<Record &>(node);
-        for (std::size_t i = 0; i < record.length; ++i)
-        {
-            if (record.left_gradient != nullptr)
-                record.left_gradient[i] += record.output_gradient[i];
-            if (record.right_gradient != nullptr)
-                record.right_gradient[i] += record.output_gradient[i];
-        }
+        if (record.left_gradient != nullptr)
+            arm_add_f32(record.left_gradient, record.output_gradient,
+                        record.left_gradient, record.length);
+        if (record.right_gradient != nullptr)
+            arm_add_f32(record.right_gradient, record.output_gradient,
+                        record.right_gradient, record.length);
     }
 
 public:
@@ -58,9 +59,9 @@ public:
             OperatorAccess::fail(*tape, Status::tape_mismatch);
             return false;
         }
-        for (std::size_t i = 0; i < OperatorAccess::length(output); ++i)
-            OperatorAccess::values(output)[i] =
-                OperatorAccess::values(left)[i] + OperatorAccess::values(right)[i];
+        arm_add_f32(OperatorAccess::values(left), OperatorAccess::values(right),
+                    OperatorAccess::values(output),
+                    OperatorAccess::length(output));
         if (!OperatorAccess::recording(*tape) || OperatorAccess::length(output) == 0U)
             return OperatorAccess::status(*tape) == Status::ok;
 
@@ -97,4 +98,3 @@ inline AddExpression operator+(const BufferView &left,
 
 } // namespace autodiff
 } // namespace arm_cmsis_dsp
-

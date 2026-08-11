@@ -55,4 +55,5 @@ build-*
 .venv/
 uv.lock
 *.cbuild-pack.yml
+disasm_*
 disasm.s
