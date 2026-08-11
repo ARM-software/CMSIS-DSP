@@ -84,6 +84,7 @@ record, gradient reset, backward rule, and expression adapter:
 | `operators/sub.hpp` | `SubOperator` | `a - b` |
 | `operators/multiply.hpp` | `MultiplyOperator` | `a * b` |
 | `operators/dot.hpp` | `DotOperator` | `dot(a, b)` |
+| `operators/dropout.hpp` | `DropoutOperator` | `dropout(x, generator, probability)` |
 | `operators/scale.hpp` | `ScaleOperator` | `scale(x, constant)` |
 | `operators/offset.hpp` | `OffsetOperator` | `offset(x, constant)` |
 | `operators/fully_connected.hpp` | `FullyConnectedOperator` | `fully_connected(x, m, b)` |
@@ -417,6 +418,20 @@ d(loss)/d(prediction[i]) = 2 * (prediction[i] - target[i])
 
 The target must be an input view; gradients are retained only for the
 prediction path and ultimately for its parameters.
+
+### Dropout
+
+Dropout uses caller-owned random state and inverted scaling during training:
+
+```cpp
+DropoutGenerator generator(1234U);
+tape.register_operator<DropoutOperator>();
+hidden = dropout(hidden_linear, generator, 0.2F);
+```
+
+When recording is disabled with `RecordingScope`, dropout copies its input
+unchanged for inference. The random state saved in each tape record lets the
+backward pass regenerate the training mask without storing a mask vector.
 
 Categorical cross entropy also returns a scalar sum:
 

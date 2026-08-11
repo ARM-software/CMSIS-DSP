@@ -10,6 +10,7 @@ extern "C" {
 #include <dsppp/autodiff/operators/add.hpp>
 #include <dsppp/autodiff/operators/cross_entropy.hpp>
 #include <dsppp/autodiff/operators/dot.hpp>
+#include <dsppp/autodiff/operators/dropout.hpp>
 #include <dsppp/autodiff/operators/fully_connected.hpp>
 #include <dsppp/autodiff/operators/multiply.hpp>
 #include <dsppp/autodiff/operators/offset.hpp>
@@ -556,6 +557,44 @@ void test12()
     assert(probability.gradient(2) == 0.0F);
 }
 
+void test13()
+{
+    // Training applies inverted dropout and backward regenerates the same
+    // mask. Disabling recording makes dropout an identity for inference.
+    Arena<1024> arena;
+    Tape &tape = arena.tape();
+    tape.register_operator<DropoutOperator>();
+    float input_value[16];
+    float output_value[16] = {};
+    for (std::size_t i = 0; i < 16U; ++i) input_value[i] = 1.0F;
+    BufferView input = tape.parameter(input_value);
+    BufferView output = tape.output(output_value);
+    DropoutGenerator generator(1234U);
+    output = dropout(input, generator, 0.5F);
+
+    unsigned dropped = 0U;
+    unsigned kept = 0U;
+    for (std::size_t i = 0; i < 16U; ++i)
+    {
+        assert(output_value[i] == 0.0F || output_value[i] == 2.0F);
+        output_value[i] == 0.0F ? ++dropped : ++kept;
+    }
+    assert(dropped != 0U && kept != 0U);
+
+    float seed[16];
+    for (std::size_t i = 0; i < 16U; ++i) seed[i] = 1.0F;
+    assert(tape.backward(output, seed, 16U));
+    for (std::size_t i = 0; i < 16U; ++i)
+        assert(input.gradient(i) == output_value[i]);
+
+    {
+        RecordingScope inference(tape, false);
+        output = dropout(input, generator, 0.5F);
+        for (std::size_t i = 0; i < 16U; ++i)
+            assert(output_value[i] == input_value[i]);
+    }
+}
+
 static void run_autodiff_tests()
 {
     test1();
@@ -570,6 +609,7 @@ static void run_autodiff_tests()
     test10();
     test11();
     test12();
+    test13();
     
     // Arena exhaustion is explicit and backward cannot return partial results.
     alignas(std::max_align_t) unsigned char tiny_memory[1];
