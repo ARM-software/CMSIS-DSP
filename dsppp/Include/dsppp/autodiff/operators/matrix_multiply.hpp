@@ -9,10 +9,6 @@
 #include <cstdint>
 #include <limits>
 
-#define dbgInst(imm) __asm volatile("DBG %0\n\t" : :"Ir" ((imm)) )
-#define startSectionNB(num) dbgInst(((num) & 0x7) | 0x0)
-#define stopSectionNB(num)  dbgInst(((num) & 0x7) | 0x8)
-
 namespace arm_cmsis_dsp {
 namespace autodiff {
 
@@ -50,7 +46,6 @@ class MatrixMultiplyOperator
         // dW = dY X^T. For each row of dY, this is X times that row. The lazy
         // matvec expression fuses the product with gradient accumulation.
 
-        startSectionNB(1);
         for (std::size_t row = 0; row < record.rows; ++row)
         {
             ::arm_cmsis_dsp::VectorView<float> output_gradient(
@@ -62,7 +57,6 @@ class MatrixMultiplyOperator
             weight_gradient +=
                 ::arm_cmsis_dsp::matvec(input_value, output_gradient);
         }
-        stopSectionNB(1);
     }
 
 public:
