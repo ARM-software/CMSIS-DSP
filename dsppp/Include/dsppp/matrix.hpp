@@ -554,6 +554,138 @@ struct VecRef<Matrix<P,R,C,A>,((R<0) || (C<0))>
    };
 };
 
+/** Lazy matrix times vector expression. */
+template<typename M, typename V>
+struct _MatVec: _Expr<_MatVec<M,V>>
+{
+    using MatrixScalar = typename traits<M>::Scalar;
+    using VectorScalar = typename traits<V>::Scalar;
+    using Scalar = typename MixedRes<MatrixScalar,VectorScalar>::type;
+#if defined(HAS_VECTOR)
+    using Vector = typename traits<Scalar>::Vector;
+    constexpr static int vector_lanes = vector_traits<Scalar>::nb_lanes;
+    constexpr static int block_size = vector_lanes > 4 ? vector_lanes : 4;
+#else
+    constexpr static int block_size = 4;
+#endif
+
+    _MatVec(const M &matrix, const V &vector)
+        : matrix_(matrix), vector_(vector), cache_start_(matrix.rows()),
+          cache_count_(0) {}
+
+    vector_length_t length() const { return matrix_.rows(); }
+
+    Scalar operator[](const index_t row) const
+    {
+        load_block(row);
+        return cache_[row - cache_start_];
+    }
+
+#if defined(HAS_VECTOR)
+    auto vector_op(const index_t row) const
+    {
+        load_block(row);
+        return inner::vload1<1>(cache_ + row - cache_start_);
+    }
+
+    auto vector_op_tail(const index_t row,
+                        const vector_length_t) const
+    {
+        return vector_op(row);
+    }
+#endif
+
+private:
+    void load_block(const index_t row) const
+    {
+        if (row >= cache_start_ && row < cache_start_ + cache_count_)
+            return;
+
+        cache_start_ = row - row % block_size;
+        const vector_length_t remaining = matrix_.rows() - cache_start_;
+        cache_count_ = remaining < block_size ? remaining : block_size;
+        for (index_t i = cache_count_; i < block_size; ++i)
+            cache_[i] = Scalar{};
+
+        _matvec_block(cache_, matrix_, vector_, cache_start_, cache_count_,
+                      (::arm_cmsis_dsp::ARCH *)nullptr);
+    }
+
+    M matrix_;
+    V vector_;
+    mutable Scalar cache_[block_size] = {};
+    mutable index_t cache_start_;
+    mutable vector_length_t cache_count_;
+};
+
+template<typename M, typename V>
+struct traits<_MatVec<M,V>>
+{
+    using Scalar = typename MixedRes<typename traits<M>::Scalar,
+                                     typename traits<V>::Scalar>::type;
+#if defined(HAS_VECTOR)
+    using Vector = typename traits<Scalar>::Vector;
+#endif
+};
+
+template<typename M, typename V>
+struct ElementType<_MatVec<M,V>>
+{
+    using type = typename MixedRes<typename traits<M>::Scalar,
+                                   typename traits<V>::Scalar>::type;
+};
+
+template<typename M, typename V>
+struct IsVector<_MatVec<M,V>>
+{
+    constexpr static bool value = true;
+};
+
+template<typename M, typename V>
+struct IsDynamic<_MatVec<M,V>>
+{
+    constexpr static bool value = IsDynamic<M>::value;
+};
+
+template<typename M, typename V>
+struct StaticLength<_MatVec<M,V>>
+{
+    constexpr static vector_length_t value = NbRows<M>::value;
+};
+
+template<typename M, typename V>
+struct Complexity<_MatVec<M,V>>
+{
+    constexpr static int value = 1;
+};
+
+template<typename M, typename V>
+struct VecRef<_MatVec<M,V>>
+{
+    using type = _MatVec<M,V>;
+    static type ref(const type &expression) { return expression; }
+};
+
+/**
+ * @brief Create a lazy matrix times vector expression.
+ *
+ * Unlike dot(matrix, vector), matvec does not allocate or evaluate a result.
+ * It can therefore be fused with surrounding elementwise vector operations.
+ */
+template<typename M,
+         typename V,
+         typename std::enable_if<
+             (CompatibleStaticMatVecProduct<M,V>::value ||
+              CompatibleDynamicMatVecProduct<M,V>::value),
+             bool>::type = true>
+inline auto matvec(const M &matrix, const V &vector)
+{
+    using MatrixRef = VecRef<M>;
+    using VectorRef = VecRef<V>;
+    return _MatVec<typename MatrixRef::type,typename VectorRef::type>(
+        MatrixRef::ref(matrix),VectorRef::ref(vector));
+}
+
 /** Lazy transposed-matrix times vector expression. */
 template<typename M, typename V>
 struct _TransposedMatVec: _Expr<_TransposedMatVec<M,V>>

@@ -1,13 +1,17 @@
 #pragma once
 
 #include <dsppp/autodiff/reverse.hpp>
+#include <dsppp/matrix.hpp>
 
-#include <dsp/basic_math_functions.h>
 #include <dsp/matrix_functions.h>
 #include <dsp/support_functions.h>
 
 #include <cstdint>
 #include <limits>
+
+#define dbgInst(imm) __asm volatile("DBG %0\n\t" : :"Ir" ((imm)) )
+#define startSectionNB(num) dbgInst(((num) & 0x7) | 0x0)
+#define stopSectionNB(num)  dbgInst(((num) & 0x7) | 0x8)
 
 namespace arm_cmsis_dsp {
 namespace autodiff {
@@ -39,26 +43,26 @@ class MatrixMultiplyOperator
     {
         Record &record = reinterpret_cast<Record &>(node);
 
-        // dW = dY X^T. X and dY are row-major, so every term needed for one
-        // element of dW is read from one row of each matrix.
+        ::arm_cmsis_dsp::MatrixView<float,::arm_cmsis_dsp::DYNAMIC>
+            input_value(const_cast<float *>(record.input_value), record.inner,
+                        record.columns, record.columns);
+
+        // dW = dY X^T. For each row of dY, this is X times that row. The lazy
+        // matvec expression fuses the product with gradient accumulation.
+
+        startSectionNB(1);
         for (std::size_t row = 0; row < record.rows; ++row)
         {
-            const float *output_gradient =
-                record.output_gradient + row * record.columns;
-            // Unrolling could improve the performances but there are not yet any abstraction 
-            // in C++ API to do it.
-            // We do not want to write a custom not generic implementation
-            // using low level intrinscis.
-            for (std::size_t inner = 0; inner < record.inner; ++inner)
-            {
-                const float *input =
-                    record.input_value + inner * record.columns;
-                float sum = 0.0F;
-                arm_dot_prod_f32(output_gradient, input, record.columns,
-                                 &sum);
-                record.weight_gradient[row * record.inner + inner] += sum;
-            }
+            ::arm_cmsis_dsp::VectorView<float> output_gradient(
+                record.output_gradient + row * record.columns, 0,
+                record.columns);
+            ::arm_cmsis_dsp::VectorView<float> weight_gradient(
+                record.weight_gradient + row * record.inner, 0,
+                record.inner);
+            weight_gradient +=
+                ::arm_cmsis_dsp::matvec(input_value, output_gradient);
         }
+        stopSectionNB(1);
     }
 
 public:

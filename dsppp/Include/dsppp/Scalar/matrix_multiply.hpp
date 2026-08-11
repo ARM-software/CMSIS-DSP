@@ -164,6 +164,69 @@ inline void _dot_m_v(RES &res,
 
 /*! @} */
 
+namespace detail {
+
+// Compute one matrix-row/vector dot product for each of up to four consecutive
+// rows. Each scalar from the vector is loaded once and reused by all dot
+// product accumulators.
+template<int ROWS, typename T, typename M, typename V>
+inline void matvec_scalar_rows(T *output, const M &matrix, const V &vector,
+                               const index_t first_row)
+{
+    using TM = typename traits<M>::Scalar;
+    using TV = typename traits<V>::Scalar;
+    using Acc = typename number_traits<T>::accumulator;
+
+    Acc sums[ROWS] = {};
+    const TM *rows[ROWS];
+    for (index_t row = 0; row < ROWS; ++row)
+        rows[row] = matrix.const_ptr() +
+                    (first_row + row) * matrix.stride();
+
+    for (index_t column = 0; column < matrix.columns(); ++column)
+    {
+        const TV value = vector[column];
+        for (index_t row = 0; row < ROWS; ++row)
+            sums[row] = inner::mac(sums[row], rows[row][column], value);
+    }
+
+    for (index_t row = 0; row < ROWS; ++row)
+        output[row] = inner::from_accumulator(sums[row]);
+}
+
+} // namespace detail
+
+// Fill the lazy matvec cache in groups of four rows, then handle the final
+// one to three rows with the same scalar kernel.
+template<typename T, typename M, typename V>
+inline void _matvec_block(T *output, const M &matrix, const V &vector,
+                          index_t first_row, vector_length_t row_count,
+                          const Scalar* = nullptr)
+{
+    while (row_count >= 4)
+    {
+        detail::matvec_scalar_rows<4>(output, matrix, vector, first_row);
+        output += 4;
+        first_row += 4;
+        row_count -= 4;
+    }
+
+    switch (row_count)
+    {
+    case 3:
+        detail::matvec_scalar_rows<3>(output, matrix, vector, first_row);
+        break;
+    case 2:
+        detail::matvec_scalar_rows<2>(output, matrix, vector, first_row);
+        break;
+    case 1:
+        detail::matvec_scalar_rows<1>(output, matrix, vector, first_row);
+        break;
+    default:
+        break;
+    }
+}
+
 #include "matrix_multiply_fixed.hpp"
 #include "matrix_multiply_float.hpp"
 

@@ -41,9 +41,23 @@ Once you have initialized matrixes, you can operate on them:
 Matrix<float32_t,ROWS,COLS> result = a * a + b;
 ```
 
-The operators `+` and `*` are merged into the loop. `*` is the element-wise multiply. For the vector / matrix products you should use the operator `dot`.
+The operators `+` and `*` are merged into the loop. `*` is the element-wise multiply. For eagerly evaluated vector / matrix products you should use the operator `dot`.
 
-Note that fusion of operators will not work with `dot(Matrix, Matrix`). It is only supported with vectors : `dot(Vector,Vector)` or `dot(Matrix,Vector)`.
+Note that fusion of operators will not work with `dot(Matrix, Matrix)` or
+`dot(Matrix, Vector)`, since both operations return an owning, eagerly
+evaluated result. Vector dot products return a scalar.
+
+For a matrix times vector product that must be fused with vector operations,
+use the lazy `matvec` operator:
+
+```cpp
+result += matvec(matrix, vector);
+```
+
+`matvec` returns a non-owning expression. In this example, the matrix-vector
+product is accumulated directly into `result` without allocating a temporary
+vector. The operands must remain alive until the complete expression is
+evaluated. Use `dot(matrix, vector)` when an owning result is required.
 
 ## VectorView
 
@@ -135,6 +149,18 @@ result = dot(a,b);
 The compiler may use the move semantic to copy the temporary result of the `dot` function to `result`.
 
 In this case, no copy would occur and `result` after the assignment would be a vector allocated by `dot` so using the `TMP_ALLOC` .
+
+### matvec
+
+```cpp
+result = bias + matvec(matrix, vector);
+```
+
+Unlike `dot(matrix, vector)`, `matvec(matrix, vector)` is lazy. It participates
+in the normal one-dimensional fusion loop, so the matrix-vector result can be
+combined with additions, multiplications, or accumulation without first being
+stored in a temporary vector. Matrix-matrix products remain eager and continue
+to use `dot`.
 
 ### diagonal
 

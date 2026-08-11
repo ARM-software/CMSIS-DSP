@@ -253,6 +253,81 @@ inline void _dot_m_v(RES &res,
     }
 }
 
+namespace detail {
+
+// Compute one matrix-row/vector dot product for each of up to four consecutive
+// rows. Each packed block from the vector is loaded once and reused by all dot
+// product accumulators.
+template<int ROWS, typename T, typename M, typename V>
+inline void matvec_dsp_rows(T *output, const M &matrix, const V &vector,
+                            const index_t first_row)
+{
+    using TM = typename traits<M>::Scalar;
+    using Acc = typename vector_traits<T>::temp_accumulator;
+    constexpr int lanes = vector_traits<T>::nb_lanes;
+
+    Acc sums[ROWS] = {};
+    const TM *rows[ROWS];
+    for (index_t row = 0; row < ROWS; ++row)
+        rows[row] = matrix.const_ptr() +
+                    (first_row + row) * matrix.stride();
+
+    index_t column = 0;
+    for (; column + lanes <= matrix.columns(); column += lanes)
+    {
+        const auto vector_data = vector.vector_op(column);
+        for (index_t row = 0; row < ROWS; ++row)
+            sums[row] = inner::vmacc(
+                sums[row], inner::vload1<1>(rows[row] + column), vector_data);
+    }
+
+    for (; column < matrix.columns(); ++column)
+        for (index_t row = 0; row < ROWS; ++row)
+            sums[row] = inner::mac(
+                sums[row], rows[row][column], vector[column]);
+
+    for (index_t row = 0; row < ROWS; ++row)
+        output[row] = inner::from_accumulator(sums[row]);
+}
+
+} // namespace detail
+
+// Fill the lazy matvec cache in groups of four rows, then handle the final
+// one to three rows with the same DSP kernel.
+template<typename T, typename M, typename V,
+         typename std::enable_if<
+             !is_complex<M>() && !is_complex<V>() &&
+             !std::is_same<typename traits<M>::Scalar,Q31>::value &&
+             number_traits<typename traits<M>::Scalar>::is_fixed,
+             bool>::type = true>
+inline void _matvec_block(T *output, const M &matrix, const V &vector,
+                          index_t first_row, vector_length_t row_count,
+                          const DSP* = nullptr)
+{
+    while (row_count >= 4)
+    {
+        detail::matvec_dsp_rows<4>(output, matrix, vector, first_row);
+        output += 4;
+        first_row += 4;
+        row_count -= 4;
+    }
+
+    switch (row_count)
+    {
+    case 3:
+        detail::matvec_dsp_rows<3>(output, matrix, vector, first_row);
+        break;
+    case 2:
+        detail::matvec_dsp_rows<2>(output, matrix, vector, first_row);
+        break;
+    case 1:
+        detail::matvec_dsp_rows<1>(output, matrix, vector, first_row);
+        break;
+    default:
+        break;
+    }
+}
+
 template<typename M,
          typename V,
          typename RES,
