@@ -119,12 +119,21 @@ int main()
     BufferView target = tape.input(state->target);
     BufferView loss = tape.output(state->loss);
 
+    
+    if (!tape.good()) {
+      if (tape.status() == Status::out_of_memory)
+        std::printf("Autodiff arena is too small\n");
+      return 1;
+    }
+
+
     if (!state->optimizer.add(hidden_weight) ||
         !state->optimizer.add(hidden_bias) ||
         !state->optimizer.add(output_weight) ||
         !state->optimizer.add(output_bias))
     {
         delete state;
+        std::printf("Failed to add parameters to optimizer\n");
         return 1;
     }
 
