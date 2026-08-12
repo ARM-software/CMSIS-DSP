@@ -21,17 +21,17 @@ using namespace arm_cmsis_dsp::autodiff;
 
 int main()
 {
-    Arena<512> arena;
-    Tape &tape = arena.tape();
-    tape.register_operator<ScaleOperator>();
+    Arena<512, float> arena;
+    Tape<float> &tape = arena.tape();
+    tape.register_operator<ScaleOperator<float>>();
 
     float a_value = 3.0F;
     float x_value[] = {2.0F, -1.0F};
     float y_value[2] = {};
 
-    BufferView a = tape.parameter(a_value);
-    BufferView x = tape.input(x_value);
-    BufferView y = tape.output(y_value);
+    BufferView<float> a = tape.parameter(a_value);
+    BufferView<float> x = tape.input(x_value);
+    BufferView<float> y = tape.output(y_value);
 
     y = scale(x, a); // Forward result: {6, -3}.
 
@@ -57,13 +57,14 @@ The seed specifies how those output contributions are combined. With
 `seed = {1, 1}`, the backward pass computes
 `a.gradient(0) = 1*2 + 1*(-1) = 1`. A seed of `{1, 0}` would select only
 `y[0]` and produce `a.gradient(0) = 2`. One call does not build the complete
-derivative vector for `y`; it propagates the combination selected by the seed.
-Training normally ends in a scalar loss, for which
+derivative vector for `y`; it propagates the selected scalar projection of the
+vector output. No loss function is present in this example. Training normally
+ends in a scalar loss, for which
 `backward(scalar_output)` uses the default seed `1`.
 
 ## Objects before the forward pass
 
-`Arena<512>` contains the storage array and constructs a `Tape` over it. The
+`Arena<512, float>` contains the storage array and constructs a `Tape<float>` over it. The
 tape initially has `used_ == 0`, `tail_ == nullptr`, `recording_ == true`, and
 `status_ == Status::ok`.
 
@@ -273,7 +274,8 @@ The operator record retains only the data needed later: raw non-owning
 pointers, dimensions, small metadata, and the common node prefix. It does not
 own or copy tensors and does not retain the temporary expression object. This
 keeps record size independent of the numerical buffer length. Gradient storage
-still costs one `float` per parameter or intermediate element.
+still costs one scalar of the selected type (`T`) per parameter or intermediate
+element.
 
 This is also why the caller must preserve values until the reverse pass. The
 scale rule rereads `x_value` and `a_value`; changing either after the forward

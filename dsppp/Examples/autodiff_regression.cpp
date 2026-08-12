@@ -54,10 +54,10 @@ int main()
     // global loss record. Values stay in caller storage; this arena contains
     // gradients and operation records only.
     Arena<32768> *arena = new Arena<32768>();
-    Tape &tape = arena->tape();
-    tape.register_operator<DotOperator>();
-    tape.register_operator<AddOperator>();
-    tape.register_operator<QuadraticErrorOperator>();
+    Tape<float> &tape = arena->tape();
+    tape.register_operator<DotOperator<float>>();
+    tape.register_operator<AddOperator<float>>();
+    tape.register_operator<QuadraticErrorOperator<float>>();
 
     float feature_value[sample_count][3] = {};
     float polynomial_value[sample_count] = {};
@@ -85,11 +85,23 @@ int main()
     BufferView target = tape.input(target_value);
     BufferView loss = tape.output(loss_value);
 
+    if (!tape.good())
+    {
+        std::printf("Autodiff setup failed (status=%u)\n",
+                    static_cast<unsigned>(tape.status()));
+        delete arena;
+        return 1;
+    }
+
     // Match the optimizer chosen by the PyTorch example. Adam can be used
     // here instead by including adam.hpp and changing only this type.
     RMSProp<4, 2> optimizer(1.0e-3F);
-    optimizer.add(coefficients);
-    optimizer.add(bias);
+    if (!optimizer.add(coefficients) || !optimizer.add(bias))
+    {
+        std::printf("Failed to add parameters to optimizer\n");
+        delete arena;
+        return 1;
+    }
 
     /* Set this to true for bias-only fine tuning. The same mechanism freezes
      * all parameters belonging to any selected layer/operator.
@@ -104,7 +116,11 @@ int main()
     tape.begin_graph();
     for (std::size_t step = 0; step < training_steps; ++step)
     {
-        tape.rewind_graph();
+        if (!tape.rewind_graph())
+        {
+            delete arena;
+            return 1;
+        }
 
         // Build all 100 predictions before constructing the loss. The scalar
         // views below share slices of the two arena-managed vector gradients;

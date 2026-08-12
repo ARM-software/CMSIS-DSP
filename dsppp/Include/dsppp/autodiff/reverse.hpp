@@ -16,8 +16,8 @@ namespace autodiff {
 #define DSPPP_AUTODIFF_MAX_OPERATORS 16
 #endif
 
-class Tape;
-class OperatorAccess;
+template <typename T = float> class Tape;
+template <typename T = float> class OperatorAccess;
 
 namespace detail {
 
@@ -55,7 +55,7 @@ enum class BufferRole
 };
 
 /** Non-owning view of caller values and an associated gradient buffer. */
-class BufferView
+template <typename T = float> class BufferView
 {
 public:
     BufferView() noexcept
@@ -64,22 +64,22 @@ public:
     {
     }
 
-    float *values() noexcept { return values_; }
-    const float *values() const noexcept { return values_; }
-    float *gradients() noexcept { return gradients_; }
-    const float *gradients() const noexcept { return gradients_; }
+    T *values() noexcept { return values_; }
+    const T *values() const noexcept { return values_; }
+    T *gradients() noexcept { return gradients_; }
+    const T *gradients() const noexcept { return gradients_; }
     std::size_t length() const noexcept { return length_; }
     BufferRole role() const noexcept { return role_; }
     bool has_gradient() const noexcept { return gradients_ != nullptr; }
 
-    float &operator[](std::size_t index) noexcept { return values_[index]; }
-    const float &operator[](std::size_t index) const noexcept
+    T &operator[](std::size_t index) noexcept { return values_[index]; }
+    const T &operator[](std::size_t index) const noexcept
     {
         return values_[index];
     }
-    float gradient(std::size_t index) const noexcept
+    T gradient(std::size_t index) const noexcept
     {
-        return gradients_ == nullptr ? 0.0F : gradients_[index];
+        return gradients_ == nullptr ? T{} : gradients_[index];
     }
 
     /** Evaluate any expression supplied by a separately included operator. */
@@ -91,68 +91,68 @@ public:
     }
 
 private:
-    BufferView(float *values, float *gradients, std::size_t length,
-               Tape *tape, BufferRole role) noexcept
+    BufferView(T *values, T *gradients, std::size_t length,
+               Tape<T> *tape, BufferRole role) noexcept
         : values_(values), gradients_(gradients), length_(length), tape_(tape),
           producer_(nullptr), role_(role)
     {
     }
 
-    float *values_;
-    float *gradients_;
+    T *values_;
+    T *gradients_;
     std::size_t length_;
-    Tape *tape_;
+    Tape<T> *tape_;
     detail::Node *producer_;
     BufferRole role_;
 
-    friend class Tape;
-    friend class OperatorAccess;
+    friend class Tape<T>;
+    friend class OperatorAccess<T>;
 };
 
 /** Non-owning row-major matrix parameter view. */
-class MatrixView
+template <typename T = float> class MatrixView
 {
 public:
     MatrixView() noexcept : buffer_(), rows_(0U), columns_(0U) {}
 
     std::size_t rows() const noexcept { return rows_; }
     std::size_t columns() const noexcept { return columns_; }
-    float *values() noexcept { return buffer_.values(); }
-    const float *values() const noexcept { return buffer_.values(); }
-    float *gradients() noexcept { return buffer_.gradients(); }
-    const float *gradients() const noexcept { return buffer_.gradients(); }
+    T *values() noexcept { return buffer_.values(); }
+    const T *values() const noexcept { return buffer_.values(); }
+    T *gradients() noexcept { return buffer_.gradients(); }
+    const T *gradients() const noexcept { return buffer_.gradients(); }
     std::size_t length() const noexcept { return rows_ * columns_; }
-    float &operator()(std::size_t row, std::size_t column) noexcept
+    T &operator()(std::size_t row, std::size_t column) noexcept
     {
         return buffer_.values()[row * columns_ + column];
     }
-    const float &operator()(std::size_t row,
-                            std::size_t column) const noexcept
+    const T &operator()(std::size_t row,
+                        std::size_t column) const noexcept
     {
         return buffer_.values()[row * columns_ + column];
     }
-    float gradient(std::size_t row, std::size_t column) const noexcept
+    T gradient(std::size_t row, std::size_t column) const noexcept
     {
         return buffer_.gradient(row * columns_ + column);
     }
 
 private:
-    MatrixView(const BufferView &buffer, std::size_t rows,
+    MatrixView(const BufferView<T> &buffer, std::size_t rows,
                std::size_t columns) noexcept
         : buffer_(buffer), rows_(rows), columns_(columns)
     {
     }
 
-    BufferView buffer_;
+    BufferView<T> buffer_;
     std::size_t rows_;
     std::size_t columns_;
 
-    friend class Tape;
-    friend class OperatorAccess;
+    friend class Tape<T>;
+    friend class OperatorAccess<T>;
 };
 
 /** Reverse-mode tape using caller-supplied storage and a fixed operator list. */
-class Tape
+template <typename T> class Tape
 {
 public:
     static constexpr std::size_t maximum_registered_operators =
@@ -267,185 +267,185 @@ public:
     void set_recording(bool enabled) noexcept { recording_ = enabled; }
 
     /** Generic active view; output() is clearer for application code. */
-    BufferView view(float *values, std::size_t length) noexcept
+    BufferView<T> view(T *values, std::size_t length) noexcept
     {
         if (length != 0U && values == nullptr)
         {
             set_error(Status::tape_mismatch);
-            return BufferView(values, nullptr, length, this,
+            return BufferView<T>(values, nullptr, length, this,
                               BufferRole::intermediate);
         }
-        if (length > static_cast<std::size_t>(-1) / sizeof(float))
+        if (length > static_cast<std::size_t>(-1) / sizeof(T))
         {
             set_error(Status::out_of_memory);
-            return BufferView(values, nullptr, length, this,
+            return BufferView<T>(values, nullptr, length, this,
                               BufferRole::intermediate);
         }
 
-        float *gradients = nullptr;
+        T *gradients = nullptr;
         if (length != 0U)
         {
-            gradients = static_cast<float *>(
-                allocate(length * sizeof(float), alignof(float)));
+            gradients = static_cast<T *>(
+                allocate(length * sizeof(T), alignof(T)));
             if (gradients != nullptr)
             {
                 for (std::size_t i = 0; i < length; ++i)
                 {
-                    gradients[i] = 0.0F;
+                    gradients[i] = T{};
                 }
             }
         }
-        return BufferView(values, gradients, length, this,
+        return BufferView<T>(values, gradients, length, this,
                           BufferRole::intermediate);
     }
 
     template <std::size_t Length>
-    BufferView view(float (&values)[Length]) noexcept
+    BufferView<T> view(T (&values)[Length]) noexcept
     {
         return view(values, Length);
     }
 
-    BufferView view(float *values, float *gradients,
+    BufferView<T> view(T *values, T *gradients,
                     std::size_t length) noexcept
     {
         if (length != 0U && (values == nullptr || gradients == nullptr))
         {
             set_error(Status::tape_mismatch);
         }
-        return BufferView(values, gradients, length, this,
+        return BufferView<T>(values, gradients, length, this,
                           BufferRole::intermediate);
     }
 
     template <std::size_t Length>
-    BufferView view(float (&values)[Length],
-                    float (&gradients)[Length]) noexcept
+    BufferView<T> view(T (&values)[Length],
+                       T (&gradients)[Length]) noexcept
     {
         return view(values, gradients, Length);
     }
 
-    BufferView input(float *values, std::size_t length) noexcept
+    BufferView<T> input(T *values, std::size_t length) noexcept
     {
         if (length != 0U && values == nullptr)
         {
             set_error(Status::tape_mismatch);
         }
-        return BufferView(values, nullptr, length, this, BufferRole::input);
+        return BufferView<T>(values, nullptr, length, this, BufferRole::input);
     }
 
     template <std::size_t Length>
-    BufferView input(float (&values)[Length]) noexcept
+    BufferView<T> input(T (&values)[Length]) noexcept
     {
         return input(values, Length);
     }
 
-    BufferView input(float &value) noexcept { return input(&value, 1U); }
+    BufferView<T> input(T &value) noexcept { return input(&value, 1U); }
 
-    BufferView parameter(float *values, std::size_t length) noexcept
+    BufferView<T> parameter(T *values, std::size_t length) noexcept
     {
-        BufferView result = view(values, length);
+        BufferView<T> result = view(values, length);
         result.role_ = BufferRole::parameter;
         return result;
     }
 
     template <std::size_t Length>
-    BufferView parameter(float (&values)[Length]) noexcept
+    BufferView<T> parameter(T (&values)[Length]) noexcept
     {
         return parameter(values, Length);
     }
 
-    BufferView parameter(float &value) noexcept
+    BufferView<T> parameter(T &value) noexcept
     {
         return parameter(&value, 1U);
     }
 
-    BufferView parameter(float *values, float *gradients,
+    BufferView<T> parameter(T *values, T *gradients,
                          std::size_t length) noexcept
     {
-        BufferView result = view(values, gradients, length);
+        BufferView<T> result = view(values, gradients, length);
         result.role_ = BufferRole::parameter;
         return result;
     }
 
     template <std::size_t Length>
-    BufferView parameter(float (&values)[Length],
-                         float (&gradients)[Length]) noexcept
+    BufferView<T> parameter(T (&values)[Length],
+                            T (&gradients)[Length]) noexcept
     {
         return parameter(values, gradients, Length);
     }
 
-    BufferView parameter(float &value, float &gradient) noexcept
+    BufferView<T> parameter(T &value, T &gradient) noexcept
     {
         return parameter(&value, &gradient, 1U);
     }
 
-    MatrixView parameter(float *values, std::size_t rows,
+    MatrixView<T> parameter(T *values, std::size_t rows,
                          std::size_t columns) noexcept
     {
         if (columns != 0U && rows > static_cast<std::size_t>(-1) / columns)
         {
             set_error(Status::out_of_memory);
-            return MatrixView();
+            return MatrixView<T>();
         }
-        return MatrixView(parameter(values, rows * columns), rows, columns);
+        return MatrixView<T>(parameter(values, rows * columns), rows, columns);
     }
 
     template <std::size_t Rows, std::size_t Columns>
-    MatrixView parameter(float (&values)[Rows][Columns]) noexcept
+    MatrixView<T> parameter(T (&values)[Rows][Columns]) noexcept
     {
         return parameter(&values[0][0], Rows, Columns);
     }
 
-    MatrixView parameter(float *values, float *gradients, std::size_t rows,
+    MatrixView<T> parameter(T *values, T *gradients, std::size_t rows,
                          std::size_t columns) noexcept
     {
         if (columns != 0U && rows > static_cast<std::size_t>(-1) / columns)
         {
             set_error(Status::out_of_memory);
-            return MatrixView();
+            return MatrixView<T>();
         }
-        return MatrixView(parameter(values, gradients, rows * columns), rows,
-                          columns);
+        return MatrixView<T>(parameter(values, gradients, rows * columns), rows,
+                             columns);
     }
 
     template <std::size_t Rows, std::size_t Columns>
-    MatrixView parameter(float (&values)[Rows][Columns],
-                         float (&gradients)[Rows][Columns]) noexcept
+    MatrixView<T> parameter(T (&values)[Rows][Columns],
+                            T (&gradients)[Rows][Columns]) noexcept
     {
         return parameter(&values[0][0], &gradients[0][0], Rows, Columns);
     }
 
-    BufferView output(float *values, std::size_t length) noexcept
+    BufferView<T> output(T *values, std::size_t length) noexcept
     {
         return view(values, length);
     }
 
     template <std::size_t Length>
-    BufferView output(float (&values)[Length]) noexcept
+    BufferView<T> output(T (&values)[Length]) noexcept
     {
         return output(values, Length);
     }
 
-    BufferView output(float &value) noexcept { return output(&value, 1U); }
+    BufferView<T> output(T &value) noexcept { return output(&value, 1U); }
 
-    BufferView output(float *values, float *gradients,
+    BufferView<T> output(T *values, T *gradients,
                       std::size_t length) noexcept
     {
         return view(values, gradients, length);
     }
 
     template <std::size_t Length>
-    BufferView output(float (&values)[Length],
-                      float (&gradients)[Length]) noexcept
+    BufferView<T> output(T (&values)[Length],
+                         T (&gradients)[Length]) noexcept
     {
         return output(values, gradients, Length);
     }
 
-    BufferView output(float &value, float &gradient) noexcept
+    BufferView<T> output(T &value, T &gradient) noexcept
     {
         return output(&value, &gradient, 1U);
     }
 
-    bool backward(const BufferView &output, float seed = 1.0F) noexcept
+    bool backward(const BufferView<T> &output, T seed = T{1}) noexcept
     {
         if (output.length_ != 1U)
         {
@@ -455,7 +455,7 @@ public:
         return backward(output, &seed, 1U);
     }
 
-    bool backward(const BufferView &output, const float *seed,
+    bool backward(const BufferView<T> &output, const T *seed,
                   std::size_t seed_length) noexcept
     {
         if (status_ != Status::ok)
@@ -497,7 +497,7 @@ private:
                (maximum_registered_operators - 1U);
     }
 
-    bool valid(const BufferView &view) const noexcept
+    bool valid(const BufferView<T> &view) const noexcept
     {
         return view.tape_ == this &&
                (view.length_ == 0U ||
@@ -572,66 +572,66 @@ private:
     std::size_t registered_count_;
     const void *registered_operators_[maximum_registered_operators];
 
-    friend class OperatorAccess;
+    friend class OperatorAccess<T>;
 };
 
 /** Narrow internal interface used by independently defined operators. */
-class OperatorAccess
+template <typename T> class OperatorAccess
 {
 public:
-    static Tape *tape(const BufferView &view) noexcept { return view.tape_; }
-    static float *values(BufferView &view) noexcept { return view.values_; }
-    static const float *values(const BufferView &view) noexcept
+    static Tape<T> *tape(const BufferView<T> &view) noexcept { return view.tape_; }
+    static T *values(BufferView<T> &view) noexcept { return view.values_; }
+    static const T *values(const BufferView<T> &view) noexcept
     {
         return view.values_;
     }
-    static float *gradients(const BufferView &view) noexcept
+    static T *gradients(const BufferView<T> &view) noexcept
     {
         return view.gradients_;
     }
-    static std::size_t length(const BufferView &view) noexcept
+    static std::size_t length(const BufferView<T> &view) noexcept
     {
         return view.length_;
     }
-    static BufferRole role(const BufferView &view) noexcept { return view.role_; }
-    static detail::Node *producer(const BufferView &view) noexcept
+    static BufferRole role(const BufferView<T> &view) noexcept { return view.role_; }
+    static detail::Node *producer(const BufferView<T> &view) noexcept
     {
         return view.producer_;
     }
-    static void set_producer(BufferView &view, detail::Node *node) noexcept
+    static void set_producer(BufferView<T> &view, detail::Node *node) noexcept
     {
         view.producer_ = node;
     }
-    static bool valid(const Tape &tape, const BufferView &view) noexcept
+    static bool valid(const Tape<T> &tape, const BufferView<T> &view) noexcept
     {
         return tape.valid(view);
     }
-    static bool compatible(const Tape &tape, const BufferView &left,
-                           const BufferView &right) noexcept
+    static bool compatible(const Tape<T> &tape, const BufferView<T> &left,
+                           const BufferView<T> &right) noexcept
     {
         return valid(tape, left) && valid(tape, right) &&
                length(left) == length(right);
     }
-    static const BufferView &buffer(const MatrixView &matrix) noexcept
+    static const BufferView<T> &buffer(const MatrixView<T> &matrix) noexcept
     {
         return matrix.buffer_;
     }
-    static std::size_t rows(const MatrixView &matrix) noexcept
+    static std::size_t rows(const MatrixView<T> &matrix) noexcept
     {
         return matrix.rows_;
     }
-    static std::size_t columns(const MatrixView &matrix) noexcept
+    static std::size_t columns(const MatrixView<T> &matrix) noexcept
     {
         return matrix.columns_;
     }
-    static bool recording(const Tape &tape) noexcept { return tape.recording_; }
-    static Status status(const Tape &tape) noexcept { return tape.status_; }
-    static void fail(Tape &tape, Status status) noexcept { tape.set_error(status); }
+    static bool recording(const Tape<T> &tape) noexcept { return tape.recording_; }
+    static Status status(const Tape<T> &tape) noexcept { return tape.status_; }
+    static void fail(Tape<T> &tape, Status status) noexcept { tape.set_error(status); }
 
     template <typename Operator>
-    static bool require(Tape &tape) noexcept
+    static bool require(Tape<T> &tape) noexcept
     {
-        if (!tape.is_operator_registered<Operator>())
+        if (!tape.template is_operator_registered<Operator>())
         {
             tape.set_error(Status::operator_not_registered);
             return false;
@@ -640,17 +640,17 @@ public:
     }
 
     template <typename Record>
-    static Record *append(Tape &tape, detail::BackwardFunction backward,
+    static Record *append(Tape<T> &tape, detail::BackwardFunction backward,
                           detail::ResetFunction reset_gradient) noexcept
     {
-        return tape.append<Record>(backward, reset_gradient);
+        return tape.template append<Record>(backward, reset_gradient);
     }
 };
 
-class RecordingScope
+template <typename T = float> class RecordingScope
 {
 public:
-    RecordingScope(Tape &tape, bool enabled) noexcept
+    RecordingScope(Tape<T> &tape, bool enabled) noexcept
         : tape_(tape), previous_(tape.recording())
     {
         tape_.set_recording(enabled);
@@ -660,11 +660,11 @@ public:
     RecordingScope &operator=(const RecordingScope &) = delete;
 
 private:
-    Tape &tape_;
+    Tape<T> &tape_;
     bool previous_;
 };
 
-template <std::size_t Bytes>
+template <std::size_t Bytes, typename T = float>
 class Arena
 {
 public:
@@ -672,12 +672,12 @@ public:
     Arena() noexcept : storage_{}, tape_(storage_, Bytes) {}
     Arena(const Arena &) = delete;
     Arena &operator=(const Arena &) = delete;
-    Tape &tape() noexcept { return tape_; }
-    const Tape &tape() const noexcept { return tape_; }
+    Tape<T> &tape() noexcept { return tape_; }
+    const Tape<T> &tape() const noexcept { return tape_; }
 
 private:
     alignas(std::max_align_t) unsigned char storage_[Bytes];
-    Tape tape_;
+    Tape<T> tape_;
 };
 
 } // namespace autodiff

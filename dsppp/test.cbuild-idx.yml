@@ -17,7 +17,7 @@ build-idx:
         info:
           - test.cbuild-pack.yml - file is already up-to-date
           - test+VHT-Corstone-300.cbuild-run.yml - file is already up-to-date
-          - example.Release+VHT-Corstone-300.cbuild.yml - file is already up-to-date
+          - example.Release+VHT-Corstone-300.cbuild.yml - file generated successfully
       packs-unused:
         - pack: ARM::CMSIS-Compiler@2.2.0
         - pack: ARM::Cortex_DFP@1.2.0

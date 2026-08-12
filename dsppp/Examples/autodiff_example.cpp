@@ -9,9 +9,9 @@ using namespace arm_cmsis_dsp::autodiff;
 int main()
 {
     Arena<2048> arena;
-    Tape &tape = arena.tape();
-    tape.register_operator<FullyConnectedOperator>();
-    tape.register_operator<ReluOperator>();
+    Tape<float> &tape = arena.tape();
+    tape.register_operator<FullyConnectedOperator<float>>();
+    tape.register_operator<ReluOperator<float>>();
 
     float x_value[] = {2.0F, -1.0F};
     float matrix_value[2][2] = {{1.0F, 2.0F}, {-3.0F, 1.0F}};
@@ -24,6 +24,13 @@ int main()
     BufferView bias = tape.parameter(bias_value);
     BufferView linear = tape.output(linear_value);
     BufferView activation = tape.output(activation_value);
+
+    if (!tape.good())
+    {
+        std::printf("Autodiff setup failed (status=%u)\n",
+                    static_cast<unsigned>(tape.status()));
+        return 1;
+    }
 
     linear = fully_connected(x, matrix, bias);
     activation = relu(linear);

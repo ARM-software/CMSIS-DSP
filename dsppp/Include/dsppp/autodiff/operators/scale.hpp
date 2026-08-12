@@ -5,113 +5,146 @@
 #include <dsppp/matrix.hpp>
 
 #include <dsp/basic_math_functions.h>
+#include <dsp/basic_math_functions_f16.h>
 #include <dsp/support_functions.h>
+#include <dsp/support_functions_f16.h>
 
 namespace arm_cmsis_dsp {
 namespace autodiff {
 
-class ScaleOperator
+template <typename T = float> class ScaleOperator
 {
+    static void fill(T *data, std::size_t length) noexcept
+    {
+        if constexpr (std::is_same<T, float>::value)
+            arm_fill_f32(T{}, data, static_cast<uint32_t>(length));
+#if defined(ARM_FLOAT16_SUPPORTED)
+        else
+            arm_fill_f16(T{}, data, static_cast<uint32_t>(length));
+#else
+        else
+            for (std::size_t i = 0; i < length; ++i) data[i] = T{};
+#endif
+    }
+
+    static void apply_scale(const T *input, T value, T *output,
+                            std::size_t length) noexcept
+    {
+        if constexpr (std::is_same<T, float>::value)
+            arm_scale_f32(input, value, output, static_cast<uint32_t>(length));
+#if defined(ARM_FLOAT16_SUPPORTED)
+        else
+            arm_scale_f16(input, value, output, static_cast<uint32_t>(length));
+#else
+        else
+            for (std::size_t i = 0; i < length; ++i) output[i] = input[i] * value;
+#endif
+    }
+
     struct Record
     {
         detail::Node node;
-        float *output_gradient;
-        const float *input_value;
-        float *input_gradient;
-        const float *scale_value;
-        float *scale_gradient;
+        T *output_gradient;
+        const T *input_value;
+        T *input_gradient;
+        const T *scale_value;
+        T *scale_gradient;
         std::size_t length;
     };
 
     static void reset(detail::Node &node) noexcept
     {
         Record &record = reinterpret_cast<Record &>(node);
-        arm_fill_f32(0.0F, record.output_gradient, record.length);
+        fill(record.output_gradient, record.length);
         if (record.input_gradient != nullptr)
-            arm_fill_f32(0.0F, record.input_gradient, record.length);
-        record.scale_gradient[0] = 0.0F;
+            fill(record.input_gradient, record.length);
+        record.scale_gradient[0] = T{};
     }
 
     static void backward(detail::Node &node) noexcept
     {
         Record &record = reinterpret_cast<Record &>(node);
-        ::arm_cmsis_dsp::VectorView<float> output_gradient(
+        ::arm_cmsis_dsp::VectorView<T> output_gradient(
             record.output_gradient, 0, record.length);
-        ::arm_cmsis_dsp::VectorView<float> input_value(
-            const_cast<float *>(record.input_value), 0, record.length);
-        record.scale_gradient[0] +=
-            ::arm_cmsis_dsp::dot(output_gradient, input_value);
+        ::arm_cmsis_dsp::VectorView<T> input_value(
+            const_cast<T *>(record.input_value), 0, record.length);
+        const T contribution = static_cast<T>(::arm_cmsis_dsp::dot(output_gradient, input_value));
+        if constexpr (std::is_same<T, float>::value)
+            record.scale_gradient[0] += contribution;
+        else
+            record.scale_gradient[0] = static_cast<T>(
+                static_cast<float>(record.scale_gradient[0]) +
+                static_cast<float>(contribution));
         if (record.input_gradient != nullptr)
         {
-            ::arm_cmsis_dsp::VectorView<float> input_gradient(
+            ::arm_cmsis_dsp::VectorView<T> input_gradient(
                 record.input_gradient, 0, record.length);
             input_gradient += output_gradient * record.scale_value[0];
         }
     }
 
 public:
-    static bool evaluate(BufferView &output, const BufferView &input,
-                         const BufferView &scale) noexcept
+    static bool evaluate(BufferView<T> &output, const BufferView<T> &input,
+                         const BufferView<T> &scale) noexcept
     {
-        Tape *tape = OperatorAccess::tape(output);
-        OperatorAccess::set_producer(output, nullptr);
-        if (tape == nullptr || !OperatorAccess::require<ScaleOperator>(*tape))
+        Tape<T> *tape = OperatorAccess<T>::tape(output);
+        OperatorAccess<T>::set_producer(output, nullptr);
+        if (tape == nullptr || !OperatorAccess<T>::template require<ScaleOperator<T>>(*tape))
             return false;
-        if (!OperatorAccess::compatible(*tape, output, input) ||
-            !OperatorAccess::valid(*tape, scale) ||
-            OperatorAccess::length(scale) != 1U ||
-            OperatorAccess::role(scale) != BufferRole::parameter ||
-            OperatorAccess::gradients(output) == nullptr ||
-            OperatorAccess::gradients(scale) == nullptr ||
-            OperatorAccess::values(output) == OperatorAccess::values(input) ||
-            OperatorAccess::values(output) == OperatorAccess::values(scale) ||
-            OperatorAccess::gradients(output) ==
-                OperatorAccess::gradients(input) ||
-            OperatorAccess::gradients(output) ==
-                OperatorAccess::gradients(scale))
+        if (!OperatorAccess<T>::compatible(*tape, output, input) ||
+            !OperatorAccess<T>::valid(*tape, scale) ||
+            OperatorAccess<T>::length(scale) != 1U ||
+            OperatorAccess<T>::role(scale) != BufferRole::parameter ||
+            OperatorAccess<T>::gradients(output) == nullptr ||
+            OperatorAccess<T>::gradients(scale) == nullptr ||
+            OperatorAccess<T>::values(output) == OperatorAccess<T>::values(input) ||
+            OperatorAccess<T>::values(output) == OperatorAccess<T>::values(scale) ||
+            OperatorAccess<T>::gradients(output) ==
+                OperatorAccess<T>::gradients(input) ||
+            OperatorAccess<T>::gradients(output) ==
+                OperatorAccess<T>::gradients(scale))
         {
-            OperatorAccess::fail(*tape, Status::tape_mismatch);
+            OperatorAccess<T>::fail(*tape, Status::tape_mismatch);
             return false;
         }
-        arm_scale_f32(OperatorAccess::values(input),
-                      OperatorAccess::values(scale)[0],
-                      OperatorAccess::values(output),
-                      OperatorAccess::length(output));
-        if (!OperatorAccess::recording(*tape) ||
-            OperatorAccess::length(output) == 0U)
-            return OperatorAccess::status(*tape) == Status::ok;
+        apply_scale(OperatorAccess<T>::values(input), OperatorAccess<T>::values(scale)[0],
+                    OperatorAccess<T>::values(output), OperatorAccess<T>::length(output));
+        if (!OperatorAccess<T>::recording(*tape) ||
+            OperatorAccess<T>::length(output) == 0U)
+            return OperatorAccess<T>::status(*tape) == Status::ok;
 
-        Record *record = OperatorAccess::append<Record>(*tape, backward, reset);
+        Record *record = OperatorAccess<T>::template append<Record>(*tape, backward, reset);
         if (record == nullptr) return false;
-        record->output_gradient = OperatorAccess::gradients(output);
-        record->input_value = OperatorAccess::values(input);
-        record->input_gradient = OperatorAccess::gradients(input);
-        record->scale_value = OperatorAccess::values(scale);
-        record->scale_gradient = OperatorAccess::gradients(scale);
-        record->length = OperatorAccess::length(output);
-        OperatorAccess::set_producer(output, &record->node);
+        record->output_gradient = OperatorAccess<T>::gradients(output);
+        record->input_value = OperatorAccess<T>::values(input);
+        record->input_gradient = OperatorAccess<T>::gradients(input);
+        record->scale_value = OperatorAccess<T>::values(scale);
+        record->scale_gradient = OperatorAccess<T>::gradients(scale);
+        record->length = OperatorAccess<T>::length(output);
+        OperatorAccess<T>::set_producer(output, &record->node);
         return true;
     }
 };
 
-class ScaleExpression
+template <typename T = float> class ScaleExpression
 {
 public:
-    ScaleExpression(const BufferView &input, const BufferView &scale) noexcept
+    ScaleExpression(const BufferView<T> &input, const BufferView<T> &scale) noexcept
         : input_(input), scale_(scale) {}
-    void evaluate(BufferView &output) const noexcept
+    void evaluate(BufferView<T> &output) const noexcept
     {
-        ScaleOperator::evaluate(output, input_, scale_);
+        ScaleOperator<T>::evaluate(output, input_, scale_);
     }
 private:
-    BufferView input_;
-    BufferView scale_;
+    BufferView<T> input_;
+    BufferView<T> scale_;
 };
 
-inline ScaleExpression scale(const BufferView &input,
-                             const BufferView &constant) noexcept
+template <typename T = float>
+inline ScaleExpression<T> scale(const BufferView<T> &input,
+                                const BufferView<T> &constant) noexcept
 {
-    return ScaleExpression(input, constant);
+    return ScaleExpression<T>(input, constant);
 }
 
 } // namespace autodiff

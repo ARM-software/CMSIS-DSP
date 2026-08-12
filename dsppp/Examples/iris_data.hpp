@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstddef>
+#include <arm_math_types_f16.h>
 
 namespace iris_data {
 
@@ -177,5 +178,19 @@ inline void normalized_features(std::size_t index, float (&output)[4]) noexcept
             (samples[index].feature[feature] - mean[feature]) *
             inverse_standard_deviation[feature];
 }
+
+// The source pattern remains float32 so it can be shared by the original
+// example. This overload provides a separate float16 pattern buffer for the
+// half-precision autodiff example.
+#if defined(ARM_FLOAT16_SUPPORTED)
+inline void normalized_features(std::size_t index,
+                                float16_t (&output)[4]) noexcept
+{
+    for (std::size_t feature = 0; feature < 4U; ++feature)
+        output[feature] = static_cast<float16_t>(
+            (samples[index].feature[feature] - mean[feature]) *
+            inverse_standard_deviation[feature]);
+}
+#endif
 
 } // namespace iris_data

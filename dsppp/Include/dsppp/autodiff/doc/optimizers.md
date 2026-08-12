@@ -1,8 +1,10 @@
 # Optimizers
 
 `Adam` and `RMSProp` update caller-owned parameter values from tape-managed or
-caller-owned gradients. All optimizer metadata and numerical state are fixed
-arrays inside the optimizer object; neither optimizer allocates memory.
+caller-owned gradients. Their third template argument selects the scalar type
+(`float` by default, or `float16_t`), matching the tape views. All optimizer
+metadata and numerical state are fixed arrays inside the optimizer object;
+neither optimizer allocates memory.
 
 ## Capacity arguments
 
@@ -22,7 +24,7 @@ only one parameter-view slot:
 
 ```cpp
 float value[10] = {};
-BufferView parameter = tape.parameter(value);
+BufferView<float> parameter = tape.parameter(value);
 RMSProp<10, 1> optimizer;
 optimizer.add(parameter);
 ```
@@ -31,6 +33,7 @@ A matrix also counts as one view, while all `rows*columns` entries count toward
 `MaximumElements`. A three-element coefficient vector plus a separate scalar
 bias fits exactly in either `RMSProp<4, 2>` or `Adam<4, 2>`. Writing
 `Adam<100>` reserves 100 scalar state positions and the default 16 view slots.
+For half precision, use for example `Adam<100, 16, float16_t>`.
 
 Adding the same value pointer twice is idempotent. A frozen parameter continues
 to occupy both capacities.
@@ -57,11 +60,13 @@ parameter -= learning_rate * gradient
 
 `square_average` starts at zero. `alpha` controls how slowly squared-gradient
 history changes; values near one produce longer memory. `epsilon` prevents a
-zero or very small denominator. The defaults are conventional starting points,
-but learning rate normally requires tuning for the model and loss scale.
+zero or very small denominator. The default is `1e-8` for float32 and `1e-4`
+for float16, where `1e-8` would round to zero. These are conventional starting
+points, but learning rate normally requires tuning for the model and loss
+scale.
 
 Storage consists principally of one
-`float square_average_[MaximumElements]` plus
+`T square_average_[MaximumElements]` plus
 `Entry entries_[MaximumParameters]`. Each entry stores value and gradient
 pointers, length, state offset, and whether the parameter is trainable.
 
@@ -94,11 +99,13 @@ parameter -= learning_rate * corrected_first
 Both moment arrays and their powers are initialized so the first successful
 step applies the usual bias correction. `beta1` controls first-moment memory,
 `beta2` controls squared-gradient memory, and `epsilon` stabilizes the
-denominator. The defaults are standard initial choices.
+denominator. The default epsilon is `1e-8` for float32 and `1e-4` for
+float16, where `1e-8` would round to zero. The other defaults are standard
+initial choices.
 
 Adam stores
-`first_moment_[MaximumElements]`,
-`second_moment_[MaximumElements]`, and
+`T first_moment_[MaximumElements]`,
+`T second_moment_[MaximumElements]`, and
 `entries_[MaximumParameters]`, so its principal per-element state is twice
 RMSProp's. Its global step advances each time `step()` succeeds.
 
@@ -109,8 +116,8 @@ Add each parameter once after creating its view:
 ```cpp
 float coefficient_value[3] = {};
 float bias_value = 0.0F;
-BufferView coefficients = tape.parameter(coefficient_value);
-BufferView bias = tape.parameter(bias_value);
+BufferView<float> coefficients = tape.parameter(coefficient_value);
+BufferView<float> bias = tape.parameter(bias_value);
 
 RMSProp<4, 2> optimizer;
 optimizer.add(coefficients);

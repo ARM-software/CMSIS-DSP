@@ -7,24 +7,39 @@
 #include <dsppp/matrix.hpp>
 
 #include <dsp/matrix_functions.h>
+#include <dsp/matrix_functions_f16.h>
 #include <dsp/support_functions.h>
+#include <dsp/support_functions_f16.h>
 
 #include <limits>
 
 namespace arm_cmsis_dsp {
 namespace autodiff {
 
-class FullyConnectedOperator
+template <typename T = float> class FullyConnectedOperator
 {
+    static void fill(T *data, std::size_t length) noexcept
+    {
+        if constexpr (std::is_same<T, float>::value)
+            arm_fill_f32(T{}, data, static_cast<uint32_t>(length));
+#if defined(ARM_FLOAT16_SUPPORTED)
+        else
+            arm_fill_f16(T{}, data, static_cast<uint32_t>(length));
+#else
+        else
+            for (std::size_t i = 0; i < length; ++i) data[i] = T{};
+#endif
+    }
+
     struct Record
     {
         detail::Node node;
-        float *output_gradient;
-        const float *input_value;
-        float *input_gradient;
-        const float *weight_value;
-        float *weight_gradient;
-        float *bias_gradient;
+        T *output_gradient;
+        const T *input_value;
+        T *input_gradient;
+        const T *weight_value;
+        T *weight_gradient;
+        T *bias_gradient;
         std::size_t rows;
         std::size_t columns;
     };
@@ -32,12 +47,11 @@ class FullyConnectedOperator
     static void reset(detail::Node &node) noexcept
     {
         Record &record = reinterpret_cast<Record &>(node);
-        arm_fill_f32(0.0F, record.output_gradient, record.rows);
-        arm_fill_f32(0.0F, record.bias_gradient, record.rows);
-        arm_fill_f32(0.0F, record.weight_gradient,
-                     record.rows * record.columns);
+        fill(record.output_gradient, record.rows);
+        fill(record.bias_gradient, record.rows);
+        fill(record.weight_gradient, record.rows * record.columns);
         if (record.input_gradient != nullptr && record.columns != 0U)
-            arm_fill_f32(0.0F, record.input_gradient, record.columns);
+            fill(record.input_gradient, record.columns);
     }
 
     static void backward(detail::Node &node) noexcept
@@ -45,9 +59,9 @@ class FullyConnectedOperator
         Record &record = reinterpret_cast<Record &>(node);
         if (record.rows == 0U) return;
 
-        ::arm_cmsis_dsp::VectorView<float> output_gradient(
+        ::arm_cmsis_dsp::VectorView<T> output_gradient(
             record.output_gradient, 0, record.rows);
-        ::arm_cmsis_dsp::VectorView<float> bias_gradient(
+        ::arm_cmsis_dsp::VectorView<T> bias_gradient(
             record.bias_gradient, 0, record.rows);
 
         // Bias is shared by every input sample, so its gradient must be
@@ -56,9 +70,9 @@ class FullyConnectedOperator
 
         if (record.columns != 0U)
         {
-            ::arm_cmsis_dsp::VectorView<float> input_value(
-                const_cast<float *>(record.input_value), 0, record.columns);
-            ::arm_cmsis_dsp::MatrixView<float,
+            ::arm_cmsis_dsp::VectorView<T> input_value(
+                const_cast<T *>(record.input_value), 0, record.columns);
+            ::arm_cmsis_dsp::MatrixView<T,
                                         ::arm_cmsis_dsp::DYNAMIC>
                 weight_gradient(record.weight_gradient, record.rows,
                                 record.columns, record.columns);
@@ -70,11 +84,11 @@ class FullyConnectedOperator
 
             if (record.input_gradient == nullptr) return;
 
-            ::arm_cmsis_dsp::VectorView<float> input_gradient(
+            ::arm_cmsis_dsp::VectorView<T> input_gradient(
                 record.input_gradient, 0, record.columns);
-            ::arm_cmsis_dsp::MatrixView<float,
+            ::arm_cmsis_dsp::MatrixView<T,
                                         ::arm_cmsis_dsp::DYNAMIC>
-                weight_value(const_cast<float *>(record.weight_value),
+                weight_value(const_cast<T *>(record.weight_value),
                              record.rows, record.columns, record.columns);
             input_gradient += ::arm_cmsis_dsp::dot(
                 ::arm_cmsis_dsp::transpose_view(weight_value),
@@ -83,54 +97,68 @@ class FullyConnectedOperator
     }
 
 public:
-    static bool evaluate(BufferView &output, const BufferView &input,
-                         const MatrixView &weights,
-                         const BufferView &bias) noexcept
+    static bool evaluate(BufferView<T> &output, const BufferView<T> &input,
+                         const MatrixView<T> &weights,
+                         const BufferView<T> &bias) noexcept
     {
-        Tape *tape = OperatorAccess::tape(output);
-        OperatorAccess::set_producer(output, nullptr);
+        Tape<T> *tape = OperatorAccess<T>::tape(output);
+        OperatorAccess<T>::set_producer(output, nullptr);
         if (tape == nullptr ||
-            !OperatorAccess::require<FullyConnectedOperator>(*tape))
+            !OperatorAccess<T>::template require<FullyConnectedOperator<T>>(*tape))
             return false;
-        const BufferView &weight_buffer = OperatorAccess::buffer(weights);
-        if (!OperatorAccess::valid(*tape, output) ||
-            !OperatorAccess::valid(*tape, input) ||
-            !OperatorAccess::valid(*tape, weight_buffer) ||
-            !OperatorAccess::valid(*tape, bias) ||
-            OperatorAccess::gradients(output) == nullptr ||
-            OperatorAccess::length(output) != OperatorAccess::rows(weights) ||
-            OperatorAccess::length(input) != OperatorAccess::columns(weights) ||
-            OperatorAccess::length(bias) != OperatorAccess::rows(weights) ||
-            OperatorAccess::rows(weights) >
+        const BufferView<T> &weight_buffer = OperatorAccess<T>::buffer(weights);
+        if (!OperatorAccess<T>::valid(*tape, output) ||
+            !OperatorAccess<T>::valid(*tape, input) ||
+            !OperatorAccess<T>::valid(*tape, weight_buffer) ||
+            !OperatorAccess<T>::valid(*tape, bias) ||
+            OperatorAccess<T>::gradients(output) == nullptr ||
+            OperatorAccess<T>::length(output) != OperatorAccess<T>::rows(weights) ||
+            OperatorAccess<T>::length(input) != OperatorAccess<T>::columns(weights) ||
+            OperatorAccess<T>::length(bias) != OperatorAccess<T>::rows(weights) ||
+            OperatorAccess<T>::rows(weights) >
                 std::numeric_limits<std::uint16_t>::max() ||
-            OperatorAccess::columns(weights) >
+            OperatorAccess<T>::columns(weights) >
                 std::numeric_limits<std::uint16_t>::max() ||
-            OperatorAccess::role(weight_buffer) != BufferRole::parameter ||
-            OperatorAccess::role(bias) != BufferRole::parameter)
+            OperatorAccess<T>::role(weight_buffer) != BufferRole::parameter ||
+            OperatorAccess<T>::role(bias) != BufferRole::parameter)
         {
-            OperatorAccess::fail(*tape, Status::tape_mismatch);
+            OperatorAccess<T>::fail(*tape, Status::tape_mismatch);
             return false;
         }
 
-        const std::size_t rows = OperatorAccess::rows(weights);
-        const std::size_t columns = OperatorAccess::columns(weights);
+        const std::size_t rows = OperatorAccess<T>::rows(weights);
+        const std::size_t columns = OperatorAccess<T>::columns(weights);
         if (rows != 0U)
         {
-            ::arm_cmsis_dsp::VectorView<float> output_value(
-                OperatorAccess::values(output), 0, rows);
-            ::arm_cmsis_dsp::VectorView<float> bias_value(
-                const_cast<float *>(OperatorAccess::values(bias)), 0, rows);
+            ::arm_cmsis_dsp::VectorView<T> output_value(
+                OperatorAccess<T>::values(output), 0, rows);
+            ::arm_cmsis_dsp::VectorView<T> bias_value(
+                const_cast<T *>(OperatorAccess<T>::values(bias)), 0, rows);
 
             if (columns != 0U)
             {
+                if constexpr (std::is_same<T, float>::value)
+                {
                 arm_matrix_instance_f32 weight_matrix;
                 arm_mat_init_f32(
                     &weight_matrix, static_cast<std::uint16_t>(rows),
                     static_cast<std::uint16_t>(columns),
-                    const_cast<float *>(OperatorAccess::values(weight_buffer)));
+                    const_cast<float *>(OperatorAccess<T>::values(weight_buffer)));
                 arm_mat_vec_mult_f32(&weight_matrix,
-                                     OperatorAccess::values(input),
-                                     OperatorAccess::values(output));
+                                     OperatorAccess<T>::values(input),
+                                     OperatorAccess<T>::values(output));
+                }
+                else
+                {
+                arm_matrix_instance_f16 weight_matrix;
+                arm_mat_init_f16(
+                    &weight_matrix, static_cast<std::uint16_t>(rows),
+                    static_cast<std::uint16_t>(columns),
+                    const_cast<float16_t *>(OperatorAccess<T>::values(weight_buffer)));
+                arm_mat_vec_mult_f16(&weight_matrix,
+                                     OperatorAccess<T>::values(input),
+                                     OperatorAccess<T>::values(output));
+                }
                 output_value += bias_value;
             }
             else
@@ -138,50 +166,51 @@ public:
                 // VectorView deliberately deletes copy assignment. This
                 // dimension-zero edge has no matrix product to optimize.
                 for (std::size_t row = 0; row < rows; ++row)
-                    OperatorAccess::values(output)[row] =
-                        OperatorAccess::values(bias)[row];
+                        OperatorAccess<T>::values(output)[row] =
+                        OperatorAccess<T>::values(bias)[row];
             }
         }
-        if (!OperatorAccess::recording(*tape) ||
-            OperatorAccess::length(output) == 0U)
-            return OperatorAccess::status(*tape) == Status::ok;
+        if (!OperatorAccess<T>::recording(*tape) ||
+            OperatorAccess<T>::length(output) == 0U)
+            return OperatorAccess<T>::status(*tape) == Status::ok;
 
-        Record *record = OperatorAccess::append<Record>(*tape, backward, reset);
+        Record *record = OperatorAccess<T>::template append<Record>(*tape, backward, reset);
         if (record == nullptr) return false;
-        record->output_gradient = OperatorAccess::gradients(output);
-        record->input_value = OperatorAccess::values(input);
-        record->input_gradient = OperatorAccess::gradients(input);
-        record->weight_value = OperatorAccess::values(weight_buffer);
-        record->weight_gradient = OperatorAccess::gradients(weight_buffer);
-        record->bias_gradient = OperatorAccess::gradients(bias);
-        record->rows = OperatorAccess::rows(weights);
-        record->columns = OperatorAccess::columns(weights);
-        OperatorAccess::set_producer(output, &record->node);
+        record->output_gradient = OperatorAccess<T>::gradients(output);
+        record->input_value = OperatorAccess<T>::values(input);
+        record->input_gradient = OperatorAccess<T>::gradients(input);
+        record->weight_value = OperatorAccess<T>::values(weight_buffer);
+        record->weight_gradient = OperatorAccess<T>::gradients(weight_buffer);
+        record->bias_gradient = OperatorAccess<T>::gradients(bias);
+        record->rows = OperatorAccess<T>::rows(weights);
+        record->columns = OperatorAccess<T>::columns(weights);
+        OperatorAccess<T>::set_producer(output, &record->node);
         return true;
     }
 };
 
-class FullyConnectedExpression
+template <typename T = float> class FullyConnectedExpression
 {
 public:
-    FullyConnectedExpression(const BufferView &input, const MatrixView &weights,
-                             const BufferView &bias) noexcept
+    FullyConnectedExpression(const BufferView<T> &input, const MatrixView<T> &weights,
+                             const BufferView<T> &bias) noexcept
         : input_(input), weights_(weights), bias_(bias) {}
-    void evaluate(BufferView &output) const noexcept
+    void evaluate(BufferView<T> &output) const noexcept
     {
-        FullyConnectedOperator::evaluate(output, input_, weights_, bias_);
+        FullyConnectedOperator<T>::evaluate(output, input_, weights_, bias_);
     }
 private:
-    BufferView input_;
-    MatrixView weights_;
-    BufferView bias_;
+    BufferView<T> input_;
+    MatrixView<T> weights_;
+    BufferView<T> bias_;
 };
 
-inline FullyConnectedExpression fully_connected(
-    const BufferView &input, const MatrixView &weights,
-    const BufferView &bias) noexcept
+template <typename T = float>
+inline FullyConnectedExpression<T> fully_connected(
+    const BufferView<T> &input, const MatrixView<T> &weights,
+    const BufferView<T> &bias) noexcept
 {
-    return FullyConnectedExpression(input, weights, bias);
+    return FullyConnectedExpression<T>(input, weights, bias);
 }
 
 } // namespace autodiff

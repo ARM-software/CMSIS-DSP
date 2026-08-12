@@ -1,8 +1,10 @@
 # Operators
 
 Each operator header owns its validation, forward computation, fixed-size tape
-record, gradient reset, backward rule, and expression adapter. Include the
-header and register its operator class before evaluating the expression.
+record, gradient reset, backward rule, and expression adapter. Operator classes
+are templated on the scalar type (`float` by default and `float16_t` when
+enabled). Include the header and register the matching specialization before
+evaluating the expression.
 
 In the formulas below, `g` is the gradient arriving from the operator's output.
 Every input gradient is accumulated with `+=` when that input has gradient
@@ -17,10 +19,10 @@ skipped.
 | `z = x - y` | `z[i] = x[i] - y[i]` | `dx[i] += g[i]`; `dy[i] -= g[i]` |
 | `z = x * y` | `z[i] = x[i] * y[i]` | `dx[i] += g[i]*y[i]`; `dy[i] += g[i]*x[i]` |
 
-These expressions require equal-length views. The forward paths use
-`arm_add_f32`, `arm_sub_f32`, and `arm_mult_f32`. Multiply's backward path uses
-fused CMSIS-DSP C++ expressions so multiplication and accumulation need no
-temporary product vector.
+These expressions require equal-length views. The forward paths dispatch to
+the matching f32 or f16 CMSIS-DSP kernels. Multiply's backward path uses fused
+CMSIS-DSP C++ expressions so multiplication and accumulation need no temporary
+product vector.
 
 ## Dot, scalar scale, and scalar offset
 
@@ -32,7 +34,7 @@ dx[i] += g * y[i]
 dy[i] += g * x[i]
 ```
 
-Its forward pass uses `arm_dot_prod_f32`.
+Its forward pass dispatches to `arm_dot_prod_f32` or `arm_dot_prod_f16`.
 
 `scale(x, a)` requires `a` to be a one-element parameter:
 
@@ -42,9 +44,9 @@ da += sum(g[i] * x[i])
 dx[i] += a * g[i]
 ```
 
-The forward pass uses `arm_scale_f32`; the scalar gradient uses the C++ dot
-expression. See the [worked implementation flow](implementation_flow.md) for a
-line-by-line explanation.
+The forward pass dispatches to `arm_scale_f32` or `arm_scale_f16`; the scalar
+gradient uses the C++ dot expression. See the [worked implementation
+flow](implementation_flow.md) for a line-by-line explanation.
 
 `offset(x, b)` likewise requires a one-element parameter:
 
@@ -54,14 +56,14 @@ db += sum(g[i])
 dx[i] += g[i]
 ```
 
-Its forward pass uses `arm_offset_f32` and the bias gradient uses
-`arm_accumulate_f32`.
+Its forward pass dispatches to `arm_offset_f32` or `arm_offset_f16`; the bias
+gradient uses the matching accumulate kernel.
 
 ## ReLU and softmax
 
-ReLU computes `y[i] = max(0, x[i])` with `arm_clip_f32`. Its backward rule
-passes `g[i]` only when the saved input value is strictly positive. The
-derivative at zero is defined as zero.
+ReLU computes `y[i] = max(0, x[i])` with the matching f32 or f16 clip kernel.
+Its backward rule passes `g[i]` only when the saved input value is strictly
+positive. The derivative at zero is defined as zero.
 
 Softmax uses a log-sum-exp forward calculation for numerical stability:
 
@@ -71,7 +73,8 @@ projection = dot(g, y)
 dx[i] += y[i] * (g[i] - projection)
 ```
 
-The forward path uses `arm_logsumexp_f32`, `arm_offset_f32`, and `arm_vexp_f32`.
+The forward path dispatches to the matching f32 or f16 log-sum-exp, offset, and
+vector-exponential kernels.
 
 ## Losses
 
@@ -82,10 +85,12 @@ loss = sum((prediction[i] - target[i])^2)
 d_prediction[i] += g * 2 * (prediction[i] - target[i])
 ```
 
-Categorical cross entropy also returns a scalar sum:
+Categorical cross entropy also returns a scalar sum. The probability floor is
+`1e-7` for float32 and `1e-4` for float16; the larger half-precision floor keeps
+the reciprocal used by the derivative finite:
 
 ```text
-p_safe[i] = max(probability[i], 1e-7)
+p_safe[i] = max(probability[i], floor)
 loss = -sum(target[i] * log(p_safe[i]))
 d_probability[i] = -g * target[i] / p_safe[i]
 ```
@@ -111,9 +116,9 @@ The number of columns in `W` must equal the input length; its rows must equal
 the bias and output lengths. Dimensions must fit the `uint16_t` CMSIS-DSP C
 matrix descriptor.
 
-The forward matrix-vector product uses `arm_mat_vec_mult_f32`, followed by a
-fused C++ bias accumulation. Backward bias and outer-product updates are fused
-C++ expressions. If `x` needs a gradient, the current implementation evaluates
+The forward matrix-vector product dispatches to `arm_mat_vec_mult_f32` or
+`arm_mat_vec_mult_f16`, followed by a fused C++ bias accumulation. Backward bias
+and outer-product updates are fused C++ expressions. If `x` needs a gradient, the current implementation evaluates
 the lazy expression `dot(transpose_view(W), g)` and accumulates it into `dx`.
 The transpose is a view: no transposed numerical matrix is allocated.
 
@@ -131,10 +136,10 @@ Only `W` is differentiated:
 dW += dY * transpose(X)
 ```
 
-The forward pass uses `arm_mat_mult_f32`. In the backward pass, each row of
-`dW` is accumulated with the lazy C++ expression
+The forward pass dispatches to `arm_mat_mult_f32` or `arm_mat_mult_f16`. In the
+backward pass, each row of `dW` is accumulated with the lazy C++ expression
 `matvec(X, corresponding_row_of_dY)`. This fuses matrix-vector evaluation with
-gradient accumulation; it does not call `arm_dot_prod_f32` once per weight and
+gradient accumulation; it does not call a scalar dot kernel once per weight and
 does not materialize `transpose(X)`.
 
 ## Dropout
@@ -165,7 +170,7 @@ Random state is explicit and caller-owned:
 
 ```cpp
 DropoutGenerator generator(1234U);
-tape.register_operator<DropoutOperator>();
+tape.register_operator<DropoutOperator<float>>();
 hidden = dropout(hidden_linear, generator, 0.2F);
 ```
 

@@ -8,6 +8,7 @@
 #include "iris_data.hpp"
 
 #include <dsp/statistics_functions.h>
+#include <dsp/statistics_functions_f16.h>
 
 #include <cstddef>
 #include <cstdint>
@@ -15,7 +16,20 @@
 
 using namespace arm_cmsis_dsp::autodiff;
 
+/* Set to 0 to build the same example with float32 autodiff. It may also be
+ * overridden from the compiler command line with -D. */
+#ifndef DSPPP_AUTODIFF_IRIS_USE_FLOAT16
+#define DSPPP_AUTODIFF_IRIS_USE_FLOAT16 1
+#endif
+
+#if !DSPPP_AUTODIFF_IRIS_USE_FLOAT16 || defined(ARM_FLOAT16_SUPPORTED)
 namespace {
+
+#if DSPPP_AUTODIFF_IRIS_USE_FLOAT16
+using IrisType = float16_t;
+#else
+using IrisType = float;
+#endif
 
 constexpr std::size_t input_size = 4U;
 constexpr std::size_t hidden_size = 8U;
@@ -25,24 +39,31 @@ constexpr std::size_t epoch_count = 120U;
 
 struct Model
 {
-    float hidden_weight[hidden_size][input_size];
-    float hidden_bias[hidden_size];
-    float output_weight[class_count][hidden_size];
-    float output_bias[class_count];
+    IrisType hidden_weight[hidden_size][input_size];
+    IrisType hidden_bias[hidden_size];
+    IrisType output_weight[class_count][hidden_size];
+    IrisType output_bias[class_count];
 };
 
 struct TrainingState
 {
     Model model{};
-    Arena<2048> arena{};
-    Adam<67U, 4U> optimizer{1.0e-2F};
-    float input[input_size]{};
-    float hidden_linear[hidden_size]{};
-    float hidden[hidden_size]{};
-    float logits[class_count]{};
-    float probability[class_count]{};
-    float target[class_count]{};
-    float loss{};
+    Arena<2048, IrisType> arena{};
+    Adam<67U, 4U, IrisType> optimizer{static_cast<IrisType>(1.0e-2F)};
+    IrisType input[input_size]{};
+    IrisType hidden_linear[hidden_size]{};
+    IrisType hidden[hidden_size]{};
+    IrisType logits[class_count]{};
+    IrisType probability[class_count]{};
+    IrisType target[class_count]{};
+    IrisType loss{};
+    // Keep normalized float32 patterns for the original example path. The
+    // additional float16 array avoids converting samples inside the loop when
+    // the half-precision path is selected.
+    float f32_patterns[iris_data::sample_count][input_size]{};
+#if defined(ARM_FLOAT16_SUPPORTED)
+    float16_t f16_patterns[iris_data::sample_count][input_size]{};
+#endif
     std::uint8_t training_index[training_count]{};
 };
 
@@ -54,11 +75,11 @@ static std::uint32_t random_u32() noexcept
     return random_state;
 }
 
-static float random_weight() noexcept
+static IrisType random_weight() noexcept
 {
     const float unit = static_cast<float>((random_u32() >> 8) & 0xffffU) /
                        65535.0F;
-    return (unit - 0.5F) * 0.5F;
+    return static_cast<IrisType>((unit - 0.5F) * 0.5F);
 }
 
 static void initialize(Model &model) noexcept
@@ -84,12 +105,23 @@ static bool is_test_sample(std::size_t index) noexcept
 }
 
 static std::uint32_t predicted_class(
-    const float (&probability)[class_count]) noexcept
+    const IrisType (&probability)[class_count]) noexcept
 {
-    float maximum;
+    IrisType maximum;
     std::uint32_t index;
+#if DSPPP_AUTODIFF_IRIS_USE_FLOAT16
+    arm_max_f16(probability, class_count, &maximum, &index);
+#else
     arm_max_f32(probability, class_count, &maximum, &index);
+#endif
     return index;
+}
+
+static const char *label_name(unsigned label) noexcept
+{
+    static constexpr const char *names[class_count] = {
+        "Iris-setosa", "Iris-versicolor", "Iris-virginica"};
+    return label < class_count ? names[label] : "unknown";
 }
 
 } // namespace
@@ -100,32 +132,44 @@ int main()
     // Keep the training buffers and optimizer state off the limited stack.
     TrainingState *state = new TrainingState;
     initialize(state->model);
-
-    Tape &tape = state->arena.tape();
-    tape.register_operator<FullyConnectedOperator>();
-    tape.register_operator<ReluOperator>();
-    tape.register_operator<SoftmaxOperator>();
-    tape.register_operator<CrossEntropyOperator>();
-
-    BufferView input = tape.input(state->input);
-    MatrixView hidden_weight = tape.parameter(state->model.hidden_weight);
-    BufferView hidden_bias = tape.parameter(state->model.hidden_bias);
-    MatrixView output_weight = tape.parameter(state->model.output_weight);
-    BufferView output_bias = tape.parameter(state->model.output_bias);
-    BufferView hidden_linear = tape.output(state->hidden_linear);
-    BufferView hidden = tape.output(state->hidden);
-    BufferView logits = tape.output(state->logits);
-    BufferView probability = tape.output(state->probability);
-    BufferView target = tape.input(state->target);
-    BufferView loss = tape.output(state->loss);
-
-    
-    if (!tape.good()) {
-      if (tape.status() == Status::out_of_memory)
-        std::printf("Autodiff arena is too small\n");
-      return 1;
+    for (std::size_t sample = 0; sample < iris_data::sample_count; ++sample)
+    {
+        iris_data::normalized_features(sample, state->f32_patterns[sample]);
+#if defined(ARM_FLOAT16_SUPPORTED)
+        for (std::size_t feature = 0; feature < input_size; ++feature)
+            state->f16_patterns[sample][feature] = static_cast<float16_t>(
+                state->f32_patterns[sample][feature]);
+#endif
     }
 
+    Tape<IrisType> &tape = state->arena.tape();
+    tape.register_operator<FullyConnectedOperator<IrisType>>();
+    tape.register_operator<ReluOperator<IrisType>>();
+    tape.register_operator<SoftmaxOperator<IrisType>>();
+    tape.register_operator<CrossEntropyOperator<IrisType>>();
+
+    BufferView<IrisType> input = tape.input(state->input);
+    MatrixView<IrisType> hidden_weight = tape.parameter(state->model.hidden_weight);
+    BufferView<IrisType> hidden_bias = tape.parameter(state->model.hidden_bias);
+    MatrixView<IrisType> output_weight = tape.parameter(state->model.output_weight);
+    BufferView<IrisType> output_bias = tape.parameter(state->model.output_bias);
+    BufferView<IrisType> hidden_linear = tape.output(state->hidden_linear);
+    BufferView<IrisType> hidden = tape.output(state->hidden);
+    BufferView<IrisType> logits = tape.output(state->logits);
+    BufferView<IrisType> probability = tape.output(state->probability);
+    BufferView<IrisType> target = tape.input(state->target);
+    BufferView<IrisType> loss = tape.output(state->loss);
+
+    if (!tape.good())
+    {
+        if (tape.status() == Status::out_of_memory)
+            std::printf("Autodiff arena is too small\n");
+        else
+            std::printf("Autodiff setup failed (status=%u)\n",
+                        static_cast<unsigned>(tape.status()));
+        delete state;
+        return 1;
+    }
 
     if (!state->optimizer.add(hidden_weight) ||
         !state->optimizer.add(hidden_bias) ||
@@ -160,10 +204,17 @@ int main()
         for (std::size_t position = 0; position < training_count; ++position)
         {
             const std::size_t sample = state->training_index[position];
-            iris_data::normalized_features(sample, state->input);
+#if DSPPP_AUTODIFF_IRIS_USE_FLOAT16
+            for (std::size_t feature = 0; feature < input_size; ++feature)
+                state->input[feature] = state->f16_patterns[sample][feature];
+#else
+            for (std::size_t feature = 0; feature < input_size; ++feature)
+                state->input[feature] = state->f32_patterns[sample][feature];
+#endif
             for (std::size_t i = 0; i < class_count; ++i)
                 state->target[i] = i == iris_data::samples[sample].label
-                                       ? 1.0F : 0.0F;
+                                       ? static_cast<IrisType>(1.0F)
+                                       : static_cast<IrisType>(0.0F);
 
             if (!tape.rewind_graph())
             {
@@ -182,7 +233,7 @@ int main()
                 delete state;
                 return 1;
             }
-            epoch_loss += state->loss;
+            epoch_loss += static_cast<float>(state->loss);
         }
 
         if ((epoch + 1U) % 20U == 0U)
@@ -193,24 +244,50 @@ int main()
 
     // Final check on the 30 samples that were kept out of training.
     unsigned correct = 0U;
+    unsigned test_number = 0U;
     {
-        RecordingScope inference(tape, false);
+        RecordingScope<IrisType> inference(tape, false);
         for (std::size_t sample = 0; sample < iris_data::sample_count;
              ++sample)
         {
             if (!is_test_sample(sample)) continue;
-            iris_data::normalized_features(sample, state->input);
+#if DSPPP_AUTODIFF_IRIS_USE_FLOAT16
+            for (std::size_t feature = 0; feature < input_size; ++feature)
+                state->input[feature] = state->f16_patterns[sample][feature];
+#else
+            for (std::size_t feature = 0; feature < input_size; ++feature)
+                state->input[feature] = state->f32_patterns[sample][feature];
+#endif
             hidden_linear = fully_connected(input, hidden_weight, hidden_bias);
             hidden = relu(hidden_linear);
             logits = fully_connected(hidden, output_weight, output_bias);
             probability = softmax(logits);
-            if (predicted_class(state->probability) ==
-                iris_data::samples[sample].label)
+            const unsigned expected = iris_data::samples[sample].label;
+            const unsigned detected = predicted_class(state->probability);
+            const bool match = detected == expected;
+            if (!match)
+                std::printf("\033[31m");
+            std::printf("Test %u:\n  Expected \"%s\"\n  Detected \"%s\"\n",
+                        ++test_number, label_name(expected),
+                        label_name(detected));
+            if (!match)
+                std::printf("\033[0m");
+            if (match)
                 ++correct;
         }
     }
-    std::printf("final test accuracy=%u/30\n", correct);
+    std::printf("final test accuracy=%u/30 tests\n", correct);
 
     delete state;
     return 0;
 }
+
+#else
+
+int main()
+{
+    std::printf("Iris float16 example requires ARM_FLOAT16_SUPPORTED\n");
+    return 0;
+}
+
+#endif

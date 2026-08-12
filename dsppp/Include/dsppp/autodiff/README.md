@@ -22,11 +22,11 @@ accumulates gradients. This implementation uses CMSIS-DSP for both rather than
 treating it only as a collection of forward-inference kernels.
 
 When an operation maps directly to an optimized CMSIS-DSP C kernel, its
-forward pass uses that kernel. For example, dot products use
-`arm_dot_prod_f32`, fully connected matrix-vector products use
-`arm_mat_vec_mult_f32`, and matrix products use `arm_mat_mult_f32`. These
-kernels provide implementations optimized for the selected Arm target,
-including Helium implementations where available.
+forward pass uses the kernel matching `T`. For example, float32 dot products
+use `arm_dot_prod_f32` and float16 dot products use `arm_dot_prod_f16`; the
+corresponding fully connected and matrix products use the f32 or f16 matrix
+kernels. These kernels provide implementations optimized for the selected Arm
+target, including Helium implementations where available.
 
 The CMSIS-DSP C++ expression system is particularly useful in backward rules,
 which often combine element-wise computation with accumulation. A typical
@@ -75,10 +75,16 @@ contribution into the gradients of earlier intermediate results and learnable
 parameters. This reverse application of the chain rule produces all parameter
 gradients needed by an optimizer.
 
-Numerical values remain in buffers owned by the application. An `Arena<Bytes>`
-provides a fixed amount of memory for gradients and tape records, so memory use
-cannot grow unexpectedly at runtime. Ordinary inputs registered with
+Numerical values remain in buffers owned by the application. `BufferView<T>` and
+`Tape<T>` support `float` and `float16_t`; the default `T` is `float`. An
+`Arena<Bytes, T>` provides a fixed amount of memory for gradients and tape
+records, so memory use cannot grow unexpectedly at runtime. Ordinary inputs
+registered with
 `tape.input()` do not receive gradient storage.
+
+On a target with CMSIS-DSP float16 support, select the half-precision path by
+using `Arena<Bytes, float16_t>`, `Tape<float16_t>`, and matching operator and
+optimizer specializations.
 
 The implementation is modular: an application includes and registers only the
 operator headers it uses. The core in `reverse.hpp` manages views, fixed arena
@@ -95,17 +101,17 @@ using namespace arm_cmsis_dsp::autodiff;
 
 int main()
 {
-    Arena<512> arena;
-    Tape &tape = arena.tape();
-    tape.register_operator<ScaleOperator>();
+    Arena<512, float> arena;
+    Tape<float> &tape = arena.tape();
+    tape.register_operator<ScaleOperator<float>>();
 
     float x_value[] = {1.0F, 2.0F};
     float a_value = 3.0F;
     float y_value[2] = {};
 
-    BufferView x = tape.input(x_value);
-    BufferView a = tape.parameter(a_value);
-    BufferView y = tape.output(y_value);
+    BufferView<float> x = tape.input(x_value);
+    BufferView<float> a = tape.parameter(a_value);
+    BufferView<float> y = tape.output(y_value);
 
     // y = a * x
     y = scale(x, a); // y = {3, 6}; records the operation
@@ -143,5 +149,7 @@ Autodiff uses the existing dsppp board-test infrastructure. From `dsppp`, run:
 python run_all.py --test AUTODIFF_TEST --dt F32_DT
 ```
 
-It currently supports `float` and dynamic test mode. The test body is selected
-when `AUTODIFF_TEST`, `F32_DT`, and `DYNAMIC_TEST` are defined.
+The API supports `float` and, on targets defining `ARM_FLOAT16_SUPPORTED`,
+`float16_t`. The board test currently selects the float32 path when
+`AUTODIFF_TEST`, `F32_DT`, and `DYNAMIC_TEST` are defined; the Iris example
+instantiates the float16 path.

@@ -50,9 +50,9 @@ static void test1()
  // Vector add followed by dot. Values and outputs belong to the caller;
     // gradients and two fixed-size operation records use the tape arena.
     Arena<2048> *buffer_arena = new Arena<2048>();
-    Tape &buffer_tape = buffer_arena->tape();
-    buffer_tape.register_operator<AddOperator>();
-    buffer_tape.register_operator<DotOperator>();
+    Tape<float> &buffer_tape = buffer_arena->tape();
+    buffer_tape.register_operator<AddOperator<float>>();
+    buffer_tape.register_operator<DotOperator<float>>();
     float x_value[] = {1.0F, 2.0F, 3.0F};
     float w_value[] = {4.0F, 5.0F, 6.0F};
     float sum_value[3] = {};
@@ -107,10 +107,10 @@ void test2()
     // Only parameters receive final gradients. The x input has no gradient
     // allocation, while scale and offset are trainable scalar parameters.
     Arena<2048> *parameter_arena = new Arena<2048>();
-    Tape &parameter_tape = parameter_arena->tape();
-    parameter_tape.register_operator<ScaleOperator>();
-    parameter_tape.register_operator<OffsetOperator>();
-    parameter_tape.register_operator<DotOperator>();
+    Tape<float> &parameter_tape = parameter_arena->tape();
+    parameter_tape.register_operator<ScaleOperator<float>>();
+    parameter_tape.register_operator<OffsetOperator<float>>();
+    parameter_tape.register_operator<DotOperator<float>>();
     float input_value[] = {1.0F, 2.0F, 3.0F};
     float alpha_value = 2.0F;
     float beta_value = 10.0F;
@@ -150,9 +150,9 @@ void test3()
     // Fully connected followed by ReLU. Only the positive first neuron
     // contributes to the matrix and bias parameter gradients.
     Arena<2048> *network_arena = new Arena<2048>();
-    Tape &network_tape = network_arena->tape();
-    network_tape.register_operator<FullyConnectedOperator>();
-    network_tape.register_operator<ReluOperator>();
+    Tape<float> &network_tape = network_arena->tape();
+    network_tape.register_operator<FullyConnectedOperator<float>>();
+    network_tape.register_operator<ReluOperator<float>>();
     float network_input_value[] = {2.0F, -1.0F};
     float matrix_value[2][2] = {{1.0F, 2.0F}, {-3.0F, 1.0F}};
     float bias_value[] = {1.0F, 0.0F};
@@ -190,8 +190,8 @@ void test4()
 {
      // ReLU uses a zero derivative at exactly zero.
     Arena<512> *relu_arena = new Arena<512>();
-    Tape &relu_tape = relu_arena->tape();
-    relu_tape.register_operator<ReluOperator>();
+    Tape<float> &relu_tape = relu_arena->tape();
+    relu_tape.register_operator<ReluOperator<float>>();
     float relu_parameter_value[] = {-1.0F, 0.0F, 2.0F};
     float relu_output_value[3] = {};
     BufferView relu_parameter = relu_tape.parameter(relu_parameter_value);
@@ -211,8 +211,8 @@ void test5()
     
     // Softmax is normalized and its vector-Jacobian product has zero sum.
     Arena<512> *softmax_arena = new Arena<512>();
-    Tape &softmax_tape = softmax_arena->tape();
-    softmax_tape.register_operator<SoftmaxOperator>();
+    Tape<float> &softmax_tape = softmax_arena->tape();
+    softmax_tape.register_operator<SoftmaxOperator<float>>();
     float logits_value[] = {0.0F, 0.0F, 0.0F};
     float probability_value[3] = {};
     BufferView logits = softmax_tape.parameter(logits_value);
@@ -241,7 +241,7 @@ void test6()
     // Including an operator does not enable it. Evaluation fails until that
     // operator type is explicitly registered on this tape.
     Arena<256> *registry_arena = new Arena<256>();
-    Tape &registry_tape = registry_arena->tape();
+    Tape<float> &registry_tape = registry_arena->tape();
     float registry_left_value[] = {1.0F};
     float registry_right_value[] = {2.0F};
     float registry_output_value[] = {0.0F};
@@ -252,7 +252,7 @@ void test6()
     assert(registry_tape.status() == Status::operator_not_registered);
     assert(registry_output_value[0] == 0.0F);
     registry_tape.clear_status();
-    assert(registry_tape.register_operator<AddOperator>());
+    assert(registry_tape.register_operator<AddOperator<float>>());
     registry_output = registry_left + registry_right;
     assert(registry_tape.good());
     assert(registry_output_value[0] == 3.0F);
@@ -264,10 +264,10 @@ void test7()
     
     // Quadratic loss, reusable graph records, Adam, and selective freezing.
     Arena<1024> *training_arena = new Arena<1024>();
-    Tape &training_tape = training_arena->tape();
-    training_tape.register_operator<DotOperator>();
-    training_tape.register_operator<AddOperator>();
-    training_tape.register_operator<QuadraticErrorOperator>();
+    Tape<float> &training_tape = training_arena->tape();
+    training_tape.register_operator<DotOperator<float>>();
+    training_tape.register_operator<AddOperator<float>>();
+    training_tape.register_operator<QuadraticErrorOperator<float>>();
     float feature_value[] = {2.0F};
     float coefficient_value[] = {3.0F};
     float bias_parameter_value[] = {1.0F};
@@ -311,10 +311,10 @@ void test8()
     // A single vector loss accumulates contributions from every sample into
     // shared polynomial parameters before an optimizer step.
     Arena<2048> *batch_arena = new Arena<2048>();
-    Tape &batch_tape = batch_arena->tape();
-    batch_tape.register_operator<DotOperator>();
-    batch_tape.register_operator<AddOperator>();
-    batch_tape.register_operator<QuadraticErrorOperator>();
+    Tape<float> &batch_tape = batch_arena->tape();
+    batch_tape.register_operator<DotOperator<float>>();
+    batch_tape.register_operator<AddOperator<float>>();
+    batch_tape.register_operator<QuadraticErrorOperator<float>>();
     float batch_feature_value[2][1] = {{1.0F}, {2.0F}};
     float batch_coefficient_value = 3.0F;
     float batch_bias_value = 1.0F;
@@ -356,7 +356,7 @@ void test9()
 {
     // RMSProp uses the same parameter registration and freezing API.
     Arena<128> *rms_arena = new Arena<128>();
-    Tape &rms_tape = rms_arena->tape();
+    Tape<float> &rms_tape = rms_arena->tape();
     float rms_value = 1.0F;
     BufferView rms_parameter = rms_tape.parameter(rms_value);
     RMSProp<1> rmsprop(1.0e-2F);
@@ -371,9 +371,9 @@ void test10()
 {
     // Subtraction and elementwise multiplication have data operands only.
     Arena<1024> arena;
-    Tape &tape = arena.tape();
-    tape.register_operator<SubOperator>();
-    tape.register_operator<MultiplyOperator>();
+    Tape<float> &tape = arena.tape();
+    tape.register_operator<SubOperator<float>>();
+    tape.register_operator<MultiplyOperator<float>>();
     float left_value[] = {2.0F, 4.0F, 6.0F};
     float left_gradient[3] = {};
     float right_value[] = {1.0F, 2.0F, 3.0F};
@@ -517,8 +517,8 @@ void test11()
 
     // Exercise the same kernel through the fully connected backward pass.
     Arena<4096> arena;
-    Tape &tape = arena.tape();
-    tape.register_operator<FullyConnectedOperator>();
+    Tape<float> &tape = arena.tape();
+    tape.register_operator<FullyConnectedOperator<float>>();
     float input_value[5] = {};
     float input_gradient[5] = {};
     float weight_gradient[3][5] = {};
@@ -541,8 +541,8 @@ void test12()
 {
     // Categorical cross entropy consumes probabilities and a one-hot target.
     Arena<512> arena;
-    Tape &tape = arena.tape();
-    tape.register_operator<CrossEntropyOperator>();
+    Tape<float> &tape = arena.tape();
+    tape.register_operator<CrossEntropyOperator<float>>();
     float probability_value[] = {0.1F, 0.7F, 0.2F};
     float target_value[] = {0.0F, 1.0F, 0.0F};
     float loss_value = 0.0F;
@@ -563,8 +563,8 @@ void test13()
     // Training applies inverted dropout and backward regenerates the same
     // mask. Disabling recording makes dropout an identity for inference.
     Arena<1024> arena;
-    Tape &tape = arena.tape();
-    tape.register_operator<DropoutOperator>();
+    Tape<float> &tape = arena.tape();
+    tape.register_operator<DropoutOperator<float>>();
     float input_value[16];
     float output_value[16] = {};
     for (std::size_t i = 0; i < 16U; ++i) input_value[i] = 1.0F;
@@ -601,8 +601,8 @@ void test14()
     // Y = W X uses CMSIS-DSP matrix multiplication in the forward pass and
     // computes only dW = dY X^T in the backward pass.
     Arena<1024> arena;
-    Tape &tape = arena.tape();
-    tape.register_operator<MatrixMultiplyOperator>();
+    Tape<float> &tape = arena.tape();
+    tape.register_operator<MatrixMultiplyOperator<float>>();
     float weight_value[2][3] = {
         {1.0F, 2.0F, 3.0F}, {4.0F, 5.0F, 6.0F}};
     float input_value[3][2] = {
@@ -648,7 +648,7 @@ static void run_autodiff_tests()
     // Arena exhaustion is explicit and backward cannot return partial results.
     alignas(std::max_align_t) unsigned char tiny_memory[1];
     Tape tiny(tiny_memory, sizeof(tiny_memory));
-    tiny.register_operator<AddOperator>();
+    tiny.register_operator<AddOperator<float>>();
     float tiny_input_value[1] = {2.0F};
     float tiny_input_gradient[1] = {};
     float tiny_output_value[1] = {};
@@ -661,6 +661,75 @@ static void run_autodiff_tests()
     assert(tiny_output_value[0] == 4.0F);
     assert(tiny.status() == Status::out_of_memory);
     assert(!tiny.backward(tiny_output));
+
+#if defined(ARM_FLOAT16_SUPPORTED)
+    // The same graph can be instantiated with CMSIS-DSP float16 kernels.
+    Arena<512, float16_t> half_arena;
+    Tape<float16_t> &half_tape = half_arena.tape();
+    half_tape.register_operator<ScaleOperator<float16_t>>();
+    half_tape.register_operator<DotOperator<float16_t>>();
+    float16_t half_input_value[2] = {static_cast<float16_t>(1.0F),
+                                     static_cast<float16_t>(2.0F)};
+    float16_t half_scale_value = static_cast<float16_t>(3.0F);
+    float16_t half_scaled_value[2] = {};
+    float16_t half_loss_value = {};
+    BufferView<float16_t> half_input = half_tape.input(half_input_value);
+    BufferView<float16_t> half_scale = half_tape.parameter(half_scale_value);
+    BufferView<float16_t> half_scaled = half_tape.output(half_scaled_value);
+    BufferView<float16_t> half_loss = half_tape.output(half_loss_value);
+    half_scaled = scale(half_input, half_scale);
+    half_loss = dot(half_scaled, half_input);
+    assert(half_tape.backward(half_loss));
+    assert(static_cast<float>(half_loss_value) > 14.9F &&
+           static_cast<float>(half_loss_value) < 15.1F);
+    assert(static_cast<float>(half_scale.gradient(0)) > 4.9F &&
+           static_cast<float>(half_scale.gradient(0)) < 5.1F);
+
+    // ReLU and categorical cross entropy use finite float16 clip bounds.
+    // In particular, numeric_limits<__fp16>::max() is not specialized by all
+    // embedded C++ libraries and can otherwise evaluate to zero.
+    Arena<1024, float16_t> half_classification_arena;
+    Tape<float16_t> &half_classification_tape =
+        half_classification_arena.tape();
+    half_classification_tape.register_operator<ReluOperator<float16_t>>();
+    half_classification_tape.register_operator<SoftmaxOperator<float16_t>>();
+    half_classification_tape.register_operator<CrossEntropyOperator<float16_t>>();
+    float16_t half_relu_input_value[3] = {
+        static_cast<float16_t>(-1.0F), static_cast<float16_t>(0.5F),
+        static_cast<float16_t>(2.0F)};
+    float16_t half_relu_output_value[3] = {};
+    float16_t half_logits_value[3] = {
+        static_cast<float16_t>(0.2F), static_cast<float16_t>(-0.1F),
+        static_cast<float16_t>(0.3F)};
+    float16_t half_probability_value[3] = {};
+    float16_t half_target_value[3] = {
+        static_cast<float16_t>(0.0F), static_cast<float16_t>(1.0F),
+        static_cast<float16_t>(0.0F)};
+    float16_t half_classification_loss_value = {};
+    BufferView<float16_t> half_relu_input =
+        half_classification_tape.input(half_relu_input_value);
+    BufferView<float16_t> half_relu_output =
+        half_classification_tape.output(half_relu_output_value);
+    BufferView<float16_t> half_logits =
+        half_classification_tape.parameter(half_logits_value);
+    BufferView<float16_t> half_probability =
+        half_classification_tape.output(half_probability_value);
+    BufferView<float16_t> half_target =
+        half_classification_tape.input(half_target_value);
+    BufferView<float16_t> half_classification_loss =
+        half_classification_tape.output(half_classification_loss_value);
+    half_relu_output = relu(half_relu_input);
+    assert(static_cast<float>(half_relu_output_value[1]) > 0.49F &&
+           static_cast<float>(half_relu_output_value[2]) > 1.9F);
+    half_probability = softmax(half_logits);
+    half_classification_loss = cross_entropy(half_probability, half_target);
+    assert(static_cast<float>(half_classification_loss_value) > 0.9F &&
+           static_cast<float>(half_classification_loss_value) < 1.3F);
+    assert(half_classification_tape.backward(half_classification_loss));
+    assert(static_cast<float>(half_logits.gradient(0)) < 0.5F &&
+           static_cast<float>(half_logits.gradient(1)) < -0.2F &&
+           static_cast<float>(half_logits.gradient(2)) > 0.2F);
+#endif
 
 }
 

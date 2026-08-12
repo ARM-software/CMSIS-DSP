@@ -7,12 +7,12 @@ them. It then visits those records in reverse order to propagate gradients.
 This ordered record is conventionally called a **tape**: operations are
 recorded during the forward pass and played backward during differentiation.
 
-`Tape` manages this record and the gradient buffers. `Arena<Bytes>` supplies
+`Tape<T>` manages this record and the gradient buffers. `Arena<Bytes, T>` supplies
 exactly `Bytes` bytes of storage to a `Tape`:
 
 ```cpp
-Arena<2048> arena;
-Tape &tape = arena.tape();
+Arena<2048, float> arena;
+Tape<float> &tape = arena.tape();
 ```
 
 The capacity is fixed and no dynamic memory allocation is performed. If the
@@ -47,8 +47,8 @@ True C arrays preserve their extent, so `tape.input(array)` can deduce the
 length. A pointer does not carry a length and requires an explicit overload:
 
 ```cpp
-BufferView input = tape.input(pointer, number_of_elements);
-MatrixView weights = tape.parameter(pointer, rows, columns);
+BufferView<float> input = tape.input(pointer, number_of_elements);
+MatrixView<float> weights = tape.parameter(pointer, rows, columns);
 ```
 
 ## Operator registration
@@ -61,7 +61,7 @@ compiler and linker.
 ```cpp
 #include <dsppp/autodiff/operators/relu.hpp>
 
-tape.register_operator<ReluOperator>();
+tape.register_operator<ReluOperator<float>>();
 ```
 
 Using an operator that has not been registered sets

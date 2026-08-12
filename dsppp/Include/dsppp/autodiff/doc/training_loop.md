@@ -20,11 +20,11 @@ using namespace arm_cmsis_dsp::autodiff;
 
 int main()
 {
-Arena<1024> arena;
-Tape &tape = arena.tape();
-tape.register_operator<MultiplyOperator>();
-tape.register_operator<AddOperator>();
-tape.register_operator<QuadraticErrorOperator>();
+Arena<1024, float> arena;
+Tape<float> &tape = arena.tape();
+tape.register_operator<MultiplyOperator<float>>();
+tape.register_operator<AddOperator<float>>();
+tape.register_operator<QuadraticErrorOperator<float>>();
 
 float coefficient_value[] = {0.0F};
 float bias_value[] = {0.0F};
@@ -34,13 +34,13 @@ float product_value[] = {0.0F};
 float prediction_value[] = {0.0F};
 float loss_value[] = {0.0F};
 
-BufferView coefficient = tape.parameter(coefficient_value);
-BufferView bias = tape.parameter(bias_value);
-BufferView feature = tape.input(feature_value);
-BufferView target = tape.input(target_value);
-BufferView product = tape.output(product_value);
-BufferView prediction = tape.output(prediction_value);
-BufferView loss = tape.output(loss_value);
+BufferView<float> coefficient = tape.parameter(coefficient_value);
+BufferView<float> bias = tape.parameter(bias_value);
+BufferView<float> feature = tape.input(feature_value);
+BufferView<float> target = tape.input(target_value);
+BufferView<float> product = tape.output(product_value);
+BufferView<float> prediction = tape.output(prediction_value);
+BufferView<float> loss = tape.output(loss_value);
 
 RMSProp<2, 2> optimizer(1.0e-3F);
 optimizer.add(coefficient);

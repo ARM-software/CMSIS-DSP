@@ -4,7 +4,9 @@
 #include <dsppp/matrix.hpp>
 
 #include <dsp/matrix_functions.h>
+#include <dsp/matrix_functions_f16.h>
 #include <dsp/support_functions.h>
+#include <dsp/support_functions_f16.h>
 
 #include <cstdint>
 #include <limits>
@@ -13,14 +15,27 @@ namespace arm_cmsis_dsp {
 namespace autodiff {
 
 /** Matrix product Y = W X, differentiating only the parameter matrix W. */
-class MatrixMultiplyOperator
+template <typename T = float> class MatrixMultiplyOperator
 {
+    static void fill(T *data, std::size_t length) noexcept
+    {
+        if constexpr (std::is_same<T, float>::value)
+            arm_fill_f32(T{}, data, static_cast<uint32_t>(length));
+#if defined(ARM_FLOAT16_SUPPORTED)
+        else
+            arm_fill_f16(T{}, data, static_cast<uint32_t>(length));
+#else
+        else
+            for (std::size_t i = 0; i < length; ++i) data[i] = T{};
+#endif
+    }
+
     struct Record
     {
         detail::Node node;
-        float *output_gradient;
-        const float *input_value;
-        float *weight_gradient;
+        T *output_gradient;
+        const T *input_value;
+        T *weight_gradient;
         std::size_t rows;
         std::size_t inner;
         std::size_t columns;
@@ -29,18 +44,16 @@ class MatrixMultiplyOperator
     static void reset(detail::Node &node) noexcept
     {
         Record &record = reinterpret_cast<Record &>(node);
-        arm_fill_f32(0.0F, record.output_gradient,
-                     record.rows * record.columns);
-        arm_fill_f32(0.0F, record.weight_gradient,
-                     record.rows * record.inner);
+        fill(record.output_gradient, record.rows * record.columns);
+        fill(record.weight_gradient, record.rows * record.inner);
     }
 
     static void backward(detail::Node &node) noexcept
     {
         Record &record = reinterpret_cast<Record &>(node);
 
-        ::arm_cmsis_dsp::MatrixView<float,::arm_cmsis_dsp::DYNAMIC>
-            input_value(const_cast<float *>(record.input_value), record.inner,
+        ::arm_cmsis_dsp::MatrixView<T,::arm_cmsis_dsp::DYNAMIC>
+            input_value(const_cast<T *>(record.input_value), record.inner,
                         record.columns, record.columns);
 
         // dW = dY X^T. For each row of dY, this is X times that row. The lazy
@@ -48,10 +61,10 @@ class MatrixMultiplyOperator
 
         for (std::size_t row = 0; row < record.rows; ++row)
         {
-            ::arm_cmsis_dsp::VectorView<float> output_gradient(
+            ::arm_cmsis_dsp::VectorView<T> output_gradient(
                 record.output_gradient + row * record.columns, 0,
                 record.columns);
-            ::arm_cmsis_dsp::VectorView<float> weight_gradient(
+            ::arm_cmsis_dsp::VectorView<T> weight_gradient(
                 record.weight_gradient + row * record.inner, 0,
                 record.inner);
             weight_gradient +=
@@ -60,95 +73,115 @@ class MatrixMultiplyOperator
     }
 
 public:
-    static bool evaluate(BufferView &output, const BufferView &input,
-                         const MatrixView &weights) noexcept
+    static bool evaluate(BufferView<T> &output, const BufferView<T> &input,
+                         const MatrixView<T> &weights) noexcept
     {
-        Tape *tape = OperatorAccess::tape(output);
-        OperatorAccess::set_producer(output, nullptr);
+        Tape<T> *tape = OperatorAccess<T>::tape(output);
+        OperatorAccess<T>::set_producer(output, nullptr);
         if (tape == nullptr ||
-            !OperatorAccess::require<MatrixMultiplyOperator>(*tape))
+            !OperatorAccess<T>::template require<MatrixMultiplyOperator<T>>(*tape))
             return false;
 
-        const BufferView &weight_buffer = OperatorAccess::buffer(weights);
-        const std::size_t rows = OperatorAccess::rows(weights);
-        const std::size_t inner = OperatorAccess::columns(weights);
-        const std::size_t input_length = OperatorAccess::length(input);
+        const BufferView<T> &weight_buffer = OperatorAccess<T>::buffer(weights);
+        const std::size_t rows = OperatorAccess<T>::rows(weights);
+        const std::size_t inner = OperatorAccess<T>::columns(weights);
+        const std::size_t input_length = OperatorAccess<T>::length(input);
         const std::size_t columns = inner == 0U ? 0U : input_length / inner;
-        if (!OperatorAccess::valid(*tape, output) ||
-            !OperatorAccess::valid(*tape, input) ||
-            !OperatorAccess::valid(*tape, weight_buffer) ||
-            OperatorAccess::gradients(output) == nullptr ||
-            OperatorAccess::role(input) != BufferRole::input ||
-            OperatorAccess::role(weight_buffer) != BufferRole::parameter ||
-            OperatorAccess::gradients(weight_buffer) == nullptr ||
+        if (!OperatorAccess<T>::valid(*tape, output) ||
+            !OperatorAccess<T>::valid(*tape, input) ||
+            !OperatorAccess<T>::valid(*tape, weight_buffer) ||
+            OperatorAccess<T>::gradients(output) == nullptr ||
+            OperatorAccess<T>::role(input) != BufferRole::input ||
+            OperatorAccess<T>::role(weight_buffer) != BufferRole::parameter ||
+            OperatorAccess<T>::gradients(weight_buffer) == nullptr ||
             rows == 0U || inner == 0U || columns == 0U ||
             input_length % inner != 0U ||
             rows > std::numeric_limits<std::uint16_t>::max() ||
             inner > std::numeric_limits<std::uint16_t>::max() ||
             columns > std::numeric_limits<std::uint16_t>::max() ||
-            OperatorAccess::length(output) != rows * columns)
+            OperatorAccess<T>::length(output) != rows * columns)
         {
-            OperatorAccess::fail(*tape, Status::tape_mismatch);
+            OperatorAccess<T>::fail(*tape, Status::tape_mismatch);
             return false;
         }
 
+        arm_status matrix_status;
+        if constexpr (std::is_same<T, float>::value)
+        {
         arm_matrix_instance_f32 weight_matrix;
         arm_matrix_instance_f32 input_matrix;
         arm_matrix_instance_f32 output_matrix;
         arm_mat_init_f32(&weight_matrix, static_cast<std::uint16_t>(rows),
                          static_cast<std::uint16_t>(inner),
-                         const_cast<float *>(OperatorAccess::values(
-                             weight_buffer)));
+                         const_cast<float *>(OperatorAccess<T>::values(weight_buffer)));
         arm_mat_init_f32(&input_matrix, static_cast<std::uint16_t>(inner),
                          static_cast<std::uint16_t>(columns),
-                         const_cast<float *>(OperatorAccess::values(input)));
+                         const_cast<float *>(OperatorAccess<T>::values(input)));
         arm_mat_init_f32(&output_matrix, static_cast<std::uint16_t>(rows),
                          static_cast<std::uint16_t>(columns),
-                         OperatorAccess::values(output));
-        if (arm_mat_mult_f32(&weight_matrix, &input_matrix, &output_matrix) !=
-            ARM_MATH_SUCCESS)
+                         OperatorAccess<T>::values(output));
+        matrix_status = arm_mat_mult_f32(&weight_matrix, &input_matrix, &output_matrix);
+        }
+        else
         {
-            OperatorAccess::fail(*tape, Status::tape_mismatch);
+        arm_matrix_instance_f16 weight_matrix;
+        arm_matrix_instance_f16 input_matrix;
+        arm_matrix_instance_f16 output_matrix;
+        arm_mat_init_f16(&weight_matrix, static_cast<std::uint16_t>(rows),
+                         static_cast<std::uint16_t>(inner),
+                         const_cast<float16_t *>(OperatorAccess<T>::values(weight_buffer)));
+        arm_mat_init_f16(&input_matrix, static_cast<std::uint16_t>(inner),
+                         static_cast<std::uint16_t>(columns),
+                         const_cast<float16_t *>(OperatorAccess<T>::values(input)));
+        arm_mat_init_f16(&output_matrix, static_cast<std::uint16_t>(rows),
+                         static_cast<std::uint16_t>(columns),
+                         OperatorAccess<T>::values(output));
+        matrix_status = arm_mat_mult_f16(&weight_matrix, &input_matrix, &output_matrix);
+        }
+        if (matrix_status != ARM_MATH_SUCCESS)
+        {
+            OperatorAccess<T>::fail(*tape, Status::tape_mismatch);
             return false;
         }
 
-        if (!OperatorAccess::recording(*tape))
-            return OperatorAccess::status(*tape) == Status::ok;
+        if (!OperatorAccess<T>::recording(*tape))
+            return OperatorAccess<T>::status(*tape) == Status::ok;
 
-        Record *record = OperatorAccess::append<Record>(*tape, backward, reset);
+        Record *record = OperatorAccess<T>::template append<Record>(*tape, backward, reset);
         if (record == nullptr) return false;
-        record->output_gradient = OperatorAccess::gradients(output);
-        record->input_value = OperatorAccess::values(input);
-        record->weight_gradient = OperatorAccess::gradients(weight_buffer);
+        record->output_gradient = OperatorAccess<T>::gradients(output);
+        record->input_value = OperatorAccess<T>::values(input);
+        record->weight_gradient = OperatorAccess<T>::gradients(weight_buffer);
         record->rows = rows;
         record->inner = inner;
         record->columns = columns;
-        OperatorAccess::set_producer(output, &record->node);
+        OperatorAccess<T>::set_producer(output, &record->node);
         return true;
     }
 };
 
-class MatrixMultiplyExpression
+template <typename T = float> class MatrixMultiplyExpression
 {
 public:
-    MatrixMultiplyExpression(const BufferView &input,
-                             const MatrixView &weights) noexcept
+    MatrixMultiplyExpression(const BufferView<T> &input,
+                             const MatrixView<T> &weights) noexcept
         : input_(input), weights_(weights) {}
 
-    void evaluate(BufferView &output) const noexcept
+    void evaluate(BufferView<T> &output) const noexcept
     {
-        MatrixMultiplyOperator::evaluate(output, input_, weights_);
+        MatrixMultiplyOperator<T>::evaluate(output, input_, weights_);
     }
 
 private:
-    BufferView input_;
-    MatrixView weights_;
+    BufferView<T> input_;
+    MatrixView<T> weights_;
 };
 
-inline MatrixMultiplyExpression matrix_multiply(
-    const BufferView &input, const MatrixView &weights) noexcept
+template <typename T = float>
+inline MatrixMultiplyExpression<T> matrix_multiply(
+    const BufferView<T> &input, const MatrixView<T> &weights) noexcept
 {
-    return MatrixMultiplyExpression(input, weights);
+    return MatrixMultiplyExpression<T>(input, weights);
 }
 
 } // namespace autodiff
