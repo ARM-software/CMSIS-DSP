@@ -80,6 +80,12 @@ filtering.
 Adam and tests it on 30 patterns excluded from training. A single macro selects
 the float32 or float16 implementation.
 
+### Quantization-aware training
+
+`dsppp/Examples/autodiff_fully_connected_qat.cpp` demonstrates
+quantization-aware training of a fully connected layer for later deployment
+with CMSIS-NN or Ethos-U.
+
 ## How reverse differentiation works here
 
 During the **forward pass**, each operator computes its output and, when
