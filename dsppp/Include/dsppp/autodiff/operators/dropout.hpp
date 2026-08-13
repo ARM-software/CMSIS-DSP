@@ -135,6 +135,22 @@ template <typename T = float> class DropoutOperator
         }
     }
 
+    static bool validate(Tape<T> &tape, const BufferView<T> &output,
+                         const BufferView<T> &input,
+                         float drop_probability) noexcept
+    {
+        if (!OperatorAccess<T>::compatible(tape, output, input) ||
+            OperatorAccess<T>::gradients(output) == nullptr ||
+            OperatorAccess<T>::values(output) == OperatorAccess<T>::values(input) ||
+            OperatorAccess<T>::gradients(output) == OperatorAccess<T>::gradients(input) ||
+            !(drop_probability >= 0.0F && drop_probability < 1.0F))
+        {
+            OperatorAccess<T>::fail(tape, Status::tape_mismatch);
+            return false;
+        }
+        return true;
+    }
+
 public:
     static bool evaluate(BufferView<T> &output, const BufferView<T> &input,
                          DropoutGenerator &generator,
@@ -144,16 +160,10 @@ public:
         OperatorAccess<T>::set_producer(output, nullptr);
         if (tape == nullptr || !OperatorAccess<T>::template require<DropoutOperator<T>>(*tape))
             return false;
-        if (!OperatorAccess<T>::compatible(*tape, output, input) ||
-            OperatorAccess<T>::gradients(output) == nullptr ||
-            OperatorAccess<T>::values(output) == OperatorAccess<T>::values(input) ||
-            OperatorAccess<T>::gradients(output) ==
-                OperatorAccess<T>::gradients(input) ||
-            !(drop_probability >= 0.0F && drop_probability < 1.0F))
-        {
-            OperatorAccess<T>::fail(*tape, Status::tape_mismatch);
+#if DSPPP_AUTODIFF_ENABLE_VALIDATION
+        if (!validate(*tape, output, input, drop_probability))
             return false;
-        }
+#endif
 
         const std::size_t length = OperatorAccess<T>::length(output);
         if (!OperatorAccess<T>::recording(*tape))

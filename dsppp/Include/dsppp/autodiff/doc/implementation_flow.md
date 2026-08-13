@@ -129,9 +129,10 @@ executes these steps:
 4. The operator clears `y.producer_`. This prevents an old record from being
    mistaken for the producer if validation or allocation fails.
 5. `OperatorAccess::require<ScaleOperator>(tape)` checks the fixed registry.
-6. Validation checks that all views belong to the same tape; `x` and `y` have
-   the same length; `a` is a one-element parameter with a gradient; and value
-   and gradient buffers do not alias illegally.
+6. When `DSPPP_AUTODIFF_ENABLE_VALIDATION=1`, validation checks that all views
+   belong to the same tape; `x` and `y` have the same length; `a` is a
+   one-element parameter with a gradient; and value and gradient buffers do
+   not alias illegally. These checks are compiled out by default.
 7. `arm_scale_f32` computes `{3*2, 3*(-1)}` into `y_value`, giving `{6, -3}`.
 8. Because recording is enabled and the output is nonempty, the operator asks
    `OperatorAccess::append` for a `ScaleOperator::Record` in the arena.

@@ -83,6 +83,27 @@ template <typename T = float> class ScaleOperator
         }
     }
 
+    static bool validate(Tape<T> &tape, const BufferView<T> &output,
+                         const BufferView<T> &input,
+                         const BufferView<T> &scale) noexcept
+    {
+        if (!OperatorAccess<T>::compatible(tape, output, input) ||
+            !OperatorAccess<T>::valid(tape, scale) ||
+            OperatorAccess<T>::length(scale) != 1U ||
+            OperatorAccess<T>::role(scale) != BufferRole::parameter ||
+            OperatorAccess<T>::gradients(output) == nullptr ||
+            OperatorAccess<T>::gradients(scale) == nullptr ||
+            OperatorAccess<T>::values(output) == OperatorAccess<T>::values(input) ||
+            OperatorAccess<T>::values(output) == OperatorAccess<T>::values(scale) ||
+            OperatorAccess<T>::gradients(output) == OperatorAccess<T>::gradients(input) ||
+            OperatorAccess<T>::gradients(output) == OperatorAccess<T>::gradients(scale))
+        {
+            OperatorAccess<T>::fail(tape, Status::tape_mismatch);
+            return false;
+        }
+        return true;
+    }
+
 public:
     static bool evaluate(BufferView<T> &output, const BufferView<T> &input,
                          const BufferView<T> &scale) noexcept
@@ -91,22 +112,10 @@ public:
         OperatorAccess<T>::set_producer(output, nullptr);
         if (tape == nullptr || !OperatorAccess<T>::template require<ScaleOperator<T>>(*tape))
             return false;
-        if (!OperatorAccess<T>::compatible(*tape, output, input) ||
-            !OperatorAccess<T>::valid(*tape, scale) ||
-            OperatorAccess<T>::length(scale) != 1U ||
-            OperatorAccess<T>::role(scale) != BufferRole::parameter ||
-            OperatorAccess<T>::gradients(output) == nullptr ||
-            OperatorAccess<T>::gradients(scale) == nullptr ||
-            OperatorAccess<T>::values(output) == OperatorAccess<T>::values(input) ||
-            OperatorAccess<T>::values(output) == OperatorAccess<T>::values(scale) ||
-            OperatorAccess<T>::gradients(output) ==
-                OperatorAccess<T>::gradients(input) ||
-            OperatorAccess<T>::gradients(output) ==
-                OperatorAccess<T>::gradients(scale))
-        {
-            OperatorAccess<T>::fail(*tape, Status::tape_mismatch);
+#if DSPPP_AUTODIFF_ENABLE_VALIDATION
+        if (!validate(*tape, output, input, scale))
             return false;
-        }
+#endif
         apply_scale(OperatorAccess<T>::values(input), OperatorAccess<T>::values(scale)[0],
                     OperatorAccess<T>::values(output), OperatorAccess<T>::length(output));
         if (!OperatorAccess<T>::recording(*tape) ||

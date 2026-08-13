@@ -143,6 +143,23 @@ template <typename T = float> class CrossEntropyOperator
         }
     }
 
+    static bool validate(Tape<T> &tape, const BufferView<T> &output,
+                         const BufferView<T> &probability,
+                         const BufferView<T> &target) noexcept
+    {
+        if (!OperatorAccess<T>::valid(tape, output) ||
+            OperatorAccess<T>::length(output) != 1U ||
+            OperatorAccess<T>::gradients(output) == nullptr ||
+            !OperatorAccess<T>::compatible(tape, probability, target) ||
+            OperatorAccess<T>::gradients(probability) == nullptr ||
+            OperatorAccess<T>::role(target) != BufferRole::input)
+        {
+            OperatorAccess<T>::fail(tape, Status::tape_mismatch);
+            return false;
+        }
+        return true;
+    }
+
 public:
     static bool evaluate(BufferView<T> &output, const BufferView<T> &probability,
                          const BufferView<T> &target) noexcept
@@ -152,16 +169,10 @@ public:
         if (tape == nullptr ||
             !OperatorAccess<T>::template require<CrossEntropyOperator<T>>(*tape))
             return false;
-        if (!OperatorAccess<T>::valid(*tape, output) ||
-            OperatorAccess<T>::length(output) != 1U ||
-            OperatorAccess<T>::gradients(output) == nullptr ||
-            !OperatorAccess<T>::compatible(*tape, probability, target) ||
-            OperatorAccess<T>::gradients(probability) == nullptr ||
-            OperatorAccess<T>::role(target) != BufferRole::input)
-        {
-            OperatorAccess<T>::fail(*tape, Status::tape_mismatch);
+#if DSPPP_AUTODIFF_ENABLE_VALIDATION
+        if (!validate(*tape, output, probability, target))
             return false;
-        }
+#endif
 
         const std::size_t length = OperatorAccess<T>::length(probability);
         T result = T{};

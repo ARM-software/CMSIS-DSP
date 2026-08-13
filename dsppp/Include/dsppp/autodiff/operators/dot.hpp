@@ -89,6 +89,23 @@ template <typename T = float> class DotOperator
         }
     }
 
+    static bool validate(Tape<T> &tape, const BufferView<T> &output,
+                         const BufferView<T> &left,
+                         const BufferView<T> &right) noexcept
+    {
+        if (!OperatorAccess<T>::valid(tape, output) ||
+            OperatorAccess<T>::length(output) != 1U ||
+            OperatorAccess<T>::gradients(output) == nullptr ||
+            !OperatorAccess<T>::compatible(tape, left, right) ||
+            OperatorAccess<T>::values(output) == OperatorAccess<T>::values(left) ||
+            OperatorAccess<T>::values(output) == OperatorAccess<T>::values(right))
+        {
+            OperatorAccess<T>::fail(tape, Status::tape_mismatch);
+            return false;
+        }
+        return true;
+    }
+
 public:
     static bool evaluate(BufferView<T> &output, const BufferView<T> &left,
                          const BufferView<T> &right) noexcept
@@ -97,16 +114,10 @@ public:
         OperatorAccess<T>::set_producer(output, nullptr);
         if (tape == nullptr || !OperatorAccess<T>::template require<DotOperator<T>>(*tape))
             return false;
-        if (!OperatorAccess<T>::valid(*tape, output) ||
-            OperatorAccess<T>::length(output) != 1U ||
-            OperatorAccess<T>::gradients(output) == nullptr ||
-            !OperatorAccess<T>::compatible(*tape, left, right) ||
-            OperatorAccess<T>::values(output) == OperatorAccess<T>::values(left) ||
-            OperatorAccess<T>::values(output) == OperatorAccess<T>::values(right))
-        {
-            OperatorAccess<T>::fail(*tape, Status::tape_mismatch);
+#if DSPPP_AUTODIFF_ENABLE_VALIDATION
+        if (!validate(*tape, output, left, right))
             return false;
-        }
+#endif
         T value = T{};
         dot(OperatorAccess<T>::values(left), OperatorAccess<T>::values(right),
             OperatorAccess<T>::length(left), &value);

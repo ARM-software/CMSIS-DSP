@@ -102,6 +102,27 @@ template <typename T = float> class OffsetOperator
                 static_cast<float>(gradient_sum));
     }
 
+    static bool validate(Tape<T> &tape, const BufferView<T> &output,
+                         const BufferView<T> &input,
+                         const BufferView<T> &offset) noexcept
+    {
+        if (!OperatorAccess<T>::compatible(tape, output, input) ||
+            !OperatorAccess<T>::valid(tape, offset) ||
+            OperatorAccess<T>::length(offset) != 1U ||
+            OperatorAccess<T>::role(offset) != BufferRole::parameter ||
+            OperatorAccess<T>::gradients(output) == nullptr ||
+            OperatorAccess<T>::gradients(offset) == nullptr ||
+            OperatorAccess<T>::values(output) == OperatorAccess<T>::values(input) ||
+            OperatorAccess<T>::values(output) == OperatorAccess<T>::values(offset) ||
+            OperatorAccess<T>::gradients(output) == OperatorAccess<T>::gradients(input) ||
+            OperatorAccess<T>::gradients(output) == OperatorAccess<T>::gradients(offset))
+        {
+            OperatorAccess<T>::fail(tape, Status::tape_mismatch);
+            return false;
+        }
+        return true;
+    }
+
 public:
     static bool evaluate(BufferView<T> &output, const BufferView<T> &input,
                          const BufferView<T> &offset) noexcept
@@ -110,22 +131,10 @@ public:
         OperatorAccess<T>::set_producer(output, nullptr);
         if (tape == nullptr || !OperatorAccess<T>::template require<OffsetOperator<T>>(*tape))
             return false;
-        if (!OperatorAccess<T>::compatible(*tape, output, input) ||
-            !OperatorAccess<T>::valid(*tape, offset) ||
-            OperatorAccess<T>::length(offset) != 1U ||
-            OperatorAccess<T>::role(offset) != BufferRole::parameter ||
-            OperatorAccess<T>::gradients(output) == nullptr ||
-            OperatorAccess<T>::gradients(offset) == nullptr ||
-            OperatorAccess<T>::values(output) == OperatorAccess<T>::values(input) ||
-            OperatorAccess<T>::values(output) == OperatorAccess<T>::values(offset) ||
-            OperatorAccess<T>::gradients(output) ==
-                OperatorAccess<T>::gradients(input) ||
-            OperatorAccess<T>::gradients(output) ==
-                OperatorAccess<T>::gradients(offset))
-        {
-            OperatorAccess<T>::fail(*tape, Status::tape_mismatch);
+#if DSPPP_AUTODIFF_ENABLE_VALIDATION
+        if (!validate(*tape, output, input, offset))
             return false;
-        }
+#endif
         apply_offset(OperatorAccess<T>::values(input), OperatorAccess<T>::values(offset)[0],
                      OperatorAccess<T>::values(output), OperatorAccess<T>::length(output));
         if (!OperatorAccess<T>::recording(*tape) ||

@@ -120,8 +120,8 @@ The first error is sticky until `clear_status()`, `reset()`, `begin_graph()`, or
 Boolean result of `backward()` before using gradients.
 
 - `out_of_memory`: a gradient or operation record did not fit in the arena.
-- `tape_mismatch`: views, roles, shapes, pointers, or aliasing are invalid for
-  an operation.
+- `tape_mismatch`: with `DSPPP_AUTODIFF_ENABLE_VALIDATION=1`, views, roles,
+  shapes, pointers, or aliasing are invalid for an operation.
 - `invalid_output`: the backward root or seed is invalid, or graph rewinding
   was requested without a mark.
 - `operator_not_registered`: an expression's operator was not registered.

@@ -69,6 +69,24 @@ template <typename T = float> class AddOperator
                 record.right_gradient, record.length);
     }
 
+    static bool validate(Tape<T> &tape, const BufferView<T> &output,
+                         const BufferView<T> &left,
+                         const BufferView<T> &right) noexcept
+    {
+        if (!OperatorAccess<T>::compatible(tape, output, left) ||
+            !OperatorAccess<T>::compatible(tape, output, right) ||
+            OperatorAccess<T>::gradients(output) == nullptr ||
+            OperatorAccess<T>::values(output) == OperatorAccess<T>::values(left) ||
+            OperatorAccess<T>::values(output) == OperatorAccess<T>::values(right) ||
+            OperatorAccess<T>::gradients(output) == OperatorAccess<T>::gradients(left) ||
+            OperatorAccess<T>::gradients(output) == OperatorAccess<T>::gradients(right))
+        {
+            OperatorAccess<T>::fail(tape, Status::tape_mismatch);
+            return false;
+        }
+        return true;
+    }
+
 public:
     static bool evaluate(BufferView<T> &output, const BufferView<T> &left,
                          const BufferView<T> &right) noexcept
@@ -77,17 +95,10 @@ public:
         OperatorAccess<T>::set_producer(output, nullptr);
         if (tape == nullptr || !OperatorAccess<T>::template require<AddOperator<T>>(*tape))
             return false;
-        if (!OperatorAccess<T>::compatible(*tape, output, left) ||
-            !OperatorAccess<T>::compatible(*tape, output, right) ||
-            OperatorAccess<T>::gradients(output) == nullptr ||
-            OperatorAccess<T>::values(output) == OperatorAccess<T>::values(left) ||
-            OperatorAccess<T>::values(output) == OperatorAccess<T>::values(right) ||
-            OperatorAccess<T>::gradients(output) == OperatorAccess<T>::gradients(left) ||
-            OperatorAccess<T>::gradients(output) == OperatorAccess<T>::gradients(right))
-        {
-            OperatorAccess<T>::fail(*tape, Status::tape_mismatch);
+#if DSPPP_AUTODIFF_ENABLE_VALIDATION
+        if (!validate(*tape, output, left, right))
             return false;
-        }
+#endif
         add(OperatorAccess<T>::values(left), OperatorAccess<T>::values(right),
             OperatorAccess<T>::values(output), OperatorAccess<T>::length(output));
         if (!OperatorAccess<T>::recording(*tape) || OperatorAccess<T>::length(output) == 0U)

@@ -193,9 +193,19 @@ start at zero.
 
 ## Common validation rules
 
-Views used by one expression must belong to the same tape and satisfy the
-operator's role and shape requirements. Output and input value storage must be
-distinct, and output gradient storage must not alias an input gradient. An
-invalid combination sets the sticky `Status::tape_mismatch`. A successfully
-computed value has a producer only when recording is enabled and its record was
-appended successfully.
+Operator argument validation is disabled by default so it adds no overhead to
+the evaluation path. Define `DSPPP_AUTODIFF_ENABLE_VALIDATION` to `1` before
+including the autodiff headers, or define it consistently for the complete
+build, to enable these checks.
+
+When enabled, views used by one expression must belong to the same tape and
+satisfy the operator's role and shape requirements. Output and input value
+storage must be distinct, and output gradient storage must not alias an input
+gradient. An invalid combination sets the sticky
+`Status::tape_mismatch`. When validation is disabled, the application is
+responsible for meeting these preconditions; invalid arguments may cause
+out-of-bounds access or otherwise undefined results.
+
+A successfully computed value has a producer only when recording is enabled
+and its record was appended successfully. Operator registration and arena
+allocation failures are checked in both validation configurations.

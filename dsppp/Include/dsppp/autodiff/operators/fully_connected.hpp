@@ -96,21 +96,16 @@ template <typename T = float> class FullyConnectedOperator
         }
     }
 
-public:
-    static bool evaluate(BufferView<T> &output, const BufferView<T> &input,
+    static bool validate(Tape<T> &tape, const BufferView<T> &output,
+                         const BufferView<T> &input,
                          const MatrixView<T> &weights,
                          const BufferView<T> &bias) noexcept
     {
-        Tape<T> *tape = OperatorAccess<T>::tape(output);
-        OperatorAccess<T>::set_producer(output, nullptr);
-        if (tape == nullptr ||
-            !OperatorAccess<T>::template require<FullyConnectedOperator<T>>(*tape))
-            return false;
         const BufferView<T> &weight_buffer = OperatorAccess<T>::buffer(weights);
-        if (!OperatorAccess<T>::valid(*tape, output) ||
-            !OperatorAccess<T>::valid(*tape, input) ||
-            !OperatorAccess<T>::valid(*tape, weight_buffer) ||
-            !OperatorAccess<T>::valid(*tape, bias) ||
+        if (!OperatorAccess<T>::valid(tape, output) ||
+            !OperatorAccess<T>::valid(tape, input) ||
+            !OperatorAccess<T>::valid(tape, weight_buffer) ||
+            !OperatorAccess<T>::valid(tape, bias) ||
             OperatorAccess<T>::gradients(output) == nullptr ||
             OperatorAccess<T>::length(output) != OperatorAccess<T>::rows(weights) ||
             OperatorAccess<T>::length(input) != OperatorAccess<T>::columns(weights) ||
@@ -122,10 +117,27 @@ public:
             OperatorAccess<T>::role(weight_buffer) != BufferRole::parameter ||
             OperatorAccess<T>::role(bias) != BufferRole::parameter)
         {
-            OperatorAccess<T>::fail(*tape, Status::tape_mismatch);
+            OperatorAccess<T>::fail(tape, Status::tape_mismatch);
             return false;
         }
+        return true;
+    }
 
+public:
+    static bool evaluate(BufferView<T> &output, const BufferView<T> &input,
+                         const MatrixView<T> &weights,
+                         const BufferView<T> &bias) noexcept
+    {
+        Tape<T> *tape = OperatorAccess<T>::tape(output);
+        OperatorAccess<T>::set_producer(output, nullptr);
+        if (tape == nullptr ||
+            !OperatorAccess<T>::template require<FullyConnectedOperator<T>>(*tape))
+            return false;
+#if DSPPP_AUTODIFF_ENABLE_VALIDATION
+        if (!validate(*tape, output, input, weights, bias))
+            return false;
+#endif
+        const BufferView<T> &weight_buffer = OperatorAccess<T>::buffer(weights);
         const std::size_t rows = OperatorAccess<T>::rows(weights);
         const std::size_t columns = OperatorAccess<T>::columns(weights);
         if (rows != 0U)

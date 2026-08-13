@@ -72,24 +72,18 @@ template <typename T = float> class MatrixMultiplyOperator
         }
     }
 
-public:
-    static bool evaluate(BufferView<T> &output, const BufferView<T> &input,
+    static bool validate(Tape<T> &tape, const BufferView<T> &output,
+                         const BufferView<T> &input,
                          const MatrixView<T> &weights) noexcept
     {
-        Tape<T> *tape = OperatorAccess<T>::tape(output);
-        OperatorAccess<T>::set_producer(output, nullptr);
-        if (tape == nullptr ||
-            !OperatorAccess<T>::template require<MatrixMultiplyOperator<T>>(*tape))
-            return false;
-
         const BufferView<T> &weight_buffer = OperatorAccess<T>::buffer(weights);
         const std::size_t rows = OperatorAccess<T>::rows(weights);
         const std::size_t inner = OperatorAccess<T>::columns(weights);
         const std::size_t input_length = OperatorAccess<T>::length(input);
         const std::size_t columns = inner == 0U ? 0U : input_length / inner;
-        if (!OperatorAccess<T>::valid(*tape, output) ||
-            !OperatorAccess<T>::valid(*tape, input) ||
-            !OperatorAccess<T>::valid(*tape, weight_buffer) ||
+        if (!OperatorAccess<T>::valid(tape, output) ||
+            !OperatorAccess<T>::valid(tape, input) ||
+            !OperatorAccess<T>::valid(tape, weight_buffer) ||
             OperatorAccess<T>::gradients(output) == nullptr ||
             OperatorAccess<T>::role(input) != BufferRole::input ||
             OperatorAccess<T>::role(weight_buffer) != BufferRole::parameter ||
@@ -101,11 +95,34 @@ public:
             columns > std::numeric_limits<std::uint16_t>::max() ||
             OperatorAccess<T>::length(output) != rows * columns)
         {
-            OperatorAccess<T>::fail(*tape, Status::tape_mismatch);
+            OperatorAccess<T>::fail(tape, Status::tape_mismatch);
             return false;
         }
+        return true;
+    }
 
+public:
+    static bool evaluate(BufferView<T> &output, const BufferView<T> &input,
+                         const MatrixView<T> &weights) noexcept
+    {
+        Tape<T> *tape = OperatorAccess<T>::tape(output);
+        OperatorAccess<T>::set_producer(output, nullptr);
+        if (tape == nullptr ||
+            !OperatorAccess<T>::template require<MatrixMultiplyOperator<T>>(*tape))
+            return false;
+#if DSPPP_AUTODIFF_ENABLE_VALIDATION
+        if (!validate(*tape, output, input, weights))
+            return false;
+#endif
+
+        const BufferView<T> &weight_buffer = OperatorAccess<T>::buffer(weights);
+        const std::size_t rows = OperatorAccess<T>::rows(weights);
+        const std::size_t inner = OperatorAccess<T>::columns(weights);
+        const std::size_t input_length = OperatorAccess<T>::length(input);
+        const std::size_t columns = inner == 0U ? 0U : input_length / inner;
+#if DSPPP_AUTODIFF_ENABLE_VALIDATION
         arm_status matrix_status;
+#endif
         if constexpr (std::is_same<T, float>::value)
         {
         arm_matrix_instance_f32 weight_matrix;
@@ -120,7 +137,10 @@ public:
         arm_mat_init_f32(&output_matrix, static_cast<std::uint16_t>(rows),
                          static_cast<std::uint16_t>(columns),
                          OperatorAccess<T>::values(output));
-        matrix_status = arm_mat_mult_f32(&weight_matrix, &input_matrix, &output_matrix);
+#if DSPPP_AUTODIFF_ENABLE_VALIDATION
+        matrix_status =
+#endif
+            arm_mat_mult_f32(&weight_matrix, &input_matrix, &output_matrix);
         }
         else
         {
@@ -136,13 +156,18 @@ public:
         arm_mat_init_f16(&output_matrix, static_cast<std::uint16_t>(rows),
                          static_cast<std::uint16_t>(columns),
                          OperatorAccess<T>::values(output));
-        matrix_status = arm_mat_mult_f16(&weight_matrix, &input_matrix, &output_matrix);
+#if DSPPP_AUTODIFF_ENABLE_VALIDATION
+        matrix_status =
+#endif
+            arm_mat_mult_f16(&weight_matrix, &input_matrix, &output_matrix);
         }
+#if DSPPP_AUTODIFF_ENABLE_VALIDATION
         if (matrix_status != ARM_MATH_SUCCESS)
         {
             OperatorAccess<T>::fail(*tape, Status::tape_mismatch);
             return false;
         }
+#endif
 
         if (!OperatorAccess<T>::recording(*tape))
             return OperatorAccess<T>::status(*tape) == Status::ok;

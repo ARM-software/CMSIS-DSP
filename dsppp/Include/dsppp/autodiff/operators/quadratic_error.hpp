@@ -58,6 +58,23 @@ template <typename T = float> class QuadraticErrorOperator
             (prediction_value - target_value) * static_cast<T>(2.0F * static_cast<float>(seed));
     }
 
+    static bool validate(Tape<T> &tape, const BufferView<T> &output,
+                         const BufferView<T> &prediction,
+                         const BufferView<T> &target) noexcept
+    {
+        if (!OperatorAccess<T>::valid(tape, output) ||
+            OperatorAccess<T>::length(output) != 1U ||
+            OperatorAccess<T>::gradients(output) == nullptr ||
+            !OperatorAccess<T>::compatible(tape, prediction, target) ||
+            OperatorAccess<T>::gradients(prediction) == nullptr ||
+            OperatorAccess<T>::role(target) != BufferRole::input)
+        {
+            OperatorAccess<T>::fail(tape, Status::tape_mismatch);
+            return false;
+        }
+        return true;
+    }
+
 public:
     static bool evaluate(BufferView<T> &output, const BufferView<T> &prediction,
                          const BufferView<T> &target) noexcept
@@ -67,16 +84,10 @@ public:
         if (tape == nullptr ||
             !OperatorAccess<T>::template require<QuadraticErrorOperator<T>>(*tape))
             return false;
-        if (!OperatorAccess<T>::valid(*tape, output) ||
-            OperatorAccess<T>::length(output) != 1U ||
-            OperatorAccess<T>::gradients(output) == nullptr ||
-            !OperatorAccess<T>::compatible(*tape, prediction, target) ||
-            OperatorAccess<T>::gradients(prediction) == nullptr ||
-            OperatorAccess<T>::role(target) != BufferRole::input)
-        {
-            OperatorAccess<T>::fail(*tape, Status::tape_mismatch);
+#if DSPPP_AUTODIFF_ENABLE_VALIDATION
+        if (!validate(*tape, output, prediction, target))
             return false;
-        }
+#endif
 
         const std::size_t length = OperatorAccess<T>::length(prediction);
         ::arm_cmsis_dsp::VectorView<T> prediction_value(

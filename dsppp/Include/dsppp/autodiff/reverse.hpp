@@ -16,6 +16,10 @@ namespace autodiff {
 #define DSPPP_AUTODIFF_MAX_OPERATORS 16
 #endif
 
+#ifndef DSPPP_AUTODIFF_ENABLE_VALIDATION
+#define DSPPP_AUTODIFF_ENABLE_VALIDATION 0
+#endif
+
 template <typename T = float> class Tape;
 template <typename T = float> class OperatorAccess;
 
