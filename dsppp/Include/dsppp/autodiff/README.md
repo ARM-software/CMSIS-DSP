@@ -18,11 +18,10 @@ providing predictable fixed memory use, no heap allocation, and no exceptions.
 
 Automatic differentiation needs high performance in both directions. The
 forward pass evaluates the model, while the backward pass propagates and
-accumulates gradients. This implementation uses CMSIS-DSP for both rather than
-treating it only as a collection of forward-inference kernels.
+accumulates gradients. This implementation uses CMSIS-DSP for both.
 
 When an operation maps directly to an optimized CMSIS-DSP C kernel, its
-forward pass uses the kernel matching `T`. For example, float32 dot products
+forward pass uses the CMSIS-DSP kernel. For example, float32 dot products
 use `arm_dot_prod_f32` and float16 dot products use `arm_dot_prod_f16`; the
 corresponding fully connected and matrix products use the f32 or f16 matrix
 kernels. These kernels provide implementations optimized for the selected Arm
@@ -59,6 +58,27 @@ weight gradient through lazy `matvec` expressions. This combination of
 optimized C kernels and fusible C++ expressions is especially important for
 training, because backward passes contain more compound updates and
 accumulations than typical forward inference code.
+
+## Examples
+
+### Polynomial regression
+
+`dsppp/Examples/autodiff_regression.cpp` trains a cubic polynomial to
+approximate `sin(x)`. It demonstrates a batch loss, RMSProp, graph reuse,
+parameter freezing, and saving learned values.
+
+### LMS adaptive filter
+
+`dsppp/Examples/autodiff_lms.cpp` identifies an unknown FIR filter with a
+per-sample quadratic loss and SGD update. It is an educational demonstration;
+the specialized CMSIS-DSP LMS implementation is more efficient for production
+filtering.
+
+### Iris classifier
+
+`dsppp/Examples/autodiff_iris.cpp` trains a small two-layer classifier with
+Adam and tests it on 30 patterns excluded from training. A single macro selects
+the float32 or float16 implementation.
 
 ## How reverse differentiation works here
 
@@ -137,20 +157,15 @@ int main()
   one expression through `reverse.hpp`, including its tape record, `producer`,
   node links, gradient reset, seed, and backward rule.
 
-## Examples and tests
+## Tests
 
-`dsppp/Examples/autodiff_regression.cpp` trains a polynomial approximation to
-`sin(x)` with RMSProp. `dsppp/Examples/autodiff_lms.cpp` demonstrates
-per-sample LMS adaptation with SGD. `dsppp/Examples/autodiff_iris.cpp` trains a
-small fully connected classifier with Adam.
-
-Autodiff uses the existing dsppp board-test infrastructure. From `dsppp`, run:
+Autodiff is tested through the usual dsppp C++ board-test framework. The same
+type-generic suite is instantiated for the datatype selected by `F32_DT` or
+`F16_DT`. From `dsppp`, run for example:
 
 ```sh
 python run_all.py --test AUTODIFF_TEST --dt F32_DT
 ```
 
-The API supports `float` and, on targets defining `ARM_FLOAT16_SUPPORTED`,
-`float16_t`. The board test currently selects the float32 path when
-`AUTODIFF_TEST`, `F32_DT`, and `DYNAMIC_TEST` are defined; the Iris example
-instantiates the float16 path.
+Use `--dt F16_DT` to run the float16 instantiation on a target defining
+`ARM_FLOAT16_SUPPORTED`.

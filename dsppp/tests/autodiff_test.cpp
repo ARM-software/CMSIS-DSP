@@ -4,7 +4,8 @@ extern "C" {
     extern void autodiff_test();
 }
 
-#if defined(AUTODIFF_TEST) && defined(F32_DT) && defined(DYNAMIC_TEST)
+#if defined(AUTODIFF_TEST) && defined(DYNAMIC_TEST) && \
+    (defined(F32_DT) || defined(F16_DT))
 
 #include <dsppp/autodiff/reverse.hpp>
 #include <dsppp/autodiff/operators/add.hpp>
@@ -46,25 +47,33 @@ using namespace arm_cmsis_dsp::autodiff;
 #endif
 #define assert(condition) AUTODIFF_CHECK(condition)
 
+template <typename T>
+static bool close_to(T actual, float expected, float tolerance) noexcept
+{
+    const float difference = static_cast<float>(actual) - expected;
+    return difference > -tolerance && difference < tolerance;
+}
+
+template <typename T>
 static void test1()
 {
  // Vector add followed by dot. Values and outputs belong to the caller;
     // gradients and two fixed-size operation records use the tape arena.
-    Arena<2048> *buffer_arena = new Arena<2048>();
-    Tape<float> &buffer_tape = buffer_arena->tape();
-    buffer_tape.register_operator<AddOperator<float>>();
-    buffer_tape.register_operator<DotOperator<float>>();
-    float x_value[] = {1.0F, 2.0F, 3.0F};
-    float w_value[] = {4.0F, 5.0F, 6.0F};
-    float sum_value[3] = {};
-    float result_value[1] = {};
+    Arena<2048, T> *buffer_arena = new Arena<2048, T>();
+    Tape<T> &buffer_tape = buffer_arena->tape();
+    buffer_tape.template register_operator<AddOperator<T>>();
+    buffer_tape.template register_operator<DotOperator<T>>();
+    T x_value[] = {1.0F, 2.0F, 3.0F};
+    T w_value[] = {4.0F, 5.0F, 6.0F};
+    T sum_value[3] = {};
+    T result_value[1] = {};
 
     BufferView x_view = buffer_tape.view(x_value);
     BufferView w_view = buffer_tape.view(w_value);
     BufferView sum_view = buffer_tape.view(sum_value);
     BufferView result_view = buffer_tape.view(result_value);
     const std::size_t gradients_end = buffer_tape.used();
-    assert(gradients_end >= 10U * sizeof(float));
+    assert(gradients_end >= 10U * sizeof(T));
 
 
 
@@ -90,7 +99,7 @@ static void test1()
 
 
     // A vector output accepts a caller-provided vector-Jacobian seed.
-    const float sum_seed[] = {1.0F, 2.0F, 3.0F};
+    const T sum_seed[] = {1.0F, 2.0F, 3.0F};
     assert(buffer_tape.backward(sum_view, sum_seed, 3));
     for (std::size_t i = 0; i < 3; ++i)
     {
@@ -101,23 +110,24 @@ static void test1()
     delete buffer_arena;
 }
 
-void test2()
+template <typename T>
+static void test2()
 {
  
 
     // Only parameters receive final gradients. The x input has no gradient
     // allocation, while scale and offset are trainable scalar parameters.
-    Arena<2048> *parameter_arena = new Arena<2048>();
-    Tape<float> &parameter_tape = parameter_arena->tape();
-    parameter_tape.register_operator<ScaleOperator<float>>();
-    parameter_tape.register_operator<OffsetOperator<float>>();
-    parameter_tape.register_operator<DotOperator<float>>();
-    float input_value[] = {1.0F, 2.0F, 3.0F};
-    float alpha_value = 2.0F;
-    float beta_value = 10.0F;
-    float scaled_value[3] = {};
-    float added_value[3] = {};
-    float loss_value[1] = {};
+    Arena<2048, T> *parameter_arena = new Arena<2048, T>();
+    Tape<T> &parameter_tape = parameter_arena->tape();
+    parameter_tape.template register_operator<ScaleOperator<T>>();
+    parameter_tape.template register_operator<OffsetOperator<T>>();
+    parameter_tape.template register_operator<DotOperator<T>>();
+    T input_value[] = {1.0F, 2.0F, 3.0F};
+    T alpha_value = 2.0F;
+    T beta_value = 10.0F;
+    T scaled_value[3] = {};
+    T added_value[3] = {};
+    T loss_value[1] = {};
 
     BufferView input_view = parameter_tape.input(input_value);
     const std::size_t after_input = parameter_tape.used();
@@ -145,20 +155,21 @@ void test2()
     delete parameter_arena;
 }
 
-void test3()
+template <typename T>
+static void test3()
 {
 
     // Fully connected followed by ReLU. Only the positive first neuron
     // contributes to the matrix and bias parameter gradients.
-    Arena<2048> *network_arena = new Arena<2048>();
-    Tape<float> &network_tape = network_arena->tape();
-    network_tape.register_operator<FullyConnectedOperator<float>>();
-    network_tape.register_operator<ReluOperator<float>>();
-    float network_input_value[] = {2.0F, -1.0F};
-    float matrix_value[2][2] = {{1.0F, 2.0F}, {-3.0F, 1.0F}};
-    float bias_value[] = {1.0F, 0.0F};
-    float linear_value[2] = {};
-    float activation_value[2] = {};
+    Arena<2048, T> *network_arena = new Arena<2048, T>();
+    Tape<T> &network_tape = network_arena->tape();
+    network_tape.template register_operator<FullyConnectedOperator<T>>();
+    network_tape.template register_operator<ReluOperator<T>>();
+    T network_input_value[] = {2.0F, -1.0F};
+    T matrix_value[2][2] = {{1.0F, 2.0F}, {-3.0F, 1.0F}};
+    T bias_value[] = {1.0F, 0.0F};
+    T linear_value[2] = {};
+    T activation_value[2] = {};
 
     BufferView network_input = network_tape.input(network_input_value);
     MatrixView matrix = network_tape.parameter(matrix_value);
@@ -173,7 +184,7 @@ void test3()
     assert(activation_value[0] == 1.0F);
     assert(activation_value[1] == 0.0F);
 
-    const float activation_seed[] = {1.0F, 1.0F};
+    const T activation_seed[] = {1.0F, 1.0F};
     assert(network_tape.backward(activation, activation_seed, 2));
     assert(matrix.gradient(0, 0) == 2.0F);
     assert(matrix.gradient(0, 1) == -1.0F);
@@ -187,18 +198,19 @@ void test3()
    
 }
 
-void test4()
+template <typename T>
+static void test4()
 {
      // ReLU uses a zero derivative at exactly zero.
-    Arena<512> *relu_arena = new Arena<512>();
-    Tape<float> &relu_tape = relu_arena->tape();
-    relu_tape.register_operator<ReluOperator<float>>();
-    float relu_parameter_value[] = {-1.0F, 0.0F, 2.0F};
-    float relu_output_value[3] = {};
+    Arena<512, T> *relu_arena = new Arena<512, T>();
+    Tape<T> &relu_tape = relu_arena->tape();
+    relu_tape.template register_operator<ReluOperator<T>>();
+    T relu_parameter_value[] = {-1.0F, 0.0F, 2.0F};
+    T relu_output_value[3] = {};
     BufferView relu_parameter = relu_tape.parameter(relu_parameter_value);
     BufferView relu_output = relu_tape.output(relu_output_value);
     relu_output = relu(relu_parameter);
-    const float relu_seed[] = {1.0F, 1.0F, 1.0F};
+    const T relu_seed[] = {1.0F, 1.0F, 1.0F};
     assert(relu_tape.backward(relu_output, relu_seed, 3));
     assert(relu_parameter.gradient(0) == 0.0F);
     assert(relu_parameter.gradient(1) == 0.0F);
@@ -207,45 +219,50 @@ void test4()
     delete relu_arena;
 }
 
-void test5()
+template <typename T>
+static void test5()
 {
     
     // Softmax is normalized and its vector-Jacobian product has zero sum.
-    Arena<512> *softmax_arena = new Arena<512>();
-    Tape<float> &softmax_tape = softmax_arena->tape();
-    softmax_tape.register_operator<SoftmaxOperator<float>>();
-    float logits_value[] = {0.0F, 0.0F, 0.0F};
-    float probability_value[3] = {};
+    Arena<512, T> *softmax_arena = new Arena<512, T>();
+    Tape<T> &softmax_tape = softmax_arena->tape();
+    softmax_tape.template register_operator<SoftmaxOperator<T>>();
+    T logits_value[] = {0.0F, 0.0F, 0.0F};
+    T probability_value[3] = {};
     BufferView logits = softmax_tape.parameter(logits_value);
     BufferView probability = softmax_tape.output(probability_value);
     probability = softmax(logits);
-    const float probability_sum = probability_value[0] +
-        probability_value[1] + probability_value[2];
-    assert(probability_sum > 0.9999F && probability_sum < 1.0001F);
+    const T probability_sum = static_cast<T>(
+        static_cast<float>(probability_value[0]) +
+        static_cast<float>(probability_value[1]) +
+        static_cast<float>(probability_value[2]));
+    const float probability_tolerance =
+        std::is_same<T, float>::value ? 2.0e-4F : 2.0e-3F;
+    assert(close_to(probability_sum, 1.0F, probability_tolerance));
     for (std::size_t i = 0; i < 3U; ++i)
-        assert(probability_value[i] > 0.3332F &&
-               probability_value[i] < 0.3335F);
-    const float softmax_seed[] = {1.0F, 2.0F, 3.0F};
+        assert(close_to(probability_value[i], 1.0F / 3.0F,
+                        probability_tolerance));
+    const T softmax_seed[] = {1.0F, 2.0F, 3.0F};
     assert(softmax_tape.backward(probability, softmax_seed, 3U));
-    assert(logits.gradient(0) < -0.3332F &&
-           logits.gradient(0) > -0.3335F);
-    assert(logits.gradient(1) > -1.0e-6F &&
-           logits.gradient(1) < 1.0e-6F);
-    assert(logits.gradient(2) > 0.3332F &&
-           logits.gradient(2) < 0.3335F);
+    assert(close_to(logits.gradient(0), -1.0F / 3.0F,
+                    probability_tolerance));
+    assert(close_to(logits.gradient(1), 0.0F, probability_tolerance));
+    assert(close_to(logits.gradient(2), 1.0F / 3.0F,
+                    probability_tolerance));
     delete softmax_arena;
 }
 
-void test6()
+template <typename T>
+static void test6()
 {
     
     // Including an operator does not enable it. Evaluation fails until that
     // operator type is explicitly registered on this tape.
-    Arena<256> *registry_arena = new Arena<256>();
-    Tape<float> &registry_tape = registry_arena->tape();
-    float registry_left_value[] = {1.0F};
-    float registry_right_value[] = {2.0F};
-    float registry_output_value[] = {0.0F};
+    Arena<256, T> *registry_arena = new Arena<256, T>();
+    Tape<T> &registry_tape = registry_arena->tape();
+    T registry_left_value[] = {1.0F};
+    T registry_right_value[] = {2.0F};
+    T registry_output_value[] = {0.0F};
     BufferView registry_left = registry_tape.input(registry_left_value);
     BufferView registry_right = registry_tape.input(registry_right_value);
     BufferView registry_output = registry_tape.output(registry_output_value);
@@ -253,29 +270,30 @@ void test6()
     assert(registry_tape.status() == Status::operator_not_registered);
     assert(registry_output_value[0] == 0.0F);
     registry_tape.clear_status();
-    assert(registry_tape.register_operator<AddOperator<float>>());
+    assert(registry_tape.template register_operator<AddOperator<T>>());
     registry_output = registry_left + registry_right;
     assert(registry_tape.good());
     assert(registry_output_value[0] == 3.0F);
     delete registry_arena;
 }
 
-void test7()
+template <typename T>
+static void test7()
 {
     
     // Quadratic loss, reusable graph records, Adam, and selective freezing.
-    Arena<1024> *training_arena = new Arena<1024>();
-    Tape<float> &training_tape = training_arena->tape();
-    training_tape.register_operator<DotOperator<float>>();
-    training_tape.register_operator<AddOperator<float>>();
-    training_tape.register_operator<QuadraticErrorOperator<float>>();
-    float feature_value[] = {2.0F};
-    float coefficient_value[] = {3.0F};
-    float bias_parameter_value[] = {1.0F};
-    float dot_value[1] = {};
-    float prediction_value[1] = {};
-    float target_value[] = {0.0F};
-    float training_loss_value[1] = {};
+    Arena<1024, T> *training_arena = new Arena<1024, T>();
+    Tape<T> &training_tape = training_arena->tape();
+    training_tape.template register_operator<DotOperator<T>>();
+    training_tape.template register_operator<AddOperator<T>>();
+    training_tape.template register_operator<QuadraticErrorOperator<T>>();
+    T feature_value[] = {2.0F};
+    T coefficient_value[] = {3.0F};
+    T bias_parameter_value[] = {1.0F};
+    T dot_value[1] = {};
+    T prediction_value[1] = {};
+    T target_value[] = {0.0F};
+    T training_loss_value[1] = {};
     BufferView feature = training_tape.input(feature_value);
     BufferView coefficient = training_tape.parameter(coefficient_value);
     BufferView bias_parameter = training_tape.parameter(bias_parameter_value);
@@ -283,7 +301,7 @@ void test7()
     BufferView prediction = training_tape.output(prediction_value);
     BufferView target = training_tape.input(target_value);
     BufferView loss = training_tape.output(training_loss_value);
-    Adam<2> adam(1.0e-2F);
+    Adam<2, 16U, T> adam(1.0e-2F);
     assert(adam.add(coefficient));
     assert(adam.add(bias_parameter));
     assert(freeze_parameters(adam, coefficient));
@@ -306,23 +324,24 @@ void test7()
     delete training_arena;
 }
 
-void test8()
+template <typename T>
+static void test8()
 {
     
     // A single vector loss accumulates contributions from every sample into
     // shared polynomial parameters before an optimizer step.
-    Arena<2048> *batch_arena = new Arena<2048>();
-    Tape<float> &batch_tape = batch_arena->tape();
-    batch_tape.register_operator<DotOperator<float>>();
-    batch_tape.register_operator<AddOperator<float>>();
-    batch_tape.register_operator<QuadraticErrorOperator<float>>();
-    float batch_feature_value[2][1] = {{1.0F}, {2.0F}};
-    float batch_coefficient_value = 3.0F;
-    float batch_bias_value = 1.0F;
-    float batch_polynomial_value[2] = {};
-    float batch_prediction_value[2] = {};
-    float batch_target_value[2] = {};
-    float batch_loss_value = 0.0F;
+    Arena<2048, T> *batch_arena = new Arena<2048, T>();
+    Tape<T> &batch_tape = batch_arena->tape();
+    batch_tape.template register_operator<DotOperator<T>>();
+    batch_tape.template register_operator<AddOperator<T>>();
+    batch_tape.template register_operator<QuadraticErrorOperator<T>>();
+    T batch_feature_value[2][1] = {{1.0F}, {2.0F}};
+    T batch_coefficient_value = 3.0F;
+    T batch_bias_value = 1.0F;
+    T batch_polynomial_value[2] = {};
+    T batch_prediction_value[2] = {};
+    T batch_target_value[2] = {};
+    T batch_loss_value = 0.0F;
     BufferView batch_coefficient =
         batch_tape.parameter(batch_coefficient_value);
     BufferView batch_bias = batch_tape.parameter(batch_bias_value);
@@ -353,14 +372,15 @@ void test8()
     delete batch_arena;
 }
 
-void test9()
+template <typename T>
+static void test9()
 {
     // RMSProp uses the same parameter registration and freezing API.
-    Arena<128> *rms_arena = new Arena<128>();
-    Tape<float> &rms_tape = rms_arena->tape();
-    float rms_value = 1.0F;
+    Arena<128, T> *rms_arena = new Arena<128, T>();
+    Tape<T> &rms_tape = rms_arena->tape();
+    T rms_value = 1.0F;
     BufferView rms_parameter = rms_tape.parameter(rms_value);
-    RMSProp<1> rmsprop(1.0e-2F);
+    RMSProp<1, 16U, T> rmsprop(1.0e-2F);
     assert(rmsprop.add(rms_parameter));
     rms_parameter.gradients()[0] = 2.0F;
     assert(rmsprop.step());
@@ -368,19 +388,20 @@ void test9()
     delete rms_arena;
 }
 
-void test10()
+template <typename T>
+static void test10()
 {
     // Subtraction and elementwise multiplication have data operands only.
-    Arena<1024> arena;
-    Tape<float> &tape = arena.tape();
-    tape.register_operator<SubOperator<float>>();
-    tape.register_operator<MultiplyOperator<float>>();
-    float left_value[] = {2.0F, 4.0F, 6.0F};
-    float left_gradient[3] = {};
-    float right_value[] = {1.0F, 2.0F, 3.0F};
-    float right_gradient[3] = {};
-    float difference_value[3] = {};
-    float product_value[3] = {};
+    Arena<1024, T> arena;
+    Tape<T> &tape = arena.tape();
+    tape.template register_operator<SubOperator<T>>();
+    tape.template register_operator<MultiplyOperator<T>>();
+    T left_value[] = {2.0F, 4.0F, 6.0F};
+    T left_gradient[3] = {};
+    T right_value[] = {1.0F, 2.0F, 3.0F};
+    T right_gradient[3] = {};
+    T difference_value[3] = {};
+    T product_value[3] = {};
     BufferView left = tape.view(left_value, left_gradient, 3U);
     BufferView right = tape.view(right_value, right_gradient, 3U);
     BufferView difference = tape.output(difference_value);
@@ -390,7 +411,7 @@ void test10()
     assert(product_value[0] == 1.0F);
     assert(product_value[1] == 4.0F);
     assert(product_value[2] == 9.0F);
-    const float seed[] = {1.0F, 1.0F, 1.0F};
+    const T seed[] = {1.0F, 1.0F, 1.0F};
     assert(tape.backward(product, seed, 3U));
     for (std::size_t i = 0; i < 3U; ++i)
     {
@@ -428,46 +449,21 @@ static void test_transposed_dot_type()
     }
 }
 
-template<typename TM, typename TV>
-static void test_transposed_dot_mixed_type()
-{
-    using Result = typename ::arm_cmsis_dsp::MixedRes<TM,TV>::type;
-    const TM matrix_one = ::arm_cmsis_dsp::number_traits<TM>::one();
-    const TV vector_one = ::arm_cmsis_dsp::number_traits<TV>::one();
-    TM matrix_value[2][5] = {};
-    for (std::size_t column = 0; column < 5; ++column)
-        matrix_value[0][column] = matrix_one;
-    TV vector_value[2] = {vector_one,TV{}};
-
-    ::arm_cmsis_dsp::MatrixView<TM, ::arm_cmsis_dsp::DYNAMIC> matrix(
-        &matrix_value[0][0], 2, 5, 5);
-    ::arm_cmsis_dsp::VectorView<TV> vector(vector_value, 0, 2);
-    ::arm_cmsis_dsp::Matrix<TM, ::arm_cmsis_dsp::DYNAMIC,
-                            ::arm_cmsis_dsp::DYNAMIC>
-        materialized_transpose(5,2);
-    ::arm_cmsis_dsp::transposeTo(materialized_transpose,matrix);
-    ::arm_cmsis_dsp::Vector<Result, ::arm_cmsis_dsp::DYNAMIC> reference =
-        ::arm_cmsis_dsp::dot(materialized_transpose,vector);
-    ::arm_cmsis_dsp::Vector<Result, ::arm_cmsis_dsp::DYNAMIC> result =
-        ::arm_cmsis_dsp::dot(::arm_cmsis_dsp::transpose_view(matrix),vector);
-    for (std::size_t column = 0; column < 5; ++column)
-        assert(result[column] == reference[column]);
-}
-
-void test11()
+template <typename T>
+static void test11()
 {
     // A transposed view selects the fused matrix-vector kernel without
     // materializing the transpose. Five columns exercise the MVE tail.
-    float matrix_value[3][5] = {
+    T matrix_value[3][5] = {
         {1.0F, 2.0F, 3.0F, 4.0F, 5.0F},
         {6.0F, 7.0F, 8.0F, 9.0F, 10.0F},
         {11.0F, 12.0F, 13.0F, 14.0F, 15.0F}};
-    float vector_value[] = {2.0F, -1.0F, 0.5F};
-    const float expected[] = {1.5F, 3.0F, 4.5F, 6.0F, 7.5F};
+    T vector_value[] = {2.0F, -1.0F, 0.5F};
+    const T expected[] = {1.5F, 3.0F, 4.5F, 6.0F, 7.5F};
 
-    ::arm_cmsis_dsp::MatrixView<float, ::arm_cmsis_dsp::DYNAMIC> matrix(
+    ::arm_cmsis_dsp::MatrixView<T, ::arm_cmsis_dsp::DYNAMIC> matrix(
         &matrix_value[0][0], 3, 5, 5);
-    ::arm_cmsis_dsp::VectorView<float> vector(vector_value, 0, 3);
+    ::arm_cmsis_dsp::VectorView<T> vector(vector_value, 0, 3);
     const auto transposed = ::arm_cmsis_dsp::transpose_view(matrix);
     assert(transposed.rows() == 5);
     assert(transposed.columns() == 3);
@@ -477,56 +473,31 @@ void test11()
     for (std::size_t column = 0; column < 5; ++column)
         assert(result[column] == expected[column]);
 
-    ::arm_cmsis_dsp::Matrix<float,2,5> static_matrix;
-    ::arm_cmsis_dsp::Vector<float,2> static_vector;
+    ::arm_cmsis_dsp::Matrix<T,2,5> static_matrix;
+    ::arm_cmsis_dsp::Vector<T,2> static_vector;
     for (std::size_t row = 0; row < 2; ++row)
         for (std::size_t column = 0; column < 5; ++column)
             static_matrix(row,column) = 1.0F;
-    static_vector = 1.0F;
-    ::arm_cmsis_dsp::Vector<float,5> static_result =
+    static_vector = static_cast<T>(1.0F);
+    ::arm_cmsis_dsp::Vector<T,5> static_result =
         ::arm_cmsis_dsp::dot(
             ::arm_cmsis_dsp::transpose_view(static_matrix),static_vector);
     for (std::size_t column = 0; column < 5; ++column)
         assert(static_result[column] == 2.0F);
 
-    test_transposed_dot_type<double>();
-    test_transposed_dot_type<float>();
-    test_transposed_dot_type<std::complex<float>>();
-#if !defined(DISABLEFLOAT16)
-    test_transposed_dot_type<float16_t>();
-    test_transposed_dot_type<std::complex<float16_t>>();
-#endif
-    test_transposed_dot_type<::arm_cmsis_dsp::Q31>();
-    test_transposed_dot_type<std::complex<::arm_cmsis_dsp::Q31>>();
-    test_transposed_dot_type<::arm_cmsis_dsp::Q15>();
-    test_transposed_dot_type<std::complex<::arm_cmsis_dsp::Q15>>();
-    test_transposed_dot_type<::arm_cmsis_dsp::Q7>();
-    test_transposed_dot_mixed_type<std::complex<float>,float>();
-    test_transposed_dot_mixed_type<float,std::complex<float>>();
-#if !defined(DISABLEFLOAT16)
-    test_transposed_dot_mixed_type<std::complex<float16_t>,float16_t>();
-    test_transposed_dot_mixed_type<float16_t,std::complex<float16_t>>();
-#endif
-    test_transposed_dot_mixed_type<
-        std::complex<::arm_cmsis_dsp::Q31>,::arm_cmsis_dsp::Q31>();
-    test_transposed_dot_mixed_type<
-        ::arm_cmsis_dsp::Q31,std::complex<::arm_cmsis_dsp::Q31>>();
-    test_transposed_dot_mixed_type<
-        std::complex<::arm_cmsis_dsp::Q15>,::arm_cmsis_dsp::Q15>();
-    test_transposed_dot_mixed_type<
-        ::arm_cmsis_dsp::Q15,std::complex<::arm_cmsis_dsp::Q15>>();
+    test_transposed_dot_type<T>();
 
     // Exercise the same kernel through the fully connected backward pass.
-    Arena<4096> arena;
-    Tape<float> &tape = arena.tape();
-    tape.register_operator<FullyConnectedOperator<float>>();
-    float input_value[5] = {};
-    float input_gradient[5] = {};
-    float weight_gradient[3][5] = {};
-    float bias_value[3] = {};
-    float bias_gradient[3] = {};
-    float output_value[3] = {};
-    float output_gradient[3] = {};
+    Arena<4096, T> arena;
+    Tape<T> &tape = arena.tape();
+    tape.template register_operator<FullyConnectedOperator<T>>();
+    T input_value[5] = {};
+    T input_gradient[5] = {};
+    T weight_gradient[3][5] = {};
+    T bias_value[3] = {};
+    T bias_gradient[3] = {};
+    T output_value[3] = {};
+    T output_gradient[3] = {};
     BufferView input = tape.view(input_value, input_gradient, 5);
     MatrixView weights = tape.parameter(
         &matrix_value[0][0], &weight_gradient[0][0], 3, 5);
@@ -538,36 +509,42 @@ void test11()
         assert(input.gradient(column) == expected[column]);
 }
 
-void test12()
+template <typename T>
+static void test12()
 {
     // Categorical cross entropy consumes probabilities and a one-hot target.
-    Arena<512> arena;
-    Tape<float> &tape = arena.tape();
-    tape.register_operator<CrossEntropyOperator<float>>();
-    float probability_value[] = {0.1F, 0.7F, 0.2F};
-    float target_value[] = {0.0F, 1.0F, 0.0F};
-    float loss_value = 0.0F;
+    Arena<512, T> arena;
+    Tape<T> &tape = arena.tape();
+    tape.template register_operator<CrossEntropyOperator<T>>();
+    T probability_value[] = {0.1F, 0.7F, 0.2F};
+    T target_value[] = {0.0F, 1.0F, 0.0F};
+    T loss_value = 0.0F;
     BufferView probability = tape.parameter(probability_value);
     BufferView target = tape.input(target_value);
     BufferView loss = tape.output(loss_value);
     loss = cross_entropy(probability, target);
-    assert(loss_value > 0.3566F && loss_value < 0.3568F);
+    const float loss_tolerance =
+        std::is_same<T, float>::value ? 2.0e-4F : 3.0e-3F;
+    const float gradient_tolerance =
+        std::is_same<T, float>::value ? 2.0e-4F : 1.0e-2F;
+    assert(close_to(loss_value, 0.35667494F, loss_tolerance));
     assert(tape.backward(loss));
     assert(probability.gradient(0) == 0.0F);
-    assert(probability.gradient(1) < -1.4285F &&
-           probability.gradient(1) > -1.4287F);
+    assert(close_to(probability.gradient(1), -1.42857143F,
+                    gradient_tolerance));
     assert(probability.gradient(2) == 0.0F);
 }
 
-void test13()
+template <typename T>
+static void test13()
 {
     // Training applies inverted dropout and backward regenerates the same
     // mask. Disabling recording makes dropout an identity for inference.
-    Arena<1024> arena;
-    Tape<float> &tape = arena.tape();
-    tape.register_operator<DropoutOperator<float>>();
-    float input_value[16];
-    float output_value[16] = {};
+    Arena<1024, T> arena;
+    Tape<T> &tape = arena.tape();
+    tape.template register_operator<DropoutOperator<T>>();
+    T input_value[16];
+    T output_value[16] = {};
     for (std::size_t i = 0; i < 16U; ++i) input_value[i] = 1.0F;
     BufferView input = tape.parameter(input_value);
     BufferView output = tape.output(output_value);
@@ -583,7 +560,7 @@ void test13()
     }
     assert(dropped != 0U && kept != 0U);
 
-    float seed[16];
+    T seed[16];
     for (std::size_t i = 0; i < 16U; ++i) seed[i] = 1.0F;
     assert(tape.backward(output, seed, 16U));
     for (std::size_t i = 0; i < 16U; ++i)
@@ -597,18 +574,19 @@ void test13()
     }
 }
 
-void test14()
+template <typename T>
+static void test14()
 {
     // Y = W X uses CMSIS-DSP matrix multiplication in the forward pass and
     // computes only dW = dY X^T in the backward pass.
-    Arena<1024> arena;
-    Tape<float> &tape = arena.tape();
-    tape.register_operator<MatrixMultiplyOperator<float>>();
-    float weight_value[2][3] = {
+    Arena<1024, T> arena;
+    Tape<T> &tape = arena.tape();
+    tape.template register_operator<MatrixMultiplyOperator<T>>();
+    T weight_value[2][3] = {
         {1.0F, 2.0F, 3.0F}, {4.0F, 5.0F, 6.0F}};
-    float input_value[3][2] = {
+    T input_value[3][2] = {
         {1.0F, 2.0F}, {3.0F, 4.0F}, {5.0F, 6.0F}};
-    float output_value[2][2] = {};
+    T output_value[2][2] = {};
     MatrixView weights = tape.parameter(weight_value);
     BufferView input = tape.input(&input_value[0][0], 6U);
     BufferView output = tape.output(&output_value[0][0], 4U);
@@ -618,9 +596,9 @@ void test14()
     assert(output_value[1][0] == 49.0F);
     assert(output_value[1][1] == 64.0F);
 
-    const float seed[] = {1.0F, 2.0F, 3.0F, 4.0F};
+    const T seed[] = {1.0F, 2.0F, 3.0F, 4.0F};
     assert(tape.backward(output, seed, 4U));
-    const float expected_gradient[2][3] = {
+    const T expected_gradient[2][3] = {
         {5.0F, 11.0F, 17.0F}, {11.0F, 25.0F, 39.0F}};
     for (std::size_t row = 0; row < 2U; ++row)
         for (std::size_t column = 0; column < 3U; ++column)
@@ -629,14 +607,15 @@ void test14()
     assert(!input.has_gradient());
 }
 
-void test15()
+template <typename T>
+static void test15()
 {
     // SGD performs one fused parameter -= learning_rate * gradient update.
-    Arena<128> arena;
-    Tape<float> &tape = arena.tape();
-    float value[] = {1.0F, -2.0F};
+    Arena<128, T> arena;
+    Tape<T> &tape = arena.tape();
+    T value[] = {1.0F, -2.0F};
     BufferView parameter = tape.parameter(value);
-    SGD<2, 1> optimizer(0.25F);
+    SGD<2, 1, T> optimizer(0.25F);
     assert(optimizer.add(parameter));
     parameter.gradients()[0] = 2.0F;
     parameter.gradients()[1] = -4.0F;
@@ -652,32 +631,33 @@ void test15()
     assert(value[0] == 0.5F);
 }
 
+template <typename T>
 static void run_autodiff_tests()
 {
-    test1();
-    test2();
-    test3();
-    test4();
-    test5();
-    test6();
-    test7();
-    test8();
-    test9();
-    test10();
-    test11();
-    test12();
-    test13();
-    test14();
-    test15();
+    test1<T>();
+    test2<T>();
+    test3<T>();
+    test4<T>();
+    test5<T>();
+    test6<T>();
+    test7<T>();
+    test8<T>();
+    test9<T>();
+    test10<T>();
+    test11<T>();
+    test12<T>();
+    test13<T>();
+    test14<T>();
+    test15<T>();
     
     // Arena exhaustion is explicit and backward cannot return partial results.
     alignas(std::max_align_t) unsigned char tiny_memory[1];
-    Tape tiny(tiny_memory, sizeof(tiny_memory));
-    tiny.register_operator<AddOperator<float>>();
-    float tiny_input_value[1] = {2.0F};
-    float tiny_input_gradient[1] = {};
-    float tiny_output_value[1] = {};
-    float tiny_output_gradient[1] = {};
+    Tape<T> tiny(tiny_memory, sizeof(tiny_memory));
+    tiny.template register_operator<AddOperator<T>>();
+    T tiny_input_value[1] = {2.0F};
+    T tiny_input_gradient[1] = {};
+    T tiny_output_value[1] = {};
+    T tiny_output_gradient[1] = {};
     BufferView tiny_input =
         tiny.view(tiny_input_value, tiny_input_gradient, 1);
     BufferView tiny_output =
@@ -687,86 +667,7 @@ static void run_autodiff_tests()
     assert(tiny.status() == Status::out_of_memory);
     assert(!tiny.backward(tiny_output));
 
-#if defined(ARM_FLOAT16_SUPPORTED)
-    // The same graph can be instantiated with CMSIS-DSP float16 kernels.
-    Arena<512, float16_t> half_arena;
-    Tape<float16_t> &half_tape = half_arena.tape();
-    half_tape.register_operator<ScaleOperator<float16_t>>();
-    half_tape.register_operator<DotOperator<float16_t>>();
-    float16_t half_input_value[2] = {static_cast<float16_t>(1.0F),
-                                     static_cast<float16_t>(2.0F)};
-    float16_t half_scale_value = static_cast<float16_t>(3.0F);
-    float16_t half_scaled_value[2] = {};
-    float16_t half_loss_value = {};
-    BufferView<float16_t> half_input = half_tape.input(half_input_value);
-    BufferView<float16_t> half_scale = half_tape.parameter(half_scale_value);
-    BufferView<float16_t> half_scaled = half_tape.output(half_scaled_value);
-    BufferView<float16_t> half_loss = half_tape.output(half_loss_value);
-    half_scaled = scale(half_input, half_scale);
-    half_loss = dot(half_scaled, half_input);
-    assert(half_tape.backward(half_loss));
-    assert(static_cast<float>(half_loss_value) > 14.9F &&
-           static_cast<float>(half_loss_value) < 15.1F);
-    assert(static_cast<float>(half_scale.gradient(0)) > 4.9F &&
-           static_cast<float>(half_scale.gradient(0)) < 5.1F);
 
-    float16_t half_sgd_value[] = {static_cast<float16_t>(1.0F),
-                                  static_cast<float16_t>(-2.0F)};
-    BufferView<float16_t> half_sgd_parameter =
-        half_tape.parameter(half_sgd_value);
-    SGD<2, 1, float16_t> half_sgd(static_cast<float16_t>(0.25F));
-    assert(half_sgd.add(half_sgd_parameter));
-    half_sgd_parameter.gradients()[0] = static_cast<float16_t>(2.0F);
-    half_sgd_parameter.gradients()[1] = static_cast<float16_t>(-4.0F);
-    assert(half_sgd.step());
-    assert(static_cast<float>(half_sgd_value[0]) == 0.5F);
-    assert(static_cast<float>(half_sgd_value[1]) == -1.0F);
-
-    // ReLU and categorical cross entropy use finite float16 clip bounds.
-    // In particular, numeric_limits<__fp16>::max() is not specialized by all
-    // embedded C++ libraries and can otherwise evaluate to zero.
-    Arena<1024, float16_t> half_classification_arena;
-    Tape<float16_t> &half_classification_tape =
-        half_classification_arena.tape();
-    half_classification_tape.register_operator<ReluOperator<float16_t>>();
-    half_classification_tape.register_operator<SoftmaxOperator<float16_t>>();
-    half_classification_tape.register_operator<CrossEntropyOperator<float16_t>>();
-    float16_t half_relu_input_value[3] = {
-        static_cast<float16_t>(-1.0F), static_cast<float16_t>(0.5F),
-        static_cast<float16_t>(2.0F)};
-    float16_t half_relu_output_value[3] = {};
-    float16_t half_logits_value[3] = {
-        static_cast<float16_t>(0.2F), static_cast<float16_t>(-0.1F),
-        static_cast<float16_t>(0.3F)};
-    float16_t half_probability_value[3] = {};
-    float16_t half_target_value[3] = {
-        static_cast<float16_t>(0.0F), static_cast<float16_t>(1.0F),
-        static_cast<float16_t>(0.0F)};
-    float16_t half_classification_loss_value = {};
-    BufferView<float16_t> half_relu_input =
-        half_classification_tape.input(half_relu_input_value);
-    BufferView<float16_t> half_relu_output =
-        half_classification_tape.output(half_relu_output_value);
-    BufferView<float16_t> half_logits =
-        half_classification_tape.parameter(half_logits_value);
-    BufferView<float16_t> half_probability =
-        half_classification_tape.output(half_probability_value);
-    BufferView<float16_t> half_target =
-        half_classification_tape.input(half_target_value);
-    BufferView<float16_t> half_classification_loss =
-        half_classification_tape.output(half_classification_loss_value);
-    half_relu_output = relu(half_relu_input);
-    assert(static_cast<float>(half_relu_output_value[1]) > 0.49F &&
-           static_cast<float>(half_relu_output_value[2]) > 1.9F);
-    half_probability = softmax(half_logits);
-    half_classification_loss = cross_entropy(half_probability, half_target);
-    assert(static_cast<float>(half_classification_loss_value) > 0.9F &&
-           static_cast<float>(half_classification_loss_value) < 1.3F);
-    assert(half_classification_tape.backward(half_classification_loss));
-    assert(static_cast<float>(half_logits.gradient(0)) < 0.5F &&
-           static_cast<float>(half_logits.gradient(1)) < -0.2F &&
-           static_cast<float>(half_logits.gradient(2)) > 0.2F);
-#endif
 
 }
 
@@ -777,8 +678,13 @@ static void run_autodiff_tests()
 
 void autodiff_test()
 {
-#if defined(AUTODIFF_TEST) && defined(F32_DT) && defined(DYNAMIC_TEST)
-    printf("Running autodiff tests...\r\n");
-    run_autodiff_tests();
+#if defined(AUTODIFF_TEST) && defined(DYNAMIC_TEST)
+#if defined(F32_DT)
+    printf("Running float32 autodiff tests...\r\n");
+    run_autodiff_tests<float>();
+#elif defined(F16_DT) && defined(ARM_FLOAT16_SUPPORTED)
+    printf("Running float16 autodiff tests...\r\n");
+    run_autodiff_tests<float16_t>();
+#endif
 #endif
 }

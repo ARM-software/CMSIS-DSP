@@ -58,7 +58,8 @@ int main(void)
     #if defined(DOT_TEST)
     dot_test();
     #endif
-    #if defined(AUTODIFF_TEST) && defined(F32_DT) && defined(DYNAMIC_TEST)
+    #if defined(AUTODIFF_TEST) && \
+        (defined(F32_DT) || defined(F16_DT)) && defined(DYNAMIC_TEST)
     autodiff_test();
     #endif
     #if defined(VECTOR_TEST)
