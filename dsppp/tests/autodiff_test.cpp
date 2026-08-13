@@ -12,6 +12,7 @@ extern "C" {
 #include <dsppp/autodiff/operators/cross_entropy.hpp>
 #include <dsppp/autodiff/operators/dot.hpp>
 #include <dsppp/autodiff/operators/dropout.hpp>
+#include <dsppp/autodiff/operators/dequantize.hpp>
 #include <dsppp/autodiff/operators/fully_connected.hpp>
 #include <dsppp/autodiff/operators/matrix_multiply.hpp>
 #include <dsppp/autodiff/operators/multiply.hpp>
@@ -21,6 +22,7 @@ extern "C" {
 #include <dsppp/autodiff/operators/softmax.hpp>
 #include <dsppp/autodiff/operators/sub.hpp>
 #include <dsppp/autodiff/operators/quadratic_error.hpp>
+#include <dsppp/autodiff/operators/quantize.hpp>
 #include <dsppp/autodiff/optimizers/adam.hpp>
 #include <dsppp/autodiff/optimizers/rmsprop.hpp>
 #include <dsppp/autodiff/optimizers/sgd.hpp>
@@ -632,6 +634,97 @@ static void test15()
 }
 
 template <typename T>
+static void test16()
+{
+    // Q/DQ keeps float storage while reproducing LiteRT/CMSIS-NN signed int8
+    // activation codes. Its combined backward pass is an STE in range and
+    // also exposes gradients for scale and zero-point learning.
+    Arena<2048, T> arena;
+    Tape<T> &tape = arena.tape();
+    tape.template register_operator<QuantizeOperator<T>>();
+    tape.template register_operator<DequantizeOperator<T>>();
+    T input_value[] = {-20.0F, -0.26F, 0.24F, 30.0F};
+    T input_gradient[4] = {};
+    T scale_value = 0.1F;
+    T zero_point_value = -3.0F;
+    T code_value[4] = {};
+    T output_value[4] = {};
+    BufferView input = tape.view(input_value, input_gradient, 4U);
+    BufferView scale_parameter = tape.parameter(scale_value);
+    BufferView zero_point_parameter = tape.parameter(zero_point_value);
+    BufferView code = tape.output(code_value);
+    BufferView output = tape.output(output_value);
+    code = quantize(input, scale_parameter, zero_point_parameter);
+    output = dequantize(code, scale_parameter, zero_point_parameter);
+
+    const float expected_code[] = {-128.0F, -6.0F, -1.0F, 127.0F};
+    const float expected_output[] = {-12.5F, -0.3F, 0.2F, 13.0F};
+    const float tolerance = std::is_same<T, float>::value ? 1.0e-5F : 2.0e-2F;
+    for (std::size_t i = 0; i < 4U; ++i)
+    {
+        assert(close_to(code_value[i], expected_code[i], tolerance));
+        assert(close_to(output_value[i], expected_output[i], tolerance));
+    }
+
+    const T seed[] = {1.0F, 1.0F, 1.0F, 1.0F};
+    assert(tape.backward(output, seed, 4U));
+    assert(close_to(input.gradient(0), 0.0F, tolerance));
+    assert(close_to(input.gradient(1), 1.0F, tolerance));
+    assert(close_to(input.gradient(2), 1.0F, tolerance));
+    assert(close_to(input.gradient(3), 0.0F, tolerance));
+    assert(close_to(scale_parameter.gradient(0), 4.2F,
+                    std::is_same<T, float>::value ? 2.0e-4F : 8.0e-2F));
+    assert(close_to(zero_point_parameter.gradient(0), -0.2F,
+                    std::is_same<T, float>::value ? 2.0e-4F : 8.0e-3F));
+
+    // Weight quantization follows the backend's symmetric per-output-axis
+    // contract: [-127, 127], zero-point zero, one scale per row here.
+    Arena<1536, T> weight_arena;
+    Tape<T> &weight_tape = weight_arena.tape();
+    weight_tape.template register_operator<QuantizeOperator<T>>();
+    weight_tape.template register_operator<DequantizeOperator<T>>();
+    T weight_value[] = {-1.2F, -0.2F, 0.6F, -2.0F, 0.8F, 2.6F};
+    T weight_scale_value[] = {0.1F, 0.2F};
+    T weight_zero_value[] = {4.0F, -4.0F};
+    T weight_code_value[6] = {};
+    T weight_output_value[6] = {};
+    BufferView weight = weight_tape.input(weight_value);
+    BufferView weight_scale = weight_tape.parameter(weight_scale_value);
+    BufferView weight_zero = weight_tape.input(weight_zero_value);
+    BufferView weight_code = weight_tape.output(weight_code_value);
+    BufferView weight_output = weight_tape.output(weight_output_value);
+    const Int8Quantization weight_quantization =
+        Int8Quantization::weights(2U, 3U);
+    weight_code = quantize(weight, weight_scale, weight_zero,
+                           weight_quantization);
+    weight_output = dequantize(weight_code, weight_scale, weight_zero,
+                               weight_quantization);
+    const float expected_weight_code[] = {-12.0F, -2.0F, 6.0F,
+                                          -10.0F, 4.0F, 13.0F};
+    for (std::size_t i = 0; i < 6U; ++i)
+    {
+        assert(close_to(weight_code_value[i], expected_weight_code[i],
+                        tolerance));
+        assert(close_to(weight_output_value[i],
+                        static_cast<float>(weight_value[i]), tolerance));
+    }
+    assert(cmsis_nn_offset(-3.0F) == 3);
+    assert(static_cast<float>(weight_zero_value[0]) == 0.0F);
+    assert(static_cast<float>(weight_zero_value[1]) == 0.0F);
+
+    // Q/DQ owns parameter projection; training loops do not need to clamp
+    // values after an optimizer step.
+    scale_value = -1.0F;
+    zero_point_value = 200.0F;
+    {
+        RecordingScope inference(tape, false);
+        code = quantize(input, scale_parameter, zero_point_parameter);
+    }
+    assert(static_cast<float>(scale_value) > 0.0F);
+    assert(static_cast<float>(zero_point_value) == 127.0F);
+}
+
+template <typename T>
 static void run_autodiff_tests()
 {
     test1<T>();
@@ -649,6 +742,7 @@ static void run_autodiff_tests()
     test13<T>();
     test14<T>();
     test15<T>();
+    test16<T>();
     
     // Arena exhaustion is explicit and backward cannot return partial results.
     alignas(std::max_align_t) unsigned char tiny_memory[1];

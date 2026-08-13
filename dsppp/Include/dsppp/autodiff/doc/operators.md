@@ -76,6 +76,56 @@ dx[i] += y[i] * (g[i] - projection)
 The forward path dispatches to the matching f32 or f16 log-sum-exp, offset, and
 vector-exponential kernels.
 
+## Signed int8 quantize/dequantize
+
+`quantize` and `dequantize` implement the signed int8 affine scheme used by
+LiteRT, CMSIS-NN, and Ethos-U while keeping every graph buffer in `float` or
+`float16_t`. The quantized codes are integer-valued floating-point numbers;
+no `int8_t` participates in training.
+
+For scale `s`, zero-point `z`, and integer limits `qmin` and `qmax`:
+
+```text
+q[i] = clamp(nearbyint(x[i] / s) + nearbyint(z), qmin, qmax)
+y[i] = (q[i] - nearbyint(z)) * s
+```
+
+Use `Int8Quantization::activation()` for asymmetric per-tensor activations.
+It uses the backend-required `[-128, 127]` range and a learnable scale and
+zero-point. Use `Int8Quantization::weights(axis_size, inner_size)` for weights.
+It uses symmetric `[-127, 127]` codes, forces the effective zero-point to zero,
+and supports one learnable scale per quantized axis. `inner_size` is the
+product of the row-major dimensions after that axis. Examples are:
+
+```cpp
+auto activation_q = Int8Quantization::activation();
+auto fully_connected_w = Int8Quantization::weights(outputs, inputs);
+auto conv2d_ohwi_w = Int8Quantization::weights(outputs, height * width * inputs);
+auto depthwise_hwc_w = Int8Quantization::weights(channels, 1U);
+```
+
+For symmetric weights, pass a zero-valued input view as `zero_point`; it is
+fixed and receives no gradient. For activations, both scale and zero-point are
+parameter views. Scale values must remain strictly positive. An optimizer can
+update both activation parameters and the per-axis weight scales. Q/DQ projects
+these parameters before each forward calculation: scale receives a small
+positive numerical floor, asymmetric zero-points are clamped to the int8
+domain, and symmetric weight zero-points are forced to zero. Training loops do
+not need to enforce these constraints themselves.
+
+The Q/DQ pair uses a straight-through estimator. Inside the int8 range its
+combined input derivative is one; saturated inputs receive zero. The local
+rules also retain the scale derivative caused by quantization error and a
+zero-point derivative at saturation, allowing the representable range to be
+learned. The forward path is the same affine quantize/dequantize calculation
+used when exporting the final int8 values.
+
+CMSIS-NN calls the negated zero-point an `offset`. Use
+`cmsis_nn_offset(zero_point)` when filling APIs such as `input_offset` or
+`output_offset`. Biases are not processed by this Q/DQ pair: CMSIS-NN/LiteRT
+requires int32 bias with zero-point zero and scale
+`input_scale * weight_scale[channel]`.
+
 ## Losses
 
 Quadratic error returns a scalar sum, not a mean:

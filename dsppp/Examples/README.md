@@ -26,6 +26,8 @@ in `dsppp/example.cproject.yml` by commenting and uncommenting its `file` line.
 - `autodiff_iris.cpp` trains a small classifier on the Iris flower dataset.
   It uses Adam and reserves 30 of the 150 samples for a final test that is not
   used during training.
+- `autodiff_fully_connected_qat.cpp` demonstrates quantization-aware training
+  of a fully connected layer for later deployment with CMSIS-NN or Ethos-U.
 
 ### Iris classifier
 

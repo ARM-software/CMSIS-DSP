@@ -7,7 +7,8 @@ project:
         #- file: Examples/matrix_op.cpp
         #- file: Examples/autodiff_regression.cpp
         #- file: Examples/autodiff_lms.cpp
-        - file: Examples/autodiff_iris.cpp
+        - file: Examples/autodiff_fully_connected_qat.cpp
+        #- file: Examples/autodiff_iris.cpp
         - file: clang_sse300.c
           for-context: 
              - +MPS3-Corstone-300
