@@ -22,6 +22,7 @@ extern "C" {
 #include <dsppp/autodiff/operators/quadratic_error.hpp>
 #include <dsppp/autodiff/optimizers/adam.hpp>
 #include <dsppp/autodiff/optimizers/rmsprop.hpp>
+#include <dsppp/autodiff/optimizers/sgd.hpp>
 
 #include <cstdio>
 
@@ -628,6 +629,29 @@ void test14()
     assert(!input.has_gradient());
 }
 
+void test15()
+{
+    // SGD performs one fused parameter -= learning_rate * gradient update.
+    Arena<128> arena;
+    Tape<float> &tape = arena.tape();
+    float value[] = {1.0F, -2.0F};
+    BufferView parameter = tape.parameter(value);
+    SGD<2, 1> optimizer(0.25F);
+    assert(optimizer.add(parameter));
+    parameter.gradients()[0] = 2.0F;
+    parameter.gradients()[1] = -4.0F;
+    assert(optimizer.step());
+    assert(value[0] == 0.5F);
+    assert(value[1] == -1.0F);
+    optimizer.zero_grad();
+    assert(parameter.gradient(0) == 0.0F);
+    assert(parameter.gradient(1) == 0.0F);
+    assert(freeze_parameters(optimizer, parameter));
+    parameter.gradients()[0] = 1.0F;
+    assert(optimizer.step());
+    assert(value[0] == 0.5F);
+}
+
 static void run_autodiff_tests()
 {
     test1();
@@ -644,6 +668,7 @@ static void run_autodiff_tests()
     test12();
     test13();
     test14();
+    test15();
     
     // Arena exhaustion is explicit and backward cannot return partial results.
     alignas(std::max_align_t) unsigned char tiny_memory[1];
@@ -684,6 +709,18 @@ static void run_autodiff_tests()
            static_cast<float>(half_loss_value) < 15.1F);
     assert(static_cast<float>(half_scale.gradient(0)) > 4.9F &&
            static_cast<float>(half_scale.gradient(0)) < 5.1F);
+
+    float16_t half_sgd_value[] = {static_cast<float16_t>(1.0F),
+                                  static_cast<float16_t>(-2.0F)};
+    BufferView<float16_t> half_sgd_parameter =
+        half_tape.parameter(half_sgd_value);
+    SGD<2, 1, float16_t> half_sgd(static_cast<float16_t>(0.25F));
+    assert(half_sgd.add(half_sgd_parameter));
+    half_sgd_parameter.gradients()[0] = static_cast<float16_t>(2.0F);
+    half_sgd_parameter.gradients()[1] = static_cast<float16_t>(-4.0F);
+    assert(half_sgd.step());
+    assert(static_cast<float>(half_sgd_value[0]) == 0.5F);
+    assert(static_cast<float>(half_sgd_value[1]) == -1.0F);
 
     // ReLU and categorical cross entropy use finite float16 clip bounds.
     // In particular, numeric_limits<__fp16>::max() is not specialized by all

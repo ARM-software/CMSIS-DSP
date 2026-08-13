@@ -6,6 +6,7 @@ project:
         #- file: Examples/vector_op.cpp
         #- file: Examples/matrix_op.cpp
         #- file: Examples/autodiff_regression.cpp
+        #- file: Examples/autodiff_lms.cpp
         - file: Examples/autodiff_iris.cpp
         - file: clang_sse300.c
           for-context: 

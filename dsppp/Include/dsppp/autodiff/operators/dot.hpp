@@ -2,14 +2,15 @@
 
 #include <dsppp/autodiff/reverse.hpp>
 
-#include <dsppp/memory_pool.hpp>
-#include <dsppp/fixed_point.hpp>
-#include <dsppp/matrix.hpp>
-
+#include <dsp/fast_math_functions.h>
 #include <dsp/statistics_functions.h>
 #include <dsp/statistics_functions_f16.h>
 #include <dsp/support_functions.h>
 #include <dsp/support_functions_f16.h>
+
+#include <dsppp/memory_pool.hpp>
+#include <dsppp/fixed_point.hpp>
+#include <dsppp/matrix.hpp>
 
 
 namespace arm_cmsis_dsp {

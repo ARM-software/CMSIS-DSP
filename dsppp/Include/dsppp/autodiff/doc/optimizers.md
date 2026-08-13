@@ -1,14 +1,14 @@
 # Optimizers
 
-`Adam` and `RMSProp` update caller-owned parameter values from tape-managed or
-caller-owned gradients. Their third template argument selects the scalar type
-(`float` by default, or `float16_t`), matching the tape views. All optimizer
-metadata and numerical state are fixed arrays inside the optimizer object;
-neither optimizer allocates memory.
+`SGD`, `Adam`, and `RMSProp` update caller-owned parameter values from
+tape-managed or caller-owned gradients. Their third template argument selects
+the scalar type (`float` by default, or `float16_t`), matching the tape views.
+All optimizer metadata and numerical state are fixed inside the optimizer
+object; none of the optimizers allocates memory.
 
 ## Capacity arguments
 
-Both types have the same capacity template arguments:
+All three types have the same capacity template arguments:
 
 ```cpp
 Optimizer<MaximumElements, MaximumParameters>
@@ -31,12 +31,36 @@ optimizer.add(parameter);
 
 A matrix also counts as one view, while all `rows*columns` entries count toward
 `MaximumElements`. A three-element coefficient vector plus a separate scalar
-bias fits exactly in either `RMSProp<4, 2>` or `Adam<4, 2>`. Writing
+bias fits exactly in `SGD<4, 2>`, `RMSProp<4, 2>`, or `Adam<4, 2>`. Writing
 `Adam<100>` reserves 100 scalar state positions and the default 16 view slots.
 For half precision, use for example `Adam<100, 16, float16_t>`.
 
 Adding the same value pointer twice is idempotent. A frozen parameter continues
 to occupy both capacities.
+
+## SGD
+
+```cpp
+SGD<4, 2> optimizer(1.0e-3F); // learning_rate
+```
+
+SGD applies plain stochastic gradient descent without momentum:
+
+```text
+parameter -= learning_rate * gradient
+```
+
+The implementation uses a CMSIS-DSP C++ vector expression that fuses scaling
+and subtraction into one loop. It therefore needs no intermediate vector and
+has no per-element optimizer state. `MaximumElements` still limits the total
+number of registered scalar parameters, while
+`Entry entries_[MaximumParameters]` holds their non-owning pointers, lengths,
+and frozen state.
+
+For online learning, such as LMS adaptation, one `step()` after each sample is
+stochastic gradient descent because the current sample gradient estimates the
+gradient of the expected loss. With this library's unscaled quadratic error,
+an LMS step size `mu` corresponds to an SGD learning rate of `mu / 2`.
 
 ## RMSProp
 
@@ -176,6 +200,6 @@ Optimizer errors are sticky. After the first error, `good()` is false,
 Parameter values and gradient arrays are referenced, not copied. They must
 remain alive as long as the optimizer uses them. A checkpoint containing only
 parameter values is sufficient for inference. Reproducing the exact continuation
-of training also requires saving the optimizer's moment state and, for Adam,
+of training also requires saving RMSProp or Adam moment state and, for Adam,
 its step-dependent powers; the current optimizer classes do not provide a
-serialization API.
+serialization API. Plain SGD has no additional numerical state to save.

@@ -131,7 +131,7 @@ int main()
 - [Operators](doc/operators.md) documents the current operator families,
   formulas, shape rules, dropout behavior, and the CMSIS-DSP implementation
   paths.
-- [Optimizers](doc/optimizers.md) documents Adam and RMSProp capacities,
+- [Optimizers](doc/optimizers.md) documents SGD, Adam, and RMSProp capacities,
   initialization, updates, freezing, and errors.
 - [Worked implementation flow: `y = a * x`](doc/implementation_flow.md) follows
   one expression through `reverse.hpp`, including its tape record, `producer`,
@@ -140,8 +140,9 @@ int main()
 ## Examples and tests
 
 `dsppp/Examples/autodiff_regression.cpp` trains a polynomial approximation to
-`sin(x)` with RMSProp. `dsppp/Examples/autodiff_iris.cpp` trains a small fully
-connected classifier with Adam.
+`sin(x)` with RMSProp. `dsppp/Examples/autodiff_lms.cpp` demonstrates
+per-sample LMS adaptation with SGD. `dsppp/Examples/autodiff_iris.cpp` trains a
+small fully connected classifier with Adam.
 
 Autodiff uses the existing dsppp board-test infrastructure. From `dsppp`, run:
 

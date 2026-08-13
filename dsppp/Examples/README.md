@@ -19,6 +19,10 @@ in `dsppp/example.cproject.yml` by commenting and uncommenting its `file` line.
 - `autodiff_regression.cpp` trains a cubic polynomial to approximate a sine
   wave. It demonstrates RMSProp, reusable graphs, parameter freezing, and
   saving model parameters.
+- `autodiff_lms.cpp` identifies an unknown FIR filter with a per-sample LMS
+  update expressed as quadratic error, reverse differentiation, and SGD. It is
+  an educational demonstration; the specialized CMSIS-DSP LMS functions are
+  more efficient for production filtering.
 - `autodiff_iris.cpp` trains a small classifier on the Iris flower dataset.
   It uses Adam and reserves 30 of the 150 samples for a final test that is not
   used during training.
