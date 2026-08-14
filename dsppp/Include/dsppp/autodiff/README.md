@@ -162,6 +162,20 @@ int main()
 - [Worked implementation flow: `y = a * x`](doc/implementation_flow.md) follows
   one expression through `reverse.hpp`, including its tape record, `producer`,
   node links, gradient reset, seed, and backward rule.
+- [Converting PyTorch modules](doc/pytorch_conversion.md) documents supported
+  mappings, batch and shape constraints, generated code, and the Iris
+  comparison script.
+
+## PyTorch conversion
+
+[`scripts/pytorch_to_autodiff.py`](scripts/pytorch_to_autodiff.py) converts a
+supported batch-1 PyTorch `nn.Module` to a reusable CMSIS-DSP autodiff C++
+class. It rejects unsupported operators and values that cannot be represented
+as scalars, vectors, or matrices. The accompanying
+[`scripts/iris_pytorch.py`](scripts/iris_pytorch.py) provides a PyTorch version
+of the Iris network, dataset preparation, training loop, and test split.
+See [Converting PyTorch modules](doc/pytorch_conversion.md) for supported
+mappings, constraints, generated code, and usage.
 
 ## Tests
 

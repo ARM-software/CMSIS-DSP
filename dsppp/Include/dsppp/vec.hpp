@@ -23,11 +23,6 @@ namespace arm_cmsis_dsp {
  *  @{
  */
 
-template<typename T,bool = true>
-struct VecRef;
-
-
-
 template<typename T>
 struct VecRef<Vector_Base<T>>
 {

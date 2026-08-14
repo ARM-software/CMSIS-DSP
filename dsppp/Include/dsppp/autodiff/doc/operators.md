@@ -120,6 +120,14 @@ zero-point derivative at saturation, allowing the representable range to be
 learned. The forward path is the same affine quantize/dequantize calculation
 used when exporting the final int8 values.
 
+Dequantization is affine, so its forward calculation and backward input
+gradient use fused CMSIS-DSP C++ vector expressions. Its parameter gradients
+use vector dot-product and accumulation kernels. Quantization uses the C++
+extension's nearest-even rounding, range-mask, masked accumulation, and masked
+dot/sum algorithms. Their Helium implementations use MVE rounding and
+predication directly without allocating a mask buffer. Other architectures
+use portable scalar implementations based on `std::nearbyint`.
+
 CMSIS-NN calls the negated zero-point an `offset`. Use
 `cmsis_nn_offset(zero_point)` when filling APIs such as `input_offset` or
 `output_offset`. Biases are not processed by this Q/DQ pair: CMSIS-NN/LiteRT

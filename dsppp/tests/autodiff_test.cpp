@@ -636,6 +636,37 @@ static void test15()
 template <typename T>
 static void test16()
 {
+    // C++ extension primitives used by QAT: nearest-even rounding and
+    // range-masked accumulation/reduction. Half-way cases verify ties-to-even.
+    T rounding_input[] = {-2.5F, -1.5F, -0.5F, 0.5F, 1.5F, 2.5F};
+    T rounding_output[6] = {};
+    T rounding_accumulator[6] = {};
+    T rounding_one[] = {1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F};
+    ::arm_cmsis_dsp::VectorView<T> rounding_input_view(rounding_input, 0, 6U);
+    ::arm_cmsis_dsp::VectorView<T> rounding_output_view(rounding_output, 0, 6U);
+    ::arm_cmsis_dsp::VectorView<T> rounding_accumulator_view(
+        rounding_accumulator, 0, 6U);
+    ::arm_cmsis_dsp::VectorView<T> rounding_one_view(rounding_one, 0, 6U);
+    ::arm_cmsis_dsp::round_to_nearest(rounding_output_view,
+                                      rounding_input_view);
+    const float expected_rounding[] = {-2.0F, -2.0F, 0.0F,
+                                       0.0F, 2.0F, 2.0F};
+    for (std::size_t i = 0; i < 6U; ++i)
+        assert(static_cast<float>(rounding_output[i]) == expected_rounding[i]);
+    const auto central = ::arm_cmsis_dsp::nearest_even_range_mask(
+        rounding_input_view, 1.0F, static_cast<T>(0.0F),
+        static_cast<T>(-1.0F), static_cast<T>(1.0F));
+    ::arm_cmsis_dsp::masked_scale_add(
+        rounding_accumulator_view, rounding_one_view, central,
+        static_cast<T>(2.0F));
+    const auto central_reduction = ::arm_cmsis_dsp::masked_dot_sum(
+        rounding_one_view, rounding_input_view, central);
+    for (std::size_t i = 0; i < 6U; ++i)
+        assert(static_cast<float>(rounding_accumulator[i]) ==
+               (i == 2U || i == 3U ? 2.0F : 0.0F));
+    assert(static_cast<float>(central_reduction.dot) == 0.0F);
+    assert(static_cast<float>(central_reduction.sum) == 2.0F);
+
     // Q/DQ keeps float storage while reproducing LiteRT/CMSIS-NN signed int8
     // activation codes. Its combined backward pass is an STE in range and
     // also exposes gradients for scale and zero-point learning.

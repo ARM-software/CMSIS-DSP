@@ -12,6 +12,96 @@
 
 #define SCALAR_UNROLL 2
 
+template<typename DST,typename SRC>
+inline void _round_to_nearest(DST& destination, const SRC& source,
+                              const vector_length_t length,
+                              const Scalar* = nullptr)
+{
+   using T = typename traits<DST>::Scalar;
+   for (index_t i = 0; i < length; ++i)
+      destination[i] = static_cast<T>(
+         std::nearbyint(static_cast<float>(source[i])));
+}
+
+template<typename DST,typename SRC>
+inline void _round_to_nearest_clipped(
+   DST& destination, const SRC& source,
+   typename traits<DST>::Scalar offset,
+   typename traits<DST>::Scalar minimum,
+   typename traits<DST>::Scalar maximum,
+   const vector_length_t length, const Scalar* = nullptr)
+{
+   using T = typename traits<DST>::Scalar;
+   for (index_t i = 0; i < length; ++i)
+   {
+      float value = std::nearbyint(static_cast<float>(source[i])) +
+                    static_cast<float>(offset);
+      if (value < static_cast<float>(minimum))
+         value = static_cast<float>(minimum);
+      if (value > static_cast<float>(maximum))
+         value = static_cast<float>(maximum);
+      destination[i] = static_cast<T>(value);
+   }
+}
+
+template<typename DST,typename SRC>
+inline void _round_scaled_to_nearest_clipped(
+   DST& destination, const SRC& source, float multiplier,
+   typename traits<DST>::Scalar offset,
+   typename traits<DST>::Scalar minimum,
+   typename traits<DST>::Scalar maximum,
+   const vector_length_t length, const Scalar* = nullptr)
+{
+   using T = typename traits<DST>::Scalar;
+   for (index_t i = 0; i < length; ++i)
+   {
+      float value = std::nearbyint(
+         static_cast<float>(source[i]) * multiplier) +
+         static_cast<float>(offset);
+      if (value < static_cast<float>(minimum))
+         value = static_cast<float>(minimum);
+      if (value > static_cast<float>(maximum))
+         value = static_cast<float>(maximum);
+      destination[i] = static_cast<T>(value);
+   }
+}
+
+template<typename MASK>
+inline bool _nearest_even_range_predicate(
+   const MASK& mask, index_t i, vector_length_t,
+   const Scalar* = nullptr)
+{
+   return mask[i];
+}
+
+template<typename DST,typename SRC,typename MASK>
+inline void _masked_scale_add(DST& destination, const SRC& source,
+                              const MASK& mask,
+                              typename traits<DST>::Scalar scale,
+                              const vector_length_t length,
+                              const Scalar* architecture = nullptr)
+{
+   for (index_t i = 0; i < length; ++i)
+      if (_nearest_even_range_predicate(mask, i, 1, architecture))
+         destination[i] += source[i] * scale;
+}
+
+template<typename A,typename B,typename MASK>
+inline auto _masked_dot_sum(const A& a, const B& b, const MASK& mask,
+                            const vector_length_t length,
+                            const Scalar* architecture = nullptr)
+{
+   using T = typename traits<A>::Scalar;
+   MaskedDotSum<T> result{T{}, T{}};
+   for (index_t i = 0; i < length; ++i)
+      if (_nearest_even_range_predicate(mask, i, 1, architecture))
+      {
+         result.dot += a[i] * b[i];
+         result.sum += a[i];
+      }
+   return result;
+}
+
 /**
  * @brief      Fill evaluator for scalar architecture
  *

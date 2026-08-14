@@ -10,6 +10,9 @@ struct Vector_Base;
 template<typename T,int stride>
 struct VectorView;
 
+template<typename T,bool = true>
+struct VecRef;
+
 template<typename P,int L,
          template<int> typename Allocator>
 struct Vector;

@@ -18,6 +18,191 @@
  */
 
 #if defined(ARM_MATH_MVEI) || defined(ARM_MATH_MVEF)
+
+template<typename DST,typename SRC,
+typename std::enable_if<has_vector_inst<DST>() &&
+                        has_vector_inst<SRC>() &&
+                        vector_idx_pair<DST,SRC>() &&
+                        has_predicate<DST>(),bool>::type = true>
+inline void _round_to_nearest(DST& destination, const SRC& source,
+                              const vector_length_t length,
+                              const Helium* = nullptr)
+{
+   using T = typename traits<DST>::Scalar;
+   constexpr int lanes = vector_traits<T>::nb_lanes;
+   for (index_t i = 0; i < length; i += lanes)
+   {
+      auto value = source.vector_op_tail(i, length - i);
+      if constexpr (std::is_same<T, float>::value)
+         value = vrndnq_f32(value);
+#if defined(ARM_FLOAT16_SUPPORTED)
+      else if constexpr (std::is_same<T, float16_t>::value)
+         value = vrndnq_f16(value);
+#endif
+      destination.vector_store_tail(i, length - i, value);
+   }
+}
+
+template<typename DST,typename SRC,
+typename std::enable_if<has_vector_inst<DST>() &&
+                        has_vector_inst<SRC>() &&
+                        vector_idx_pair<DST,SRC>() &&
+                        has_predicate<DST>(),bool>::type = true>
+inline void _round_to_nearest_clipped(
+   DST& destination, const SRC& source,
+   typename traits<DST>::Scalar offset,
+   typename traits<DST>::Scalar minimum,
+   typename traits<DST>::Scalar maximum,
+   const vector_length_t length, const Helium* = nullptr)
+{
+   using T = typename traits<DST>::Scalar;
+   constexpr int lanes = vector_traits<T>::nb_lanes;
+   const auto minimum_vector = inner::vconst(minimum);
+   const auto maximum_vector = inner::vconst(maximum);
+   for (index_t i = 0; i < length; i += lanes)
+   {
+      auto value = source.vector_op_tail(i, length - i);
+      if constexpr (std::is_same<T, float>::value)
+         value = vrndnq_f32(value);
+#if defined(ARM_FLOAT16_SUPPORTED)
+      else if constexpr (std::is_same<T, float16_t>::value)
+         value = vrndnq_f16(value);
+#endif
+      value = inner::vadd(value, offset);
+      value = vmaxnmq(value, minimum_vector);
+      value = vminnmq(value, maximum_vector);
+      destination.vector_store_tail(i, length - i, value);
+   }
+}
+
+template<typename DST,typename SRC,
+typename std::enable_if<has_vector_inst<DST>() &&
+                        has_vector_inst<SRC>() &&
+                        vector_idx_pair<DST,SRC>() &&
+                        has_predicate<DST>(),bool>::type = true>
+inline void _round_scaled_to_nearest_clipped(
+   DST& destination, const SRC& source, float multiplier,
+   typename traits<DST>::Scalar offset,
+   typename traits<DST>::Scalar minimum,
+   typename traits<DST>::Scalar maximum,
+   const vector_length_t length, const Helium* = nullptr)
+{
+   using T = typename traits<DST>::Scalar;
+   constexpr int lanes = vector_traits<T>::nb_lanes;
+   for (index_t i = 0; i < length; i += lanes)
+   {
+      auto value = source.vector_op_tail(i, length - i);
+      if constexpr (std::is_same<T, float>::value)
+      {
+         value = vrndnq_f32(vmulq_n_f32(value, multiplier));
+         value = vaddq_n_f32(value, offset);
+         value = vmaxnmq(value, inner::vconst(minimum));
+         value = vminnmq(value, inner::vconst(maximum));
+      }
+#if defined(ARM_FLOAT16_SUPPORTED)
+      else if constexpr (std::is_same<T, float16_t>::value)
+      {
+         auto bottom = vrndnq_f32(
+            vmulq_n_f32(vcvtbq_f32_f16(value), multiplier));
+         auto top = vrndnq_f32(
+            vmulq_n_f32(vcvttq_f32_f16(value), multiplier));
+         const float offset_f32 = static_cast<float>(offset);
+         const auto minimum_f32 = vdupq_n_f32(static_cast<float>(minimum));
+         const auto maximum_f32 = vdupq_n_f32(static_cast<float>(maximum));
+         bottom = vmaxnmq(vaddq_n_f32(bottom, offset_f32), minimum_f32);
+         top = vmaxnmq(vaddq_n_f32(top, offset_f32), minimum_f32);
+         bottom = vminnmq(bottom, maximum_f32);
+         top = vminnmq(top, maximum_f32);
+         value = vcvtbq_f16_f32(value, bottom);
+         value = vcvttq_f16_f32(value, top);
+      }
+#endif
+      destination.vector_store_tail(i, length - i, value);
+   }
+}
+
+template<typename MASK>
+inline mve_pred16_t _nearest_even_range_predicate(
+   const MASK& mask, index_t i, vector_length_t remaining,
+   const Helium* = nullptr)
+{
+   using T = typename MASK::Scalar;
+   const mve_pred16_t tail = inner::vctpq<T>::mk(remaining);
+   auto value = mask.values().vector_op_tail(i, remaining);
+   if constexpr (std::is_same<T, float>::value)
+   {
+      value = vrndnq_f32(vmulq_n_f32(value, mask.multiplier()));
+      value = inner::vadd(value, mask.offset(), tail);
+   }
+#if defined(ARM_FLOAT16_SUPPORTED)
+   else if constexpr (std::is_same<T, float16_t>::value)
+   {
+      auto bottom = vrndnq_f32(
+         vmulq_n_f32(vcvtbq_f32_f16(value), mask.multiplier()));
+      auto top = vrndnq_f32(
+         vmulq_n_f32(vcvttq_f32_f16(value), mask.multiplier()));
+      const float offset = static_cast<float>(mask.offset());
+      bottom = vaddq_n_f32(bottom, offset);
+      top = vaddq_n_f32(top, offset);
+      value = vcvtbq_f16_f32(value, bottom);
+      value = vcvttq_f16_f32(value, top);
+   }
+#endif
+   mve_pred16_t selected = vcmpgeq_m(value, mask.minimum(), tail);
+   return vcmpleq_m(value, mask.maximum(), selected);
+}
+
+template<typename DST,typename SRC,typename MASK,
+typename std::enable_if<has_vector_inst<DST>() &&
+                        has_vector_inst<SRC>() &&
+                        vector_idx_pair<DST,SRC>() &&
+                        has_predicate<DST>(),bool>::type = true>
+inline void _masked_scale_add(DST& destination, const SRC& source,
+                              const MASK& mask,
+                              typename traits<DST>::Scalar scale,
+                              const vector_length_t length,
+                              const Helium* architecture = nullptr)
+{
+   using T = typename traits<DST>::Scalar;
+   constexpr int lanes = vector_traits<T>::nb_lanes;
+   for (index_t i = 0; i < length; i += lanes)
+   {
+      const mve_pred16_t selected =
+         _nearest_even_range_predicate(mask, i, length - i, architecture);
+      auto destination_value = destination.vector_op_tail(i, length - i);
+      destination_value = vfmaq_m(
+         destination_value, source.vector_op_tail(i, length - i),
+         scale, selected);
+      destination.vector_store_tail(i, length - i, destination_value);
+   }
+}
+
+template<typename A,typename B,typename MASK,
+typename std::enable_if<has_vector_inst<A>() &&
+                        has_vector_inst<B>() &&
+                        vector_idx_pair<A,B>() &&
+                        has_predicate<A>(),bool>::type = true>
+inline auto _masked_dot_sum(const A& a, const B& b, const MASK& mask,
+                            const vector_length_t length,
+                            const Helium* architecture = nullptr)
+{
+   using T = typename traits<A>::Scalar;
+   using Vector = typename vector_traits<T>::vector;
+   constexpr int lanes = vector_traits<T>::nb_lanes;
+   Vector dot = vector_traits<T>::temp_acc_zero();
+   Vector sum = vector_traits<T>::temp_acc_zero();
+   for (index_t i = 0; i < length; i += lanes)
+   {
+      const mve_pred16_t selected =
+         _nearest_even_range_predicate(mask, i, length - i, architecture);
+      const auto first = a.vector_op_tail(i, length - i);
+      dot = inner::vmacc(dot, first, b.vector_op_tail(i, length - i),
+                         selected);
+      sum = vaddq_m(sum, sum, first, selected);
+   }
+   return MaskedDotSum<T>{inner::vreduce(dot), inner::vreduce(sum)};
+}
+
 /**
  * @brief      Fill evaluator for Helium
  *
