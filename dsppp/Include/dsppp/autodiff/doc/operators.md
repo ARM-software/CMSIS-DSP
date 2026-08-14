@@ -134,6 +134,12 @@ CMSIS-NN calls the negated zero-point an `offset`. Use
 requires int32 bias with zero-point zero and scale
 `input_scale * weight_scale[channel]`.
 
+When an autodiff layer is trained after a fixed Ethos-U network, its input
+scale and zero-point must normally remain equal to the Ethos-U output
+parameters. See [Fine-tuning an output layer after
+Ethos-U](ethos_cmsis_nn_fine_tuning.md) for the fixed-parameter setup and the
+conditions for connecting the two int8 tensors without requantization.
+
 ## Losses
 
 Quadratic error returns a scalar sum, not a mean:

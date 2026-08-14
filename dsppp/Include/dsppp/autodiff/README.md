@@ -84,7 +84,11 @@ the float32 or float16 implementation.
 
 `dsppp/Examples/autodiff_fully_connected_qat.cpp` demonstrates
 quantization-aware training of a fully connected layer for later deployment
-with CMSIS-NN or Ethos-U.
+with CMSIS-NN or Ethos-U. See
+[Fine-tuning an output layer after Ethos-U](doc/ethos_cmsis_nn_fine_tuning.md)
+for the main deployment use case: keeping the Ethos-U output and trained-layer
+input quantization parameters identical so their int8 tensors connect without
+requantization.
 
 ## How reverse differentiation works here
 
@@ -157,6 +161,10 @@ int main()
 - [Operators](doc/operators.md) documents the current operator families,
   formulas, shape rules, dropout behavior, and the CMSIS-DSP implementation
   paths.
+- [Fine-tuning an output layer after Ethos-U](doc/ethos_cmsis_nn_fine_tuning.md)
+  explains how to fix the QAT input quantization parameters to the Ethos-U
+  output interface and deploy the trained layer without an intermediate
+  conversion.
 - [Optimizers](doc/optimizers.md) documents SGD, Adam, and RMSProp capacities,
   initialization, updates, freezing, and errors.
 - [Worked implementation flow: `y = a * x`](doc/implementation_flow.md) follows
