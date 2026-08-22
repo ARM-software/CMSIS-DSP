@@ -64,13 +64,14 @@ ARM_DSP_ATTRIBUTE void arm_cmplx_mult_cmplx_q15(
     q15x8_t         vecSrcC, vecSrcD;
     q15x8_t         vecDst;
 
+    /* Scale inputs so the saturating multiply cannot clip before the 3.13 conversion. */
     blkCnt = (numSamples >> 3);
     blkCnt -= 1;
     if (blkCnt > 0) 
     {
         /* should give more freedom to generate stall free code */
-        vecSrcA = vld1q(pSrcA);
-        vecSrcB = vld1q(pSrcB);
+        vecSrcA = vshrq(vld1q(pSrcA), 1);
+        vecSrcB = vshrq(vld1q(pSrcB), 1);
         pSrcA += 8;
         pSrcB += 8;
 
@@ -79,26 +80,26 @@ ARM_DSP_ATTRIBUTE void arm_cmplx_mult_cmplx_q15(
 
             /* C[2 * i] = A[2 * i] * B[2 * i] - A[2 * i + 1] * B[2 * i + 1].  */
             vecDst = vqdmlsdhq(vuninitializedq_s16(), vecSrcA, vecSrcB);
-            vecSrcC = vld1q(pSrcA);
+            vecSrcC = vshrq(vld1q(pSrcA), 1);
             pSrcA += 8;
 
             /* C[2 * i + 1] = A[2 * i] * B[2 * i + 1] + A[2 * i + 1] * B[2 * i].  */
             vecDst = vqdmladhxq(vecDst, vecSrcA, vecSrcB);
-            vecSrcD = vld1q(pSrcB);
+            vecSrcD = vshrq(vld1q(pSrcB), 1);
             pSrcB += 8;
 
-            vstrhq_s16(pDst, vshrq(vecDst, 2));
+            vstrhq_s16(pDst, vecDst);
             pDst += 8;
 
             vecDst = vqdmlsdhq(vuninitializedq_s16(), vecSrcC, vecSrcD);
-            vecSrcA = vld1q(pSrcA);
+            vecSrcA = vshrq(vld1q(pSrcA), 1);
             pSrcA += 8;
 
             vecDst = vqdmladhxq(vecDst, vecSrcC, vecSrcD);
-            vecSrcB = vld1q(pSrcB);
+            vecSrcB = vshrq(vld1q(pSrcB), 1);
             pSrcB += 8;
 
-            vstrhq_s16(pDst, vshrq(vecDst, 2));
+            vstrhq_s16(pDst, vecDst);
             pDst += 8;
 
             /*
@@ -109,18 +110,18 @@ ARM_DSP_ATTRIBUTE void arm_cmplx_mult_cmplx_q15(
 
         /* process last elements out of the loop avoid the armclang breaking the SW pipeline */
         vecDst = vqdmlsdhq(vuninitializedq_s16(), vecSrcA, vecSrcB);
-        vecSrcC = vld1q(pSrcA);
+        vecSrcC = vshrq(vld1q(pSrcA), 1);
 
         vecDst = vqdmladhxq(vecDst, vecSrcA, vecSrcB);
-        vecSrcD = vld1q(pSrcB);
+        vecSrcD = vshrq(vld1q(pSrcB), 1);
 
-        vstrhq_s16(pDst, vshrq(vecDst, 2));
+        vstrhq_s16(pDst, vecDst);
         pDst += 8;
 
         vecDst = vqdmlsdhq(vuninitializedq_s16(), vecSrcC, vecSrcD);
         vecDst = vqdmladhxq(vecDst, vecSrcC, vecSrcD);
 
-        vstrhq_s16(pDst, vshrq(vecDst, 2));
+        vstrhq_s16(pDst, vecDst);
         pDst += 8;
 
         /*
@@ -134,13 +135,12 @@ ARM_DSP_ATTRIBUTE void arm_cmplx_mult_cmplx_q15(
             pSrcA += 8;
             pSrcB += 8;
 
-            vecSrcA = vldrhq_z_s16(pSrcA, p);
-            vecSrcB = vldrhq_z_s16(pSrcB, p);
+            vecSrcA = vshrq(vldrhq_z_s16(pSrcA, p), 1);
+            vecSrcB = vshrq(vldrhq_z_s16(pSrcB, p), 1);
 
             vecDst = vqdmlsdhq_m(vuninitializedq_s16(), vecSrcA, vecSrcB, p);
             vecDst = vqdmladhxq_m(vecDst, vecSrcA, vecSrcB, p);
 
-            vecDst = vshrq_m(vuninitializedq_s16(), vecDst, 2, p);
             vstrhq_p_s16(pDst, vecDst, p);
             pDst += 8;
 
@@ -154,13 +154,12 @@ ARM_DSP_ATTRIBUTE void arm_cmplx_mult_cmplx_q15(
         while (blkCnt > 0) {
             mve_pred16_t    p = vctp16q(blkCnt);
 
-            vecSrcA = vldrhq_z_s16(pSrcA, p);
-            vecSrcB = vldrhq_z_s16(pSrcB, p);
+            vecSrcA = vshrq(vldrhq_z_s16(pSrcA, p), 1);
+            vecSrcB = vshrq(vldrhq_z_s16(pSrcB, p), 1);
 
             vecDst = vqdmlsdhq_m(vuninitializedq_s16(), vecSrcA, vecSrcB, p);
             vecDst = vqdmladhxq_m(vecDst, vecSrcA, vecSrcB, p);
 
-            vecDst = vshrq_m(vuninitializedq_s16(), vecDst, 2, p);
             vstrhq_p_s16(pDst, vecDst, p);
 
             pDst += 8;

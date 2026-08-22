@@ -5,7 +5,6 @@ import Tools
 
 
 # Those patterns are used for tests and benchmarks.
-# For tests, there is the need to add tests for saturation
 
 def randComplex(nb):
     data = np.random.randn(2*nb)
@@ -16,6 +15,30 @@ def randComplex(nb):
 def asReal(a):
     #return(a.view(dtype=np.float64))
     return(a.reshape(np.size(a)).view(dtype=np.float64))
+
+def saturationComplex():
+    data1 = np.array([
+        1 + 1j,
+        1 + 1j,
+        1 - 1j,
+        1 - 1j,
+       -1 + 1j,
+       -1 + 1j,
+       -1 - 1j,
+       -1 - 1j,
+    ])
+    data2 = np.array([
+        1 + 1j,
+        1 - 1j,
+        1 + 1j,
+       -1 - 1j,
+        1 + 1j,
+       -1 + 1j,
+        1 + 1j,
+       -1 - 1j,
+    ])
+
+    return(np.resize(data1, 17), np.resize(data2, 17))
 
 def writeTests(config,format):
     NBSAMPLES=256
@@ -99,6 +122,14 @@ def writeTests(config,format):
         config.writeReferenceQ31(9, asReal(ref))
     else:
         config.writeReference(9, asReal(ref))
+
+    if format == 31 or format == 15:
+        saturation1, saturation2 = saturationComplex()
+        config.writeInput(4, asReal(saturation1))
+        config.writeInput(5, asReal(saturation2))
+
+        ref = saturation1 * saturation2 / 4
+        config.writeReference(10, asReal(ref))
     
 def  generatePatterns():
      PATTERNDIR = os.path.join("Patterns","DSP","ComplexMaths","ComplexMaths")
@@ -123,5 +154,4 @@ def  generatePatterns():
 
 if __name__ == '__main__':
   generatePatterns()
-
 
