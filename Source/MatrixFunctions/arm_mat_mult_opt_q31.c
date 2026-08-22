@@ -58,7 +58,8 @@
                    distorts the result. The input signals should be scaled down to avoid intermediate
                    overflows. The input is thus scaled down by log2(numColsA) bits
                    to avoid overflows, as a total of numColsA additions are performed internally.
-                   The 2.62 accumulator is right shifted by 31 bits and saturated to 1.31 format to yield the final result.
+                   The scalar implementation right shifts the 2.62 accumulator by 31 bits to yield the final 1.31 result.
+                   This conversion does not saturate.
   @remark
                    Refer to \ref arm_mat_mult_fast_q31() for a faster but less precise implementation of this function.
   @remark

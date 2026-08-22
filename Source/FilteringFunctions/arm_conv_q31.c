@@ -56,7 +56,8 @@
                    The input signals should be scaled down to avoid intermediate overflows.
                    Scale down the inputs by log2(min(srcALen, srcBLen)) (log2 is read as log to the base 2) times to avoid overflows,
                    as maximum of min(srcALen, srcBLen) number of additions are carried internally.
-                   The 2.62 accumulator is right shifted by 31 bits and saturated to 1.31 format to yield the final result.
+                   The scalar implementation right shifts the 2.62 accumulator by 31 bits to yield the final 1.31 result.
+                   This conversion does not saturate.
 
   @remark
                    Refer to \ref arm_conv_fast_q31() for a faster but less precise implementation of this function.
