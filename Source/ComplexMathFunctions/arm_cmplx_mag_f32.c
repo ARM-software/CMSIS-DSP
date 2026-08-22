@@ -48,6 +48,11 @@
   The input array has a total of <code>2*numSamples</code> values;
   the output array has a total of <code>numSamples</code> values.
 
+  @par           In-place operation
+  The source and destination buffers may be identical. In this case, the
+  <code>numSamples</code> magnitude values overwrite the first <code>numSamples</code>
+  elements of the input buffer.
+
   The underlying algorithm is used:
 
   <pre>
