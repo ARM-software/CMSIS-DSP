@@ -66,6 +66,11 @@
   <pre>
       scale = scaleFract * 2^shift.
   </pre>
+
+  @par In-place operation
+  The destination matrix may be the same instance as the input matrix. Its
+  data buffer may also be identical to the source data buffer. Other
+  overlapping buffer arrangements are not supported.
  */
 
 /**
