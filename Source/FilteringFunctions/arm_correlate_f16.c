@@ -467,7 +467,7 @@ ARM_DSP_ATTRIBUTE void arm_correlate_f16(
         float16_t * pDst)
 {
 
-#if defined(ARM_MATH_DSP) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_LOOPUNROLL) && !defined(ARM_MATH_AUTOVECTORIZE)
   
   const float16_t *pIn1;                               /* InputA pointer */
   const float16_t *pIn2;                               /* InputB pointer */
@@ -1105,7 +1105,7 @@ ARM_DSP_ATTRIBUTE void arm_correlate_f16(
       *pDst++ = sum;
   }
 
-#endif /* #if !defined(ARM_MATH_CM0_FAMILY) */
+#endif /* defined(ARM_MATH_LOOPUNROLL) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 }
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
