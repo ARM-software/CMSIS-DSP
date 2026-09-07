@@ -53,7 +53,8 @@
                    Thus, if the accumulator result overflows it wraps around rather than clip.
                    In order to avoid overflows completely the input signal must be scaled down by <code>1/(numTaps/L)</code>.
                    since <code>numTaps/L</code> additions occur per output sample.
-                   After all multiply-accumulates are performed, the 2.62 accumulator is truncated to 1.32 format and then saturated to 1.31 format.
+                   After all multiply-accumulates are performed, the 2.62 accumulator is truncated to 1.32 format and then converted to 1.31 format.
+                   This conversion is not saturating.
  */
 
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)

@@ -53,7 +53,8 @@
                    The accumulator has a 2.62 format and maintains full precision of the intermediate multiplication results but provides only a single guard bit.
                    Thus, if the accumulator result overflows it wraps around rather than clip.
                    In order to avoid overflows completely the input signal must be scaled down by log2(numTaps) bits.
-                   After all multiply-accumulates are performed, the 2.62 accumulator is right shifted by 31 bits and saturated to 1.31 format to yield the final result.
+                   After all multiply-accumulates are performed, the 2.62 accumulator is right shifted by 31 bits and converted to 1.31 format to yield the final result.
+                   This conversion is not saturating.
 
  @remark
                    Refer to \ref arm_fir_fast_q31() for a faster but less precise implementation of this filter.

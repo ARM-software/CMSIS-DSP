@@ -57,7 +57,8 @@
                    In order to avoid overflows completely the input signal must be scaled down by
                    log2(numTaps) bits. The reference signal should not be scaled down.
                    After all multiply-accumulates are performed, the 2.62 accumulator is shifted
-                   and saturated to 1.31 format to yield the final result.
+                   and converted to 1.31 format to yield the final result.
+                   This conversion is not saturating.
                    The output signal and error signal are in 1.31 format.
  @par
   	               In this filter, filter coefficients are updated for each sample and the
