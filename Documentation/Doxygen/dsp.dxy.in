@@ -936,6 +936,7 @@ INPUT                  = ./src/mainpage.md   \
                          ./src/history.md    \
                          ./src/history.txt   \
                          ../../Examples/ARM  \
+                         ../../Examples/dsppp_example \
                          ../../Include/      \
                          ../../Source/ \
                          ../../dsppp/Include \
@@ -1106,7 +1107,8 @@ EXCLUDE_SYMBOLS        = S \
 # that contain example code fragments that are included (see the \include
 # command).
 
-EXAMPLE_PATH           = ../../Examples/ARM
+EXAMPLE_PATH           = ../../Examples/ARM \
+                         ../../Examples/dsppp_example/Dsppp
 
 # If the value of the EXAMPLE_PATH tag contains directories, you can use the
 # EXAMPLE_PATTERNS tag to specify one or more wildcard pattern (like *.cpp and

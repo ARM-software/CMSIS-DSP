@@ -1,0 +1,17 @@
+build-idx:
+  generated-by: csolution version 2.14.1+p38-gf512b381
+  cdefault: ${CMSIS_COMPILER_ROOT}/cdefault.yml
+  csolution: dsppp.csolution.yml
+  cbuild-run: out/dsppp+ARMCM55.cbuild-run.yml
+  tmpdir: tmp/ARMCM55/default
+  cprojects:
+    - cproject: Dsppp/Dsppp.cproject.yml
+  cbuilds:
+    - cbuild: out/Dsppp/ARMCM55/Release/Dsppp.Release+ARMCM55.cbuild.yml
+      project: Dsppp
+      configuration: .Release+ARMCM55
+      messages:
+        info:
+          - dsppp.cbuild-pack.yml - file is already up-to-date
+          - dsppp+ARMCM55.cbuild-run.yml - file generated successfully
+          - Dsppp.Release+ARMCM55.cbuild.yml - file is already up-to-date

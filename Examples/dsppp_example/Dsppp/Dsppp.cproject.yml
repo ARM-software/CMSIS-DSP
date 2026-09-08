@@ -1,0 +1,96 @@
+# A project translates into one executable or library.
+project:
+  
+  groups:
+    - group: Main App
+      files:
+        - file: ./main.cpp
+        - file: ./allocators.cpp
+        - file: ./init_data.cpp
+        - file: ./stdio_semihosting.c
+        - file: ./exit_semihosting.c
+
+
+  add-path:
+    - .
+    - ../../../dsppp/Include
+    
+  packs:
+    - pack: ARM::CMSIS@>=6.0.0
+    - pack: ARM::Cortex_DFP@>=1.1.0
+    - pack: ARM::CMSIS-Compiler
+    - pack: ARM::CMSIS-DSP@>=1.17.0
+
+  components:
+    - component: ARM::CMSIS:CORE
+    - component: ARM::Device:Startup&C Startup
+    - component: ARM::CMSIS-Compiler:CORE
+    - component: ARM::CMSIS-Compiler:STDIN:Custom
+    - component: ARM::CMSIS-Compiler:STDOUT:Custom
+    - component: ARM::CMSIS-Compiler:STDERR:Custom
+    - component: CMSIS:DSP&Source
+    
+  define:
+    - TMP_ALLOC: pool_allocator
+    #- STAT_ALLOCATOR
+
+  misc:
+    - for-compiler: CLANG
+      C: 
+        - -ffunction-sections
+        - -fdata-sections
+        - -std=c11 
+        - -O3 
+        - -ffast-math
+      CPP: 
+        - -ffunction-sections
+        - -fdata-sections
+        - -fno-rtti
+        - -std=c++17
+        - -fno-exceptions
+        - -O3 
+        - -ffast-math
+      Link: 
+        - -Wl,--gc-sections
+    # AC6: armlink's RW-data decompressor hardfaults at startup; disable RW
+    # compression so scatter-load does a plain copy.
+    - for-compiler: AC6
+      C: 
+       - -ffunction-sections
+       - -fdata-sections
+       - -std=c11 
+       - -O3 
+       - -ffast-math
+      CPP: 
+       - -ffunction-sections
+       - -fdata-sections
+       - -fno-rtti
+       - -std=c++17
+       - -fno-exceptions
+       - -O3 
+       - -ffast-math
+      
+    - for-compiler: GCC
+      C: 
+       - -ffunction-sections
+       - -fdata-sections
+       - -std=c11 
+       - -O3 
+       - -ffast-math
+      CPP: 
+       - -ffunction-sections
+       - -fdata-sections
+       - -fno-rtti
+       - -std=c++17
+       - -fno-exceptions
+       - -O3 
+       - -ffast-math
+      Link: 
+        - -Wl,--gc-sections
+
+  # List executable file formats to be generated.
+  output:
+    type:
+      - elf
+      - hex
+      - map

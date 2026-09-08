@@ -1,0 +1,10 @@
+[project]
+name = "dspp_example"
+version = "0.0.0"
+requires-python = ">=3.12"
+dependencies = [
+]
+
+[tool.uv]
+package = false
+
