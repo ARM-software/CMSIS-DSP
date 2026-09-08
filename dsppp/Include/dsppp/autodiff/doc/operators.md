@@ -1,4 +1,4 @@
-# Operators
+# Operators {#autodiff_operators}
 
 Each operator header owns its validation, forward computation, fixed-size tape
 record, gradient reset, backward rule, and expression adapter. Operator classes

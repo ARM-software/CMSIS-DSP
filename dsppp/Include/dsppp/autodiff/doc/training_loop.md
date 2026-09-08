@@ -1,4 +1,4 @@
-# Training loop
+# Training loop {#autodiff_training_loop}
 
 The application owns the model, data, outputs, and loop. The tape records one
 evaluation of the model, computes gradients, and then an optimizer changes the

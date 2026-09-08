@@ -1,4 +1,4 @@
-# Converting PyTorch modules
+# Converting PyTorch modules {#autodiff_pytorch_conversion}
 
 `scripts/pytorch_to_autodiff.py` converts a PyTorch `nn.Module` into a
 reusable C++ class using the CMSIS-DSP autodiff API. The generated class owns

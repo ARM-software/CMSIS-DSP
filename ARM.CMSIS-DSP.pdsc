@@ -30,18 +30,11 @@
       <require Cclass="CMSIS" Cgroup="CORE"/>
     </condition>
 
-    <condition id="ARMv7-A Device">
-      <description>Armv7-A architecture based device</description>
-      <accept Dcore="Cortex-A5"/>
-      <accept Dcore="Cortex-A7"/>
-      <accept Dcore="Cortex-A9"/>
-    </condition>
-
   </conditions>
 
   <components>
     <!-- CMSIS-DSP component -->
-    <component Cclass="CMSIS" Cgroup="DSP" Cvariant="Source"  Cversion="1.17.1" isDefaultVariant="true" condition="CMSISCORE">
+    <component Cclass="CMSIS" Cgroup="DSP" Cvariant="Source"  Cversion="1.18.0" isDefaultVariant="true" condition="CMSISCORE">
       <description>CMSIS-DSP Library for Cortex-M and Cortex-A</description>
       <files>
         <!-- CPU independent -->
@@ -55,6 +48,7 @@
 
         <file category="include"  name="PrivateInclude/"/>
         <file category="include"  name="Include/"/>
+        <file category="include"  name="dsppp/Include/"/>
 
         <!-- DSP sources (core) -->
         <file category="source"   name="Source/BasicMathFunctions/BasicMathFunctions.c"/>
@@ -95,6 +89,32 @@
   </components>
 
   <examples>
+    <example name="CMSIS-DSP DSP++ vector and allocator example" doc="README.md" folder="Examples/dsppp_example">
+      <description>Fused f32 vector expressions with pool and arena memory allocators on ARMCM55 using the Corstone-300 FVP.</description>
+      <project>
+        <environment name="csolution" load="dsppp.csolution.yml"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="CMSIS" Cgroup="DSP"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+        <category>Getting Started</category>
+      </attributes>
+    </example>
+
+    <example name="CMSIS-DSP DSP++ autodiff Iris example" doc="README.md" folder="Examples/autodiff_example">
+      <description>Train an f32 Iris classifier with reverse-mode automatic differentiation and Adam on ARMCM55 using the Corstone-300 FVP.</description>
+      <project>
+        <environment name="csolution" load="autodiff.csolution.yml"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="CMSIS" Cgroup="DSP"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+        <category>Getting Started</category>
+      </attributes>
+    </example>
+
     <example name="CMSIS-DSP Bayes example" doc="Abstract.txt" folder="Examples/ARM/arm_bayes_example">
       <description>Bayes example</description>
       <board name="uVision Simulator" vendor="Keil"/>

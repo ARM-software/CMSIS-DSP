@@ -6,6 +6,20 @@
   <th>Description</th>
 </tr>
 <tr>
+  <td>v1.18.0</td>
+  <td>
+     * Included the optional C++ template headers in the CMSIS-DSP pack. They provide a higher-level API with automatic loop fusion for improved performance.
+     * Added experimental reverse-mode automatic differentiation with f32 and f16 support for on-device fine-tuning using only existing CMSIS-DSP kernels. This is not a new machine-learning framework; the focus is learning parameters of selected CMSIS-DSP kernels.
+     * Added examples for the C++ API
+     * Corrected Q15 FIR state buffer sizing when ARM_MATH_LOOPUNROLL is enabled (#305, #317).
+     * Removed implementation-defined signed shifts from fixed-point clipping helpers (#211) and expanded their tests.
+     * Corrected the INT64_MIN / -1 overflow case in arm_div_int64_to_int32 (#322).
+     * Corrected normalization by 32 bits in arm_norm_64_to_32u.
+     * Corrected controller benchmark tests (#325).
+     * Documented the non-saturating final conversion in arm_pid_q31 (#327).
+  </td>
+</tr>
+<tr>
   <td>v1.17.1</td>
   <td>
      * Added manual loop unrolling support to the F64 FIR filter.

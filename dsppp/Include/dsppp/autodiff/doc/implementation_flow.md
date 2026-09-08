@@ -1,4 +1,4 @@
-# Worked implementation flow: `y = a * x`
+# Worked implementation flow: `y = a * x` {#autodiff_implementation_flow}
 
 This example follows one vector scaling operation through the public API,
 `ScaleOperator`, and the internals of `reverse.hpp`. It uses a trainable scalar

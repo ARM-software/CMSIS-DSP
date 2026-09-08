@@ -1,4 +1,4 @@
-# Fine-tuning an output layer after Ethos-U
+# Fine-tuning an output layer after Ethos-U {#autodiff_ethos_cmsis_nn_fine_tuning}
 
 A common on-device training arrangement is to run a fixed feature extractor on
 Ethos-U and train only its final layer with CMSIS-DSP autodiff. During

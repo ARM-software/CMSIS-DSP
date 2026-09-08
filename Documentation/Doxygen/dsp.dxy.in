@@ -920,6 +920,8 @@ WARN_LOGFILE           =
 
 INPUT                  = ./src/mainpage.md   \
                          ./src/dsppp_main.md   \
+                         ./src/autodiff_main.md   \
+                         ./src/autodiff_introduction.md   \
                          ./src/introduction.md   \
                          ./src/template.md   \
                          ./src/guidelines.md \
@@ -933,6 +935,7 @@ INPUT                  = ./src/mainpage.md   \
                          ./src/matrix.md   \
                          ./src/building.md   \
                          ./src/transformbuffers.md   \
+                         ./src/examples.md   \
                          ./src/history.md    \
                          ./src/history.txt   \
                          ../../Examples/ARM  \

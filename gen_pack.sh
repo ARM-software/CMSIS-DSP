@@ -34,6 +34,7 @@ PACK_DIRS="
   Include
   PrivateInclude
   Source
+  dsppp/Include
   overview
 "
 
@@ -48,6 +49,12 @@ PACK_BASE_FILES="
 # Default: empty
 #
 PACK_DELETE_FILES="
+  Examples/dsppp_example/run.bat
+  Examples/dsppp_example/dsppp.cbuild-idx.yml
+  Examples/dsppp_example/Dsppp/.clangd
+  Examples/autodiff_example/run.bat
+  Examples/autodiff_example/autodiff.cbuild-idx.yml
+  Examples/autodiff_example/Autodiff/.clangd
   Documentation/Doxygen
   Documentation/README.md
   Source/CMakeLists.txt

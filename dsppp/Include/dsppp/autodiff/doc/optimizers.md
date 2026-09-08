@@ -1,4 +1,4 @@
-# Optimizers
+# Optimizers {#autodiff_optimizers}
 
 `SGD`, `Adam`, and `RMSProp` update caller-owned parameter values from
 tape-managed or caller-owned gradients. Their third template argument selects
