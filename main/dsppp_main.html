@@ -137,7 +137,9 @@ $(function(){initNavTree('dsppp_main.html',''); initResizable(true); });
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_src_2dsppp__main"></a></p>
-<p>C++ extensions to CMSIS-DSP using C++ template meta-programming (headers only).</p>
+<p>DSP++ is an entirely optional, header-only C++ extension to CMSIS-DSP.</p>
+<p>Applications using only the C API are unaffected: no code or build changes are needed, and the extension adds no code size, memory or runtime overhead.</p>
+<p><b>DSP++ is currently unsupported in builds with <code>ARM_MATH_NEON</code> enabled.</b> On Cortex-A, enabling this macro to benefit from Neon in the C API also affects DSP++: its incomplete Neon implementation can cause compilation errors, with no automatic scalar fallback. Applications using only the C API can continue to use Neon normally.</p>
 <p>The headers are included in the CMSIS-DSP pack starting with version 1.18.0 and are also available in the <a href="https://github.com/ARM-software/CMSIS-DSP/tree/main/dsppp/Include/dsppp">CMSIS-DSP GitHub repository</a>. The extension itself requires no separate build: include the headers to use its C++ API with CMSIS-DSP.</p>
 <ul>
 <li><a class="el" href="dsppp_intro.html">Introduction</a></li>
