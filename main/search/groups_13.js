@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['unrolling_0',['Unrolling',['../group__UNROLLING.html',1,'']]]
+  ['jensen_20shannon_20distance_0',['Jensen-Shannon distance',['../group__JensenShannon.html',1,'']]]
 ];

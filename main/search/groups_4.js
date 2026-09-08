@@ -1,9 +1,6 @@
 var searchData=
 [
-  ['elementwise_20clipping_0',['Elementwise clipping',['../group__BasicClip.html',1,'']]],
-  ['elementwise_20quaternion_20product_1',['Elementwise Quaternion Product',['../group__QuatProdVect.html',1,'']]],
-  ['entropy_2',['Entropy',['../group__Entropy.html',1,'']]],
-  ['enumerations_20for_20transform_20buffer_20size_20functions_3',['Enumerations for transform buffer size functions',['../group__bufferSizeTypes.html',1,'']]],
-  ['euclidean_20distance_4',['Euclidean distance',['../group__Euclidean.html',1,'']]],
-  ['examples_5',['Examples',['../group__groupExamples.html',1,'']]]
+  ['4_20db_0',['Hft248d window function (248.4 dB)',['../group__WindowHFT248D.html',1,'']]],
+  ['42_207_20db_1',['Hamming window function (42.7 dB)',['../group__WindowHAMMING.html',1,'']]],
+  ['46_207_20db_2',['Nuttall3 window function (46.7 dB)',['../group__WindowNUTTALL3.html',1,'']]]
 ];

@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['infinite_20impulse_20response_20_28iir_29_20lattice_20filters_0',['Infinite Impulse Response (IIR) Lattice Filters',['../group__IIR__Lattice.html',1,'']]],
-  ['interpolation_20functions_1',['Interpolation Functions',['../group__groupInterpolation.html',1,'']]]
+  ['8_20bit_20fixed_20point_20value_0',['Convert 8-bit fixed point value',['../group__q7__to__x.html',1,'']]],
+  ['8_20db_1',['Hft116d window function (116.8 dB)',['../group__WindowHFT116D.html',1,'']]],
+  ['82_206_20db_2',['Nuttall4a window function (82.6 dB)',['../group__WindowNUTTALL4A.html',1,'']]]
 ];

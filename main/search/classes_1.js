@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['accumulate_0',['Accumulate',['../group__FIXED.html#structarm__cmsis__dsp_1_1Accumulate',1,'arm_cmsis_dsp']]],
-  ['accumulate_3c_20md_2c_20ms_2c_20f_2c_20s_2c_20true_20_3e_1',['Accumulate&lt; MD, MS, F, S, true &gt;',['../group__FIXED.html#structarm__cmsis__dsp_1_1Accumulate_3_01MD_00_01MS_00_01F_00_01S_00_01true_01_4',1,'arm_cmsis_dsp']]],
+  ['accumulate_0',['Accumulate',['../group__FIXED.html#structarm__cmsis__dsp_1_1Accumulate',1,'Accumulate&lt; MD, MS, F, S, bool &gt;'],['../group__FIXED.html#structarm__cmsis__dsp_1_1arm__cmsis__dsp_1_1Accumulate',1,'Accumulate&lt; MD, MS, F, S, bool &gt;']]],
+  ['accumulate_3c_20md_2c_20ms_2c_20f_2c_20s_2c_20true_20_3e_1',['Accumulate&lt; MD, MS, F, S, true &gt;',['../group__FIXED.html#structarm__cmsis__dsp_1_1Accumulate_3_01MD_00_01MS_00_01F_00_01S_00_01true_01_4',1,'Accumulate&lt; MD, MS, F, S, true &gt;'],['../group__VECTOR.html#structarm__cmsis__dsp_1_1arm__cmsis__dsp_1_1Accumulate_3_01MD_00_01MS_00_01F_00_01S_00_01true_01_4',1,'Accumulate&lt; MD, MS, F, S, true &gt;']]],
   ['arm_5fbilinear_5finterp_5finstance_5ff16_2',['arm_bilinear_interp_instance_f16',['../structarm__bilinear__interp__instance__f16.html',1,'']]],
   ['arm_5fbilinear_5finterp_5finstance_5ff32_3',['arm_bilinear_interp_instance_f32',['../structarm__bilinear__interp__instance__f32.html',1,'']]],
   ['arm_5fbilinear_5finterp_5finstance_5fq15_4',['arm_bilinear_interp_instance_q15',['../structarm__bilinear__interp__instance__q15.html',1,'']]],

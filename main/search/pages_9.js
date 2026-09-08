@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['static_20_2f_20dynamic_0',['Static / dynamic',['../dsppp_memory_static_dynamic.html',1,'dsppp_main']]]
+  ['know_20about_20c_20templates_0',['What you need to know about C++ templates',['../dsppp_template.html',1,'dsppp_main']]]
 ];

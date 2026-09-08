@@ -1,0 +1,5 @@
+var group__VECTOR_structarm__cmsis__dsp_1_1arm__cmsis__dsp_1_1number__traits_3_01std_1_1complex_3_01double_01_4_01_4 =
+[
+    [ "accumulator", "group__VECTOR.html#a6edd73504114644d1e89141bffbba705", null ],
+    [ "compute_type", "group__VECTOR.html#af22ffe9626c863a31144cf3e115ce8c5", null ]
+];

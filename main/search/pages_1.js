@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['code_20size_0',['Code size',['../dsppp_code_size.html',1,'dsppp_main']]],
-  ['complex_20numbers_1',['Complex numbers',['../dsppp_complex.html',1,'dsppp_main']]]
+  ['buffer_20sizes_0',['Transform buffer sizes',['../transformbuffers.html',1,'']]],
+  ['building_20and_20running_20examples_1',['Building and running examples',['../dsppp_building.html',1,'dsppp_main']]]
 ];

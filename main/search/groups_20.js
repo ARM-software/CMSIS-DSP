@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['warping_20distance_0',['Dynamic Time Warping Distance',['../group__DTW.html',1,'']]],
+  ['weighted_20average_1',['Weighted Average',['../group__weightedaverage.html',1,'']]],
+  ['welch_20window_20function_2021_203_20db_2',['Welch window function (21.3 dB)',['../group__WindowWELCH.html',1,'']]],
+  ['window_20function_20116_208_20db_3',['Hft116d window function (116.8 dB)',['../group__WindowHFT116D.html',1,'']]],
+  ['window_20function_20144_201_20db_4',['Hft144d window function (144.1 dB)',['../group__WindowHFT144D.html',1,'']]],
+  ['window_20function_20169_205_20db_5',['Hft169d window function (169.5 dB)',['../group__WindowHFT169D.html',1,'']]],
+  ['window_20function_20196_202_20db_6',['Hft196d window function (196.2 dB)',['../group__WindowHFT196D.html',1,'']]],
+  ['window_20function_2021_203_20db_7',['Welch window function (21.3 dB)',['../group__WindowWELCH.html',1,'']]],
+  ['window_20function_20223_200_20db_8',['Hft223d window function (223.0 dB)',['../group__WindowHFT223D.html',1,'']]],
+  ['window_20function_20248_204_20db_9',['Hft248d window function (248.4 dB)',['../group__WindowHFT248D.html',1,'']]],
+  ['window_20function_2026_205_20db_10',['Bartlett window function (26.5 dB)',['../group__WindowBARTLETT.html',1,'']]],
+  ['window_20function_2031_205_20db_11',['Hanning window function (31.5 dB)',['../group__WindowHANNING.html',1,'']]],
+  ['window_20function_2042_207_20db_12',['Hamming window function (42.7 dB)',['../group__WindowHAMMING.html',1,'']]],
+  ['window_20function_2046_207_20db_13',['Nuttall3 window function (46.7 dB)',['../group__WindowNUTTALL3.html',1,'']]],
+  ['window_20function_2060_209_20db_14',['Nuttall4 window function (60.9 dB)',['../group__WindowNUTTALL4.html',1,'']]],
+  ['window_20function_2064_202_20db_15',['Nuttall3a window function (64.2 dB)',['../group__WindowNUTTALL3A.html',1,'']]],
+  ['window_20function_2071_205_20db_16',['Nuttall3b window function (71.5 dB)',['../group__WindowNUTTALL3B.html',1,'']]],
+  ['window_20function_2082_206_20db_17',['Nuttall4a window function (82.6 dB)',['../group__WindowNUTTALL4A.html',1,'']]],
+  ['window_20function_2090_202_20db_18',['Hft90d window function (90.2 dB)',['../group__WindowHFT90D.html',1,'']]],
+  ['window_20function_2092_20db_19',['Blackman Harris window function (92 dB)',['../group__WindowBLACKMAN__HARRIS__92DB.html',1,'']]],
+  ['window_20function_2093_203_20db_20',['Nuttall4b window function (93.3 dB)',['../group__WindowNUTTALL4B.html',1,'']]],
+  ['window_20function_2095_200_20db_21',['Hft95 window function (95.0 dB)',['../group__WindowHFT95.html',1,'']]],
+  ['window_20function_2098_201_20db_22',['Nuttall4c window function (98.1 dB)',['../group__WindowNUTTALL4C.html',1,'']]],
+  ['window_20functions_23',['Window Functions',['../group__groupWindow.html',1,'']]],
+  ['window_20functions_24',['window functions',['../group__WindowFlat.html',1,'Flat-top window functions'],['../group__WindowNormal.html',1,'Regular window functions']]]
+];

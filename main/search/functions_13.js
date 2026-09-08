@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['zero_5flane_0',['zero_lane',['../group__DSPQ15Number.html#a4c64987939f6ab27ea8771270ee49b72',1,'vector_traits&lt; Q15, DSP, typename std::enable_if&lt; true &gt;::type &gt;::zero_lane()'],['../group__HeliumFloatNumber.html#a425fff42be94f514024d63fb721c56f0',1,'vector_traits&lt; float, arch, typename std::enable_if&lt; std::is_base_of&lt; Helium, arch &gt;::value &gt;::type &gt;::zero_lane()'],['../group__HeliumHalfNumber.html#ae0b4a4d6f075325f5cc847a52b1c27ee',1,'vector_traits&lt; float16_t, arch, typename std::enable_if&lt; std::is_base_of&lt; Helium, arch &gt;::value &gt;::type &gt;::zero_lane()'],['../group__HeliumQ15Number.html#a4c64987939f6ab27ea8771270ee49b72',1,'vector_traits&lt; Q15, arch, typename std::enable_if&lt; std::is_base_of&lt; Helium, arch &gt;::value &gt;::type &gt;::zero_lane()']]]
+  ['write_5fq15x2_0',['write_q15x2',['../namespacearm__cmsis__dsp.html#a156d8ca8eea04c44562dd14cbb5380b6',1,'arm_cmsis_dsp']]],
+  ['write_5fq15x2_5fia_1',['write_q15x2_ia',['../namespacearm__cmsis__dsp.html#a8284bc26dcdef2ff063ec69e2d0e3800',1,'arm_cmsis_dsp']]],
+  ['write_5fq7x4_5fia_2',['write_q7x4_ia',['../namespacearm__cmsis__dsp.html#acb593a6864d01a3fbe5ec35a22048d8c',1,'arm_cmsis_dsp']]]
 ];

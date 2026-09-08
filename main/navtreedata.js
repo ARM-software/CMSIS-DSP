@@ -49,7 +49,6 @@ var NAVTREE =
     ] ],
     [ "Revision History", "rev_hist.html", null ],
     [ "Deprecated List", "deprecated.html", null ],
-    [ "API Reference", "modules.html", "modules" ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ]
     ] ]
@@ -59,17 +58,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"group__COMMON.html",
-"group__FIXED.html#ga27217ada53c40424a1f02485b4037d45",
-"group__FUSION.html#ga5e94654d3f1f670867fb8957577396dc",
-"group__LD.html",
-"group__Matrix.html#ab7c0b49d5a9fc39d067a404c09e031ab",
-"group__QuatRot.html",
-"group__VECTOR.html#structarm__cmsis__dsp_1_1Vector_3_01P_00_01DYNAMIC_00_01Allocator_01_4",
-"group__variance.html#ga0ece08da589f4649bfa4c8445dc05132",
 "structarm__fir__instance__q15.html#ae85d417edcdce57e9a54f8c841580578",
 "structarm__spline__instance__f32.html#a6ceaa0b32c96a0b5be445ae8b51035ef"
 ];
 
-var SYNCONMSG = 'click to disable panel synchronisation';
-var SYNCOFFMSG = 'click to enable panel synchronisation';
+var SYNCONMSG = 'click to disable panel synchronization';
+var SYNCOFFMSG = 'click to enable panel synchronization';

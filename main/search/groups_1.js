@@ -1,17 +1,10 @@
 var searchData=
 [
-  ['bartlett_20window_20function_20_2826_2e5_20db_29_0',['Bartlett window function (26.5 dB)',['../group__WindowBARTLETT.html',1,'']]],
-  ['barycenter_1',['Barycenter',['../group__barycenter.html',1,'']]],
-  ['basic_20math_20functions_2',['Basic Math Functions',['../group__groupMath.html',1,'']]],
-  ['bayes_20example_3',['Bayes Example',['../group__BayesExample.html',1,'']]],
-  ['bayesian_20estimators_4',['Bayesian estimators',['../group__groupBayes.html',1,'']]],
-  ['bilinear_20interpolation_5',['Bilinear Interpolation',['../group__BilinearInterpolate.html',1,'']]],
-  ['biquad_20cascade_20iir_20filters_20using_20a_20direct_20form_20ii_20transposed_20structure_6',['Biquad Cascade IIR Filters Using a Direct Form II Transposed Structure',['../group__BiquadCascadeDF2T.html',1,'']]],
-  ['biquad_20cascade_20iir_20filters_20using_20direct_20form_20i_20structure_7',['Biquad Cascade IIR Filters Using Direct Form I Structure',['../group__BiquadCascadeDF1.html',1,'']]],
-  ['blackman_20harris_20window_20function_20_2892_20db_29_8',['Blackman Harris window function (92 dB)',['../group__WindowBLACKMAN__HARRIS__92DB.html',1,'']]],
-  ['boolean_20distances_9',['Boolean Distances',['../group__BoolDist.html',1,'']]],
-  ['bray_2dcurtis_20distance_10',['Bray-Curtis distance',['../group__braycurtis.html',1,'']]],
-  ['buffer_20sizes_20for_20cfft_11',['Buffer Sizes for CFFT',['../group__CFFTBuffers.html',1,'']]],
-  ['buffer_20sizes_20for_20mfcc_12',['Buffer Sizes for MFCC',['../group__MFCCBuffers.html',1,'']]],
-  ['buffer_20sizes_20for_20rfft_13',['Buffer Sizes for RFFT',['../group__RFFTBuffers.html',1,'']]]
+  ['1_20db_0',['1 dB',['../group__WindowHFT144D.html',1,'Hft144d window function (144.1 dB)'],['../group__WindowNUTTALL4C.html',1,'Nuttall4c window function (98.1 dB)']]],
+  ['116_208_20db_1',['Hft116d window function (116.8 dB)',['../group__WindowHFT116D.html',1,'']]],
+  ['144_201_20db_2',['Hft144d window function (144.1 dB)',['../group__WindowHFT144D.html',1,'']]],
+  ['16_20bit_20fixed_20point_20value_3',['Convert 16-bit fixed point value',['../group__q15__to__x.html',1,'']]],
+  ['16_20bit_20floating_20point_20value_4',['Convert 16-bit floating point value',['../group__f16__to__x.html',1,'']]],
+  ['169_205_20db_5',['Hft169d window function (169.5 dB)',['../group__WindowHFT169D.html',1,'']]],
+  ['196_202_20db_6',['Hft196d window function (196.2 dB)',['../group__WindowHFT196D.html',1,'']]]
 ];
