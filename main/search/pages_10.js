@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['templates_0',['What you need to know about C++ templates',['../dsppp_template.html',1,'dsppp_main']]],
-  ['to_20know_20about_20c_20templates_1',['What you need to know about C++ templates',['../dsppp_template.html',1,'dsppp_main']]],
-  ['transform_20buffer_20sizes_2',['Transform buffer sizes',['../transformbuffers.html',1,'']]]
+  ['size_0',['Code size',['../dsppp_code_size.html',1,'dsppp_main']]],
+  ['sizes_1',['Transform buffer sizes',['../transformbuffers.html',1,'']]],
+  ['static_20dynamic_2',['Static / dynamic',['../dsppp_memory_static_dynamic.html',1,'dsppp_main']]]
 ];

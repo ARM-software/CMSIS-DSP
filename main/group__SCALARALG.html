@@ -169,10 +169,10 @@ Functions</h2></td></tr>
 <tr class="memitem:ga47bb2ac69df29ba95a74825e4fff2726"><td class="memTemplItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ga47bb2ac69df29ba95a74825e4fff2726">_arm_mat_trans</a> (const MA &amp;src, MB &amp;dst, const Scalar *=nullptr)</td></tr>
 <tr class="memdesc:ga47bb2ac69df29ba95a74825e4fff2726"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transposition for scalar architecture.  <br /></td></tr>
 <tr class="separator:ga47bb2ac69df29ba95a74825e4fff2726"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac896323f3479d29fb42470c2880ec387" id="r_gac896323f3479d29fb42470c2880ec387"><td class="memTemplParams" colspan="2">template&lt;typename M, typename V, typename RES&gt; </td></tr>
-<tr class="memitem:gac896323f3479d29fb42470c2880ec387"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#gac896323f3479d29fb42470c2880ec387">_dot_m_v</a> (RES &amp;res, const M &amp;m, const V &amp;v, const Scalar *=nullptr)</td></tr>
-<tr class="memdesc:gac896323f3479d29fb42470c2880ec387"><td class="mdescLeft">&#160;</td><td class="mdescRight">Matrix times vector for scalar architecture.  <br /></td></tr>
-<tr class="separator:gac896323f3479d29fb42470c2880ec387"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab40c9e214ba1d3a52692ab1646732ed1" id="r_gab40c9e214ba1d3a52692ab1646732ed1"><td class="memTemplParams" colspan="2">template&lt;typename M, typename V, typename RES&gt; </td></tr>
+<tr class="memitem:gab40c9e214ba1d3a52692ab1646732ed1"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#gab40c9e214ba1d3a52692ab1646732ed1">_dot_m_v</a> (RES &amp;res, const TransposeView&lt; M &gt; &amp;m, const V &amp;v, const Scalar *=nullptr)</td></tr>
+<tr class="memdesc:gab40c9e214ba1d3a52692ab1646732ed1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Matrix times vector for scalar architecture.  <br /></td></tr>
+<tr class="separator:gab40c9e214ba1d3a52692ab1646732ed1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4e6fec1c099138a96cf3f56e68b50880" id="r_ga4e6fec1c099138a96cf3f56e68b50880"><td class="memTemplParams" colspan="2">template&lt;typename MA, typename MB, typename RES, typename TMP, typename std::enable_if&lt; number_traits&lt; typename traits&lt; MA &gt;::Scalar &gt;::is_fixed, bool &gt;::type = true&gt; </td></tr>
 <tr class="memitem:ga4e6fec1c099138a96cf3f56e68b50880"><td class="memTemplItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ga4e6fec1c099138a96cf3f56e68b50880">_dot_m_m</a> (const MA &amp;pSrcA, const MB &amp;pSrcB, RES &amp;&amp;pDst, const TMP &amp;BT, const Scalar *=nullptr)</td></tr>
 <tr class="memdesc:ga4e6fec1c099138a96cf3f56e68b50880"><td class="mdescLeft">&#160;</td><td class="mdescRight">Matrix times matrix for scalar architecture and fixed point.  <br /></td></tr>
@@ -185,10 +185,10 @@ Functions</h2></td></tr>
 <tr class="memitem:ga47bb2ac69df29ba95a74825e4fff2726"><td class="memTemplItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ga47bb2ac69df29ba95a74825e4fff2726">_arm_mat_trans</a> (const MA &amp;src, MB &amp;dst, const <a class="el" href="group__ARCH.html#classarm__cmsis__dsp_1_1Scalar">Scalar</a> *=nullptr)</td></tr>
 <tr class="memdesc:ga47bb2ac69df29ba95a74825e4fff2726"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transposition for scalar architecture.  <br /></td></tr>
 <tr class="separator:ga47bb2ac69df29ba95a74825e4fff2726"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac896323f3479d29fb42470c2880ec387" id="r_gac896323f3479d29fb42470c2880ec387"><td class="memTemplParams" colspan="2">template&lt;typename M, typename V, typename RES&gt; </td></tr>
-<tr class="memitem:gac896323f3479d29fb42470c2880ec387"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#gac896323f3479d29fb42470c2880ec387">_dot_m_v</a> (RES &amp;res, const M &amp;m, const V &amp;v, const <a class="el" href="group__ARCH.html#classarm__cmsis__dsp_1_1Scalar">Scalar</a> *=nullptr)</td></tr>
-<tr class="memdesc:gac896323f3479d29fb42470c2880ec387"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="group__Matrix.html#structarm__cmsis__dsp_1_1Matrix" title="Matrix.">Matrix</a> times vector for scalar architecture.  <br /></td></tr>
-<tr class="separator:gac896323f3479d29fb42470c2880ec387"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab40c9e214ba1d3a52692ab1646732ed1" id="r_gab40c9e214ba1d3a52692ab1646732ed1"><td class="memTemplParams" colspan="2">template&lt;typename M, typename V, typename RES&gt; </td></tr>
+<tr class="memitem:gab40c9e214ba1d3a52692ab1646732ed1"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#gab40c9e214ba1d3a52692ab1646732ed1">_dot_m_v</a> (RES &amp;res, const <a class="el" href="group__Matrix.html#structarm__cmsis__dsp_1_1TransposeView">TransposeView</a>&lt; M &gt; &amp;m, const V &amp;v, const <a class="el" href="group__ARCH.html#classarm__cmsis__dsp_1_1Scalar">Scalar</a> *=nullptr)</td></tr>
+<tr class="memdesc:gab40c9e214ba1d3a52692ab1646732ed1"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="group__Matrix.html#structarm__cmsis__dsp_1_1Matrix" title="Matrix.">Matrix</a> times vector for scalar architecture.  <br /></td></tr>
+<tr class="separator:gab40c9e214ba1d3a52692ab1646732ed1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4e6fec1c099138a96cf3f56e68b50880" id="r_ga4e6fec1c099138a96cf3f56e68b50880"><td class="memTemplParams" colspan="2">template&lt;typename MA, typename MB, typename RES, typename TMP, typename std::enable_if&lt; <a class="el" href="group__NUMBER.html#structarm__cmsis__dsp_1_1number__traits">number_traits</a>&lt; typename traits&lt; MA &gt;::Scalar &gt;<a class="el" href="group__FUSION.html#gacea8d6d85638c8b0a14726eedee25128">::is_fixed</a>, bool &gt;::type = true&gt; </td></tr>
 <tr class="memitem:ga4e6fec1c099138a96cf3f56e68b50880"><td class="memTemplItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ga4e6fec1c099138a96cf3f56e68b50880">_dot_m_m</a> (const MA &amp;pSrcA, const MB &amp;pSrcB, RES &amp;&amp;pDst, const TMP &amp;BT, const <a class="el" href="group__ARCH.html#classarm__cmsis__dsp_1_1Scalar">Scalar</a> *=nullptr)</td></tr>
 <tr class="memdesc:ga4e6fec1c099138a96cf3f56e68b50880"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="group__Matrix.html#structarm__cmsis__dsp_1_1Matrix" title="Matrix.">Matrix</a> times matrix for scalar architecture and fixed point.  <br /></td></tr>
@@ -654,8 +654,8 @@ template&lt;typename MA, typename MB, typename RES, typename TMP, typename std::
 
 </div>
 </div>
-<a id="gac896323f3479d29fb42470c2880ec387" name="gac896323f3479d29fb42470c2880ec387"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gac896323f3479d29fb42470c2880ec387">&#9670;&#160;</a></span>_dot_m_v() <span class="overload">[1/2]</span></h2>
+<a id="gab40c9e214ba1d3a52692ab1646732ed1" name="gab40c9e214ba1d3a52692ab1646732ed1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab40c9e214ba1d3a52692ab1646732ed1">&#9670;&#160;</a></span>_dot_m_v() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -673,7 +673,7 @@ template&lt;typename M, typename V, typename RES&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const M &amp;</td>          <td class="paramname"><span class="paramname"><em>m</em></span>, </td>
+          <td class="paramtype">const TransposeView&lt; M &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>m</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -713,8 +713,8 @@ template&lt;typename M, typename V, typename RES&gt; </div>
 
 </div>
 </div>
-<a id="gac896323f3479d29fb42470c2880ec387" name="gac896323f3479d29fb42470c2880ec387"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gac896323f3479d29fb42470c2880ec387">&#9670;&#160;</a></span>_dot_m_v() <span class="overload">[2/2]</span></h2>
+<a id="gab40c9e214ba1d3a52692ab1646732ed1" name="gab40c9e214ba1d3a52692ab1646732ed1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab40c9e214ba1d3a52692ab1646732ed1">&#9670;&#160;</a></span>_dot_m_v() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -732,7 +732,7 @@ template&lt;typename M, typename V, typename RES&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const M &amp;</td>          <td class="paramname"><span class="paramname"><em>m</em></span>, </td>
+          <td class="paramtype">const <a class="el" href="group__Matrix.html#structarm__cmsis__dsp_1_1TransposeView">TransposeView</a>&lt; M &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>m</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>

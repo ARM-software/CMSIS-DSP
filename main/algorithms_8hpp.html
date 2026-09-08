@@ -134,12 +134,21 @@ $(function(){initNavTree('algorithms_8hpp.html',''); initResizable(true); });
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">algorithms.hpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<table class="memberdecls">
+<div class="textblock"><code>#include &lt;cmath&gt;</code><br />
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__cmsis__dsp_1_1MaskedDotSum.html">MaskedDotSum&lt; T &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarm__cmsis__dsp_1_1NearestEvenRangeMask.html">NearestEvenRangeMask&lt; V &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacearm__cmsis__dsp.html">arm_cmsis_dsp</a></td></tr>
@@ -147,6 +156,26 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a82ddd42ae238dc4ab3bd8a97ee7e2dc0" id="r_a82ddd42ae238dc4ab3bd8a97ee7e2dc0"><td class="memTemplParams" colspan="2">template&lt;typename DST, typename SRC&gt; </td></tr>
+<tr class="memitem:a82ddd42ae238dc4ab3bd8a97ee7e2dc0"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacearm__cmsis__dsp.html#a82ddd42ae238dc4ab3bd8a97ee7e2dc0">round_scaled_to_nearest_clipped</a> (DST &amp;destination, const SRC &amp;source, float multiplier, typename traits&lt; DST &gt;::Scalar offset, typename traits&lt; DST &gt;::Scalar minimum, typename traits&lt; DST &gt;::Scalar maximum)</td></tr>
+<tr class="memdesc:a82ddd42ae238dc4ab3bd8a97ee7e2dc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scale in float, round to nearest-even, offset, and clip.  <br /></td></tr>
+<tr class="separator:a82ddd42ae238dc4ab3bd8a97ee7e2dc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9acd6486378ccecbbc8cd06eb77cdff" id="r_ac9acd6486378ccecbbc8cd06eb77cdff"><td class="memTemplParams" colspan="2">template&lt;typename DST, typename SRC&gt; </td></tr>
+<tr class="memitem:ac9acd6486378ccecbbc8cd06eb77cdff"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacearm__cmsis__dsp.html#ac9acd6486378ccecbbc8cd06eb77cdff">round_to_nearest</a> (DST &amp;destination, const SRC &amp;source)</td></tr>
+<tr class="memdesc:ac9acd6486378ccecbbc8cd06eb77cdff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element-wise nearest-even rounding into an existing vector.  <br /></td></tr>
+<tr class="separator:ac9acd6486378ccecbbc8cd06eb77cdff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0be12fd3532318612a9441987bc721c" id="r_aa0be12fd3532318612a9441987bc721c"><td class="memTemplParams" colspan="2">template&lt;typename DST, typename SRC&gt; </td></tr>
+<tr class="memitem:aa0be12fd3532318612a9441987bc721c"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacearm__cmsis__dsp.html#aa0be12fd3532318612a9441987bc721c">round_to_nearest_clipped</a> (DST &amp;destination, const SRC &amp;source, typename traits&lt; DST &gt;::Scalar offset, typename traits&lt; DST &gt;::Scalar minimum, typename traits&lt; DST &gt;::Scalar maximum)</td></tr>
+<tr class="memdesc:aa0be12fd3532318612a9441987bc721c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nearest-even rounding followed by an offset and inclusive clipping.  <br /></td></tr>
+<tr class="separator:aa0be12fd3532318612a9441987bc721c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afdf9d4dc649ccbfdb8d320fa87d729ab" id="r_afdf9d4dc649ccbfdb8d320fa87d729ab"><td class="memTemplParams" colspan="2">template&lt;typename DST, typename SRC, typename MASK&gt; </td></tr>
+<tr class="memitem:afdf9d4dc649ccbfdb8d320fa87d729ab"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacearm__cmsis__dsp.html#afdf9d4dc649ccbfdb8d320fa87d729ab">masked_scale_add</a> (DST &amp;destination, const SRC &amp;source, const MASK &amp;mask, typename traits&lt; DST &gt;::Scalar scale)</td></tr>
+<tr class="memdesc:afdf9d4dc649ccbfdb8d320fa87d729ab"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="group__FIXED.html#structarm__cmsis__dsp_1_1Accumulate" title="Accumulation without saturation.">Accumulate</a> <code>source * scale</code> into destination where mask is true.  <br /></td></tr>
+<tr class="separator:afdf9d4dc649ccbfdb8d320fa87d729ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62f0c516dd339cba5362b8698837ce16" id="r_a62f0c516dd339cba5362b8698837ce16"><td class="memTemplParams" colspan="2">template&lt;typename A, typename B, typename MASK&gt; </td></tr>
+<tr class="memitem:a62f0c516dd339cba5362b8698837ce16"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacearm__cmsis__dsp.html#a62f0c516dd339cba5362b8698837ce16">masked_dot_sum</a> (const A &amp;a, const B &amp;b, const MASK &amp;mask)</td></tr>
+<tr class="memdesc:a62f0c516dd339cba5362b8698837ce16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute a masked dot product and masked sum of the first operand.  <br /></td></tr>
+<tr class="separator:a62f0c516dd339cba5362b8698837ce16"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga25c5f009d6955ec75b47dff97784bfe6" id="r_ga25c5f009d6955ec75b47dff97784bfe6"><td class="memTemplParams" colspan="2">template&lt;typename MA, typename MB, typename std::enable_if&lt; HasMatrixIndexing&lt; MA &gt;::value &amp;&amp;HasMatrixIndexing&lt; MB &gt;::value, bool &gt;::type = true&gt; </td></tr>
 <tr class="memitem:ga25c5f009d6955ec75b47dff97784bfe6"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__ALGO.html#ga25c5f009d6955ec75b47dff97784bfe6">transposeTo</a> (MA &amp;dst, const MB &amp;src)</td></tr>
 <tr class="memdesc:ga25c5f009d6955ec75b47dff97784bfe6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transpose a matrix.  <br /></td></tr>

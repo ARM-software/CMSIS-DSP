@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['revision_20history_0',['Revision History',['../rev_hist.html',1,'']]],
-  ['running_20examples_1',['Building and running examples',['../dsppp_building.html',1,'dsppp_main']]]
+  ['pytorch_20modules_0',['Converting PyTorch modules',['../autodiff_pytorch_conversion.html',1,'autodiff_main']]]
 ];

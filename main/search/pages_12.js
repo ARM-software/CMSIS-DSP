@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['what_20you_20need_20to_20know_20about_20c_20templates_0',['What you need to know about C++ templates',['../dsppp_template.html',1,'dsppp_main']]]
+  ['u_0',['Fine-tuning an output layer after Ethos-U',['../autodiff_ethos_cmsis_nn_fine_tuning.html',1,'autodiff_main']]]
 ];

@@ -23,5 +23,6 @@ var searchData=
   ['architecture_20specific_20algorithm_20',['Architecture specific algorithm',['../group__ARCHALG.html',1,'']]],
   ['arctan2_21',['ArcTan2',['../group__atan2.html',1,'']]],
   ['audio_20equalizer_20example_22',['Graphic Audio Equalizer Example',['../group__GEQ5Band.html',1,'']]],
-  ['average_23',['Weighted Average',['../group__weightedaverage.html',1,'']]]
+  ['autodiff_20iris_20classification_20example_23',['DSP++ Autodiff Iris Classification Example',['../group__AutodiffExample.html',1,'']]],
+  ['average_24',['Weighted Average',['../group__weightedaverage.html',1,'']]]
 ];

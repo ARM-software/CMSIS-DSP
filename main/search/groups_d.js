@@ -22,9 +22,10 @@ var searchData=
   ['dot_20product_19',['Dot Product',['../group__cmplx__dot__prod.html',1,'Complex Dot Product'],['../group__BasicDotProd.html',1,'Vector Dot Product']]],
   ['dot_20product_20example_20',['Dot Product Example',['../group__DotproductExample.html',1,'']]],
   ['double_21',['Double',['../group__GenericComplexDoubleNumber.html',1,'Complex Double'],['../group__GenericDoubleNumber.html',1,'Double']]],
-  ['dsp_20extension_20specific_20algorithm_22',['DSP Extension specific algorithm',['../group__DSPALG.html',1,'']]],
-  ['dsp_20extension_20specific_20number_20definitions_23',['DSP extension specific number definitions',['../group__DSPNumber.html',1,'']]],
-  ['dsp_20vector_20and_20memory_20allocator_20example_24',['DSP++ Vector and Memory Allocator Example',['../group__DspppExample.html',1,'']]],
-  ['durbin_20algorithm_25',['Levinson Durbin Algorithm',['../group__LD.html',1,'']]],
-  ['dynamic_20time_20warping_20distance_26',['Dynamic Time Warping Distance',['../group__DTW.html',1,'']]]
+  ['dsp_20autodiff_20iris_20classification_20example_22',['DSP++ Autodiff Iris Classification Example',['../group__AutodiffExample.html',1,'']]],
+  ['dsp_20extension_20specific_20algorithm_23',['DSP Extension specific algorithm',['../group__DSPALG.html',1,'']]],
+  ['dsp_20extension_20specific_20number_20definitions_24',['DSP extension specific number definitions',['../group__DSPNumber.html',1,'']]],
+  ['dsp_20vector_20and_20memory_20allocator_20example_25',['DSP++ Vector and Memory Allocator Example',['../group__DspppExample.html',1,'']]],
+  ['durbin_20algorithm_26',['Levinson Durbin Algorithm',['../group__LD.html',1,'']]],
+  ['dynamic_20time_20warping_20distance_27',['Dynamic Time Warping Distance',['../group__DTW.html',1,'']]]
 ];

@@ -157,6 +157,13 @@ $(function(){initNavTree('matrix_8hpp.html',''); initResizable(true); });
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Data Structures</h2></td></tr>
+<tr class="memitem:structarm__cmsis__dsp_1_1TransposeView" id="r_structarm__cmsis__dsp_1_1TransposeView"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Matrix.html#structarm__cmsis__dsp_1_1TransposeView">TransposeView&lt; M &gt;</a></td></tr>
+<tr class="memdesc:structarm__cmsis__dsp_1_1TransposeView"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zero-copy transposed view of a matrix.  <a href="group__Matrix.html#structarm__cmsis__dsp_1_1TransposeView">More...</a><br /></td></tr>
+<tr class="separator:structarm__cmsis__dsp_1_1TransposeView"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structarm__cmsis__dsp_1_1__MatVec" id="r_structarm__cmsis__dsp_1_1__MatVec"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Matrix.html#structarm__cmsis__dsp_1_1__MatVec">_MatVec&lt; M, V &gt;</a></td></tr>
+<tr class="separator:structarm__cmsis__dsp_1_1__MatVec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structarm__cmsis__dsp_1_1__TransposedMatVec" id="r_structarm__cmsis__dsp_1_1__TransposedMatVec"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Matrix.html#structarm__cmsis__dsp_1_1__TransposedMatVec">_TransposedMatVec&lt; M, V &gt;</a></td></tr>
+<tr class="separator:structarm__cmsis__dsp_1_1__TransposedMatVec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structarm__cmsis__dsp_1_1__Outer" id="r_structarm__cmsis__dsp_1_1__Outer"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Matrix.html#structarm__cmsis__dsp_1_1__Outer">_Outer&lt; LHS, RHS, DerivedOp &gt;</a></td></tr>
 <tr class="memdesc:structarm__cmsis__dsp_1_1__Outer"><td class="mdescLeft">&#160;</td><td class="mdescRight">Outer product operator for expressions.  <a href="group__Matrix.html#structarm__cmsis__dsp_1_1__Outer">More...</a><br /></td></tr>
 <tr class="separator:structarm__cmsis__dsp_1_1__Outer"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -168,6 +175,14 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:gab1565fdf055cc69209b1d02a4c951081" id="r_gab1565fdf055cc69209b1d02a4c951081"><td class="memTemplParams" colspan="2">template&lt;typename M, typename std::enable_if&lt; HasMatrixIndexing&lt; M &gt;::value, bool &gt;::type = true&gt; </td></tr>
+<tr class="memitem:gab1565fdf055cc69209b1d02a4c951081"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="group__Matrix.html#structarm__cmsis__dsp_1_1TransposeView">TransposeView</a>&lt; M &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Matrix.html#gab1565fdf055cc69209b1d02a4c951081">transpose_view</a> (const M &amp;matrix)</td></tr>
+<tr class="memdesc:gab1565fdf055cc69209b1d02a4c951081"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a zero-copy transposed matrix view.  <br /></td></tr>
+<tr class="separator:gab1565fdf055cc69209b1d02a4c951081"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac528f333231398bfbcd3435f51913f9c" id="r_gac528f333231398bfbcd3435f51913f9c"><td class="memTemplParams" colspan="2">template&lt;typename M, typename V, typename std::enable_if&lt;(CompatibleStaticMatVecProduct&lt; M, V &gt;::value||CompatibleDynamicMatVecProduct&lt; M, V &gt;::value), bool &gt;::type = true&gt; </td></tr>
+<tr class="memitem:gac528f333231398bfbcd3435f51913f9c"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Matrix.html#gac528f333231398bfbcd3435f51913f9c">matvec</a> (const M &amp;matrix, const V &amp;<a class="el" href="group__NUMBER.html">vector</a>)</td></tr>
+<tr class="memdesc:gac528f333231398bfbcd3435f51913f9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a lazy matrix times vector expression.  <br /></td></tr>
+<tr class="separator:gac528f333231398bfbcd3435f51913f9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac70f640476a4639f2005ff2b338c2545" id="r_gac70f640476a4639f2005ff2b338c2545"><td class="memTemplParams" colspan="2">template&lt;typename VA, typename VB, typename std::enable_if&lt; <a class="el" href="group__FUSION.html#gac46de68e57bd3e7c10bc879645583d6c">vector_idx_pair</a>&lt; VA, VB &gt;(), bool &gt;::type = true&gt; </td></tr>
 <tr class="memitem:gac70f640476a4639f2005ff2b338c2545"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__Matrix.html#gac70f640476a4639f2005ff2b338c2545">outer</a> (const VA &amp;a, const VB &amp;b)</td></tr>
 <tr class="memdesc:gac70f640476a4639f2005ff2b338c2545"><td class="mdescLeft">&#160;</td><td class="mdescRight">Outer product.  <br /></td></tr>

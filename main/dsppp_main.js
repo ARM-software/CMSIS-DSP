@@ -34,15 +34,16 @@ var dsppp_main =
       [ "MatrixView", "dsppp_matrix.html#autotoc_md27", null ],
       [ "Matrix operations", "dsppp_matrix.html#autotoc_md28", [
         [ "dot", "dsppp_matrix.html#autotoc_md29", null ],
-        [ "diagonal", "dsppp_matrix.html#autotoc_md30", null ],
-        [ "identity", "dsppp_matrix.html#autotoc_md31", null ],
-        [ "transpose", "dsppp_matrix.html#autotoc_md32", null ],
-        [ "outer product", "dsppp_matrix.html#autotoc_md33", null ]
+        [ "matvec", "dsppp_matrix.html#autotoc_md30", null ],
+        [ "diagonal", "dsppp_matrix.html#autotoc_md31", null ],
+        [ "identity", "dsppp_matrix.html#autotoc_md32", null ],
+        [ "transpose", "dsppp_matrix.html#autotoc_md33", null ],
+        [ "outer product", "dsppp_matrix.html#autotoc_md34", null ]
       ] ]
     ] ],
     [ "Building and running examples", "dsppp_building.html", [
-      [ "To build", "dsppp_building.html#autotoc_md34", null ],
-      [ "To run", "dsppp_building.html#autotoc_md35", null ]
+      [ "To build", "dsppp_building.html#autotoc_md35", null ],
+      [ "To run", "dsppp_building.html#autotoc_md36", null ]
     ] ],
     [ "Guidelines", "dsppp_guidelines.html", null ],
     [ "Complex numbers", "dsppp_complex.html", null ]

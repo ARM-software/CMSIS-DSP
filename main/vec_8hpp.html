@@ -401,6 +401,10 @@ Functions</h2></td></tr>
 <tr class="memitem:ga598c716ed42fa423aa5ebdecdea243de"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__VECTOR.html#ga598c716ed42fa423aa5ebdecdea243de">operator*</a> (const LHS &amp;a, const RHS &amp;b)</td></tr>
 <tr class="memdesc:ga598c716ed42fa423aa5ebdecdea243de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element wise multiplication operator for expressions.  <br /></td></tr>
 <tr class="separator:ga598c716ed42fa423aa5ebdecdea243de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94b83f5538bbc9d6d7afd019ffd0e591" id="r_a94b83f5538bbc9d6d7afd019ffd0e591"><td class="memTemplParams" colspan="2">template&lt;typename RES, typename M, typename V&gt; </td></tr>
+<tr class="memitem:a94b83f5538bbc9d6d7afd019ffd0e591"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a94b83f5538bbc9d6d7afd019ffd0e591">dot_transposed_unrolled</a> (RES &amp;res, const <a class="el" href="group__Matrix.html#structarm__cmsis__dsp_1_1TransposeView">TransposeView</a>&lt; M &gt; &amp;m, const V &amp;v)</td></tr>
+<tr class="memdesc:a94b83f5538bbc9d6d7afd019ffd0e591"><td class="mdescLeft">&#160;</td><td class="mdescRight">Four-column fallback for a transposed matrix times vector product.  <br /></td></tr>
+<tr class="separator:a94b83f5538bbc9d6d7afd019ffd0e591"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4e0599824a67dbe33cd02085abdda12c" id="r_a4e0599824a67dbe33cd02085abdda12c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0">q31_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacearm__cmsis__dsp.html#a4e0599824a67dbe33cd02085abdda12c">read_q15x2</a> (<a class="el" href="group__genericTypes.html#gab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> const *pQ15)</td></tr>
 <tr class="memdesc:a4e0599824a67dbe33cd02085abdda12c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read 2 <a class="el" href="group__FIXED.html#ga51955f28b22fcdc84593909693a99e81" title="Q15 datatype.">Q15</a> from <a class="el" href="group__FIXED.html#ga51955f28b22fcdc84593909693a99e81" title="Q15 datatype.">Q15</a> pointer.  <br /></td></tr>
 <tr class="separator:a4e0599824a67dbe33cd02085abdda12c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -677,10 +681,10 @@ Functions</h2></td></tr>
 <tr class="memitem:ga47bb2ac69df29ba95a74825e4fff2726"><td class="memTemplItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__SCALARALG.html#ga47bb2ac69df29ba95a74825e4fff2726">_arm_mat_trans</a> (const MA &amp;src, MB &amp;dst, const <a class="el" href="group__ARCH.html#classarm__cmsis__dsp_1_1Scalar">Scalar</a> *=nullptr)</td></tr>
 <tr class="memdesc:ga47bb2ac69df29ba95a74825e4fff2726"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transposition for scalar architecture.  <br /></td></tr>
 <tr class="separator:ga47bb2ac69df29ba95a74825e4fff2726"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac896323f3479d29fb42470c2880ec387" id="r_gac896323f3479d29fb42470c2880ec387"><td class="memTemplParams" colspan="2">template&lt;typename M, typename V, typename RES&gt; </td></tr>
-<tr class="memitem:gac896323f3479d29fb42470c2880ec387"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__SCALARALG.html#gac896323f3479d29fb42470c2880ec387">_dot_m_v</a> (RES &amp;res, const M &amp;m, const V &amp;v, const <a class="el" href="group__ARCH.html#classarm__cmsis__dsp_1_1Scalar">Scalar</a> *=nullptr)</td></tr>
-<tr class="memdesc:gac896323f3479d29fb42470c2880ec387"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="group__Matrix.html#structarm__cmsis__dsp_1_1Matrix" title="Matrix.">Matrix</a> times vector for scalar architecture.  <br /></td></tr>
-<tr class="separator:gac896323f3479d29fb42470c2880ec387"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab40c9e214ba1d3a52692ab1646732ed1" id="r_gab40c9e214ba1d3a52692ab1646732ed1"><td class="memTemplParams" colspan="2">template&lt;typename M, typename V, typename RES&gt; </td></tr>
+<tr class="memitem:gab40c9e214ba1d3a52692ab1646732ed1"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__SCALARALG.html#gab40c9e214ba1d3a52692ab1646732ed1">_dot_m_v</a> (RES &amp;res, const <a class="el" href="group__Matrix.html#structarm__cmsis__dsp_1_1TransposeView">TransposeView</a>&lt; M &gt; &amp;m, const V &amp;v, const <a class="el" href="group__ARCH.html#classarm__cmsis__dsp_1_1Scalar">Scalar</a> *=nullptr)</td></tr>
+<tr class="memdesc:gab40c9e214ba1d3a52692ab1646732ed1"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="group__Matrix.html#structarm__cmsis__dsp_1_1Matrix" title="Matrix.">Matrix</a> times vector for scalar architecture.  <br /></td></tr>
+<tr class="separator:gab40c9e214ba1d3a52692ab1646732ed1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4e6fec1c099138a96cf3f56e68b50880" id="r_ga4e6fec1c099138a96cf3f56e68b50880"><td class="memTemplParams" colspan="2">template&lt;typename MA, typename MB, typename RES, typename TMP, typename std::enable_if&lt; <a class="el" href="group__NUMBER.html#structarm__cmsis__dsp_1_1number__traits">number_traits</a>&lt; typename traits&lt; MA &gt;::Scalar &gt;<a class="el" href="group__FUSION.html#gacea8d6d85638c8b0a14726eedee25128">::is_fixed</a>, bool &gt;::type = true&gt; </td></tr>
 <tr class="memitem:ga4e6fec1c099138a96cf3f56e68b50880"><td class="memTemplItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__SCALARALG.html#ga4e6fec1c099138a96cf3f56e68b50880">_dot_m_m</a> (const MA &amp;pSrcA, const MB &amp;pSrcB, RES &amp;&amp;pDst, const TMP &amp;BT, const <a class="el" href="group__ARCH.html#classarm__cmsis__dsp_1_1Scalar">Scalar</a> *=nullptr)</td></tr>
 <tr class="memdesc:ga4e6fec1c099138a96cf3f56e68b50880"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="group__Matrix.html#structarm__cmsis__dsp_1_1Matrix" title="Matrix.">Matrix</a> times matrix for scalar architecture and fixed point.  <br /></td></tr>
@@ -703,6 +707,61 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>// endgroup bufferSizeTypes </p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a94b83f5538bbc9d6d7afd019ffd0e591" name="a94b83f5538bbc9d6d7afd019ffd0e591"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94b83f5538bbc9d6d7afd019ffd0e591">&#9670;&#160;</a></span>dot_transposed_unrolled()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename RES, typename M, typename V&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void dot_transposed_unrolled </td>
+          <td>(</td>
+          <td class="paramtype">RES &amp;</td>          <td class="paramname"><span class="paramname"><em>res</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group__Matrix.html#structarm__cmsis__dsp_1_1TransposeView">TransposeView</a>&lt; M &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>m</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const V &amp;</td>          <td class="paramname"><span class="paramname"><em>v</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Four-column fallback for a transposed matrix times vector product. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">RES</td><td>Result vector type. </td></tr>
+    <tr><td class="paramname">M</td><td>Original matrix type. </td></tr>
+    <tr><td class="paramname">V</td><td>Input vector type. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">res</td><td>Result vector, with one element per original matrix column. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">m</td><td>Transposed view of the original matrix. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">v</td><td>Input vector, with one element per original matrix row. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

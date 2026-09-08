@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['size_0',['Code size',['../dsppp_code_size.html',1,'dsppp_main']]],
-  ['sizes_1',['Transform buffer sizes',['../transformbuffers.html',1,'']]],
-  ['static_20dynamic_2',['Static / dynamic',['../dsppp_memory_static_dynamic.html',1,'dsppp_main']]]
+  ['revision_20history_0',['Revision History',['../rev_hist.html',1,'']]],
+  ['running_20examples_1',['Building and running examples',['../dsppp_building.html',1,'dsppp_main']]]
 ];

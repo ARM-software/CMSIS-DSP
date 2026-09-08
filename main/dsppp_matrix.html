@@ -158,8 +158,11 @@ $(function(){initNavTree('dsppp_matrix.html',''); initResizable(true); });
 <div class="line">}</div>
 </div><!-- fragment --><p>Once you have initialized matrixes, you can operate on them:</p>
 <div class="fragment"><div class="line">Matrix&lt;float32_t,ROWS,COLS&gt; result = a * a + b;</div>
-</div><!-- fragment --><p>The operators <code>+</code> and <code>*</code> are merged into the loop. <code>*</code> is the element-wise multiply. For the vector / matrix products you should use the operator <code>dot</code>.</p>
-<p>Note that fusion of operators will not work with <code>dot(Matrix, Matrix</code>). It is only supported with vectors : <code>dot(Vector,Vector)</code> or <code>dot(Matrix,Vector)</code>.</p>
+</div><!-- fragment --><p>The operators <code>+</code> and <code>*</code> are merged into the loop. <code>*</code> is the element-wise multiply. For eagerly evaluated vector / matrix products you should use the operator <code>dot</code>.</p>
+<p>Note that fusion of operators will not work with <code>dot(Matrix, Matrix)</code> or <code>dot(Matrix, Vector)</code>, since both operations return an owning, eagerly evaluated result. Vector dot products return a scalar.</p>
+<p>For a matrix times vector product that must be fused with vector operations, use the lazy <code>matvec</code> operator:</p>
+<div class="fragment"><div class="line">result += matvec(matrix, vector);</div>
+</div><!-- fragment --><p><code>matvec</code> returns a non-owning expression. In this example, the matrix-vector product is accumulated directly into <code>result</code> without allocating a temporary vector. The operands must remain alive until the complete expression is evaluated. Use <code>dot(matrix, vector)</code> when an owning result is required.</p>
 <h1><a class="anchor" id="autotoc_md24"></a>
 VectorView</h1>
 <p>We can create virtual vectors which are view of some slices of the matrix.</p>
@@ -211,17 +214,21 @@ dot</h2>
 </div><!-- fragment --><p>The compiler may use the move semantic to copy the temporary result of the <code>dot</code> function to <code>result</code>.</p>
 <p>In this case, no copy would occur and <code>result</code> after the assignment would be a vector allocated by <code>dot</code> so using the <code>TMP_ALLOC</code> .</p>
 <h2><a class="anchor" id="autotoc_md30"></a>
+matvec</h2>
+<div class="fragment"><div class="line">result = bias + matvec(matrix, vector);</div>
+</div><!-- fragment --><p>Unlike <code>dot(matrix, vector)</code>, <code>matvec(matrix, vector)</code> is lazy. It participates in the normal one-dimensional fusion loop, so the matrix-vector result can be combined with additions, multiplications, or accumulation without first being stored in a temporary vector. Matrix-matrix products remain eager and continue to use <code>dot</code>.</p>
+<h2><a class="anchor" id="autotoc_md31"></a>
 diagonal</h2>
 <div class="fragment"><div class="line">result = Matrix&lt;float32_t,ROWS,COLS&gt;::diagonal(c);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md31"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md32"></a>
 identity</h2>
 <div class="fragment"><div class="line">result = Matrix&lt;float32_t,ROWS,COLS&gt;::identity();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md32"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md33"></a>
 transpose</h2>
 <div class="fragment"><div class="line">result = a.transpose();</div>
 </div><!-- fragment --><p>or</p>
 <div class="fragment"><div class="line">transposeTo(result,a);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md33"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md34"></a>
 outer product</h2>
 <div class="fragment"><div class="line">result = outer(c,c);</div>
 </div><!-- fragment --> </div></div><!-- contents -->

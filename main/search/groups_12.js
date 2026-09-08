@@ -21,5 +21,6 @@ var searchData=
   ['interpolator_18',['Finite Impulse Response (FIR) Interpolator',['../group__FIR__Interpolate.html',1,'']]],
   ['inverse_19',['Inverse',['../group__MatrixInv.html',1,'Matrix Inverse'],['../group__QuatInverse.html',1,'Quaternion Inverse']]],
   ['inverse_20clarke_20transform_20',['Vector Inverse Clarke Transform',['../group__inv__clarke.html',1,'']]],
-  ['inverse_20park_20transform_21',['Vector Inverse Park transform',['../group__inv__park.html',1,'']]]
+  ['inverse_20park_20transform_21',['Vector Inverse Park transform',['../group__inv__park.html',1,'']]],
+  ['iris_20classification_20example_22',['DSP++ Autodiff Iris Classification Example',['../group__AutodiffExample.html',1,'']]]
 ];
