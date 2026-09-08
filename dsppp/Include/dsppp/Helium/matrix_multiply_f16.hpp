@@ -8,13 +8,13 @@
 #define ARM_MATH_MVE_FLOAT16
 #endif
 
-/** \addtogroup HELIUMALG
- *  @{
- */
-
 #if defined(ARM_MATH_MVE_FLOAT16)
 
 #include "arm_helium_utils.h"
+
+/** \addtogroup HELIUMALG
+ *  @{
+ */
 
 /*
 
@@ -779,6 +779,6 @@ __STATIC_INLINE  void _arm_mat_mult_4x4_mve(
 
 }
 
-#endif
-
 /*! @} */
+
+#endif

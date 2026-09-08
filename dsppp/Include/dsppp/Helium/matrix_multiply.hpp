@@ -68,6 +68,8 @@ inline void _dot_m_v(RES &res,
 #define MATRIX_DIM3 3
 #define MATRIX_DIM4 4
 
+/*! @} */
+
 #if defined(ARM_MATH_MVEI) 
 
 /* Fixed point specific cases*/
@@ -80,6 +82,10 @@ inline void _dot_m_v(RES &res,
 /* Datatype specific cases*/
 #include "matrix_multiply_f16.hpp"
 #include "matrix_multiply_f32.hpp"
+
+/** \addtogroup HELIUMALG
+ *  @{
+ */
 
 /* Generic float */
 template<typename MA,
@@ -402,6 +408,6 @@ __STATIC_INLINE void _dot_m_m(const MA&    pSrcA,
 #undef MATRIX_DIM3
 #undef MATRIX_DIM4
 
-#endif
-
 /*! @} */
+
+#endif

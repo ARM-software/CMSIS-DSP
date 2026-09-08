@@ -121,7 +121,10 @@ extern "C"
 #define SECTION_NOINIT
 #define NO_INLINE __attribute__ ((noinline))
 
+/* Compiler intrinsics are supplied by CMSIS-Core, outside the DSP documentation. */
+#ifndef DOXYGEN
 #include "cmsis_compiler.h"
+#endif
 #endif
 
 

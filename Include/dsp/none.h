@@ -132,6 +132,8 @@ __STATIC_FORCEINLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
 
 /**
    * @brief Clips Q63 to Q31 values.
+   * @param[in] x Value to saturate to the signed 32-bit range.
+   * @return The saturated value, without fractional rescaling.
    */
   __STATIC_FORCEINLINE q31_t clip_q63_to_q31(
   q63_t x)
@@ -156,6 +158,8 @@ __STATIC_FORCEINLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
 
   /**
    * @brief Clips Q31 to Q15 values.
+   * @param[in] x Value to saturate to the signed 16-bit range.
+   * @return The saturated value, without fractional rescaling.
    */
   __STATIC_FORCEINLINE q15_t clip_q31_to_q15(
   q31_t x)
@@ -175,7 +179,10 @@ __STATIC_FORCEINLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
   }
 
   /**
-   * @brief Multiplies 32 X 64 and returns 32 bit result in 2.30 format.
+   * @brief Multiplies Q63 by Q31 and returns a result in 2.62 format.
+   * @param[in] x Multiplicand in 1.63 format.
+   * @param[in] y Multiplicand in 1.31 format.
+   * @return The 64-bit product after discarding the lowest 32 bits.
    */
   __STATIC_FORCEINLINE q63_t mult32x64(
   q63_t x,

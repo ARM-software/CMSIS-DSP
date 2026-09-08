@@ -151,7 +151,7 @@ inline void _dot_m_v(RES &res,
     }
 }
 
+/*! @} */
+
 #include "matrix_multiply_fixed.hpp"
 #include "matrix_multiply_float.hpp"
-
-/*! @} */

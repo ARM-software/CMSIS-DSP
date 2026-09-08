@@ -63,6 +63,10 @@ extern "C"
   /**
    * @brief Function to Calculates 1/in (reciprocal) value of Q31 Data type.
      It should not be used with negative values.
+   * @param[in] in Input value in 1.31 format.
+   * @param[out] dst Reciprocal mantissa in 1.31 format.
+   * @param[in] pRecipTable Table of 64 initial reciprocal approximations.
+   * @return Exponent e such that the reciprocal is approximately *dst times 2^e.
    */
   __STATIC_FORCEINLINE uint32_t arm_recip_q31(
         q31_t in,
@@ -115,6 +119,10 @@ extern "C"
   /**
    * @brief Function to Calculates 1/in (reciprocal) value of Q15 Data type.
      It should not be used with negative values.
+   * @param[in] in Input value in 1.15 format.
+   * @param[out] dst Reciprocal mantissa in 1.15 format.
+   * @param[in] pRecipTable Table of 64 initial reciprocal approximations.
+   * @return Exponent e such that the reciprocal is approximately *dst times 2^e.
    */
   __STATIC_FORCEINLINE uint32_t arm_recip_q15(
         q15_t in,

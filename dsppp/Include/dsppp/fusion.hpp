@@ -461,7 +461,13 @@ constexpr bool same_static_length()
 Vector operators at instruction level
 
 */
+/*! @} */
+
 #include "fusion_ops.hpp"
+
+/** \addtogroup FUSION
+ *  @{
+ */
 
 
 /**

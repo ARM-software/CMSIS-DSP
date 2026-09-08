@@ -586,10 +586,10 @@ Core algorithms that cannot be expressed only with high level
 abstractions and need intrinsics.
 
 */
+/*! @} */
+
 #include "Helium/matrix_multiply.hpp"
 #include "DSP/matrix_multiply.hpp"
 #include "Scalar/matrix_multiply.hpp"
-
-/*! @} */
 
 }

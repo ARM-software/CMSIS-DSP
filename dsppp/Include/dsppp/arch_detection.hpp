@@ -64,7 +64,10 @@ extern "C"
 #define __STATIC_INLINE static inline
 #define __WEAK
 #else
+/* Compiler intrinsics are supplied by CMSIS-Core, outside the DSP documentation. */
+#ifndef DOXYGEN
 #include "cmsis_compiler.h"
+#endif
 #endif
 
 
