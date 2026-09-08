@@ -43,7 +43,7 @@ The C++ API headers are in `dsppp/Include` and are included in the CMSIS-DSP pac
 
 ### Experimental autodiff extension
 
-Built on DSP++, the automatic differentiation (autodiff) extension is **experimental** and is **NOT a new ML framework**. Its focus is on-device fine-tuning using a subset of existing CMSIS-DSP kernels. See the [autodiff introduction](https://arm-software.github.io/CMSIS-DSP/autodiff_introduction.html) to learn more.
+Built on DSP++, the automatic differentiation (autodiff) extension is **experimental** and is not a new ML framework. Its focus is on-device fine-tuning using a subset of existing CMSIS-DSP kernels. See the [autodiff introduction](https://arm-software.github.io/CMSIS-DSP/autodiff_introduction.html) to learn more.
 
 ### Python wrapper
 
