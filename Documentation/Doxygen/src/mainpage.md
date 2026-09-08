@@ -34,11 +34,11 @@ When using a vectorized version, provide a little bit of padding after the end o
 
 A Python wrapper is also available with a Python API as close as possible to the C one. It can be used to start developing and testing an algorithm with NumPy and SciPy before writing the C version. Is is available on [PyPI.org](https://pypi.org/project/cmsisdsp/). It can be installed with: `pip install cmsisdsp`.
 
-### Experimental C++ template extension
+### C++ template extension
 
-This extension is a set of C++ headers. They just need to included to start using the features.
-
-Those headers are not yet part of the pack and you need to get them from the [github repository](https://github.com/ARM-software/CMSIS-DSP/tree/main/dsppp/Include)
+This extension is a set of C++ headers using templates.
+To use this C++ API, just include the headers.
+The C++ API is a higher-level API that provides automatic vectorized loop fusion for better performance.
 
 More documentation about the @ref dsppp_main "DSP++" extension.
 

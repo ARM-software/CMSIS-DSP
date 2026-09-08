@@ -2,6 +2,8 @@
 /** @file */ 
 #pragma once 
 
+#include <cmath>
+
 /** \defgroup DSPPP C++ extension
  *  C++ template extension to CMSIS-DSP. It is not yet part of
  *  the pack but the headers can be found on the 
@@ -22,6 +24,160 @@ namespace arm_cmsis_dsp {
  *  \ingroup DSPPP
  *  Algorithms written in an architecture independent way
  */
+
+/** Result of a masked dot product and sum computed in one traversal. */
+template<typename T>
+struct MaskedDotSum
+{
+   T dot;
+   T sum;
+};
+
+/**
+ * Mask selecting values whose scaled nearest-even integer lies in a range.
+ *
+ * The test is inclusive and evaluates
+ * `minimum <= nearbyint(value * multiplier) + offset <= maximum`.
+ */
+template<typename V>
+class NearestEvenRangeMask
+{
+public:
+   using Scalar = typename traits<V>::Scalar;
+   using Stored = typename VecRef<V>::type;
+
+   NearestEvenRangeMask(const V& values, float multiplier, Scalar offset,
+                        Scalar minimum, Scalar maximum)
+      : values_(VecRef<V>::ref(values)), multiplier_(multiplier),
+        offset_(offset), minimum_(minimum), maximum_(maximum) {}
+
+   bool operator[](index_t i) const
+   {
+      const float rounded = std::nearbyint(
+         static_cast<float>(values_[i]) * multiplier_);
+      const float selected = rounded + static_cast<float>(offset_);
+      return selected >= static_cast<float>(minimum_) &&
+             selected <= static_cast<float>(maximum_);
+   }
+
+   vector_length_t length() const { return values_.length(); }
+
+   const Stored& values() const { return values_; }
+   float multiplier() const { return multiplier_; }
+   Scalar offset() const { return offset_; }
+   Scalar minimum() const { return minimum_; }
+   Scalar maximum() const { return maximum_; }
+
+private:
+   Stored values_;
+   float multiplier_;
+   Scalar offset_;
+   Scalar minimum_;
+   Scalar maximum_;
+};
+
+template<typename V>
+inline auto nearest_even_range_mask(
+   const V& values, float multiplier,
+   typename traits<V>::Scalar offset, typename traits<V>::Scalar minimum,
+   typename traits<V>::Scalar maximum)
+{
+   return NearestEvenRangeMask<V>(values, multiplier, offset,
+                                  minimum, maximum);
+}
+
+/**
+ * @brief Scale in float, round to nearest-even, offset, and clip.
+ * @tparam DST Destination vector type.
+ * @tparam SRC Source vector expression type.
+ * @param[out] destination Vector receiving the rounded and clipped values.
+ * @param[in] source Input expression with at least destination.length() elements.
+ * @param[in] multiplier Scale applied before rounding.
+ * @param[in] offset Offset added after rounding.
+ * @param[in] minimum Inclusive lower clipping bound.
+ * @param[in] maximum Inclusive upper clipping bound.
+ */
+template<typename DST,typename SRC>
+inline void round_scaled_to_nearest_clipped(
+   DST& destination, const SRC& source, float multiplier,
+   typename traits<DST>::Scalar offset,
+   typename traits<DST>::Scalar minimum,
+   typename traits<DST>::Scalar maximum)
+{
+   _round_scaled_to_nearest_clipped(
+      destination, source, multiplier, offset, minimum, maximum,
+      destination.length(), CURRENT_ARCH);
+}
+
+/**
+ * @brief Element-wise nearest-even rounding into an existing vector.
+ * @tparam DST Destination vector type.
+ * @tparam SRC Source vector expression type.
+ * @param[out] destination Vector receiving the rounded values.
+ * @param[in] source Input expression with at least destination.length() elements.
+ */
+template<typename DST,typename SRC>
+inline void round_to_nearest(DST& destination, const SRC& source)
+{
+   _round_to_nearest(destination, source, destination.length(), CURRENT_ARCH);
+}
+
+/**
+ * @brief Nearest-even rounding followed by an offset and inclusive clipping.
+ * @tparam DST Destination vector type.
+ * @tparam SRC Source vector expression type.
+ * @param[out] destination Vector receiving the rounded and clipped values.
+ * @param[in] source Input expression with at least destination.length() elements.
+ * @param[in] offset Offset added after rounding.
+ * @param[in] minimum Inclusive lower clipping bound.
+ * @param[in] maximum Inclusive upper clipping bound.
+ */
+template<typename DST,typename SRC>
+inline void round_to_nearest_clipped(
+   DST& destination, const SRC& source,
+   typename traits<DST>::Scalar offset,
+   typename traits<DST>::Scalar minimum,
+   typename traits<DST>::Scalar maximum)
+{
+   _round_to_nearest_clipped(destination, source, offset, minimum, maximum,
+                             destination.length(), CURRENT_ARCH);
+}
+
+/**
+ * @brief Accumulate `source * scale` into destination where mask is true.
+ * @tparam DST Destination vector type.
+ * @tparam SRC Source vector expression type.
+ * @tparam MASK Mask type supporting element indexing.
+ * @param[in,out] destination Vector to update.
+ * @param[in] source Input expression with at least destination.length() elements.
+ * @param[in] mask Selection mask with at least destination.length() elements.
+ * @param[in] scale Multiplier applied to selected source values.
+ */
+template<typename DST,typename SRC,typename MASK>
+inline void masked_scale_add(DST& destination, const SRC& source,
+                             const MASK& mask,
+                             typename traits<DST>::Scalar scale)
+{
+   _masked_scale_add(destination, source, mask, scale,
+                     destination.length(), CURRENT_ARCH);
+}
+
+/**
+ * @brief Compute a masked dot product and masked sum of the first operand.
+ * @tparam A First vector expression type.
+ * @tparam B Second vector expression type.
+ * @tparam MASK Mask type supporting element indexing.
+ * @param[in] a First vector operand.
+ * @param[in] b Second vector operand with at least a.length() elements.
+ * @param[in] mask Selection mask with at least a.length() elements.
+ * @return MaskedDotSum containing the sum of a[i] * b[i] and the sum of a[i]
+ *         over indices where mask[i] is true.
+ */
+template<typename A,typename B,typename MASK>
+inline auto masked_dot_sum(const A& a, const B& b, const MASK& mask)
+{
+   return _masked_dot_sum(a, b, mask, a.length(), CURRENT_ARCH);
+}
 
 /*
 

@@ -920,6 +920,8 @@ WARN_LOGFILE           =
 
 INPUT                  = ./src/mainpage.md   \
                          ./src/dsppp_main.md   \
+                         ./src/autodiff_main.md   \
+                         ./src/autodiff_introduction.md   \
                          ./src/introduction.md   \
                          ./src/template.md   \
                          ./src/guidelines.md \
@@ -933,10 +935,12 @@ INPUT                  = ./src/mainpage.md   \
                          ./src/matrix.md   \
                          ./src/building.md   \
                          ./src/transformbuffers.md   \
+                         ./src/examples.md   \
                          ./src/history.md    \
                          ./src/history.txt   \
                          ../../Examples/ARM  \
                          ../../Examples/dsppp_example \
+                         ../../Examples/autodiff_example/Autodiff/main.cpp \
                          ../../Include/      \
                          ../../Source/ \
                          ../../dsppp/Include \
@@ -1108,7 +1112,8 @@ EXCLUDE_SYMBOLS        = S \
 # command).
 
 EXAMPLE_PATH           = ../../Examples/ARM \
-                         ../../Examples/dsppp_example/Dsppp
+                         ../../Examples/dsppp_example/Dsppp \
+                         ../../Examples/autodiff_example/Autodiff
 
 # If the value of the EXAMPLE_PATH tag contains directories, you can use the
 # EXAMPLE_PATTERNS tag to specify one or more wildcard pattern (like *.cpp and

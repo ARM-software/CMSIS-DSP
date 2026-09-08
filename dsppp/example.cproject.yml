@@ -4,7 +4,11 @@ project:
       files:
         #- file: Examples/dot_product.cpp
         #- file: Examples/vector_op.cpp
-        - file: Examples/matrix_op.cpp
+        #- file: Examples/matrix_op.cpp
+        #- file: Examples/autodiff_regression.cpp
+        #- file: Examples/autodiff_lms.cpp
+        - file: Examples/autodiff_fully_connected_qat.cpp
+        #- file: Examples/autodiff_iris.cpp
         - file: clang_sse300.c
           for-context: 
              - +MPS3-Corstone-300
@@ -16,7 +20,7 @@ project:
 
   components:
     - component: ARM::CMSIS:CORE
-    - component: ARM::CMSIS:DSP@1.15.0
+    - component: ARM::CMSIS:DSP@1.17.1
     - component: ARM::Device:Startup&C Startup
       for-context: 
         - +VHT-Corstone-300

@@ -23,11 +23,6 @@ namespace arm_cmsis_dsp {
  *  @{
  */
 
-template<typename T,bool = true>
-struct VecRef;
-
-
-
 template<typename T>
 struct VecRef<Vector_Base<T>>
 {
@@ -587,6 +582,65 @@ abstractions and need intrinsics.
 
 */
 /*! @} */
+
+namespace detail {
+
+/**
+ * @brief Four-column fallback for a transposed matrix times vector product.
+ * @tparam RES Result vector type.
+ * @tparam M Original matrix type.
+ * @tparam V Input vector type.
+ * @param[out] res Result vector, with one element per original matrix column.
+ * @param[in] m Transposed view of the original matrix.
+ * @param[in] v Input vector, with one element per original matrix row.
+ */
+template<typename RES, typename M, typename V>
+inline void dot_transposed_unrolled(RES &res,
+                                    const TransposeView<M> &m,
+                                    const V &v)
+{
+    using TM = typename traits<M>::Scalar;
+    using TV = typename traits<V>::Scalar;
+    using T = typename MixedRes<TM,TV>::type;
+    using Acc = typename number_traits<T>::accumulator;
+
+    const auto &original = m.original();
+    const vector_length_t rows = original.rows();
+    const vector_length_t columns = original.columns();
+    vector_length_t column = 0;
+
+    for (; column <= columns - 4; column += 4)
+    {
+        Acc sum0{};
+        Acc sum1{};
+        Acc sum2{};
+        Acc sum3{};
+
+        for (index_t row = 0; row < rows; ++row)
+        {
+            const TV value = v[row];
+            sum0 = inner::mac(sum0, original(row,column), value);
+            sum1 = inner::mac(sum1, original(row,column + 1), value);
+            sum2 = inner::mac(sum2, original(row,column + 2), value);
+            sum3 = inner::mac(sum3, original(row,column + 3), value);
+        }
+
+        res[column] = inner::from_accumulator(sum0);
+        res[column + 1] = inner::from_accumulator(sum1);
+        res[column + 2] = inner::from_accumulator(sum2);
+        res[column + 3] = inner::from_accumulator(sum3);
+    }
+
+    for (; column < columns; ++column)
+    {
+        Acc sum{};
+        for (index_t row = 0; row < rows; ++row)
+            sum = inner::mac(sum, original(row,column), v[row]);
+        res[column] = inner::from_accumulator(sum);
+    }
+}
+
+} // namespace detail
 
 #include "Helium/matrix_multiply.hpp"
 #include "DSP/matrix_multiply.hpp"

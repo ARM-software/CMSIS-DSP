@@ -20,3 +20,11 @@
 - For each of the generated pickle file, generate missing C files with : `python processTests.py -gen . -p Patterns -d Parameters -f <pickle file> -e`
 - Switch to `cmsis_build` working directory
 - Run python script `python runall.py`
+
+## Testing instructions for dsppp autodiff
+- Do not use or install `pyocd` for autodiff tests.
+- Change working directory to the `dsppp` folder.
+- Set `AVH_FVP_PLUGINS` to an empty string before launching the FVP.
+- Prepend the CMSIS Toolbox `bin` directory and the Python directory containing `python3.dll` to `PATH`.
+- Build the generated project with `cbuild -O cprj test.csolution.yml --toolchain AC6 -c test.Release+VHT-Corstone-300`.
+- Run `FVP_Corstone_SSE-300_Ethos-U55.exe` directly with `-f fvp_configs\VHT-Corstone-300.txt -a cpu0=cprj\out\test\VHT-Corstone-300\Release\test.axf`.

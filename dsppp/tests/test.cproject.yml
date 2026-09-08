@@ -4,6 +4,7 @@ project:
       files:
         - file: matrix_test.cpp
         - file: dot_test.cpp
+        - file: autodiff_test.cpp
         - file: vector_test.cpp
         - file: row_test.cpp
         - file: col_test.cpp

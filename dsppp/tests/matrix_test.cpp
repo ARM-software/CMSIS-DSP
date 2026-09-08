@@ -893,9 +893,13 @@ void testmatvec()
    startSectionNB(1);
    #if defined(STATIC_TEST)
    PVector<T,R> res = dot(m,a);
+   PVector<T,R> fused;
    #else
    PVector<T> res = dot(m,a);
+   PVector<T> fused(R);
    #endif
+   fused = number_traits<T>::one();
+   fused += matvec(m,a);
    stopSectionNB(1);
    STOP_CYCLE_MEASUREMENT;
 
@@ -925,6 +929,15 @@ void testmatvec()
        ErrThreshold<T>::abserr,ErrThreshold<T>::relerr))
    {
       printf("matrix times vector failed \r\n");
+   }
+   for (index_t row = 0; row < R; ++row)
+   {
+      const T expected = res[row] + number_traits<T>::one();
+      if (fused[row] != expected)
+      {
+         printf("lazy matrix times vector accumulation failed \r\n");
+         break;
+      }
    }
    std::cout << "=====\r\n";
   

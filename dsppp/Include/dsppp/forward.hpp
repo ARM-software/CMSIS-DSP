@@ -10,6 +10,9 @@ struct Vector_Base;
 template<typename T,int stride>
 struct VectorView;
 
+template<typename T,bool = true>
+struct VecRef;
+
 template<typename P,int L,
          template<int> typename Allocator>
 struct Vector;
@@ -20,6 +23,9 @@ struct Matrix;
 
 template<typename T,int S>
 struct MatrixView;
+
+template<typename M>
+struct TransposeView;
 
 template<typename T>
 struct NbRows;

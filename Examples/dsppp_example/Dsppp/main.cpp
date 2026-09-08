@@ -55,9 +55,9 @@
  * See also \ref dsppp_memory_allocator for the custom allocator interface.
  *
  * <b> Refer </b>
- * \link main.cpp \endlink
+ * \link dsppp_example/Dsppp/main.cpp \endlink
  *
- * \example main.cpp
+ * \example dsppp_example/Dsppp/main.cpp
  *
  * @} */
 

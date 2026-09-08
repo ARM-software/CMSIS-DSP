@@ -1,0 +1,23 @@
+build-idx:
+  generated-by: csolution version 2.14.1+p38-gf512b381
+  cdefault: cdefault.yml
+  csolution: test.csolution.yml
+  cbuild-run: out/test+VHT-Corstone-300.cbuild-run.yml
+  tmpdir: tmp/VHT-Corstone-300/default
+  cprojects:
+    - cproject: tests/test.cproject.yml
+      clayers:
+        - clayer: ../Testing/cmsis_build/dsp.clayer.yml
+    - cproject: example.cproject.yml
+  cbuilds:
+    - cbuild: out/example/VHT-Corstone-300/Release/example.Release+VHT-Corstone-300.cbuild.yml
+      project: example
+      configuration: .Release+VHT-Corstone-300
+      messages:
+        info:
+          - test.cbuild-pack.yml - file is already up-to-date
+          - test+VHT-Corstone-300.cbuild-run.yml - file is already up-to-date
+          - example.Release+VHT-Corstone-300.cbuild.yml - file is already up-to-date
+      packs-unused:
+        - pack: ARM::CMSIS-Compiler@2.2.0
+        - pack: ARM::Cortex_DFP@1.2.0

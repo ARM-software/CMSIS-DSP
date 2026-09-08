@@ -1,0 +1,269 @@
+#pragma once
+
+#include <dsppp/autodiff/reverse.hpp>
+#include <dsppp/autodiff/operators/quantization_support.hpp>
+
+#include <dsppp/matrix.hpp>
+
+#include <dsp/support_functions.h>
+#include <dsp/support_functions_f16.h>
+
+#include <cmath>
+
+namespace arm_cmsis_dsp {
+namespace autodiff {
+
+/** Quantize to signed int8 codes represented in the tape's floating type. */
+template <typename T = float> class QuantizeOperator
+{
+    struct Record
+    {
+        detail::Node node;
+        T *output_gradient;
+        const T *input_value;
+        T *input_gradient;
+        const T *scale_value;
+        const T *zero_point_value;
+        T *scale_gradient;
+        T *zero_point_gradient;
+        std::size_t length;
+        Int8Quantization quantization;
+    };
+
+    static float rounded(float value) noexcept { return std::nearbyint(value); }
+
+    static void add(T &destination, float contribution) noexcept
+    {
+        destination = static_cast<T>(static_cast<float>(destination) +
+                                     contribution);
+    }
+
+    static void fill(T *data, std::size_t length) noexcept
+    {
+        if constexpr (std::is_same<T, float>::value)
+            arm_fill_f32(0.0F, data, static_cast<uint32_t>(length));
+#if defined(ARM_FLOAT16_SUPPORTED)
+        else if constexpr (std::is_same<T, float16_t>::value)
+            arm_fill_f16(static_cast<float16_t>(0.0F), data,
+                         static_cast<uint32_t>(length));
+#endif
+        else
+            for (std::size_t i = 0; i < length; ++i) data[i] = T{};
+    }
+
+    static std::size_t block_length(const Int8Quantization &quantization,
+                                    std::size_t remaining) noexcept
+    {
+        if (quantization.parameter_count() == 1U)
+            return remaining;
+        return remaining < quantization.inner_size()
+                   ? remaining
+                   : quantization.inner_size();
+    }
+
+    static void reset(detail::Node &node) noexcept
+    {
+        Record &record = reinterpret_cast<Record &>(node);
+        fill(record.output_gradient, record.length);
+        if (record.input_gradient != nullptr)
+            fill(record.input_gradient, record.length);
+        fill(record.scale_gradient, record.quantization.parameter_count());
+        if (record.zero_point_gradient != nullptr)
+            fill(record.zero_point_gradient,
+                 record.quantization.parameter_count());
+    }
+
+    static void backward(detail::Node &node) noexcept
+    {
+        Record &record = reinterpret_cast<Record &>(node);
+        for (std::size_t offset = 0; offset < record.length;)
+        {
+            const std::size_t p = record.quantization.parameter_index(offset);
+            const std::size_t length = block_length(record.quantization,
+                                                    record.length - offset);
+            const float scale = static_cast<float>(record.scale_value[p]);
+            const float inverse_scale = 1.0F / scale;
+            const float inverse_scale_squared = inverse_scale * inverse_scale;
+            const float zero_point = record.quantization.asymmetric()
+                                         ? rounded(static_cast<float>(
+                                               record.zero_point_value[p]))
+                                         : 0.0F;
+            ::arm_cmsis_dsp::VectorView<T> output_gradient(
+                record.output_gradient + offset, 0, length);
+            ::arm_cmsis_dsp::VectorView<T> input_value(
+                const_cast<T *>(record.input_value) + offset, 0, length);
+            const auto selected = ::arm_cmsis_dsp::nearest_even_range_mask(
+                input_value, inverse_scale,
+                static_cast<T>(zero_point),
+                static_cast<T>(record.quantization.quant_min()),
+                static_cast<T>(record.quantization.quant_max()));
+            if (record.input_gradient != nullptr)
+            {
+                ::arm_cmsis_dsp::VectorView<T> input_gradient(
+                    record.input_gradient + offset, 0, length);
+                ::arm_cmsis_dsp::masked_scale_add(
+                    input_gradient, output_gradient, selected,
+                    static_cast<T>(inverse_scale));
+            }
+            const auto reductions = ::arm_cmsis_dsp::masked_dot_sum(
+                output_gradient, input_value, selected);
+            add(record.scale_gradient[p],
+                -static_cast<float>(reductions.dot) *
+                 inverse_scale_squared);
+            if (record.zero_point_gradient != nullptr &&
+                record.quantization.asymmetric())
+                add(record.zero_point_gradient[p],
+                    static_cast<float>(reductions.sum));
+            offset += length;
+        }
+    }
+
+    static bool validate(Tape<T> &tape, const BufferView<T> &output,
+                         const BufferView<T> &input,
+                         const BufferView<T> &scale,
+                         const BufferView<T> &zero_point,
+                         const Int8Quantization &quantization) noexcept
+    {
+        if (!OperatorAccess<T>::compatible(tape, output, input) ||
+            !OperatorAccess<T>::valid(tape, scale) ||
+            !OperatorAccess<T>::valid(tape, zero_point) ||
+            OperatorAccess<T>::length(scale) != quantization.parameter_count() ||
+            OperatorAccess<T>::length(zero_point) != quantization.parameter_count() ||
+            OperatorAccess<T>::role(scale) != BufferRole::parameter ||
+            OperatorAccess<T>::gradients(output) == nullptr ||
+            OperatorAccess<T>::gradients(scale) == nullptr ||
+            !quantization.valid_for(OperatorAccess<T>::length(input)) ||
+            OperatorAccess<T>::values(output) == OperatorAccess<T>::values(input))
+        {
+            OperatorAccess<T>::fail(tape, Status::tape_mismatch);
+            return false;
+        }
+        if (quantization.asymmetric())
+        {
+            if (OperatorAccess<T>::role(zero_point) != BufferRole::parameter ||
+                OperatorAccess<T>::gradients(zero_point) == nullptr)
+            {
+                OperatorAccess<T>::fail(tape, Status::tape_mismatch);
+                return false;
+            }
+        }
+        else
+        {
+            for (std::size_t i = 0; i < quantization.parameter_count(); ++i)
+                if (rounded(static_cast<float>(OperatorAccess<T>::values(zero_point)[i])) != 0.0F)
+                {
+                    OperatorAccess<T>::fail(tape, Status::tape_mismatch);
+                    return false;
+                }
+        }
+        return true;
+    }
+
+public:
+    static bool evaluate(BufferView<T> &output, const BufferView<T> &input,
+                         const BufferView<T> &scale,
+                         const BufferView<T> &zero_point,
+                         Int8Quantization quantization) noexcept
+    {
+        Tape<T> *tape = OperatorAccess<T>::tape(output);
+        OperatorAccess<T>::set_producer(output, nullptr);
+        if (tape == nullptr ||
+            !OperatorAccess<T>::template require<QuantizeOperator<T>>(*tape))
+            return false;
+        if (!quantization.valid_for(OperatorAccess<T>::length(input)))
+        {
+            OperatorAccess<T>::fail(*tape, Status::tape_mismatch);
+            return false;
+        }
+        quantization.constrain_parameters(
+            const_cast<T *>(OperatorAccess<T>::values(scale)),
+            const_cast<T *>(OperatorAccess<T>::values(zero_point)));
+#if DSPPP_AUTODIFF_ENABLE_VALIDATION
+        if (!validate(*tape, output, input, scale, zero_point, quantization))
+            return false;
+#endif
+        for (std::size_t p = 0; p < quantization.parameter_count(); ++p)
+            if (!(static_cast<float>(OperatorAccess<T>::values(scale)[p]) > 0.0F))
+            {
+                OperatorAccess<T>::fail(*tape, Status::tape_mismatch);
+                return false;
+            }
+
+        const std::size_t output_length = OperatorAccess<T>::length(output);
+        for (std::size_t offset = 0; offset < output_length;)
+        {
+            const std::size_t p = quantization.parameter_index(offset);
+            const std::size_t length = block_length(
+                quantization, output_length - offset);
+            const float scale_value =
+                static_cast<float>(OperatorAccess<T>::values(scale)[p]);
+            const float inverse_scale = 1.0F / scale_value;
+            const float zero = quantization.asymmetric()
+                                   ? rounded(static_cast<float>(
+                                         OperatorAccess<T>::values(zero_point)[p]))
+                                   : 0.0F;
+            ::arm_cmsis_dsp::VectorView<T> input_block(
+                const_cast<T *>(OperatorAccess<T>::values(input)) + offset,
+                0, length);
+            ::arm_cmsis_dsp::VectorView<T> output_block(
+                OperatorAccess<T>::values(output) + offset, 0, length);
+            ::arm_cmsis_dsp::round_scaled_to_nearest_clipped(
+                output_block, input_block, inverse_scale, static_cast<T>(zero),
+                static_cast<T>(quantization.quant_min()),
+                static_cast<T>(quantization.quant_max()));
+            offset += length;
+        }
+        if (!OperatorAccess<T>::recording(*tape) ||
+            OperatorAccess<T>::length(output) == 0U)
+            return OperatorAccess<T>::status(*tape) == Status::ok;
+
+        Record *record = OperatorAccess<T>::template append<Record>(
+            *tape, backward, reset);
+        if (record == nullptr) return false;
+        record->output_gradient = OperatorAccess<T>::gradients(output);
+        record->input_value = OperatorAccess<T>::values(input);
+        record->input_gradient = OperatorAccess<T>::gradients(input);
+        record->scale_value = OperatorAccess<T>::values(scale);
+        record->zero_point_value = OperatorAccess<T>::values(zero_point);
+        record->scale_gradient = OperatorAccess<T>::gradients(scale);
+        record->zero_point_gradient = quantization.asymmetric()
+                                          ? OperatorAccess<T>::gradients(zero_point)
+                                          : nullptr;
+        record->length = OperatorAccess<T>::length(output);
+        record->quantization = quantization;
+        OperatorAccess<T>::set_producer(output, &record->node);
+        return true;
+    }
+};
+
+template <typename T = float> class QuantizeExpression
+{
+public:
+    QuantizeExpression(const BufferView<T> &input, const BufferView<T> &scale,
+                       const BufferView<T> &zero_point,
+                       Int8Quantization quantization) noexcept
+        : input_(input), scale_(scale), zero_point_(zero_point),
+          quantization_(quantization) {}
+    void evaluate(BufferView<T> &output) const noexcept
+    {
+        QuantizeOperator<T>::evaluate(output, input_, scale_, zero_point_,
+                                      quantization_);
+    }
+private:
+    BufferView<T> input_;
+    BufferView<T> scale_;
+    BufferView<T> zero_point_;
+    Int8Quantization quantization_;
+};
+
+template <typename T = float>
+inline QuantizeExpression<T> quantize(
+    const BufferView<T> &input, const BufferView<T> &scale,
+    const BufferView<T> &zero_point,
+    Int8Quantization quantization = Int8Quantization::activation()) noexcept
+{
+    return QuantizeExpression<T>(input, scale, zero_point, quantization);
+}
+
+} // namespace autodiff
+} // namespace arm_cmsis_dsp

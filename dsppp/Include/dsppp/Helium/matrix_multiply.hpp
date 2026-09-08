@@ -64,6 +64,166 @@ inline void _dot_m_v(RES &res,
 
 }
 
+namespace detail {
+
+// Compute one matrix-row/vector dot product for each of up to four consecutive
+// rows. Each vector block is loaded once and reused by all dot product
+// accumulators.
+template<int ROWS, typename T, typename M, typename V>
+inline void matvec_helium_rows(T *output, const M &matrix, const V &vector,
+                               const index_t first_row)
+{
+    using Acc = DotResult<T>;
+    using Temp = typename vector_traits<T>::temp_accumulator;
+    constexpr int lanes = vector_traits<T>::nb_lanes;
+
+    Temp vector_sums[ROWS];
+    for (index_t row = 0; row < ROWS; ++row)
+        vector_sums[row] = vector_traits<T>::temp_acc_zero();
+
+    index_t column = 0;
+    if constexpr (has_predicate<T>())
+    {
+        for (; column < matrix.columns(); column += lanes)
+        {
+            const vector_length_t remaining = matrix.columns() - column;
+            const auto predicate = inner::vctpq<T>::mk(remaining);
+            const auto vector_data =
+                vector.vector_op_tail(column, remaining);
+            for (index_t row = 0; row < ROWS; ++row)
+                vector_sums[row] = inner::vmacc(
+                    vector_sums[row],
+                    matrix.row(first_row + row).vector_op_tail(
+                        column, remaining),
+                    vector_data, predicate);
+        }
+
+        for (index_t row = 0; row < ROWS; ++row)
+            output[row] = inner::from_accumulator(
+                inner::vreduce(vector_sums[row]));
+    }
+    else
+    {
+        for (; column + lanes <= matrix.columns(); column += lanes)
+        {
+            const auto vector_data = vector.vector_op(column);
+            for (index_t row = 0; row < ROWS; ++row)
+                vector_sums[row] = inner::vmacc(
+                    vector_sums[row],
+                    matrix.row(first_row + row).vector_op(column),
+                    vector_data);
+        }
+
+        Acc sums[ROWS];
+        for (index_t row = 0; row < ROWS; ++row)
+            sums[row] = inner::vreduce(vector_sums[row]);
+        for (; column < matrix.columns(); ++column)
+        {
+            const auto value = vector[column];
+            for (index_t row = 0; row < ROWS; ++row)
+                sums[row] = inner::mac(
+                    sums[row], matrix(first_row + row, column), value);
+        }
+        for (index_t row = 0; row < ROWS; ++row)
+            output[row] = inner::from_accumulator(sums[row]);
+    }
+}
+
+} // namespace detail
+
+// Fill the lazy matvec cache in groups of four rows, then handle the final
+// one to three rows with the same Helium kernel.
+template<typename T, typename M, typename V,
+         typename std::enable_if<
+             has_vector_inst<M>() && has_vector_inst<V>() &&
+             same_nb_lanes<M,V>(), bool>::type = true>
+inline void _matvec_block(T *output, const M &matrix, const V &vector,
+                          index_t first_row, vector_length_t row_count,
+                          const Helium* = nullptr)
+{
+    while (row_count >= 4)
+    {
+        detail::matvec_helium_rows<4>(output, matrix, vector, first_row);
+        output += 4;
+        first_row += 4;
+        row_count -= 4;
+    }
+
+    switch (row_count)
+    {
+    case 3:
+        detail::matvec_helium_rows<3>(output, matrix, vector, first_row);
+        break;
+    case 2:
+        detail::matvec_helium_rows<2>(output, matrix, vector, first_row);
+        break;
+    case 1:
+        detail::matvec_helium_rows<1>(output, matrix, vector, first_row);
+        break;
+    default:
+        break;
+    }
+}
+
+#if defined(ARM_MATH_MVEI) || defined(ARM_MATH_MVEF)
+
+template<typename M,
+         typename V,
+         typename RES,
+         typename std::enable_if<
+         has_vector_inst<M>() &&
+         has_vector_inst<V>() &&
+         same_nb_lanes<M,V>() &&
+         same_nb_lanes<M,RES>(),bool>::type = true>
+inline void _dot_m_v(RES &res,
+                     const TransposeView<M> &m,
+                     const V &v,
+                     const Helium* = nullptr)
+{
+    if constexpr (is_float<M>())
+    {
+        using TM = typename traits<M>::Scalar;
+        using TV = typename traits<V>::Scalar;
+        using T = typename MixedRes<TM,TV>::type;
+        using Acc = typename vector_traits<T>::temp_accumulator;
+        constexpr int nb_lanes = vector_traits<T>::nb_lanes;
+
+        const auto &original = m.original();
+        const vector_length_t rows = original.rows();
+        const vector_length_t columns = original.columns();
+        vector_length_t column = 0;
+
+        for (; column <= columns - nb_lanes; column += nb_lanes)
+        {
+            Acc sum = vector_traits<T>::temp_acc_zero();
+            for (index_t row = 0; row < rows; ++row)
+                sum = inner::vmacc(sum,
+                                   original.row(row).vector_op(column),
+                                   v[row]);
+            inner::vstore1<1>(res.ptr() + column,sum);
+        }
+
+        const vector_length_t remaining = columns - column;
+        if (remaining > 0)
+        {
+            const mve_pred16_t predicate = inner::vctpq<T>::mk(remaining);
+            Acc sum = vector_traits<T>::temp_acc_zero();
+            for (index_t row = 0; row < rows; ++row)
+                sum = inner::vmacc(
+                    sum,
+                    original.row(row).vector_op_tail(column,remaining),
+                    v[row]);
+            inner::vstore1_z<1>(res.ptr() + column,sum,remaining,predicate);
+        }
+    }
+    else
+    {
+        detail::dot_transposed_unrolled(res,m,v);
+    }
+}
+
+#endif
+
 #define MATRIX_DIM2 2
 #define MATRIX_DIM3 3
 #define MATRIX_DIM4 4
@@ -411,3 +571,4 @@ __STATIC_INLINE void _dot_m_m(const MA&    pSrcA,
 /*! @} */
 
 #endif
+

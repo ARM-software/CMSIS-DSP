@@ -1,0 +1,89 @@
+# A project translates into one executable or library.
+project:
+  
+  groups:
+    - group: Main App
+      files:
+        - file: ./main.cpp
+        - file: ./iris_data.hpp
+        - file: ./stdio_semihosting.c
+        - file: ./exit_semihosting.c
+
+
+  add-path:
+    - .
+    
+  packs:
+    - pack: ARM::CMSIS@>=6.0.0
+    - pack: ARM::Cortex_DFP@>=1.1.0
+    - pack: ARM::CMSIS-Compiler
+    - pack: ARM::CMSIS-DSP@>=1.18.0
+
+  components:
+    - component: ARM::CMSIS:CORE
+    - component: ARM::Device:Startup&C Startup
+    - component: ARM::CMSIS-Compiler:CORE
+    - component: ARM::CMSIS-Compiler:STDIN:Custom
+    - component: ARM::CMSIS-Compiler:STDOUT:Custom
+    - component: ARM::CMSIS-Compiler:STDERR:Custom
+    - component: CMSIS:DSP&Source
+    
+  misc:
+    - for-compiler: CLANG
+      C: 
+        - -ffunction-sections
+        - -fdata-sections
+        - -std=c11 
+        - -O3 
+        - -ffast-math
+      CPP: 
+        - -ffunction-sections
+        - -fdata-sections
+        - -fno-rtti
+        - -std=c++17
+        - -fno-exceptions
+        - -O3 
+        - -ffast-math
+      Link: 
+        - -Wl,--gc-sections
+    - for-compiler: AC6
+      C: 
+       - -ffunction-sections
+       - -fdata-sections
+       - -std=c11 
+       - -O3 
+       - -ffast-math
+      CPP: 
+       - -ffunction-sections
+       - -fdata-sections
+       - -fno-rtti
+       - -std=c++17
+       - -fno-exceptions
+       - -O3 
+       - -ffast-math
+      
+    - for-compiler: GCC
+      C: 
+       - -ffunction-sections
+       - -fdata-sections
+       - -std=c11 
+       - -O3 
+       - -ffast-math
+      CPP: 
+       - -ffunction-sections
+       - -fdata-sections
+       - -fno-rtti
+       - -std=c++17
+       - -fno-exceptions
+       - -O3 
+       - -ffast-math
+      Link: 
+        - -Wl,--gc-sections
+
+  # List executable file formats to be generated.
+  output:
+    type:
+      - elf
+      - hex
+      - map
+

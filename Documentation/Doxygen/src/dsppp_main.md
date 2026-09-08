@@ -2,7 +2,7 @@
 
 C++ extensions to CMSIS-DSP using C++ template meta-programming (headers only).
 
-The headers are not yet part of the CMSIS-DSP pack since they are experimental. You can get them from the [CMSIS-DSP github](https://github.com/ARM-software/CMSIS-DSP/tree/main/dsppp/Include/dsppp). There is nothing to build. Just include the headers when you want to use this framework.
+The headers are included in the CMSIS-DSP pack starting with version 1.18.0 and are also available in the [CMSIS-DSP GitHub repository](https://github.com/ARM-software/CMSIS-DSP/tree/main/dsppp/Include/dsppp). The extension itself requires no separate build: include the headers to use its C++ API with CMSIS-DSP.
 
 * @subpage dsppp_intro "Introduction"
 * @subpage dsppp_template "C++ template for C programmer"

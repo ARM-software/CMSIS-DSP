@@ -1,0 +1,51 @@
+# A solution is a collection of related projects that share same base configuration.
+solution:
+  created-for: CMSIS-Toolbox@2.14.1
+  language-C: c11
+  language-CPP: c++17
+  cdefault: # use CMSIS-Toolbox default Compiler options
+
+  # Compilers that can be selected
+  select-compiler:
+    - compiler: AC6
+    - compiler: GCC
+    - compiler: CLANG
+
+  # List of miscellaneous tool-specific controls
+  misc:
+    - for-compiler: AC6 # GDB requires DWARF 5, remove when using uVision Debugger
+      C-CPP:
+        - -gdwarf-5
+      ASM:
+        - -gdwarf-5
+
+  packs:
+    - pack: ARM::Cortex_DFP@>=1.1.0
+    - pack: ARM::CMSIS@>=6.0.0
+    - pack: ARM::CMSIS-Compiler
+
+  # List different hardware targets that are used to deploy the solution.
+  target-types:
+    - type: ARMCM55
+      device: ARM::ARMCM55
+
+      target-set:
+        - set:
+          images:
+            - project-context: Autodiff.Release
+          debugger:
+            name: Arm-FVP
+            model: FVP_Corstone_SSE-300
+            args: ""
+            config-file: fvp_config.txt
+
+  # List of different build configurations.
+  build-types:
+    - type: Release
+      debug: off
+      optimize: speed
+
+  # List related projects.
+  projects:
+    - project: Autodiff/Autodiff.cproject.yml
+  compiler: CLANG
