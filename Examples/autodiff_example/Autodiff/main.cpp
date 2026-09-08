@@ -1,3 +1,60 @@
+/**
+ * @addtogroup groupExamples
+ * @{
+ *
+ * @defgroup AutodiffExample DSP++ Autodiff Iris Classification Example
+ *
+ * \par Description:
+ * Trains a small neural network to classify Iris flowers using CMSIS-DSP
+ * reverse-mode automatic differentiation. All model parameters, intermediate
+ * buffers, gradients, and optimizer state use single-precision float (f32).
+ * The dataset is included in \c iris_data.hpp. The CMSIS-DSP pack supplies
+ * the DSP++ autodiff headers and CMSIS-DSP C functions.
+ *
+ * \par Network and Training:
+ * Four inputs describe sepal length, sepal width, petal length, and petal
+ * width. A fully connected layer with eight outputs is followed by ReLU,
+ * a fully connected layer with three outputs, and softmax. The outputs
+ * represent Iris-setosa, Iris-versicolor, and Iris-virginica.
+ *
+ * Cross-entropy measures the classification loss. Adam updates the network's
+ * 67 parameters with a learning rate of 0.01 over 120 epochs. The 120 training
+ * samples are shuffled before each epoch using a deterministic random sequence.
+ * Normalization uses fixed population statistics over all 150 samples.
+ *
+ * \par Automatic Differentiation:
+ * The tape registers the fully connected, ReLU, softmax, and cross-entropy
+ * operators. Model weights and biases are registered as parameters, while
+ * features and one-hot labels are inputs. For each training sample, the graph
+ * is rewound, the forward expressions are evaluated, gradients are cleared,
+ * and the loss is differentiated before the optimizer updates the parameters.
+ * During testing, a recording scope disables graph recording for inference.
+ *
+ * \par Memory:
+ * The training state is allocated on the heap to keep the model, sample
+ * buffers, autodiff arena, and optimizer state off the stack. The arena has
+ * a capacity of 2048 bytes. The Cortex-M55 configuration provides a 16 KiB
+ * stack and a 64 KiB heap.
+ *
+ * \par Results:
+ * Every fifth sample of each class is held out from training, giving 30 test
+ * samples. The program prints the mean loss every 20 epochs, the expected and
+ * detected class for each test sample, and the final test accuracy.
+ *
+ * \par Build and Run:
+ * Open \c autodiff.csolution.yml with the CMSIS Solution VS Code extension
+ * and install the required tools and packs. The default configuration is
+ * \c Autodiff.Release+ARMCM55 with the CLANG compiler. AC6 and GCC are also
+ * selectable. Run the executable on the Corstone-300 FVP with the supplied
+ * \c fvp_config.txt. Console output and program termination use semihosting.
+ *
+ * <b> Refer </b>
+ * \link autodiff_example/Autodiff/main.cpp \endlink
+ *
+ * \example autodiff_example/Autodiff/main.cpp
+ *
+ * @} */
+
 #include "RTE_Components.h"
 #include CMSIS_device_header
 

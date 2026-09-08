@@ -937,6 +937,7 @@ INPUT                  = ./src/mainpage.md   \
                          ./src/history.txt   \
                          ../../Examples/ARM  \
                          ../../Examples/dsppp_example \
+                         ../../Examples/autodiff_example/Autodiff/main.cpp \
                          ../../Include/      \
                          ../../Source/ \
                          ../../dsppp/Include \
@@ -1108,7 +1109,8 @@ EXCLUDE_SYMBOLS        = S \
 # command).
 
 EXAMPLE_PATH           = ../../Examples/ARM \
-                         ../../Examples/dsppp_example/Dsppp
+                         ../../Examples/dsppp_example/Dsppp \
+                         ../../Examples/autodiff_example/Autodiff
 
 # If the value of the EXAMPLE_PATH tag contains directories, you can use the
 # EXAMPLE_PATTERNS tag to specify one or more wildcard pattern (like *.cpp and
