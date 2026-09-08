@@ -585,7 +585,15 @@ abstractions and need intrinsics.
 
 namespace detail {
 
-/** Four-column fallback for a transposed matrix times vector product. */
+/**
+ * @brief Four-column fallback for a transposed matrix times vector product.
+ * @tparam RES Result vector type.
+ * @tparam M Original matrix type.
+ * @tparam V Input vector type.
+ * @param[out] res Result vector, with one element per original matrix column.
+ * @param[in] m Transposed view of the original matrix.
+ * @param[in] v Input vector, with one element per original matrix row.
+ */
 template<typename RES, typename M, typename V>
 inline void dot_transposed_unrolled(RES &res,
                                     const TransposeView<M> &m,

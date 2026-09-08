@@ -1,0 +1,7 @@
+out/
+tmp/
+.cmsis/
+*.cbuild-idx.yml
+Autodiff/*.cbuild.yml
+Autodiff/*.cbuild-run.yml
+Autodiff/.clangd

@@ -86,7 +86,12 @@ public:
         return gradients_ == nullptr ? T{} : gradients_[index];
     }
 
-    /** Evaluate any expression supplied by a separately included operator. */
+    /**
+     * @brief Evaluate any expression supplied by a separately included operator.
+     * @tparam Expression Operator expression type.
+     * @param expression Expression to evaluate into this view.
+     * @return Reference to this view.
+     */
     template <typename Expression>
     BufferView &operator=(const Expression &expression) noexcept
     {
@@ -178,7 +183,11 @@ public:
     Tape(const Tape &) = delete;
     Tape &operator=(const Tape &) = delete;
 
-    /** Register an operator type once. Registration uses no arena storage. */
+    /**
+     * @brief Register an operator type once. Registration uses no arena storage.
+     * @tparam Operator Operator type to register.
+     * @return True if registered or already present; false if the registry is full.
+     */
     template <typename Operator>
     bool register_operator() noexcept
     {
@@ -247,7 +256,10 @@ public:
         status_ = Status::ok;
     }
 
-    /** Reclaim only operation records, preserving views and their gradients. */
+    /**
+     * @brief Reclaim only operation records, preserving views and their gradients.
+     * @return True on success; false if begin_graph() has not marked the graph.
+     */
     bool rewind_graph() noexcept
     {
         if (!graph_marked_)
@@ -270,7 +282,14 @@ public:
     bool recording() const noexcept { return recording_; }
     void set_recording(bool enabled) noexcept { recording_ = enabled; }
 
-    /** Generic active view; output() is clearer for application code. */
+    /**
+     * @brief Generic active view; output() is clearer for application code.
+     * @param values Caller-owned value buffer, which must outlive the view.
+     * @param length Number of values and gradient elements.
+     * @return Intermediate buffer view with zero-initialized gradients allocated
+     *         from the tape. On failure, the view has no gradient buffer and
+     *         the tape status records the error.
+     */
     BufferView<T> view(T *values, std::size_t length) noexcept
     {
         if (length != 0U && values == nullptr)

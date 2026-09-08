@@ -669,6 +669,12 @@ struct VecRef<_MatVec<M,V>>
 /**
  * @brief Create a lazy matrix times vector expression.
  *
+ * @tparam M Matrix type.
+ * @tparam V Vector expression type.
+ * @param[in] matrix Matrix operand.
+ * @param[in] vector Vector operand, with one element per matrix column.
+ * @return Lazy vector expression with one element per matrix row.
+ *
  * Unlike dot(matrix, vector), matvec does not allocate or evaluate a result.
  * It can therefore be fused with surrounding elementwise vector operations.
  */

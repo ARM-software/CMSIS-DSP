@@ -25,7 +25,10 @@ public:
     {
     }
 
-    /** Per-tensor asymmetric activation quantization. */
+    /**
+     * @brief Per-tensor asymmetric activation quantization.
+     * @return Asymmetric int8 layout with one scale and zero-point per tensor.
+     */
     static constexpr Int8Quantization activation() noexcept
     {
         return Int8Quantization(-128, 127, 1U, 1U, true);
@@ -33,6 +36,10 @@ public:
 
     /**
      * Symmetric per-axis weight quantization.
+     *
+     * @param axis_size Number of scales along the quantized axis.
+     * @param inner_size Product of dimensions following the quantized axis.
+     * @return Symmetric int8 layout with one scale per axis entry.
      *
      * axis_size is the number of scales and inner_size is the product of the
      * dimensions following the quantized axis in a row-major tensor. Thus a
@@ -69,7 +76,11 @@ public:
                  (length / parameter_count_) % inner_size_ == 0U));
     }
 
-    /** Keep learned scales in the numerically safe, strictly-positive range. */
+    /**
+     * @brief Keep learned scales in the numerically safe, strictly-positive range.
+     * @tparam T Scale scalar type.
+     * @param[in,out] scale Learned scale to constrain.
+     */
     template <typename T>
     void constrain_scale(T &scale) const noexcept
     {
@@ -87,6 +98,8 @@ public:
     /**
      * Keep learned zero-points in this scheme's integer domain. Symmetric
      * weight quantization always forces them to zero.
+     * @tparam T Zero-point scalar type.
+     * @param[in,out] zero_point Learned zero-point to constrain.
      */
     template <typename T>
     void constrain_zero_point(T &zero_point) const noexcept
@@ -109,7 +122,12 @@ public:
             constrain_zero_point(zero_points[i]);
     }
 
-    /** Project all learned parameters into this backend quantization scheme. */
+    /**
+     * @brief Project all learned parameters into this backend quantization scheme.
+     * @tparam T Quantization parameter scalar type.
+     * @param[in,out] scales Array of parameter_count() learned scales.
+     * @param[in,out] zero_points Array of parameter_count() learned zero-points.
+     */
     template <typename T>
     void constrain_parameters(T *scales, T *zero_points) const noexcept
     {

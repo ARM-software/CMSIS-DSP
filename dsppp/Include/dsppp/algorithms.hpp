@@ -86,7 +86,17 @@ inline auto nearest_even_range_mask(
                                   minimum, maximum);
 }
 
-/** Scale in float, round to nearest-even, offset, and clip. */
+/**
+ * @brief Scale in float, round to nearest-even, offset, and clip.
+ * @tparam DST Destination vector type.
+ * @tparam SRC Source vector expression type.
+ * @param[out] destination Vector receiving the rounded and clipped values.
+ * @param[in] source Input expression with at least destination.length() elements.
+ * @param[in] multiplier Scale applied before rounding.
+ * @param[in] offset Offset added after rounding.
+ * @param[in] minimum Inclusive lower clipping bound.
+ * @param[in] maximum Inclusive upper clipping bound.
+ */
 template<typename DST,typename SRC>
 inline void round_scaled_to_nearest_clipped(
    DST& destination, const SRC& source, float multiplier,
@@ -99,14 +109,29 @@ inline void round_scaled_to_nearest_clipped(
       destination.length(), CURRENT_ARCH);
 }
 
-/** Element-wise nearest-even rounding into an existing vector. */
+/**
+ * @brief Element-wise nearest-even rounding into an existing vector.
+ * @tparam DST Destination vector type.
+ * @tparam SRC Source vector expression type.
+ * @param[out] destination Vector receiving the rounded values.
+ * @param[in] source Input expression with at least destination.length() elements.
+ */
 template<typename DST,typename SRC>
 inline void round_to_nearest(DST& destination, const SRC& source)
 {
    _round_to_nearest(destination, source, destination.length(), CURRENT_ARCH);
 }
 
-/** Nearest-even rounding followed by an offset and inclusive clipping. */
+/**
+ * @brief Nearest-even rounding followed by an offset and inclusive clipping.
+ * @tparam DST Destination vector type.
+ * @tparam SRC Source vector expression type.
+ * @param[out] destination Vector receiving the rounded and clipped values.
+ * @param[in] source Input expression with at least destination.length() elements.
+ * @param[in] offset Offset added after rounding.
+ * @param[in] minimum Inclusive lower clipping bound.
+ * @param[in] maximum Inclusive upper clipping bound.
+ */
 template<typename DST,typename SRC>
 inline void round_to_nearest_clipped(
    DST& destination, const SRC& source,
@@ -118,7 +143,16 @@ inline void round_to_nearest_clipped(
                              destination.length(), CURRENT_ARCH);
 }
 
-/** Accumulate `source * scale` into destination where mask is true. */
+/**
+ * @brief Accumulate `source * scale` into destination where mask is true.
+ * @tparam DST Destination vector type.
+ * @tparam SRC Source vector expression type.
+ * @tparam MASK Mask type supporting element indexing.
+ * @param[in,out] destination Vector to update.
+ * @param[in] source Input expression with at least destination.length() elements.
+ * @param[in] mask Selection mask with at least destination.length() elements.
+ * @param[in] scale Multiplier applied to selected source values.
+ */
 template<typename DST,typename SRC,typename MASK>
 inline void masked_scale_add(DST& destination, const SRC& source,
                              const MASK& mask,
@@ -128,7 +162,17 @@ inline void masked_scale_add(DST& destination, const SRC& source,
                      destination.length(), CURRENT_ARCH);
 }
 
-/** Compute a masked dot product and masked sum of the first operand. */
+/**
+ * @brief Compute a masked dot product and masked sum of the first operand.
+ * @tparam A First vector expression type.
+ * @tparam B Second vector expression type.
+ * @tparam MASK Mask type supporting element indexing.
+ * @param[in] a First vector operand.
+ * @param[in] b Second vector operand with at least a.length() elements.
+ * @param[in] mask Selection mask with at least a.length() elements.
+ * @return MaskedDotSum containing the sum of a[i] * b[i] and the sum of a[i]
+ *         over indices where mask[i] is true.
+ */
 template<typename A,typename B,typename MASK>
 inline auto masked_dot_sum(const A& a, const B& b, const MASK& mask)
 {

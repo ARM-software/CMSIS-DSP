@@ -1,0 +1,12 @@
+cpu0.semihosting-enable=1
+mps3_board.uart0.out_file=-
+mps3_board.uart0.shutdown_on_eot=1
+mps3_board.visualisation.disable-visualisation=1
+mps3_board.telnetterminal0.quiet=1
+mps3_board.telnetterminal0.start_telnet=0
+mps3_board.telnetterminal1.quiet=1
+mps3_board.telnetterminal1.start_telnet=0
+mps3_board.telnetterminal2.quiet=1
+mps3_board.telnetterminal2.start_telnet=0
+mps3_board.telnetterminal5.quiet=1
+mps3_board.telnetterminal5.start_telnet=0
