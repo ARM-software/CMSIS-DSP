@@ -31,6 +31,20 @@ Kernels provided by CMSIS-DSP (list not exhaustive):
 
 Kernels are provided with several datatypes : f64, f32, f16, q31, q15, q7.
 
+### C++ API (DSP++)
+
+DSP++ provides a higher-level C++ API for combining existing CMSIS-DSP kernels into new algorithms while keeping good performance. Its loop fusion feature can combine several operations into a single loop, avoiding temporary arrays and repeated passes over the data.
+
+DSP++ is entirely optional and header-only: it requires no separate library build. Applications using only the C API are unaffected: no code or build changes are needed, and the extension adds no code size, memory or runtime overhead.
+
+**DSP++ is currently unsupported in builds with `ARM_MATH_NEON` enabled.** On Cortex-A, enabling this macro to benefit from Neon in the C API also affects DSP++: its incomplete Neon implementation can cause compilation errors, with no automatic scalar fallback. Applications using only the C API can continue to use Neon normally.
+
+The C++ API headers are in `dsppp/Include` and are included in the CMSIS-DSP pack starting with version 1.18.0. See the [DSP++ introduction](https://arm-software.github.io/CMSIS-DSP/dsppp_intro.html) for an example.
+
+### Experimental autodiff extension
+
+Built on DSP++, the automatic differentiation (autodiff) extension is **experimental** and is **NOT a new ML framework**. Its focus is on-device fine-tuning using a subset of existing CMSIS-DSP kernels. See the [autodiff introduction](https://arm-software.github.io/CMSIS-DSP/autodiff_introduction.html) to learn more.
+
 ### Python wrapper
 
 A [PythonWrapper](https://pypi.org/project/cmsisdsp/) is also available and can be installed with:
@@ -301,6 +315,7 @@ The only folders required to build and use CMSIS-DSP Library are:
 * Include
 * PrivateInclude
 * ComputeLibrary (only when using Neon)
+* dsppp/Include (when using the C++ API)
 
 Other folders are part of different projects, tests or examples.
 
@@ -311,6 +326,8 @@ Other folders are part of different projects, tests or examples.
   * It contains all Python packages
 * ComputeLibrary:
   * Some kernels required when building CMSIS-DSP with Neon acceleration
+* dsppp:
+  * DSP++ C++ API headers, tests and examples
 * Examples:
   * Examples of use of CMSIS-DSP on bare metal Cortex-M
   * Require the use of CMSIS Build tools
