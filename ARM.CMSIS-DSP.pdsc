@@ -102,8 +102,8 @@
       </attributes>
     </example>
 
-    <example name="CMSIS-DSP DSP++ autodiff Iris example" doc="README.md" folder="Examples/autodiff_example">
-      <description>Train an f32 Iris classifier with reverse-mode automatic differentiation and Adam on ARMCM55 using the Corstone-300 FVP.</description>
+    <example name="CMSIS-DSP DSP++ autodiff examples" doc="README.md" folder="Examples/autodiff_example">
+      <description>Illustrate vector addition derivatives or train an f32 Iris classifier with reverse-mode automatic differentiation and Adam on ARMCM55 using the Corstone-300 FVP.</description>
       <project>
         <environment name="csolution" load="autodiff.csolution.yml"/>
       </project>

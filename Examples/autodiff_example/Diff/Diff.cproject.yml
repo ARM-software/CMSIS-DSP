@@ -5,9 +5,8 @@ project:
     - group: Main App
       files:
         - file: ./main.cpp
-        - file: ./iris_data.hpp
-        - file: ./stdio_semihosting.c
-        - file: ./exit_semihosting.c
+        - file: ../Common/stdio_semihosting.c
+        - file: ../Common/exit_semihosting.c
 
 
   add-path:

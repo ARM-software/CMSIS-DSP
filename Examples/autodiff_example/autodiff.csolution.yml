@@ -32,7 +32,15 @@ solution:
       target-set:
         - set:
           images:
-            - project-context: Autodiff.Release
+            - project-context: Diff.Release
+          debugger:
+            name: Arm-FVP
+            model: FVP_Corstone_SSE-300
+            args:
+            config-file: fvp_config.txt
+        - set: Diff
+          images:
+            - project-context: Diff.Release
           debugger:
             name: Arm-FVP
             model: FVP_Corstone_SSE-300
@@ -47,5 +55,6 @@ solution:
 
   # List related projects.
   projects:
-    - project: Autodiff/Autodiff.cproject.yml
+    - project: Iris/Iris.cproject.yml
+    - project: Diff/Diff.cproject.yml
   compiler: CLANG
