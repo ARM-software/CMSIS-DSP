@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['a_20direct_20form_20ii_20transposed_20structure_0',['Biquad Cascade IIR Filters Using a Direct Form II Transposed Structure',['../group__BiquadCascadeDF2T.html',1,'']]],
+  ['a_20matrix_1',['QR decomposition of a Matrix',['../group__MatrixQR.html',1,'']]],
+  ['a_20vector_2',['Householder transform of a vector',['../group__MatrixHouseholder.html',1,'']]],
+  ['absolute_20maximum_3',['Absolute Maximum',['../group__AbsMax.html',1,'']]],
+  ['absolute_20minimum_4',['Absolute Minimum',['../group__AbsMin.html',1,'']]],
+  ['absolute_20value_5',['Vector Absolute Value',['../group__BasicAbs.html',1,'']]],
+  ['abstract_20syntax_20tree_20for_20fusion_6',['Abstract syntax tree for fusion',['../group__FUSION.html',1,'']]],
+  ['accumulation_20functions_7',['Accumulation functions',['../group__Accumulation.html',1,'']]],
+  ['addition_8',['Addition',['../group__MatrixAdd.html',1,'Matrix Addition'],['../group__BasicAdd.html',1,'Vector Addition']]],
+  ['algorithm_9',['Levinson Durbin Algorithm',['../group__LD.html',1,'']]],
+  ['algorithm_10',['algorithm',['../group__ARCHALG.html',1,'Architecture specific algorithm'],['../group__DSPALG.html',1,'DSP Extension specific algorithm'],['../group__HELIUMALG.html',1,'Helium specific algorithm'],['../group__SCALARALG.html',1,'Scalar algorithm']]],
+  ['algorithms_11',['algorithms',['../group__ALGO.html',1,'Architecture independent algorithms'],['../group__Sorting.html',1,'Vector sorting algorithms']]],
+  ['allocator_12',['allocator',['../group__MEMORY.html',1,'Memory allocator'],['../group__MEMBUF.html',1,'Memory buffer allocator'],['../group__MEMVEC.html',1,'Vector / matrix buffer allocator']]],
+  ['allocator_20example_13',['DSP++ Vector and Memory Allocator Example',['../group__DspppExample.html',1,'']]],
+  ['and_14',['Vector bitwise AND',['../group__And.html',1,'']]],
+  ['and_20constants_15',['Common types and constants',['../group__COMMON.html',1,'']]],
+  ['and_20ldlt_20decompositions_16',['Cholesky and LDLT decompositions',['../group__MatrixChol.html',1,'']]],
+  ['and_20memory_20allocator_20example_17',['DSP++ Vector and Memory Allocator Example',['../group__DspppExample.html',1,'']]],
+  ['architecture_20detection_18',['Architecture detection',['../group__ARCH.html',1,'']]],
+  ['architecture_20independent_20algorithms_19',['Architecture independent algorithms',['../group__ALGO.html',1,'']]],
+  ['architecture_20specific_20algorithm_20',['Architecture specific algorithm',['../group__ARCHALG.html',1,'']]],
+  ['arctan2_21',['ArcTan2',['../group__atan2.html',1,'']]],
+  ['audio_20equalizer_20example_22',['Graphic Audio Equalizer Example',['../group__GEQ5Band.html',1,'']]],
+  ['autodiff_20iris_20classification_20example_23',['DSP++ Autodiff Iris Classification Example',['../group__AutodiffExample.html',1,'']]],
+  ['average_24',['Weighted Average',['../group__weightedaverage.html',1,'']]]
+];

@@ -1,0 +1,7 @@
+var searchData=
+[
+  ['weights_0',['weights',['../classarm__cmsis__dsp_1_1autodiff_1_1Int8Quantization.html#a6fa4db277911fa42f990d04e5a99e967',1,'arm_cmsis_dsp::autodiff::Int8Quantization']]],
+  ['write_5fq15x2_1',['write_q15x2',['../namespacearm__cmsis__dsp.html#a156d8ca8eea04c44562dd14cbb5380b6',1,'arm_cmsis_dsp']]],
+  ['write_5fq15x2_5fia_2',['write_q15x2_ia',['../namespacearm__cmsis__dsp.html#a8284bc26dcdef2ff063ec69e2d0e3800',1,'arm_cmsis_dsp']]],
+  ['write_5fq7x4_5fia_3',['write_q7x4_ia',['../namespacearm__cmsis__dsp.html#acb593a6864d01a3fbe5ec35a22048d8c',1,'arm_cmsis_dsp']]]
+];

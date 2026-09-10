@@ -1,0 +1,23 @@
+var searchData=
+[
+  ['q15_0',['Q15',['../group__FIXED.html#ga51955f28b22fcdc84593909693a99e81',1,'arm_cmsis_dsp::Q15'],['../group__FIXED.html#ga51955f28b22fcdc84593909693a99e81',1,'arm_cmsis_dsp::arm_cmsis_dsp::Q15']]],
+  ['q15_5ft_1',['q15_t',['../group__genericTypes.html#gab5a8fb21a5b3b983d5f54f31614052ea',1,'q15_t:&#160;arm_math_types.h'],['../group__genericTypes.html#gab5a8fb21a5b3b983d5f54f31614052ea',1,'arm_cmsis_dsp::q15_t']]],
+  ['q15x8_5ft_2',['q15x8_t',['../group__genericTypes.html#ga9551824e9be8e0dd3d9be8a795122eea',1,'arm_cmsis_dsp']]],
+  ['q15x8x2_5ft_3',['q15x8x2_t',['../group__genericTypes.html#ga86812b3ac74040cf6be7800e1712b65f',1,'arm_cmsis_dsp']]],
+  ['q15x8x4_5ft_4',['q15x8x4_t',['../group__genericTypes.html#gaaa2f4c37777c944e348dd28b92c64c26',1,'arm_cmsis_dsp']]],
+  ['q23_5ft_5',['q23_t',['../group__genericTypes.html#ga5c6fe896b23b8bcdf05c98051207da6c',1,'arm_cmsis_dsp']]],
+  ['q23x4_5ft_6',['q23x4_t',['../group__genericTypes.html#ga41062b2fa31a08ab7c5bb1d6b60b2924',1,'arm_cmsis_dsp']]],
+  ['q31_7',['Q31',['../group__FIXED.html#ga4e46b06c2ab0f1dfd4bce590f2d86678',1,'arm_cmsis_dsp::Q31'],['../group__FIXED.html#ga4e46b06c2ab0f1dfd4bce590f2d86678',1,'arm_cmsis_dsp::arm_cmsis_dsp::Q31']]],
+  ['q31_5ft_8',['q31_t',['../group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0',1,'q31_t:&#160;arm_math_types.h'],['../group__genericTypes.html#gadc89a3547f5324b7b3b95adec3806bc0',1,'arm_cmsis_dsp::q31_t']]],
+  ['q31x4_5ft_9',['q31x4_t',['../group__genericTypes.html#ga93a1fec6f47d59f63147169b3b43f7a0',1,'arm_cmsis_dsp']]],
+  ['q31x4x2_5ft_10',['q31x4x2_t',['../group__genericTypes.html#gade5b4339ea40c22e32028f2ca6cfd2b5',1,'arm_cmsis_dsp']]],
+  ['q31x4x4_5ft_11',['q31x4x4_t',['../group__genericTypes.html#gab9a364b1d33095c364714a697b39f23c',1,'arm_cmsis_dsp']]],
+  ['q63_12',['Q63',['../group__FIXED.html#ga2ab11417fdc15929fd908c719982ad53',1,'arm_cmsis_dsp::Q63'],['../group__FIXED.html#ga2ab11417fdc15929fd908c719982ad53',1,'arm_cmsis_dsp::arm_cmsis_dsp::Q63']]],
+  ['q63_5ft_13',['q63_t',['../group__genericTypes.html#ga5aea1cb12fc02d9d44c8abf217eaa5c6',1,'q63_t:&#160;arm_math_types.h'],['../group__genericTypes.html#ga5aea1cb12fc02d9d44c8abf217eaa5c6',1,'arm_cmsis_dsp::q63_t']]],
+  ['q63x2_5ft_14',['q63x2_t',['../group__genericTypes.html#ga320a091814ba9ff779d02ece8d21f176',1,'arm_cmsis_dsp']]],
+  ['q7_15',['Q7',['../group__FIXED.html#ga4974322f2e1fa028ac118085279682b1',1,'arm_cmsis_dsp::Q7'],['../group__FIXED.html#ga4974322f2e1fa028ac118085279682b1',1,'arm_cmsis_dsp::arm_cmsis_dsp::Q7']]],
+  ['q7_5ft_16',['q7_t',['../group__genericTypes.html#gae541b6f232c305361e9b416fc9eed263',1,'q7_t:&#160;arm_math_types.h'],['../group__genericTypes.html#gae541b6f232c305361e9b416fc9eed263',1,'arm_cmsis_dsp::q7_t']]],
+  ['q7x16_5ft_17',['q7x16_t',['../group__genericTypes.html#ga371e9c8d3915ece597e11ec70a9d3231',1,'arm_cmsis_dsp']]],
+  ['q7x16x2_5ft_18',['q7x16x2_t',['../group__genericTypes.html#gaa15e56f60abf07562e7c24786aad8485',1,'arm_cmsis_dsp']]],
+  ['q7x16x4_5ft_19',['q7x16x4_t',['../group__genericTypes.html#ga956128b7a0d71442fb29cbcbecd71d71',1,'arm_cmsis_dsp']]]
+];

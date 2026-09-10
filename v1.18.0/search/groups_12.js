@@ -1,0 +1,26 @@
+var searchData=
+[
+  ['i_20structure_0',['Biquad Cascade IIR Filters Using Direct Form I Structure',['../group__BiquadCascadeDF1.html',1,'']]],
+  ['ii_20transposed_20structure_1',['Biquad Cascade IIR Filters Using a Direct Form II Transposed Structure',['../group__BiquadCascadeDF2T.html',1,'']]],
+  ['iir_20filters_20using_20a_20direct_20form_20ii_20transposed_20structure_2',['Biquad Cascade IIR Filters Using a Direct Form II Transposed Structure',['../group__BiquadCascadeDF2T.html',1,'']]],
+  ['iir_20filters_20using_20direct_20form_20i_20structure_3',['Biquad Cascade IIR Filters Using Direct Form I Structure',['../group__BiquadCascadeDF1.html',1,'']]],
+  ['iir_20lattice_20filters_4',['Infinite Impulse Response (IIR) Lattice Filters',['../group__IIR__Lattice.html',1,'']]],
+  ['impulse_20response_20fir_20decimator_5',['Finite Impulse Response (FIR) Decimator',['../group__FIR__decimate.html',1,'']]],
+  ['impulse_20response_20fir_20filters_6',['Finite Impulse Response (FIR) Filters',['../group__FIR.html',1,'']]],
+  ['impulse_20response_20fir_20interpolator_7',['Finite Impulse Response (FIR) Interpolator',['../group__FIR__Interpolate.html',1,'']]],
+  ['impulse_20response_20fir_20lattice_20filters_8',['Finite Impulse Response (FIR) Lattice Filters',['../group__FIR__Lattice.html',1,'']]],
+  ['impulse_20response_20fir_20sparse_20filters_9',['Finite Impulse Response (FIR) Sparse Filters',['../group__FIR__Sparse.html',1,'']]],
+  ['impulse_20response_20iir_20lattice_20filters_10',['Infinite Impulse Response (IIR) Lattice Filters',['../group__IIR__Lattice.html',1,'']]],
+  ['inclusive_20or_11',['Vector bitwise inclusive OR',['../group__Or.html',1,'']]],
+  ['independent_20algorithms_12',['Architecture independent algorithms',['../group__ALGO.html',1,'']]],
+  ['infinite_20impulse_20response_20iir_20lattice_20filters_13',['Infinite Impulse Response (IIR) Lattice Filters',['../group__IIR__Lattice.html',1,'']]],
+  ['initialization_14',['Matrix Initialization',['../group__MatrixInit.html',1,'']]],
+  ['interpolate_20example_15',['Linear Interpolate Example',['../group__LinearInterpExample.html',1,'']]],
+  ['interpolation_16',['Interpolation',['../group__BilinearInterpolate.html',1,'Bilinear Interpolation'],['../group__SplineInterpolate.html',1,'Cubic Spline Interpolation'],['../group__LinearInterpolate.html',1,'Linear Interpolation']]],
+  ['interpolation_20functions_17',['Interpolation Functions',['../group__groupInterpolation.html',1,'']]],
+  ['interpolator_18',['Finite Impulse Response (FIR) Interpolator',['../group__FIR__Interpolate.html',1,'']]],
+  ['inverse_19',['Inverse',['../group__MatrixInv.html',1,'Matrix Inverse'],['../group__QuatInverse.html',1,'Quaternion Inverse']]],
+  ['inverse_20clarke_20transform_20',['Vector Inverse Clarke Transform',['../group__inv__clarke.html',1,'']]],
+  ['inverse_20park_20transform_21',['Vector Inverse Park transform',['../group__inv__park.html',1,'']]],
+  ['iris_20classification_20example_22',['DSP++ Autodiff Iris Classification Example',['../group__AutodiffExample.html',1,'']]]
+];
