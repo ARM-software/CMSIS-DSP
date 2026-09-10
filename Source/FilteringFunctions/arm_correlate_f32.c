@@ -65,8 +65,10 @@
                    \f]
   @par
                    The <code>pSrcA</code> points to the first input vector of length <code>srcALen</code> and <code>pSrcB</code> points to the second input vector of length <code>srcBLen</code>.
-                   The result <code>c[n]</code> is of length <code>2 * max(srcALen, srcBLen) - 1</code> and is defined over the interval <code>n=0, 1, 2, ..., (2 * max(srcALen, srcBLen) - 2)</code>.
-                   The output result is written to <code>pDst</code> and the calling function must allocate <code>2 * max(srcALen, srcBLen) - 1</code> words for the result.
+                   The correlation has <code>srcALen + srcBLen - 1</code> values, but the output is zero-padded to a length of <code>2 * max(srcALen, srcBLen) - 1</code>.
+                   The calling function must allocate <code>2 * max(srcALen, srcBLen) - 1</code> words for <code>pDst</code>.
+                   If <code>srcALen &gt;= srcBLen</code>, the first <code>srcALen - srcBLen</code> elements are zero padding and the correlation values occupy the remaining elements.
+                   If <code>srcALen &lt; srcBLen</code>, the correlation values occupy the first <code>srcALen + srcBLen - 1</code> elements and the remaining elements are zero padding.
 
   @note
                    The <code>pDst</code> should be initialized to all zeros before being used.
