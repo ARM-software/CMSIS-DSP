@@ -90,7 +90,7 @@
 
   <examples>
     <example name="CMSIS-DSP DSP++ vector and allocator example" doc="README.md" folder="Examples/dsppp_example">
-      <description>Fused f32 vector expressions with pool and arena memory allocators on ARMCM55 using the Corstone-300 FVP.</description>
+      <description>Fused f32 vector expressions with pool and arena memory allocators.</description>
       <project>
         <environment name="csolution" load="dsppp.csolution.yml"/>
       </project>
@@ -103,7 +103,7 @@
     </example>
 
     <example name="CMSIS-DSP DSP++ autodiff examples" doc="README.md" folder="Examples/autodiff_example">
-      <description>Illustrate vector addition derivatives or train an f32 Iris classifier with reverse-mode automatic differentiation and Adam on ARMCM55 using the Corstone-300 FVP.</description>
+      <description>Illustrate reverse-mode automatic differentiation on two projects.</description>
       <project>
         <environment name="csolution" load="autodiff.csolution.yml"/>
       </project>
