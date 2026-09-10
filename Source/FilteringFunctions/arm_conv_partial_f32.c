@@ -95,7 +95,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_conv_partial_f32(
         uint32_t firstIndex,
         uint32_t numPoints)
 {
-#if defined (ARM_MATH_DSP)
+#if defined (ARM_MATH_LOOPUNROLL)
   const float32_t *pIn1 = pSrcA;                       /* InputA pointer */
   const float32_t *pIn2 = pSrcB;                       /* InputB pointer */
         float32_t *pOut = pDst;                        /* Output pointer */
@@ -679,7 +679,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_conv_partial_f32(
   /* Return to application */
   return (status);
 
-#endif /* defined(ARM_MATH_DSP) */
+#endif /* defined(ARM_MATH_LOOPUNROLL) */
 }
 
 /**
