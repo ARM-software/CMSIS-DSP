@@ -107,7 +107,6 @@ ARM_DSP_ATTRIBUTE void arm_mult_q31(
         uint32_t blockSize)
 {
         uint32_t blkCnt;                               /* Loop counter */
-        q31_t out;                                     /* Temporary output variable */
 
 #if defined (ARM_MATH_LOOPUNROLL)
 
@@ -119,21 +118,13 @@ ARM_DSP_ATTRIBUTE void arm_mult_q31(
     /* C = A * B */
 
     /* Multiply inputs and store result in destination buffer. */
-    out = ((q63_t) *pSrcA++ * *pSrcB++) >> 32;
-    out = __SSAT(out, 31);
-    *pDst++ = out << 1U;
+    *pDst++ = (q31_t) clip_q63_to_q31(((q63_t) *pSrcA++ * *pSrcB++) >> 31);
 
-    out = ((q63_t) *pSrcA++ * *pSrcB++) >> 32;
-    out = __SSAT(out, 31);
-    *pDst++ = out << 1U;
+    *pDst++ = (q31_t) clip_q63_to_q31(((q63_t) *pSrcA++ * *pSrcB++) >> 31);
 
-    out = ((q63_t) *pSrcA++ * *pSrcB++) >> 32;
-    out = __SSAT(out, 31);
-    *pDst++ = out << 1U;
+    *pDst++ = (q31_t) clip_q63_to_q31(((q63_t) *pSrcA++ * *pSrcB++) >> 31);
 
-    out = ((q63_t) *pSrcA++ * *pSrcB++) >> 32;
-    out = __SSAT(out, 31);
-    *pDst++ = out << 1U;
+    *pDst++ = (q31_t) clip_q63_to_q31(((q63_t) *pSrcA++ * *pSrcB++) >> 31);
 
     /* Decrement loop counter */
     blkCnt--;
@@ -154,9 +145,7 @@ ARM_DSP_ATTRIBUTE void arm_mult_q31(
     /* C = A * B */
 
     /* Multiply inputs and store result in destination buffer. */
-    out = ((q63_t) *pSrcA++ * *pSrcB++) >> 32;
-    out = __SSAT(out, 31);
-    *pDst++ = out << 1U;
+    *pDst++ = (q31_t) clip_q63_to_q31(((q63_t) *pSrcA++ * *pSrcB++) >> 31);
 
     /* Decrement loop counter */
     blkCnt--;
