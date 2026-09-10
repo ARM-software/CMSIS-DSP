@@ -306,6 +306,14 @@ a double precision computation.
 
           output.create(ref.nbSamples(),ComplexTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
         break;
+
+        case ComplexTestsQ31::TEST_CMPLX_MULT_CMPLX_Q31_24:
+          ref.reload(ComplexTestsQ31::REF_CMPLX_MULT_CMPLX_SAT_Q31_ID,mgr);
+          input1.reload(ComplexTestsQ31::INPUT_SAT1_Q31_ID,mgr);
+          input2.reload(ComplexTestsQ31::INPUT_SAT2_Q31_ID,mgr);
+
+          output.create(ref.nbSamples(),ComplexTestsQ31::OUT_SAMPLES_Q31_ID,mgr);
+        break;
         
        }
       
