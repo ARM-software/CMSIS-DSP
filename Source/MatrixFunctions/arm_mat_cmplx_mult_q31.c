@@ -57,7 +57,7 @@
                    distorts the result. The input signals should be scaled down to avoid intermediate
                    overflows. The input is thus scaled down by log2(numColsA) bits
                    to avoid overflows, as a total of numColsA additions are performed internally.
-                   The 2.62 accumulator is right shifted by 31 bits and saturated to 1.31 format to yield the final result.
+                   The result is in 1.31 format.
  */
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 

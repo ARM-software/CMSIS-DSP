@@ -48,12 +48,14 @@
   @param[in]     blockSize  number of input samples to process
 
   @par           Scaling and Overflow Behavior
-                   The function is implemented using an internal 64-bit accumulator.
+                   The scalar implementation uses an internal 64-bit accumulator.
                    The accumulator has a 2.62 format and maintains full precision of the intermediate multiplication results but provides only a single guard bit.
                    Thus, if the accumulator result overflows it wraps around rather than clip.
                    In order to avoid overflows completely the input signal must be scaled down by <code>1/(numTaps/L)</code>.
                    since <code>numTaps/L</code> additions occur per output sample.
-                   After all multiply-accumulates are performed, the 2.62 accumulator is truncated to 1.32 format and then saturated to 1.31 format.
+                   The result is in 1.31 format.
+                   The Helium implementation may avoid some intermediate overflows, but the same scaling constraints
+                   as for the scalar implementation should be followed.
  */
 
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
