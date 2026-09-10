@@ -228,6 +228,12 @@ find_package(CMSISDSP CONFIG REQUIRED)
 target_link_libraries(my_application PRIVATE CMSISDSP::CMSISDSP)
 ```
 
+The package also installs the DSP++ headers. Linking to `CMSISDSP::CMSISDSP` makes headers such as `dsppp/algorithms.hpp` available through the same include path. When using `add_subdirectory`, the target also exposes `dsppp/Include` from the source tree.
+
+To request a particular version, use, for example, `find_package(CMSISDSP 1.18.0 CONFIG REQUIRED)`. The package accepts requests with the same major and minor version and a patch version no newer than the installed package (`SameMinorVersion`). Add `EXACT` to require an exact version.
+
+CMake detects the version from the latest reachable release tag matching `v<major>.<minor>.<patch>` using `git describe --tags --abbrev=0`. Prerelease tags are excluded. This follows the checked-out commit's history, so a tag on an unrelated branch does not change the package version. If Git or suitable tags are unavailable (including source archives and shallow clones without release tags), it uses the release fallback in `cmake/CMSISDSPVersion.cmake`, currently `1.18.0`. This fallback must be updated for each release. Packagers can set `-DCMSISDSP_VERSION=1.18.0` to override detection.
+
 Configure the application with `CMAKE_PREFIX_PATH` pointing to the install folder:
 
 ```bash
