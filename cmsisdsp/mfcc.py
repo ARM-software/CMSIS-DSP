@@ -3,7 +3,9 @@ import cmsisdsp.datatype as dt
 
 def frequencyToMelSpace(freq):
     """
-     Convert a frequency in Hz to Mel space value
+     Convert a frequency in Hz to an HTK Mel-space value.
+
+     The conversion is ``1127 * log(1 + freq / 700)``.
 
      :param freq: Frequency in Hz.
      :type freq: float
@@ -27,7 +29,11 @@ def melSpaceToFrequency(mels):
 
 def melFilterMatrix(dtype,fmin, fmax, numOfMelFilters,fs,FFTSize):
     """
-     Sparse matrix in a specific format and encoding the filters in Mel space
+     Generate a sparse matrix encoding triangular filters in Mel space.
+
+     Filter centers are equally spaced on the HTK Mel scale. The triangular
+     weights are evaluated at the FFT bin center frequencies and are not area
+     normalized.
 
      :param dtype: The datatype to use for the matrix coefficients.
      :type dtype: int
@@ -91,7 +97,12 @@ def melFilterMatrix(dtype,fmin, fmax, numOfMelFilters,fs,FFTSize):
 
 def dctMatrix(dtype,numOfDctOutputs, numOfMelFilters):
     """
-     Dct matrix in a specific format
+     Generate the type-II DCT matrix used by the MFCC helper.
+
+     For ``M = numOfMelFilters``, element ``(k, n)`` is
+     ``sqrt(2 / M) * cos(pi * k * (n + 0.5) / M)``. The ``sqrt(2 / M)``
+     factor is applied to every row, including ``k = 0``. This differs from an
+     orthonormal DCT-II, whose first row is scaled by ``sqrt(1 / M)``.
 
      :param dtype: The datatype to use for the matrix coefficients.
      :type dtype: int
