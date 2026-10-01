@@ -317,7 +317,7 @@ ARM_DSP_ATTRIBUTE void arm_correlate_f32(
         float32_t * pDst)
 {
 
-#if defined(ARM_MATH_DSP) || defined(ARM_MATH_NEON) 
+#if defined(ARM_MATH_LOOPUNROLL) || defined(ARM_MATH_NEON)
   
   const float32_t *pIn1;                               /* InputA pointer */
   const float32_t *pIn2;                               /* InputB pointer */
@@ -1095,7 +1095,7 @@ ARM_DSP_ATTRIBUTE void arm_correlate_f32(
       *pDst++ = sum;
   }
 
-#endif /* #if !defined(ARM_MATH_CM0_FAMILY) */
+#endif /* defined(ARM_MATH_LOOPUNROLL) || defined(ARM_MATH_NEON) */
 
 }
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
