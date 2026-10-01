@@ -1789,6 +1789,8 @@ group Root {
               Pattern INPUT1_Q31_ID : Input1_q31.txt 
               Pattern INPUT2_Q31_ID : Input2_q31.txt 
               Pattern INPUT3_Q31_ID : Input3_q31.txt 
+              Pattern INPUT_SAT1_Q31_ID : Input4_q31.txt
+              Pattern INPUT_SAT2_Q31_ID : Input5_q31.txt
 
               Pattern REF_CONJ_Q31_ID : Reference1_q31.txt
               Pattern REF_DOT_PROD_3_Q31_ID : Reference2_q63.txt
@@ -1798,6 +1800,7 @@ group Root {
               Pattern REF_MAG_SQUARED_Q31_ID : Reference6_q31.txt
               Pattern REF_CMPLX_MULT_CMPLX_Q31_ID : Reference7_q31.txt
               Pattern REF_CMPLX_MULT_REAL_Q31_ID : Reference8_q31.txt
+              Pattern REF_CMPLX_MULT_CMPLX_SAT_Q31_ID : Reference10_q31.txt
 
               Output  OUT_SAMPLES_Q31_ID : Output
               Output  OUT_STATE_Q31_ID : State
@@ -1832,6 +1835,8 @@ group Root {
                 Test long    arm_cmplx_mag_squared_q31:test_cmplx_mag_squared_q31
                 Test long    arm_cmplx_mult_cmplx_q31:test_cmplx_mult_cmplx_q31
                 Test long    arm_cmplx_mult_real_q31:test_cmplx_mult_real_q31
+
+                Test saturation arm_cmplx_mult_cmplx_q31:test_cmplx_mult_cmplx_q31
               }
 
            }
@@ -1843,6 +1848,8 @@ group Root {
               Pattern INPUT1_Q15_ID : Input1_q15.txt 
               Pattern INPUT2_Q15_ID : Input2_q15.txt 
               Pattern INPUT3_Q15_ID : Input3_q15.txt 
+              Pattern INPUT_SAT1_Q15_ID : Input4_q15.txt
+              Pattern INPUT_SAT2_Q15_ID : Input5_q15.txt
 
               Pattern REF_CONJ_Q15_ID : Reference1_q15.txt
               Pattern REF_DOT_PROD_3_Q15_ID : Reference2_q31.txt
@@ -1852,6 +1859,7 @@ group Root {
               Pattern REF_MAG_SQUARED_Q15_ID : Reference6_q15.txt
               Pattern REF_CMPLX_MULT_CMPLX_Q15_ID : Reference7_q15.txt
               Pattern REF_CMPLX_MULT_REAL_Q15_ID : Reference8_q15.txt
+              Pattern REF_CMPLX_MULT_CMPLX_SAT_Q15_ID : Reference10_q15.txt
 
               Output  OUT_SAMPLES_Q15_ID : Output
               Output  OUT_STATE_Q15_ID : State
@@ -1891,6 +1899,8 @@ group Root {
                 Test nb=4n   arm_cmplx_mag_fast_q15:test_cmplx_mag_fast_q15
                 Test nb=4n+1 arm_cmplx_mag_fast_q15:test_cmplx_mag_fast_q15
                 Test long    arm_cmplx_mag_fast_q15:test_cmplx_mag_fast_q15
+
+                Test saturation arm_cmplx_mult_cmplx_q15:test_cmplx_mult_cmplx_q15
 
               }
 
