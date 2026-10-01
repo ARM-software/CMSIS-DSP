@@ -477,6 +477,17 @@ The results generated in previous step can be processed with a Python script.
 
 The `-f` option should be used to tell the script where to find the `Output.pickle` file if the script is not run from the `Testing` folder.
 
+When the output contains benchmarks, `processResult.py` reads `currentConfig.csv` from the same
+directory as the result file passed with `-r`. This file is not generated automatically. Create it
+as a two-line CSV containing a header and the configuration used for the benchmark. For example:
+
+    OPTIMIZED,HARDFP,FASTMATH,NEON,HELIUM,UNROLL,ROUNDING,PLATFORM,CORE,COMPILER,VERSION
+    1,1,1,0,1,1,0,FVP_M55,M55,AC6,6.21
+
+Use `1` or `0` for the first seven fields to show whether each option was enabled. Replace the
+platform, core or configuration identifier, compiler, and version values with those used for the
+benchmark run.
+
     python processResult.py -f Output.pickle -e -r result.txt
 
 -e option is needed if the mode -e was used with processTests because the output has a different
@@ -496,8 +507,8 @@ The script summaryBench can parse those results and compute regression formula.
     python summaryBench.py -r build\result.txt
 
 The file result.txt must be placed inside the build folder for this script to work.
-Indeed, this script is using the path to result.txt to also find the file currentConfig.csv which has
-been created by the cmake command.
+Indeed, this script uses the path to result.txt to also find the currentConfig.csv file described
+above.
 
 The Output.pickle file is used by default. It can be changed with -f option.
 
