@@ -24,6 +24,15 @@ Kernels provided by CMSIS-DSP (list not exhaustive):
 
 Kernels are provided with several data types: f64, f32, f16, q31, q15, q7.
 
+## C++ API (DSP++)
+
+DSP++ makes it easier to combine existing kernels into efficient Cortex-M algorithms. This optional, header-only C++ API uses automatic loop fusion to avoid temporary arrays and repeated passes over data. It is included in the pack and has no impact on applications using only the C API.
+
+## Experimental autodiff extension
+
+Autodiff builds on DSP++ to enable on-device machine learning with a focus on fine-tuning using a subset of existing CMSIS-DSP kernels. It is **experimental** and not a new ML framework.
+
+
 ## CMSIS-DSP and Python
 
 A [Python package](https://pypi.org/project/cmsisdsp/) is available for CMSIS-DSP. It provides access to CMSIS-DSP functions (including fixed point) from Python with NumPy compatibility.

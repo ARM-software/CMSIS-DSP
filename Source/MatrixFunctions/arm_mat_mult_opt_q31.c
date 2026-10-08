@@ -51,14 +51,16 @@
                    - \ref ARM_MATH_SIZE_MISMATCH : Matrix size check failed
 
   @par           Scaling and Overflow Behavior
-                   The function is implemented using an internal 64-bit accumulator.
+                   The scalar implementation uses an internal 64-bit accumulator.
                    The accumulator has a 2.62 format and maintains full precision of the intermediate
                    multiplication results but provides only a single guard bit. There is no saturation
                    on intermediate additions. Thus, if the accumulator overflows it wraps around and
                    distorts the result. The input signals should be scaled down to avoid intermediate
                    overflows. The input is thus scaled down by log2(numColsA) bits
                    to avoid overflows, as a total of numColsA additions are performed internally.
-                   The 2.62 accumulator is right shifted by 31 bits and saturated to 1.31 format to yield the final result.
+                   The result is in 1.31 format.
+                   The Helium implementation may avoid some intermediate overflows, but the same scaling constraints
+                   as for the scalar implementation should be followed.
   @remark
                    Refer to \ref arm_mat_mult_fast_q31() for a faster but less precise implementation of this function.
   @remark

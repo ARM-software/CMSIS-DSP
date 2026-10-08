@@ -2,6 +2,9 @@ out/
 tmp/
 .cmsis/
 *.cbuild-idx.yml
-Autodiff/*.cbuild.yml
-Autodiff/*.cbuild-run.yml
-Autodiff/.clangd
+Iris/*.cbuild.yml
+Iris/*.cbuild-run.yml
+Iris/.clangd
+Diff/*.cbuild.yml
+Diff/*.cbuild-run.yml
+Diff/.clangd

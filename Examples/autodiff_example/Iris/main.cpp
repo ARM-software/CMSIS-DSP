@@ -44,14 +44,14 @@
  * \par Build and Run:
  * Open \c autodiff.csolution.yml with the CMSIS Solution VS Code extension
  * and install the required tools and packs. The default configuration is
- * \c Autodiff.Release+ARMCM55 with the CLANG compiler. AC6 and GCC are also
+ * \c Iris.Release+ARMCM55 with the CLANG compiler. AC6 and GCC are also
  * selectable. Run the executable on the Corstone-300 FVP with the supplied
  * \c fvp_config.txt. Console output and program termination use semihosting.
  *
  * <b> Refer </b>
- * \link autodiff_example/Autodiff/main.cpp \endlink
+ * \link autodiff_example/Iris/main.cpp \endlink
  *
- * \example autodiff_example/Autodiff/main.cpp
+ * \example autodiff_example/Iris/main.cpp
  *
  * @} */
 

@@ -70,7 +70,6 @@ html {
 	
 	--icon-background-color: #728DC1;
 	--icon-foreground-color: white;
-	--icon-doc-image: url('doc.png');
 	
 	/* brief member declaration list */
 	--memdecl-background-color:#F9FAFC;
@@ -247,7 +246,6 @@ html.dark-mode {
 	
 	--icon-background-color: #334975;
 	--icon-foreground-color: #C4CFE5;
-	--icon-doc-image: url('docd.png');
 	
 	/* brief member declaration list */
 	--memdecl-background-color:var(--page-background-color);

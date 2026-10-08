@@ -4,7 +4,7 @@ set(CMSIS_DSP_DIR ${ZEPHYR_CURRENT_MODULE_DIR})
 
 zephyr_library()
 
-zephyr_library_compile_options(-Ofast)
+zephyr_library_compile_options($<TARGET_PROPERTY:compiler,optimization_fast>)
 
 zephyr_include_directories(
     ${CMSIS_DSP_DIR}/Include
@@ -20,7 +20,7 @@ else()
    zephyr_library_compile_definitions(__GNUC_PYTHON__) # Disable dependency to CMSIS Core
 endif()
 
-zephyr_library_compile_definitions(ZEPHYR_INCLUDE_TOOLCHAIN_STDINT_H_)
+zephyr_library_compile_definitions(ZEPHYR_INCLUDE_TOOLCHAIN_ZEPHYR_STDINT_H_)
 
 
 # Global Feature Definitions

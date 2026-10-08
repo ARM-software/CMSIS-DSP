@@ -1,6 +1,7 @@
 cmake_minimum_required (VERSION 3.14)
 cmake_policy(SET CMP0077 NEW)
-project(CMSISDSP)
+include(${CMAKE_CURRENT_LIST_DIR}/../cmake/CMSISDSPVersion.cmake)
+project(CMSISDSP VERSION ${CMSISDSP_VERSION})
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
@@ -76,6 +77,7 @@ include(WindowFunctions/Config.cmake)
 ### Includes
 target_include_directories(CMSISDSP PUBLIC
   $<BUILD_INTERFACE:${DSP}/Include>
+  $<BUILD_INTERFACE:${DSP}/dsppp/Include>
   $<INSTALL_INTERFACE:${CMSISDSP_INSTALL_INCLUDEDIR}>)
 if (DEFINED CMSISCORE)
 target_include_directories(CMSISDSP PUBLIC
@@ -104,6 +106,10 @@ if (CMSISDSP_INSTALL)
     DESTINATION ${CMSISDSP_INSTALL_INCLUDEDIR}
     FILES_MATCHING PATTERN "*.h")
 
+  install(DIRECTORY "${DSP}/dsppp/Include/"
+    DESTINATION ${CMSISDSP_INSTALL_INCLUDEDIR}
+    FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp")
+
   if (NEON OR NEONEXPERIMENTAL)
     install(DIRECTORY "${DSP}/ComputeLibrary/Include/"
       DESTINATION ${CMSISDSP_INSTALL_INCLUDEDIR}
@@ -115,7 +121,14 @@ if (CMSISDSP_INSTALL)
     "${CMAKE_CURRENT_BINARY_DIR}/CMSISDSPConfig.cmake"
     INSTALL_DESTINATION ${CMSISDSP_INSTALL_CMAKEDIR})
 
-  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/CMSISDSPConfig.cmake"
+  write_basic_package_version_file(
+    "${CMAKE_CURRENT_BINARY_DIR}/CMSISDSPConfigVersion.cmake"
+    VERSION "${CMSISDSP_VERSION}"
+    COMPATIBILITY SameMinorVersion)
+
+  install(FILES
+    "${CMAKE_CURRENT_BINARY_DIR}/CMSISDSPConfig.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/CMSISDSPConfigVersion.cmake"
     DESTINATION ${CMSISDSP_INSTALL_CMAKEDIR})
 
   install(EXPORT CMSISDSPTargets

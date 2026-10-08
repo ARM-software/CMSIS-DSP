@@ -56,7 +56,7 @@
                    The input signals should be scaled down to avoid intermediate overflows.
                    Scale down one of the inputs by 1/min(srcALen, srcBLen)to avoid overflows since a
                    maximum of min(srcALen, srcBLen) number of additions is carried internally.
-                   The 2.62 accumulator is right shifted by 31 bits and saturated to 1.31 format to yield the final result.
+                   The result is in 1.31 format.
 
   @remark
                    Refer to \ref arm_correlate_fast_q31() for a faster but less precise implementation of this function.
