@@ -40,7 +40,7 @@ static double abs_err,rel_err;
 
        float16_t *outfftp = outputfft.ptr();
 
-        memcpy(infftp,inp,sizeof(float32_t)*input.nbSamples());
+        memcpy(infftp,inp,sizeof(float16_t)*input.nbSamples());
 
    
 #if defined(ARM_MATH_NEON_FLOAT16) && defined(ARM_FLOAT16_SUPPORTED)
