@@ -71,13 +71,14 @@ jobs:
           cpackget add -a -f required_packs.txt
 
       - name: Execute
+        id: execute
         run: |
           cd Testing/cmsis_build
           echo "Running tests"
           python runall.py -s -g ${{ matrix.compiler }} -avh $AVH_FVP_PLUGINS/../bin
 
       - name: Upload test report
-        if: always()
+        if: ${{ !cancelled() && (steps.execute.outcome == 'success' || steps.execute.outcome == 'failure') }}
         uses: actions/upload-artifact@v7
         with:
           name: test-report_${{ matrix.compiler }}
@@ -86,7 +87,7 @@ jobs:
           if-no-files-found: error
 
       - name: Check error
-        if: always()
+        if: ${{ !cancelled() && (steps.execute.outcome == 'success' || steps.execute.outcome == 'failure') }}
         run: |
           cd Testing/cmsis_build
           echo "Checking output..."

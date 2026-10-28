@@ -82,13 +82,14 @@ jobs:
           cpackget add -a -f required_packs.txt
 
       - name: Execute
+        id: execute
         run: |
           cd dsppp
           echo "Running tests"
           python run_all.py -t -g ${{ matrix.compiler }} -c ${{ matrix.core }} --dt ${{matrix.dt}} -avh $AVH_FVP_PLUGINS/../bin
 
       - name: Upload test report
-        if: always()
+        if: ${{ !cancelled() && (steps.execute.outcome == 'success' || steps.execute.outcome == 'failure') }}
         uses: actions/upload-artifact@v7
         with:
           name: test-cpp-report_${{ matrix.compiler }}_${{ matrix.core }}_${{ matrix.dt }}
@@ -96,7 +97,7 @@ jobs:
           if-no-files-found: error
 
       - name: Check error
-        if: always()
+        if: ${{ !cancelled() && (steps.execute.outcome == 'success' || steps.execute.outcome == 'failure') }}
         run: |
           cd dsppp
           echo "Checking output..."
