@@ -46,5 +46,6 @@
 #include "arm_cmplx_mult_cmplx_q15.c"
 #include "arm_cmplx_mult_cmplx_q31.c"
 #include "arm_cmplx_mult_real_f32.c"
+#include "arm_cmplx_mult_real_f64.c"
 #include "arm_cmplx_mult_real_q15.c"
 #include "arm_cmplx_mult_real_q31.c"
