@@ -83,9 +83,22 @@ jobs:
           name: test-report_${{ matrix.compiler }}
           path: |
             Testing/cmsis_build/summary_${{ matrix.compiler }}.html
+          if-no-files-found: error
 
       - name: Check error
+        if: always()
         run: |
           cd Testing/cmsis_build
           echo "Checking output..."
-          test "$(grep "Error" summary_${{ matrix.compiler }}.html | wc -l)" -eq 0
+          report="summary_${{ matrix.compiler }}.html"
+          if [ ! -s "$report" ]; then
+            echo "::error::Missing or empty C test summary: $report"
+            exit 1
+          fi
+          if grep -n "Error" "$report"; then
+            echo "::error::C tests reported errors"
+            exit 1
+          else
+            status=$?
+            test "$status" -eq 1
+          fi

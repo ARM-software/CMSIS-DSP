@@ -88,13 +88,25 @@ jobs:
           python run_all.py -t -g ${{ matrix.compiler }} -c ${{ matrix.core }} --dt ${{matrix.dt}} -avh $AVH_FVP_PLUGINS/../bin
 
       - name: Upload test report
+        if: always()
         uses: actions/upload-artifact@v7
         with:
           name: test-cpp-report_${{ matrix.compiler }}_${{ matrix.core }}_${{ matrix.dt }}
-          path: dsppp/${{ matrix.compiler }}_results/errors_${{ matrix.core }}_${{ matrix.dt }}.txt
+          path: dsppp/${{ matrix.compiler }}_results/errors_${{ matrix.core }}.txt
+          if-no-files-found: error
 
       - name: Check error
+        if: always()
         run: |
           cd dsppp
           echo "Checking output..."
-          test "$(cat ${{ matrix.compiler }}_results/errors_${{ matrix.core }}_${{ matrix.dt }}.txt | wc -l)" -eq 0
+          report="${{ matrix.compiler }}_results/errors_${{ matrix.core }}.txt"
+          if [ ! -f "$report" ]; then
+            echo "::error::Missing C++ test error report: $report"
+            exit 1
+          fi
+          if [ -s "$report" ]; then
+            cat "$report"
+            echo "::error::C++ tests reported errors"
+            exit 1
+          fi

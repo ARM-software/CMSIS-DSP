@@ -484,11 +484,10 @@ with open(os.path.join(results(),f"errors_{args.c}.txt"),"w") as err:
             nb = nb + 1
 
 
-if not GHACTION:
-   if ERROR_OCCURED:
-       printError("Error in tests:")
-       for n in all_errors:
-           printError(n)
-       sys.exit("Error occurred")
-   else:
-       sys.exit(0)
+if ERROR_OCCURED:
+    printError("Error in tests:")
+    for n in all_errors:
+        printError(n)
+    sys.exit("Error occurred")
+else:
+    sys.exit(0)
