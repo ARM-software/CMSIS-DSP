@@ -1,0 +1,14 @@
+{
+  "name": "CMSIS-DSP",
+  "build": {
+    "includeDir": "Include",
+    "srcDir": "Source",
+    "flags": ["-IPrivateInclude"],
+    "srcFilter": [
+      "-<*>",
+      "+<TransformFunctions/TransformFunctions.c>",
+      "+<CommonTables/CommonTables.c>",
+      "+<ComplexMathFunctions/ComplexMathFunctions.c>"
+    ]
+  }
+}

@@ -1,3 +1,0 @@
-fvp_mps2.mps2_visualisation.disable-visualisation=1
-armcortexm0plusct.semihosting-enable=1
-armcortexm0plusct.NUM_MPU_REGION=0x8
