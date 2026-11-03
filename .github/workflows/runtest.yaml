@@ -15,8 +15,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        os: [ubuntu-24.04, ubuntu-26.04]
         compiler: [AC6, CLANG, GCC]
-    runs-on: ubuntu-22.04
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout
@@ -31,8 +32,9 @@ jobs:
 
       - name: Install system packages
         run: |
-          sudo add-apt-repository ppa:deadsnakes/ppa
-          sudo apt-get install libpython3.12 libtinfo5
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y libtinfo6
+          echo "LD_LIBRARY_PATH=${pythonLocation}/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" >> "$GITHUB_ENV"
 
       - name: Activate vcpkg
         uses: ARM-software/cmsis-actions/vcpkg@v1
@@ -81,7 +83,7 @@ jobs:
         if: ${{ !cancelled() && (steps.execute.outcome == 'success' || steps.execute.outcome == 'failure') }}
         uses: actions/upload-artifact@v7
         with:
-          name: test-report_${{ matrix.compiler }}
+          name: test-report_${{ matrix.os }}_${{ matrix.compiler }}
           path: |
             Testing/cmsis_build/summary_${{ matrix.compiler }}.html
           if-no-files-found: error
