@@ -79,8 +79,17 @@ uint32_t *outp=outputLogical.ptr();
 
         ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
 
-        ASSERT_NEAR_EQ(output,ref,ABS_ERROR_Q31);
-       
+        if (this->exactRef)
+        {
+            /* Saturation test: the reference pattern is the Q31 limit itself,
+               so ABS_ERROR_Q31 must not be allowed to absorb the difference. */
+            ASSERT_EQ(output,ref);
+        }
+        else
+        {
+            ASSERT_NEAR_EQ(output,ref,ABS_ERROR_Q31);
+        }
+
     } 
 
     void BasicTestsQ31::test_negate_q31()
@@ -238,6 +247,8 @@ uint32_t *outp=outputLogical.ptr();
        Testing::nbSamples_t nb=MAX_NB_SAMPLES; 
 
        this->scalar = ONEHALF;
+
+       this->exactRef = false;
 
        
        switch(id)
@@ -444,6 +455,7 @@ uint32_t *outp=outputLogical.ptr();
           output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
           input1.reload(BasicTestsQ31::MAXNEG2_Q31_ID,mgr);
           input2.reload(BasicTestsQ31::MAXNEG2_Q31_ID,mgr);
+          this->exactRef = true;
         break;
 
         case BasicTestsQ31::TEST_NEGATE_Q31_30:
