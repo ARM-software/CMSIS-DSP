@@ -2136,11 +2136,40 @@ group Root {
               Pattern PROBAS1_F32_ID : Probas1_f32.txt
               Pattern PREDICTS1_S16_ID : Predicts1_s16.txt
 
+              Pattern SEFRDIMS3_S16_ID : SefrDims3_s16.txt
+              Pattern SEFRINPUTS3_F32_ID : SefrInputs3_f32.txt
+              Pattern SEFRLABELS3_U32_ID : SefrLabels3_u32.txt
+              Pattern SEFRWEIGHTS3_F32_ID : SefrWeights3_f32.txt
+              Pattern SEFRBIAS3_F32_ID : SefrBias3_f32.txt
+              Pattern SEFRPREDICTS3_S16_ID : SefrPredicts3_s16.txt
+              Pattern SEFRLDAWEIGHTS3_F32_ID : SefrLdaWeights3_f32.txt
+              Pattern SEFRLDABIAS3_F32_ID : SefrLdaBias3_f32.txt
+              Pattern SEFRLDAPREDICTS3_S16_ID : SefrLdaPredicts3_s16.txt
+
+              Pattern SEFRDIMS4_S16_ID : SefrDims4_s16.txt
+              Pattern SEFRINPUTS4_F32_ID : SefrInputs4_f32.txt
+              Pattern SEFRLABELS4_U32_ID : SefrLabels4_u32.txt
+              Pattern SEFRWEIGHTS4_F32_ID : SefrWeights4_f32.txt
+              Pattern SEFRBIAS4_F32_ID : SefrBias4_f32.txt
+              Pattern SEFRPREDICTS4_S16_ID : SefrPredicts4_s16.txt
+              Pattern SEFRLDAWEIGHTS4_F32_ID : SefrLdaWeights4_f32.txt
+              Pattern SEFRLDABIAS4_F32_ID : SefrLdaBias4_f32.txt
+              Pattern SEFRLDAPREDICTS4_S16_ID : SefrLdaPredicts4_s16.txt
+
               Output  OUT_PROBA_F32_ID : Probas
               Output  OUT_PREDICT_S16_ID : Predicts
+              Output  OUT_WEIGHTS_F32_ID : Weights
+              Output  OUT_BIAS_F32_ID : Bias
+              Output  OUT_TMP_F32_ID : Tmp
+              Output  OUT_LABELS_U32_ID : Labels
 
               Functions {
                  arm_gaussian_naive_bayes_predict_f32:test_gaussian_naive_bayes_predict_f32
+                 arm_sefr_train_f32 binary:test_sefr_train_f32
+                 arm_sefr_train_f32 multiclass:test_sefr_train_f32
+                 arm_sefr_lda_f32 binary:test_sefr_lda_f32
+                 arm_sefr_lda_f32 multiclass:test_sefr_lda_f32
+                 arm_sefr_train_f32 invalid arguments:test_sefr_invalid_f32
               }
            }
         }

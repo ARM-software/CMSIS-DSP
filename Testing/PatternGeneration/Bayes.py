@@ -188,6 +188,69 @@ def writeBenchmark(config):
     config.writeInputS16(2, dims,"DimsBench")
 
 
+# float64 reference of arm_sefr_train_f32, one-vs-rest
+def trainSefr(x,y,nbClasses):
+    low, high = x.min(0), x.max(0)
+    span = np.where(high > low, high - low, 1.0)
+    z = (x - low) / span
+    n = np.bincount(y, minlength=nbClasses).astype(float)
+    sums = np.zeros((nbClasses, x.shape[1]))
+    np.add.at(sums, y, z)
+    p = sums / n[:, None]
+    r = (sums.sum(0) - sums) / (len(y) - n)[:, None]
+    w = (p - r) / (p + r + 1e-7)
+    t = ((len(y) - n) * (w * p).sum(1) + n * (w * r).sum(1)) / len(y)
+    w = w / span
+    return(w, -(t + w @ low))
+
+# float64 reference of arm_sefr_lda_f32
+def ldaSefr(x,y,nbClasses,w,b):
+    scores = x @ w.T + b
+    n = np.bincount(y, minlength=nbClasses).astype(float)
+    means = np.zeros((nbClasses, nbClasses))
+    np.add.at(means, y, scores)
+    means /= n[:, None]
+    rest = scores - means[y]
+    cov = rest.T @ rest / len(y)
+    cov += 1e-6 * np.trace(cov) / nbClasses * np.eye(nbClasses)
+    a = np.linalg.solve(cov, means.T).T
+    return(a @ w, np.log(n / len(y)) + a @ b - 0.5 * (a * means).sum(1))
+
+def generateSefrTest(config,nb,nbClasses,vecDim):
+    rng = np.random.default_rng(nb)
+    NBTRAIN = 60
+    NBTEST = 20
+    centers = rng.uniform(-2.0, 2.0, (nbClasses, vecDim))
+    # Every class is in the training set. The last class is more common than the
+    # others because the class counts and priors would have no effect otherwise.
+    y = np.concatenate([np.minimum(np.arange(NBTRAIN) % (2 * nbClasses), nbClasses - 1),
+                        rng.integers(0, nbClasses, NBTEST)])
+    # The reference has to see the same float32 values as the C code
+    x = (centers[y] + rng.normal(0.0, 1.5, (NBTRAIN + NBTEST, vecDim))).astype(np.float32).astype(np.float64)
+    xtrain, ytrain, xtest = x[:NBTRAIN], y[:NBTRAIN], x[NBTRAIN:]
+
+    w, b = trainSefr(xtrain, ytrain, nbClasses)
+    wlda, blda = ldaSefr(xtrain, ytrain, nbClasses, w, b)
+
+    config.writeInputS16(nb, np.array([NBTRAIN, NBTEST, nbClasses, vecDim]), "SefrDims")
+    config.writeInput(nb, x.reshape(-1), "SefrInputs")
+    config.writeInputU32(nb, ytrain, "SefrLabels")
+    config.writeReference(nb, w.reshape(-1), "SefrWeights")
+    config.writeReference(nb, b, "SefrBias")
+    config.writeReferenceS16(nb, np.argmax(xtest @ w.T + b, 1), "SefrPredicts")
+    config.writeReference(nb, wlda.reshape(-1), "SefrLdaWeights")
+    config.writeReference(nb, blda, "SefrLdaBias")
+    config.writeReferenceS16(nb, np.argmax(xtest @ wlda.T + blda, 1), "SefrLdaPredicts")
+
+def generateSefrPatterns():
+    PATTERNDIR = os.path.join("Patterns","DSP","Bayes","Bayes")
+    PARAMDIR = os.path.join("Parameters","DSP","Bayes","Bayes")
+
+    configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
+
+    generateSefrTest(configf32,3,2,6)
+    generateSefrTest(configf32,4,5,12)
+
 def generatePatterns():
     PATTERNDIR = os.path.join("Patterns","DSP","Bayes","Bayes")
     PARAMDIR = os.path.join("Parameters","DSP","Bayes","Bayes")
@@ -200,6 +263,8 @@ def generatePatterns():
 
     writeBenchmark(configf32)
     writeBenchmark(configf16)
+
+    generateSefrPatterns()
 
 if __name__ == '__main__':
   generatePatterns()

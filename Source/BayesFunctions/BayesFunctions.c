@@ -27,3 +27,7 @@
  */
 
 #include "arm_gaussian_naive_bayes_predict_f32.c"
+#include "arm_sefr_init_f32.c"
+#include "arm_sefr_train_f32.c"
+#include "arm_sefr_lda_f32.c"
+#include "arm_sefr_predict_f32.c"
