@@ -12,7 +12,7 @@ permissions:
 
 jobs:
    CI_test_run: 
-    runs-on: ubuntu-22.04-arm
+    runs-on: ubuntu-24.04-arm
 
     steps:
       - name: Checkout
@@ -25,12 +25,8 @@ jobs:
 
       - name: Install system packages
         run: |
-          sudo add-apt-repository ppa:deadsnakes/ppa
-          sudo apt-get install libpython3.12 libtinfo5
-          sudo apt install build-essential
-          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 60 --slave /usr/bin/g++ g++ /usr/bin/g++-11
-          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 40 --slave /usr/bin/g++ g++ /usr/bin/g++-12
-          sudo update-alternatives --set gcc  /usr/bin/gcc-12
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y build-essential
 
 
       - name: Activate vcpkg
