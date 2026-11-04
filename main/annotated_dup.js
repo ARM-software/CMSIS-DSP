@@ -313,6 +313,7 @@ var annotated_dup =
     [ "arm_rfft_instance_f32", "structarm__rfft__instance__f32.html", "structarm__rfft__instance__f32" ],
     [ "arm_rfft_instance_q15", "structarm__rfft__instance__q15.html", "structarm__rfft__instance__q15" ],
     [ "arm_rfft_instance_q31", "structarm__rfft__instance__q31.html", "structarm__rfft__instance__q31" ],
+    [ "arm_sefr_instance_f32", "structarm__sefr__instance__f32.html", "structarm__sefr__instance__f32" ],
     [ "arm_sort_instance_f32", "structarm__sort__instance__f32.html", "structarm__sort__instance__f32" ],
     [ "arm_spline_instance_f32", "structarm__spline__instance__f32.html", "structarm__spline__instance__f32" ],
     [ "arm_svm_linear_instance_f16", "structarm__svm__linear__instance__f16.html", "structarm__svm__linear__instance__f16" ],

@@ -147,10 +147,26 @@ Functions</h2></td></tr>
 <tr class="memitem:ga23f942747fc13865a66bf14bb44dd299" id="r_ga23f942747fc13865a66bf14bb44dd299"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga23f942747fc13865a66bf14bb44dd299">arm_gaussian_naive_bayes_predict_f32</a> (const <a class="el" href="structarm__gaussian__naive__bayes__instance__f32.html">arm_gaussian_naive_bayes_instance_f32</a> *S, const <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *in, <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *pOutputProbabilities, <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *pBufferB)</td></tr>
 <tr class="memdesc:ga23f942747fc13865a66bf14bb44dd299"><td class="mdescLeft">&#160;</td><td class="mdescRight">Naive Gaussian Bayesian Estimator.  <br /></td></tr>
 <tr class="separator:ga23f942747fc13865a66bf14bb44dd299"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga52f8903ea04ba548b12bb004570d30ec" id="r_ga52f8903ea04ba548b12bb004570d30ec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga52f8903ea04ba548b12bb004570d30ec">arm_sefr_init_f32</a> (<a class="el" href="structarm__sefr__instance__f32.html">arm_sefr_instance_f32</a> *S, uint32_t vectorDimension, uint32_t numberOfClasses, <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *pWeights, <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *pBias)</td></tr>
+<tr class="memdesc:ga52f8903ea04ba548b12bb004570d30ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialization of a SEFR classifier instance.  <br /></td></tr>
+<tr class="separator:ga52f8903ea04ba548b12bb004570d30ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad74c0d5660c56efec56d099012a9680f" id="r_gad74c0d5660c56efec56d099012a9680f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__genericTypes.html#ga5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gad74c0d5660c56efec56d099012a9680f">arm_sefr_lda_f32</a> (const <a class="el" href="structarm__sefr__instance__f32.html">arm_sefr_instance_f32</a> *S, const <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *pSrc, const uint32_t *pLabels, uint32_t numSamples, <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *pTmp)</td></tr>
+<tr class="memdesc:gad74c0d5660c56efec56d099012a9680f"><td class="mdescLeft">&#160;</td><td class="mdescRight">SEFR LDA stage.  <br /></td></tr>
+<tr class="separator:gad74c0d5660c56efec56d099012a9680f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab20ac1545c5d97a5f85b77dbb594eafd" id="r_gab20ac1545c5d97a5f85b77dbb594eafd"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gab20ac1545c5d97a5f85b77dbb594eafd">arm_sefr_predict_f32</a> (const <a class="el" href="structarm__sefr__instance__f32.html">arm_sefr_instance_f32</a> *S, const <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *pIn, <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *pScores)</td></tr>
+<tr class="memdesc:gab20ac1545c5d97a5f85b77dbb594eafd"><td class="mdescLeft">&#160;</td><td class="mdescRight">SEFR prediction.  <br /></td></tr>
+<tr class="separator:gab20ac1545c5d97a5f85b77dbb594eafd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab4653b93fae2f41bf7dbfd970b649430" id="r_gab4653b93fae2f41bf7dbfd970b649430"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__genericTypes.html#ga5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gab4653b93fae2f41bf7dbfd970b649430">arm_sefr_train_f32</a> (const <a class="el" href="structarm__sefr__instance__f32.html">arm_sefr_instance_f32</a> *S, const <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *pSrc, const uint32_t *pLabels, uint32_t numSamples, <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *pTmp)</td></tr>
+<tr class="memdesc:gab4653b93fae2f41bf7dbfd970b649430"><td class="mdescLeft">&#160;</td><td class="mdescRight">SEFR training.  <br /></td></tr>
+<tr class="separator:gab4653b93fae2f41bf7dbfd970b649430"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>Implement the naive gaussian Bayes estimator. The training must be done from scikit-learn.</p>
 <p>The parameters can be easily generated from the scikit-learn object. Some examples are given in DSP/Testing/PatternGeneration/Bayes.py</p>
+<p>Also implement SEFR, a linear classifier that can be trained on the device. Training does not iterate and has no gradients or learning rate.</p>
+<p>arm_sefr_train_f32 makes one pass over the labelled samples. arm_sefr_lda_f32 is an optional second pass that fits linear discriminant analysis on the class scores and writes the result into the same weights. It is usually more accurate, and the model size and prediction cost stay the same.</p>
+<p>The caller provides all the memory: the model buffers for arm_sefr_init_f32 and the temporary buffers for the training functions.</p>
+<p>The method comes from: H. Keshavarz, M. S. Abadeh, R. Rawassizadeh, "SEFR: A Fast Linear-Time Classifier for Ultra-Low Power Devices", <a href="https://arxiv.org/abs/2006.04620">https://arxiv.org/abs/2006.04620</a></p>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="ga6f7cde3d37f85f99bd1a125601a718a0" name="ga6f7cde3d37f85f99bd1a125601a718a0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga6f7cde3d37f85f99bd1a125601a718a0">&#9670;&#160;</a></span>arm_gaussian_naive_bayes_predict_f16()</h2>
@@ -235,6 +251,192 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The predicted class </dd></dl>
+
+</div>
+</div>
+<a id="ga52f8903ea04ba548b12bb004570d30ec" name="ga52f8903ea04ba548b12bb004570d30ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga52f8903ea04ba548b12bb004570d30ec">&#9670;&#160;</a></span>arm_sefr_init_f32()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_sefr_init_f32 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structarm__sefr__instance__f32.html">arm_sefr_instance_f32</a> *</td>          <td class="paramname"><span class="paramname"><em>S</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>vectorDimension</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>numberOfClasses</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *</td>          <td class="paramname"><span class="paramname"><em>pWeights</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *</td>          <td class="paramname"><span class="paramname"><em>pBias</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialization of a SEFR classifier instance. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">S</td><td>points to a SEFR instance structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">vectorDimension</td><td>dimension of the input vectors </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">numberOfClasses</td><td>number of classes </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pWeights</td><td>points to a buffer of numberOfClasses * vectorDimension values </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pBias</td><td>points to a buffer of numberOfClasses values </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gad74c0d5660c56efec56d099012a9680f" name="gad74c0d5660c56efec56d099012a9680f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad74c0d5660c56efec56d099012a9680f">&#9670;&#160;</a></span>arm_sefr_lda_f32()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__genericTypes.html#ga5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a> arm_sefr_lda_f32 </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structarm__sefr__instance__f32.html">arm_sefr_instance_f32</a> *</td>          <td class="paramname"><span class="paramname"><em>S</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *</td>          <td class="paramname"><span class="paramname"><em>pSrc</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint32_t *</td>          <td class="paramname"><span class="paramname"><em>pLabels</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>numSamples</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *</td>          <td class="paramname"><span class="paramname"><em>pTmp</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>SEFR LDA stage. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">S</td><td>points to a SEFR instance structure trained by arm_sefr_train_f32 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pSrc</td><td>points to numSamples * vectorDimension training values, row major </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pLabels</td><td>points to numSamples class indices in [0, numberOfClasses) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">numSamples</td><td>number of training samples </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pTmp</td><td>points to a temporary buffer of arm_sefr_lda_tmp_buffer_size() values </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ARM_MATH_SUCCESS, ARM_MATH_ARGUMENT_ERROR if a label is out of range or a class has no samples, or the error from the matrix function that failed. An error leaves the model unchanged.</dd></dl>
+<dl class="section user"><dt>Algorithm</dt><dd>One more pass over the data fits linear discriminant analysis on the numberOfClasses scores of the trained model. It uses a Gaussian for each class with a shared covariance, and takes the class priors from the data. The result goes into the same weights and bias, so the model size and the cost of arm_sefr_predict_f32 stay the same.</dd></dl>
+<dl class="section user"><dt>Ridge</dt><dd>The ridge added to the covariance starts at 1e-6 of the mean score variance. It grows by a factor of 10 each time the Cholesky decomposition fails, which can happen in float32 when the scores are nearly collinear. </dd></dl>
+
+</div>
+</div>
+<a id="gab20ac1545c5d97a5f85b77dbb594eafd" name="gab20ac1545c5d97a5f85b77dbb594eafd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab20ac1545c5d97a5f85b77dbb594eafd">&#9670;&#160;</a></span>arm_sefr_predict_f32()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t arm_sefr_predict_f32 </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structarm__sefr__instance__f32.html">arm_sefr_instance_f32</a> *</td>          <td class="paramname"><span class="paramname"><em>S</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *</td>          <td class="paramname"><span class="paramname"><em>pIn</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *</td>          <td class="paramname"><span class="paramname"><em>pScores</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>SEFR prediction. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">S</td><td>points to a SEFR instance structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pIn</td><td>points to the elements of the input vector </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pScores</td><td>points to a buffer of numberOfClasses values receiving the class scores </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The predicted class </dd></dl>
+
+</div>
+</div>
+<a id="gab4653b93fae2f41bf7dbfd970b649430" name="gab4653b93fae2f41bf7dbfd970b649430"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab4653b93fae2f41bf7dbfd970b649430">&#9670;&#160;</a></span>arm_sefr_train_f32()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__genericTypes.html#ga5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a> arm_sefr_train_f32 </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structarm__sefr__instance__f32.html">arm_sefr_instance_f32</a> *</td>          <td class="paramname"><span class="paramname"><em>S</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *</td>          <td class="paramname"><span class="paramname"><em>pSrc</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint32_t *</td>          <td class="paramname"><span class="paramname"><em>pLabels</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>numSamples</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__genericTypes.html#ga4611b605e45ab401f02cab15c5e38715">float32_t</a> *</td>          <td class="paramname"><span class="paramname"><em>pTmp</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>SEFR training. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">S</td><td>points to a SEFR instance structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pSrc</td><td>points to numSamples * vectorDimension training values, row major </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pLabels</td><td>points to numSamples class indices in [0, numberOfClasses) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">numSamples</td><td>number of training samples </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pTmp</td><td>points to a temporary buffer of arm_sefr_train_tmp_buffer_size() values </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ARM_MATH_SUCCESS, or ARM_MATH_ARGUMENT_ERROR if there are no samples, if a label is out of range, or if a class has no samples or holds all of them. Do not use the model after an error.</dd></dl>
+<dl class="section user"><dt>Algorithm</dt><dd>One pass over the data collects the sum of each class, the class counts and the minimum and maximum of each feature. Features are scaled to [0, 1]. For class k and feature j, p is the mean of the class, r is the mean of all other samples, and the weight is (p - r) / (p + r). The threshold is the mean of w . p and w . r, each weighted by the size of the other group. The final weights and bias include the scaling, so the predictor takes raw features. </dd></dl>
 
 </div>
 </div>
