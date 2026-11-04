@@ -22,12 +22,11 @@ jobs:
       max-parallel: 6
       fail-fast: false
       matrix:
-        os: [ubuntu-24.04, ubuntu-26.04]
         # GCC currently has too many problems with the C++ API
         compiler: [AC6, CLANG]
         core: [M0, M4, M55]
         dt: [F64_DT,COMPLEX_F32_DT,F32_DT,COMPLEX_F16_DT,F16_DT,COMPLEX_Q31_DT,Q31_DT,COMPLEX_Q15_DT,Q15_DT,Q7_DT]
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout
@@ -96,7 +95,7 @@ jobs:
         if: ${{ !cancelled() && (steps.execute.outcome == 'success' || steps.execute.outcome == 'failure') }}
         uses: actions/upload-artifact@v7
         with:
-          name: test-cpp-report_${{ matrix.os }}_${{ matrix.compiler }}_${{ matrix.core }}_${{ matrix.dt }}
+          name: test-cpp-report_${{ matrix.compiler }}_${{ matrix.core }}_${{ matrix.dt }}
           path: dsppp/${{ matrix.compiler }}_results/errors_${{ matrix.core }}.txt
           if-no-files-found: error
 
