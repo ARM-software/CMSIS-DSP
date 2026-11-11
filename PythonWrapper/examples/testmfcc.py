@@ -98,7 +98,8 @@ class TestMFCC_MFCC(unittest.TestCase):
            errorStatus,resQ31=dsp.arm_mfcc_q31(mfccq31,debugQ31,tmp,tmp2=tmp2)
         else:
            errorStatus,resQ31=dsp.arm_mfcc_q31(mfccq31,debugQ31,tmp)
-        res=self.FFTSize*Q31toF32(resQ31)
+        # arm_mfcc_q31 returns q8.23 values.
+        res=resQ31 / float(1 << 23)
 
         assert_allclose(res,ref,4e-5,4e-5)
 
@@ -140,7 +141,8 @@ class TestMFCC_MFCC(unittest.TestCase):
            errorStatus,resQ15=dsp.arm_mfcc_q15(mfccq15,debugQ15,tmp,tmp2=tmp2)
         else:
            errorStatus,resQ15=dsp.arm_mfcc_q15(mfccq15,debugQ15,tmp)
-        res=self.FFTSize*Q15toF32(resQ15)
+        # arm_mfcc_q15 returns q8.7 values.
+        res=resQ15 / float(1 << 7)
 
         assert_allclose(res,ref,3e-3,1e-2)
 
