@@ -1389,7 +1389,7 @@ extern int32_t arm_rifft_input_buffer_size(arm_math_target_arch arch,
    @param[in] dt Data type of the input data
    @param[in] nb_samples Number of samples in the input data
    @param[in] buf_id Identification for the temporary buffer
-   @param[in] use_cfft 1 if implementastion uses CFFT, 0 if RFFT
+   @param[in] use_cfft 1 if implementation uses CFFT, 0 if RFFT
    @return Length in datatype elements (real numbers) for the temporary buffer
 
    @note 0 means not applicable (temporary buffer not needed)

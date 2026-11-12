@@ -25,7 +25,7 @@ The commands must be run from `Testing` folder:
 
 `createDefaultFolder.sh`
 
-Matrix patterns for Neon are too big to be commited to github.
+Matrix patterns for Neon are too big to be committed to github.
 
 As consequence, they need to be regenerated.
 
