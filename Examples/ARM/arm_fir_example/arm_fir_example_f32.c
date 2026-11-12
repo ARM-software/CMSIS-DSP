@@ -71,7 +71,7 @@
  * <pre>
  *     fliplr(h)
  * </pre>
- * The resulting filter coefficients and are shown below.
+ * The resulting filter coefficients are shown below.
  * Note that the filter is symmetric (a property of linear phase FIR filters)
  * and the point of symmetry is sample 14.  Thus the filter will have a delay of
  * 14 samples for all frequencies.
