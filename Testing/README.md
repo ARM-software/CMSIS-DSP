@@ -588,9 +588,18 @@ This is done in testmain.cpp.
 
 ## HOW TO ADD NEW TESTS
 
+Before implementing a new test suite:
+
+1. Add the group, suite, tests, and associated pattern, reference, output, and parameter declarations to the applicable test description file (`desc.txt`, `desc_f16.txt`, or `desc_neon.txt`).
+2. Add or update a pattern generator under `PatternGeneration`. [`PatternGeneration/Example.py`](PatternGeneration/Example.py) shows how to create input and reference patterns whose paths match the `folder` directives in the test description.
+3. Generate the pattern, reference, and parameter files under `Patterns` and `Parameters`, as applicable.
+4. Put test suite headers in `Include/Tests` and implementations in `Source/Tests`. For benchmarks, use `Include/Benchmarks` and `Source/Benchmarks` instead.
+5. Add the implementation file to the applicable source list in `CMakeLists.txt`.
+6. Rerun `preprocess.py` and `processTests.py` as described in [Generate the cpp,h and txt files from the desc.txt file](#generate-the-cpph-and-txt-files-from-the-desctxt-file) so that the generated test declarations and sources match the updated description.
+
 For a test suite MyClass, the scripts are generating an include file MyClass_decl.h 
 
-You should create another include Include/MyClass.h and another cpp file Source/MyClass.cpp in TEsting folder.
+You should create `Include/Tests/MyClass.h` and `Source/Tests/MyClass.cpp` in the `Testing` folder.
 
 MyClass.h should contain:
 
