@@ -50,7 +50,7 @@
   @param[in]     blockSize number of input samples to process per call
   @return        execution status
                    - \ref ARM_MATH_SUCCESS        : Operation successful
-                   - \ref ARM_MATH_ARGUMENT_ERROR : filter length <code>numTaps</code> is not a multiple of the interpolation factor <code>L</code>
+                   - \ref ARM_MATH_LENGTH_ERROR   : filter length <code>numTaps</code> is not a multiple of the interpolation factor <code>L</code>
  
   @par           Details
                    <code>pCoeffs</code> points to the array of filter coefficients stored in time reversed order:
