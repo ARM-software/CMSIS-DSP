@@ -265,11 +265,11 @@ ARM_DSP_ATTRIBUTE void arm_fir_q7(
         acc2 = 0;
         acc3 = 0;
         /*
-         * Save 16 input samples in the history buffer
+         * Save the 4 input samples of the 4 outputs in the history buffer
          */
-        vst1q(pStateCur, vld1q(pTempSrc));
-        pStateCur += 16;
-        pTempSrc += 16;
+        vstrbq_p_s8(pStateCur, vldrbq_z_s8(pTempSrc, vctp8q(4)), vctp8q(4));
+        pStateCur += 4;
+        pTempSrc += 4;
 
         /*
          * inner coefficients loop
@@ -328,11 +328,11 @@ ARM_DSP_ATTRIBUTE void arm_fir_q7(
             acc1 = 0;
             acc2 = 0;
             /*
-             * Save 16 input samples in the history buffer
+             * Save the residual input samples in the history buffer
              */
-            vst1q(pStateCur, vld1q(pTempSrc));
-            pStateCur += 16;
-            pTempSrc += 16;
+            vstrbq_p_s8(pStateCur, vldrbq_z_s8(pTempSrc, vctp8q(residual)), vctp8q(residual));
+            pStateCur += residual;
+            pTempSrc += residual;
 
             int       i = tapsBlkCnt;
             while (i > 0)
@@ -342,10 +342,10 @@ ARM_DSP_ATTRIBUTE void arm_fir_q7(
                 vecIn0 = vld1q(pSamplesTmp);
                 acc0 = vmladavaq(acc0, vecIn0, vecCoeffs);
 
-                vecIn0 = vld1q(&pSamplesTmp[4]);
+                vecIn0 = vld1q(&pSamplesTmp[1]);
                 acc1 = vmladavaq(acc1, vecIn0, vecCoeffs);
 
-                vecIn0 = vld1q(&pSamplesTmp[8]);
+                vecIn0 = vld1q(&pSamplesTmp[2]);
                 acc2 = vmladavaq(acc2, vecIn0, vecCoeffs);
 
                 pSamplesTmp += 16;
@@ -367,11 +367,11 @@ ARM_DSP_ATTRIBUTE void arm_fir_q7(
             acc0 = 0;
             acc1 = 0;
             /*
-             * Save 16 input samples in the history buffer
+             * Save the residual input samples in the history buffer
              */
-            vst1q(pStateCur, vld1q(pTempSrc));
-            pStateCur += 16;
-            pTempSrc += 16;
+            vstrbq_p_s8(pStateCur, vldrbq_z_s8(pTempSrc, vctp8q(residual)), vctp8q(residual));
+            pStateCur += residual;
+            pTempSrc += residual;
 
             int       i = tapsBlkCnt;
             while (i > 0)
@@ -381,7 +381,7 @@ ARM_DSP_ATTRIBUTE void arm_fir_q7(
                 vecIn0 = vld1q(pSamplesTmp);
                 acc0 = vmladavaq(acc0, vecIn0, vecCoeffs);
 
-                vecIn0 = vld1q(&pSamplesTmp[4]);
+                vecIn0 = vld1q(&pSamplesTmp[1]);
                 acc1 = vmladavaq(acc1, vecIn0, vecCoeffs);
 
                 pSamplesTmp += 16;
@@ -401,11 +401,11 @@ ARM_DSP_ATTRIBUTE void arm_fir_q7(
 
             acc0 = 0;
             /*
-             * Save 16 input samples in the history buffer
+             * Save the residual input samples in the history buffer
              */
-            vst1q(pStateCur, vld1q(pTempSrc));
-            pStateCur += 16;
-            pTempSrc += 16;
+            vstrbq_p_s8(pStateCur, vldrbq_z_s8(pTempSrc, vctp8q(residual)), vctp8q(residual));
+            pStateCur += residual;
+            pTempSrc += residual;
 
             int       i = tapsBlkCnt;
             while (i > 0)
@@ -430,7 +430,7 @@ ARM_DSP_ATTRIBUTE void arm_fir_q7(
     pTempSrc = &pState[blockSize];
     pTempDest = pState;
 
-    blkCnt = numTaps >> 4;
+    blkCnt = (numTaps - 1U) >> 4;
     while (blkCnt > 0U)
     {
         vst1q(pTempDest, vld1q(pTempSrc));
@@ -438,7 +438,7 @@ ARM_DSP_ATTRIBUTE void arm_fir_q7(
         pTempDest += 16;
         blkCnt--;
     }
-    blkCnt = numTaps & 0xF;
+    blkCnt = (numTaps - 1U) & 0xF;
     if (blkCnt > 0U)
     {
         mve_pred16_t p0 = vctp8q(blkCnt);
