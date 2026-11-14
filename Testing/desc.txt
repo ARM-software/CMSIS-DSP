@@ -3351,10 +3351,16 @@ group Root {
 
                 Pattern FIRREFS_Q15_ID : FirRefs1_q15.txt
 
+                Pattern FIRINPUTS2_Q15_ID : FirInput2_q15.txt
+                Pattern FIRCOEFS2_Q15_ID : FirCoefs2_q15.txt
+                Pattern FIRCONFIGS2_S16_ID : FirConfigs2_s16.txt
+                Pattern FIRREFS2_Q15_ID : FirRefs2_q15.txt
+
                 Output  OUT_Q15_ID : Output
 
                 Functions {
                   arm_fir_q15:test_fir_q15
+                  arm_fir_q15 many taps:test_fir_long_q15
                 }
 
              }
@@ -3369,10 +3375,16 @@ group Root {
 
                 Pattern FIRREFS_Q7_ID : FirRefs1_q7.txt
 
+                Pattern FIRINPUTS2_Q7_ID : FirInput2_q7.txt
+                Pattern FIRCOEFS2_Q7_ID : FirCoefs2_q7.txt
+                Pattern FIRCONFIGS2_S16_ID : FirConfigs2_s16.txt
+                Pattern FIRREFS2_Q7_ID : FirRefs2_q7.txt
+
                 Output  OUT_Q7_ID : Output
 
                 Functions {
                   arm_fir_q7:test_fir_q7
+                  arm_fir_q7 many taps:test_fir_long_q7
                 }
 
              }
