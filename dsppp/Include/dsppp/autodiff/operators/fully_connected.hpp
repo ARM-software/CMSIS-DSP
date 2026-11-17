@@ -160,6 +160,7 @@ public:
                                      OperatorAccess<T>::values(input),
                                      OperatorAccess<T>::values(output));
                 }
+#if defined(ARM_FLOAT16_SUPPORTED)
                 else
                 {
                 arm_matrix_instance_f16 weight_matrix;
@@ -171,6 +172,7 @@ public:
                                      OperatorAccess<T>::values(input),
                                      OperatorAccess<T>::values(output));
                 }
+#endif
                 output_value += bias_value;
             }
             else

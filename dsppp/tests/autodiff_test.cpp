@@ -443,10 +443,12 @@ static void test_transposed_dot_type()
         ::arm_cmsis_dsp::transpose_view(matrix),vector);
     for (std::size_t column = 0; column < 5; ++column)
     {
+#if defined(ARM_FLOAT16_SUPPORTED)
         if constexpr (std::is_same<T,float16_t>::value)
             assert(static_cast<float>(result[column]) ==
                    static_cast<float>(reference[column]));
         else
+#endif
             assert(result[column] == reference[column]);
     }
 }

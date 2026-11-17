@@ -142,6 +142,7 @@ public:
 #endif
             arm_mat_mult_f32(&weight_matrix, &input_matrix, &output_matrix);
         }
+#if defined(ARM_FLOAT16_SUPPORTED)
         else
         {
         arm_matrix_instance_f16 weight_matrix;
@@ -161,6 +162,7 @@ public:
 #endif
             arm_mat_mult_f16(&weight_matrix, &input_matrix, &output_matrix);
         }
+#endif
 #if DSPPP_AUTODIFF_ENABLE_VALIDATION
         if (matrix_status != ARM_MATH_SUCCESS)
         {
