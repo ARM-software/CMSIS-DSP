@@ -37,9 +37,21 @@ jobs:
 
       - name: Activate vcpkg
         uses: ARM-software/cmsis-actions/vcpkg@v1
+        with:
+          cache: '-tools-v1'
 
       - name: Activate Arm tool license
         uses: ARM-software/cmsis-actions/armlm@v1
+
+      - name: Cache CMSIS packs
+        uses: actions/cache@v6
+        with:
+          # Respect the activated pack root, or use the Linux default.
+          path: ${{ env.CMSIS_PACK_ROOT || '~/.cache/arm/packs' }}
+          key: cmsis-packs-${{ runner.os }}-v1-c-${{ hashFiles('Testing/cmsis_build/**/*.csolution.yml', 'Testing/cmsis_build/**/*.cproject.yml', 'Testing/cmsis_build/**/*.clayer.yml', 'Testing/cmsis_build/**/*.cbuild-pack.yml') }}
+          restore-keys: |
+            cmsis-packs-${{ runner.os }}-v1-c-
+            cmsis-packs-${{ runner.os }}-v1-
 
       - name: Prepare framework
         run: |
@@ -76,6 +88,7 @@ jobs:
         run: |
           cd Testing/cmsis_build
           echo "Running tests"
+          export LD_PRELOAD="${pythonLocation}/lib/libpython3.10.so"
           python runall.py -s -g ${{ matrix.compiler }} -avh $AVH_FVP_PLUGINS/../bin
 
       - name: Upload test report

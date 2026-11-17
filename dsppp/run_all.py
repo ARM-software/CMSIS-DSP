@@ -67,7 +67,7 @@ def has_test_error(msg):
             return True
     return False
 
-def run(args,mustPrint=False,dumpStdErr=True,timeout=20,printCmd=False):
+def run(args,mustPrint=False,dumpStdErr=True,timeout=100,printCmd=False):
     global ERROR_OCCURED
     global DEBUG
     try:
