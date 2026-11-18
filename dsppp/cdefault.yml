@@ -39,6 +39,7 @@ default:
         - -Ofast 
         - -ffast-math
         - -Wno-unused-function
+        - -Wno-unused-template
         - -ffunction-sections
         - -mllvm -disable-vector-combine
       ASM:
@@ -85,6 +86,7 @@ default:
         - -Ofast 
         - -ffast-math
         - -Wno-unused-function
+        - -Wno-unused-template
         - -ffunction-sections
         - -fdata-sections
         - -Wno-psabi
@@ -125,6 +127,7 @@ default:
          - -Wno-parentheses-equality 
          - -Wno-reserved-identifier
          - -ffunction-sections
+         - -fdata-sections
       CPP:
         - -fno-rtti 
         - -fno-exceptions
@@ -137,7 +140,9 @@ default:
         - -Ofast 
         - -ffast-math
         - -Wno-unused-function
+        - -Wno-unused-template
         - -ffunction-sections
+        - -fdata-sections
       ASM:
         - -masm=auto
       Link:

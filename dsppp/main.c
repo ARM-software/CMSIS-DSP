@@ -2,6 +2,7 @@
 #include "RTE_Components.h"
 #include  CMSIS_device_header
 #include "stdio.h"
+#include <stdlib.h>
 
 #if defined(MPS3)
 #include "cmsis_driver_config.h"
@@ -86,6 +87,9 @@ int main(void)
 
 #if defined(MPS3)
     while(1);
+#elif defined(VHT) && defined(__PICOLIBC__)
+    /* This Picolibc startup loops if main returns. Exit via semihosting. */
+    exit(EXIT_SUCCESS);
 #else
 #if defined(RTE_Compiler_EventRecorder)
 endThread:

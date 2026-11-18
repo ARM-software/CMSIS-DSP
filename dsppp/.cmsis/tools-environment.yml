@@ -1,0 +1,42 @@
+cmsis-tools-environment:
+    version: 1.1.0
+    generated-by: arm.cmsis-csolution version 1.72.1-100-20261117
+    solution: ../test.csolution.yml
+    environment:
+        path:
+            - c:/Users/chrfav01/.vscode/extensions/arm.vscode-cmsis-debugger-1.10.1-win32-x64/tools/pyocd
+            - c:/Users/chrfav01/.vscode/extensions/arm.cmsis-csolution-1.72.1-100-20261117/tools/cmsis-toolbox/bin
+            - c:/Users/chrfav01/.vscode/extensions/arm.vscode-cmsis-debugger-1.10.1-win32-x64/tools/gdb/bin
+        variables:
+            AC6_TOOLCHAIN_6_22_0: C:/Users/chrfav01/.vcpkg/artifacts/2139c4c6/compilers.arm.armclang/6.22.0/bin
+            AC6_TOOLCHAIN_6_24_0: C:/Users/chrfav01/.vcpkg/artifacts/2139c4c6/compilers.arm.armclang/6.24.0/bin
+            CLANG_TOOLCHAIN_18_1_3: C:/Users/chrfav01/.vcpkg/artifacts/2139c4c6/compilers.arm.llvm.embedded/18.1.3/bin
+            CLANG_TOOLCHAIN_22_1_0: C:/Users/chrfav01/.vcpkg/artifacts/2139c4c6/compilers.arm.llvm.embedded/22.1.0/bin
+            CMSIS_PACK_ROOT: C:/ctools_pack
+            GCC_TOOLCHAIN_13_3_1: C:/Users/chrfav01/.vcpkg/artifacts/2139c4c6/compilers.arm.arm.none.eabi.gcc/13.3.1/bin
+            GCC_TOOLCHAIN_14_3_1: C:/Users/chrfav01/.vcpkg/artifacts/2139c4c6/compilers.arm.arm.none.eabi.gcc/14.3.1/bin
+    tools:
+        - name: pyOCD
+          version: v0.46.1
+          origin: built-in
+          provider:
+              type: vscode-extension
+              id: arm.vscode-cmsis-debugger
+          directory: c:/Users/chrfav01/.vscode/extensions/arm.vscode-cmsis-debugger-1.10.1-win32-x64/tools/pyocd
+          manual: https://pyocd.io/docs/
+        - name: CMSIS-Toolbox
+          version: 2.15.0-41-gb69523a
+          origin: built-in
+          provider:
+              type: vscode-extension
+              id: arm.cmsis-csolution
+          directory: c:/Users/chrfav01/.vscode/extensions/arm.cmsis-csolution-1.72.1-100-20261117/tools/cmsis-toolbox/bin
+          manual: https://open-cmsis-pack.github.io/cmsis-toolbox/
+        - name: Arm GNU GDB
+          version: 15.3.1
+          origin: built-in
+          provider:
+              type: vscode-extension
+              id: arm.vscode-cmsis-debugger
+          directory: c:/Users/chrfav01/.vscode/extensions/arm.vscode-cmsis-debugger-1.10.1-win32-x64/tools/gdb/bin
+          manual: https://developer.arm.com/Tools%20and%20Software/GNU%20Toolchain

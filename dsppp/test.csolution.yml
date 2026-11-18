@@ -1,5 +1,5 @@
 solution:
-  compiler: AC6
+  compiler: CLANG
 
   language-C: c11
   language-CPP: c++17
@@ -64,12 +64,12 @@ solution:
             - -lsemihost
       target-set:
         - set:
-          images:
-            - project-context: example.Release
           debugger:
             name: Arm-FVP
             model: FVP_Corstone_SSE-300_Ethos-U55
             config-file: fvp_configs/VHT-Corstone-300.txt
+          images:
+            - project-context: test.Release
 
     - type: VHT-M0P
       device: ARMCM0P
@@ -124,3 +124,4 @@ solution:
   projects:
     - project: ./tests/test.cproject.yml
     - project: ./example.cproject.yml
+  created-for: CMSIS-Toolbox@2.15.0

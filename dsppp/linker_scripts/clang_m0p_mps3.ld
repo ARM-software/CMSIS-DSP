@@ -119,7 +119,8 @@ SECTIONS
 		/* Need to pre-align so that the symbols come after padding */
 		. = ALIGN(8);
 
-		/* lists of constructors and destructors */
+		/* Picolibc walks preinit and init as one constructor range. */
+		PROVIDE_HIDDEN ( __bothinit_array_start = . );
 		PROVIDE_HIDDEN ( __preinit_array_start = . );
 		KEEP (*(.preinit_array))
 		PROVIDE_HIDDEN ( __preinit_array_end = . );
@@ -128,6 +129,7 @@ SECTIONS
 		KEEP (*(SORT_BY_INIT_PRIORITY(.init_array.*) SORT_BY_INIT_PRIORITY(.ctors.*)))
 		KEEP (*(.init_array .ctors))
 		PROVIDE_HIDDEN ( __init_array_end = . );
+		PROVIDE_HIDDEN ( __bothinit_array_end = . );
 
 		PROVIDE_HIDDEN ( __fini_array_start = . );
 		KEEP (*(SORT_BY_INIT_PRIORITY(.fini_array.*) SORT_BY_INIT_PRIORITY(.dtors.*)))
