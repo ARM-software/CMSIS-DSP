@@ -29,5 +29,9 @@ class BasicTestsQ31:public Client::Suite
             /* Offset or scale value */
             q31_t scalar;
 
+            /* Set for the saturation tests, where the reference pattern is the
+               exact Q31 limit and no tolerance is allowed. */
+            bool exactRef;
+
             q31_t min,max;
     };
