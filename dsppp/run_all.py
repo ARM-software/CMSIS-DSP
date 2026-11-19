@@ -84,6 +84,18 @@ def run(args,mustPrint=False,dumpStdErr=True,timeout=100,printCmd=False):
         if mustPrint:
             print(result.stdout)
         return(Result(result.stdout))
+    except subprocess.TimeoutExpired as error:
+        printError("Exception occurred")
+        ERROR_OCCURED = True
+        message = str(error)
+        # TimeoutExpired can expose bytes even when subprocess.run uses text=True.
+        for stream, output in (("STDERR", error.stderr if dumpStdErr else None),
+                               ("STDOUT", error.stdout)):
+            if output:
+                if isinstance(output, bytes):
+                    output = output.decode(errors="replace")
+                message += f"\n\n{stream}:\n\n{output}"
+        return(Result(message,error=True))
     except Exception as e:
         printError("Exception occurred")
         ERROR_OCCURED = True
@@ -105,6 +117,7 @@ parser.add_argument('-r', action='store_true', help="No full rebuild")
 parser.add_argument('-avh', nargs='?',type = str, default="C:/Keil_v5/ARM/avh-fvp/bin/models", help="AVH folder")
 parser.add_argument('-dump', action='store_true', help="Dump build output")
 parser.add_argument('-s', nargs='?',type = int,help="Force subtest")
+parser.add_argument('-n', action='store_true', help="Disable build and run")
 
 parser.add_argument('--dt', nargs='?',type = str, default="ALL",help="Dataype to run")
 parser.add_argument('--test', nargs='?',type = str, default="ALL",help="Test to run")
@@ -301,20 +314,23 @@ def configure_and_build_test(args,test_name,test,err,subtest,first):
         subteststr = ""
     with open("test_config.h","w") as c:
         print(HEADER % (test + (subteststr,)),file=c)
-    if first and not args.r:
-       res = run(["cbuild"] + cmd_args() + ["-r","--update-rte"],timeout=600,printCmd=True)
-    else:
-       res = run(["cbuild"] +cmd_args(),timeout=600,printCmd=True)
+    if not args.n:
+       if first and not args.r:
+          res = run(["cbuild"] + cmd_args() + ["-r","--update-rte"],timeout=600,printCmd=True)
+       else:
+          res = run(["cbuild"] +cmd_args(),timeout=600,printCmd=True)
 
-    # Dump build messages. Can be useful to find warnings in the tests
-    if args.dump:
-        print(res.msg,file=err)
-    
-    if not is_error(res,test_name,err):
-        if DEBUG:
-            print(res.msg)
+       # Dump build messages. Can be useful to find warnings in the tests
+       if args.dump:
+           print(res.msg,file=err)
+       
+       if not is_error(res,test_name,err):
+           if DEBUG:
+               print(res.msg)
+           return(True)
+       return(False)
+    else:
         return(True)
-    return(False)
 
 def process_allocator_data(test_name,test,msg,subtest):
     lines = msg.splitlines()
@@ -418,11 +434,12 @@ def runATest(args,test,file_err,nb,NB_MAX,current_nb_axf,nb_axf,first=True,subte
         return
     printSubTitle("Configure and build")
     if configure_and_build_test(args,test_name,test,file_err,subtest,first):
-        printSubTitle("Run")
-        if args.p == "VHT":
-            runVHT(test_name,test,file_err,subtest)
-        if args.p == "MPS3" and args.c == "M55":
-            runMPS3(test_name,test,file_err,subtest)     
+        if not args.n:
+            printSubTitle("Run")
+            if args.p == "VHT":
+                runVHT(test_name,test,file_err,subtest)
+            if args.p == "MPS3" and args.c == "M55":
+                runMPS3(test_name,test,file_err,subtest)     
 
 nb_axf = 0
 for test in all_tests:

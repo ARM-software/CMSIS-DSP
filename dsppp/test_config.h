@@ -9,7 +9,7 @@
 
 
 #define AUTODIFF_TEST
-#define F32_DT
+#define F16_DT
 #define DYNAMIC_TEST
 
 
