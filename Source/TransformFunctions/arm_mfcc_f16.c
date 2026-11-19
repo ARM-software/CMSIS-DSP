@@ -50,6 +50,41 @@
   MFCC Transform
 
   There are separate functions for floating-point, Q15, and Q31 data types.
+
+  @par Processing convention
+  Each call processes one frame whose length is the configured FFT length. The
+  function applies the configured window, computes the FFT magnitude, applies
+  the configured Mel filter bank, takes the natural logarithm after adding a
+  data-type-specific positive floor, and multiplies the result by the configured
+  DCT matrix.
+
+  The Mel filters operate on the magnitude spectrum, not the squared magnitude
+  (power spectrum). When comparing with an API that exposes a power exponent,
+  use <code>power=1.0</code>.
+
+  The window, Mel filter bank, and DCT matrix are supplied during instance
+  initialization, so the MFCC functions do not impose a particular window,
+  Mel-scale normalization, DCT type, or DCT normalization. Comparisons with
+  another MFCC implementation must use the same coefficient arrays.
+
+  The <code>cmsisdsp.mfcc</code> Python helper generates triangular filters on
+  the HTK Mel scale
+
+  \f[
+  m(f) = 1127 \ln\left(1 + \frac{f}{700}\right)
+  \f]
+
+  without area normalization. Its DCT helper generates a type-II matrix. For
+  <code>M</code> Mel filters, its entries are
+
+  \f[
+  D_{k,n} = \sqrt{\frac{2}{M}}
+            \cos\left(\frac{\pi k(n + 1/2)}{M}\right).
+  \f]
+
+  The factor \f$\sqrt{2/M}\f$ is applied to every row, including
+  <code>k=0</code>. This differs from an orthonormal DCT-II, whose first row uses
+  \f$\sqrt{1/M}\f$.
  */
 
 
