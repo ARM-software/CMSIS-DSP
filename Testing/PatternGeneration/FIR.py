@@ -93,7 +93,66 @@ def writeTests(config,format):
     config.writeInput(1, tapConfigs,"FirCoefs")
     config.writeReferenceS16(1,defs,"FirConfigs")
 
-    
+# Number of successive calls on the same instance in the long FIR tests
+LONG_NBCALLS = 3
+
+def writeLongTests(config,format):
+    """ Q15 and Q7 FIR with a number of taps above the limit of the
+    specialized Helium kernels (32 for Q15, 64 for Q7), for all the values
+    of blockSize & 3.
+
+    The references are computed with an exact model of the fixed point
+    FIR, so the test is bit exact :
+    - Q15 : 64-bit accumulator, >> 15, saturation to 16 bits
+    - Q7  : 32-bit accumulator, >> 7, saturation to 8 bits
+
+    The coefficients are written in the CMSIS-DSP order
+    (b[numTaps-1], ..., b[0]) and the filter is
+    y[n] = sum_k state[n + k] * pCoeffs[k]
+    where state is the history (numTaps - 1 zeros after the init)
+    followed by the input samples.
+    """
+    rng = np.random.default_rng(1234 + format)
+    blk = [1, 2, 3, 4, 5, 6, 7, 8, 13, 16]
+    if format == 15:
+       # Even numbers of taps : arm_fir_init_q15 requires an even numTaps
+       # with ARM_MATH_LOOPUNROLL
+       taps = [34, 40, 48, 64, 100, 200]
+       scale = 2**15
+       shift = 15
+       satmin, satmax = -2**15, 2**15 - 1
+       coefmax = 2**12
+    else:
+       taps = [65, 72, 96, 128, 200]
+       scale = 2**7
+       shift = 7
+       satmin, satmax = -2**7, 2**7 - 1
+       coefmax = 2**4
+
+    nbInput = LONG_NBCALLS * max(blk)
+    # Full scale input : the outputs saturate for some configurations
+    x = [int(v) for v in rng.integers(satmin, satmax + 1, nbInput)]
+
+    tapConfigs=[]
+    output=[]
+    defs=[]
+
+    for b in blk:
+        for t in taps:
+            c = [int(v) for v in rng.integers(-coefmax, coefmax + 1, t)]
+            state = [0] * (t - 1) + x[0:LONG_NBCALLS * b]
+            for n in range(LONG_NBCALLS * b):
+                acc = sum(state[n + k] * c[k] for k in range(t))
+                output.append(min(max(acc >> shift, satmin), satmax))
+            tapConfigs += c
+            defs += [b, t]
+
+    config.writeInput(2, [v / scale for v in x],"FirInput")
+    config.writeInput(2, [v / scale for v in output],"FirRefs")
+    config.writeInput(2, [v / scale for v in tapConfigs],"FirCoefs")
+    config.writeReferenceS16(2,defs,"FirConfigs")
+
+
 def generatePatterns():
     PATTERNDIR = os.path.join("Patterns","DSP","Filtering","FIR","FIR")
     PARAMDIR = os.path.join("Parameters","DSP","Filtering","FIR","FIR")
@@ -118,6 +177,9 @@ def generatePatterns():
     writeTests(configq31,31)
     writeTests(configq15,15)
     writeTests(configq7,7)
+
+    writeLongTests(configq15,15)
+    writeLongTests(configq7,7)
 
 
 if __name__ == '__main__':

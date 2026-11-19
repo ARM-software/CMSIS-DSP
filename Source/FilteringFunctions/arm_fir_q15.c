@@ -256,11 +256,11 @@ switch(nbTaps) {
         acc3 = 0LL;
 
         /*
-         * Save 8 input samples in the history buffer
+         * Save the 4 input samples of the 4 outputs in the history buffer
          */
-        vst1q(pStateCur, vld1q(pTempSrc));
-        pStateCur += 8;
-        pTempSrc += 8;
+        vstrhq_p_s16(pStateCur, vldrhq_z_s16(pTempSrc, vctp16q(4)), vctp16q(4));
+        pStateCur += 4;
+        pTempSrc += 4;
 
         int       i = tapsBlkCnt;
         while (i > 0)
@@ -315,11 +315,11 @@ switch(nbTaps) {
             acc2 = 0LL;
 
             /*
-             * Save 8 input samples in the history buffer
+             * Save the residual input samples in the history buffer
              */
-            *(q15x8_t *) pStateCur = *(q15x8_t *) pTempSrc;
-            pStateCur += 8;
-            pTempSrc += 8;
+            vstrhq_p_s16(pStateCur, vldrhq_z_s16(pTempSrc, vctp16q(residual)), vctp16q(residual));
+            pStateCur += residual;
+            pTempSrc += residual;
 
             int       i = tapsBlkCnt;
             while (i > 0)
@@ -332,10 +332,10 @@ switch(nbTaps) {
                 vecIn0 = vld1q(pSamplesTmp);
                 acc0 = vmlaldavaq(acc0, vecIn0, vecCoeffs);
 
-                vecIn0 = vld1q(&pSamplesTmp[2]);
+                vecIn0 = vld1q(&pSamplesTmp[1]);
                 acc1 = vmlaldavaq(acc1, vecIn0, vecCoeffs);
 
-                vecIn0 = vld1q(&pSamplesTmp[4]);
+                vecIn0 = vld1q(&pSamplesTmp[2]);
                 acc2 = vmlaldavaq(acc2, vecIn0, vecCoeffs);
 
                 pSamplesTmp += 8;
@@ -346,9 +346,6 @@ switch(nbTaps) {
                 i--;
             }
 
-            acc0 = asrl(acc0, 15);
-            acc1 = asrl(acc1, 15);
-            acc2 = asrl(acc2, 15);
 
             *pOutput++ = (q15_t) MVE_ASRL_SAT16(acc0, 15);
             *pOutput++ = (q15_t) MVE_ASRL_SAT16(acc1, 15);
@@ -364,11 +361,11 @@ switch(nbTaps) {
             acc0 = 0LL;
             acc1 = 0LL;
             /*
-             * Save 8 input samples in the history buffer
+             * Save the residual input samples in the history buffer
              */
-            vst1q(pStateCur, vld1q(pTempSrc));
-            pStateCur += 8;
-            pTempSrc += 8;
+            vstrhq_p_s16(pStateCur, vldrhq_z_s16(pTempSrc, vctp16q(residual)), vctp16q(residual));
+            pStateCur += residual;
+            pTempSrc += residual;
 
             int       i = tapsBlkCnt;
             while (i > 0)
@@ -381,7 +378,7 @@ switch(nbTaps) {
                 vecIn0 = vld1q(pSamplesTmp);
                 acc0 = vmlaldavaq(acc0, vecIn0, vecCoeffs);
 
-                vecIn0 = vld1q(&pSamplesTmp[2]);
+                vecIn0 = vld1q(&pSamplesTmp[1]);
                 acc1 = vmlaldavaq(acc1, vecIn0, vecCoeffs);
 
                 pSamplesTmp += 8;
@@ -405,11 +402,11 @@ switch(nbTaps) {
             acc0 = 0LL;
 
             /*
-             * Save 8 input samples in the history buffer
+             * Save the residual input samples in the history buffer
              */
-            vst1q(pStateCur, vld1q(pTempSrc));
-            pStateCur += 8;
-            pTempSrc += 8;
+            vstrhq_p_s16(pStateCur, vldrhq_z_s16(pTempSrc, vctp16q(residual)), vctp16q(residual));
+            pStateCur += residual;
+            pTempSrc += residual;
 
             int       i = tapsBlkCnt;
             while (i > 0)
@@ -441,7 +438,7 @@ switch(nbTaps) {
     pTempSrc = &pState[blockSize];
     pTempDest = pState;
 
-    blkCnt = numTaps >> 3;
+    blkCnt = (numTaps - 1U) >> 3;
     while (blkCnt > 0U)
     {
         vst1q(pTempDest, vld1q(pTempSrc));
@@ -449,7 +446,7 @@ switch(nbTaps) {
         pTempDest += 8;
         blkCnt--;
     }
-    blkCnt = numTaps & 7;
+    blkCnt = (numTaps - 1U) & 7;
     if (blkCnt > 0U)
     {
         mve_pred16_t p0 = vctp16q(blkCnt);
