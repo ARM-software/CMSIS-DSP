@@ -65,15 +65,11 @@ ARM_DSP_ATTRIBUTE arm_status arm_sqrt_q15(
   {
     signBits1 = __CLZ(number) - 17;
 
+    /* Force an even normalization shift. */
+    signBits1 &= ~1;
+
     /* Shift by the number of signBits1 */
-    if ((signBits1 % 2) == 0)
-    {
-      number = number << signBits1;
-    }
-    else
-    {
-      number = number << (signBits1 - 1);
-    }
+    number = number << signBits1;
     /* Start value for 1/sqrt(x) for the Newton iteration */
     var1 = sqrt_initial_lut_q15[(number>> 11) - (Q12QUARTER >> 11)];
 
@@ -100,14 +96,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_sqrt_q15(
     var1 = ((q15_t) (((q31_t) number * var1) >> 12));
 
     /* Shift the output down accordingly */
-    if ((signBits1 % 2) == 0)
-    {
-      var1 = var1 >> (signBits1 / 2);
-    }
-    else
-    {
-      var1 = var1 >> ((signBits1 - 1) / 2);
-    }
+    var1 = var1 >> (signBits1 / 2);
     *pOut = var1;
 
 
