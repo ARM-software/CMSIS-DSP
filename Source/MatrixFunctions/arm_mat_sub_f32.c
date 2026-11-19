@@ -63,6 +63,11 @@
   The functions check to make sure that
   <code>pSrcA</code>, <code>pSrcB</code>, and <code>pDst</code> have the same
   number of rows and columns.
+
+  @par In-place operation
+  The destination matrix may be the same instance as either input matrix.
+  Its data buffer may also be identical to either source data buffer. Other
+  overlapping buffer arrangements are not supported.
  */
 
 /**
