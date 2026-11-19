@@ -354,6 +354,13 @@ a double precision computation.
 
           output.create(ref.nbSamples(),ComplexTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
         break;
+        case ComplexTestsQ15::TEST_CMPLX_MULT_CMPLX_Q15_28:
+          ref.reload(ComplexTestsQ15::REF_CMPLX_MULT_CMPLX_SAT_Q15_ID,mgr);
+          input1.reload(ComplexTestsQ15::INPUT_SAT1_Q15_ID,mgr);
+          input2.reload(ComplexTestsQ15::INPUT_SAT2_Q15_ID,mgr);
+
+          output.create(ref.nbSamples(),ComplexTestsQ15::OUT_SAMPLES_Q15_ID,mgr);
+        break;
        }
       
 
