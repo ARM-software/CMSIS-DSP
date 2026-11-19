@@ -1710,16 +1710,16 @@ group Root {
                 Test nb=2n   arm_cmplx_mult_cmplx_f64:test_cmplx_mult_cmplx_f64
                 Test nb=2n+1 arm_cmplx_mult_cmplx_f64:test_cmplx_mult_cmplx_f64
 
-                disabled{Test nb=2    arm_cmplx_mult_real_f64:test_cmplx_mult_real_f64}
-                disabled{Test nb=2n   arm_cmplx_mult_real_f64:test_cmplx_mult_real_f64}
-                disabled{Test nb=2n+1 arm_cmplx_mult_real_f64:test_cmplx_mult_real_f64}
+                Test nb=2    arm_cmplx_mult_real_f64:test_cmplx_mult_real_f64
+                Test nb=2n   arm_cmplx_mult_real_f64:test_cmplx_mult_real_f64
+                Test nb=2n+1 arm_cmplx_mult_real_f64:test_cmplx_mult_real_f64
 
                 disabled{Test long    arm_cmplx_conj_f64:test_cmplx_conj_f64}
                 disabled{Test long    arm_cmplx_dot_prod_f64:test_cmplx_dot_prod_f64}
                 Test long    arm_cmplx_mag_f64:test_cmplx_mag_f64
                 Test long    arm_cmplx_mag_squared_f64:test_cmplx_mag_squared_f64
                 Test long    arm_cmplx_mult_cmplx_f64:test_cmplx_mult_cmplx_f64
-                disabled{Test long    arm_cmplx_mult_real_f64:test_cmplx_mult_real_f64}
+                Test long    arm_cmplx_mult_real_f64:test_cmplx_mult_real_f64
 
               }
 

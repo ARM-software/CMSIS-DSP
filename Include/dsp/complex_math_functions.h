@@ -336,6 +336,19 @@ const float64_t * pSrcB,
 	  float64_t * pDst,
 	  uint32_t numSamples);
 
+/**
+ * @brief  Floating-point complex-by-real multiplication
+ * @param[in]  pSrcCmplx   points to the complex input vector
+ * @param[in]  pSrcReal    points to the real input vector
+ * @param[out] pCmplxDst   points to the complex output vector
+ * @param[in]  numSamples  number of samples in each vector
+ */
+void arm_cmplx_mult_real_f64(
+const float64_t * pSrcCmplx,
+const float64_t * pSrcReal,
+	  float64_t * pCmplxDst,
+	  uint32_t numSamples);
+
 
 
 #ifdef   __cplusplus
