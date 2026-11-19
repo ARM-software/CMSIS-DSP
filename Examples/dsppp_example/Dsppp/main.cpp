@@ -114,7 +114,7 @@ void test2() {
   // (instead of moved) to the vectors using arena_allocator.
   using ArenaVector = Vector<float32_t, DYNAMIC, arena_allocator>;
 
-  // Dyamically sized vectors using the arena allocator
+  // Dynamically sized vectors using the arena allocator
   ArenaVector a(NB);
   ArenaVector b(NB);
   ArenaVector c(NB);
