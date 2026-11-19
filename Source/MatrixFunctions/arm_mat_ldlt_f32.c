@@ -50,7 +50,7 @@
    * @param[in]  pSrc   points to the instance of the input floating-point matrix structure.
    * @param[out] pl   points to the instance of the output floating-point triangular matrix structure.
    * @param[out] pd   points to the instance of the output floating-point diagonal matrix structure.
-   * @param[out] pp   points to the instance of the output floating-point permutation vector.
+   * @param[out] pp   points to the output permutation vector of length N.
    * @return The function returns ARM_MATH_SIZE_MISMATCH, if the dimensions do not match.
    * @return        execution status
                    - \ref ARM_MATH_SUCCESS       : Operation successful
@@ -58,6 +58,11 @@
                    - \ref ARM_MATH_DECOMPOSITION_FAILURE      : Input matrix cannot be decomposed
    * @par
    *  Computes the LDL^t decomposition of a matrix A such that P A P^t = L D L^t.
+   * @par          Output representation
+   *  The output <code>pd</code> is an N x N diagonal matrix whose off-diagonal elements are zero.
+   *  For each decomposition step k, <code>pp[k]</code> records the row and column index swapped with k.
+   *  To construct P, start with an N x N identity matrix and swap rows k and <code>pp[k]</code>
+   *  for k = 0, 1, ..., N - 1, in that order.
    */
 ARM_DSP_ATTRIBUTE arm_status arm_mat_ldlt_f32(
   const arm_matrix_instance_f32 * pSrc,
@@ -309,7 +314,7 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_ldlt_f32(
    * @param[in]  pSrc   points to the instance of the input floating-point matrix structure.
    * @param[out] pl   points to the instance of the output floating-point triangular matrix structure.
    * @param[out] pd   points to the instance of the output floating-point diagonal matrix structure.
-   * @param[out] pp   points to the instance of the output floating-point permutation vector.
+   * @param[out] pp   points to the output permutation vector of length N.
    * @return The function returns ARM_MATH_SIZE_MISMATCH, if the dimensions do not match.
    * @return        execution status
                    - \ref ARM_MATH_SUCCESS       : Operation successful
@@ -317,6 +322,11 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_ldlt_f32(
                    - \ref ARM_MATH_DECOMPOSITION_FAILURE      : Input matrix cannot be decomposed
    * @par
    *  Computes the LDL^t decomposition of a matrix A such that P A P^t = L D L^t.
+   * @par          Output representation
+   *  The output <code>pd</code> is an N x N diagonal matrix whose off-diagonal elements are zero.
+   *  For each decomposition step k, <code>pp[k]</code> records the row and column index swapped with k.
+   *  To construct P, start with an N x N identity matrix and swap rows k and <code>pp[k]</code>
+   *  for k = 0, 1, ..., N - 1, in that order.
    */
 ARM_DSP_ATTRIBUTE arm_status arm_mat_ldlt_f32(
   const arm_matrix_instance_f32 * pSrc,
