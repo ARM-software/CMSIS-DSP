@@ -119,7 +119,7 @@ ARM_DSP_ATTRIBUTE void arm_var_q15(
     squareOfMean = arm_div_int64_to_int32((q63_t)sum * sum, (q31_t)(blockSize * (blockSize - 1U)));
 
     /* mean of the squares minus the square of the mean. */
-    *pResult = (meanOfSquares - squareOfMean) >> 15;
+    *pResult = __SSAT((meanOfSquares - squareOfMean) >> 15, 16);
 }
 #else
 ARM_DSP_ATTRIBUTE void arm_var_q15(
@@ -223,7 +223,7 @@ ARM_DSP_ATTRIBUTE void arm_var_q15(
   squareOfMean = (q31_t) ((q63_t) sum * sum / (q63_t)(blockSize * (blockSize - 1U)));
 
   /* mean of squares minus the square of mean. */
-  *pResult = (meanOfSquares - squareOfMean) >> 15U;
+  *pResult = __SSAT((meanOfSquares - squareOfMean) >> 15U, 16);
 }
 #endif /* defined(ARM_MATH_MVEI) */
 
