@@ -121,12 +121,6 @@
                    <code>pState</code> is the address of the state buffer.
                    <code>pCoeffs</code> is the address of the coefficient buffer;
 
-  @par           Neon version
-                  For Neon version, the function arm_biquad_cascade_df2T_compute_coefs_x must be
-                  used in addition to arm_biquad_cascade_df2T_init_x.
-
-                  See the documentation of arm_biquad_cascade_df2T_init_x for more details.
-
 */
 
 /**

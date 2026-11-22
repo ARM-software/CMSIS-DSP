@@ -117,24 +117,7 @@ a double precision computation.
            The filter is initialized with the coefs, blockSize and numTaps.
 
            */
-// Neon disabled because this filter has issues with Neon.
-// So test changed to use the scalar version
-//#if !defined(ARM_MATH_NEON) 
            arm_biquad_cascade_df2T_init_f32(&this->Sdf2T,3,coefsp,statep);
-#if 0
-//#else
-           float32_t *vecCoefsPtr = vecCoefs.ptr();
-
-           // Those Neon coefs must be computed from original coefs
-           arm_biquad_cascade_df2T_compute_coefs_f32(3,coefsp,vecCoefsPtr);
-
-           arm_biquad_cascade_df2T_init_f32(&this->Sdf2T,
-                    3,
-                    vecCoefsPtr,
-                    statep);
-
-           
-#endif
 
            /*
            
@@ -246,13 +229,7 @@ a double precision computation.
         float32_t *statep = state.ptr();
         const int16_t *configsp = configs.ptr();
 
-// Neon version has issues and is disabled.
-// So the test is not using Neon version
-//#if !defined(ARM_MATH_NEON) 
         const float32_t *coefsp = coefs.ptr();
-//#else
-//        float32_t *coefsp = coefs.ptr();
-//#endif
         
         const float32_t *inputp = inputs.ptr();
         float32_t *outp = output.ptr();
@@ -288,22 +265,7 @@ a double precision computation.
            The filter is initialized with the coefs, blockSize and numTaps.
 
            */
-//#if !defined(ARM_MATH_NEON) 
            arm_biquad_cascade_df2T_init_f32(&this->Sdf2T,numStages,coefsp,statep);
-//#else
-#if 0
-           float32_t *vecCoefsPtr = vecCoefs.ptr();
-
-           // Those Neon coefs must be computed from original coefs
-           arm_biquad_cascade_df2T_compute_coefs_f32(numStages,coefsp,vecCoefsPtr);
-
-           arm_biquad_cascade_df2T_init_f32(&this->Sdf2T,
-                    numStages,
-                    vecCoefsPtr,
-                    statep);
-
-           
-#endif
            coefsp += numStages * 5;
 
            /*
