@@ -183,6 +183,21 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_f32(
 }
 #else
 
+/* One step of the recursion, with the coefficients b0, b1, b2, a1, a2 of the
+ * current stage. With ARM_FMAF_FUSED (AArch64) the operations are fused and
+ * ordered so that the output y enters the state update last : the chain
+ * between two samples is 2 FMA, whatever the reassociation done by the
+ * compiler. Otherwise the original expressions are kept unchanged. */
+#if defined(ARM_FMAF_FUSED)
+#define ARM_DF2T_Y(x, d1)          ARM_FMAF(b0, (x), (d1))
+#define ARM_DF2T_D1(d1, y, x, d2)  do { (d1) = ARM_FMAF(a1, (y), ARM_FMAF(b1, (x), (d2))); } while (0)
+#define ARM_DF2T_D2(d2, y, x)      do { (d2) = ARM_FMAF(a2, (y), b2 * (x)); } while (0)
+#else
+#define ARM_DF2T_Y(x, d1)          (b0 * (x) + (d1))
+#define ARM_DF2T_D1(d1, y, x, d2)  do { (d1) = b1 * (x) + (d2); (d1) += a1 * (y); } while (0)
+#define ARM_DF2T_D2(d2, y, x)      do { (d2) = b2 * (x); (d2) += a2 * (y); } while (0)
+#endif
+
 ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_f32(
   const arm_biquad_cascade_df2T_instance_f32 * S,
   const float32_t * pSrc,
@@ -228,208 +243,176 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_f32(
 /*  1 */
        Xn1 = *pIn++;
 
-       acc1 = b0 * Xn1 + d1;
+       acc1 = ARM_DF2T_Y(Xn1, d1);
 
-       d1 = b1 * Xn1 + d2;
-       d1 += a1 * acc1;
+       ARM_DF2T_D1(d1, acc1, Xn1, d2);
 
-       d2 = b2 * Xn1;
-       d2 += a2 * acc1;
+       ARM_DF2T_D2(d2, acc1, Xn1);
 
        *pOut++ = acc1;
 
 /*  2 */
          Xn1 = *pIn++;
 
-        acc1 = b0 * Xn1 + d1;
+        acc1 = ARM_DF2T_Y(Xn1, d1);
 
-        d1 = b1 * Xn1 + d2;
-        d1 += a1 * acc1;
+        ARM_DF2T_D1(d1, acc1, Xn1, d2);
 
-        d2 = b2 * Xn1;
-        d2 += a2 * acc1;
+        ARM_DF2T_D2(d2, acc1, Xn1);
 
         *pOut++ = acc1;
 
 /*  3 */
          Xn1 = *pIn++;
 
-        acc1 = b0 * Xn1 + d1;
+        acc1 = ARM_DF2T_Y(Xn1, d1);
 
-        d1 = b1 * Xn1 + d2;
-        d1 += a1 * acc1;
+        ARM_DF2T_D1(d1, acc1, Xn1, d2);
 
-        d2 = b2 * Xn1;
-        d2 += a2 * acc1;
+        ARM_DF2T_D2(d2, acc1, Xn1);
 
         *pOut++ = acc1;
 
 /*  4 */
          Xn1 = *pIn++;
 
-        acc1 = b0 * Xn1 + d1;
+        acc1 = ARM_DF2T_Y(Xn1, d1);
 
-        d1 = b1 * Xn1 + d2;
-        d1 += a1 * acc1;
+        ARM_DF2T_D1(d1, acc1, Xn1, d2);
 
-        d2 = b2 * Xn1;
-        d2 += a2 * acc1;
+        ARM_DF2T_D2(d2, acc1, Xn1);
 
         *pOut++ = acc1;
 
 /*  5 */
          Xn1 = *pIn++;
 
-        acc1 = b0 * Xn1 + d1;
+        acc1 = ARM_DF2T_Y(Xn1, d1);
 
-        d1 = b1 * Xn1 + d2;
-        d1 += a1 * acc1;
+        ARM_DF2T_D1(d1, acc1, Xn1, d2);
 
-        d2 = b2 * Xn1;
-        d2 += a2 * acc1;
+        ARM_DF2T_D2(d2, acc1, Xn1);
 
         *pOut++ = acc1;
 
 /*  6 */
          Xn1 = *pIn++;
 
-        acc1 = b0 * Xn1 + d1;
+        acc1 = ARM_DF2T_Y(Xn1, d1);
 
-        d1 = b1 * Xn1 + d2;
-        d1 += a1 * acc1;
+        ARM_DF2T_D1(d1, acc1, Xn1, d2);
 
-        d2 = b2 * Xn1;
-        d2 += a2 * acc1;
+        ARM_DF2T_D2(d2, acc1, Xn1);
 
         *pOut++ = acc1;
 
 /*  7 */
          Xn1 = *pIn++;
 
-        acc1 = b0 * Xn1 + d1;
+        acc1 = ARM_DF2T_Y(Xn1, d1);
 
-        d1 = b1 * Xn1 + d2;
-        d1 += a1 * acc1;
+        ARM_DF2T_D1(d1, acc1, Xn1, d2);
 
-        d2 = b2 * Xn1;
-        d2 += a2 * acc1;
+        ARM_DF2T_D2(d2, acc1, Xn1);
 
         *pOut++ = acc1;
 
 /*  8 */
          Xn1 = *pIn++;
 
-        acc1 = b0 * Xn1 + d1;
+        acc1 = ARM_DF2T_Y(Xn1, d1);
 
-        d1 = b1 * Xn1 + d2;
-        d1 += a1 * acc1;
+        ARM_DF2T_D1(d1, acc1, Xn1, d2);
 
-        d2 = b2 * Xn1;
-        d2 += a2 * acc1;
+        ARM_DF2T_D2(d2, acc1, Xn1);
 
         *pOut++ = acc1;
 
 /*  9 */
          Xn1 = *pIn++;
 
-        acc1 = b0 * Xn1 + d1;
+        acc1 = ARM_DF2T_Y(Xn1, d1);
 
-        d1 = b1 * Xn1 + d2;
-        d1 += a1 * acc1;
+        ARM_DF2T_D1(d1, acc1, Xn1, d2);
 
-        d2 = b2 * Xn1;
-        d2 += a2 * acc1;
+        ARM_DF2T_D2(d2, acc1, Xn1);
 
         *pOut++ = acc1;
 
 /* 10 */
          Xn1 = *pIn++;
 
-        acc1 = b0 * Xn1 + d1;
+        acc1 = ARM_DF2T_Y(Xn1, d1);
 
-        d1 = b1 * Xn1 + d2;
-        d1 += a1 * acc1;
+        ARM_DF2T_D1(d1, acc1, Xn1, d2);
 
-        d2 = b2 * Xn1;
-        d2 += a2 * acc1;
+        ARM_DF2T_D2(d2, acc1, Xn1);
 
         *pOut++ = acc1;
 
 /* 11 */
          Xn1 = *pIn++;
 
-        acc1 = b0 * Xn1 + d1;
+        acc1 = ARM_DF2T_Y(Xn1, d1);
 
-        d1 = b1 * Xn1 + d2;
-        d1 += a1 * acc1;
+        ARM_DF2T_D1(d1, acc1, Xn1, d2);
 
-        d2 = b2 * Xn1;
-        d2 += a2 * acc1;
+        ARM_DF2T_D2(d2, acc1, Xn1);
 
         *pOut++ = acc1;
 
 /* 12 */
          Xn1 = *pIn++;
 
-        acc1 = b0 * Xn1 + d1;
+        acc1 = ARM_DF2T_Y(Xn1, d1);
 
-        d1 = b1 * Xn1 + d2;
-        d1 += a1 * acc1;
+        ARM_DF2T_D1(d1, acc1, Xn1, d2);
 
-        d2 = b2 * Xn1;
-        d2 += a2 * acc1;
+        ARM_DF2T_D2(d2, acc1, Xn1);
 
         *pOut++ = acc1;
 
 /* 13 */
          Xn1 = *pIn++;
 
-        acc1 = b0 * Xn1 + d1;
+        acc1 = ARM_DF2T_Y(Xn1, d1);
 
-        d1 = b1 * Xn1 + d2;
-        d1 += a1 * acc1;
+        ARM_DF2T_D1(d1, acc1, Xn1, d2);
 
-        d2 = b2 * Xn1;
-        d2 += a2 * acc1;
+        ARM_DF2T_D2(d2, acc1, Xn1);
 
         *pOut++ = acc1;
 
 /* 14 */
          Xn1 = *pIn++;
 
-        acc1 = b0 * Xn1 + d1;
+        acc1 = ARM_DF2T_Y(Xn1, d1);
 
-        d1 = b1 * Xn1 + d2;
-        d1 += a1 * acc1;
+        ARM_DF2T_D1(d1, acc1, Xn1, d2);
 
-        d2 = b2 * Xn1;
-        d2 += a2 * acc1;
+        ARM_DF2T_D2(d2, acc1, Xn1);
 
         *pOut++ = acc1;
 
 /* 15 */
          Xn1 = *pIn++;
 
-        acc1 = b0 * Xn1 + d1;
+        acc1 = ARM_DF2T_Y(Xn1, d1);
 
-        d1 = b1 * Xn1 + d2;
-        d1 += a1 * acc1;
+        ARM_DF2T_D1(d1, acc1, Xn1, d2);
 
-        d2 = b2 * Xn1;
-        d2 += a2 * acc1;
+        ARM_DF2T_D2(d2, acc1, Xn1);
 
         *pOut++ = acc1;
 
 /* 16 */
          Xn1 = *pIn++;
 
-        acc1 = b0 * Xn1 + d1;
+        acc1 = ARM_DF2T_Y(Xn1, d1);
 
-        d1 = b1 * Xn1 + d2;
-        d1 += a1 * acc1;
+        ARM_DF2T_D1(d1, acc1, Xn1, d2);
 
-        d2 = b2 * Xn1;
-        d2 += a2 * acc1;
+        ARM_DF2T_D2(d2, acc1, Xn1);
 
         *pOut++ = acc1;
 
@@ -450,13 +433,11 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_f32(
       while (sample > 0U) {
         Xn1 = *pIn++;
 
-        acc1 = b0 * Xn1 + d1;
+        acc1 = ARM_DF2T_Y(Xn1, d1);
 
-        d1 = b1 * Xn1 + d2;
-        d1 += a1 * acc1;
+        ARM_DF2T_D1(d1, acc1, Xn1, d2);
 
-        d2 = b2 * Xn1;
-        d2 += a2 * acc1;
+        ARM_DF2T_D2(d2, acc1, Xn1);
 
         *pOut++ = acc1;
 
@@ -482,6 +463,10 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_f32(
    } while (stage > 0U);
 
 }
+
+#undef ARM_DF2T_Y
+#undef ARM_DF2T_D1
+#undef ARM_DF2T_D2
 
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 

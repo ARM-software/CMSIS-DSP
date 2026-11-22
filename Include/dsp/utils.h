@@ -59,6 +59,46 @@ extern "C"
   #define ARM_ROUND_UP(N, S) ((((N) + (S) - 1) / (S)) * (S))
 #endif
 
+  /**
+   * @brief Fused multiply-add (a * b) + c for float32_t.
+   *
+   * On AArch64 the fused instruction is used explicitly : the compiler keeps
+   * the order of the operations as written (an fma is never reassociated,
+   * even with -ffast-math). In recursive filters this keeps the recursive
+   * value as the last operand and the dependency chain short.
+   *
+   * Writing a * b + c and relying on the compiler to contract it is not
+   * enough : with -ffast-math gcc reassociates the sums of a biquad and puts
+   * the recursive value first, and the compilers also keep some products
+   * unfused on purpose. For instance gcc keeps the Neon vmla intrinsics
+   * unfused, as specified by the ACLE (gcc/config/aarch64/
+   * aarch64-neon-builtins-base.cc : "Use a PAREN_EXPR (equivalent to C's
+   * `__builtin_assoc_barrier`) to prevent floating-point add and mul being
+   * transformed to an FMA").
+   * On other targets (Cortex-M : FMA latency higher than separate multiply
+   * and add, destructive accumulator) the plain expression is used.
+   * ARM_FMAF_FUSED is defined when the fused version is used : code can then
+   * keep its original expressions on the other targets.
+   * clang : __builtin_elementwise_fma is never lowered to a call to fmaf
+   * (with -fmath-errno, __builtin_fmaf can be on some targets).
+   */
+#ifndef ARM_FMAF
+  #if defined(__aarch64__) && defined(__ARM_FEATURE_FMA) && (defined(__GNUC__) || defined(__clang__))
+    #if defined(__clang__) && defined(__has_builtin)
+      #if __has_builtin(__builtin_elementwise_fma)
+        #define ARM_FMAF(a, b, c) __builtin_elementwise_fma((float32_t)(a), (float32_t)(b), (float32_t)(c))
+        #define ARM_FMAF_FUSED
+      #endif
+    #endif
+    #ifndef ARM_FMAF
+      #define ARM_FMAF(a, b, c) __builtin_fmaf((a), (b), (c))
+      #define ARM_FMAF_FUSED
+    #endif
+  #else
+    #define ARM_FMAF(a, b, c) (((a) * (b)) + (c))
+  #endif
+#endif
+
 
   /**
    * @brief Function to Calculates 1/in (reciprocal) value of Q31 Data type.
