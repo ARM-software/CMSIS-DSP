@@ -53,28 +53,10 @@
                coefs.reload(BIQUADF16::COEFS1_F16_ID,mgr,this->numStages * 5);
                state.create(2*this->numStages,BIQUADF16::STATE_F16_ID,mgr);
 
-
-#if defined(ARM_MATH_NEON_FLOAT16) && defined(ARM_FLOAT16_SUPPORTED)
-               // For Neon, neonCoefs is the coef array and is bigger
-               neonCoefs.create(8*this->numStages,BIQUADF16::STATE_F16_ID,mgr);
-
                arm_biquad_cascade_df2T_init_f16(&instBiquadDf2T,
-                    this->numStages,
-                    neonCoefs.ptr(),
-                    state.ptr());
-
-               // Those Neon coefs must be computed from original coefs
-               arm_biquad_cascade_df2T_compute_coefs_f16(&instBiquadDf2T,this->numStages,coefs.ptr());
-#else
-                  
-              // For cortex-M, coefs is the coef array
-              arm_biquad_cascade_df2T_init_f16(&instBiquadDf2T,
                     this->numStages,
                     coefs.ptr(),
                     state.ptr());
-
-                
-#endif
            break;
 
            case TEST_BIQUAD_CASCADE_STEREO_DF2T_F16_3:

@@ -16,7 +16,6 @@ class BIQUADF16:public Client::Suite
 
             Client::LocalPattern<float16_t> output;
             Client::LocalPattern<float16_t> state;
-            Client::LocalPattern<float16_t> neonCoefs;
 
             arm_biquad_casd_df1_inst_f16 instBiquadDf1;
             arm_biquad_cascade_df2T_instance_f16 instBiquadDf2T;
