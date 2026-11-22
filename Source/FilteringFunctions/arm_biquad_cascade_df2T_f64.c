@@ -343,7 +343,7 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_df2T_f64(
         while (sample > 0U) {
             
             /* y[n] = b0 * x[n] + d1 */
-            /* d1 = b1 * x[n] + a1 * y[n] + d2 */
+            /* d1 = (b1 * x[n] + d2) + a1 * y[n] */
             /* d2 = b2 * x[n] + a2 * y[n] */
             
             /*  1 */
