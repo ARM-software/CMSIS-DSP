@@ -182,6 +182,21 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_stereo_df2T_f32(
 
 #else
 
+/* One step of the recursion, with the coefficients b0, b1, b2, a1, a2 of the
+ * current stage. With ARM_FMAF_FUSED (AArch64) the operations are fused and
+ * ordered so that the output y enters the state update last : the chain
+ * between two samples is 2 FMA, whatever the reassociation done by the
+ * compiler. Otherwise the original expressions are kept unchanged. */
+#if defined(ARM_FMAF_FUSED)
+#define ARM_STEREO_DF2T_Y(x, d1)      ARM_FMAF(b0, (x), (d1))
+#define ARM_STEREO_DF2T_D1(y, x, d2)  ARM_FMAF(a1, (y), ARM_FMAF(b1, (x), (d2)))
+#define ARM_STEREO_DF2T_D2(y, x)      ARM_FMAF(a2, (y), b2 * (x))
+#else
+#define ARM_STEREO_DF2T_Y(x, d1)      ((b0 * (x)) + (d1))
+#define ARM_STEREO_DF2T_D1(y, x, d2)  (((b1 * (x)) + (a1 * (y))) + (d2))
+#define ARM_STEREO_DF2T_D2(y, x)      ((b2 * (x)) + (a2 * (y)))
+#endif
+
 ARM_DSP_ATTRIBUTE void arm_biquad_cascade_stereo_df2T_f32(
   const arm_biquad_cascade_stereo_df2T_instance_f32 * S,
   const float32_t * pSrc,
@@ -229,129 +244,129 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_stereo_df2T_f32(
           Xn1a = *pIn++; /* Channel a */
           Xn1b = *pIn++; /* Channel b */
 
-          acc1a = (b0 * Xn1a) + d1a;
-          acc1b = (b0 * Xn1b) + d1b;
+          acc1a = ARM_STEREO_DF2T_Y(Xn1a, d1a);
+          acc1b = ARM_STEREO_DF2T_Y(Xn1b, d1b);
 
           *pOut++ = acc1a;
           *pOut++ = acc1b;
 
-          d1a = ((b1 * Xn1a) + (a1 * acc1a)) + d2a;
-          d1b = ((b1 * Xn1b) + (a1 * acc1b)) + d2b;
+          d1a = ARM_STEREO_DF2T_D1(acc1a, Xn1a, d2a);
+          d1b = ARM_STEREO_DF2T_D1(acc1b, Xn1b, d2b);
 
-          d2a = (b2 * Xn1a) + (a2 * acc1a);
-          d2b = (b2 * Xn1b) + (a2 * acc1b);
+          d2a = ARM_STEREO_DF2T_D2(acc1a, Xn1a);
+          d2b = ARM_STEREO_DF2T_D2(acc1b, Xn1b);
 
 /*  2 */
           Xn1a = *pIn++; /* Channel a */
           Xn1b = *pIn++; /* Channel b */
 
-          acc1a = (b0 * Xn1a) + d1a;
-          acc1b = (b0 * Xn1b) + d1b;
+          acc1a = ARM_STEREO_DF2T_Y(Xn1a, d1a);
+          acc1b = ARM_STEREO_DF2T_Y(Xn1b, d1b);
 
           *pOut++ = acc1a;
           *pOut++ = acc1b;
 
-          d1a = ((b1 * Xn1a) + (a1 * acc1a)) + d2a;
-          d1b = ((b1 * Xn1b) + (a1 * acc1b)) + d2b;
+          d1a = ARM_STEREO_DF2T_D1(acc1a, Xn1a, d2a);
+          d1b = ARM_STEREO_DF2T_D1(acc1b, Xn1b, d2b);
 
-          d2a = (b2 * Xn1a) + (a2 * acc1a);
-          d2b = (b2 * Xn1b) + (a2 * acc1b);
+          d2a = ARM_STEREO_DF2T_D2(acc1a, Xn1a);
+          d2b = ARM_STEREO_DF2T_D2(acc1b, Xn1b);
 
 /*  3 */
           Xn1a = *pIn++; /* Channel a */
           Xn1b = *pIn++; /* Channel b */
 
-          acc1a = (b0 * Xn1a) + d1a;
-          acc1b = (b0 * Xn1b) + d1b;
+          acc1a = ARM_STEREO_DF2T_Y(Xn1a, d1a);
+          acc1b = ARM_STEREO_DF2T_Y(Xn1b, d1b);
 
           *pOut++ = acc1a;
           *pOut++ = acc1b;
 
-          d1a = ((b1 * Xn1a) + (a1 * acc1a)) + d2a;
-          d1b = ((b1 * Xn1b) + (a1 * acc1b)) + d2b;
+          d1a = ARM_STEREO_DF2T_D1(acc1a, Xn1a, d2a);
+          d1b = ARM_STEREO_DF2T_D1(acc1b, Xn1b, d2b);
 
-          d2a = (b2 * Xn1a) + (a2 * acc1a);
-          d2b = (b2 * Xn1b) + (a2 * acc1b);
+          d2a = ARM_STEREO_DF2T_D2(acc1a, Xn1a);
+          d2b = ARM_STEREO_DF2T_D2(acc1b, Xn1b);
 
 /*  4 */
           Xn1a = *pIn++; /* Channel a */
           Xn1b = *pIn++; /* Channel b */
 
-          acc1a = (b0 * Xn1a) + d1a;
-          acc1b = (b0 * Xn1b) + d1b;
+          acc1a = ARM_STEREO_DF2T_Y(Xn1a, d1a);
+          acc1b = ARM_STEREO_DF2T_Y(Xn1b, d1b);
 
           *pOut++ = acc1a;
           *pOut++ = acc1b;
 
-          d1a = ((b1 * Xn1a) + (a1 * acc1a)) + d2a;
-          d1b = ((b1 * Xn1b) + (a1 * acc1b)) + d2b;
+          d1a = ARM_STEREO_DF2T_D1(acc1a, Xn1a, d2a);
+          d1b = ARM_STEREO_DF2T_D1(acc1b, Xn1b, d2b);
 
-          d2a = (b2 * Xn1a) + (a2 * acc1a);
-          d2b = (b2 * Xn1b) + (a2 * acc1b);
+          d2a = ARM_STEREO_DF2T_D2(acc1a, Xn1a);
+          d2b = ARM_STEREO_DF2T_D2(acc1b, Xn1b);
 
 /*  5 */
           Xn1a = *pIn++; /* Channel a */
           Xn1b = *pIn++; /* Channel b */
 
-          acc1a = (b0 * Xn1a) + d1a;
-          acc1b = (b0 * Xn1b) + d1b;
+          acc1a = ARM_STEREO_DF2T_Y(Xn1a, d1a);
+          acc1b = ARM_STEREO_DF2T_Y(Xn1b, d1b);
 
           *pOut++ = acc1a;
           *pOut++ = acc1b;
 
-          d1a = ((b1 * Xn1a) + (a1 * acc1a)) + d2a;
-          d1b = ((b1 * Xn1b) + (a1 * acc1b)) + d2b;
+          d1a = ARM_STEREO_DF2T_D1(acc1a, Xn1a, d2a);
+          d1b = ARM_STEREO_DF2T_D1(acc1b, Xn1b, d2b);
 
-          d2a = (b2 * Xn1a) + (a2 * acc1a);
-          d2b = (b2 * Xn1b) + (a2 * acc1b);
+          d2a = ARM_STEREO_DF2T_D2(acc1a, Xn1a);
+          d2b = ARM_STEREO_DF2T_D2(acc1b, Xn1b);
 
 /*  6 */
           Xn1a = *pIn++; /* Channel a */
           Xn1b = *pIn++; /* Channel b */
 
-          acc1a = (b0 * Xn1a) + d1a;
-          acc1b = (b0 * Xn1b) + d1b;
+          acc1a = ARM_STEREO_DF2T_Y(Xn1a, d1a);
+          acc1b = ARM_STEREO_DF2T_Y(Xn1b, d1b);
 
           *pOut++ = acc1a;
           *pOut++ = acc1b;
 
-          d1a = ((b1 * Xn1a) + (a1 * acc1a)) + d2a;
-          d1b = ((b1 * Xn1b) + (a1 * acc1b)) + d2b;
+          d1a = ARM_STEREO_DF2T_D1(acc1a, Xn1a, d2a);
+          d1b = ARM_STEREO_DF2T_D1(acc1b, Xn1b, d2b);
 
-          d2a = (b2 * Xn1a) + (a2 * acc1a);
-          d2b = (b2 * Xn1b) + (a2 * acc1b);
+          d2a = ARM_STEREO_DF2T_D2(acc1a, Xn1a);
+          d2b = ARM_STEREO_DF2T_D2(acc1b, Xn1b);
 
 /*  7 */
           Xn1a = *pIn++; /* Channel a */
           Xn1b = *pIn++; /* Channel b */
 
-          acc1a = (b0 * Xn1a) + d1a;
-          acc1b = (b0 * Xn1b) + d1b;
+          acc1a = ARM_STEREO_DF2T_Y(Xn1a, d1a);
+          acc1b = ARM_STEREO_DF2T_Y(Xn1b, d1b);
 
           *pOut++ = acc1a;
           *pOut++ = acc1b;
 
-          d1a = ((b1 * Xn1a) + (a1 * acc1a)) + d2a;
-          d1b = ((b1 * Xn1b) + (a1 * acc1b)) + d2b;
+          d1a = ARM_STEREO_DF2T_D1(acc1a, Xn1a, d2a);
+          d1b = ARM_STEREO_DF2T_D1(acc1b, Xn1b, d2b);
 
-          d2a = (b2 * Xn1a) + (a2 * acc1a);
-          d2b = (b2 * Xn1b) + (a2 * acc1b);
+          d2a = ARM_STEREO_DF2T_D2(acc1a, Xn1a);
+          d2b = ARM_STEREO_DF2T_D2(acc1b, Xn1b);
 
 /*  8 */
           Xn1a = *pIn++; /* Channel a */
           Xn1b = *pIn++; /* Channel b */
 
-          acc1a = (b0 * Xn1a) + d1a;
-          acc1b = (b0 * Xn1b) + d1b;
+          acc1a = ARM_STEREO_DF2T_Y(Xn1a, d1a);
+          acc1b = ARM_STEREO_DF2T_Y(Xn1b, d1b);
 
           *pOut++ = acc1a;
           *pOut++ = acc1b;
 
-          d1a = ((b1 * Xn1a) + (a1 * acc1a)) + d2a;
-          d1b = ((b1 * Xn1b) + (a1 * acc1b)) + d2b;
+          d1a = ARM_STEREO_DF2T_D1(acc1a, Xn1a, d2a);
+          d1b = ARM_STEREO_DF2T_D1(acc1b, Xn1b, d2b);
 
-          d2a = (b2 * Xn1a) + (a2 * acc1a);
-          d2b = (b2 * Xn1b) + (a2 * acc1b);
+          d2a = ARM_STEREO_DF2T_D2(acc1a, Xn1a);
+          d2b = ARM_STEREO_DF2T_D2(acc1b, Xn1b);
 
           /* decrement loop counter */
           sample--;
@@ -373,8 +388,8 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_stereo_df2T_f32(
           Xn1b = *pIn++; /* Channel b */
 
           /* y[n] = b0 * x[n] + d1 */
-          acc1a = (b0 * Xn1a) + d1a;
-          acc1b = (b0 * Xn1b) + d1b;
+          acc1a = ARM_STEREO_DF2T_Y(Xn1a, d1a);
+          acc1b = ARM_STEREO_DF2T_Y(Xn1b, d1b);
 
           /* Store the result in the accumulator in the destination buffer. */
           *pOut++ = acc1a;
@@ -382,12 +397,12 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_stereo_df2T_f32(
 
           /* Every time after the output is computed state should be updated. */
           /* d1 = b1 * x[n] + a1 * y[n] + d2 */
-          d1a = ((b1 * Xn1a) + (a1 * acc1a)) + d2a;
-          d1b = ((b1 * Xn1b) + (a1 * acc1b)) + d2b;
+          d1a = ARM_STEREO_DF2T_D1(acc1a, Xn1a, d2a);
+          d1b = ARM_STEREO_DF2T_D1(acc1b, Xn1b, d2b);
 
           /* d2 = b2 * x[n] + a2 * y[n] */
-          d2a = (b2 * Xn1a) + (a2 * acc1a);
-          d2b = (b2 * Xn1b) + (a2 * acc1b);
+          d2a = ARM_STEREO_DF2T_D2(acc1a, Xn1a);
+          d2b = ARM_STEREO_DF2T_D2(acc1b, Xn1b);
 
           /* decrement loop counter */
           sample--;
@@ -414,6 +429,10 @@ ARM_DSP_ATTRIBUTE void arm_biquad_cascade_stereo_df2T_f32(
     } while (stage > 0U);
 
 }
+
+#undef ARM_STEREO_DF2T_Y
+#undef ARM_STEREO_DF2T_D1
+#undef ARM_STEREO_DF2T_D2
 
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 

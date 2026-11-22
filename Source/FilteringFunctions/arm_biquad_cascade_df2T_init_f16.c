@@ -49,38 +49,18 @@
   @param[in]     pState      points to the state buffer.
 
   @par           Coefficient and State Ordering
-                   The coefficients are stored in the array <code>pCoeffs</code> in the following order
-                   in the not Neon version.
+                   The coefficients are stored in the array <code>pCoeffs</code> in the following order:
   <pre>
       {b10, b11, b12, a11, a12, b20, b21, b22, a21, a22, ...}
   </pre>
-                   
+
   @par
                    where <code>b1x</code> and <code>a1x</code> are the coefficients for the first stage,
                    <code>b2x</code> and <code>a2x</code> are the coefficients for the second stage,
                    and so on.  The <code>pCoeffs</code> array contains a total of <code>5*numStages</code> values.
 
-                   For Neon version, this array is bigger. If numstages = 4x + y, then the array has size:
-                   32*x + 5*y
-                   and it must be initialized using the function
-                   arm_biquad_cascade_df2T_compute_coefs_f16 which is taking the
-                   standard array coefficient as parameters.
-
-                   But, an array of 8*numstages is a good approximation.
-
-                   Then, the initialization can be done with:
-  <pre>
-                   arm_biquad_cascade_df2T_init_f16(&SNeon, nbCascade, neonCoefs, stateNeon);
-                   arm_biquad_cascade_df2T_compute_coefs_f16(&SNeon,nbCascade,coefs);
-  </pre>
-
-  @par             In this example, neonCoefs is a bigger array of size 8 * numStages.
-                   coefs is the standard array:
-
-  <pre>
-      {b10, b11, b12, a11, a12, b20, b21, b22, a21, a22, ...}
-  </pre>
-
+                   The same coefficient array is used by all the implementations of the filter
+                   (there is no specific coefficient layout for a vectorized version).
 
   @par
                    The <code>pState</code> is a pointer to state array.
