@@ -114,7 +114,7 @@ void FUNC(EXT)(const uint32_t *pA
 #ifdef FT
     uint32_t _cft=0;
 #endif
-    uint32_t        a, b, ba, bb;
+    uint32_t        a = 0, b = 0, ba, bb;
     int shift;
     const uint8_t  *pA8 = (const uint8_t *) pA;
     const uint8_t  *pB8 = (const uint8_t *) pB;
@@ -189,11 +189,12 @@ void FUNC(EXT)(const uint32_t *pA
        blkCnt -= 32;
     }
 
-    a = *pA++;
-    b = *pB++;
-
-    a = a >> (32 - blkCnt);
-    b = b >> (32 - blkCnt);
+    /* Remaining booleans (if any) are in the next word */
+    if (blkCnt > 0)
+    {
+      a = *pA++ >> (32 - blkCnt);
+      b = *pB++ >> (32 - blkCnt);
+    }
 
     while(blkCnt > 0)
     {
@@ -265,7 +266,7 @@ void FUNC(EXT)(const uint32_t *pA
     uint32_t _cft=0;
 #endif
     uint32_t nbBoolBlock;
-    uint32_t a,b,ba,bb;
+    uint32_t a = 0,b = 0,ba,bb;
     int shift;
     uint32x4_t aV, bV;
 #ifdef TT
@@ -411,11 +412,12 @@ void FUNC(EXT)(const uint32_t *pA
        nbBoolBlock -= 32;
     }
 
-    a = *pA++;
-    b = *pB++;
-
-    a = a >> (32 - nbBoolBlock);
-    b = b >> (32 - nbBoolBlock);
+    /* Remaining booleans (if any) are in the next word */
+    if (nbBoolBlock > 0)
+    {
+      a = *pA++ >> (32 - nbBoolBlock);
+      b = *pB++ >> (32 - nbBoolBlock);
+    }
 
     while(nbBoolBlock > 0)
     {
@@ -485,7 +487,7 @@ void FUNC(EXT)(const uint32_t *pA
 #ifdef FT
     uint32_t _cft=0;
 #endif
-    uint32_t a,b,ba,bb;
+    uint32_t a = 0,b = 0,ba,bb;
     int shift;
 
     while(numberOfBools >= 32)
@@ -517,11 +519,12 @@ void FUNC(EXT)(const uint32_t *pA
        numberOfBools -= 32;
     }
 
-    a = *pA++;
-    b = *pB++;
-
-    a = a >> (32 - numberOfBools);
-    b = b >> (32 - numberOfBools);
+    /* Remaining booleans (if any) are in the next word */
+    if (numberOfBools > 0)
+    {
+      a = *pA++ >> (32 - numberOfBools);
+      b = *pB++ >> (32 - numberOfBools);
+    }
 
     while(numberOfBools > 0)
     {
