@@ -209,10 +209,10 @@ ARM_DSP_ATTRIBUTE arm_status arm_mat_qr_f64(
         pa += pOutQ->numCols+1;
      }
    
-     nb = pOutQ->numRows - pOutQ->numCols + 1;
+     nb = pOutQ->numRows - pSrc->numCols + 1;
    
-     pc = pOutTau + pOutQ->numCols - 1;
-     for(col=0 ; col < pOutQ->numCols; col++)
+     pc = pOutTau + pSrc->numCols - 1;
+     for(col=0 ; col < pSrc->numCols; col++)
      {
        int32_t i,j,k, blkCnt;
        float64_t *pa0,*pa1,*pa2,*pa3;
